@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>    
+    <string name="app_name">Ad Hoc Wireless Creation</string>
+    
+    <string name="ssid_prompt">Choose an SSID</string>
+    <string-array name="ssid_array">
+        <item>Test</item>
+        <item>CSL</item>
+        <item>SC</item>
+    </string-array>
+    
+    <string name="subnet_prompt">Choose a Subnet</string>
+    <string-array name="subnet_array">
+        <item>192.168.1.101</item>
+        <item>192.168.1.102</item>
+        <item>192.168.1.103</item>
+        <item>192.168.1.104</item>
+    </string-array>    
+    
+    <string name="exist_ssid_prompt">Choose an existing Subnet</string>
+    <string-array name="exist_ssid_array">
+
+    </string-array>    
+    
+    
+</resources>
