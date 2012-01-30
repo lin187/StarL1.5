@@ -34,7 +34,7 @@ public class RobotsActivity extends Activity {
 	private static final String TAG = "RobotsActivity";
 	private static final String ERR = "Critical Error";
 	
-	private static final boolean DISPLAY_MODE = true;
+	private boolean DISPLAY_MODE = true;
 	
 	private globalVarHolder gvh = null;
 	private static String gps_host = "192.168.1.100";
@@ -56,6 +56,7 @@ public class RobotsActivity extends Activity {
 	private CheckBox cbGPS;
 	private CheckBox cbBluetooth;
 	private CheckBox cbRunning;
+	private CheckBox cbDebug;
 	
 	// SharedPreferences variables
 	private static final String PREF_SELECTED_ROBOT = "SELECTED_ROBOT";
@@ -118,6 +119,7 @@ public class RobotsActivity extends Activity {
     	}
 
 		private void launch() {
+			DISPLAY_MODE = cbDebug.isChecked();
 			launched = true;
 			cbRunning.setChecked(true);
 			logic = new LogicThread(gvh, motion);
@@ -259,6 +261,8 @@ public class RobotsActivity extends Activity {
 		pbBluetooth = (ProgressBar) findViewById(R.id.pb_bluetooth);
 		
 		txtRobotName.setText(participants[selected_robot]);
+		
+		cbDebug = (CheckBox) findViewById(R.id.cbDebugMode);
 		
 		btnConnect.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {

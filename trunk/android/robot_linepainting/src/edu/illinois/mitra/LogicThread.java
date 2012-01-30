@@ -178,6 +178,7 @@ public class LogicThread extends Thread {
 				if(nextline == -1 || nextpoint == -1) {
 					Log.e(TAG, "Reached the end of the artwork!");
 					stage = STAGE_DONE;
+					screenDark();
 					break;
 				}
 				
@@ -187,6 +188,7 @@ public class LogicThread extends Thread {
 					motion.go_to(dest);
 					while(motion.inMotion) {sleep(10);}				
 					stage = STAGE_DONE;
+					screenDark();
 					break;
 				}
 				
@@ -216,18 +218,18 @@ public class LogicThread extends Thread {
 				
 			case STAGE_WAIT_AT_INTERSECTION:
 				Log.d(TAG, "Holding at intersection " + intersection_num);
-				gvh.sendMainMsg(RobotsActivity.MESSAGE_SCREEN, 0);
+				screenDark();
 				if(mutex.clearToEnter(intersection_num)) {
 					stage = STAGE_GO_NEXT_POINT;
 				}
 				break;
 				
 			case STAGE_GO_NEXT_POINT:
-				gvh.sendMainMsg(RobotsActivity.MESSAGE_SCREEN, 0);
+				screenDark();
 				Log.d(TAG, "Next point: " + my_currentline + " " + my_currentpoint);
 				dest = div.getLinePoint(my_currentline, my_currentpoint);
 				motion.go_to(dest);
-				gvh.sendMainMsg(RobotsActivity.MESSAGE_SCREEN, (div.lineColor(my_currentline)*100));
+				screenColor(div.lineColor(my_currentline));
 				while(motion.inMotion) {sleep(10);}				
 				stage = STAGE_CALC_NEXT_POINT;
 				break;				
@@ -243,6 +245,14 @@ public class LogicThread extends Thread {
 		}
 	}
 
+	private void screenColor(int color) {
+		gvh.sendMainMsg(RobotsActivity.MESSAGE_SCREEN, (color*100));
+	}
+	
+	private void screenDark() {
+		gvh.sendMainMsg(RobotsActivity.MESSAGE_SCREEN, 0);
+	}
+	
 	@Override
 	public synchronized void start() {
 		// TODO Auto-generated method stub
