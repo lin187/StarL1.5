@@ -2,13 +2,15 @@ clear,clc;
 %% Options section
 % Input SVG and output WPT filenames
 DIR = 'C:\pictures\';
-INPUT = 'test.svg';
-OUTPUT = 'test.wpt';
+INPUT = 'currentImg.svg';
+OUTPUT = 'currentImg.wpt';
+
+LAUNCH_TRACKER = true;
 
 % Waypoint spacing and intersection radius constants
 SPACING = 325;
-ABSORPTION_RADIUS = 50;
-INTERSECTION_RADIUS = 175;
+ABSORPTION_RADIUS = 150;
+INTERSECTION_RADIUS = 225;
 
 % Enable/disable image scaling and centering
 CENTER = true;
@@ -92,7 +94,12 @@ for i = 1:size(lines,1)
 	l_ghosts = l_ghosts + ghosts(i)*line_len;
     l_lines = l_lines + (~ghosts(i))*line_len;
 end
-fprintf('Image line segments: %u\nGhost segments added: %u\n',n_lines,n_ghosts);
+fprintf('----------------------\nImage line segments: %u\nGhost segments added: %u\n',n_lines,n_ghosts);
 fprintf('Intersection points: %u\n',size(ints,1));
 fprintf('Total ghost length: %0.f\nTotal drawn length: %0.f\nTotal path length: %0.f\n',...
     l_ghosts, l_lines, (l_lines+l_ghosts));
+
+if LAUNCH_TRACKER
+    cd '..\matlab_optitrack_v2';
+    main_udp;
+end

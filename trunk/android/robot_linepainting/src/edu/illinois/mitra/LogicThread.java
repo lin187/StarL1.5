@@ -8,6 +8,7 @@ import edu.illinois.mitra.Objects.globalVarHolder;
 import edu.illinois.mitra.Objects.itemPosition;
 import edu.illinois.mitra.bluetooth.RobotMotion;
 import edu.illinois.mitra.comms.RobotMessage;
+import edu.illinois.mitra.lightpaint.BotProgressThread;
 import edu.illinois.mitra.lightpaint.DivideLines;
 
 public class LogicThread extends Thread {
@@ -18,6 +19,7 @@ public class LogicThread extends Thread {
 	private RobotMotion motion;
 	private Synchronizer sync;
 	private MutualExclusion mutex;
+	private BotProgressThread prog;
 	private int stage = 0;
 	private String name = null;
 	private String leader = null;
@@ -93,12 +95,11 @@ public class LogicThread extends Thread {
 				
 			case STAGE_LEADERELECT:
 				LeaderElection le = new LeaderElection(gvh);
-				leader = le.elect(); //"Alice";
+				leader = le.elect();
 				iamleader = (leader.equals(name));
 				gvh.sendMainToast(leader);
 				Log.d(TAG, "Leader elected!");
 				stage = STAGE_DIVIDE_LINES;
-				motion.blink(1);
 				break;
 			
 			case STAGE_DIVIDE_LINES:
@@ -134,8 +135,6 @@ public class LogicThread extends Thread {
 				// Start the mutual exclusion thread
 				mutex = new MutualExclusion(div.getNumIntersections(),gvh,leader);
 				mutex.start();
-				
-				gvh.setDebugInfo(my_startline + ", " + my_startpoint + " -> " + my_endline + ", " + my_endpoint);
 				break;
 				
 			case STAGE_GO_TO_START:
@@ -143,17 +142,14 @@ public class LogicThread extends Thread {
 				dest = div.getLinePoint(my_startline, my_startpoint);
 				my_currentline = my_startline;
 				my_currentpoint = my_startpoint;
+				
 				motion.go_to(dest);
 				Log.d(TAG, "Going to start...");
-				Log.i(TAG, dest.toString());
-				gvh.setDebugInfo(my_startline + ", " + my_startpoint + " -> " + my_endline + ", " + my_endpoint + "\nGOING TO START");
 				while(motion.inMotion) {sleep(10);}
 				
 				Log.d(TAG, "Turning to face next point...");
 				dest = div.getNextLinePoint(my_startline, my_startpoint);
-				Log.i(TAG, dest.toString());
 				motion.turn_to(dest);
-				gvh.setDebugInfo(my_startline + ", " + my_startpoint + " -> " + my_endline + ", " + my_endpoint + "\nTURNING TO NEXT");
 				while(motion.inMotion) {sleep(10);}
 
 				sync.barrier_sync(SYNC_START_DRAWING);
@@ -167,10 +163,14 @@ public class LogicThread extends Thread {
 					stage = STAGE_CALC_NEXT_POINT;
 					sleep(1000);
 					motion.song();
+					
+					// Create and start the progress tracking thread
+					prog = new BotProgressThread(gvh);
+					prog.start();
 				}
 				break;
 				
-			case STAGE_CALC_NEXT_POINT:
+			case STAGE_CALC_NEXT_POINT:								
 				// Calculate the next point to go to
 				int nextline = div.getNextLineNum(my_currentline, my_currentpoint);
 				int nextpoint = div.getNextPointNum(my_currentline, my_currentpoint);
@@ -179,18 +179,30 @@ public class LogicThread extends Thread {
 					Log.e(TAG, "Reached the end of the artwork!");
 					stage = STAGE_DONE;
 					screenDark();
+					
+					// Send a progress update
+					prog.sendDone();
 					break;
 				}
 				
 				if(nextline == my_endline && nextpoint == my_endpoint) {
 					Log.e(TAG, "Reaching the end of my section!");
 					dest = div.getLinePoint(nextline, nextpoint);
+					
 					motion.go_to(dest);
-					while(motion.inMotion) {sleep(10);}				
+					while(motion.inMotion) {sleep(10);}
+					
 					stage = STAGE_DONE;
+					
+					// Send a progress update
+					prog.sendDone();
+					
 					screenDark();
 					break;
 				}
+				
+				// Send a progress update
+				prog.updateMyProgress(my_currentline, my_currentpoint);
 				
 				my_currentline = nextline;
 				my_currentpoint = nextpoint;
@@ -211,8 +223,7 @@ public class LogicThread extends Thread {
 					intersection_num = -1;
 					motion.song(2);
 				}
-				
-				gvh.setDebugInfo(my_startline + ", " + my_startpoint + " -> " + my_endline + ", " + my_endpoint + "\n" + my_currentline + ", " + my_currentpoint);				
+					
 				stage = STAGE_GO_NEXT_POINT;
 				break;
 				
@@ -260,7 +271,9 @@ public class LogicThread extends Thread {
 	}
 	
 	public void cancel() {
-		
+		Log.d(TAG, "CANCELLING LOGIC THREAD");
+		prog.cancel();
+		mutex.cancel();
 	}
 
 	private void sleep(int time) {

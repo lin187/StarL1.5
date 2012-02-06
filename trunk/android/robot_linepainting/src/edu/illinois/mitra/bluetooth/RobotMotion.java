@@ -1,5 +1,7 @@
 package edu.illinois.mitra.bluetooth;
 
+import java.util.Arrays;
+
 import android.os.Handler;
 import android.util.Log;
 import edu.illinois.mitra.Objects.globalVarHolder;
@@ -72,6 +74,27 @@ public class RobotMotion {
 		return new byte[]{(byte) 139, led_state, 0x00, (byte) (led==0?0xFF:0x00)};
 	}
 
+	private byte[] req_sensor(int packetID) {
+		return new byte[]{(byte) 142, (byte) packetID};
+	}
+	
+	public int getBatteryPercentage() {
+		int capacity = -1;
+		int current = 0;
+		
+		while(capacity < current) {
+			bti.send(req_sensor(26));
+			capacity = unsignedShortToInt(bti.readBuffer(2));
+			
+			bti.send(req_sensor(25));
+			current = unsignedShortToInt(bti.readBuffer(2));
+			
+			Log.d(TAG, "Read from buffer: " + capacity + " and " + current);
+		}
+		
+		return (int) Math.round((new Float(current)/capacity)*100.0);
+	}
+	
 	public void song() {
 		bti.send(robot_play_song(0));
 	}
@@ -185,5 +208,22 @@ public class RobotMotion {
 			}
 			return false;
 		}
+	}
+	
+	/**
+	 * Converts a two byte array to an integer
+	 * @param b a byte array of length 2
+	 * @return an int representing the unsigned short
+	 */
+	private static final int unsignedShortToInt(byte[] b) 
+	{
+		if(b.length != 2){
+			return -99;
+		}
+	    int i = 0;
+	    i |= b[0] & 0xFF;
+	    i <<= 8;
+	    i |= b[1] & 0xFF;
+	    return i;
 	}
 }

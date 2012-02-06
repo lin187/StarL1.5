@@ -15,9 +15,11 @@ public class MutualExclusion extends Thread {
 	private globalVarHolder gvh;
 	private String name;
 	
-	private ArrayList<ArrayList<String>> token_requestors;
+	private ArrayList<ArrayList<String>> token_requesters;
 	private String[] token_owners;
 	private Boolean[] using_token;
+	
+	private boolean running = true;
 	
 	public MutualExclusion(int num_sections, globalVarHolder gvh, String leader) {
 		this.num_sections = num_sections;
@@ -27,11 +29,11 @@ public class MutualExclusion extends Thread {
 		// Set leader as token owner for all tokens
 		token_owners = new String[num_sections];
 		using_token = new Boolean[num_sections];
-		token_requestors = new ArrayList<ArrayList<String>>();
+		token_requesters = new ArrayList<ArrayList<String>>();
 		for(int i = 0; i < num_sections; i++) {
 			token_owners[i] = new String(leader);
 			using_token[i] = false;
-			token_requestors.add(i, new ArrayList<String>());
+			token_requesters.add(i, new ArrayList<String>());
 		}
 	}
 
@@ -39,7 +41,7 @@ public class MutualExclusion extends Thread {
 	public void run() {
 		int msgcount = 0;
 		String output = "";
-		while(true) {
+		while(running) {
 			// Receive token ownership broadcasts
 			msgcount = gvh.getIncomingMessageCount(LogicThread.MSG_MUTEX_TOKEN_OWNER_BCAST);
 			for(int i = 0; i < msgcount; i ++) {
@@ -58,14 +60,14 @@ public class MutualExclusion extends Thread {
 				int id = Integer.parseInt(parts[0]);
 				token_owners[id] = name;
 				using_token[id] = true;
-				// Parse any attached requestors
+				// Parse any attached requesters
 				if(parts.length > 1) {
-					Log.i(TAG, "Parsing attached requestors...");
-					token_requestors.get(id).clear();
+					Log.i(TAG, "Parsing attached requesters...");
+					token_requesters.get(id).clear();
 					for(int b = 1; b < parts.length; b++) {
-						token_requestors.get(id).add(parts[b]);
+						token_requesters.get(id).add(parts[b]);
 					}
-					Log.i(TAG, "Requestors: " + token_requestors.get(id).toString());
+					Log.i(TAG, "requesters: " + token_requesters.get(id).toString());
 				}
 				Log.e(TAG, "Received token " + id + "!");
 			}
@@ -76,9 +78,9 @@ public class MutualExclusion extends Thread {
 				RobotMessage next = gvh.getIncomingMessage(LogicThread.MSG_MUTEX_TOKEN_REQUEST);
 				String parts[] = next.getContents().split(",");
 				int id = Integer.parseInt(parts[0]);
-				// If we own the token being requested, enqueue the requestor
+				// If we own the token being requested, enqueue the requester
 				if(token_owners[id].equals(name)) {
-					token_requestors.get(id).add(next.getFrom());
+					token_requesters.get(id).add(next.getFrom());
 				} else {
 				// If we don't own the token, forward the request to the actual owner
 					next.setTo(token_owners[id]);
@@ -87,20 +89,20 @@ public class MutualExclusion extends Thread {
 				Log.i(TAG, next.getFrom() + " has requested token " + id);
 			}
 			
-			// Send any unused tokens on to the next requestor
+			// Send any unused tokens on to the next requester
 			for(int i = 0; i < num_sections; i ++) {
-				if(token_owners[i].equals(name) && !using_token[i] && !token_requestors.get(i).isEmpty()) {					
-					// Pass the token. Include any additional requestors
-					String to = token_requestors.get(i).remove(0);
+				if(token_owners[i].equals(name) && !using_token[i] && !token_requesters.get(i).isEmpty()) {					
+					// Pass the token. Include any additional requesters
+					String to = token_requesters.get(i).remove(0);
 					RobotMessage pass_token;
-					Log.d(TAG, "Passing token " + i + " to requestor " + to);
-					if(token_requestors.get(i).isEmpty()) {
-						Log.d(TAG, "No additional requestors to include.");
+					Log.d(TAG, "Passing token " + i + " to requester " + to);
+					if(token_requesters.get(i).isEmpty()) {
+						Log.d(TAG, "No additional requesters to include.");
 						pass_token = new RobotMessage(to, name, LogicThread.MSG_MUTEX_TOKEN, Integer.toString(i));
 					} else {
-						Log.d(TAG, "Including list of requestors.");
-						String reqs = token_requestors.get(i).toString().replaceAll("[\\[\\]\\s]", "");
-						token_requestors.get(i).clear();
+						Log.d(TAG, "Including list of requesters.");
+						String reqs = token_requesters.get(i).toString().replaceAll("[\\[\\]\\s]", "");
+						token_requesters.get(i).clear();
 						pass_token = new RobotMessage(to, name, LogicThread.MSG_MUTEX_TOKEN, i + "," + reqs);
 					}
 					gvh.addOutgoingMessage(pass_token);
@@ -115,9 +117,9 @@ public class MutualExclusion extends Thread {
 			// Show token owners on the debug
 			output = "";
 			for(int i = 0; i < num_sections; i++) {
-				output = output + i + " " + token_owners[i] + "-" + token_requestors.get(i) + "\n";
+				output = output + i + " " + token_owners[i] + "-" + token_requesters.get(i) + "\n";
 			}
-			gvh.setDebugInfo(new String(output));
+			//gvh.setDebugInfo(new String(output));
 		}
 	}
 
@@ -146,5 +148,9 @@ public class MutualExclusion extends Thread {
 	public synchronized void start() {
 		// TODO Auto-generated method stub
 		super.start();
+	}
+	
+	public void cancel() {
+		running = false;
 	}
 }

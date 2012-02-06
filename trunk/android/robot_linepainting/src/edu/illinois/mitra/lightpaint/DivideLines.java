@@ -1,11 +1,7 @@
 package edu.illinois.mitra.lightpaint;
 
-import java.util.Iterator;
-import java.util.Set;
-
 import android.util.Log;
 import edu.illinois.mitra.LogicThread;
-import edu.illinois.mitra.Objects.MutualExclusion;
 import edu.illinois.mitra.Objects.globalVarHolder;
 import edu.illinois.mitra.Objects.itemPosition;
 import edu.illinois.mitra.Objects.positionList;
@@ -92,17 +88,20 @@ public class DivideLines {
 		for(int i = 0; i < num_robots-1; i++) {
 			int current_dist = 0;
 			Log.i(TAG, "Starting[" + i + "] = " + startingLine[i] + ":" + startingPoint[i]);
-			while(current_dist <= target && current_seg < num_lines) {
+			while((current_dist <= target || segments[current_seg].isIntersectionPoint(current_point)) && current_seg < num_lines) {
 				// If we've walked to the end of this segment, go to the next one
 				if(segments[current_seg].getLength() == current_point) {
 					current_seg ++;
 					current_point = 0;				
-					Log.i(TAG, "\tIncrement to segment " + current_seg);
+					Log.i(TAG, "  Increment to segment " + current_seg);
 				} else {
 					current_point ++;
 				}
 				current_dist ++;
 				Log.i(TAG, "Current distance: " + current_dist);
+			}
+			if(segments[current_seg].isIntersectionPoint(current_point)) {
+				Log.e(ERR,"Line divider just placed an endpoint at an intersection!");
 			}
 			endingLine[i] = current_seg;
 			endingPoint[i] = current_point;

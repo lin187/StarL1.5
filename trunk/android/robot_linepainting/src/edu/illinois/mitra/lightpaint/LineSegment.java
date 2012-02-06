@@ -29,6 +29,10 @@ public class LineSegment implements Comparable<LineSegment> {
 			return null;
 		}
 	}
+	
+	public boolean isIntersectionPoint(int point) {
+		return segments[point].getName().matches("[0-9]+-[0-9]+-[0-9]+-[0-9]+-[0-9]+");
+	}
 
 	public int getID() {
 		return ID;

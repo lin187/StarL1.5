@@ -9,6 +9,7 @@ public class BotProgress {
 	private long lastReceivedTime = -1;
 	
 	public BotProgress() {
+		lastReceivedTime = System.currentTimeMillis();
 	}
 	
 	public void update(RobotMessage msg) {
@@ -20,7 +21,7 @@ public class BotProgress {
 		// Update the last received time
 		lastReceivedTime = System.currentTimeMillis();
 	}
-	
+
 	public long getLastReportTime() {
 		return lastReceivedTime;
 	}

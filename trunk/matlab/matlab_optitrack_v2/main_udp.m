@@ -1,7 +1,7 @@
 % Main OptiTrack interface
 % Settings
 TTP_FILENAME = 'C:\ALL_ROBOTS_PROJECT.ttp';
-WPT_FILENAME = 'C:\pictures\test.wpt';
+WPT_FILENAME = 'C:\pictures\currentImg.wpt';
 USE_SERVER = 1; %Enable/disable the network server
 USE_WPT = 1;    %Enable/disable loading waypoints and walls
 USE_HISTORY = 1;%Enable/disable history
@@ -32,6 +32,7 @@ disp('N - Toggle waypoint name viewing');
 disp('S - Resend waypoints');
 disp('C - Clear history');
 disp('X - Exit');
+disp('Q - Track shutdown');
 
 % Load the walls and waypoints (if required)
 [walls waypoints] = load_wpt(WPT_FILENAME, USE_WPT);
@@ -98,6 +99,14 @@ while 1
     if get(fig,'currentkey') == 'x'
         disp('Exiting...');
         close all;
+        shutdown_track = 0;
+        break;
+    end
+    
+    if get(fig,'currentkey') == 'q'
+        disp('Exiting...');
+        close all;
+        shutdown_track = 1;
         break;
     end
     
@@ -131,6 +140,8 @@ while 1
     end
 end
 
-%track_shutdown();
+if shutdown_track == 1
+    track_shutdown();
+    clear
+end
 close all
-%clear

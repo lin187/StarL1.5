@@ -3,7 +3,27 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:weightSum="1" android:orientation="vertical">
-    <TextView android:textAppearance="?android:attr/textAppearanceSmall" android:layout_height="wrap_content" android:id="@+id/textView1" android:text="v1.0.1" android:layout_gravity="fill_horizontal" android:layout_width="fill_parent"></TextView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ProgressBar
+            android:id="@+id/pbBattery"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_marginRight="0px"/>
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="v1.0.2"
+            android:textAppearance="?android:attr/textAppearanceSmall" android:gravity="right"/>
+
+    </LinearLayout>
+
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:id="@+id/txtRobotName" android:layout_gravity="center_horizontal" android:text="%RobotName"></TextView>
 <Button android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:text="Connect" android:layout_width="wrap_content" android:id="@+id/btnConnect"></Button>
 <LinearLayout android:layout_width="match_parent" android:id="@+id/linearLayout1" android:layout_height="wrap_content" android:orientation="vertical">
@@ -11,7 +31,7 @@
     <LinearLayout android:layout_width="match_parent" android:id="@+id/linearLayout2" android:layout_height="wrap_content">
         <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/cbBluetooth" android:text="Bluetooth" android:clickable="false"></CheckBox>
         <ProgressBar android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="40px" android:id="@+id/pb_bluetooth" android:visibility="invisible"></ProgressBar>
-        <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/cbDebugMode" android:text="Debug Mode"></CheckBox>
+        <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/cbDebugMode" android:text="Paint Mode"></CheckBox>
     </LinearLayout>
     <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/cbRunning" android:text="Running" android:clickable="false"></CheckBox>
 </LinearLayout>
