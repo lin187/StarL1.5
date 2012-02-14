@@ -2,15 +2,15 @@ clear,clc;
 %% Options section
 % Input SVG and output WPT filenames
 DIR = 'C:\pictures\';
-INPUT = 'currentImg.svg';
+INPUT = 'videodemo2.svg'; %'currentImg.svg';
 OUTPUT = 'currentImg.wpt';
 
-LAUNCH_TRACKER = true;
+LAUNCH_TRACKER = false;
 
 % Waypoint spacing and intersection radius constants
-SPACING = 325;
+SPACING = 275;
 ABSORPTION_RADIUS = 150;
-INTERSECTION_RADIUS = 225;
+INTERSECTION_RADIUS = 300;
 
 % Enable/disable image scaling and centering
 CENTER = true;
@@ -20,7 +20,7 @@ CENTER_LOCATION = [1700 1700];
 
 % Enable/disable endpoint snapping
 END_SNAPPING = true;
-END_SNAP_RADIUS = 15;
+END_SNAP_RADIUS = 10;
 
 %% Process the image
 % Load the SVG image, convert it to usable data
@@ -35,6 +35,20 @@ lines(:,2) = centr_y - lines(:,2);
 lines(:,4) = centr_y - lines(:,4);
 
 % Connect nonadjacent lines with "ghost" lines when neccessary
+% To find the minimal path, run this once with each line as the first line
+% and record the total length.
+lengths = zeros(size(lines,1),3);
+for i=1:size(lines,1)
+    % Run add_ghosts with line i as the first line
+    reorder_lines = lines;
+    reorder_lines([1 i],:) = reorder_lines([i 1],:);
+    [outlines outghosts] = add_ghosts(reorder_lines, END_SNAPPING, END_SNAP_RADIUS);
+    lengths(i,1:2) = statistics(outlines, outghosts);
+    lengths(i,3) = sum(lengths(i,1:2));
+end
+[min_dist startline] = min(lengths(:,3));
+fprintf('Minimum path distance with starting line %u\n',startline);
+lines([1 startline],:) = lines([startline 1],:);
 [lines ghosts] = add_ghosts(lines, END_SNAPPING, END_SNAP_RADIUS);
 
 % Calculate intersections
@@ -86,14 +100,10 @@ hold off;
 % Calculate and print statistics
 n_ghosts = sum(ghosts);
 n_lines = size(ghosts,1)-n_ghosts;
-l_ghosts = 0;
-l_lines = 0;
 idx_ghosts = find(ghosts);
-for i = 1:size(lines,1)
-    line_len = p_dist(lines(i,1:2),lines(i,3:4));
-	l_ghosts = l_ghosts + ghosts(i)*line_len;
-    l_lines = l_lines + (~ghosts(i))*line_len;
-end
+
+[l_ghosts l_lines] = statistics(lines, ghosts);
+
 fprintf('----------------------\nImage line segments: %u\nGhost segments added: %u\n',n_lines,n_ghosts);
 fprintf('Intersection points: %u\n',size(ints,1));
 fprintf('Total ghost length: %0.f\nTotal drawn length: %0.f\nTotal path length: %0.f\n',...
@@ -103,3 +113,4 @@ if LAUNCH_TRACKER
     cd '..\matlab_optitrack_v2';
     main_udp;
 end
+

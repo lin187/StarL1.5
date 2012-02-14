@@ -1,7 +1,7 @@
 % Main OptiTrack interface
 % Settings
 TTP_FILENAME = 'C:\ALL_ROBOTS_PROJECT.ttp';
-WPT_FILENAME = 'C:\pictures\currentImg.wpt';
+WPT_FILENAME = 'C:\pictures\multiframe_test.wpt';
 USE_SERVER = 1; %Enable/disable the network server
 USE_WPT = 1;    %Enable/disable loading waypoints and walls
 USE_HISTORY = 1;%Enable/disable history
@@ -42,6 +42,8 @@ global disp_waypoint_names;
 disp_waypoint_names = 0;
 global draw_and_save;
 draw_and_save = 0;
+global fig_closed;
+fig_closed = 0;
 
 % Only transmit the waypoints once
 global waypoints_transmitted;
@@ -58,7 +60,9 @@ bots = struct('X',{0},'Y',{0},'yaw',{0},'visible',{0},'name',robot_names,...
 
 % Set up the plot
 fig = figure('KeyPressFcn',@fig_key_handler);
-%colormap(cmap);
+
+% IF THIS CRASHES, ERASE THIS LINE:
+%set(gcf,'CloseRequestFcn',@close_fig_handler);
 
 % Start the frame count for drawing and timer for transmitting
 frameCount = 0;
@@ -66,6 +70,11 @@ tic;
 while 1
     frameCount = frameCount + 1;
     track_updateFrame()
+    
+    % If the figure was closed, exit
+    if fig_closed == 1
+        break;
+    end
     
     % Get each robots position (if visible)
     for i = 1:robot_count
@@ -90,7 +99,7 @@ while 1
     end
    
     % Update the plot on every 4th frame
-    if rem(frameCount,4) == 0    
+    if rem(frameCount,4) == 0
         plot_bots(fig, LINE_LEN, X_MAX, Y_MAX, bots, waypoints, walls,...
             disp_waypoints, disp_waypoint_names)
     end
