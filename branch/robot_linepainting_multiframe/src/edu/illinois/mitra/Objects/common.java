@@ -29,7 +29,7 @@ public final class common {
 	
 	
 	
-	// Common math functions	
+	// Common value manipulation functions	
 	public static int cap(int val, int max) {
 		if(val < max) {
 			return val;

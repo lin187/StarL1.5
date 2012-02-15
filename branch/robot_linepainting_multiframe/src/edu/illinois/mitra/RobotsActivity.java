@@ -110,8 +110,11 @@ public class RobotsActivity extends Activity {
 	    			}
 	    		} else if(cmd.equals("ABORT")) {
 	    			Toast.makeText(getApplicationContext(), "Aborting!", Toast.LENGTH_SHORT).show();
+	    			// Disconnect
 	    			attempt_connect();
 	    			launched = false;
+	    			// Reconnect
+	    			attempt_connect();
 	    		}
 	    		break;
 	    	case MESSAGE_DEBUG:

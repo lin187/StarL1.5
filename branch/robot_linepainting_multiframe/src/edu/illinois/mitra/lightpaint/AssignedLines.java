@@ -40,7 +40,7 @@ public class AssignedLines {
 	}
 	
 	public boolean equalsEndPos(int line, int point) {
-		return (line == my_startline) && (point == my_startpoint);
+		return (line == my_endline) && (point == my_endpoint);
 	}
 	
 	// Return current line and current position in array {my_startline, my_startpoint}

@@ -53,6 +53,7 @@ public class globalVarHolder {
 	
 	//Robot positions
 	public synchronized void setPositions(positionList new_position) {
+		//SET POSITIONS MAY ONLY BE CALLED BY THE GPSRECEIVER!
 		robot_positions = new_position;
 		notifyAll();
 	}

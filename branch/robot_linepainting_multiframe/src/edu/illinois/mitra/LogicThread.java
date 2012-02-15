@@ -26,6 +26,10 @@ public class LogicThread extends Thread {
 	private String name = null;
 	private String leader = null;
 	
+	// Maximum angle at which robots can curve to their destination.
+	// This prevents "soft" corners and forces robots to turn in place at sharper angles
+	private static final int MAXCURVEANGLE = 35;
+	
 	// Constant stage names
 	public static final int STAGE_START 					= 0;
 	public static final int STAGE_LEADERELECT_BARRIER 		= 1;
@@ -81,7 +85,7 @@ public class LogicThread extends Thread {
 	public void run() {
 		while(running) {
 			switch(stage) {
-			case STAGE_START:
+			case STAGE_START:				
 				sync.barrier_sync(SYNC_BEGIN);
 				stage = STAGE_LEADERELECT_BARRIER;
 				break;
@@ -165,7 +169,9 @@ public class LogicThread extends Thread {
 				while(motion.inMotion) {sleep(10);}
 
 				sync.barrier_sync(SYNC_START_DRAWING);
+				//TODO: Put this back:
 				stage = STAGE_CALC_NEXT_POINT_BARRIER;
+				//stage = STAGE_DONE;
 				break;
 				
 			case STAGE_CALC_NEXT_POINT_BARRIER:
@@ -201,7 +207,7 @@ public class LogicThread extends Thread {
 					Log.e(TAG, "Reaching the end of my section!");
 					dest = div.getFrame(cur_frame).getLinePoint(nextline, nextpoint);
 					
-					motion.go_to(dest);
+					motion.go_to(dest,MAXCURVEANGLE);
 					while(motion.inMotion) {sleep(10);}
 					
 					stage = STAGE_FRAME_DONE;
@@ -251,7 +257,7 @@ public class LogicThread extends Thread {
 				screenDark();
 				Log.d(TAG, "Next point: " + assignment.curString());
 				dest = div.getFrame(cur_frame).getLinePoint(assignment.getCurPos());
-				motion.go_to(dest);
+				motion.go_to(dest,MAXCURVEANGLE);
 				screenColor(div.getFrame(cur_frame).lineColor(assignment.getCurPos()[0]));
 				while(motion.inMotion) {sleep(10);}				
 				stage = STAGE_CALC_NEXT_POINT;
