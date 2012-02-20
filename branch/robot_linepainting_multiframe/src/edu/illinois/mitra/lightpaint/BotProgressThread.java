@@ -2,8 +2,6 @@ package edu.illinois.mitra.lightpaint;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
 
 import android.util.Log;
 
@@ -31,8 +29,7 @@ public class BotProgressThread extends Thread {
 	
 	public BotProgressThread(globalVarHolder gvh) {
 		this.gvh = gvh;
-		
-		// I just need an array of names! Why is this so hard??
+
 		names = gvh.getParticipants().toArray(new String[0]);
 		
 		completed = new ArrayList<String>();
@@ -48,6 +45,7 @@ public class BotProgressThread extends Thread {
 	}
 	
 	public synchronized void start() {
+		Log.i(TAG, "Starting progress tracker!");
 		running = true;
 		super.start();
 	}
@@ -69,11 +67,10 @@ public class BotProgressThread extends Thread {
 				// Otherwise, if we have a tracker for this robot, update it
 				} else if(progress.containsKey(from)) {
 					progress.get(from).update(rec);
-				} else {
+				} else if(!completed.contains(from)) {
 					Log.e(ERR, "Don't have a progress tracker for robot with name " + from);
 				}
 			}
-			// TODO: Insert a pause??
 			
 			// TODO: ERASE THIS TEMPORARY DEBUG STUFF:
 			// Update the GUI

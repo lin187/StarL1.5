@@ -3,6 +3,7 @@ package edu.illinois.mitra.lightpaint;
 import android.util.Log;
 import edu.illinois.mitra.LogicThread;
 import edu.illinois.mitra.Objects.globalVarHolder;
+import edu.illinois.mitra.Objects.itemPosition;
 import edu.illinois.mitra.Objects.positionList;
 import edu.illinois.mitra.comms.RobotMessage;
 
@@ -10,7 +11,7 @@ public class DivideLines {
 	private static final String TAG = "DivideLines";
 	private static final String ERR = "Critical Error";
 	
-	private static int MIN_ROBOT_TRAVEL_DIST = 1000;
+	private static int MIN_ROBOT_TRAVEL_DIST = 1700;
 	
 	private int num_frames = 0;
 	private int num_robots = 0;
@@ -61,6 +62,7 @@ public class DivideLines {
 	
 	public void assignLineSegments() {
 		for(int i = 0; i < num_frames; i++) {
+			Log.e(TAG, "Frame " + i);
 			assignLineSegments(i);
 		}
 	}
@@ -93,9 +95,7 @@ public class DivideLines {
 		startingPoint[0][frame] = 0;
 		
 		Log.i(TAG, "Starting at line " + current_line + " of length " + lines[current_line].getLength());
-		
-		// TODO: THIS ISN'T DIVIDING LINES PROPERLY!
-		
+				
 		for(int i = 0; i < num_operating_robots[frame]-1; i++) {
 			int current_dist = 0;
 			Log.i(TAG, "Starting[" + i + "] = " + startingLine[i][frame] + ":" + startingPoint[i][frame]);
@@ -140,15 +140,51 @@ public class DivideLines {
 	public void sendAssignments(int frame) {
 		String name = gvh.getName();
 		String[] robots = gvh.getParticipants().toArray(new String[0]);
-		
+		Log.d(TAG, "Sending for frame " + frame);
 		for(int i = 0; i < robots.length; i++) {
-			String current = (String) robots[i];
-			// TODO: Include the frame number in the outgoing message?
+			int closestIdx = closestRobot(robots, frame, startingLine[i][frame], startingPoint[i][frame]);
+			String current = robots[closestIdx];
+
 			RobotMessage sendLine = new RobotMessage(current, name, LogicThread.MSG_INFORMLINE, startingLine[i][frame] + ":" + startingPoint[i][frame] + "," + endingLine[i][frame] + ":" + endingPoint[i][frame]);
+			
 			Log.d(TAG, i + "| To " + current + ": " + startingLine[i][frame] + ":" + startingPoint[i][frame] + "," + endingLine[i][frame] + ":" + endingPoint[i][frame]);
+			
 			gvh.addOutgoingMessage(sendLine);
+			
+			robots[closestIdx] = "";
 		}
 	}
+	
+	// Given an array of robot names and a location, returns the index of the closest robot to that location
+	private int closestRobot(String[] robots, int frame, int startLine, int startPoint) {
+		int minDist = 9999999;
+		int minidx = -1;
+		int dist = 0;
+		itemPosition start = null;
+		
+		// If assignment isn't "you're not participating", fetch the location of the starting point
+		if(startLine >= 0 && startPoint >= 0) {
+			start = frames[frame].getLinePoint(startLine, startPoint);
+		}
+		
+		for(int i = 0; i < robots.length; i ++) {
+			if(!robots[i].equals("")) {
+				// If the assignment is "you're not participating", return the first non-empty robot
+				if(start == null) {
+					Log.i(TAG, "Non participating robot: " + robots[i] + "!");
+					return i;
+				}
+				dist = gvh.getPosition(robots[i]).distanceTo(start);
+				if(dist < minDist) {
+					minDist = dist;
+					minidx = i;
+				}
+			}
+		}
+		//Log.i(TAG, "The closest robot to position " + start.getName() + " is " + robots[minidx]);
+		return minidx;
+	}
+	
 	public ImageFrame getFrame(int frame) {
 		return frames[frame];
 	}

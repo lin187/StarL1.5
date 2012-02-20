@@ -59,4 +59,12 @@ public class AssignedLines {
 	public String rangeString() {
 		return new String(my_startline + ", " + my_startpoint + " -> " + my_endline + ", " + my_endpoint);
 	}
+	
+	public int getCurLine() {
+		return my_currentline;
+	}
+	
+	public int getCurPoint() {
+		return my_currentpoint;
+	}
 }

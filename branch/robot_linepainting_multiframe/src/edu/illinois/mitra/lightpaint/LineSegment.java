@@ -6,7 +6,7 @@ import edu.illinois.mitra.Objects.itemPosition;
 
 public class LineSegment implements Comparable<LineSegment> {
 	private int ID;
-	private int color = 0;
+	private String color = "000000";
 	private int length;
 	private itemPosition[] segments;
 	
@@ -23,7 +23,6 @@ public class LineSegment implements Comparable<LineSegment> {
 	
 	public itemPosition getPoint(int point) {
 		if(point >= 0 && point <= length) {
-			Log.d("TEST", "Requested " + point + " out of " + segments.length);
 			return segments[point];
 		} else {
 			return null;
@@ -42,11 +41,11 @@ public class LineSegment implements Comparable<LineSegment> {
 		ID = iD;
 	}
 
-	public int getColor() {
+	public String getColor() {
 		return color;
 	}
 
-	public void setColor(int color) {
+	public void setColor(String color) {
 		this.color = color;
 	}
 
@@ -60,5 +59,9 @@ public class LineSegment implements Comparable<LineSegment> {
 
 	public int compareTo(LineSegment another) {
 		return another.getID() - ID;
+	}
+	
+	public boolean isGhost() {
+		return color.equals("000000");
 	}
 }

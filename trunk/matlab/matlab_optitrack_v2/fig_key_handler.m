@@ -3,15 +3,9 @@ global send_launch;
 global disp_waypoints;
 global waypoints_transmitted;
 global disp_waypoint_names;
-global draw_and_save;
+global clear_history;
 
 disp(event.Character);
-
-    if event.Character == 'd'
-        disp('Drawing and saving...');
-        draw_and_save = 1;
-    end
-
     if event.Character == 'w'
         disp('Toggling waypoint viewing');
         disp_waypoints = ~disp_waypoints;
@@ -31,7 +25,7 @@ disp(event.Character);
     end
     
     if event.Character == 'c'
-        draw_and_save = 2;
+        clear_history = 1;
     end
     
     if event.Character == 'l'

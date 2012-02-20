@@ -24,22 +24,22 @@ for i0 = 1:num_lines-1
     end
 end
 
-% Remove any intersections that match line coordinates
-%ints(ints == -1) = [];
-%ints = reshape(ints,[],2);
-linematch = [lines(:,1:2); lines(:,3:4)];
-for i = 1:size(ints,1)
-   if ints(i,:) ~= [-1 -1]
-       if ismember(round(ints(i,:)),linematch,'rows')
-           ints(i,:) = [-1 -1];
-           line_A(i) = -1;
-           line_B(i) = -1;
-       end
-   end
-end
-
 % Remove any blank intersections
 ints(ints == -1) = [];
 ints = reshape(ints,[],2);
 line_A(line_A == -1) = [];
 line_B(line_B == -1) = [];
+
+% Remove any intersections that match line coordinates
+linematch = round([lines(:,1:2); lines(:,3:4)]);
+ints = round(ints);
+i = 1;
+while (i <= size(ints,1))
+    if ismember(round(ints(i,:)), linematch, 'rows')
+       ints(i,:) = [];
+       line_A(i) = [];
+       line_B(i) = [];
+    else
+        i = i + 1;
+    end
+end

@@ -27,21 +27,19 @@ public final class common {
 		return partsToInts(parts);
 	}
 	
-	
-	
 	// Common value manipulation functions	
-	public static int cap(int val, int max) {
-		if(val < max) {
+	public static <T extends Comparable<T>> T cap(T val, T max) {
+		if(val.compareTo(max) < 0) {
 			return val;
 		} else {
 			return max;
 		}
 	}
 	
-	public static int cap(int val, int min, int max) {
-		if(val > max) {
+	public static <T extends Comparable<T>> T  cap(T val, T min, T max) {
+		if(val.compareTo(max) > 0) {
 			return max;
-		} else if(val < min) {
+		} else if(val.compareTo(min) < 0) {
 			return min;
 		} else {
 			return val;

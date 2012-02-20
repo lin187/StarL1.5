@@ -34,6 +34,7 @@ public class positionList {
 			}
 		} else {
 			Log.e(TAG, "Invalid item formatting: " + parts.length);
+			Log.e(TAG, received.replace(",",""));
 		}
 	}
 	
@@ -44,6 +45,15 @@ public class positionList {
 		} else {
 			return null;
 		}
+	}
+	
+	public itemPosition getPositionRegex(String exp) {
+		for(int i = 0; i < names.size(); i++) {
+			if(names.get(i).matches(exp)) {
+				return positions.get(i);
+			}
+		}
+		return null;
 	}
 	
 	public boolean hasPositionFor(String name) {

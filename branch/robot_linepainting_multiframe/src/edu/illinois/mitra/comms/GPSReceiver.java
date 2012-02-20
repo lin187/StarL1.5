@@ -75,28 +75,30 @@ public class GPSReceiver extends Thread {
     				received = true;
     			}    			
     			for(int i = 0; i < parts.length; i++) {
-	    			switch(parts[i].charAt(0)) {
-	    			case '@':
-	    				waypointPositions.update(parts[i]);
-	    				break;
-	    			case '#':
-	    				robotPositions.update(parts[i]);
-	    				break;
-	    			case 'G':
-	    				gvh.sendMainMsg(3, parts[i]);
-	    				break;
-	    			case 'A':
-	    				gvh.sendMainMsg(3, "ABORT");
-	    				break;
-	    			default:
-	    				Log.e(ERR, "Unknown GPS message received: " + line);
-	    				break;
-	    			}
+    				if(parts[i].length() >= 2) {
+		    			switch(parts[i].charAt(0)) {
+		    			case '@':
+		    				waypointPositions.update(parts[i]);
+		    				break;
+		    			case '#':
+		    				robotPositions.update(parts[i]);
+		    				break;
+		    			case 'G':
+		    				gvh.sendMainMsg(3, parts[i]);
+		    				break;
+		    			case 'A':
+		    				gvh.sendMainMsg(3, "ABORT");
+		    				break;
+		    			default:
+		    				Log.e(ERR, "Unknown GPS message received: " + line);
+		    				break;
+		    			}
+    				}
     			}
     			//gvh.setDebugInfo(robotPositions.toString() + "\nWaypoints: " + waypointPositions.getNumPositions());
 	    	}
 		} catch (IOException e) {
-			Log.e(ERR, "Error receiving in GPSReceiver");
+			//Log.e(ERR, "Error receiving in GPSReceiver");
 			gvh.sendMainMsg(1, 0);
 		} 
 	}
@@ -120,6 +122,11 @@ public class GPSReceiver extends Thread {
     
     public void cancel() {
         try {
+        	// Clear the list of waypoints
+        	robotPositions = new positionList();
+        	waypointPositions = new positionList();
+        	gvh.setWaypointPositions(waypointPositions);
+        	gvh.setPositions(robotPositions);
             mSocket.close();
         } catch (Exception e) {
             Log.e(ERR, "close of connect socket failed", e);

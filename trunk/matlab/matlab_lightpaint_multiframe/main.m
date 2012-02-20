@@ -1,33 +1,39 @@
-clear,clc;
+clear,clc,close all;
+format longg;
 %% Options section
 % Input SVG and output WPT filenames
-DIR = 'C:\pictures\';
-INPUT = 'multiframe_test.svg';
-OUTPUT = 'multiframe_test.wpt';
+DIR = 'C:\pictures\tests';
+FNAME = 'texas';
 
-LAUNCH_TRACKER = false;
+LAUNCH_TRACKER = true;
+MAXFRAMES = 1;
 
-MAXFRAMES = 3;
 
 % Waypoint spacing and intersection radius constants
-SPACING = 325;
+SPACING = 300;
 ABSORPTION_RADIUS = 150;
-INTERSECTION_RADIUS = 225;
+INTERSECTION_RADIUS = 350;
 SAFE_TRAVEL_RADIUS = 250;
 
 % Enable/disable image scaling and centering
 CENTER = true;
 SCALE = true;
-SCALE_MAX = 2800;
+SCALE_MAX = 2900;
 CENTER_LOCATION = [1700 1700];
 
 % Enable/disable endpoint snapping
-END_SNAPPING = false;
-END_SNAP_RADIUS = 15;
+END_SNAPPING = true;
+END_SNAP_RADIUS = 50;
 
+OUTPUT = [FNAME '.wpt'];
+INPUT = [FNAME '.svg'];
 %% Load and pre-process the image
 % Load the SVG image, convert it to usable data
-lines = load_replace(fullfile(DIR,INPUT));
+[lines colors] = load_replace(fullfile(DIR,INPUT));
+
+if size(lines,1) == 0
+    error('There were no parseable lines in the specified image!');
+end
 
 % Flip vertically
 % Find the min x and y coordinates
@@ -46,11 +52,11 @@ if CENTER
 end
 
 %% Separate the lines into multiple frames
-flines = separate_frames(lines, SAFE_TRAVEL_RADIUS, SPACING, MAXFRAMES);
+[flines fcolors] = separate_frames(lines, colors, SAFE_TRAVEL_RADIUS, SPACING, MAXFRAMES);
 n_frames = size(flines,3);
 
 %% Process each frame
-output = struct('framenum',{},'cLines',{},'lines',{},'ghosts',{},'ints',{});
+output = struct('framenum',{},'cLines',{},'lines',{},'ghosts',{},'ints',{},'colors',{});
 for b=1:n_frames
     lines = flines(:,:,b);
     lines(lines == -1) = [];
@@ -61,6 +67,13 @@ for b=1:n_frames
         break;
     end
     
+    color = [];%cell(0);
+    for i=1:size(fcolors,1)
+        if ~isequal(fcolors{i,b},-1)
+           color = [color; fcolors{i,b}] ;
+        end
+    end
+    
     process_lines;
     
     output(b).framenum = b;
@@ -68,6 +81,7 @@ for b=1:n_frames
     output(b).ghosts = ghosts;
     output(b).ints = ints;
     output(b).lines = lines;
+    output(b).colors = color;
 end;
 
 %% Output lines
@@ -81,11 +95,16 @@ for i=1:n_frames
     
 	[len_ghosts len_lines] = statistics(output(i).lines, output(i).ghosts);
     fprintf('\nFrame %u\nLine lengths: %6.0f\nGhost lengths:%6.0f\nTotal lengths:%6.0f\n', i,len_lines, len_ghosts, (len_lines + len_ghosts));    
+    total_len = total_len + (len_lines + len_ghosts);
 end
+fprintf('\nTotal length:%7.0f\n', total_len);    
 
 set(gcf,'Position',[400 400 400*n_frames 400]);
 
 if LAUNCH_TRACKER
+    pause;
     cd '..\matlab_optitrack_v2';
-    main_udp;
+    load_settings
+    WPT_FILENAME = fullfile(DIR, OUTPUT);
+    mainprog;
 end

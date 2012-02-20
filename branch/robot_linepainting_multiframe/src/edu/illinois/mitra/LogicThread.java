@@ -28,7 +28,7 @@ public class LogicThread extends Thread {
 	
 	// Maximum angle at which robots can curve to their destination.
 	// This prevents "soft" corners and forces robots to turn in place at sharper angles
-	private static final int MAXCURVEANGLE = 35;
+	private static final int MAXCURVEANGLE = 25;
 	
 	// Constant stage names
 	public static final int STAGE_START 					= 0;
@@ -65,6 +65,7 @@ public class LogicThread extends Thread {
 	// Values for tracking current position, start, and destination
 	private int cur_frame = 0;
 	private int intersection_num = -1;
+	private boolean new_line_seg = false;
 	private AssignedLines assignment = new AssignedLines();
 	
 	private boolean iamleader = false;
@@ -135,12 +136,19 @@ public class LogicThread extends Thread {
 				// If this robot doesn't have an assignment for this frame, skip straight to the end
 				if(!assignment.includedInFrame()) {
 					Log.e(TAG, "I'm not included in frame " + cur_frame + "!");
+
+					// TODO: Make sure this works and doesn't send non-participants into the abyss
+					// TODO: "I should really get out of the way here"
+					itemPosition outOfFrame = new itemPosition("OUT",(name.toLowerCase().charAt(0)-97)*300,0,0);
+					motion.go_to(outOfFrame);
+					while(motion.inMotion) {sleep(10);}
+					Log.e(TAG, "I'm at my designated non-participant point. Sad robot.");
+					
 					// "Send out a sync message so other robots don't wait around for me"
 					sync.barrier_sync(SYNC_START_DRAWING);
-					
-					// TODO: "I should really get out of the way here"
 					stage = STAGE_FRAME_DONE;
 				} else {
+					Log.i(TAG, "I'm included in frame " + cur_frame + "!");
 					stage = STAGE_GO_TO_START;
 					
 					if(prog != null) {
@@ -164,14 +172,42 @@ public class LogicThread extends Thread {
 				while(motion.inMotion) {sleep(10);}
 				
 				Log.d(TAG, "Turning to face next point...");
+				
 				dest = div.getFrame(cur_frame).getNextLinePoint(assignment.getStartPos());
+				
+				Log.d(TAG, "Facing my next point!");
+				
+				if(dest == null) {
+					Log.e(TAG, "I was only assigned ONE POINT for this frame! I quit!");
+					// TODO: Make sure this works and doesn't send non-participants into the abyss
+					// TODO: "I should really get out of the way here"
+					//itemPosition outOfFrame = new itemPosition("OUT",(name.toLowerCase().charAt(0)-97)*300,200,0);
+					//motion.go_to(outOfFrame);
+					// "Send out a sync message so other robots don't wait around for me"
+					sync.barrier_sync(SYNC_START_DRAWING);
+					//while(motion.inMotion) {sleep(10);}
+					//Log.e(TAG, "I'm at my designated non-participant point. Sad robot.");
+					stage = STAGE_FRAME_DONE;
+					break;
+				}
+				
+//				int destLine = div.getFrame(cur_frame).getNextLineNum(assignment.getStartPos());
+//				int destPoint = div.getFrame(cur_frame).getNextPointNum(assignment.getStartPos());
+//				
+//				Log.e(TAG, "Currently at " + dest.toString());
+//				Log.e(TAG, "Next point SHOULD be frame " + cur_frame + " line " + destLine + " point " + destPoint);
+//				
+//				dest = div.getFrame(cur_frame).getLinePoint(destLine, destPoint);
+//				if(dest == null) {
+//					Log.e(TAG, "NULL NULL NULL NULL NULL NULL NULL");
+//				} else {
+//					Log.d(TAG, "  " + dest.toString());
+//				}
 				motion.turn_to(dest);
 				while(motion.inMotion) {sleep(10);}
 
 				sync.barrier_sync(SYNC_START_DRAWING);
-				//TODO: Put this back:
 				stage = STAGE_CALC_NEXT_POINT_BARRIER;
-				//stage = STAGE_DONE;
 				break;
 				
 			case STAGE_CALC_NEXT_POINT_BARRIER:
@@ -179,7 +215,9 @@ public class LogicThread extends Thread {
 				if(sync.barrier_proceed(SYNC_START_DRAWING)){
 					Log.d(TAG, "Barrier sync complete!");
 					stage = STAGE_CALC_NEXT_POINT;
-					sleep(1000);
+					
+					// Wait to give the photographer enough time to press the shutter
+					sleep(400);
 					motion.song();
 					
 					// Create and start the progress tracking thread
@@ -193,6 +231,7 @@ public class LogicThread extends Thread {
 				int nextline = div.getFrame(cur_frame).getNextLineNum(assignment.getCurPos());
 				int nextpoint = div.getFrame(cur_frame).getNextPointNum(assignment.getCurPos());
 				
+				// If the end of the artwork has been reached
 				if(nextline == -1 || nextpoint == -1) {
 					Log.e(TAG, "Reached the end of the artwork!");
 					stage = STAGE_FRAME_DONE;
@@ -203,27 +242,33 @@ public class LogicThread extends Thread {
 					break;
 				}
 				
+				// If the end of the robot's current section has been reached
 				if(assignment.equalsEndPos(nextline, nextpoint)) {
 					Log.e(TAG, "Reaching the end of my section!");
 					dest = div.getFrame(cur_frame).getLinePoint(nextline, nextpoint);
 					
-					motion.go_to(dest,MAXCURVEANGLE);
+					motion.go_to(dest,MAXCURVEANGLE, false);
 					while(motion.inMotion) {sleep(10);}
 					
 					stage = STAGE_FRAME_DONE;
+					screenDark();
 					
 					// Send a progress update
-					prog.sendDone();
-					
-					screenDark();
+					prog.sendDone();					
 					break;
 				}
 				
 				// Send a progress update
 				prog.updateMyProgress(assignment.getCurPos());
 				
+				// If we're moving to a new line segment, the flag the turn to be done with the screen darkened 
+				if(nextline != assignment.getCurLine()) {
+					Log.i(TAG, "Going dark for this corner!");
+					new_line_seg = true;
+				}
+				
 				assignment.setCurPos(nextline, nextpoint);
-				Log.e(TAG, "My next point is " + assignment.curString());
+				Log.i(TAG, "My next point is " + assignment.curString());
 
 				// If the next point is an intersection, request access.
 				// If it's not an intersection and we're holding on to an intersection token, let go of the token.
@@ -246,24 +291,49 @@ public class LogicThread extends Thread {
 				break;
 				
 			case STAGE_WAIT_AT_INTERSECTION:
-				Log.d(TAG, "Holding at intersection " + intersection_num);
 				screenDark();
+				Log.d(TAG, "Holding at intersection " + intersection_num);
 				if(mutex.clearToEnter(intersection_num)) {
 					stage = STAGE_GO_NEXT_POINT;
+				} else {
+					sleep(50);
 				}
 				break;
 				
 			case STAGE_GO_NEXT_POINT:
-				screenDark();
+				//screenDark();
 				Log.d(TAG, "Next point: " + assignment.curString());
 				dest = div.getFrame(cur_frame).getLinePoint(assignment.getCurPos());
-				motion.go_to(dest,MAXCURVEANGLE);
-				screenColor(div.getFrame(cur_frame).lineColor(assignment.getCurPos()[0]));
+				
+				// TODO: See if this code can be replaced by activity level code
+				// If we're moving to a new line segment, keep the screen dark until we're ready to move forward
+//				if(new_line_seg) {
+//					new_line_seg = false;
+//					motion.turn_to(dest);
+//					screenColor("ff0000");
+//					screenBright();
+//					while(motion.inMotion) {sleep(10);}
+//				}
+				
+				// Travel to the next point, keep curving to a minimum to prevent wavy images
+				// Don't use collision avoidance, keep everyone on their lines.
+				motion.go_to(dest,MAXCURVEANGLE, false);
+				
+				// Set the screen color
+				screenColor(div.getFrame(cur_frame).lineColor(assignment.getCurLine()));
+				
+				// Illuminate the screen if it's not a ghost line
+				if(!div.getFrame(cur_frame).isGhost(assignment.getCurLine())) {
+					screenBright();
+				}
+				
 				while(motion.inMotion) {sleep(10);}				
 				stage = STAGE_CALC_NEXT_POINT;
 				break;				
 			
 			case STAGE_FRAME_DONE:
+				// If the last frame has been completed, end
+				// Otherwise, continue looping
 				if(cur_frame == div.getNumFrames()-1) {
 					stage = STAGE_DONE;
 				} else {
@@ -283,11 +353,19 @@ public class LogicThread extends Thread {
 		}
 	}
 
-	private void screenColor(int color) {
-		gvh.sendMainMsg(RobotsActivity.MESSAGE_SCREEN, (color*100));
+	private void screenColor(String color) {
+		Log.i(TAG, "  Colored " + color);
+		gvh.sendMainMsg(RobotsActivity.MESSAGE_SCREEN_COLOR, color);
+	}
+
+	private void screenBright() {
+		Log.i(TAG, "  Bright!");
+		gvh.sendMainMsg(RobotsActivity.MESSAGE_SCREEN, 100);
 	}
 	
 	private void screenDark() {
+		Log.i(TAG, "  Dark.");
+		screenColor("000000");
 		gvh.sendMainMsg(RobotsActivity.MESSAGE_SCREEN, 0);
 	}
 	

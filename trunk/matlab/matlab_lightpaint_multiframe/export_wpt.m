@@ -20,13 +20,16 @@ for frame = 1:n_frames
     % Print the metadata points
     fprintf(fid, 'WAY,0,0,%u,NUM_LINES_IN_FRAME_%u\n',num_lines,(frame-1));
     fprintf(fid, 'WAY,0,0,%u,NUM_INTS_IN_FRAME_%u\n',intcount,(frame-1));
+    for i = 1:num_lines
+        fprintf(fid, 'WAY,0,0,0,F%uL%uC_%s\n',(frame-1),(i-1),output(frame).colors(i,:));
+    end
 
     for i = 1:num_lines
        % Print the metadata point for each line segment in this frame
        n_points = size((reshape([cLines{i,:}]',[],3)),1);
        color = ghosts(i);
        %fprintf(fid, 'WAY,-%u,-%u,-1,%u-%u-%u\n',frame,(i-1),(n_points-1),~color,marker);
-       fprintf(fid, 'WAY,%u,%u,-1,F%u_L%u\n',n_points,~color,(frame-1),(i-1));
+       fprintf(fid, 'WAY,%u,0,-1,F%u_L%u\n',n_points,(frame-1),(i-1));
        %marker = marker + 1;
     end
 
@@ -51,3 +54,5 @@ for frame = 1:n_frames
        end
     end
 end
+
+fclose(fid);

@@ -73,11 +73,22 @@ public class RobotsActivity extends Activity {
 	public static final int MESSAGE_LAUNCH = 3;
 	public static final int MESSAGE_DEBUG = 4;
 	public static final int MESSAGE_SCREEN = 5;
-	public static final int MESSAGE_BATTERY = 6;
+	public static final int MESSAGE_SCREEN_COLOR = 6;
+	public static final int MESSAGE_BATTERY = 7;
+	public static final int MESSAGE_MOTION = 8;
+	
+	// Motion types
+	public static final int MOT_TURNING		= 0;
+	public static final int MOT_ARCING		= 1;
+	public static final int MOT_STRAIGHT	= 2;
+	public static final int MOT_STOPPED		= 3;
+	
 	// Lightpainting specific
+	private float overrideBrightness = 1;
+	private int reqBrightness = 100; 
 	private WindowManager.LayoutParams lp;	
 	private View vi;
-	private float defaultBrightness;
+	private int defaultBrightness = -1;
 	
     private final Handler debug_handler = new Handler() {
     	public void handleMessage(Message msg) {	    	
@@ -106,13 +117,14 @@ public class RobotsActivity extends Activity {
 		    				launch();
 		    			}	    				
 	    			} else {
-	    				Toast.makeText(getApplicationContext(), "Should have " + wptcount + ". I only have " + gvh.getWaypointPositions().getNumPositions(), Toast.LENGTH_LONG).show();
+	    				gvh.sendMainToast("Should have " + wptcount + " waypoints, but I have " + gvh.getWaypointPositions().getNumPositions());
 	    			}
 	    		} else if(cmd.equals("ABORT")) {
 	    			Toast.makeText(getApplicationContext(), "Aborting!", Toast.LENGTH_SHORT).show();
 	    			// Disconnect
 	    			attempt_connect();
 	    			launched = false;
+	    			
 	    			// Reconnect
 	    			attempt_connect();
 	    		}
@@ -122,14 +134,41 @@ public class RobotsActivity extends Activity {
 	    		break;
 	    	case MESSAGE_SCREEN:
 	    		if(DISPLAY_MODE) {
-		        	lp.screenBrightness = common.cap((Integer) msg.obj, 1,100) / 100.0f;
-		        	int color = common.cap(((Integer) msg.obj)*255,0,255);
-		        	vi.setBackgroundColor(Color.argb(255, color, color, color));
+	    			reqBrightness = (Integer) msg.obj;
+		        	lp.screenBrightness = common.cap(reqBrightness*overrideBrightness, 1f, 100f) / 100.0f;
 		        	getWindow().setAttributes(lp);
 	    		}
 	    		break;
+	    	case MESSAGE_SCREEN_COLOR:
+	    		String colParse = "#" + (String) msg.obj;
+	    		vi.setBackgroundColor(Color.parseColor(colParse));
+	    		break;
 	    	case MESSAGE_BATTERY:
 	    		pbBattery.setProgress((Integer) msg.obj);
+	    		break;
+	    	case MESSAGE_MOTION:
+	    		switch((Integer) msg.obj) {
+	    		case MOT_TURNING:
+	    			// Illuminate the screen if we're turning in place (assuming phones are in the middle!)
+	    			overrideBrightness = 0.21f;	    			
+	    			break;
+	    		case MOT_ARCING:
+	    			// Illuminate the screen if we're arcing 
+	    			overrideBrightness = 1;
+	    			break;
+	    		case MOT_STRAIGHT:
+	    			// Illuminate the screen if we're going straight 
+	    			overrideBrightness = 1;	    
+	    			break;
+	    		case MOT_STOPPED:
+	    			// Darken the screen if we've stopped 
+	    			overrideBrightness = 0;	    
+	    			break;
+	    		}
+	    		
+	    		if(DISPLAY_MODE && launched) {
+	    			gvh.sendMainMsg(MESSAGE_SCREEN, reqBrightness);
+	    		}
 	    		break;
 	    	}	
     	}
@@ -147,25 +186,21 @@ public class RobotsActivity extends Activity {
     };
 	
     // Persistent threads
-    private GPSReceiver gps;
-    private RobotMotion motion;
-    private LogicThread logic;
+    private GPSReceiver gps = null;
+    private RobotMotion motion = null;
+    private LogicThread logic = null;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.main);
-        
-        // Get the default screen brightness
-        lp = getWindow().getAttributes();
-        defaultBrightness = lp.screenBrightness;
-        
+
         // Initialize preferences holder
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        selected_robot = prefs.getInt(PREF_SELECTED_ROBOT, 0);
         
         // Set up the GUI
-        selected_robot = prefs.getInt(PREF_SELECTED_ROBOT, 0);
         setupGUI();
         
         // Create the global variable holder
@@ -179,7 +214,6 @@ public class RobotsActivity extends Activity {
         attempt_connect();
         
         // Set up brightness attribute
-        lp = getWindow().getAttributes();
         vi = new View(this);
     }
     
@@ -194,19 +228,18 @@ public class RobotsActivity extends Activity {
 	        // Begin persistent background threads
 	        gvh.startComms();
 	        gps = new GPSReceiver(gvh, gps_host, gps_port);
-	        gps.start();	        
+	        gps.start();
 	        motion = new RobotMotion(gvh, mac[selected_robot]);
 		} else {
 			// Update GUI
 			btnConnect.setText("Connect");
 			cbRunning.setChecked(false);
-			gvh.sendMainMsg(MESSAGE_LOCATION, new Integer(0));
+			gvh.sendMainMsg(MESSAGE_LOCATION, 0);
 			
 			// Shut down persistent threads
 			gvh.stopComms();
 			gps.cancel();
-			motion.cancel();
-			
+
 			// Shut down the logic thread if it was running
 			if(launched) {
 				logic.cancel();
@@ -215,8 +248,12 @@ public class RobotsActivity extends Activity {
 			launched = false;
 			
 			// Restore the view to the main GUI
-			setContentView(R.layout.main);
-			setupGUI();
+			if(DISPLAY_MODE) {
+				setContentView(R.layout.main);
+				setupGUI();
+			}
+
+			motion.cancel();
 		}	
 		connected = !connected;
 	}
@@ -268,9 +305,9 @@ public class RobotsActivity extends Activity {
 
 	private void setupGUI() {
 		// Set the brightness to the default level
+		lp = getWindow().getAttributes();
 		lp.screenBrightness = defaultBrightness;
 		getWindow().setAttributes(lp);
-		
 		
 		btnConnect = (Button) findViewById(R.id.btnConnect);
 		txtRobotName = (TextView) findViewById(R.id.txtRobotName);

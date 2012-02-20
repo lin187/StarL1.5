@@ -8,21 +8,23 @@ for i=1:size(lines,1)
     % Run add_ghosts with line i as the first line
     reorder_lines = lines;
     reorder_lines([1 i],:) = reorder_lines([i 1],:);
-    [outlines outghosts] = add_ghosts(reorder_lines, END_SNAPPING, END_SNAP_RADIUS);
+    [outlines outghosts outcolor] = add_ghosts(reorder_lines, color, END_SNAPPING, END_SNAP_RADIUS);
     lengths(i,1:2) = statistics(outlines, outghosts);
     lengths(i,3) = sum(lengths(i,1:2));
 end
 [min_dist startline] = min(lengths(:,3));
-fprintf('Minimum path distance with starting line %u\n',startline);
+%fprintf('Minimum path distance with starting line %u\n',startline);
 lines([1 startline],:) = lines([startline 1],:);
-[lines ghosts] = add_ghosts(lines, END_SNAPPING, END_SNAP_RADIUS);
+color([1 startline],:) = color([startline 1],:);
+
+[lines ghosts color] = add_ghosts(lines, color, END_SNAPPING, END_SNAP_RADIUS);
 
 % Calculate intersections
 [ints intsA intsB] = find_intersections(lines);
 
 % Round the lines
+% TODO: Determine if this makes any appreciable difference!
 lines = round(lines);
-ints = round(ints);
 
 % Break each of the lines into equal length segments
 cLines = divide_lines(lines, SPACING, ints, intsA, intsB, ABSORPTION_RADIUS);

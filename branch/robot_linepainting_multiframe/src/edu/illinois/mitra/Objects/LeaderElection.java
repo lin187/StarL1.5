@@ -2,12 +2,10 @@ package edu.illinois.mitra.Objects;
 
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Set;
 
 import android.util.Log;
 
 import edu.illinois.mitra.LogicThread;
-import edu.illinois.mitra.comms.MessageResult;
 import edu.illinois.mitra.comms.RobotMessage;
 
 public class LeaderElection {
@@ -68,7 +66,6 @@ public class LeaderElection {
 					receivedFrom.add(from);
 				} else {
 					Log.e(TAG, "Received from " + from + " twice!");
-					//gvh.setDebugInfo("Received message from " + from + " twice!");
 					error = true;
 					break;
 				}
@@ -82,7 +79,6 @@ public class LeaderElection {
 			}
 		}
 		if(!error) {
-			//gvh.setDebugInfo(toDebug);
 			if(myNum > max_val) {
 				leader = gvh.getName();
 				max_val = myNum;

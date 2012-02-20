@@ -90,8 +90,11 @@ public class BluetoothInterface {
 			try {
 				buffer[i] = (byte) bufInStream.read();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				return new byte[]{0};
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+				return new byte[]{0};
 			}
 		}
 

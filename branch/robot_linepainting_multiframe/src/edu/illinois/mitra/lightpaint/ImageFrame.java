@@ -1,7 +1,5 @@
 package edu.illinois.mitra.lightpaint;
 
-import java.util.Arrays;
-
 import android.util.Log;
 import edu.illinois.mitra.Objects.common;
 import edu.illinois.mitra.Objects.itemPosition;
@@ -35,7 +33,8 @@ public class ImageFrame {
 			itemPosition cur = waypoints.getPosition("F" + frame_number + "_L" + i);
 			if(cur.getAngle() == -1) {
 				segments[i] = new LineSegment(i, cur.getX());
-				segments[i].setColor(cur.getY());
+				
+				segments[i].setColor(waypoints.getPositionRegex("F" + frame_number + "L" + i + "C_[0-9a-fA-F]{6}").getName().split("_")[1]);
 				Log.i(TAG, "Initialized segment " + i);
 				total_distance += cur.getX();
 			}
@@ -114,7 +113,7 @@ public class ImageFrame {
 			return -1;
 		}
 	}
-	public int lineColor(int line) {
+	public String lineColor(int line) {
 		return segments[line].getColor();
 	}
 	public int lineLen(int line_num) {
@@ -137,6 +136,7 @@ public class ImageFrame {
 			// Otherwise, if the first point on the next line exists
 			return line_num + 1;
 		}
+		// Otherwise, we're at the edge of the artwork
 		return -1;
 	}
 	public itemPosition getNextLinePoint(int line_num, int point) {
@@ -174,5 +174,8 @@ public class ImageFrame {
 
 	public int intersectionNumber(int[] curPos) {
 		return intersectionNumber(curPos[0], curPos[1]);
+	}
+	public boolean isGhost(int line) {
+		return segments[line].isGhost();
 	}
 }
