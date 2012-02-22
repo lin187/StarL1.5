@@ -176,7 +176,8 @@ public class RobotMotion {
 	
 	// Motion class to intelligently drive in curves
 	class motion_go_curve implements Runnable {
-		private static final int THRESH_GOAL = 100;
+		//TODO: This value was originally 100, but the robots were drifting too far from their goals
+		private static final int THRESH_GOAL = 75;
 		private static final int THRESH_SHORT = 800;
 		private static final int THRESH_MED = 1500;
 		
@@ -237,6 +238,12 @@ public class RobotMotion {
 				if(state == -1) {
 					state = getNextState(dzone, azone);
 					//Log.d(TAG, "FIRST RUN: analyzed current position, going to state " + state);
+				}
+				
+				// If we're within close range, we're at the goal
+				if(dzone == GOAL) {
+					nextState = 3;
+					state = 3;
 				}
 				
 				switch(state) {

@@ -1,10 +1,23 @@
-function [outlines color] = parse_path(path, color)
+function [outlines outcolor] = parse_path(path, color)
 outlines = [];
+outcolor = [];
 for i=1:length(path)
     path(i) = regexprep(path(i), 'm', '');
+    
+    % Error if there are any curves present
+    findcurve = regexp(path(i), 'c', 'match');
+    if ~cellfun('isempty', findcurve)
+       error('Curves are not currently supported'); 
+    end
+    
     parts = regexprep(path(i),'[l,]', ' ');
     pval = textscan(parts{:},'%d ');
     pval = reshape(double(cell2mat(pval)),2,[])';
+    
+    if size(pval,1) == 1
+        warning('Single point path detected! Ignoring.');
+        break;
+    end
     
     out = pval(1,:);
     idx = 2;
@@ -25,5 +38,5 @@ for i=1:length(path)
     end
     
     outlines = [outlines ; nout];
+    outcolor = [outcolor ; repmat(color(i),size(nout,1),1)];
 end
-outcolor = repmat(color(i),size(nout,1),1);

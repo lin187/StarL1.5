@@ -65,7 +65,6 @@ public class LogicThread extends Thread {
 	// Values for tracking current position, start, and destination
 	private int cur_frame = 0;
 	private int intersection_num = -1;
-	private boolean new_line_seg = false;
 	private AssignedLines assignment = new AssignedLines();
 	
 	private boolean iamleader = false;
@@ -86,7 +85,11 @@ public class LogicThread extends Thread {
 	public void run() {
 		while(running) {
 			switch(stage) {
-			case STAGE_START:				
+			case STAGE_START:
+				// Initially the screen should be dark
+				screenColor("000000");
+				screenDark();
+				
 				sync.barrier_sync(SYNC_BEGIN);
 				stage = STAGE_LEADERELECT_BARRIER;
 				break;
@@ -128,7 +131,7 @@ public class LogicThread extends Thread {
 				
 				// Receive line assignments
 				while(gvh.getIncomingMessageCount(MSG_INFORMLINE) == 0) {}
-				RobotMessage assignmsg = gvh.getIncomingMessage(MSG_INFORMLINE);
+				RobotMessage assignmsg = gvh.getIncomingMessages(MSG_INFORMLINE).iterator().next();
 				assignment.parseAssignmentMessage(assignmsg);
 
 				Log.d(TAG, "Frame " + cur_frame + ": Assigned lines " + assignment.rangeString());			
@@ -261,38 +264,33 @@ public class LogicThread extends Thread {
 				// Send a progress update
 				prog.updateMyProgress(assignment.getCurPos());
 				
-				// If we're moving to a new line segment, the flag the turn to be done with the screen darkened 
-				if(nextline != assignment.getCurLine()) {
-					Log.i(TAG, "Going dark for this corner!");
-					new_line_seg = true;
-				}
-				
 				assignment.setCurPos(nextline, nextpoint);
-				Log.i(TAG, "My next point is " + assignment.curString());
 
 				// If the next point is an intersection, request access.
 				// If it's not an intersection and we're holding on to an intersection token, let go of the token.
 				if(div.getFrame(cur_frame).isIntersection(assignment.getCurPos())) {
 					intersection_num = div.getFrame(cur_frame).intersectionNumber(assignment.getCurPos());
+					Log.i(TAG, "  Intersection #" + intersection_num);
 					if(!mutex.clearToEnter(intersection_num)) {
+						Log.i(TAG, "I requested the token. Holding at intersection " + intersection_num);
 						mutex.requestEntry(intersection_num);
 						stage = STAGE_WAIT_AT_INTERSECTION;
 						motion.song(1);
 					} else {
 						stage = STAGE_GO_NEXT_POINT;
-					}					
+					}
+					break;
 				} else if(intersection_num != -1) {
 					mutex.exit(intersection_num);
 					intersection_num = -1;
 					motion.song(2);
-				}
-					
+				}	
 				stage = STAGE_GO_NEXT_POINT;
 				break;
 				
 			case STAGE_WAIT_AT_INTERSECTION:
 				screenDark();
-				Log.d(TAG, "Holding at intersection " + intersection_num);
+				
 				if(mutex.clearToEnter(intersection_num)) {
 					stage = STAGE_GO_NEXT_POINT;
 				} else {
@@ -301,19 +299,8 @@ public class LogicThread extends Thread {
 				break;
 				
 			case STAGE_GO_NEXT_POINT:
-				//screenDark();
 				Log.d(TAG, "Next point: " + assignment.curString());
 				dest = div.getFrame(cur_frame).getLinePoint(assignment.getCurPos());
-				
-				// TODO: See if this code can be replaced by activity level code
-				// If we're moving to a new line segment, keep the screen dark until we're ready to move forward
-//				if(new_line_seg) {
-//					new_line_seg = false;
-//					motion.turn_to(dest);
-//					screenColor("ff0000");
-//					screenBright();
-//					while(motion.inMotion) {sleep(10);}
-//				}
 				
 				// Travel to the next point, keep curving to a minimum to prevent wavy images
 				// Don't use collision avoidance, keep everyone on their lines.
@@ -354,17 +341,14 @@ public class LogicThread extends Thread {
 	}
 
 	private void screenColor(String color) {
-		Log.i(TAG, "  Colored " + color);
 		gvh.sendMainMsg(RobotsActivity.MESSAGE_SCREEN_COLOR, color);
 	}
 
 	private void screenBright() {
-		Log.i(TAG, "  Bright!");
 		gvh.sendMainMsg(RobotsActivity.MESSAGE_SCREEN, 100);
 	}
 	
 	private void screenDark() {
-		Log.i(TAG, "  Dark.");
 		screenColor("000000");
 		gvh.sendMainMsg(RobotsActivity.MESSAGE_SCREEN, 0);
 	}

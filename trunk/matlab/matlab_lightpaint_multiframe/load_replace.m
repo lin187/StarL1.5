@@ -20,7 +20,7 @@ c = regexprep(c,'stroke="#','');
 c = regexprep(c,'000000','ffffff')';
 
 % Extract pathway lines
-p = regexp(pdata, 'm[.l0-9\-,]{4,}', 'match');
+p = regexp(pdata, 'm[.cl0-9\-,]{4,}', 'match');
 % Retrive the color strings for each path
 cp = regexp(pdata,'stroke="#[0-9a-fA-F]{6}', 'match');
 cp = regexprep(cp,'stroke="#','');

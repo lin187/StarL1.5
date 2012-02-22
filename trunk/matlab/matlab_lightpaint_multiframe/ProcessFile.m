@@ -1,23 +1,21 @@
-clear,clc,close all;format longg;
-
+function [] = ProcessFile(FNAME, MAXFRAMES, LAUNCH_TRACKER)
+%clear,clc,close all;format longg;
+format longg;clc;close all;
 %% Options section
-FNAME = 'strange_shape';
+%FNAME = 'vermont';
 DIR = 'C:\pictures\tests';
 
-LAUNCH_TRACKER = false;
-MAXFRAMES = 1;
-
 % Waypoint spacing and intersection radius constants
-SPACING = 300;
+SPACING = 250;
 ABSORPTION_RADIUS = 150;
-INTERSECTION_RADIUS = 350;
+INTERSECTION_RADIUS = 400;
 SAFE_TRAVEL_RADIUS = 250;
 
 % Enable/disable image scaling and centering
 CENTER = true;
 SCALE = true;
-SCALE_MAX = 2900;
-CENTER_LOCATION = [1700 1700];
+SCALE_MAX = 2850;
+CENTER_LOCATION = [1600 1750];
 
 % Enable/disable endpoint snapping
 END_SNAPPING = true;
@@ -25,6 +23,14 @@ END_SNAP_RADIUS = 50;
 
 OUTPUT = [FNAME '.wpt'];
 INPUT = [FNAME '.svg'];
+
+if nargin == 1
+    LAUNCH_TRACKER = true;
+    MAXFRAMES = 1;
+elseif nargin == 2
+    LAUNCH_TRACKER = false;
+end
+
 %% Load and pre-process the image
 % Load the SVG image, convert it to usable data
 [lines colors] = load_replace(fullfile(DIR,INPUT));
@@ -103,6 +109,7 @@ if LAUNCH_TRACKER
     pause;
     cd '..\matlab_optitrack_v2';
     load_settings
+    RETURN_DIR = '..\matlab_lightpaint_multiframe';
     WPT_FILENAME = fullfile(DIR, OUTPUT);
     mainprog;
 end

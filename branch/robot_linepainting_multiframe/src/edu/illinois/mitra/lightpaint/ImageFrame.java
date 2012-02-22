@@ -101,14 +101,14 @@ public class ImageFrame {
 		}
 	}
 	public boolean isIntersection(itemPosition pos) {
-		return pos.getName().matches("[0-9]+-[0-9]+-[0-9]+-[0-9]+-[0-9]+");
+		return pos.getName().matches("[0-9]+-[0-9]+-[0-9]+-[0-9]+");
 	}
 	public int intersectionNumber(int line, int point) {
 		return intersectionNumber(getLinePoint(line,point));
 	}
 	public int intersectionNumber(itemPosition pos) {
 		if(isIntersection(pos)) {
-			return Integer.parseInt(pos.getName().split("-")[4]);
+			return Integer.parseInt(pos.getName().split("-")[3]);
 		} else {
 			return -1;
 		}

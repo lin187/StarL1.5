@@ -2,6 +2,7 @@ package edu.illinois.mitra.lightpaint;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import android.util.Log;
 
@@ -56,8 +57,10 @@ public class BotProgressThread extends Thread {
 		while(running) {
 			// Receive line progress update messages
 			n_received_msgs = gvh.getIncomingMessageCount(LogicThread.MSG_LINEPROGRESS);
+			Iterator<RobotMessage> iter = gvh.getIncomingMessages(LogicThread.MSG_LINEPROGRESS).iterator();
 			for(int i = 0; i < n_received_msgs; i++) {
-				RobotMessage rec = gvh.getIncomingMessage(LogicThread.MSG_LINEPROGRESS);
+				//RobotMessage rec = gvh.getIncomingMessage(LogicThread.MSG_LINEPROGRESS);
+				RobotMessage rec = iter.next();
 				String from = rec.getFrom();
 				
 				// If the next message indicates that the robot is done, remove it from the progress tracking map
@@ -74,10 +77,10 @@ public class BotProgressThread extends Thread {
 			
 			// TODO: ERASE THIS TEMPORARY DEBUG STUFF:
 			// Update the GUI
-			if((System.currentTimeMillis() - lastUpdate) > GUI_UPDATE_TIMER) {
-				gvh.setDebugInfo(getDebug());
-				lastUpdate = System.currentTimeMillis();
-			}
+//			if((System.currentTimeMillis() - lastUpdate) > GUI_UPDATE_TIMER) {
+//				gvh.setDebugInfo(getDebug());
+//				lastUpdate = System.currentTimeMillis();
+//			}
 		}
 	}
 	

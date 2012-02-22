@@ -1,6 +1,8 @@
 package edu.illinois.mitra.Objects;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Random;
 
 import android.util.Log;
@@ -56,9 +58,10 @@ public class LeaderElection {
 		int max_val = -1;
 		ArrayList<String> receivedFrom = new ArrayList<String>();
 		String leader = null;
-		if(!error) {	
+		if(!error) {
+			Iterator<RobotMessage> iter = gvh.getIncomingMessages(LogicThread.MSG_LEADERELECT).iterator();
 			for(int i = 0; i < nodes-1; i ++) {
-				RobotMessage next = gvh.getIncomingMessage(LogicThread.MSG_LEADERELECT);
+				RobotMessage next = iter.next();
 				String from = next.getFrom();
 				String contents = next.getContents();
 				// Make sure we haven't received multiple values from the same robot
@@ -102,7 +105,7 @@ public class LeaderElection {
 					return "ERROR!";
 				}
 			}
-			leader = gvh.getIncomingMessage(LogicThread.MSG_LEADERELECT_ANNOUNCE).getContents();
+			leader = gvh.getIncomingMessages(LogicThread.MSG_LEADERELECT_ANNOUNCE).iterator().next().getContents();
 		}
 		
 		Log.i(TAG, "Elected leader: " + leader);
@@ -118,9 +121,7 @@ public class LeaderElection {
 	private void clear_msgbuffer(int MID) {
 		int toClear = gvh.getIncomingMessageCount(MID);
 		Log.d(TAG, "Clearing " + toClear + " MID = " + MID + " messages from the buffer");
-		for(int i = 0; i < toClear; i++) {
-			@SuppressWarnings("unused")
-			RobotMessage clearbuf = gvh.getIncomingMessage(LogicThread.MSG_LEADERELECT);
-		}
+		@SuppressWarnings("unused")
+		Collection<RobotMessage> clearbuf = gvh.getIncomingMessages(LogicThread.MSG_LEADERELECT);
 	}
 }

@@ -30,6 +30,7 @@ public class LineSegment implements Comparable<LineSegment> {
 	}
 	
 	public boolean isIntersectionPoint(int point) {
+		Log.d("TEST", segments[point].getName() + " is intersection? " + segments[point].getName().matches("[0-9]+-[0-9]+-[0-9]+-[0-9]+"));
 		return segments[point].getName().matches("[0-9]+-[0-9]+-[0-9]+-[0-9]+");
 	}
 
