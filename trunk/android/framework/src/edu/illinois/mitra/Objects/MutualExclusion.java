@@ -1,6 +1,7 @@
 package edu.illinois.mitra.Objects;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import android.util.Log;
 
@@ -41,11 +42,14 @@ public class MutualExclusion extends Thread {
 	public void run() {
 		int msgcount = 0;
 		String output = "";
+		Iterator<RobotMessage> iter = null;
 		while(running) {
 			// Receive token ownership broadcasts
 			msgcount = gvh.getIncomingMessageCount(LogicThread.MSG_MUTEX_TOKEN_OWNER_BCAST);
+			iter = gvh.getIncomingMessages(LogicThread.MSG_MUTEX_TOKEN_OWNER_BCAST).iterator();
 			for(int i = 0; i < msgcount; i ++) {
-				RobotMessage next = gvh.getIncomingMessage(LogicThread.MSG_MUTEX_TOKEN_OWNER_BCAST);
+				//RobotMessage next = gvh.getIncomingMessage(LogicThread.MSG_MUTEX_TOKEN_OWNER_BCAST);
+				RobotMessage next = iter.next();
 				String parts[] = next.getContents().split(",");
 				int id = Integer.parseInt(parts[0]);
 				token_owners[id] = parts[1];
@@ -54,8 +58,10 @@ public class MutualExclusion extends Thread {
 			
 			// Receive token messages
 			msgcount = gvh.getIncomingMessageCount(LogicThread.MSG_MUTEX_TOKEN);
+			iter = gvh.getIncomingMessages(LogicThread.MSG_MUTEX_TOKEN).iterator();
 			for(int i = 0; i < msgcount; i ++) {
-				RobotMessage next = gvh.getIncomingMessage(LogicThread.MSG_MUTEX_TOKEN);
+				//RobotMessage next = gvh.getIncomingMessage(LogicThread.MSG_MUTEX_TOKEN);
+				RobotMessage next = iter.next();
 				String parts[] = next.getContents().split(",");
 				int id = Integer.parseInt(parts[0]);
 				token_owners[id] = name;
@@ -74,8 +80,10 @@ public class MutualExclusion extends Thread {
 			
 			// Receive token requests
 			msgcount = gvh.getIncomingMessageCount(LogicThread.MSG_MUTEX_TOKEN_REQUEST);
+			iter = gvh.getIncomingMessages(LogicThread.MSG_MUTEX_TOKEN_REQUEST).iterator();
 			for(int i = 0; i < msgcount; i ++) {
-				RobotMessage next = gvh.getIncomingMessage(LogicThread.MSG_MUTEX_TOKEN_REQUEST);
+				//RobotMessage next = gvh.getIncomingMessage(LogicThread.MSG_MUTEX_TOKEN_REQUEST);
+				RobotMessage next = iter.next();
 				String parts[] = next.getContents().split(",");
 				int id = Integer.parseInt(parts[0]);
 				// If we own the token being requested, enqueue the requester
@@ -119,7 +127,7 @@ public class MutualExclusion extends Thread {
 			for(int i = 0; i < num_sections; i++) {
 				output = output + i + " " + token_owners[i] + "-" + token_requesters.get(i) + "\n";
 			}
-			//gvh.setDebugInfo(new String(output));
+			gvh.setDebugInfo(output);
 		}
 	}
 
@@ -146,11 +154,11 @@ public class MutualExclusion extends Thread {
 	
 	@Override
 	public synchronized void start() {
-		// TODO Auto-generated method stub
 		super.start();
 	}
 	
 	public void cancel() {
+		Log.d(TAG, "CANCELLING MUTEX THREAD");
 		running = false;
 	}
 }

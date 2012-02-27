@@ -1,7 +1,8 @@
 package edu.illinois.mitra.Objects;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
@@ -115,7 +116,7 @@ public class globalVarHolder {
 
 	//Incoming messages
 	//Return the next incoming message if it has a matching MID
-	public synchronized RobotMessage getIncomingMessage(int mid_match) {
+	private synchronized RobotMessage getIncomingMessage(int mid_match) {
 		if(incomingMIDs[mid_match] > 0) {
 			for(int i=0; i<incomingMessages.size(); i++) {
 				RobotMessage current = incomingMessages.get(i);
@@ -128,9 +129,19 @@ public class globalVarHolder {
 		}
 		return null;
 	}
+	// Get all matching messages
+	public synchronized Collection<RobotMessage> getIncomingMessages(int mid_match) {
+		HashSet<RobotMessage> retval = new HashSet<RobotMessage>();
+		while(getIncomingMessageCount(mid_match) > 0) {
+			retval.add(getIncomingMessage(mid_match));
+		}
+		return retval;
+	}
+	// Get the number of matching messages
 	public synchronized int getIncomingMessageCount(int mid_match) {
 		return incomingMIDs[mid_match];
 	}
+	// Add an incoming message
 	public synchronized void addIncomingMessage(RobotMessage msg) {
 		incomingMessages.add(msg);
 		incomingMIDs[msg.getMID()] ++;
@@ -148,5 +159,6 @@ public class globalVarHolder {
 	
 	public void stopComms() {
 		comms.cancel();
+		comms = null;
 	}
 }

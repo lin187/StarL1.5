@@ -20,6 +20,7 @@
     
     <application android:icon="@drawable/icon" android:label="@string/app_name">
         <activity android:name=".RobotsActivity"
+            	  android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
                   android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,13 +1,13 @@
 package edu.illinois.mitra.Objects;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Random;
-import java.util.Set;
 
 import android.util.Log;
 
 import edu.illinois.mitra.LogicThread;
-import edu.illinois.mitra.comms.MessageResult;
 import edu.illinois.mitra.comms.RobotMessage;
 
 public class LeaderElection {
@@ -26,10 +26,6 @@ public class LeaderElection {
 	// Elects one of the participants as leader, returns their name
 	public String elect() {		
 		nodes = gvh.getParticipants().size();
-		
-		// Clear any previously received messages
-		//clear_msgbuffer(LogicThread.MSG_LEADERELECT);
-		//clear_msgbuffer(LogicThread.MSG_LEADERELECT_ANNOUNCE);
 
 		// Generate a random number
 		Random rand = new Random();
@@ -58,9 +54,10 @@ public class LeaderElection {
 		int max_val = -1;
 		ArrayList<String> receivedFrom = new ArrayList<String>();
 		String leader = null;
-		if(!error) {	
+		if(!error) {
+			Iterator<RobotMessage> iter = gvh.getIncomingMessages(LogicThread.MSG_LEADERELECT).iterator();
 			for(int i = 0; i < nodes-1; i ++) {
-				RobotMessage next = gvh.getIncomingMessage(LogicThread.MSG_LEADERELECT);
+				RobotMessage next = iter.next();
 				String from = next.getFrom();
 				String contents = next.getContents();
 				// Make sure we haven't received multiple values from the same robot
@@ -68,7 +65,6 @@ public class LeaderElection {
 					receivedFrom.add(from);
 				} else {
 					Log.e(TAG, "Received from " + from + " twice!");
-					//gvh.setDebugInfo("Received message from " + from + " twice!");
 					error = true;
 					break;
 				}
@@ -82,7 +78,6 @@ public class LeaderElection {
 			}
 		}
 		if(!error) {
-			//gvh.setDebugInfo(toDebug);
 			if(myNum > max_val) {
 				leader = gvh.getName();
 				max_val = myNum;
@@ -106,7 +101,7 @@ public class LeaderElection {
 					return "ERROR!";
 				}
 			}
-			leader = gvh.getIncomingMessage(LogicThread.MSG_LEADERELECT_ANNOUNCE).getContents();
+			leader = gvh.getIncomingMessages(LogicThread.MSG_LEADERELECT_ANNOUNCE).iterator().next().getContents();
 		}
 		
 		Log.i(TAG, "Elected leader: " + leader);
@@ -122,9 +117,7 @@ public class LeaderElection {
 	private void clear_msgbuffer(int MID) {
 		int toClear = gvh.getIncomingMessageCount(MID);
 		Log.d(TAG, "Clearing " + toClear + " MID = " + MID + " messages from the buffer");
-		for(int i = 0; i < toClear; i++) {
-			@SuppressWarnings("unused")
-			RobotMessage clearbuf = gvh.getIncomingMessage(LogicThread.MSG_LEADERELECT);
-		}
+		@SuppressWarnings("unused")
+		Collection<RobotMessage> clearbuf = gvh.getIncomingMessages(LogicThread.MSG_LEADERELECT);
 	}
 }

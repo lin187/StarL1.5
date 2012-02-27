@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import android.util.Log;
 
 public class positionList {
+	private static final String TAG = "positionList";
+	private static final String ERR = "Critical Error";
+	
 	private ArrayList<itemPosition> positions;
 	private ArrayList<String> names;
 	
@@ -30,7 +33,8 @@ public class positionList {
 				names.add(parts[1]);
 			}
 		} else {
-			Log.d("positionList", "Invalid item formatting: " + parts.length);
+			Log.e(TAG, "Invalid item formatting: " + parts.length);
+			Log.e(TAG, received.replace(",",""));
 		}
 	}
 	
@@ -41,6 +45,15 @@ public class positionList {
 		} else {
 			return null;
 		}
+	}
+	
+	public itemPosition getPositionRegex(String exp) {
+		for(int i = 0; i < names.size(); i++) {
+			if(names.get(i).matches(exp)) {
+				return positions.get(i);
+			}
+		}
+		return null;
 	}
 	
 	public boolean hasPositionFor(String name) {

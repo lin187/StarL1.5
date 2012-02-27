@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 import android.os.Handler;
 import android.util.Log;
+import edu.illinois.mitra.RobotsActivity;
+import edu.illinois.mitra.Objects.common;
 import edu.illinois.mitra.Objects.globalVarHolder;
 import edu.illinois.mitra.Objects.itemPosition;
 import edu.illinois.mitra.Objects.positionList;
@@ -12,10 +14,16 @@ public class RobotMotion {
 	private static final String TAG = "RobotMotion";
 	private static final String ERR = "Critical Error";
 	
+	private static final int TURN = 60;
+	private static final int MINORCURVE = 900;
+	private static final int SPEED = 200;
+	private static final int DELAY = 50;
+	
 	private globalVarHolder gvh;
 	private itemPosition currentpos;	
-	private itemPosition destination;
 	private BluetoothInterface bti;
+	
+	private itemPosition blocker = null;
 	
 	private Handler handler;
 	
@@ -35,6 +43,7 @@ public class RobotMotion {
 
 	// Roomba motion commands
 	private byte[] robot_turn(int velocity, int dir) {
+		gvh.sendMainMsg(RobotsActivity.MESSAGE_MOTION, RobotsActivity.MOT_TURNING);
 		if(dir > 0) {
 			return new byte[]{(byte) 137, 0x00, (byte) velocity, (byte) 0xFF, (byte) 0xFF};
 		} else {
@@ -43,29 +52,25 @@ public class RobotMotion {
 	}
 	
 	private byte[] robot_straight(int velocity) {
+		if(velocity != 0) {
+			gvh.sendMainMsg(RobotsActivity.MESSAGE_MOTION, RobotsActivity.MOT_STRAIGHT);
+		}
 		return new byte[]{(byte) 137, 0x00, (byte) velocity, 0x7F, (byte) 0xFF};
 	}
 	
 	private byte[] robot_curve(int velocity, int radius) {
-		radius = (int) Math.copySign((15-Math.abs(radius))*100,-radius);
+		gvh.sendMainMsg(RobotsActivity.MESSAGE_MOTION, RobotsActivity.MOT_ARCING);
+		//radius = (int) Math.copySign((15-Math.abs(radius))*100,-radius);
 		return new byte[]{(byte) 137, 0x00, (byte) velocity, (byte) ((radius & 0xFF00) >> 8), (byte) (radius & 0xFF)};
 	}
 	
 	private byte[] robot_stop() {
+		gvh.sendMainMsg(RobotsActivity.MESSAGE_MOTION, RobotsActivity.MOT_STOPPED);
 		return robot_straight(0);
 	}
 	
 	private byte[] robot_play_song(int song) {
 		return new byte[]{(byte) 141, (byte) song};
-	}
-	
-	//The turn angle function is currently very imprecise, the wheel encoders could be the cause
-	private byte[] robot_turn_angle(int angle, int velocity) {
-		if(angle > 0) {		//		SCRIPT			|			TURN											|		WAIT ANGLE						 						  |		STOP
-			return new byte[]{(byte) 152, (byte) 13, (byte) 137, 0x00, (byte) velocity, (byte) 0x00, (byte) 0x01, (byte) 157, (byte) ((angle & 0xFF00) >> 8), (byte) (angle & 0xFF), (byte) 137, 0x00, 0x00, 0x7F, (byte) 0xFF, (byte) 153};
-		} else {
-			return new byte[]{(byte) 152, (byte) 13, (byte) 137, 0x00, (byte) velocity, (byte) 0xFF, (byte) 0xFF, (byte) 157, (byte) ((angle & 0xFF00) >> 8), (byte) (angle & 0xFF), (byte) 137, 0x00, 0x00, 0x7F, (byte) 0xFF,(byte) 153};
-		}
 	}
 	
 	//Turns on one of the three LEDs, specified by an int 0->2
@@ -81,8 +86,9 @@ public class RobotMotion {
 	public int getBatteryPercentage() {
 		int capacity = -1;
 		int current = 0;
+		int attempts = 0;
 		
-		while(capacity < current) {
+		while((capacity < current) && attempts < 30) {
 			bti.send(req_sensor(26));
 			capacity = unsignedShortToInt(bti.readBuffer(2));
 			
@@ -90,8 +96,9 @@ public class RobotMotion {
 			current = unsignedShortToInt(bti.readBuffer(2));
 			
 			Log.d(TAG, "Read from buffer: " + capacity + " and " + current);
+			attempts ++;
 		}
-		
+		current = common.cap(current, 0, capacity);
 		return (int) Math.round((new Float(current)/capacity)*100.0);
 	}
 	
@@ -111,47 +118,53 @@ public class RobotMotion {
 		turn_to(dest,true);
 	}
 	
-	private void turn_to(itemPosition dest, final boolean stopinMotion) {		
+	public void turn_to(itemPosition dest, final boolean stopinMotion) {		
 		inMotion = true;
-		this.destination = dest;
-		if(running) {
-			handler.post(new motion_turn(gvh,dest,stopinMotion));
+		if(running && dest != null) {
+			handler.post(new motion_turn(dest,stopinMotion));
+		}
+		if(dest == null) {
+			Log.e(ERR, "Tried to pass a null destination to turn_to");
 		}
 	}
-	
+
 	public void go_to(itemPosition dest) {
 		inMotion = true;
-		this.destination = dest;
 		currentpos = gvh.getMyPosition();
-		turn_to(destination, false);
 
-		handler.post(new motion_go(gvh,dest));
+		handler.post(new motion_go_curve(dest));
+	}
+
+	public void go_to(itemPosition dest, int maxCurveAngle) {
+		inMotion = true;
+		currentpos = gvh.getMyPosition();
+
+		handler.post(new motion_go_curve(dest, maxCurveAngle, true));
 	}
 	
-	public void cancel() {
-		running = false;
-		bti.send(robot_stop());
-		bti.disconnect();		
+	public void go_to(itemPosition dest, int maxCurveAngle, boolean useCollisionAvoidance) {
+		inMotion = true;
+		currentpos = gvh.getMyPosition();
+
+		handler.post(new motion_go_curve(dest, maxCurveAngle, useCollisionAvoidance));
 	}
 	
 	// Motion class implementing turning
 	class motion_turn implements Runnable {
-		globalVarHolder gvh;
-		itemPosition destination;
+		itemPosition dest;
 		boolean stop;
-		public motion_turn(globalVarHolder gvh, itemPosition destination, boolean stop) {
-			this.gvh = gvh;
-			this.destination = destination;
+		public motion_turn(itemPosition destination, boolean stop) {
+			this.dest = destination;
 			this.stop = stop;
 		}
 		public void run() {
 			currentpos = gvh.getMyPosition();
-			angle = currentpos.angleTo(destination);
-			distance = currentpos.distanceTo(destination);
+			angle = currentpos.angleTo(dest);
+			distance = currentpos.distanceTo(dest);
 			if(Math.abs(angle) > 5 && distance > 100) {
-				distance = currentpos.distanceTo(destination);
+				distance = currentpos.distanceTo(dest);
 				bti.send(robot_turn(80, angle));
-				handler.postDelayed(new motion_turn(gvh,destination,stop), 50);
+				handler.postDelayed(new motion_turn(dest,stop), 50);
 			} else {
 				bti.send(robot_stop());
 				if(stop) {
@@ -160,53 +173,289 @@ public class RobotMotion {
 			}
 		}
 	}
-	// Motion class implements forward motion
-	class motion_go implements Runnable {
-		globalVarHolder gvh;
-		itemPosition destination;
-		public motion_go(globalVarHolder gvh, itemPosition destination) {
-			this.gvh = gvh;
-			this.destination = destination;
+	
+	// Motion class to intelligently drive in curves
+	class motion_go_curve implements Runnable {
+		//TODO: This value was originally 100, but the robots were drifting too far from their goals
+		private static final int THRESH_GOAL = 75;
+		private static final int THRESH_SHORT = 800;
+		private static final int THRESH_MED = 1500;
+		
+		private static final int ANGLE_NARROW = 3;
+		private static final int ANGLE_SMALL = 7;
+		private int ANGLE_WIDE = 100;
+		
+		private static final int GOAL = 0;
+		private static final int SHORT = 1;
+		private static final int MED = 2;
+		private static final int LONG = 3;
+		
+		private static final int NARROW = 0;
+		private static final int SMALL = 1;
+		private static final int WIDE = 2;
+		private static final int OBTUSE = 3;
+		
+		private itemPosition dest;
+		private int distance = 0;
+		private int angle = 0;
+		private int state = -1;
+		private int nextState = -1;
+		private boolean colavoid = true;
+		
+		public motion_go_curve(itemPosition dest) {
+			this.dest = dest;
+			this.state = 0;
+			this.nextState = -1;
+			ANGLE_WIDE = 100;
+			colavoid = true;
 		}
+		
+		public motion_go_curve(itemPosition dest, int maxCurveAngle, boolean useCollisionAvoidance) {
+			ANGLE_WIDE = maxCurveAngle;
+			this.dest = dest;
+			this.state = 0;
+			this.nextState = -1;
+			this.colavoid = useCollisionAvoidance;
+		}
+		
 		public void run() {
-			// TODO Determine if this line is even necessary:
-			currentpos = gvh.getMyPosition();
-			angle = currentpos.angleTo(destination);
-			distance = currentpos.distanceTo(destination);
-			if(distance > 100) {
-				if(Math.abs(angle) > 10) {
-					// Too far off the path, stop and turn
-					bti.send(robot_turn(60, angle));
-				} else if(Math.abs(angle) > 2) {
-					// Off path, curve back to the path
-					bti.send(robot_curve(200,angle));
+			state = nextState;
+			if(collision()) {
+				//Log.d(TAG, "Collision!");
+				if(colavoid) {
+					handler.post(new motion_go_colavoid(dest));
 				} else {
-					// On path, go straight if no collision
-					if(!collision()) {
-						bti.send(robot_straight(200));
-					} else {
-						bti.send(robot_stop());
-					}
+					bti.send(robot_stop());
+					postMe(DELAY);
 				}
-				handler.postDelayed(this, 50);
 			} else {
-				bti.send(robot_stop());
-				inMotion = false;
-			}
-		}
-		private boolean collision() {
-			itemPosition me = gvh.getMyPosition();
-			positionList others = gvh.getPositions();
-			for(int i = 0; i < others.getNumPositions(); i ++) {
-				itemPosition current = others.getPositionAtIndex(i);
-				if(!current.getName().equals(me.getName())) {
-					if(me.isFacing(current, 180) && me.distanceTo(current) < 500) {
-						return true;
+				angle = currentpos.angleTo(dest);
+				distance = currentpos.distanceTo(dest);
+				int azone = getAngleZone(angle);
+				int dzone = getRangeZone(distance);
+				
+				// First run of algorithm. Analyze the current situation and begin motion accordingly
+				if(state == -1) {
+					state = getNextState(dzone, azone);
+					//Log.d(TAG, "FIRST RUN: analyzed current position, going to state " + state);
+				}
+				
+				// If we're within close range, we're at the goal
+				if(dzone == GOAL) {
+					nextState = 3;
+					state = 3;
+				}
+				
+				switch(state) {
+				case 0:
+					// Go straight
+					bti.send(robot_straight(SPEED));
+					nextState = getNextState(dzone, azone);
+					break;
+					
+				case 11:
+					// Start arcing
+					int r = common.cap(curveRadius(dest),-2000,2000);
+					if(r < 1000) {
+						r = (int) (r * .9);
 					}
+					//Log.d(TAG, "Starting curve of radius " + r);
+					bti.send(robot_curve(SPEED,r));
+					nextState = 1;
+					break;
+					
+				case 1:
+					// Arcing in progress
+					if(azone == NARROW) {
+						// If we're facing the target, go straight
+						//Log.d(TAG, "Facing the goal, stopping the curve and going straight");
+						bti.send(robot_straight(SPEED));
+						nextState = 0;
+					} else if(azone == OBTUSE) {
+						// We missed! Turn and go straight to the goal
+						//Log.d(TAG, "Missed the goal! Stopping the curve and turning straight to the goal");
+						bti.send(robot_turn(TURN, angle));
+						nextState = 2;
+					} else {
+						nextState = 1;
+					}
+					if(dzone == GOAL) {
+						// At destination, stop moving
+						//Log.d(TAG, "ARRIVED!");
+						nextState = 3;
+						state = 3;
+					}
+					break;
+					
+				case 2:
+					// Turn to face goal
+					if(getAngleZone(angle) != NARROW) {
+						//Log.d(TAG, "Turning to face goal...");
+						bti.send(robot_turn(TURN, angle));
+						nextState = 2;
+					} else {
+						nextState = getNextState(dzone, azone);
+						//Log.d(TAG, "Facing goal! Next state determined to be " + nextState);
+					}
+					break;
+					
+				case 3:
+					// At the goal, halt motion!
+					//Log.d(TAG, "ARRIVED!");
+					bti.send(robot_stop());
+					nextState = 3;
+					break;
+				}
+				
+				if(state == 3 || nextState == 3) {
+					//Log.d(TAG, "Done!");
+					bti.send(robot_stop());
+					inMotion = false;
+				} else {
+					postMe(DELAY);
 				}
 			}
-			return false;
+		}		
+		
+		private int getNextState(int dzone, int azone) {
+			if(dzone == GOAL) {
+				return 3;
+			}
+			switch(azone) {
+			case NARROW:
+				// Go straight towards destination
+				return 0;
+			case SMALL:
+				// Arc to destination
+				return 11;
+			case WIDE:
+				// Arc to destination
+				return 11;				
+			case OBTUSE:
+				// Turn to within NARROW and proceed straight
+				return 2;
+			default:
+				Log.e(ERR, "RobotMotion: curve motion function getNextState encountered an unknown angle zone: " + azone);
+			}
+			return 2;
 		}
+		
+		private void postMe(int delay) {
+			if(running) {
+				//handler.postDelayed(new motion_go_curve(dest, nextState), delay);
+				handler.postDelayed(this, delay);
+			} else {
+				Log.e(TAG, "Halted motion_go_curve: No longer running");
+			}
+		}
+		
+		private int getRangeZone(int distance) {
+			if(distance <= THRESH_GOAL) {
+				return GOAL;
+			} else if(distance <= THRESH_SHORT) {
+				return SHORT;
+			} else if(distance <= THRESH_MED) {
+				return MED;				
+			} else {
+				return LONG;
+			}
+		}
+		
+		private int getAngleZone(int angle) {
+			int absangle = Math.abs(angle);
+			if(absangle <= ANGLE_NARROW) {
+				return NARROW;
+			} else if(absangle <= ANGLE_SMALL) {
+				return SMALL;
+			} else if(absangle <= ANGLE_WIDE) {
+				return WIDE;				
+			} else {
+				return OBTUSE;
+			}
+		}
+	}
+		
+	// Motion class to handle imminent collisions
+	class motion_go_colavoid implements Runnable {
+		int mystate = 0;
+		itemPosition dest;
+		globalVarHolder gvh;
+		
+		public motion_go_colavoid(itemPosition destination, int state) {
+			this.mystate = state;
+			this.dest = destination;
+		}
+		
+		public motion_go_colavoid(itemPosition destination) {
+			this.mystate = 0;
+			this.dest = destination;
+		}
+				
+		public void run() {
+			switch(mystate) {
+			case 0:
+				//Log.d(TAG,"0 - Turning away from blocker!");
+				// Turn to the right
+				bti.send(robot_turn(100, -currentpos.angleTo(blocker)));
+				handler.postDelayed(new motion_go_colavoid(dest,1), 150);
+				break;
+			case 1:
+				// If no robot in the way, go straight
+				// Otherwise, turn again
+				if(collision()) {
+					//Log.d(TAG,"1 - Collision! Turning again");
+					bti.send(robot_turn(100, -currentpos.angleTo(blocker)));
+					handler.post(new motion_go_colavoid(dest,0));
+				} else {
+					//Log.d(TAG,"1 - No collision, going straight.");
+					bti.send(robot_straight(SPEED));
+					handler.postDelayed(new motion_go_colavoid(dest,2),650);
+				}
+				break;
+			case 2:
+				// If we've gone straight and are in the clear, resume normal motion
+				// Otherwise, turn again
+				if(collision()) {
+					//Log.d(TAG,"2 - Collision! Turning again");
+					bti.send(robot_turn(100, -currentpos.angleTo(blocker)));
+					handler.postDelayed(new motion_go_colavoid(dest,1), 150);					
+				} else {
+					//Log.d(TAG,"2 - Free! Resuming normal motion");
+					handler.post(new motion_go_curve(dest));
+				}
+			}
+		}	
+	}
+	
+	// Detects an imminent collision with another robot
+	private boolean collision() {
+		itemPosition me = gvh.getMyPosition();
+		positionList others = gvh.getPositions();
+		for(int i = 0; i < others.getNumPositions(); i ++) {
+			itemPosition current = others.getPositionAtIndex(i);
+			if(!current.getName().equals(me.getName())) {
+				if(me.isFacing(current, 180) && me.distanceTo(current) < 500) {
+					blocker = current;
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
+	// Calculates the radius of curvature to meet a target
+	private int curveRadius(itemPosition destination) {
+		int x0 = gvh.getMyPosition().getX();
+		int y0 = gvh.getMyPosition().getY();
+		int x1 = destination.getX();
+		int y1 = destination.getY();
+		int theta = gvh.getMyPosition().getAngle();
+			
+		double alpha = -180+Math.toDegrees(Math.atan2((y1-y0),(x1-x0)));
+
+		double rad = -(Math.sqrt(Math.pow(x1-x0,2) + Math.pow(y1-y0,2))/(2*Math.sin(Math.toRadians(alpha-theta))));
+
+		return (int) rad;
 	}
 	
 	/**
@@ -224,5 +473,11 @@ public class RobotMotion {
 	    i <<= 8;
 	    i |= b[1] & 0xFF;
 	    return i;
+	}
+
+	public void cancel() {
+		running = false;
+		bti.send(robot_stop());
+		bti.disconnect();		
 	}
 }

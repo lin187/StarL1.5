@@ -1,6 +1,7 @@
 package edu.illinois.mitra.Objects;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 import android.util.Log;
 
@@ -41,8 +42,10 @@ public class Synchronizer {
 	public boolean barrier_proceed(String barrierID) {
 		// Update the barriers
 		int msgs = gvh.getIncomingMessageCount(LogicThread.MSG_BARRIERSYNC);
+		Iterator<RobotMessage> iter = gvh.getIncomingMessages(LogicThread.MSG_BARRIERSYNC).iterator();
 		for(int i = 0; i < msgs; i++) {
-			RobotMessage recd = gvh.getIncomingMessage(LogicThread.MSG_BARRIERSYNC);
+			//RobotMessage recd = gvh.getIncomingMessage(LogicThread.MSG_BARRIERSYNC);
+			RobotMessage recd = iter.next();
 			String bID = recd.getContents();
 			// If the barrier ID has been encountered before, increment the count
 			// of robots at the barrier. Otherwise, add a new barrier to barriers

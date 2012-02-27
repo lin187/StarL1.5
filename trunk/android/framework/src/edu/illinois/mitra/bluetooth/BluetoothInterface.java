@@ -62,12 +62,14 @@ public class BluetoothInterface {
 	}
 	
 	public void send(byte[] to_send) {
-		try {
-			mOutStream.write(to_send);
-		} catch (IOException e) {
-			Log.e(ERR, "Bluetooth failed to send!");
-		} catch (NullPointerException e) {
-			Log.e(ERR, "Bluetooth write failed: mOutStream throws null pointer exception");
+		if(mOutStream != null) {
+			try {
+				mOutStream.write(to_send);
+			} catch (IOException e) {
+				Log.e(ERR, "Bluetooth failed to send!");
+			} catch (NullPointerException e) {
+				Log.e(ERR, "Bluetooth write failed: mOutStream throws null pointer exception");
+			}
 		}
 	}
 	public int read() {
@@ -88,8 +90,11 @@ public class BluetoothInterface {
 			try {
 				buffer[i] = (byte) bufInStream.read();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
+				return new byte[]{0};
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+				return new byte[]{0};
 			}
 		}
 
@@ -114,6 +119,7 @@ public class BluetoothInterface {
 	}
 	
 	public void disconnect() {
+		Log.e(TAG, "Disconnecting from bluetooth!");
 		if(mSocket != null) {
 			try {
 				mSocket.close();
@@ -121,6 +127,7 @@ public class BluetoothInterface {
 				Log.e(ERR, "Bluetooth failed to disconnect!");
 			}
 		}
+		mOutStream = null;
 		gvh.sendMainMsg(RobotsActivity.MESSAGE_BLUETOOTH,0);
 	}
 
