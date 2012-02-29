@@ -2,6 +2,7 @@ package edu.illinois.mitra.Objects;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Set;
 
 import android.util.Log;
 
@@ -44,12 +45,12 @@ public class MutualExclusion extends Thread {
 		String output = "";
 		Iterator<RobotMessage> iter = null;
 		while(running) {
-			// Receive token ownership broadcasts
-			msgcount = gvh.getIncomingMessageCount(LogicThread.MSG_MUTEX_TOKEN_OWNER_BCAST);
-			iter = gvh.getIncomingMessages(LogicThread.MSG_MUTEX_TOKEN_OWNER_BCAST).iterator();
-			for(int i = 0; i < msgcount; i ++) {
-				//RobotMessage next = gvh.getIncomingMessage(LogicThread.MSG_MUTEX_TOKEN_OWNER_BCAST);
-				RobotMessage next = iter.next();
+			for(RobotMessage next : gvh.getIncomingMessages(LogicThread.MSG_MUTEX_TOKEN_OWNER_BCAST)) {
+//			// Receive token ownership broadcasts
+//			msgcount = gvh.getIncomingMessageCount(LogicThread.MSG_MUTEX_TOKEN_OWNER_BCAST);
+//			iter = gvh.getIncomingMessages(LogicThread.MSG_MUTEX_TOKEN_OWNER_BCAST).iterator();
+//			for(int i = 0; i < msgcount; i ++) {
+//				RobotMessage next = iter.next();
 				String parts[] = next.getContents().split(",");
 				int id = Integer.parseInt(parts[0]);
 				token_owners[id] = parts[1];
@@ -57,11 +58,11 @@ public class MutualExclusion extends Thread {
 			}
 			
 			// Receive token messages
-			msgcount = gvh.getIncomingMessageCount(LogicThread.MSG_MUTEX_TOKEN);
-			iter = gvh.getIncomingMessages(LogicThread.MSG_MUTEX_TOKEN).iterator();
-			for(int i = 0; i < msgcount; i ++) {
-				//RobotMessage next = gvh.getIncomingMessage(LogicThread.MSG_MUTEX_TOKEN);
-				RobotMessage next = iter.next();
+			for(RobotMessage next : gvh.getIncomingMessages(LogicThread.MSG_MUTEX_TOKEN)) {
+//			msgcount = gvh.getIncomingMessageCount(LogicThread.MSG_MUTEX_TOKEN);
+//			iter = gvh.getIncomingMessages(LogicThread.MSG_MUTEX_TOKEN).iterator();
+//			for(int i = 0; i < msgcount; i ++) {
+//				RobotMessage next = iter.next();
 				String parts[] = next.getContents().split(",");
 				int id = Integer.parseInt(parts[0]);
 				token_owners[id] = name;
@@ -79,11 +80,11 @@ public class MutualExclusion extends Thread {
 			}
 			
 			// Receive token requests
-			msgcount = gvh.getIncomingMessageCount(LogicThread.MSG_MUTEX_TOKEN_REQUEST);
-			iter = gvh.getIncomingMessages(LogicThread.MSG_MUTEX_TOKEN_REQUEST).iterator();
-			for(int i = 0; i < msgcount; i ++) {
-				//RobotMessage next = gvh.getIncomingMessage(LogicThread.MSG_MUTEX_TOKEN_REQUEST);
-				RobotMessage next = iter.next();
+			for(RobotMessage next : gvh.getIncomingMessages(LogicThread.MSG_MUTEX_TOKEN_REQUEST)) {
+//			msgcount = gvh.getIncomingMessageCount(LogicThread.MSG_MUTEX_TOKEN_REQUEST);
+//			iter = gvh.getIncomingMessages(LogicThread.MSG_MUTEX_TOKEN_REQUEST).iterator();
+//			for(int i = 0; i < msgcount; i ++) {
+//				RobotMessage next = iter.next();
 				String parts[] = next.getContents().split(",");
 				int id = Integer.parseInt(parts[0]);
 				// If we own the token being requested, enqueue the requester
@@ -125,7 +126,11 @@ public class MutualExclusion extends Thread {
 			// Show token owners on the debug
 			output = "";
 			for(int i = 0; i < num_sections; i++) {
-				output = output + i + " " + token_owners[i] + "-" + token_requesters.get(i) + "\n";
+				if(using_token[i]) {
+					output = output + i + " " + token_owners[i] + "*-" + token_requesters.get(i) + "\n";
+				} else {
+					output = output + i + " " + token_owners[i] + "-" + token_requesters.get(i) + "\n";
+				}
 			}
 			gvh.setDebugInfo(output);
 		}
@@ -143,13 +148,42 @@ public class MutualExclusion extends Thread {
 		}
 	}
 	
+	
+	public synchronized void requestEntry(Set<Integer> ids) {
+		for(int id : ids) {
+			requestEntry(id);
+		}
+	}
+	
 	public synchronized boolean clearToEnter(int id) {
 		return using_token[id];
 	}
+	
+	public synchronized boolean clearToEnter(Set<Integer> ids) {
+		boolean retval = true;
+		for(int id : ids) {
+			retval &= clearToEnter(id);
+		}
+		return retval;
+	}
 
 	public synchronized void exit(int id) {
-		Log.d(TAG, "Exiting section " + id);
-		using_token[id] = false;
+		if(using_token[id]) {
+			Log.d(TAG, "Exiting section " + id);
+			using_token[id] = false;
+		}
+	}
+	
+	public synchronized void exit(Set<Integer> ids) {
+		for(int id : ids) {
+			exit(id);
+		}
+	}
+	
+	public synchronized void exitAll() {
+		for(int i = 0; i < num_sections; i++) {
+			exit(i);
+		}
 	}
 	
 	@Override

@@ -1,5 +1,8 @@
 package edu.illinois.mitra;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import android.util.Log;
 import edu.illinois.mitra.Objects.LeaderElection;
 import edu.illinois.mitra.Objects.MutualExclusion;
@@ -25,11 +28,17 @@ public class LogicThread extends Thread {
 	private int stage = 0;
 	private String name = null;
 	private String leader = null;
+	private boolean iamleader = false;
 	
 	// Maximum angle at which robots can curve to their destination.
 	// This prevents "soft" corners and forces robots to turn in place at sharper angles
 	private static final int MAXCURVEANGLE = 25;
 	
+	// Radius of intersection collection. When entering an intersection, tokens for
+	// all intersections within this radius must be collected as well.
+	private static final int INTERSECTION_RADIUS = 250;
+	
+	//---------------------
 	// Constant stage names
 	public static final int STAGE_START 					= 0;
 	public static final int STAGE_LEADERELECT_BARRIER 		= 1;
@@ -64,10 +73,12 @@ public class LogicThread extends Thread {
 	
 	// Values for tracking current position, start, and destination
 	private int cur_frame = 0;
-	private int intersection_num = -1;
+	private Set<Integer> intersections = new HashSet<Integer>();
+	private Set<Integer> new_intersections = new HashSet<Integer>();
 	private AssignedLines assignment = new AssignedLines();
+	private int timeSpentWaiting = 0;
 	
-	private boolean iamleader = false;
+	
 	DivideLines div = null;
 	itemPosition dest = null;
 	
@@ -139,16 +150,17 @@ public class LogicThread extends Thread {
 				// If this robot doesn't have an assignment for this frame, skip straight to the end
 				if(!assignment.includedInFrame()) {
 					Log.e(TAG, "I'm not included in frame " + cur_frame + "!");
+					//itemPosition outOfFrame = new itemPosition("OUT",(name.toLowerCase().charAt(0)-97)*500,300,0);
+					//motion.go_to(outOfFrame);
+					//while(motion.inMotion) {sleep(10);}
+					//Log.e(TAG, "I'm at my designated non-participant point. Sad robot.");
 
-					// TODO: Make sure this works and doesn't send non-participants into the abyss
-					// TODO: "I should really get out of the way here"
-					itemPosition outOfFrame = new itemPosition("OUT",(name.toLowerCase().charAt(0)-97)*300,0,0);
-					motion.go_to(outOfFrame);
-					while(motion.inMotion) {sleep(10);}
-					Log.e(TAG, "I'm at my designated non-participant point. Sad robot.");
-					
 					// "Send out a sync message so other robots don't wait around for me"
 					sync.barrier_sync(SYNC_START_DRAWING);
+					if(!intersections.isEmpty()) {
+						intersections.clear();
+						mutex.exitAll();
+					}
 					stage = STAGE_FRAME_DONE;
 				} else {
 					Log.i(TAG, "I'm included in frame " + cur_frame + "!");
@@ -174,41 +186,30 @@ public class LogicThread extends Thread {
 				Log.d(TAG, "Going to start...");
 				while(motion.inMotion) {sleep(10);}
 				
+				Log.d(TAG, "  " + dest);
 				Log.d(TAG, "Turning to face next point...");
 				
-				dest = div.getFrame(cur_frame).getNextLinePoint(assignment.getStartPos());
 				
-				Log.d(TAG, "Facing my next point!");
-				
-				if(dest == null) {
-					Log.e(TAG, "I was only assigned ONE POINT for this frame! I quit!");
-					// TODO: Make sure this works and doesn't send non-participants into the abyss
-					// TODO: "I should really get out of the way here"
-					//itemPosition outOfFrame = new itemPosition("OUT",(name.toLowerCase().charAt(0)-97)*300,200,0);
-					//motion.go_to(outOfFrame);
-					// "Send out a sync message so other robots don't wait around for me"
-					sync.barrier_sync(SYNC_START_DRAWING);
-					//while(motion.inMotion) {sleep(10);}
-					//Log.e(TAG, "I'm at my designated non-participant point. Sad robot.");
-					stage = STAGE_FRAME_DONE;
-					break;
+				itemPosition nextPt = div.getFrame(cur_frame).getNextLinePoint(assignment.getStartPos());
+				if(nextPt.equals(dest)) {
+					nextPt = div.getFrame(cur_frame).getNextLinePoint(nextPt);
 				}
+				dest = nextPt;				
+
+				Log.d(TAG, "  " + dest);
 				
-//				int destLine = div.getFrame(cur_frame).getNextLineNum(assignment.getStartPos());
-//				int destPoint = div.getFrame(cur_frame).getNextPointNum(assignment.getStartPos());
-//				
-//				Log.e(TAG, "Currently at " + dest.toString());
-//				Log.e(TAG, "Next point SHOULD be frame " + cur_frame + " line " + destLine + " point " + destPoint);
-//				
-//				dest = div.getFrame(cur_frame).getLinePoint(destLine, destPoint);
 //				if(dest == null) {
-//					Log.e(TAG, "NULL NULL NULL NULL NULL NULL NULL");
-//				} else {
-//					Log.d(TAG, "  " + dest.toString());
+//					Log.e(TAG, "I was only assigned ONE POINT for this frame! I quit!");
+//					// "Send out a sync message so other robots don't wait around for me"
+//					sync.barrier_sync(SYNC_START_DRAWING);
+//					stage = STAGE_FRAME_DONE;
+//					break;
 //				}
+
 				motion.turn_to(dest);
 				while(motion.inMotion) {sleep(10);}
-
+				Log.d(TAG, "Facing my next point!");
+				
 				sync.barrier_sync(SYNC_START_DRAWING);
 				stage = STAGE_CALC_NEXT_POINT_BARRIER;
 				break;
@@ -220,7 +221,7 @@ public class LogicThread extends Thread {
 					stage = STAGE_CALC_NEXT_POINT;
 					
 					// Wait to give the photographer enough time to press the shutter
-					sleep(400);
+					sleep(1000);
 					motion.song();
 					
 					// Create and start the progress tracking thread
@@ -265,36 +266,56 @@ public class LogicThread extends Thread {
 				prog.updateMyProgress(assignment.getCurPos());
 				
 				assignment.setCurPos(nextline, nextpoint);
-
-				// If the next point is an intersection, request access.
-				// If it's not an intersection and we're holding on to an intersection token, let go of the token.
-				if(div.getFrame(cur_frame).isIntersection(assignment.getCurPos())) {
-					intersection_num = div.getFrame(cur_frame).intersectionNumber(assignment.getCurPos());
-					Log.i(TAG, "  Intersection #" + intersection_num);
-					if(!mutex.clearToEnter(intersection_num)) {
-						Log.i(TAG, "I requested the token. Holding at intersection " + intersection_num);
-						mutex.requestEntry(intersection_num);
-						stage = STAGE_WAIT_AT_INTERSECTION;
-						motion.song(1);
-					} else {
-						stage = STAGE_GO_NEXT_POINT;
-					}
-					break;
-				} else if(intersection_num != -1) {
-					mutex.exit(intersection_num);
-					intersection_num = -1;
-					motion.song(2);
-				}	
 				stage = STAGE_GO_NEXT_POINT;
+				
+				// Handle the case when we're heading into an intersection
+				if(div.getFrame(cur_frame).isIntersection(assignment.getCurPos())) {
+					new_intersections = div.getFrame(cur_frame).intersectionNumbers(assignment.getCurPos(), INTERSECTION_RADIUS);
+					Log.i(TAG, "  Intersection #" + new_intersections.toString());
+					
+					// Exit sections in intersections which aren't in new_intersections
+					HashSet<Integer> exitme = new HashSet<Integer>(intersections);
+					exitme.removeAll(new_intersections);
+					mutex.exit(exitme);
+					intersections.removeAll(exitme);
+					
+					// If we don't hold the token(s) needed to continue, request them and hold
+					if(!intersections.containsAll(new_intersections)) {
+						Log.i(TAG, "  I requested the token(s). Holding.");
+						
+						// Remove any intersections already held
+						new_intersections.removeAll(intersections);
+						mutex.requestEntry(new_intersections);
+						motion.song(1);
+						
+						stage = STAGE_WAIT_AT_INTERSECTION;
+					} else {
+						Log.i(TAG, "  I hold the token(s): " + intersections.toString());
+					}
+				} else if(!intersections.isEmpty()) {
+					// If the next point isn't an intersection but tokens are still held, release the tokens
+					Log.d(TAG, "  Returning all tokens.");
+					mutex.exitAll();
+					intersections.clear();
+					motion.song(2);
+				}
 				break;
 				
 			case STAGE_WAIT_AT_INTERSECTION:
 				screenDark();
 				
-				if(mutex.clearToEnter(intersection_num)) {
+				if(mutex.clearToEnter(new_intersections)) {
+					intersections.clear();
+					intersections.addAll(new_intersections);
 					stage = STAGE_GO_NEXT_POINT;
+					timeSpentWaiting = 0;
 				} else {
 					sleep(50);
+					timeSpentWaiting += 50;
+					if(timeSpentWaiting >= 3000) {
+						prog.updateMyProgress(assignment.getCurPos());
+						timeSpentWaiting = 0;
+					}
 				}
 				break;
 				
@@ -323,6 +344,12 @@ public class LogicThread extends Thread {
 				// Otherwise, continue looping
 				if(cur_frame == div.getNumFrames()-1) {
 					stage = STAGE_DONE;
+					
+					if(!intersections.isEmpty()) {
+						mutex.exitAll();
+						motion.song(2);
+						Log.d(TAG, "  Returning all tokens.");
+					}
 				} else {
 					cur_frame ++;
 					stage = STAGE_GET_LINE_ASSIGNMENT;

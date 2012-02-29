@@ -18,8 +18,8 @@ public class GPSReceiver extends Thread {
 	private static final String TAG = "GPSReceiver";
 	private static final String ERR = "Critical Error";
 	
-	private positionList robotPositions = new positionList();
-	private positionList waypointPositions = new positionList();
+	private positionList robotPositions;
+	private positionList waypointPositions;
 
 	private globalVarHolder gvh;
 
@@ -31,6 +31,9 @@ public class GPSReceiver extends Thread {
 	public GPSReceiver(globalVarHolder gvh,String hostname, int port) {
 		super();
 		this.gvh = gvh;
+		
+		robotPositions = new positionList();
+		waypointPositions = new positionList();
 		
 		try {
 			myLocalIP = getLocalAddress();
@@ -123,10 +126,10 @@ public class GPSReceiver extends Thread {
     public void cancel() {
         try {
         	// Clear the list of waypoints
-        	robotPositions = new positionList();
-        	waypointPositions = new positionList();
-        	gvh.setWaypointPositions(waypointPositions);
-        	gvh.setPositions(robotPositions);
+        	//robotPositions = new positionList();
+        	//waypointPositions = new positionList();
+        	//gvh.setWaypointPositions(waypointPositions);
+        	//gvh.setPositions(robotPositions);
             mSocket.close();
         } catch (Exception e) {
             Log.e(ERR, "close of connect socket failed", e);

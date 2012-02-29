@@ -2,13 +2,12 @@ function [] = ProcessFile(FNAME, MAXFRAMES, LAUNCH_TRACKER)
 %clear,clc,close all;format longg;
 format longg;clc;close all;
 %% Options section
-%FNAME = 'vermont';
 DIR = 'C:\pictures\tests';
 
 % Waypoint spacing and intersection radius constants
-SPACING = 250;
+SPACING = 225;
 ABSORPTION_RADIUS = 150;
-INTERSECTION_RADIUS = 400;
+INTERSECTION_RADIUS = 350;
 SAFE_TRAVEL_RADIUS = 250;
 
 % Enable/disable image scaling and centering

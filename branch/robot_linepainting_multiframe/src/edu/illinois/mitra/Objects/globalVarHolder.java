@@ -56,14 +56,11 @@ public class globalVarHolder {
 	public synchronized void setPositions(positionList new_position) {
 		//SET POSITIONS MAY ONLY BE CALLED BY THE GPSRECEIVER!
 		robot_positions = new_position;
-		notifyAll();
 	}
 	public synchronized positionList getPositions() {
-		notifyAll();
 		return robot_positions;
 	}
 	public synchronized itemPosition getPosition(String robot_name) {
-		notifyAll();
 		return robot_positions.getPosition(robot_name);
 	}
 	public synchronized itemPosition getMyPosition() {
@@ -74,24 +71,19 @@ public class globalVarHolder {
 	public synchronized void setWaypointPositions(positionList new_positions) {
 		//SET POSITIONS MAY ONLY BE CALLED BY THE GPSRECEIVER!
 		waypoint_positions = new_positions;
-		notifyAll();
 	}
 	public synchronized positionList getWaypointPositions() {
-		notifyAll();
 		return waypoint_positions;
 	}
 	public synchronized itemPosition getWaypointPosition(String waypoint_name) {
-		notifyAll();
 		return waypoint_positions.getPosition(waypoint_name);
 	}
 		
 	//Name
 	public synchronized void setName(String new_name) {
 		name = new String(new_name);
-		notifyAll();
 	}
 	public synchronized String getName() {
-		notifyAll();
 		return name;
 	}
 

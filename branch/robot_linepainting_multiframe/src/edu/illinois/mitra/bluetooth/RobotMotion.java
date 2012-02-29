@@ -177,7 +177,7 @@ public class RobotMotion {
 	// Motion class to intelligently drive in curves
 	class motion_go_curve implements Runnable {
 		//TODO: This value was originally 100, but the robots were drifting too far from their goals
-		private static final int THRESH_GOAL = 75;
+		private static final int THRESH_GOAL = 95;
 		private static final int THRESH_SHORT = 800;
 		private static final int THRESH_MED = 1500;
 		
@@ -220,11 +220,12 @@ public class RobotMotion {
 		
 		public void run() {
 			state = nextState;
-			if(collision()) {
-				//Log.d(TAG, "Collision!");
+			if(collision() && (state != 2)) {
+				Log.d(TAG, "Collision with " + blocker);
 				if(colavoid) {
 					handler.post(new motion_go_colavoid(dest));
 				} else {
+					Log.d(TAG, "No avoidance, waiting for resolution...");
 					bti.send(robot_stop());
 					postMe(DELAY);
 				}
@@ -243,7 +244,6 @@ public class RobotMotion {
 				// If we're within close range, we're at the goal
 				if(dzone == GOAL) {
 					nextState = 3;
-					state = 3;
 				}
 				
 				switch(state) {
@@ -281,9 +281,7 @@ public class RobotMotion {
 					}
 					if(dzone == GOAL) {
 						// At destination, stop moving
-						//Log.d(TAG, "ARRIVED!");
 						nextState = 3;
-						state = 3;
 					}
 					break;
 					
@@ -300,9 +298,7 @@ public class RobotMotion {
 					break;
 					
 				case 3:
-					// At the goal, halt motion!
-					//Log.d(TAG, "ARRIVED!");
-					bti.send(robot_stop());
+					// At the goal
 					nextState = 3;
 					break;
 				}
@@ -342,7 +338,6 @@ public class RobotMotion {
 		
 		private void postMe(int delay) {
 			if(running) {
-				//handler.postDelayed(new motion_go_curve(dest, nextState), delay);
 				handler.postDelayed(this, delay);
 			} else {
 				Log.e(TAG, "Halted motion_go_curve: No longer running");
@@ -434,7 +429,7 @@ public class RobotMotion {
 		for(int i = 0; i < others.getNumPositions(); i ++) {
 			itemPosition current = others.getPositionAtIndex(i);
 			if(!current.getName().equals(me.getName())) {
-				if(me.isFacing(current, 180) && me.distanceTo(current) < 500) {
+				if(me.isFacing(current, 180) && me.distanceTo(current) < 400) {
 					blocker = current;
 					return true;
 				}

@@ -1,5 +1,8 @@
 package edu.illinois.mitra.lightpaint;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import android.util.Log;
 import edu.illinois.mitra.Objects.common;
 import edu.illinois.mitra.Objects.itemPosition;
@@ -103,6 +106,7 @@ public class ImageFrame {
 	public boolean isIntersection(itemPosition pos) {
 		return pos.getName().matches("[0-9]+-[0-9]+-[0-9]+-[0-9]+");
 	}
+	
 	public int intersectionNumber(int line, int point) {
 		return intersectionNumber(getLinePoint(line,point));
 	}
@@ -113,6 +117,38 @@ public class ImageFrame {
 			return -1;
 		}
 	}
+	
+	
+	
+	// Intersection numbers within RADIUS
+	
+	public Set<Integer> intersectionNumbers(itemPosition pos, int RADIUS) {
+		HashSet<Integer> retval = new HashSet<Integer>();
+
+		if(!isIntersection(pos)) {
+			return retval;
+		}
+		
+		retval.add(intersectionNumber(pos));
+		// Find all points within RADIUS of the requested point
+		for(int i = 0; i < num_lines; i++) {
+			itemPosition[] segs = segments[i].getPositions();
+			for(itemPosition pt : segs) {
+				if(isIntersection(pt) && pt.distanceTo(pos) <= RADIUS) {
+					retval.add(intersectionNumber(pt));
+				}
+			}
+		}	
+		return retval;
+	}	
+	public Set<Integer> intersectionNumbers(int line, int point, int RADIUS) {
+		return intersectionNumbers(getLinePoint(line,point), RADIUS);
+	}
+	public Set<Integer> intersectionNumbers(int[] pos, int RADIUS) {
+		return intersectionNumbers(getLinePoint(pos), RADIUS);
+	}
+	
+
 	public String lineColor(int line) {
 		return segments[line].getColor();
 	}
@@ -142,22 +178,26 @@ public class ImageFrame {
 	public itemPosition getNextLinePoint(int line_num, int point) {
 		// Return the position of the next point along the line
 		if(linePointExists(line_num,point+1)) {
-			// If the next point on this line exists
-			return segments[line_num].getPoint(point+1);
+			return segments[line_num].getPoint(point+1);			
+		// Otherwise, if the first point on the next line exists
 		} else if(linePointExists(line_num+1,0)) {
-			// Otherwise, if the first point on the next line exists
 			return segments[line_num+1].getPoint(0);
 		}
 		// Otherwise, we're at the end of the drawing, return null
 		return null;
 	}
 
-	public itemPosition getLinePoint(int[] pos) {
-		return getLinePoint(pos[0], pos[1]);
+	public itemPosition getNextLinePoint(itemPosition pos) {
+		int[] parts = common.partsToInts(pos.getName(), "-");
+		return getNextLinePoint(parts[1], parts[2]);
 	}
 
 	public itemPosition getNextLinePoint(int[] pos) {
 		return getNextLinePoint(pos[0], pos[1]);
+	}
+	
+	public itemPosition getLinePoint(int[] pos) {
+		return getLinePoint(pos[0], pos[1]);
 	}
 
 	public int getNextLineNum(int[] pos) {

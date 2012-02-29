@@ -99,30 +99,11 @@ public class itemPosition implements Comparable<itemPosition> {
 		result = prime * result + y;
 		return result;
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		itemPosition other = (itemPosition) obj;
-		if (angle != other.angle)
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (x != other.x)
-			return false;
-		if (y != other.y)
-			return false;
-		return true;
-	}
 	
+	public boolean equals(itemPosition o) {
+		return (this.x == o.x) && (this.y == o.y) && (this.angle == o.angle);
+	}
+
 	private int min_magitude(int a1, int a2) {
 		if(Math.abs(a1) < Math.abs(a2)) {
 			return a1;

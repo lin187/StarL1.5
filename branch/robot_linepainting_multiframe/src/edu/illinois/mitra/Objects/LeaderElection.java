@@ -46,9 +46,7 @@ public class LeaderElection {
 		Long startWaitTime = System.currentTimeMillis();
 		while(msgcount < (nodes-1)) {
 			msgcount = gvh.getIncomingMessageCount(LogicThread.MSG_LEADERELECT);
-			//gvh.setDebugInfo("Waiting... have " + msgcount);
 			if(System.currentTimeMillis() > startWaitTime+MAX_WAIT_TIME) {
-				//gvh.setDebugInfo("Waited too long!");
 				error = true;
 				break;
 			}

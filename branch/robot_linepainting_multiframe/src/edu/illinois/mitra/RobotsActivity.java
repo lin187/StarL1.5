@@ -223,7 +223,7 @@ public class RobotsActivity extends Activity {
 			btnConnect.setText("Disconnect");
 			gvh.setName(participants[selected_robot]);
 	        Log.d(TAG, gvh.getName());
-	        gvh.setDebugInfo("");
+	        gvh.setDebugInfo("[Not Connected]");
 	        
 	        // Begin persistent background threads
 	        gvh.startComms();

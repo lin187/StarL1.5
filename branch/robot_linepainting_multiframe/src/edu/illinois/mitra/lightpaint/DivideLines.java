@@ -11,7 +11,7 @@ public class DivideLines {
 	private static final String TAG = "DivideLines";
 	private static final String ERR = "Critical Error";
 	
-	private static int MIN_ROBOT_TRAVEL_DIST = 1700;
+	private static int MIN_ROBOT_TRAVEL_DIST = 1500;
 	
 	private int num_frames = 0;
 	private int num_robots = 0;
@@ -99,20 +99,15 @@ public class DivideLines {
 		for(int i = 0; i < num_operating_robots[frame]-1; i++) {
 			int current_dist = 0;
 			Log.i(TAG, "Starting[" + i + "] = " + startingLine[i][frame] + ":" + startingPoint[i][frame]);
-			while(current_line < num_lines && (current_dist <= target || lines[current_line].isIntersectionPoint(current_point))) {
+			while(continueDividing(i, frame, current_line, current_point, num_lines, current_dist, target, lines)) {
 				// If we've walked to the end of this segment, go to the next one
 				if(lines[current_line].getLength()-1 == current_point) {
 					current_line ++;
 					current_point = 0;				
-					Log.i(TAG, "   Increment to line " + current_line + " of length " + lines[current_line].getLength());
 				} else {
 					current_point ++;
 				}
 				current_dist ++;
-				Log.i(TAG, "Current distance: " + current_dist + ". linept: " + current_point);
-			}
-			if(lines[current_line].isIntersectionPoint(current_point)) {
-				Log.e(TAG,"Line divider just placed an endpoint at an intersection!");
 			}
 			endingLine[i][frame] = current_line;
 			endingPoint[i][frame] = current_point;
@@ -121,9 +116,27 @@ public class DivideLines {
 				startingPoint[i+1][frame] = current_point;
 			}
 			Log.i(TAG, "Ending[" + i + "] = " + endingLine[i][frame] + ":" + endingPoint[i][frame]);
+			Log.i(TAG, "Distance covered: " + distanceCovered(lines,startingLine[i][frame],startingPoint[i][frame],endingLine[i][frame],endingPoint[i][frame]));
 		}
 		endingLine[num_operating_robots[frame]-1][frame] = num_lines + 1;
 		endingPoint[num_operating_robots[frame]-1][frame] = 0;
+	
+		
+		// If the last robot has less than the minimum travel distance, remove it from the execution
+		int lastbot = num_operating_robots[frame]-1;
+		int lastdst = distanceCovered(lines,startingLine[lastbot][frame],startingPoint[lastbot][frame],endingLine[lastbot][frame],endingPoint[lastbot][frame]);
+		
+		Log.i(TAG, "Starting[" + (lastbot) + "] = " + startingLine[lastbot][frame] + ":" + startingPoint[lastbot][frame]);
+		Log.i(TAG, "Ending[" + (lastbot) + "] = " + endingLine[lastbot][frame] + ":" + endingPoint[lastbot][frame]);
+		Log.i(TAG, "Distance covered: " + lastdst);
+		
+		if(lastbot > 0 && lastdst < MIN_ROBOT_TRAVEL_DIST) {
+			Log.e(TAG, "The last robot only covered " + lastdst + " and was removed from execution!");
+			// Eliminate the last robot from the execution
+			endingLine[lastbot-1][frame] = endingLine[lastbot][frame];
+			endingPoint[lastbot-1][frame] = endingPoint[lastbot][frame];
+			num_operating_robots[frame] --;
+		}
 		
 		// If not all of the robots were used, fill in the rest of the arrays with null values
 		for(int i = num_operating_robots[frame]; i < num_robots; i++) {
@@ -131,10 +144,47 @@ public class DivideLines {
 			endingLine[i][frame] = -1;
 			startingPoint[i][frame] = -1;
 			endingPoint[i][frame] = -1;
+		}		
+
+	}
+	
+	// Return true if the target distance has been met AND the current point isn't an intersection AND we're still 
+	// on a valid line AND there's no start or stop point within RADIUS
+	private boolean continueDividing(int i, int frame, int current_line, int current_point, int num_lines, int current_dist, double target, LineSegment[] lines) {
+		final int TOO_CLOSE_RADIUS = 2*spacing;
+		if(current_line >= num_lines) { 
+			return false;
 		}
+		boolean retval = (current_dist <= target || lines[current_line].isIntersectionPoint(current_point));
+
+		itemPosition cur = lines[current_line].getPoint(current_point);
+		for(; i > 0; i--) {
+			itemPosition otherStart = lines[startingLine[i][frame]].getPoint(startingPoint[i][frame]);
+			itemPosition otherEnd = lines[endingLine[i][frame]].getPoint(endingPoint[i][frame]);
+			retval |= (cur.distanceTo(otherStart) < TOO_CLOSE_RADIUS);
+			retval |= (cur.distanceTo(otherEnd) < TOO_CLOSE_RADIUS);
+		}
+	
+		return retval;
+	}
+
+	
+	// Return the total distance covered by an assignment
+	private int distanceCovered(LineSegment[] lines, int ln, int pt, int endLine, int endPt) {
+		int dist = 0;
 		
-		Log.i(TAG, "Starting[" + (num_operating_robots[frame]-1) + "] = " + startingLine[num_operating_robots[frame]-1][frame] + ":" + startingPoint[num_operating_robots[frame]-1][frame]);
-		Log.i(TAG, "Ending[" + (num_operating_robots[frame]-1) + "] = " + endingLine[num_operating_robots[frame]-1][frame] + ":" + endingPoint[num_operating_robots[frame]-1][frame]);
+		while(!(pt == endPt && ln == endLine)) {
+			if(pt < lines[ln].getLength()) {
+				pt ++;
+				dist ++;
+			} else if(ln < lines.length-1) {
+				pt = 0;
+				ln ++;
+			} else {
+				break;
+			}
+		}
+		return spacing*dist;
 	}
 	
 	public void sendAssignments(int frame) {
@@ -171,7 +221,6 @@ public class DivideLines {
 			if(!robots[i].equals("")) {
 				// If the assignment is "you're not participating", return the first non-empty robot
 				if(start == null) {
-					Log.i(TAG, "Non participating robot: " + robots[i] + "!");
 					return i;
 				}
 				dist = gvh.getPosition(robots[i]).distanceTo(start);
@@ -181,7 +230,6 @@ public class DivideLines {
 				}
 			}
 		}
-		//Log.i(TAG, "The closest robot to position " + start.getName() + " is " + robots[minidx]);
 		return minidx;
 	}
 	
