@@ -15,14 +15,11 @@ if diff(x) ~= 0
     xi = union(x,min(x):cos(angle)*SPACING:max(x));
     xi = union(xi, intsX);
     yi = interp1(x,y,xi,'linear');
-    if ~isempty(find(isnan(xi),1)) || ~isempty(find(isnan(yi),1))
-        [xi' yi']
-        angle
-        error(['(x,y): ' num2str(x) ', ' num2str(y)]);
-    end
-    %b = [xi' yi'];
-    %d = p_dist(b(1,:),b(2,:))  
-    %d = p_dist(b(2,:),b(3,:))
+%     if ~isempty(find(isnan(xi),1)) || ~isempty(find(isnan(yi),1))
+%         [xi' yi']
+%         angle
+%         error(['(x,y): ' num2str(x) ', ' num2str(y)]);
+%     end
 else
     % If the line is vertical simply divide by SPACING along the y axis
     yi = union(y,min(y):SPACING:max(y));

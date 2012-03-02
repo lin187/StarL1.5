@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="hello">Hello World, RobotTestActivity!</string>
-    <string name="app_name">LIGHT PAINTER MULTIFRAME</string>
+    <string name="app_name">[Application Name]</string>
     <string name="id_array_prompt">Who Am I?</string>
     <string-array name="id_array">
         <item>Alice</item>

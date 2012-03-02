@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -25,6 +26,7 @@ import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import edu.illinois.mitra.Objects.common;
 import edu.illinois.mitra.Objects.globalVarHolder;
 import edu.illinois.mitra.bluetooth.RobotMotion;
 import edu.illinois.mitra.comms.GPSReceiver;
@@ -70,6 +72,8 @@ public class RobotsActivity extends Activity {
 	public static final int MESSAGE_BLUETOOTH = 2;
 	public static final int MESSAGE_LAUNCH = 3;
 	public static final int MESSAGE_DEBUG = 4;
+	public static final int MESSAGE_SCREEN = 5;
+	public static final int MESSAGE_SCREEN_COLOR = 6;
 	public static final int MESSAGE_BATTERY = 7;
 	public static final int MESSAGE_MOTION = 8;
 	
@@ -78,6 +82,13 @@ public class RobotsActivity extends Activity {
 	public static final int MOT_ARCING		= 1;
 	public static final int MOT_STRAIGHT	= 2;
 	public static final int MOT_STOPPED		= 3;
+	
+	// Lightpainting specific
+	private float overrideBrightness = 1;
+	private int reqBrightness = 100; 
+	private WindowManager.LayoutParams lp;	
+	private View vi;
+	private int defaultBrightness = -1;
 	
     private final Handler debug_handler = new Handler() {
     	public void handleMessage(Message msg) {	    	
@@ -121,11 +132,43 @@ public class RobotsActivity extends Activity {
 	    	case MESSAGE_DEBUG:
 	    		txtDebug.setText("DEBUG:\n" + (String) msg.obj);
 	    		break;
+	    	case MESSAGE_SCREEN:
+	    		if(DISPLAY_MODE) {
+	    			reqBrightness = (Integer) msg.obj;
+		        	lp.screenBrightness = common.cap(reqBrightness*overrideBrightness, 1f, 100f) / 100.0f;
+		        	getWindow().setAttributes(lp);
+	    		}
+	    		break;
+	    	case MESSAGE_SCREEN_COLOR:
+	    		String colParse = "#" + (String) msg.obj;
+	    		vi.setBackgroundColor(Color.parseColor(colParse));
+	    		break;
 	    	case MESSAGE_BATTERY:
 	    		pbBattery.setProgress((Integer) msg.obj);
 	    		break;
 	    	case MESSAGE_MOTION:
-
+	    		switch((Integer) msg.obj) {
+	    		case MOT_TURNING:
+	    			// Illuminate the screen if we're turning in place (assuming phones are in the middle!)
+	    			overrideBrightness = 0.21f;	    			
+	    			break;
+	    		case MOT_ARCING:
+	    			// Illuminate the screen if we're arcing 
+	    			overrideBrightness = 1;
+	    			break;
+	    		case MOT_STRAIGHT:
+	    			// Illuminate the screen if we're going straight 
+	    			overrideBrightness = 1;	    
+	    			break;
+	    		case MOT_STOPPED:
+	    			// Darken the screen if we've stopped 
+	    			overrideBrightness = 0;	    
+	    			break;
+	    		}
+	    		
+	    		if(DISPLAY_MODE && launched) {
+	    			gvh.sendMainMsg(MESSAGE_SCREEN, reqBrightness);
+	    		}
 	    		break;
 	    	}	
     	}
@@ -136,6 +179,9 @@ public class RobotsActivity extends Activity {
 			cbRunning.setChecked(true);
 			logic = new LogicThread(gvh, motion);
 			logic.start();
+			if(DISPLAY_MODE) {
+				setContentView(vi);
+			}
 		}
     };
 	
@@ -166,6 +212,9 @@ public class RobotsActivity extends Activity {
         
         // Connect
         attempt_connect();
+        
+        // Set up brightness attribute
+        vi = new View(this);
     }
     
 	private void attempt_connect() {
@@ -255,7 +304,12 @@ public class RobotsActivity extends Activity {
 		spe.commit();
 	}
 
-	private void setupGUI() {	
+	private void setupGUI() {
+		// Set the brightness to the default level
+		lp = getWindow().getAttributes();
+		lp.screenBrightness = defaultBrightness;
+		getWindow().setAttributes(lp);
+		
 		btnConnect = (Button) findViewById(R.id.btnConnect);
 		txtRobotName = (TextView) findViewById(R.id.txtRobotName);
 		cbGPS = (CheckBox) findViewById(R.id.cbGPS);
@@ -267,7 +321,17 @@ public class RobotsActivity extends Activity {
 		pbBattery.setMax(100);
 		
 		txtRobotName.setText(participants[selected_robot]);
-
+		
+		cbPaintMode = (CheckBox) findViewById(R.id.cbDebugMode);
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		cbPaintMode.setChecked(prefs.getBoolean("PAINT_MODE", false));		
+		
+		cbPaintMode.setOnClickListener(new OnClickListener() {
+			public void onClick(View v) {
+		    	saveToOptions();
+			}
+		});
+		
 		btnConnect.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				attempt_connect();

@@ -5,9 +5,9 @@ format longg;clc;close all;
 DIR = 'C:\pictures\tests';
 
 % Waypoint spacing and intersection radius constants
-SPACING = 225;
+SPACING = 275;
 ABSORPTION_RADIUS = 150;
-INTERSECTION_RADIUS = 350;
+INTERSECTION_RADIUS = 375;
 SAFE_TRAVEL_RADIUS = 250;
 
 % Enable/disable image scaling and centering
