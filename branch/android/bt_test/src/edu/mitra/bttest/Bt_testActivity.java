@@ -32,7 +32,7 @@ public class Bt_testActivity extends Activity {
     class sendHello implements Runnable {
 		public void run() {
 			try {
-				out.write(Byte.parseByte("HELLO.\n"));
+				out.write("HELLO.\n".getBytes());
 			} catch (NumberFormatException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
