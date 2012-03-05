@@ -32,7 +32,10 @@ public class BluetoothInterface {
 	private int retries = 0;
 	private globalVarHolder gvh;
 	
-	public BluetoothInterface(globalVarHolder gvh) {
+	private RobotMotion parent;
+	
+	public BluetoothInterface(globalVarHolder gvh, RobotMotion parent) {
+		this.parent = parent;
 		this.gvh = gvh;
 		btAdapter = BluetoothAdapter.getDefaultAdapter();
 	    if (btAdapter == null) {
@@ -72,7 +75,6 @@ public class BluetoothInterface {
 		try {
 			retval = bufInStream.read();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return retval;
@@ -94,23 +96,6 @@ public class BluetoothInterface {
 		}
 
 		return buffer;
-//		for(int i = 0; i < n_bytes; i++) {
-//			buffer[i] = (byte) 55;
-//		}
-//		
-//		int bytesRead = -1;
-//		try {
-//			bytesRead = bufInStream.read(buffer, 0, n_bytes);
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		
-//		if(bytesRead == -1) {
-//			return new byte[]{-1};
-//		}
-//		Log.d(TAG, "Read from buffer: " + Arrays.toString(buffer));
-//		return buffer;
 	}
 	
 	public void disconnect() {
@@ -129,7 +114,7 @@ public class BluetoothInterface {
 	private class BluetoothConnectTask 	extends AsyncTask<BluetoothDevice, Void, Integer> {
 		@Override
 		protected Integer doInBackground(BluetoothDevice... params) {
-			gvh.sendMainMsg(common.MESSAGE_BLUETOOTH,2);
+			gvh.sendMainMsg(common.MESSAGE_BLUETOOTH,common.BLUETOOTH_CONNECTING);
 			while(mSocket == null && retries < MAX_RETRIES) {
 				retries ++;
 				try {
@@ -181,7 +166,10 @@ public class BluetoothInterface {
 				Log.d(TAG, "Read " + read + " byte(s) while clearing the inbuf");
 				
 				// Inform the GUI that bluetooth has been connected
-				gvh.sendMainMsg(common.MESSAGE_BLUETOOTH,1);
+				gvh.sendMainMsg(common.MESSAGE_BLUETOOTH,common.BLUETOOTH_CONNECTED);
+				
+				// Trigger a read of the battery
+				gvh.sendMainMsg(common.MESSAGE_BATTERY, parent.getBatteryPercentage());
 			}
 			return 0;
 		}

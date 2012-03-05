@@ -4,9 +4,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import android.util.Log;
-import edu.illinois.mitra.Objects.common;
-import edu.illinois.mitra.Objects.itemPosition;
-import edu.illinois.mitra.Objects.positionList;
+import edu.illinois.mitra.starl.objects.common;
+import edu.illinois.mitra.starl.objects.itemPosition;
+import edu.illinois.mitra.starl.objects.positionList;
 
 
 public class ImageFrame {

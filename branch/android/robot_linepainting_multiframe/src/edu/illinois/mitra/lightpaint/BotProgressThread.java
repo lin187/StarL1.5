@@ -5,11 +5,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import android.util.Log;
-import edu.illinois.mitra.LogicThread;
-import edu.illinois.mitra.Objects.globalVarHolder;
-import edu.illinois.mitra.comms.RobotMessage;
+import edu.illinois.mitra.lightpaint.main.LogicThread;
+import edu.illinois.mitra.starl.comms.RobotMessage;
+import edu.illinois.mitra.starl.interfaces.MessageListener;
+import edu.illinois.mitra.starl.objects.globalVarHolder;
 
-public class BotProgressThread extends Thread {
+public class BotProgressThread implements MessageListener {
 	private static final String TAG = "ProgressTrack";
 	private static final String ERR = "Critical Error";
 	
@@ -20,12 +21,7 @@ public class BotProgressThread extends Thread {
 	private int num_bots;
 	private globalVarHolder gvh;
 	
-	private boolean running = false;
-	
 	private static final int ROBOT_TIMEOUT = 7500; // Milliseconds
-	
-	private static final int GUI_UPDATE_TIMER = 250;
-	private long lastUpdate = 0;
 	
 	public BotProgressThread(globalVarHolder gvh) {
 		this.gvh = gvh;
@@ -42,45 +38,9 @@ public class BotProgressThread extends Thread {
 				progress.put(names[i], new BotProgress());
 			}
 		}
-	}
-	
-	public synchronized void start() {
+		
 		Log.i(TAG, "Starting progress tracker!");
-		running = true;
-		super.start();
-	}
-
-	public void run() {
-		super.run();
-		int n_received_msgs = 0;
-		while(running) {
-			// Receive line progress update messages
-			n_received_msgs = gvh.getIncomingMessageCount(LogicThread.MSG_LINEPROGRESS);
-			Iterator<RobotMessage> iter = gvh.getIncomingMessages(LogicThread.MSG_LINEPROGRESS).iterator();
-			for(int i = 0; i < n_received_msgs; i++) {
-				//RobotMessage rec = gvh.getIncomingMessage(LogicThread.MSG_LINEPROGRESS);
-				RobotMessage rec = iter.next();
-				String from = rec.getFrom();
-				
-				// If the next message indicates that the robot is done, remove it from the progress tracking map
-				if(rec.getContents().equals("DONE")) {
-					progress.remove(from);
-					completed.add(from);
-				// Otherwise, if we have a tracker for this robot, update it
-				} else if(progress.containsKey(from)) {
-					progress.get(from).update(rec);
-				} else if(!completed.contains(from)) {
-					Log.e(ERR, "Don't have a progress tracker for robot with name " + from);
-				}
-			}
-			
-			// TODO: ERASE THIS TEMPORARY DEBUG STUFF:
-			// Update the GUI
-//			if((System.currentTimeMillis() - lastUpdate) > GUI_UPDATE_TIMER) {
-//				gvh.setDebugInfo(getDebug());
-//				lastUpdate = System.currentTimeMillis();
-//			}
-		}
+		gvh.addMsgListener(LogicThread.MSG_LINEPROGRESS, this);
 	}
 	
 	// Returns a string for the debug window indicating who has expired
@@ -134,11 +94,27 @@ public class BotProgressThread extends Thread {
 	}
 	
 	public void cancel() {
-		Log.d(TAG, "CANCELLING PROGRESS THREAD");
-		running = false;
+		Log.d(TAG, "CANCELLING PROGRESS TRACKER");
+		gvh.removeMsgListener(LogicThread.MSG_LINEPROGRESS);
 	}
 
 	public void updateMyProgress(int[] curPos) {
 		updateMyProgress(curPos[0], curPos[1]);
+	}
+
+	public void messageReceied(RobotMessage m) {
+		// Receive line progress update messages
+		String from = m.getFrom();
+		
+		// If the next message indicates that the robot is done, remove it from the progress tracking map
+		if(m.getContents().equals("DONE")) {
+			progress.remove(from);
+			completed.add(from);
+		// Otherwise, if we have a tracker for this robot, update it
+		} else if(progress.containsKey(from)) {
+			progress.get(from).update(m);
+		} else if(!completed.contains(from)) {
+			Log.e(ERR, "Don't have a progress tracker for robot with name " + from);
+		}
 	}
 }

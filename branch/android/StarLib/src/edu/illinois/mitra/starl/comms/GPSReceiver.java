@@ -86,10 +86,10 @@ public class GPSReceiver extends Thread {
 		    				robotPositions.update(parts[i]);
 		    				break;
 		    			case 'G':
-		    				gvh.sendMainMsg(3, parts[i]);
+		    				gvh.sendMainMsg(common.MESSAGE_LAUNCH, Integer.parseInt(parts[i].substring(3)));
 		    				break;
 		    			case 'A':
-		    				gvh.sendMainMsg(3, "ABORT");
+		    				gvh.sendMainMsg(common.MESSAGE_ABORT, null);
 		    				break;
 		    			default:
 		    				Log.e(ERR, "Unknown GPS message received: " + line);

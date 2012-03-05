@@ -4,12 +4,10 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 
 import android.util.Log;
+import edu.illinois.mitra.starl.objects.common;
 
 /**
  * This thread handles all incoming and outgoing transmissions.
@@ -35,7 +33,7 @@ class ComThread extends Thread {
 
 		while(err && retries < 15) {
 			try {
-				myLocalIP = getLocalAddress();
+				myLocalIP = common.getLocalAddress();
 				if(mSocket == null) {
 					mSocket = new DatagramSocket(BCAST_PORT);
 					mSocket.setBroadcast(true);
@@ -95,23 +93,6 @@ class ComThread extends Thread {
         } catch (Exception e) {
             Log.e(ERR, "Exception during write", e);
         }
-    }
-    
-    private InetAddress getLocalAddress()throws IOException {
-		try {
-		    for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
-		        NetworkInterface intf = en.nextElement();
-		        for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
-		            InetAddress inetAddress = enumIpAddr.nextElement();
-		            if (!inetAddress.isLoopbackAddress()) {
-		            	return inetAddress;
-		            }
-		        }
-		    }
-		} catch (SocketException ex) {
-		    Log.e(TAG, ex.toString());
-		}
-		return null;
     }
     
     public void cancel() {

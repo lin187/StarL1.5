@@ -11,9 +11,6 @@ import edu.illinois.mitra.starl.objects.common;
 import edu.illinois.mitra.starl.objects.globalVarHolder;
 
 public class SingleHopMutualExclusion extends Thread implements MutualExclusion, MessageListener {
-	private static final String TAG = "Mutex";
-	private static final String ERR = "Critical Error";
-	
 	private int num_sections = 0;
 	private globalVarHolder gvh;
 	private String name;

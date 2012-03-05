@@ -12,7 +12,6 @@ public class RobotMotion {
 	private static final String ERR = "Critical Error";
 	
 	private static final int TURN = 60;
-	private static final int MINORCURVE = 900;
 	private static final int SPEED = 200;
 	private static final int DELAY = 50;
 	
@@ -33,7 +32,7 @@ public class RobotMotion {
 	
 	public RobotMotion(globalVarHolder gvh, String mac) {
 		this.gvh = gvh;
-		this.bti = new BluetoothInterface(gvh);
+		this.bti = new BluetoothInterface(gvh, this);
 		bti.connect(mac);
 		handler = new Handler();
 	}
@@ -477,5 +476,14 @@ public class RobotMotion {
 		running = false;
 		bti.send(robot_stop());
 		bti.disconnect();		
+	}
+	
+	public void halt() {
+		running = false;
+		bti.send(robot_stop());
+	}
+	
+	public void resume() {
+		running = true;
 	}
 }

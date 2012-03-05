@@ -2,7 +2,6 @@
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Random;
 
 import android.util.Log;
@@ -136,17 +135,16 @@ public class CommsHandler extends Thread {
 		int toHandle = ReceivedMsgList.size();
 		for(int i = 0; i < toHandle; i++) {
 		UDPMessage current = ReceivedMsgList.get(0);
-//		for(UDPMessage current : ReceivedMsgList) {
-			if(current != null) {
-				// If the message is an ACK, handle it
-				if(current.isACK()) {
-					handleAck(current);
-				// If the received message is a data message, handle it 
-				} else {
-					handleDataMsg(current);
-				}
+		if(current != null) {
+			// If the message is an ACK, handle it
+			if(current.isACK()) {
+				handleAck(current);
+			// If the received message is a data message, handle it 
+			} else {
+				handleDataMsg(current);
 			}
-			ReceivedMsgList.remove(current);
+		}
+		ReceivedMsgList.remove(current);
 		}
 	}
 
@@ -156,8 +154,11 @@ public class CommsHandler extends Thread {
 		
 		// If it's a new message, add it to the InMsgList
 		if(msg_idx == -1) {
-			current.setState(UDPMessage.MSG_RECEIVED);
-			InMsgList.add(current);
+			// Discovery messages are not ACK'd and aren't added to InMsgList
+			if(!current.isDiscovery()) {
+				current.setState(UDPMessage.MSG_RECEIVED);
+				InMsgList.add(current);
+			}
 			
 			// Add it to the gvh in queue
 			gvh.addIncomingMessage(new RobotMessage(current.getContents()));
@@ -185,9 +186,7 @@ public class CommsHandler extends Thread {
 				if(current.isBroadcast() || current.isDiscovery()) {
 					OutMsgList.remove(i);
 					if(current.isBroadcast()) {
-						Iterator<String> iter = participants.keySet().iterator();
-						for(int b = 0; b < participants.size(); b ++) {
-							String next = iter.next();
+						for(String next : participants.keySet()) {
 							if(!next.equals(name)) {
 								RobotMessage current_msg = new RobotMessage(current.getContents());
 								current_msg.setTo(next);

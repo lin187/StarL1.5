@@ -1,5 +1,11 @@
 package edu.illinois.mitra.starl.objects;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
+
 import android.util.Log;
 
 public final class common {
@@ -13,15 +19,23 @@ public final class common {
 	public static final int MSG_MUTEX_TOKEN_REQUEST 	= 4;
 	public static final int MSG_LEADERELECT 			= 5;
 	public static final int MSG_LEADERELECT_ANNOUNCE	= 6;
+	public static final int MSG_NETWORK_DISCOVERY		= 7;
 	
 	// GUI Message handler
 	public static final int MESSAGE_TOAST = 0;
 	public static final int MESSAGE_LOCATION = 1;
 	public static final int MESSAGE_BLUETOOTH = 2;
 	public static final int MESSAGE_LAUNCH = 3;
-	public static final int MESSAGE_DEBUG = 4;
-	public static final int MESSAGE_BATTERY = 7;
-	public static final int MESSAGE_MOTION = 8;
+	public static final int MESSAGE_ABORT = 4;
+	public static final int MESSAGE_DEBUG = 5;
+	public static final int MESSAGE_BATTERY = 6;
+	public static final int MESSAGE_MOTION = 7;
+	
+	public static final int BLUETOOTH_CONNECTING = 2;
+	public static final int BLUETOOTH_CONNECTED = 1;
+	public static final int GPS_RECEIVING = 1;
+	
+	
 	// Motion types
 	public static final int MOT_TURNING		= 0;
 	public static final int MOT_ARCING		= 1;
@@ -68,4 +82,21 @@ public final class common {
 			return val;
 		}
 	}
+	
+    public static InetAddress getLocalAddress()throws IOException {
+		try {
+		    for (Enumeration<NetworkInterface> en = NetworkInterface.getNetworkInterfaces(); en.hasMoreElements();) {
+		        NetworkInterface intf = en.nextElement();
+		        for (Enumeration<InetAddress> enumIpAddr = intf.getInetAddresses(); enumIpAddr.hasMoreElements();) {
+		            InetAddress inetAddress = enumIpAddr.nextElement();
+		            if (!inetAddress.isLoopbackAddress()) {
+		            	return inetAddress;
+		            }
+		        }
+		    }
+		} catch (SocketException ex) {
+		    Log.e(TAG, ex.toString());
+		}
+		return null;
+    }
 }

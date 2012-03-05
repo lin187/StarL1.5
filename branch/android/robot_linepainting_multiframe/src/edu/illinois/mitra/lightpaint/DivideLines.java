@@ -1,11 +1,11 @@
 package edu.illinois.mitra.lightpaint;
 
 import android.util.Log;
-import edu.illinois.mitra.LogicThread;
-import edu.illinois.mitra.Objects.globalVarHolder;
-import edu.illinois.mitra.Objects.itemPosition;
-import edu.illinois.mitra.Objects.positionList;
-import edu.illinois.mitra.comms.RobotMessage;
+import edu.illinois.mitra.lightpaint.main.LogicThread;
+import edu.illinois.mitra.starl.comms.RobotMessage;
+import edu.illinois.mitra.starl.objects.globalVarHolder;
+import edu.illinois.mitra.starl.objects.itemPosition;
+import edu.illinois.mitra.starl.objects.positionList;
 
 public class DivideLines {
 	private static final String TAG = "DivideLines";

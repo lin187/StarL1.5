@@ -1,8 +1,9 @@
 package edu.illinois.mitra.lightpaint;
 
-import edu.illinois.mitra.comms.RobotMessage;
+import edu.illinois.mitra.starl.comms.RobotMessage;
+import edu.illinois.mitra.starl.interfaces.MessageListener;
 
-public class AssignedLines {
+public class AssignedLines implements MessageListener {
 	private int my_startline = 0;
 	private int my_endline = 0;
 	private int my_startpoint = 0;
@@ -11,9 +12,22 @@ public class AssignedLines {
 	private int my_currentline = 0;
 	private int my_currentpoint = 0;
 	
+	private RobotMessage nextAssignment = null;
+	
 	public AssignedLines() {
 	}
 	
+	public boolean hasNextAssignment() {
+		return (nextAssignment != null);
+	}
+	
+	public void parseNextAssignment() {
+		if(nextAssignment != null) {
+			parseAssignmentMessage(nextAssignment);
+			nextAssignment = null;
+		}
+	}
+
 	public void parseAssignmentMessage(RobotMessage msg) {
 		String[] parts = msg.getContents().split(",");
 		String[] startParts = parts[0].split(":");
@@ -66,5 +80,9 @@ public class AssignedLines {
 	
 	public int getCurPoint() {
 		return my_currentpoint;
+	}
+
+	public void messageReceied(RobotMessage m) {
+		nextAssignment = m;		
 	}
 }

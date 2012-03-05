@@ -3,9 +3,11 @@ package edu.illinois.mitra.starl.interfaces;
 import java.util.Set;
 
 public interface MutualExclusion {
-
-	public abstract void run();
-
+	static final String TAG = "Mutex";
+	static final String ERR = "Critical Error";
+	
+	public abstract void start();
+	
 	public abstract void requestEntry(int id);
 
 	public abstract void requestEntry(Set<Integer> ids);
@@ -19,8 +21,6 @@ public interface MutualExclusion {
 	public abstract void exit(Set<Integer> ids);
 
 	public abstract void exitAll();
-
-	public abstract void start();
 
 	public abstract void cancel();
 

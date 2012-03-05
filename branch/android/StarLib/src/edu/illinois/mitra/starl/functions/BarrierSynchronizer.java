@@ -10,9 +10,6 @@ import edu.illinois.mitra.starl.objects.common;
 import edu.illinois.mitra.starl.objects.globalVarHolder;
 
 public class BarrierSynchronizer implements Synchronizer, MessageListener {
-	private static String TAG = "Synchronizer";
-	private static String ERR = "Critical Error";
-	
 	private globalVarHolder gvh;
 	// Barriers tracks which barriers are active and how many robots have reported ready to proceed for each
 	// Keys are barrier IDs, values are number of robots ready to proceed

@@ -5,8 +5,10 @@
     android:orientation="vertical" >
 
     <TextView
-        android:layout_width="fill_parent"
+        android:id="@+id/txtDebug"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello" />
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </LinearLayout>

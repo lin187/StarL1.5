@@ -1,8 +1,8 @@
 clear,clc,close all;format longg;
 
 %% Options section
-FNAME = 'strange_shape';
-DIR = 'C:\pictures\tests';
+FNAME = 'test';
+DIR = 'D:\';
 
 LAUNCH_TRACKER = false;
 MAXFRAMES = 1;

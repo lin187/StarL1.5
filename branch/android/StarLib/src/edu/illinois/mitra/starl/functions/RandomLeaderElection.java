@@ -104,8 +104,6 @@ public class RandomLeaderElection implements LeaderElection, MessageListener {
 	}
 	
 	public void messageReceied(RobotMessage m) {
-		
-		
 		switch(m.getMID()) {
 		case common.MSG_LEADERELECT:
 			String from = m.getFrom();

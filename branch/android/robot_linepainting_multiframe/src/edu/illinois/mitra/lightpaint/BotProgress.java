@@ -1,6 +1,6 @@
 package edu.illinois.mitra.lightpaint;
 
-import edu.illinois.mitra.comms.RobotMessage;
+import edu.illinois.mitra.starl.comms.RobotMessage;
 
 public class BotProgress {
 	

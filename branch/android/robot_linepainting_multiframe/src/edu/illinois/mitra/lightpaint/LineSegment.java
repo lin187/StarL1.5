@@ -1,7 +1,7 @@
 package edu.illinois.mitra.lightpaint;
 
-import edu.illinois.mitra.Objects.common;
-import edu.illinois.mitra.Objects.itemPosition;
+import edu.illinois.mitra.starl.objects.common;
+import edu.illinois.mitra.starl.objects.itemPosition;
 
 public class LineSegment implements Comparable<LineSegment> {
 	private int ID;
