@@ -1,25 +1,20 @@
-clear,clc,close all;format longg;
-
+function [] = ProcessFile(FNAME, MAXFRAMES, LAUNCH_TRACKER)
+format longg;
 %% Options section
-FNAME = 'test';
-DIR = 'D:\';
-
-LAUNCH_TRACKER = false;
-MAXFRAMES = 1;
+DIR = 'C:\pictures\tests';
 
 % Waypoint spacing and intersection radius constants
-SPACING = 300;
-ABSORPTION_RADIUS = 150;
-INTERSECTION_RADIUS = 350;
+SPACING = 500;
 SAFE_TRAVEL_RADIUS = 250;
-ROBOT_RADIUS = 300;
+ROBOT_RADIUS = 160;
 
 % Enable/disable image scaling and centering
 CENTER = true;
 SCALE = true;
-SCALE_MAX = 2900;
-CENTER_LOCATION = [1700 1700];
+SCALE_MAX = 2850;
+CENTER_LOCATION = [1600 1750];
 
+% Snap to grid options
 SNAP_TO_GRID = true;
 GRIDSIZE = [3200 3200];
 ROBOTSIZE = 350;
@@ -30,6 +25,14 @@ END_SNAP_RADIUS = 50;
 
 OUTPUT = [FNAME '.wpt'];
 INPUT = [FNAME '.svg'];
+
+if nargin == 1
+    LAUNCH_TRACKER = true;
+    MAXFRAMES = 1;
+elseif nargin == 2
+    LAUNCH_TRACKER = false;
+end
+
 %% Load and pre-process the image
 % Load the SVG image, convert it to usable data
 [lines colors] = load_replace(fullfile(DIR,INPUT));
@@ -58,56 +61,44 @@ if SNAP_TO_GRID
     lines = remap_to_grid(lines, ROBOTSIZE, GRIDSIZE);
 end
 
-cLines_alpha = computeMutex(SPACING, ROBOT_RADIUS, round(lines), colors);
-
-
 %% Separate the lines into multiple frames
 [flines fcolors] = separate_frames(lines, colors, SAFE_TRAVEL_RADIUS, SPACING, MAXFRAMES);
 n_frames = size(flines,3);
 
 %% Process each frame
-output = struct('framenum',{},'cLines',{},'lines',{},'ghosts',{},'ints',{},'colors',{});
+output = struct('framenum',{},'cLines',{},'lines',{});
 for b=1:n_frames
     lines = flines(:,:,b);
     lines(lines == -1) = [];
     lines = reshape(lines,[],4);
-
+    
+    % Eliminate any lines with only a single point (occasional byproduct of gridsnapping)
+    [lines,~,~] = eliminateSingletons(lines,colors);
+    
     if isempty(lines)
         n_frames = b-1;
         break;
     end
     
-    color = [];%cell(0);
+    colors = [];
     for i=1:size(fcolors,1)
         if ~isequal(fcolors{i,b},-1)
-           color = [color; fcolors{i,b}] ;
+           colors = [colors; fcolors{i,b}] ;
         end
     end
     
-    process_lines;
-    
+    [output(b).cLines output(b).lines] = process_lines(lines,colors, END_SNAPPING, END_SNAP_RADIUS, ROBOT_RADIUS, SPACING);
     output(b).framenum = b;
-    output(b).cLines = cLines;
-    output(b).ghosts = ghosts;
-    output(b).ints = ints;
-    output(b).lines = lines;
-    output(b).colors = color;
-end;
+end
 
 %% Output lines
 % Export to a .WPT file
 export_wpt(output, INPUT, SPACING, fullfile(DIR,OUTPUT));
 
 % Print statistics
-total_len = 0;
 for i=1:n_frames      
-    plot_lines(output(i).cLines, output(i).lines, output(i).ghosts, i, n_frames);
-    
-	[len_ghosts len_lines] = statistics(output(i).lines, output(i).ghosts);
-    fprintf('\nFrame %u\nLine lengths: %6.0f\nGhost lengths:%6.0f\nTotal lengths:%6.0f\n', i,len_lines, len_ghosts, (len_lines + len_ghosts));    
-    total_len = total_len + (len_lines + len_ghosts);
+    plot_lines(output(i).cLines, output(i).lines, i, n_frames);
 end
-fprintf('\nTotal length:%7.0f\n', total_len);    
 
 set(gcf,'Position',[400 400 400*n_frames 400]);
 

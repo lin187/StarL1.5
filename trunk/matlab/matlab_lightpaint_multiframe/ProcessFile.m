@@ -16,6 +16,11 @@ SCALE = true;
 SCALE_MAX = 2850;
 CENTER_LOCATION = [1600 1750];
 
+% Snap to grid options
+SNAP_TO_GRID = true;
+GRIDSIZE = [3200 3200];
+ROBOTSIZE = 350;
+
 % Enable/disable endpoint snapping
 END_SNAPPING = true;
 END_SNAP_RADIUS = 50;
@@ -52,6 +57,10 @@ if SCALE
 end
 if CENTER
     [lines] = center_lines(lines, CENTER_LOCATION);
+end
+
+if SNAP_TO_GRID
+    lines = remap_to_grid(lines, ROBOTSIZE, GRIDSIZE);
 end
 
 %% Separate the lines into multiple frames
