@@ -139,9 +139,9 @@ end
 if shutdown_track == 1
     track_shutdown();
     
-    if exist('RETURN_DIR','var')
-        cd(RETURN_DIR);
-    end
+%     if exist('RETURN_DIR','var')
+%         cd(RETURN_DIR);
+%     end
     clear
 end
 close all

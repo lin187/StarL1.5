@@ -1,7 +1,4 @@
 function cLines = computeMutex(SPACING, ROBOT_RADIUS, lines, colors)
-
-% replace the path here with the path to the .jar file
-%clear java;% <- you need this if you plan on modifying the .jar file to get rid of the previous definition
 if isequal(javaclasspath('-dynamic'),{})
     javaclasspath('LineMutexVisualizer.jar');
 end
@@ -10,6 +7,8 @@ import edu.illinois.linemutex.*;
 % First define the lines using two endpoints and a color and store each
 % line in 'linesIn'
 linesIn = java.util.ArrayList;
+
+lines = int32(lines);
 
 % constructor is LineInputData(DoublePoint s, DoublePoint e, Color c)
 for i=1:size(lines,1)
@@ -42,8 +41,7 @@ for i = 0:numLines % for each line
         y(j+1) = point.y;
 
         mutex(j+1) = lineOutput.mutexId.get(j)-1;
-        
-        disp(['(', num2str(x(j+1)), ',', num2str(y(j+1)), ') color=', lineOutput.colors.get(j), ' mutex=', num2str(mutex(j+1))]);
+        %disp([num2str(i) ':' num2str(j) ' (', num2str(x(j+1)), ',', num2str(y(j+1)), ') color=', lineOutput.colors.get(j), ' mutex=', num2str(mutex(j+1))]);
     end
     
     cLines(i+1,1) = {x};

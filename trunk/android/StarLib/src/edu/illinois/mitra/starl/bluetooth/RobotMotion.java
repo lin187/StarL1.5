@@ -229,7 +229,7 @@ public class RobotMotion {
 					postMe(DELAY);
 				}
 			} else {
-				Log.d(TAG, "Stage = " + state);
+				//Log.d(TAG, "Stage = " + state);
 				angle = currentpos.angleTo(dest);
 				distance = currentpos.distanceTo(dest);
 				int azone = getAngleZone(angle);
@@ -474,12 +474,14 @@ public class RobotMotion {
 
 	public void cancel() {
 		running = false;
+		handler.removeCallbacksAndMessages(null);
 		bti.send(robot_stop());
 		bti.disconnect();		
 	}
 	
 	public void halt() {
 		running = false;
+		handler.removeCallbacksAndMessages(null);
 		bti.send(robot_stop());
 	}
 	

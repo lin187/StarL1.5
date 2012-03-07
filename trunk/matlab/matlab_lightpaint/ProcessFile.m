@@ -1,5 +1,7 @@
-function [] = ProcessFile(FNAME, MAXFRAMES, LAUNCH_TRACKER)
+function [] = ProcessFile(varargin)%FNAME, MAXFRAMES, LAUNCH_TRACKER)
 format longg;
+
+FNAME = varargin{1};
 %% Options section
 DIR = 'C:\pictures\tests';
 
@@ -15,9 +17,9 @@ SCALE_MAX = 2850;
 CENTER_LOCATION = [1600 1750];
 
 % Snap to grid options
-SNAP_TO_GRID = true;
-GRIDSIZE = [3200 3200];
-ROBOTSIZE = 350;
+SNAP_TO_GRID = false;
+GRIDDIM = [3200 3200];
+GRIDSIZE = 300;
 
 % Enable/disable endpoint snapping
 END_SNAPPING = true;
@@ -26,11 +28,30 @@ END_SNAP_RADIUS = 50;
 OUTPUT = [FNAME '.wpt'];
 INPUT = [FNAME '.svg'];
 
-if nargin == 1
-    LAUNCH_TRACKER = true;
-    MAXFRAMES = 1;
-elseif nargin == 2
-    LAUNCH_TRACKER = false;
+LAUNCH_TRACKER = true;
+MAXFRAMES = 1;
+
+% Parse input arguments
+if nargin > 1 && mod(nargin,2) == 0
+    error('Invalid number of arguments!');
+elseif nargin > 1
+    for i = 2:2:nargin
+        if strcmpi(varargin{i},'frames')
+            MAXFRAMES = varargin{i+1};
+        elseif strcmpi(varargin{i},'track')
+            LAUNCH_TRACKER = varargin{i+1};
+        elseif strcmpi(varargin{i},'spacing')
+            SPACING = varargin{i+1};
+        elseif strcmpi(varargin{i},'gridsize')
+            GRIDSIZE = varargin{i+1};
+        elseif strcmpi(varargin{i},'snap')
+            SNAP_TO_GRID = varargin{i+1};
+        elseif strcmpi(varargin{i},'radius')
+            ROBOT_RADIUS = varargin{i+1};
+        else
+            warning(['Unrecognized argument: ' varargin{i}]);
+        end
+    end
 end
 
 %% Load and pre-process the image
@@ -58,11 +79,11 @@ if CENTER
 end
 
 if SNAP_TO_GRID
-    lines = remap_to_grid(lines, ROBOTSIZE, GRIDSIZE);
+    lines = remap_to_grid(lines,GRIDSIZE, GRIDDIM);
 end
 
 %% Separate the lines into multiple frames
-[flines fcolors] = separate_frames(lines, colors, SAFE_TRAVEL_RADIUS, SPACING, MAXFRAMES);
+[flines fcolors] = separate_frames(round(lines), colors, SAFE_TRAVEL_RADIUS, SPACING, MAXFRAMES);
 n_frames = size(flines,3);
 
 %% Process each frame
@@ -104,7 +125,7 @@ set(gcf,'Position',[400 400 400*n_frames 400]);
 
 if LAUNCH_TRACKER
     pause;
-    cd '..\matlab_optitrack_v2';
+    addpath('..\matlab_optitrack_v2');
     load_settings
     WPT_FILENAME = fullfile(DIR, OUTPUT);
     mainprog;

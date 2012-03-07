@@ -89,8 +89,8 @@ public class RobotsActivity extends Activity {
 	    		break;
 	    	case common.MESSAGE_LAUNCH:
 	    		int wptcount = (Integer) msg.obj;
-    			if(gvh.getWaypointPositions().getNumPositions() == wptcount && !launched) {
-    				launch();   				
+    			if(gvh.getWaypointPositions().getNumPositions() == wptcount) {
+    				if(!launched) launch();   				
     			} else {
     				gvh.sendMainToast("Should have " + wptcount + " waypoints, but I have " + gvh.getWaypointPositions().getNumPositions());
     			}

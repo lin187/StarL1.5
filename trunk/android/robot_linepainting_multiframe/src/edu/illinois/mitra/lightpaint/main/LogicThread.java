@@ -148,9 +148,9 @@ public class LogicThread extends Thread {
 					int centerY = 1750;
 					int nameloc = (name.toLowerCase().charAt(0)-97)*500;
 					int exitX = nameloc;
-					int exitY = 300;
+					int exitY = 200;
 					itemPosition me = gvh.getMyPosition();
-					if(me.getY() > centerY) exitY = 3200;
+					if(me.getY() > centerY) exitY = 3300;
 					if(me.getX() > centerX) exitX = 3200-nameloc;
 					itemPosition outOfFrame = new itemPosition("OUT",exitX,exitY,0);
 					motion.go_to(outOfFrame);

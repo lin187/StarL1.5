@@ -20,6 +20,7 @@ end
 
 
 figure(1);
+clf;
 subplot(1,n_frames,frame_num);
 hold on
 line([lines(li,1)';lines(li,3)'],[lines(li,2)';lines(li,4)'],'Color','r','Marker','.');
