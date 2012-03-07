@@ -17,9 +17,12 @@ public final class common {
 	public static final int MSG_MUTEX_TOKEN_OWNER_BCAST = 2;
 	public static final int MSG_MUTEX_TOKEN 			= 3;
 	public static final int MSG_MUTEX_TOKEN_REQUEST 	= 4;
-	public static final int MSG_LEADERELECT 			= 5;
-	public static final int MSG_LEADERELECT_ANNOUNCE	= 6;
+	public static final int MSG_RANDLEADERELECT 		= 5;
+	public static final int MSG_RANDLEADERELECT_ANNOUNCE= 6;
 	public static final int MSG_NETWORK_DISCOVERY		= 7;
+	public static final int MSG_BULLYELECTION 			= 8;
+	public static final int MSG_BULLYANSWER 			= 9;
+	public static final int MSG_BULLYWINNER				= 10;
 	
 	// GUI Message handler
 	public static final int MESSAGE_TOAST = 0;

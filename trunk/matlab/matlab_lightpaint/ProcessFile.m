@@ -1,6 +1,21 @@
-function [] = ProcessFile(varargin)%FNAME, MAXFRAMES, LAUNCH_TRACKER)
-format longg;
+function [] = ProcessFile(varargin)
+%PROCESSFILE Process SVG file for painting.
+%   PROCESSFILE(filename) Processes the SVG file named filename.svg in the
+%   default directory, 'C:\pictures\tests'. Automatically launches the
+%   tracking program upon completion.
+%
+%   PROCESSFILE(...,OPTION,VALUE) Processes the file with optional
+%   arguments. Available options:
+%
+%     'frames' - maximum number of frames, default 1
+%     'track'  - enable/disable launching the tracker, default true
+%     'spacing' - point spacing, default 500
+%     'gridsize' - size of grid used for grid snapping, default 300
+%     'snap' - enable/disable snap to grid, default false
+%     'radius' - radius of the robot, default 160
+%     'dir' - the directory images and wpt files are stored in
 
+format longg;
 FNAME = varargin{1};
 %% Options section
 DIR = 'C:\pictures\tests';
@@ -25,11 +40,11 @@ GRIDSIZE = 300;
 END_SNAPPING = true;
 END_SNAP_RADIUS = 50;
 
-OUTPUT = [FNAME '.wpt'];
-INPUT = [FNAME '.svg'];
-
 LAUNCH_TRACKER = true;
 MAXFRAMES = 1;
+
+OUTPUT = [FNAME '.wpt'];
+INPUT = [FNAME '.svg'];
 
 % Parse input arguments
 if nargin > 1 && mod(nargin,2) == 0
@@ -48,6 +63,8 @@ elseif nargin > 1
             SNAP_TO_GRID = varargin{i+1};
         elseif strcmpi(varargin{i},'radius')
             ROBOT_RADIUS = varargin{i+1};
+        elseif strcmpi(varargin{i},'dir')
+            DIR = varargin{i+1};
         else
             warning(['Unrecognized argument: ' varargin{i}]);
         end

@@ -2,7 +2,7 @@ clear,clc,close all;format longg;
 
 %% Options section
 FNAME = 'pineapple';
-DIR = 'D:\';
+DIR = 'C:\';
 
 LAUNCH_TRACKER = false;
 MAXFRAMES = 3;

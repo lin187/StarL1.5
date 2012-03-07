@@ -46,7 +46,7 @@ public class RandomLeaderElection implements LeaderElection, MessageListener {
 		Log.i(TAG, "My number is " + myNum);
 		
 		// Broadcast
-		RobotMessage bcast = new RobotMessage("ALL", gvh.getName(), common.MSG_LEADERELECT, Integer.toString(myNum));
+		RobotMessage bcast = new RobotMessage("ALL", gvh.getName(), common.MSG_RANDLEADERELECT, Integer.toString(myNum));
 		gvh.addOutgoingMessage(bcast);
 		
 		// Wait to receive MSG_LEADERELECT messages
@@ -69,7 +69,7 @@ public class RandomLeaderElection implements LeaderElection, MessageListener {
 			leader = leader_candidates.first();
 			
 			// Have determined a leader, broadcast the result
-			RobotMessage bcast_leader = new RobotMessage("ALL", gvh.getName(), common.MSG_LEADERELECT_ANNOUNCE, leader);
+			RobotMessage bcast_leader = new RobotMessage("ALL", gvh.getName(), common.MSG_RANDLEADERELECT_ANNOUNCE, leader);
 			gvh.addOutgoingMessage(bcast_leader);
 		}
 		if(error) {
@@ -94,18 +94,18 @@ public class RandomLeaderElection implements LeaderElection, MessageListener {
 	}
 	
 	private void registerListeners() {
-		gvh.addMsgListener(common.MSG_LEADERELECT, this);
-		gvh.addMsgListener(common.MSG_LEADERELECT_ANNOUNCE, this);
+		gvh.addMsgListener(common.MSG_RANDLEADERELECT, this);
+		gvh.addMsgListener(common.MSG_RANDLEADERELECT_ANNOUNCE, this);
 	}
 
 	private void unregisterListeners() {
-		gvh.removeMsgListener(common.MSG_LEADERELECT);
-		gvh.removeMsgListener(common.MSG_LEADERELECT_ANNOUNCE);		
+		gvh.removeMsgListener(common.MSG_RANDLEADERELECT);
+		gvh.removeMsgListener(common.MSG_RANDLEADERELECT_ANNOUNCE);		
 	}
 	
 	public void messageReceied(RobotMessage m) {
 		switch(m.getMID()) {
-		case common.MSG_LEADERELECT:
+		case common.MSG_RANDLEADERELECT:
 			String from = m.getFrom();
 			if(received.containsValue(from)) {
 				error = true;
@@ -119,7 +119,7 @@ public class RandomLeaderElection implements LeaderElection, MessageListener {
 			}
 			break;
 			
-		case common.MSG_LEADERELECT_ANNOUNCE:
+		case common.MSG_RANDLEADERELECT_ANNOUNCE:
 			announcedLeader = m.getContents();
 			break;
 		}

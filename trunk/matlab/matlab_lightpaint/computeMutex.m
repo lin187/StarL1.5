@@ -8,7 +8,7 @@ import edu.illinois.linemutex.*;
 % line in 'linesIn'
 linesIn = java.util.ArrayList;
 
-lines = int32(lines);
+lines = int16(lines);
 
 % constructor is LineInputData(DoublePoint s, DoublePoint e, Color c)
 for i=1:size(lines,1)
