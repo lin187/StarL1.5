@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
@@ -21,8 +22,9 @@ public class DrawPanel extends ZoomablePanel
 	ArrayList <String> colors = new ArrayList <String>();
 	
 	TreeMap <String, Color> colorMap = new TreeMap <String, Color>();
+	String ghostLineColor = "ghost";
 	
-	 ArrayList <LineOutputData> result = null;
+	 ArrayList <LineOutput> result = null;
 	 
 	 private Point mousePoint = null;
 
@@ -38,89 +40,115 @@ public class DrawPanel extends ZoomablePanel
 		 colorMap.put("orange", Color.orange);
 		 colorMap.put("pink", Color.pink);
 		 colorMap.put("gray", Color.gray);
+		 
+		 
+		 // small test for intersection correctness
+		 /*Line2D.Double one = new Line2D.Double(0, 0, 500, 500);
+		 Line2D.Double two = new Line2D.Double(500, 500, 1000, 1000); 
+		 
+		 System.out.println("intersection: " + Geometry.segSegIntersection(two, one));
+		 System.exit(1);*/
 				
+		/* int[][] testLines = 
+		 {
+//				 {2238,	2020,	2222,	2312},
+//				 {2222,	2312,	 983,	2296},
+//				  {983,	2296,	 993,	2025},
+//				  {993,	2025,	 633,	2015},
+//				  {633,	2015,	 225,	1729},
+//				  {225,	1729,	 231,	1098},
+//				  {231,	1098,	 506,	 733},
+//				  {506,	 733,	2699,	 733},
+//				 {2699,	 733,	2964,	1024},
+//				 {2964,	1024,	2975,	1178},
+//				 {2975,	1178,	2969,	1787},
+//				 {2969,	1787,	2630,	2004},
+//				 {2630,	2004,	 633,	2015},
+//				  {633,	2015,	 744,	2603},
+//				  {744,	2603,	 744,	2608},
+//				  {744,	2608,	1295,	2613},
+//				 {1295,	2613,	1417,	2613},
+//				 {1417,	2613,	1417,	2322},
+//				 {1417,	2322,	1555,	2306},
+//				 {1555,	2306,	1539,	2767},
+//				 {1539,	2767,	1290,	2767},
+//				 {1290,	2767,	1295,	2624},
+				 
+				 
+				 // simple test
+				 {0, 0, 1000, 1000},
+				 {1000, 1000, 0, 1000},
+				 {0, 1000, 1000, 0},
+		 };
 		 
-		 /*colors.add(Color.green);
-		 colors.add(Color.green);
-		 colors.add(Color.green);
-		 
-		 endPoints.add(new Point(400, 400));
-		 endPoints.add(new Point(500, 400));
-		 endPoints.add(new Point(400, 420));
-		 
-		 result = compute(makeLineInputData(), SPACING, ROBOT_RADIUS);*/
+		 for (int i = 0; i < testLines.length; ++i)
+		 {
+			 Point a = new Point(testLines[i][0], testLines[i][1]);
+			 Point b = new Point(testLines[i][2], testLines[i][3]);
+			 
+			 colors.add("green");
+			 endPoints.add(a);
+			 
+			 if (i == testLines.length - 1)
+			 {
+				 endPoints.add(b);
+				 colors.add("green");
+			 }
+		 }//*/
 	 }
 	 
 	@Override
 	protected void draw(Graphics2D g)
-	{
-		// draw all the lines
-		Ellipse2D.Double endPoint = new Ellipse2D.Double(0, 0, 10, 10);
-		g.setStroke(new BasicStroke(3));
-		
-		// draw first point
-		if (endPoints.size() > 0)
+	{		
+		for (Point p : endPoints)
 		{
-			Point p = endPoints.get(0);
+			Ellipse2D.Double e = new Ellipse2D.Double(0, 0, 7, 7);
+			g.setColor(Color.GRAY);
 			
-			g.setColor(Color.black);
-			endPoint.x = p.x - endPoint.width / 2;
-			endPoint.y = p.y - endPoint.width / 2;
+			e.x = p.x - e.width/2;
+			e.y = p.y - e.height/2;
 			
-			g.fill(endPoint);
-		}
-		
-		for (int index = 1; index < endPoints.size(); ++index)
-		{
-			Point cur = endPoints.get(index);
-			Point prev = endPoints.get(index - 1);
-			
-			// draw a line to the previous point
-			g.setColor(colorMap.get(colors.get(index)));
-			g.drawLine(cur.x,cur.y, prev.x, prev.y);
-			
-			// draw endpoints
-			g.setColor(Color.black);
-			
-			for (Point p : new Point[]{cur, prev})
-			{
-				endPoint.x = p.x - endPoint.width / 2;
-				endPoint.y = p.y - endPoint.width / 2;
-				
-				g.fill(endPoint);
-			}	
+			g.fill(e);
 		}
 		
 		// draw output result
 		if (result != null)
 		{
-			Ellipse2D.Double anchor = new Ellipse2D.Double(0, 0, 12, 12);
-			g.setStroke(new BasicStroke(1));
-			g.setFont(new Font("Tahoma", Font.PLAIN, 20));
-			
-			for (LineOutputData out : result)
+			for (LineOutput out : result)
 			{
-				for (int i = 0; i < out.points.size(); ++i)
+				boolean isFirst = true;
+				for (int i = 1; i < out.waypoints.size(); ++i)
 				{
-					DoublePoint p = out.points.get(i);
+					WayPoint wpPrev = out.waypoints.get(i-1);
 					
-					Color c = colorMap.get(out.colors.get(i));
-					
-					anchor.x = p.x - anchor.width / 2;
-					anchor.y = p.y - anchor.width / 2;
-					
-					g.setColor(c);
-					g.draw(anchor);
-					
-					// mutex
-					int mutex = out.mutexId.get(i);
-					int DEFAULT_MUTEX_ID = 0;
-					
-					if (mutex != DEFAULT_MUTEX_ID)
+					if (isFirst)
 					{
-						g.setColor(Color.darkGray);
-						g.drawString("" + mutex, (int)p.x+7, (int)p.y + 5);
+						isFirst = false;
+						
+						// draw the first waypoint
+						drawWaypoint(g,wpPrev);
 					}
+					
+					WayPoint wp = out.waypoints.get(i);
+					drawWaypoint(g,wp);
+					
+					// draw the connecting line
+					String color = wp.color;
+					
+					if (color.equals(ghostLineColor))
+					{
+						g.setStroke(new BasicStroke(1.0f, BasicStroke.CAP_BUTT,
+						        BasicStroke.JOIN_MITER, 10.0f, new float[] {2.0f}, 0.0f));
+						
+						g.setColor(Color.black);
+					}
+					else
+					{
+						g.setStroke(new BasicStroke(2));
+						g.setColor(colorMap.get(color));
+					}
+					
+					g.drawLine(wpPrev.point.x, wpPrev.point.y, wp.point.x, wp.point.y);
 				}
 			}
 		}
@@ -136,6 +164,54 @@ public class DrawPanel extends ZoomablePanel
 		}
 	}
 	
+	private void drawWaypoint(Graphics2D g, WayPoint wp)
+	{
+		Ellipse2D.Double anchor = new Ellipse2D.Double(0, 0, 20, 20);
+		g.setStroke(new BasicStroke(1));
+		
+		String color = wp.color;
+		
+		if (color.equals(ghostLineColor))
+			g.setColor(Color.black);
+		else
+			g.setColor(colorMap.get(color));
+		
+		anchor.x = wp.point.x - anchor.width / 2;
+		anchor.y = wp.point.y - anchor.height / 2;
+		
+		g.draw(anchor);
+		
+		// mutex
+		g.setFont(new Font("Tahoma", Font.PLAIN, 24));
+		
+		int mutex = wp.mutexId;
+		
+		if (mutex != -1)
+		{
+			g.setColor(Color.darkGray);
+			
+			g.drawString("" + mutex, wp.point.x + 10, wp.point.y + 3);
+		}
+		
+		g.setFont(new Font("Tahoma", Font.BOLD, 10));
+		
+		// start / end
+		if (wp.start)
+		{
+			g.setColor(Color.black);
+			
+			g.drawString("S", wp.point.x - 8, wp.point.y+4);
+		}
+		
+		if (wp.end)
+		{
+			g.setColor(Color.black);
+			
+			g.drawString("E", wp.point.x + 2, wp.point.y+4);
+		}
+		
+	}
+
 	protected void mousePressedAt(Point p, MouseEvent e) 
 	{		
 		if (e.getButton() == MouseEvent.BUTTON1)
@@ -182,9 +258,9 @@ public class DrawPanel extends ZoomablePanel
 		repaint();
 	}
 	
-	private ArrayList<LineInputData> makeLineInputData()
+	private ArrayList<LineInput> makeLineInputData()
 	{
-		ArrayList <LineInputData> rv = new ArrayList <LineInputData> ();
+		ArrayList <LineInput> rv = new ArrayList <LineInput> ();
 		
 		if (endPoints.size() > 0)
 		{
@@ -195,8 +271,8 @@ public class DrawPanel extends ZoomablePanel
 				Point p = endPoints.get(i);
 				String c = colors.get(i);
 				
-				rv.add(new LineInputData(new DoublePoint((double)lastPoint.x, (double)lastPoint.y), new DoublePoint((double)p.x, (double)p.y), c));
-				
+				rv.add(new LineInput(new Point(lastPoint.x, lastPoint.y), new Point(p.x, p.y), c));
+			
 				lastPoint = p;
 			}
 		}
@@ -218,7 +294,22 @@ public class DrawPanel extends ZoomablePanel
 	
 	public void compute()
 	{
-		result = LineMutexCompute.compute(makeLineInputData(), parent.getWaypointSpacing(), parent.getRobotRadius());
+		Rectangle world = new Rectangle(100, 100, 1000, 1000);
+		
+		result = LineMutexCompute.compute(makeLineInputData(), parent.getWaypointSpacing(), parent.getRobotRadius(),
+				parent.getNumRobots(), parent.getMinTravelDistance(), world, ghostLineColor);
+		
+		/*System.out.println("Result:");
+		
+		for (LineOutput out : result)
+		{
+			System.out.print("Waypoints: ");
+			
+			for (WayPoint wp : out.waypoints)
+				System.out.println("Pt = " + wp.point + ", mutex=" + wp.mutexId + ", color = " + wp.color + ", start = " + wp.start + ", end = " + wp.end);
+		
+			System.out.println();
+		}*/
 		
 		repaint();
 	}

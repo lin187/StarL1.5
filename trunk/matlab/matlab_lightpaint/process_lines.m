@@ -1,4 +1,4 @@
-function [cLines lines] = process_lines(lines,color, END_SNAPPING, END_SNAP_RADIUS, ROBOT_RADIUS, SPACING)
+function [cLines ghosts] = process_lines(lines,color, END_SNAPPING, END_SNAP_RADIUS, ROBOT_RADIUS, SPACING, MIN_TRAVEL_DIST, N_ROBOTS, WGRID)
 % Connect nonadjacent lines with "ghost" lines when neccessary
 % To find the minimal path, run this once with each line as the first line
 % and record the total length.
@@ -15,10 +15,7 @@ end
 lines([1 startline],:) = lines([startline 1],:);
 color([1 startline],:) = color([startline 1],:);
 
-[lines,~,color] = add_ghosts(lines, color, END_SNAPPING, END_SNAP_RADIUS);
+[lines,ghostidx,colors] = add_ghosts(lines, color, END_SNAPPING, END_SNAP_RADIUS);
+ghosts = lines(ghostidx==1,:);
 
-cLines = computeMutex(SPACING, ROBOT_RADIUS, lines, color);
-
-% Need to flip the coordinates of each line such that the last point of a
-% line shares its coordinates with the first point of the next line
-cLines = fliplines(cLines);
+cLines = computeMutex(SPACING, ROBOT_RADIUS, MIN_TRAVEL_DIST, N_ROBOTS, WGRID, lines, colors);

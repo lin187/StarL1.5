@@ -23,6 +23,8 @@ public final class common {
 	public static final int MSG_BULLYELECTION 			= 8;
 	public static final int MSG_BULLYANSWER 			= 9;
 	public static final int MSG_BULLYWINNER				= 10;
+	public static final int MSG_ACTIVITYLAUNCH			= 11;
+	public static final int MSG_ACTIVITYABORT			= 12;
 	
 	// GUI Message handler
 	public static final int MESSAGE_TOAST = 0;
@@ -32,7 +34,6 @@ public final class common {
 	public static final int MESSAGE_ABORT = 4;
 	public static final int MESSAGE_DEBUG = 5;
 	public static final int MESSAGE_BATTERY = 6;
-	public static final int MESSAGE_MOTION = 7;
 	
 	public static final int BLUETOOTH_CONNECTING = 2;
 	public static final int BLUETOOTH_CONNECTED = 1;

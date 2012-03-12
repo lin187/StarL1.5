@@ -1,13 +1,17 @@
 package edu.illinois.mitra.starl.bluetooth;
 
+import java.util.HashSet;
+
 import android.os.Handler;
 import android.util.Log;
+import edu.illinois.mitra.starl.interfaces.MotionEventProvider;
+import edu.illinois.mitra.starl.interfaces.MotionListener;
 import edu.illinois.mitra.starl.objects.common;
 import edu.illinois.mitra.starl.objects.globalVarHolder;
 import edu.illinois.mitra.starl.objects.itemPosition;
 import edu.illinois.mitra.starl.objects.positionList;
 
-public class RobotMotion {
+public class RobotMotion implements MotionEventProvider {
 	private static final String TAG = "RobotMotion";
 	private static final String ERR = "Critical Error";
 	
@@ -20,11 +24,13 @@ public class RobotMotion {
 	private BluetoothInterface bti;
 	
 	private itemPosition blocker = null;
-	
 	private Handler handler;
 	
-	public boolean inMotion = false;
+	private HashSet<MotionListener> listeners;
+	
 	private boolean running = true;
+	
+	public boolean inMotion = false;
 	
 	// Direction and distance variables
 	private int angle = 0;
@@ -39,7 +45,7 @@ public class RobotMotion {
 
 	// Roomba motion commands
 	private byte[] robot_turn(int velocity, int dir) {
-		gvh.sendMainMsg(common.MESSAGE_MOTION, common.MOT_TURNING);
+		sendMotionEvent(common.MOT_TURNING);
 		if(dir > 0) {
 			return new byte[]{(byte) 137, 0x00, (byte) velocity, (byte) 0xFF, (byte) 0xFF};
 		} else {
@@ -49,19 +55,18 @@ public class RobotMotion {
 	
 	private byte[] robot_straight(int velocity) {
 		if(velocity != 0) {
-			gvh.sendMainMsg(common.MESSAGE_MOTION, common.MOT_STRAIGHT);
+			sendMotionEvent(common.MOT_STRAIGHT);
 		}
 		return new byte[]{(byte) 137, 0x00, (byte) velocity, 0x7F, (byte) 0xFF};
 	}
 	
 	private byte[] robot_curve(int velocity, int radius) {
-		gvh.sendMainMsg(common.MESSAGE_MOTION, common.MOT_ARCING);
-		//radius = (int) Math.copySign((15-Math.abs(radius))*100,-radius);
+		sendMotionEvent(common.MOT_ARCING);
 		return new byte[]{(byte) 137, 0x00, (byte) velocity, (byte) ((radius & 0xFF00) >> 8), (byte) (radius & 0xFF)};
 	}
 	
 	private byte[] robot_stop() {
-		gvh.sendMainMsg(common.MESSAGE_MOTION, common.MOT_STOPPED);
+		sendMotionEvent(common.MOT_STOPPED);
 		return robot_straight(0);
 	}
 	
@@ -174,7 +179,6 @@ public class RobotMotion {
 	
 	// Motion class to intelligently drive in curves
 	class motion_go_curve implements Runnable {
-		//TODO: This value was originally 100, but the robots were drifting too far from their goals
 		private static final int THRESH_GOAL = 110;
 		private static final int THRESH_SHORT = 800;
 		private static final int THRESH_MED = 1500;
@@ -427,8 +431,7 @@ public class RobotMotion {
 	private boolean collision() {
 		itemPosition me = gvh.getMyPosition();
 		positionList others = gvh.getPositions();
-		for(int i = 0; i < others.getNumPositions(); i ++) {
-			itemPosition current = others.getPositionAtIndex(i);
+		for(itemPosition current : others.getList()) {
 			if(!current.getName().equals(me.getName())) {
 				if(me.isFacing(current, 120) && me.distanceTo(current) < 450) {
 					blocker = current;
@@ -473,9 +476,7 @@ public class RobotMotion {
 	}
 
 	public void cancel() {
-		running = false;
-		handler.removeCallbacksAndMessages(null);
-		bti.send(robot_stop());
+		halt();
 		bti.disconnect();		
 	}
 	
@@ -487,5 +488,21 @@ public class RobotMotion {
 	
 	public void resume() {
 		running = true;
+	}
+
+	@Override
+	public void addMotionListener(MotionListener l) {
+		listeners.add(l);		
+	}
+
+	@Override
+	public void removeMotionListener(MotionListener l) {
+		listeners.remove(l);
+	}
+	
+	private void sendMotionEvent(int e) {
+		for(MotionListener l : listeners) {
+			l.motionEvent(e);
+		}
 	}
 }

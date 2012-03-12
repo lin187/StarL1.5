@@ -1,4 +1,4 @@
-function [lines ints] = center_lines(lines, ints, CENTER_LOCATION)
+function [lines] = center_lines(lines, CENTER_LOCATION)
 
 % Find the min x and y coordinates
 min_x = min(min(lines(:,[1 3])));
@@ -15,6 +15,4 @@ centr_y = min_y + (height/2);
 % Calculate the difference needed to move the centroid to the img center
 delta = CENTER_LOCATION - [centr_x centr_y];
 deltamat_l = repmat([delta delta], size(lines,1),1);
-deltamat_i = repmat(delta, size(ints,1),1);
 lines = lines + deltamat_l;
-ints = ints + deltamat_i;

@@ -1,50 +1,54 @@
-function cLines = computeMutex(SPACING, ROBOT_RADIUS, lines, colors)
+function cLines = computeMutex(SPACING, ROBOT_RADIUS, MIN_TRAVEL_DIST, N_ROBOTS, WGRID, lines, colors)
 if isequal(javaclasspath('-dynamic'),{})
     javaclasspath('LineMutexVisualizer.jar');
 end
 import edu.illinois.linemutex.*;
 
-% First define the lines using two endpoints and a color and store each
-% line in 'linesIn'
 linesIn = java.util.ArrayList;
 
 lines = int16(lines);
 
 % constructor is LineInputData(DoublePoint s, DoublePoint e, Color c)
 for i=1:size(lines,1)
-    startPoint = DoublePoint(lines(i,1), lines(i,2));
-    endPoint = DoublePoint(lines(i,3), lines(i,4));
-    aLine = LineInputData(startPoint, endPoint, colors(i,:));
+    startPoint = java.awt.Point(lines(i,1), lines(i,2));
+    endPoint = java.awt.Point(lines(i,3), lines(i,4));
+    aLine = LineInput(startPoint, endPoint, colors(i,:));
     linesIn.add(aLine);
 end
 
-% call the computation function
-% signature is 
-% ArrayList <LineOutputData> compute(ArrayList <LineInputData> in, int spacing, int robotRadius)
-allLines = edu.illinois.linemutex.LineMutexCompute.compute(linesIn, SPACING, ROBOT_RADIUS) ;
+world = java.awt.Rectangle(WGRID(1), WGRID(2), WGRID(3), WGRID(4));
 
+% call the computation function; signature is:
+% ArrayList <LineOutput> compute(
+%			ArrayList <LineInput> lines, 
+%			int waypointSpacing, 
+%			int robotRadius,
+%           int numRobots,
+%			int minTravelDistance, 
+%			Rectangle world,
+%   		String ghostLineColor)
+allRobots = edu.illinois.linemutex.LineMutexCompute.compute(linesIn, SPACING, ...
+            ROBOT_RADIUS, N_ROBOTS, MIN_TRAVEL_DIST, world, '000000') ;
+        
 % print out the result
-numLines = allLines.size() - 1;
-cLines = cell(numLines,4);
-for i = 0:numLines % for each line
-    lineOutput = allLines.get(i);
-    numWaypoints = lineOutput.points.size() - 1;
-    
-    x = zeros(numWaypoints,1);
-    y = zeros(numWaypoints,1);
-    mutex = zeros(numWaypoints,1);
-    cLines(i+1,4) = {lineOutput.colors.get(0)};
-    
+idx = 1;
+cLines = struct('robot',{},'waypoint',{},'ptx',{},'pty',{},'color',{},'mutex',{},'start',{},'end',{});
+numRobots = allRobots.size() - 1;
+for i = 0:numRobots % for each line
+    points = allRobots.get(i).waypoints;
+    numWaypoints = points.size() - 1;
+     
     for j = 0:numWaypoints % for each waypoint in the line
-        point = lineOutput.points.get(j);
-        x(j+1) = point.x;
-        y(j+1) = point.y;
-
-        mutex(j+1) = lineOutput.mutexId.get(j)-1;
-        %disp([num2str(i) ':' num2str(j) ' (', num2str(x(j+1)), ',', num2str(y(j+1)), ') color=', lineOutput.colors.get(j), ' mutex=', num2str(mutex(j+1))]);
+        wp = points.get(j);
+        cLines(idx).robot = i;
+        cLines(idx).waypoint = j;
+        wppoint = wp.point;
+        cLines(idx).ptx = wppoint.x;
+        cLines(idx).pty = wppoint.y;
+        cLines(idx).color = char(wp.color);
+        cLines(idx).mutex = wp.mutexId;
+        cLines(idx).start = wp.start;
+        cLines(idx).end = wp.end;        
+        idx = idx + 1;
     end
-    
-    cLines(i+1,1) = {x};
-    cLines(i+1,2) = {y};
-    cLines(i+1,3) = {mutex};
 end

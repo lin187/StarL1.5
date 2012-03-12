@@ -178,7 +178,28 @@ public class globalVarHolder implements NetworkDiscoveryListener {
 		participants.remove(name);
 	}
 	
-	public void event(String thread, String data) {
-		// TODO: Implement me!
+	public void traceStart() {
+		if(trace == null) {
+			trace = new TraceWriter(getName());
+		}
+	}
+	
+	public void traceVariable(String source, String name, Object data) {
+		if(trace != null) trace.variable(source, name, data);
+	}
+	
+	public void traceEvent(String source, String type, Object data) {
+		if(trace != null) trace.event(source, type, data);
+	}
+	
+	public void traceSync(String source) {
+		if(trace != null) trace.sync(source);
+	}
+	
+	public void traceEnd() {
+		if(trace != null) {
+			trace.close();
+			trace = null;
+		}
 	}
 }

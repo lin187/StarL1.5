@@ -4,13 +4,13 @@ import javax.swing.UIManager;
 
 
 /**
- * Lne Mutex Visualizer
+ * Line Mutex Visualizer
  * 3-5-2012
  * @author Stanley Bak (sbak2@illinois.edu)
  *
  */
 public class Main
-{
+{	
 	public static void main(String[] args)
 	{	
 		try 

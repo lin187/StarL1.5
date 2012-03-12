@@ -3,6 +3,7 @@ package edu.illinois.mitra.test;
 import android.util.Log;
 import edu.illinois.mitra.starl.bluetooth.RobotMotion;
 import edu.illinois.mitra.starl.functions.BarrierSynchronizer;
+import edu.illinois.mitra.starl.functions.BullyLeaderElection;
 import edu.illinois.mitra.starl.functions.RandomLeaderElection;
 import edu.illinois.mitra.starl.interfaces.LeaderElection;
 import edu.illinois.mitra.starl.interfaces.MutualExclusion;
@@ -43,25 +44,19 @@ public class LogicThread extends Thread {
 		Log.i(TAG, "I AM " + name);
 		
 		sync = new BarrierSynchronizer(gvh);
-		le = new RandomLeaderElection(gvh);
+		le = new BullyLeaderElection(gvh);
 	}
 	
 	@Override
 	public void run() {
 		while(running) {
-			gvh.setDebugInfo(gvh.getParticipants().toString());
 			switch(stage) {
 			case START:
+				int sleepFor = 1000 + (int)(Math.random()*1000.0);
+				Log.d(TAG, "Sleeping for " + sleepFor);
+				sleep(sleepFor);
 				sync.barrier_sync("1");
-				stage = STAGE.SYNC;
-				Log.d(TAG, "Syncing...");
-				break;
-
-			case SYNC:
-				if(sync.barrier_proceed("1")) {
-					stage = STAGE.LE;
-					Log.d(TAG, "Synced!");
-				}
+				stage = STAGE.LE;
 				break;
 				
 			case LE:

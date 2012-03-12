@@ -1,4 +1,4 @@
-function [next need_ghost data closest_dist] = find_nearest(cur, data)
+function [next need_ghost data closest_dist idx] = find_nearest(cur, data)
 need_ghost = 0;
 next = [0 0 0 0];
 
@@ -21,8 +21,8 @@ for i = 1:n_lines
        closest = i + 1i;  
    end
 end
-
-next = data(real(closest),:);
+idx = real(closest);
+next = data(idx,:);
 data(real(closest),:) = [];
 need_ghost = (closest_dist ~= 0);
 

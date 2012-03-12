@@ -20,13 +20,13 @@ ghosts = ones(num_lines+num_lines-1,1)*-1;
 colors = repmat('000000' ,[num_lines+num_lines-1 1]);
 
 lines(1,:) = data(1,:);
-colors(1,:) = colorin(1,:);
+colors(1,:) = colorin{1};
 ghosts(1) = 0;
 
 cur_A = data(1,1:2);
 cur_B = data(1,3:4);
 data(1,:) = [];
-colorin(1,:) = [];
+colorin(1) = [];
 
 % Determine which of them has a closer neighbor
 closest_A = inf;
@@ -69,14 +69,14 @@ while ~isempty(data)
         lines(i+1,:) = next;
         
         colors(i,:) = '000000';
-        colors(i+1,:) = colorin(idx,:);
-        colorin(idx,:) = [];
+        colors(i+1,:) = colorin{idx};
+        colorin(idx) = [];
         
         ghosts(i:i+1) = [1 0];
         i = i + 1;
     else 
         lines(i,:) = next;
-        colors(i,:) = colorin(idx,:);
+        colors(i,:) = colorin{idx};
         ghosts(i) = 0;
     end
     

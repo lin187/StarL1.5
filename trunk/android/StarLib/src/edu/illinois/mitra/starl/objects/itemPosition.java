@@ -26,7 +26,7 @@ public class itemPosition implements Comparable<itemPosition> {
 	
 	// This compareTo implementation doesn't make tons of sense
 	public int compareTo(itemPosition other) {
-		if(name.equals(other.getName())) {
+		if(!name.equals(other.getName())) {
 			return 1;
 		}
 		return 0;
@@ -106,20 +106,32 @@ public class itemPosition implements Comparable<itemPosition> {
 		this.y = y;
 		this.angle = angle;
 	}
-
+	
+	// Hashing and equals checks are done only against the position's name. Position names are unique!
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + angle;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + x;
-		result = prime * result + y;
 		return result;
 	}
-	
-	public boolean equals(itemPosition o) {
-		return (this.x == o.x) && (this.y == o.y) && (this.angle == o.angle);
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		itemPosition other = (itemPosition) obj;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
 	}
 
 	private int min_magitude(int a1, int a2) {

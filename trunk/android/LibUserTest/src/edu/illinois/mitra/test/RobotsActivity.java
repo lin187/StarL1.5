@@ -128,8 +128,8 @@ public class RobotsActivity extends Activity {
         for(int i = 0; i < participants.length; i++) {
         	hm_participants.put(participants[i], ips[i]);
         }        
-        //gvh = new globalVarHolder(hm_participants, main_handler);
-        gvh = new globalVarHolder(main_handler);
+        gvh = new globalVarHolder(hm_participants, main_handler);
+        //gvh = new globalVarHolder(main_handler);
         
         // Connect
         connect_disconnect();

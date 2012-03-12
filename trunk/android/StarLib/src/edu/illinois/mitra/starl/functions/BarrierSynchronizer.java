@@ -10,6 +10,9 @@ import edu.illinois.mitra.starl.objects.common;
 import edu.illinois.mitra.starl.objects.globalVarHolder;
 
 public class BarrierSynchronizer implements Synchronizer, MessageListener {
+	private static final String TAG = "BarrierSynchronizer";
+	private static final String ERR = "Critical Error";
+	
 	private globalVarHolder gvh;
 	// Barriers tracks which barriers are active and how many robots have reported ready to proceed for each
 	// Keys are barrier IDs, values are number of robots ready to proceed
@@ -36,6 +39,8 @@ public class BarrierSynchronizer implements Synchronizer, MessageListener {
 		}
 		RobotMessage notify_sync = new RobotMessage("ALL", name, common.MSG_BARRIERSYNC, barrierID);
 		gvh.addOutgoingMessage(notify_sync);
+		
+		gvh.traceEvent(TAG, "barrier_sync", barrierID);
 	}
 	
 	public boolean barrier_proceed(String barrierID) {	
@@ -59,6 +64,8 @@ public class BarrierSynchronizer implements Synchronizer, MessageListener {
 			Log.d(TAG, "Received first barrier notice for bID " + bID);
 			barriers.put(bID, new Integer(1));
 		}
+		
+		gvh.traceEvent(TAG, "messageReceived", m);
 	}
 	
 	public void cancel() {

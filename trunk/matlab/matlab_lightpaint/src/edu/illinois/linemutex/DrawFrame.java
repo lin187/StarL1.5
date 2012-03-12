@@ -21,9 +21,11 @@ import javax.swing.event.ChangeListener;
 public class DrawFrame extends JFrame implements ActionListener, ChangeListener
 {
 	DrawPanel dp = new DrawPanel(this);
-	JButton clear = new JButton("Clear Segments");	
+	JButton clear = new JButton("Reset");	
 	JSpinner waypointSpacing;
 	JSpinner robotRadius;
+	JSpinner numRobots;
+	JSpinner minTravelDistance;
 	
 	public DrawFrame()
 	{
@@ -36,7 +38,7 @@ public class DrawFrame extends JFrame implements ActionListener, ChangeListener
 		JPanel top = new JPanel();
 		getContentPane().add(top, BorderLayout.PAGE_START);
 		
-		top.add(new JLabel("<html>Use the mouse to create segment endpoints (left = add, right = undo).<br .> " +
+		top.add(new JLabel("<html>Use the mouse to create segment endpoints (left = add, right = undo).<br /> " +
 				"The red circle's diameter is twice the robot's radius (the collision distance).</html>"));
 		
 		bottom.setLayout(new FlowLayout());
@@ -66,10 +68,32 @@ public class DrawFrame extends JFrame implements ActionListener, ChangeListener
 		                               1));                //step
 		robotRadius.addChangeListener(this);
 		bottom.add(robotRadius);
+		
+		bottom.add(Box.createRigidArea(new Dimension(25,0)));
+		bottom.add(new JLabel("Num Robots:"));
+		
+		numRobots = new JSpinner(
+		        new SpinnerNumberModel(4, //initial value
+		                               1, //min
+		                              99, //max
+		                               1));                //step
+		numRobots.addChangeListener(this);
+		bottom.add(numRobots);
+		
+		bottom.add(Box.createRigidArea(new Dimension(25,0)));
+		bottom.add(new JLabel("Min Travel Distance:"));
+		
+		minTravelDistance = new JSpinner(
+		        new SpinnerNumberModel(200, //initial value
+		                               1, //min
+		                              999999, //max
+		                               1));                //step
+		minTravelDistance.addChangeListener(this);
+		bottom.add(minTravelDistance);
 	
 		
 		setTitle("Line Mutex Visualizer");
-		setSize(1024,768);
+		setSize(1100,600);
 		setLocation(100, 100);
 		
 	}
@@ -95,5 +119,15 @@ public class DrawFrame extends JFrame implements ActionListener, ChangeListener
 	public void stateChanged(ChangeEvent arg0)
 	{
 		dp.compute();
+	}
+
+	public int getNumRobots()
+	{
+		return (Integer)numRobots.getValue();
+	}
+
+	public int getMinTravelDistance()
+	{
+		return (Integer)minTravelDistance.getValue();
 	}
 }

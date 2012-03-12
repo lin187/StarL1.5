@@ -64,7 +64,7 @@ public class Geometry
 	{
 		double rv = Double.MAX_VALUE;
 		
-		if (one.intersectsLine(two))
+		if (one.intersectsLine(two) && getLength(one) > 0 && getLength(two) > 0)
 		{
 			rv = 0;
 		}
@@ -78,6 +78,81 @@ public class Geometry
 		}
 		
 		return rv;
+	}
+	
+	public static Point2D.Double segSegIntersection(Line2D.Double one, Line2D.Double two)
+	{
+		Point2D.Double rv = null;
+		
+		if (getLength(one) < SMALL) // line one is actually a point
+		{
+			if (two.ptSegDist(one.getP1()) < SMALL)
+				rv = new Point2D.Double(one.x1, one.y1);
+		}
+		else if (getLength(two) < SMALL) // line two is actually a point
+		{
+			if (one.ptSegDist(two.getP1()) < SMALL)
+				rv = new Point2D.Double(two.x1, two.y1);
+		}
+		else if (one.intersectsLine(two))
+		{
+			double m1 = getSlope(one);
+			double m2 = getSlope(two);
+			
+			if (m1 == Double.POSITIVE_INFINITY || m1 == Double.NEGATIVE_INFINITY)
+			{
+				// one is a vertical line, use its x value and solve for y
+				double b2 = getYIntercept(two);
+				
+				double x = one.x1;
+				double y = m2 * x + b2;
+				
+				rv = new Point2D.Double(x, y);
+			}
+			else if (m2 == Double.POSITIVE_INFINITY || m2 == Double.NEGATIVE_INFINITY)
+			{
+				// two is a vertical line, use its x value and solve for y
+				double b1 = getYIntercept(one);
+				
+				double x = two.x1;
+				double y = m1 * x + b1;
+				
+				rv = new Point2D.Double(x, y);
+			}
+			else if (Math.abs(m1 - m2) < SMALL)
+			{
+				// lines are parallel, intersection must be at an end point
+				
+				Point2D.Double a = new Point2D.Double(one.x1, one.y1);
+				Point2D.Double b = new Point2D.Double(one.x2, one.y2);
+				
+				if (two.ptSegDist(a) < two.ptSegDist(b))
+					rv = a;
+				else
+					rv = b;
+			}
+			else
+			{
+				// neither is a vertical line and lines are not parallel
+				double b1 = getYIntercept(one);
+				double b2 = getYIntercept(two);
+				
+				double x = (b2 - b1) / (m1 - m2);
+				double y = m1 * x + b1;
+				
+				rv = new Point2D.Double(x, y);
+			}				
+		}
+		
+		return rv;
+	}
+
+	private static double getYIntercept(Line2D.Double line)
+	{
+		double m = getSlope(line);
+		double dx = line.x1;
+		
+		return line.y1 - m * dx;
 	}
 	
 }

@@ -18,17 +18,16 @@ function [] = ProcessFile(varargin)
 format longg;
 FNAME = varargin{1};
 %% Options section
-DIR = 'C:\pictures\tests';
+DIR = 'D:\';
 
 % Waypoint spacing and intersection radius constants
 SPACING = 500;
-SAFE_TRAVEL_RADIUS = 250;
 ROBOT_RADIUS = 160;
 
 % Enable/disable image scaling and centering
 CENTER = true;
 SCALE = true;
-SCALE_MAX = 2850;
+SCALE_MAX = 2400;
 CENTER_LOCATION = [1600 1750];
 
 % Snap to grid options
@@ -36,12 +35,16 @@ SNAP_TO_GRID = false;
 GRIDDIM = [3200 3200];
 GRIDSIZE = 300;
 
+% Settings
+N_ROBOTS = 4;
+MIN_TRAVEL_DIST = 1000;
+WGRID = [100 100 GRIDDIM-GRIDSIZE];
+
 % Enable/disable endpoint snapping
 END_SNAPPING = true;
 END_SNAP_RADIUS = 50;
 
 LAUNCH_TRACKER = true;
-MAXFRAMES = 1;
 
 OUTPUT = [FNAME '.wpt'];
 INPUT = [FNAME '.svg'];
@@ -51,9 +54,7 @@ if nargin > 1 && mod(nargin,2) == 0
     error('Invalid number of arguments!');
 elseif nargin > 1
     for i = 2:2:nargin
-        if strcmpi(varargin{i},'frames')
-            MAXFRAMES = varargin{i+1};
-        elseif strcmpi(varargin{i},'track')
+        if strcmpi(varargin{i},'track')
             LAUNCH_TRACKER = varargin{i+1};
         elseif strcmpi(varargin{i},'spacing')
             SPACING = varargin{i+1};
@@ -65,6 +66,10 @@ elseif nargin > 1
             ROBOT_RADIUS = varargin{i+1};
         elseif strcmpi(varargin{i},'dir')
             DIR = varargin{i+1};
+        elseif strcmpi(varargin{i},'robots')
+            N_ROBOTS = varargin{i+1};
+        elseif strcmpi(varargin{i},'dist')
+            MIN_TRAVEL_DIST = varargin{i+1};
         else
             warning(['Unrecognized argument: ' varargin{i}]);
         end
@@ -72,7 +77,6 @@ elseif nargin > 1
 end
 
 %% Load and pre-process the image
-% Load the SVG image, convert it to usable data
 [lines colors] = load_replace(fullfile(DIR,INPUT));
 
 if size(lines,1) == 0
@@ -99,46 +103,17 @@ if SNAP_TO_GRID
     lines = remap_to_grid(lines,GRIDSIZE, GRIDDIM);
 end
 
-%% Separate the lines into multiple frames
-[flines fcolors] = separate_frames(round(lines), colors, SAFE_TRAVEL_RADIUS, SPACING, MAXFRAMES);
-n_frames = size(flines,3);
+%% Process the lines
+% Eliminate any lines with only a single point (occasional byproduct of gridsnapping)
+[lines,colors,~] = eliminateSingletons(lines,colors);
 
-%% Process each frame
-output = struct('framenum',{},'cLines',{},'lines',{});
-for b=1:n_frames
-    lines = flines(:,:,b);
-    lines(lines == -1) = [];
-    lines = reshape(lines,[],4);
-    
-    % Eliminate any lines with only a single point (occasional byproduct of gridsnapping)
-    [lines,~,~] = eliminateSingletons(lines,colors);
-    
-    if isempty(lines)
-        n_frames = b-1;
-        break;
-    end
-    
-    colors = [];
-    for i=1:size(fcolors,1)
-        if ~isequal(fcolors{i,b},-1)
-           colors = [colors; fcolors{i,b}] ;
-        end
-    end
-    
-    [output(b).cLines output(b).lines] = process_lines(lines,colors, END_SNAPPING, END_SNAP_RADIUS, ROBOT_RADIUS, SPACING);
-    output(b).framenum = b;
-end
+[cLines ghosts] = process_lines(round(lines),colors, END_SNAPPING, END_SNAP_RADIUS, ROBOT_RADIUS, SPACING, MIN_TRAVEL_DIST, N_ROBOTS, WGRID);
 
 %% Output lines
 % Export to a .WPT file
-export_wpt(output, INPUT, SPACING, fullfile(DIR,OUTPUT));
-
-% Print statistics
-for i=1:n_frames      
-    plot_lines(output(i).cLines, output(i).lines, i, n_frames);
-end
-
-set(gcf,'Position',[400 400 400*n_frames 400]);
+export_wpt(cLines, INPUT, fullfile(DIR,OUTPUT));
+  
+plot_lines(cLines, lines, ghosts);
 
 if LAUNCH_TRACKER
     pause;
