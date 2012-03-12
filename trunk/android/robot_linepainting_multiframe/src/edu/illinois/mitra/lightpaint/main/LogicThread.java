@@ -40,7 +40,6 @@ public class LogicThread extends Thread implements MessageListener {
 	
 	//---------------------
 	// Constant stage names
-
 	public enum STAGE {
 		START,LEADERELECT_BARRIER,LEADERELECT,DIVIDE_LINES,GET_LINE_ASSIGNMENT,GO_TO_START,CALC_NEXT_POINT_BARRIER,CALC_NEXT_POINT,GO_NEXT_POINT,WAIT_AT_INTERSECTION,FINISH,DONE
 	}
@@ -304,7 +303,7 @@ public class LogicThread extends Thread implements MessageListener {
 	}
 
 	public void messageReceied(RobotMessage m) {
-		// TODO Auto-generated method stub
-		
+		Log.i(TAG, "Received assignment message " + m.getContents());
+		assignment = Integer.parseInt(m.getContents());
 	}	
 }

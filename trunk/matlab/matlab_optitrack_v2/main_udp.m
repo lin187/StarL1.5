@@ -1,5 +1,5 @@
 % Main OptiTrack interface
 % Settings
-WPT_FILENAME = 'C:\pictures\tests\texas.wpt';
+WPT_FILENAME = 'C:\tag.wpt';
 load_settings;
 mainprog;

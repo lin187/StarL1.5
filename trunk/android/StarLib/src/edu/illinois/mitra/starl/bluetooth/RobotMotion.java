@@ -41,6 +41,7 @@ public class RobotMotion implements MotionEventProvider {
 		this.bti = new BluetoothInterface(gvh, this);
 		bti.connect(mac);
 		handler = new Handler();
+		listeners = new HashSet<MotionListener>();
 	}
 
 	// Roomba motion commands
@@ -222,6 +223,7 @@ public class RobotMotion implements MotionEventProvider {
 		
 		public void run() {
 			if(running) {
+			currentpos = gvh.getMyPosition();
 			state = nextState;
 			if(collision()) {
 				Log.d(TAG, "Collision with " + blocker);
@@ -379,7 +381,6 @@ public class RobotMotion implements MotionEventProvider {
 	class motion_go_colavoid implements Runnable {
 		int mystate = 0;
 		itemPosition dest;
-		globalVarHolder gvh;
 		
 		public motion_go_colavoid(itemPosition destination, int state) {
 			this.mystate = state;
@@ -392,6 +393,7 @@ public class RobotMotion implements MotionEventProvider {
 		}
 				
 		public void run() {
+			currentpos = gvh.getMyPosition();
 			switch(mystate) {
 			case 0:
 				//Log.d(TAG,"0 - Turning away from blocker!");
@@ -505,8 +507,8 @@ public class RobotMotion implements MotionEventProvider {
 	}
 	
 	private void sendMotionEvent(int e) {
-		for(MotionListener l : listeners) {
-			l.motionEvent(e);
-		}
+//		for(MotionListener l : listeners) {
+//			l.motionEvent(e);
+//		}
 	}
 }
