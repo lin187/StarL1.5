@@ -28,15 +28,6 @@ public class LogicThread extends Thread {
 	}
 	private STAGE stage = STAGE.START;
 	
-	//---------------------
-	// Constant message IDs
-	public static final int MSG_BARRIERSYNC 			= 1;
-	public static final int MSG_MUTEX_TOKEN_OWNER_BCAST = 2;
-	public static final int MSG_MUTEX_TOKEN 			= 3;
-	public static final int MSG_MUTEX_TOKEN_REQUEST 	= 4;
-	public static final int MSG_LEADERELECT 			= 5;
-	public static final int MSG_LEADERELECT_ANNOUNCE	= 6;
-	
 	public LogicThread(globalVarHolder gvh, RobotMotion motion) {
 		this.gvh = gvh;
 		this.motion = motion;

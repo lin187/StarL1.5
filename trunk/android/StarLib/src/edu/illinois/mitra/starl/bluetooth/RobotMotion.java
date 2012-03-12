@@ -482,9 +482,13 @@ public class RobotMotion implements MotionEventProvider {
 	
 	public void halt() {
 		running = false;
+		stop();
+	}
+	
+	public void stop() {
 		handler.removeCallbacksAndMessages(null);
 		bti.send(robot_stop());
-	}
+	}	
 	
 	public void resume() {
 		running = true;

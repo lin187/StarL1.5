@@ -91,8 +91,6 @@ public class RobotsActivity extends Activity {
 	    	case common.MESSAGE_BATTERY:
 	    		pbBattery.setProgress((Integer) msg.obj);
 	    		break;
-	    	case common.MESSAGE_MOTION:
-	    		break;
 	    	}	
     	}
 
