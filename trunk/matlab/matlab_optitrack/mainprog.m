@@ -1,6 +1,8 @@
 close all;
 format longg;
 
+load('run_number.mat')
+
 % Start the tracker interface if it isn't running
 if ~exist('cameraCount', 'var')
     cameraCount = track_init(TTP_FILENAME);
@@ -39,7 +41,7 @@ send_launch = 0;
 % Get all trackable robots, set up a structure to hold them
 [robot_count robot_names] = track_getTrackables();
 bots = struct('X',{0},'Y',{0},'yaw',{0},'visible',{0},'name',robot_names,...
-    'history',{ones(HISTORY_SIZE,2)*-1},'hist_index',{1});
+    'history',{ones(HISTORY_SIZE,2)*-1},'histangle',{ones(HISTORY_SIZE,1)*-1},'hist_index',{1});
 
 % Set up the plot
 fig = figure('KeyPressFcn',@fig_key_handler);
@@ -78,12 +80,10 @@ while 1
             bots(i).visible = 1;
             
             % Append the new point to the history
-            hist = bots(i).history;
-            if ~ismember([bots(i).X bots(i).Y], hist, 'rows')
-                hist_index = mod(bots(i).hist_index,HISTORY_SIZE)+1;
-                bots(i).history(bots(i).hist_index,:) = [bots(i).X bots(i).Y];
-                bots(i).hist_index = hist_index;
-            end
+            hist_index = mod(bots(i).hist_index,HISTORY_SIZE)+1;
+            bots(i).history(bots(i).hist_index,:) = [bots(i).X bots(i).Y];
+            bots(i).histangle(bots(i).hist_index) = bots(i).yaw;
+            bots(i).hist_index = hist_index;
         else
             bots(i).visible = 0;
         end
@@ -114,14 +114,27 @@ while 1
 
     if USE_SERVER == 1       
         % Send positions to all connected nodes
-        if ((toc > TX_PERIOD && send_launch ~= 1) || waypoints_transmitted == 0)
-            server_send_udp(bots, waypoints);
-            tic;
+        if ((toc > TX_PERIOD && send_launch ~= 1))
+            midx = robot_has_moved(bots);
+            if ~isequal(midx,[])
+                server_send_robots(bots(midx));
+                tic;
+            end
         end
+        
+        % Send waypoints and robot positions
+         if(waypoints_transmitted == 0)
+             waypoints_transmitted = 1;
+             server_send_waypoints(waypoints);
+             server_send_robots(bots);
+         end
 
         % If launching the robots
         if send_launch == 1
-            judp('SEND',4000,'192.168.1.255',int8(['GO ' int2str(size(waypoints,2))]));
+            server_send_waypoints(waypoints);
+            server_send_robots(bots);
+            judp('SEND',4000,'192.168.1.255',int8(['GO ' int2str(size(waypoints,2)) ' ' int2str(run_number)]));
+            run_number = run_number + 1;
             send_launch = 0;
         end
         
@@ -138,10 +151,7 @@ end
 
 if shutdown_track == 1
     track_shutdown();
-    
-%     if exist('RETURN_DIR','var')
-%         cd(RETURN_DIR);
-%     end
+    save('run_number.mat', 'run_number');
     clear
 end
 close all

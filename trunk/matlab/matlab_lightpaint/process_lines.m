@@ -17,5 +17,5 @@ color([1 startline],:) = color([startline 1],:);
 
 [lines,ghostidx,colors] = add_ghosts(lines, color, END_SNAPPING, END_SNAP_RADIUS);
 ghosts = lines(ghostidx==1,:);
-
+lines
 cLines = computeMutex(SPACING, ROBOT_RADIUS, MIN_TRAVEL_DIST, N_ROBOTS, WGRID, lines, colors);

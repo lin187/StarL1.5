@@ -6,7 +6,7 @@ import edu.illinois.linemutex.*;
 
 linesIn = java.util.ArrayList;
 
-%lines = int16(lines);
+lines = int16(lines);
 
 % constructor is LineInputData(DoublePoint s, DoublePoint e, Color c)
 for i=1:size(lines,1)
@@ -49,6 +49,11 @@ for i = 0:numRobots % for each line
         cLines(idx).mutex = wp.mutexId;
         cLines(idx).start = wp.start;
         cLines(idx).end = wp.end;        
+        
+        fprintf('%u %u   (%u,%u) %s %d [%u %u]\n', cLines(idx).robot, cLines(idx).waypoint, ...
+            cLines(idx).ptx, cLines(idx).pty, cLines(idx).color, cLines(idx).mutex, ...
+            cLines(idx).start, cLines(idx).end);
+        
         idx = idx + 1;
     end
 end

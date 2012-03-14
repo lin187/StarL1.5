@@ -7,13 +7,14 @@ function [] = ProcessFile(varargin)
 %   PROCESSFILE(...,OPTION,VALUE) Processes the file with optional
 %   arguments. Available options:
 %
-%     'frames' - maximum number of frames, default 1
 %     'track'  - enable/disable launching the tracker, default true
 %     'spacing' - point spacing, default 500
 %     'gridsize' - size of grid used for grid snapping, default 300
 %     'snap' - enable/disable snap to grid, default false
 %     'radius' - radius of the robot, default 160
 %     'dir' - the directory images and wpt files are stored in
+%     'dist' - the minimum robot travel distance, default 1000
+%     'robots' - the number of participating robots, default 4
 
 format longg;
 FNAME = varargin{1};
@@ -22,7 +23,7 @@ DIR = 'C:\pictures\tests';
 
 % Waypoint spacing and intersection radius constants
 SPACING = 500;
-ROBOT_RADIUS = 160;
+ROBOT_RADIUS = 230;
 
 % Enable/disable image scaling and centering
 CENTER = true;
@@ -112,12 +113,18 @@ end
 %% Output lines
 % Export to a .WPT file
 export_wpt(cLines, INPUT, fullfile(DIR,OUTPUT));
-  
-plot_lines(cLines, lines, ghosts);
 
-if LAUNCH_TRACKER
+if ~LAUNCH_TRACKER
+    for i=-1:N_ROBOTS-1
+        plot_lines(cLines, lines, ghosts,i);
+        if i ~= N_ROBOTS-1
+            pause;
+        end
+    end
+else
+    plot_lines(cLines, lines, ghosts);
     pause;
-    addpath('..\matlab_optitrack_v2');
+    addpath('..\matlab_optitrack');
     load_settings
     WPT_FILENAME = fullfile(DIR, OUTPUT);
     mainprog;

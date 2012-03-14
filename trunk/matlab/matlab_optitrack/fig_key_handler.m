@@ -30,7 +30,6 @@ disp(event.Character);
     
     if event.Character == 'l'
         if send_launch == 0
-            waypoints_transmitted = 0;
             disp('Sending launch command!');
             send_launch = 1;
         end
