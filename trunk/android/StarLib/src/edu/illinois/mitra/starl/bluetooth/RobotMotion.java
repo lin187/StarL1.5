@@ -507,8 +507,8 @@ public class RobotMotion implements MotionEventProvider {
 	}
 	
 	private void sendMotionEvent(int e) {
-//		for(MotionListener l : listeners) {
-//			l.motionEvent(e);
-//		}
+		for(MotionListener l : listeners) {
+			l.motionEvent(e);
+		}
 	}
 }

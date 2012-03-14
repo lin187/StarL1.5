@@ -38,7 +38,7 @@ public final class common {
 	public static final int BLUETOOTH_CONNECTING = 2;
 	public static final int BLUETOOTH_CONNECTED = 1;
 	public static final int GPS_RECEIVING = 1;
-	
+	public static final int GPS_OFFLINE = 0;
 	
 	// Motion types
 	public static final int MOT_TURNING		= 0;

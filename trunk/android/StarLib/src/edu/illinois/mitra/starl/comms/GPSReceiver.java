@@ -24,6 +24,7 @@ public class GPSReceiver extends Thread {
 
 	private DatagramSocket mSocket;
 	private InetAddress myLocalIP;
+	private boolean running = true;
 	
 	private boolean received = false;
 
@@ -40,6 +41,7 @@ public class GPSReceiver extends Thread {
 		} catch (IOException e) {}
 		
 		Log.i("GPSReceiver", "Listening to GPS host on port " + port);
+		gvh.traceEvent(TAG, "Created");
 	}
 
 	@Override
@@ -50,6 +52,7 @@ public class GPSReceiver extends Thread {
 	
 	@Override
 	public synchronized void start() {
+		running = true;
 		super.start();
 	}
 
@@ -60,7 +63,7 @@ public class GPSReceiver extends Thread {
     	try {
     		byte[] buf = new byte[2048]; 
     		
-    		while(true) {
+    		while(running) {
 		    	// Receive a message
     			DatagramPacket packet = new DatagramPacket(buf, buf.length); 
 				mSocket.receive(packet);
@@ -73,22 +76,26 @@ public class GPSReceiver extends Thread {
     			// Parse the received string
     			String [] parts = line.split("\n");
     			if(received == false) {
-    				gvh.sendMainMsg(common.MESSAGE_LOCATION, 1);
+    				gvh.sendMainMsg(common.MESSAGE_LOCATION, common.GPS_RECEIVING);
     				received = true;
     			}    			
     			for(int i = 0; i < parts.length; i++) {
     				if(parts[i].length() >= 2) {
 		    			switch(parts[i].charAt(0)) {
 		    			case '@':
+		    				gvh.traceEvent(TAG, "Received waypoint position", parts[i]);
 		    				waypointPositions.update(parts[i]);
 		    				break;
 		    			case '#':
+		    				gvh.traceEvent(TAG, "Received robot position", parts[i]);
 		    				robotPositions.update(parts[i]);
 		    				break;
 		    			case 'G':
-		    				gvh.sendMainMsg(common.MESSAGE_LAUNCH, Integer.parseInt(parts[i].substring(3)));
+		    				gvh.traceEvent(TAG, "Received launch command");
+		    				gvh.sendMainMsg(common.MESSAGE_LAUNCH, parts[i].substring(3));
 		    				break;
 		    			case 'A':
+		    				gvh.traceEvent(TAG, "Received abort command");
 		    				gvh.sendMainMsg(common.MESSAGE_ABORT, null);
 		    				break;
 		    			default:
@@ -97,11 +104,9 @@ public class GPSReceiver extends Thread {
 		    			}
     				}
     			}
-    			//gvh.setDebugInfo(robotPositions.toString() + "\nWaypoints: " + waypointPositions.getNumPositions());
 	    	}
 		} catch (IOException e) {
-			//Log.e(ERR, "Error receiving in GPSReceiver");
-			gvh.sendMainMsg(1, 0);
+			gvh.sendMainMsg(common.MESSAGE_LOCATION, common.GPS_OFFLINE);
 		} 
 	}
 	
@@ -123,6 +128,8 @@ public class GPSReceiver extends Thread {
     }
     
     public void cancel() {
+    	running = false;
+    	gvh.sendMainMsg(common.MESSAGE_LOCATION, common.GPS_OFFLINE);
         try {
         	// Clear the list of waypoints
         	//robotPositions = new positionList();
@@ -133,5 +140,6 @@ public class GPSReceiver extends Thread {
         } catch (Exception e) {
             Log.e(ERR, "close of connect socket failed", e);
         }
+		gvh.traceEvent(TAG, "Cancelled");
     }
 }

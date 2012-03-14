@@ -15,7 +15,7 @@ import edu.illinois.mitra.starl.objects.globalVarHolder;
 
 public class RandomLeaderElection implements LeaderElection, MessageListener {
 
-	private static final String TAG = "LeaderElection";
+	private static final String TAG = "RandomLeaderElection";
 	private static final String ERR = "Critical Error";
 	private globalVarHolder gvh = null;
 	private int nodes = 0;
@@ -31,10 +31,12 @@ public class RandomLeaderElection implements LeaderElection, MessageListener {
 		nodes = gvh.getParticipants().size();
 		received = new TreeMap<Integer,String>();
 		registerListeners();
+		gvh.traceEvent(TAG, "Created");
 	}
 	
 	// Elects one of the participants as leader, returns their name
-	public String elect() {		
+	public String elect() {
+		gvh.traceEvent(TAG, "Beginning Election");
 		nodes = gvh.getParticipants().size();
 		error = false;
 
@@ -43,6 +45,7 @@ public class RandomLeaderElection implements LeaderElection, MessageListener {
 		int myNum = rand.nextInt(1000);
 		received.put(myNum, gvh.getName());
 
+		gvh.traceVariable(TAG, "myNum", myNum);
 		Log.i(TAG, "My number is " + myNum);
 		
 		// Broadcast
@@ -52,8 +55,10 @@ public class RandomLeaderElection implements LeaderElection, MessageListener {
 		// Wait to receive MSG_LEADERELECT messages
 		Long startWaitTime = System.currentTimeMillis();
 		Long endTime = startWaitTime+MAX_WAIT_TIME;
+		gvh.traceEvent(TAG, "Waiting for MSG_LEADERELECT messages");
 		while(!error && received.size() < nodes) {
 			if(System.currentTimeMillis() > endTime) {
+				gvh.traceEvent(TAG, "Waited timed out");
 				Log.e(TAG, "Waited too long!");
 				error = true;
 			}
@@ -67,17 +72,21 @@ public class RandomLeaderElection implements LeaderElection, MessageListener {
 			
 			// The leader is the first in the sorted list
 			leader = leader_candidates.first();
+			gvh.traceEvent(TAG, "Determined leader", leader);
 			
 			// Have determined a leader, broadcast the result
 			RobotMessage bcast_leader = new RobotMessage("ALL", gvh.getName(), common.MSG_RANDLEADERELECT_ANNOUNCE, leader);
 			gvh.addOutgoingMessage(bcast_leader);
+			gvh.traceEvent(TAG, "Notified all of leader");
 		}
 		if(error) {
 			// Receive any MSG_LEADERELECT_ANNOUNCE messages, accept whoever they elect as leader
 			startWaitTime = System.currentTimeMillis();
 			endTime = startWaitTime+MAX_WAIT_TIME;
+			gvh.traceEvent(TAG, "Waiting for MSG_LEADERELECT_ANNOUNCE messages");
 			while(announcedLeader == null) {
 				if(System.currentTimeMillis() > startWaitTime + MAX_WAIT_TIME) {
+					gvh.traceEvent(TAG, "Waited timed out, leader election failed");
 					Log.e(ERR, "Leader election failed!");
 					return "ERROR";
 				}
@@ -85,12 +94,13 @@ public class RandomLeaderElection implements LeaderElection, MessageListener {
 			leader = announcedLeader;
 		}
 		Log.i(TAG, "Elected leader: " + leader);
-
+		gvh.traceEvent(TAG, "Elected leader", leader);
 		return leader;
 	}	
 	
 	public void cancel() {
 		unregisterListeners();
+		gvh.traceEvent(TAG, "Cancelled");
 	}
 	
 	private void registerListeners() {
@@ -117,10 +127,12 @@ public class RandomLeaderElection implements LeaderElection, MessageListener {
 				}
 				received.put(val, from);
 			}
+			gvh.traceEvent(TAG, "Received MSG_RANDLEADERELECT message", from + " " + m.getContents());
 			break;
 			
 		case common.MSG_RANDLEADERELECT_ANNOUNCE:
 			announcedLeader = m.getContents();
+			gvh.traceEvent(TAG, "Received MSG_RANDLEADERELECT_ANNOUNCE message", announcedLeader);
 			break;
 		}
 	}

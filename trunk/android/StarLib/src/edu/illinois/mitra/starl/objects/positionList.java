@@ -4,6 +4,8 @@ package edu.illinois.mitra.starl.objects;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import edu.illinois.mitra.starl.exceptions.ItemFormattingException;
+
 import android.util.Log;
 
 public class positionList {
@@ -18,12 +20,11 @@ public class positionList {
 	}
 	
 	public void update(String received) {
-		String[] parts = received.replace(",", "").split("\\|");
-		if(parts.length == 6) {
-			positions.put(parts[1],new itemPosition(parts[1], Integer.parseInt(parts[2]), Integer.parseInt(parts[3]), Integer.parseInt(parts[4])));
-		} else {
-			Log.e(TAG, "Invalid item formatting: " + parts.length);
-			Log.e(TAG, received.replace(",",""));
+		try {
+			itemPosition updated = new itemPosition(received);
+			positions.put(updated.getName(), updated);
+		} catch(ItemFormattingException e){
+			Log.e(TAG, "Invalid item formatting: " + e.getError());
 		}
 	}
 	

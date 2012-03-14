@@ -15,6 +15,8 @@ import edu.illinois.mitra.starl.objects.common;
 import edu.illinois.mitra.starl.objects.globalVarHolder;
 
 public class HeartbeatDiscovery extends Thread implements NetworkDiscovery, MessageListener {
+	private static final String TAG = "HeartbeatDiscovery";
+	private static final String ERR = "Critical Error";
 	
 	private static final int HEARTBEAT_PERIOD = 5000;
 	private HashSet<String> remove;
@@ -42,6 +44,7 @@ public class HeartbeatDiscovery extends Thread implements NetworkDiscovery, Mess
 			e.printStackTrace();
 		}
 		discover = new RobotMessage("DISCOVER", name, common.MSG_NETWORK_DISCOVERY, myip);
+		gvh.traceEvent(TAG, "Created");
 	}
 	
 	@Override
@@ -91,6 +94,8 @@ public class HeartbeatDiscovery extends Thread implements NetworkDiscovery, Mess
 	public synchronized void messageReceied(RobotMessage m) {
 		String from = m.getFrom();
 
+		gvh.traceEvent(TAG, "Received heartbeat message", from);
+		
 		if(!participants.containsKey(from)) {
 			Log.i(TAG, "New neighbor: " + from + ": " + m.getContents());
 			participants.put(m.getFrom(),System.currentTimeMillis());
@@ -104,6 +109,7 @@ public class HeartbeatDiscovery extends Thread implements NetworkDiscovery, Mess
 	public void cancel() {
 		running = false;
 		gvh.removeMsgListener(common.MSG_NETWORK_DISCOVERY);
+		gvh.traceEvent(TAG, "Cancelled");
 	}
 	
 	private void sleep(int time) {

@@ -15,13 +15,13 @@ public class TraceWriter {
 	
 	private File logFile;
 	private BufferedWriter buf;
-	
+
 	public TraceWriter(String filename) {
 		SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy-mm-kk");
 		String date = df.format(new Date());
 		
 		// Create the log file
-		logFile = new File("sdcard/" + date + "-" + filename + ".xml");
+		logFile = new File("sdcard/trace/" + filename + ".xml");
 		try {
 			logFile.createNewFile();
 		} catch(IOException e) {
@@ -38,7 +38,7 @@ public class TraceWriter {
 	}
 	
 	public void sync(String source) {
-		write("<sync>\n\t<source>"+source+"</source>\n\t<time>"+System.currentTimeMillis()+"</time>\n</sync>");
+		write("\t<sync>\n\t\t<source>"+source+"</source>\n\t\t<time>"+System.currentTimeMillis()+"</time>\n\t</sync>");
 	}
 	
 	public void event(String source, String type, Object data) {
@@ -50,10 +50,11 @@ public class TraceWriter {
 	}
 	
 	public void variable(String source, String var, Object value) {
-		if(value != null) {
-			write("\t<variable>\n\t\t<source>"+source+"</source>\n\t\t<time>"+System.currentTimeMillis()+"</time>\n\t\t<varname>"+ var +"</varname>\n\t\t<value>"+value.toString()+"</value>\n\t</variable>");
-		} else {
-			write("\t<variable>\n\t\t<source>"+source+"</source>\n\t\t<time>"+System.currentTimeMillis()+"</time>\n\t\t<varname>"+ var +"</varname>\n\t</variable>");
+		try {
+			write("\t<variable>\n\t\t<source>"+source+"</source>\n\t\t<time>"+System.currentTimeMillis()+"</time>\n\t\t<varname>"+ var +"</varname>\n\t\t<class>"+value.getClass().getName()+"</class>\n\t\t<value>"+value.toString()+"</value>\n\t</variable>");
+		} catch(NullPointerException e) {
+			Log.e(ERR, "Tried to write a null value to the trace!");
+			write("\t<variable>\n\t\t<source>"+source+"</source>\n\t\t<time>"+System.currentTimeMillis()+"</time>\n\t\t<varname>"+ var +"</varname>\n\t\t<class>?</class>\n\t\t<value>null</value>\n\t</variable>");
 		}
 	}
 	
@@ -74,8 +75,7 @@ public class TraceWriter {
 			buf.append(text);
 			buf.newLine();
 			//buf.flush();
-		} catch(IOException e) {
-			
+		} catch(IOException e) {	
 		} catch(NullPointerException e) {
 		}
 	}

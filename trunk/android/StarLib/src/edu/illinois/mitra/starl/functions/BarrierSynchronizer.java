@@ -26,25 +26,30 @@ public class BarrierSynchronizer implements Synchronizer, MessageListener {
 		barriers = new HashMap<String,Integer>();
 		name = gvh.getName();
 		gvh.addMsgListener(common.MSG_BARRIERSYNC, this);
+		gvh.traceEvent(TAG, "Created");
 	}
 	
 	public void barrier_sync(String barrierID) {
+		gvh.traceEvent(TAG, "Requested sync", barrierID);
+		
 		if(barriers.containsKey(barrierID)) {
-			Integer currentCount = barriers.get(barrierID);
-			barriers.put(barrierID, Integer.valueOf(currentCount + 1));
+			int currentCount = barriers.get(barrierID);
+			barriers.put(barrierID, currentCount + 1);
 			Log.d(TAG, "Updated barrier for bID " + barrierID);
 		} else {
-			barriers.put(barrierID, new Integer(1));
+			barriers.put(barrierID, 1);
 			Log.d(TAG, "Added barrier for bID " + barrierID);
 		}
 		RobotMessage notify_sync = new RobotMessage("ALL", name, common.MSG_BARRIERSYNC, barrierID);
 		gvh.addOutgoingMessage(notify_sync);
 		
-		gvh.traceEvent(TAG, "barrier_sync", barrierID);
+		gvh.traceVariable(TAG, barrierID+"_count", barriers.get(barrierID));
+		gvh.traceEvent(TAG, "Notified all of sync", barrierID);
 	}
 	
-	public boolean barrier_proceed(String barrierID) {	
+	public boolean barrier_proceed(String barrierID) {
 		if(barriers.get(barrierID) == n_participants) {
+			gvh.traceEvent(TAG, "Barrier ready to proceed", barrierID);
 			Log.i(TAG, "Barrier " + barrierID + " has all robots ready to proceed!");
 			barriers.remove(barrierID);
 			return true;
@@ -55,6 +60,8 @@ public class BarrierSynchronizer implements Synchronizer, MessageListener {
 	public void messageReceied(RobotMessage m) {
 		// Update the barriers when a barrier sync message is received
 		String bID = m.getContents();
+		
+		gvh.traceEvent(TAG, "Received barrier sync message", bID);
 		
 		if(barriers.containsKey(bID)) {
 			Integer currentCount = barriers.get(bID);
@@ -70,5 +77,6 @@ public class BarrierSynchronizer implements Synchronizer, MessageListener {
 	
 	public void cancel() {
 		gvh.removeMsgListener(common.MSG_BARRIERSYNC);
+		gvh.traceEvent(TAG, "Cancelled");
 	}
 }

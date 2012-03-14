@@ -1,5 +1,6 @@
 package edu.illinois.mitra.starl.objects;
 
+import edu.illinois.mitra.starl.exceptions.ItemFormattingException;
 import android.util.Log;
 
 public class itemPosition implements Comparable<itemPosition> {
@@ -22,6 +23,18 @@ public class itemPosition implements Comparable<itemPosition> {
 		this.x = x;
 		this.y = y;
 		this.angle = angle;
+	}
+	
+	public itemPosition(String received) throws ItemFormattingException {
+		String[] parts = received.replace(",", "").split("\\|");
+		if(parts.length == 6) {
+			this.name = parts[1];
+			this.x = Integer.parseInt(parts[2]);
+			this.y = Integer.parseInt(parts[3]);
+			this.angle = Integer.parseInt(parts[4]);
+		} else {
+			throw new ItemFormattingException("Should be length 6, is length " + parts.length);
+		}
 	}
 	
 	// This compareTo implementation doesn't make tons of sense

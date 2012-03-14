@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import android.util.Log;
 import edu.illinois.mitra.starl.objects.common;
+import edu.illinois.mitra.starl.objects.globalVarHolder;
 
 /**
  * This thread handles all incoming and outgoing transmissions.
@@ -21,12 +22,11 @@ class ComThread extends Thread {
 	
 	private DatagramSocket mSocket = null;
 	private InetAddress myLocalIP = null;
+	private boolean running = true;
+	private globalVarHolder gvh;
 	
-	//TODO: ERASE THIS
-	//private LogFile mlog;
-	
-	//TODO: Remove String name from this constructor
-	public ComThread(ArrayList<UDPMessage> ReceivedMsgList, String name) {
+	public ComThread(ArrayList<UDPMessage> ReceivedMsgList, globalVarHolder gvh) {
+		this.gvh = gvh;
 		this.ReceivedMsgList = ReceivedMsgList;
 		Boolean err = true;
 		int retries = 0;
@@ -45,10 +45,8 @@ class ComThread extends Thread {
 				retries ++;
 			}
 		}
-		
-        //TODO: ERASE THIS LOGFILE ONCE THE COMMS SYSTEM HAS BEEN FIXED UP
-        //TODO: ADD AN INTENT TO AUTO SHARE THE FILE VIA DROPBOX? THIS WONT WORK W/OUT INTERNET THOUGH
-        //mlog = new LogFile(name + "_msg.csv");
+		gvh.traceEvent(TAG, "Created");
+		running = true;
 	}
     
     public void run() {
@@ -56,7 +54,7 @@ class ComThread extends Thread {
 			byte[] buf = new byte[1024]; 
 			
 			//Listen on socket to receive messages 
-			while (true) { 
+			while(running) { 
     			DatagramPacket packet = new DatagramPacket(buf, buf.length); 
     			mSocket.receive(packet); 
 
@@ -68,8 +66,7 @@ class ComThread extends Thread {
     			UDPMessage recd = new UDPMessage(s, System.currentTimeMillis());
 
     			Log.d(TAG, "Received: " + s);
-    			//TODO: ERASE THIS ONCE LOGGING COMPLETED
-    			//mlog.write(recd,false);
+    			gvh.traceEvent(TAG, "Received", recd);
     			
     			// Add the message to the received queue
     			ReceivedMsgList.add(recd);
@@ -88,21 +85,20 @@ class ComThread extends Thread {
             DatagramPacket packet = new DatagramPacket(data.getBytes(), data.length(), InetAddress.getByName(IP), BCAST_PORT);
             mSocket.send(packet); 
             Log.i(TAG, "Sent: " + data + " to " + IP);
-            //TODO: ERASE THIS ONCE LOGGING COMPLETED
-            //mlog.write(msg,true);
+            gvh.traceEvent(TAG, "Sent", msg);
         } catch (Exception e) {
             Log.e(ERR, "Exception during write", e);
         }
     }
     
     public void cancel() {
-    	//TODO: ERASE THIS ONCE LOGGING COMPLETED
-    	//mlog.close();
+    	running = false;
         try {
             mSocket.close();
             mSocket = null;
         } catch (Exception e) {
             Log.e(ERR, "close of connect socket failed", e);
         }
+        gvh.traceEvent(TAG, "Cancelled");
     }
 } 

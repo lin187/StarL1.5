@@ -11,7 +11,7 @@ public class CommsHandler extends Thread {
 	public static final int TIMEOUT = 250;
 	public static final int MSG_LIFESPAN = 30000;
 	public static final int MAX_RETRIES = 15;
-	private static final String TAG = "ProtocolThread";
+	private static final String TAG = "CommsHandler";
 	private static final String ERR = "Critical Error";
 	
 	private int seqNum = 0;
@@ -37,7 +37,8 @@ public class CommsHandler extends Thread {
 		Random rand = new Random();
 		seqNum = rand.nextInt(10000);
 		
-        mConnectedThread = new ComThread(ReceivedMsgList, name);
+        mConnectedThread = new ComThread(ReceivedMsgList,gvh);
+		gvh.traceEvent(TAG, "Created");
 	}
 	
 	public synchronized void addOutgoing(RobotMessage msg, MessageResult result) {
@@ -45,12 +46,14 @@ public class CommsHandler extends Thread {
 		newMsg.setHandler(result);
 		OutMsgList.add(newMsg);
 		seqNum = (seqNum + 1) % 9999;
+		gvh.traceEvent(TAG, "Sending", msg);
 	}
 	
 	public synchronized void clear() {
 		InMsgList.clear();
 		OutMsgList.clear();
 		ReceivedMsgList.clear();
+		gvh.traceEvent(TAG, "Cleared");
 	}
 	
 	@Override
@@ -58,6 +61,7 @@ public class CommsHandler extends Thread {
 		mConnectedThread.start();
 		Log.e(TAG, "Starting protocol thread...");
 		super.start();
+		gvh.traceEvent(TAG, "Starting");
 	}
 	
     @Override
@@ -69,12 +73,14 @@ public class CommsHandler extends Thread {
     		if(isPendingMessage()) {
     			UDPMessage toSend = nextPendingMessage();
     	        mConnectedThread.write(toSend, nameToIP(toSend));
+    			gvh.traceEvent(TAG, "Sent pending message", toSend);
     		}
     		
     		// Send any outgoing ACKs
     		if(isPendingACK()) {
     			UDPMessage toSend = nextPendingACK();
     			mConnectedThread.write(toSend, nameToIP(toSend));
+    			gvh.traceEvent(TAG, "Sent pending ACK", toSend);
     		}
     		
     		// Handle any newly received messages
@@ -160,11 +166,14 @@ public class CommsHandler extends Thread {
 				InMsgList.add(current);
 			}
 			
+			gvh.traceEvent(TAG, "Incoming data message", current.getContents());
+			
 			// Add it to the gvh in queue
 			gvh.addIncomingMessage(new RobotMessage(current.getContents()));
 		} else {
 		// If we've received it before, flag its duplicate for re-sending an ACK and reset it's received time
 			Log.d(TAG, "-> Received duplicate message: " + current + "\n-> Flagging for re-ACKing");
+			gvh.traceEvent(TAG, "Duplicate message", current);
 			UDPMessage duplicate = InMsgList.get(msg_idx);
 			duplicate.setState(UDPMessage.MSG_RECEIVED);
 			duplicate.setReceivedTime(System.currentTimeMillis());
@@ -271,6 +280,7 @@ public class CommsHandler extends Thread {
         } catch (Exception e) {
             Log.e(ERR, "close() of connect socket failed", e);
         }
+		gvh.traceEvent(TAG, "Cancelled");
     }
 	
 	private String nameToIP(String to) {
