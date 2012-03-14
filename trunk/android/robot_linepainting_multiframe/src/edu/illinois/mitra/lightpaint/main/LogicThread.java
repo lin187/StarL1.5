@@ -1,6 +1,5 @@
 package edu.illinois.mitra.lightpaint.main;
 
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.SortedSet;
 
@@ -18,7 +17,6 @@ import edu.illinois.mitra.starl.interfaces.MessageListener;
 import edu.illinois.mitra.starl.interfaces.MutualExclusion;
 import edu.illinois.mitra.starl.interfaces.Synchronizer;
 import edu.illinois.mitra.starl.objects.globalVarHolder;
-import edu.illinois.mitra.starl.objects.itemPosition;
 
 public class LogicThread extends Thread implements MessageListener {
 	private static final String TAG = "Logic";
@@ -120,6 +118,7 @@ public class LogicThread extends Thread implements MessageListener {
 				
 			case GET_LINE_ASSIGNMENT:				
 				// Receive line assignments
+				Log.d(TAG, "Waiting to receive assignment...");
 				while(assignment == -1) {}
 
 				Log.d(TAG, "Assigned as robot " + assignment);			
@@ -200,10 +199,12 @@ public class LogicThread extends Thread implements MessageListener {
 				
 			case WAIT_AT_INTERSECTION:
 				screenDark();	
+				gvh.setDebugInfo("Waiting for mutex " + intersection);
 				stage = intersectionWait();
 				break;
 				
 			case GO_NEXT_POINT:
+				gvh.setDebugInfo("");
 				Log.d(TAG, "Next point: " + dest.getPoint());
 				
 				// Travel to the next point, keep curving to a minimum to prevent wavy images
@@ -215,6 +216,7 @@ public class LogicThread extends Thread implements MessageListener {
 				break;				
 				
 			case FINISH:
+				gvh.setDebugInfo("Done!");
 				mutex.exitAll();
 				prog.sendDone();
 				stage = STAGE.DONE;

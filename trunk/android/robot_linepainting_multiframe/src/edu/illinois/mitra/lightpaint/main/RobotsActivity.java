@@ -86,14 +86,14 @@ public class RobotsActivity extends Activity implements MessageListener, MotionL
 	    		Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_LONG).show();
 	    		break;
 	    	case common.MESSAGE_LOCATION:
-	    		cbGPS.setChecked((Integer)msg.obj == 1);
+	    		cbGPS.setChecked((Integer)msg.obj == common.GPS_RECEIVING);
 	    		break;
 	    	case common.MESSAGE_BLUETOOTH:
 	    		bluetoothStatus = (Integer)msg.obj;
 	    		updateGUI();
 	    		break;
 	    	case common.MESSAGE_LAUNCH:
-	    		launch((Integer) msg.obj);
+	    		launch((String) msg.obj);
 	    		break;
 	    	case common.MESSAGE_ABORT:
     			// Disconnect and reconnect
@@ -117,6 +117,44 @@ public class RobotsActivity extends Activity implements MessageListener, MotionL
 	    		pbBattery.setProgress((Integer) msg.obj);
 	    		break;	
 	    	}
+    	}
+    	
+    	private void launch(String strvalues) {
+    		int[] values = common.partsToInts(strvalues, " ");
+    		
+    		gvh.traceStart(values[1]);
+    		
+    		if(gvh.getWaypointPositions().getNumPositions() == values[0]) {
+    			if(!launched) {
+    				// GUI Updates				
+    				launched = true;
+    				cbRunning.setChecked(true);
+    				DISPLAY_MODE = cbPaintMode.isChecked();
+    				if(DISPLAY_MODE) setContentView(vi);
+    				
+    				gvh.traceSync("APPLICATION LAUNCH");
+    				
+    				logic = new LogicThread(gvh, motion);
+    				logic.start();
+    				
+    	    		RobotMessage informLaunch = new RobotMessage("ALL", gvh.getName(), common.MSG_ACTIVITYLAUNCH, strvalues);
+    	    		gvh.addOutgoingMessage(informLaunch);
+    			}
+    		} else {
+    			gvh.sendMainToast("Should have " + values[0] + " waypoints, but I have " + gvh.getWaypointPositions().getNumPositions());
+    		}
+    	}
+    	
+    	private void abort() {
+    		if(launched) {
+    			gvh.traceSync("APPLICATION ABORT");
+    			attempt_connect();
+    			launched = false;
+    			attempt_connect();
+    			
+        		RobotMessage informAbort = new RobotMessage("ALL", gvh.getName(), common.MSG_ACTIVITYABORT, null);
+        		gvh.addOutgoingMessage(informAbort);
+    		}
     	}
     };
 	
@@ -167,7 +205,6 @@ public class RobotsActivity extends Activity implements MessageListener, MotionL
 			// Update GUI
 			btnConnect.setText("Disconnect");
 			gvh.setName(participants[selected_robot]);
-			gvh.traceStart();
 	        Log.d(TAG, gvh.getName());
 	        
 	        // Begin persistent background threads
@@ -191,7 +228,7 @@ public class RobotsActivity extends Activity implements MessageListener, MotionL
 			// Update GUI
 			btnConnect.setText("Connect");
 			cbRunning.setChecked(false);
-			gvh.sendMainMsg(common.MESSAGE_LOCATION, 0);
+			//gvh.sendMainMsg(common.MESSAGE_LOCATION, 0);
 			
 			// Shut down persistent threads
 			gvh.stopComms();
@@ -308,46 +345,11 @@ public class RobotsActivity extends Activity implements MessageListener, MotionL
 	public void messageReceied(RobotMessage m) {
 		switch(m.getMID()) {
 		case common.MSG_ACTIVITYLAUNCH:
-			launch(Integer.parseInt(m.getContents()));
+			gvh.sendMainMsg(common.MESSAGE_LAUNCH, m.getContents());
 			break;
 		case common.MSG_ACTIVITYABORT:
-			abort();
+			gvh.sendMainMsg(common.MESSAGE_ABORT, null);
 			break;
-		}
-	}
-	
-	private void launch(int wptcount) {
-		if(gvh.getWaypointPositions().getNumPositions() == wptcount) {
-			if(!launched) {
-				// GUI Updates				
-				launched = true;
-				cbRunning.setChecked(true);
-				DISPLAY_MODE = cbPaintMode.isChecked();
-				if(DISPLAY_MODE) setContentView(vi);
-				
-				
-				gvh.traceSync("APPLICATION LAUNCH");
-				
-				logic = new LogicThread(gvh, motion);
-				logic.start();
-				
-	    		RobotMessage informLaunch = new RobotMessage("ALL", gvh.getName(), common.MSG_ACTIVITYLAUNCH, Integer.toString(wptcount));
-	    		gvh.addOutgoingMessage(informLaunch);
-			}
-		} else {
-			gvh.sendMainToast("Should have " + wptcount + " waypoints, but I have " + gvh.getWaypointPositions().getNumPositions());
-		}
-	}
-
-	private void abort() {
-		if(launched) {
-			gvh.traceSync("APPLICATION ABORT");
-			attempt_connect();
-			launched = false;
-			attempt_connect();
-			
-    		RobotMessage informAbort = new RobotMessage("ALL", gvh.getName(), common.MSG_ACTIVITYABORT, null);
-    		gvh.addOutgoingMessage(informAbort);
 		}
 	}
 
