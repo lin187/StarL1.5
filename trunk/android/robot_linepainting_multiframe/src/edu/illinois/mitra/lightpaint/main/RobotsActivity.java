@@ -1,8 +1,8 @@
 package edu.illinois.mitra.lightpaint.main;
 
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.HashSet;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -18,15 +18,14 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import edu.illinois.mitra.lightpaint.main.R;
 import edu.illinois.mitra.starl.bluetooth.RobotMotion;
 import edu.illinois.mitra.starl.comms.GPSReceiver;
 import edu.illinois.mitra.starl.comms.RobotMessage;
+import edu.illinois.mitra.starl.interfaces.Cancellable;
 import edu.illinois.mitra.starl.interfaces.MessageListener;
 import edu.illinois.mitra.starl.interfaces.MotionListener;
 import edu.illinois.mitra.starl.objects.common;
@@ -43,6 +42,7 @@ public class RobotsActivity extends Activity implements MessageListener, MotionL
 	private static int gps_port = 4000;
 	private boolean connected = false;
 	private boolean launched = false;
+	private Collection<Cancellable> created;
 	
 	// THESE NAMES AND ASSOCIATED IP ADDRESSES ARE CONSTANT FOR TESTING.
 	//									ALICE				BOB					CARLOS				DIANA
@@ -51,7 +51,7 @@ public class RobotsActivity extends Activity implements MessageListener, MotionL
 	private static final String [] ips = {"192.168.1.101", "192.168.1.102", "192.168.1.103", "192.168.1.104"};
 	
 	// GUI variables
-	private Button btnConnect;
+	private TextView txtRunNumber;
 	private TextView txtRobotName;
 	private TextView txtDebug;
 	private ProgressBar pbBluetooth;
@@ -123,6 +123,7 @@ public class RobotsActivity extends Activity implements MessageListener, MotionL
     		int[] values = common.partsToInts(strvalues, " ");
     		
     		gvh.traceStart(values[1]);
+    		txtRunNumber.setText("Run: " + values[1]);
     		
     		if(gvh.getWaypointPositions().getNumPositions() == values[0]) {
     			if(!launched) {
@@ -135,6 +136,7 @@ public class RobotsActivity extends Activity implements MessageListener, MotionL
     				gvh.traceSync("APPLICATION LAUNCH");
     				
     				logic = new LogicThread(gvh, motion);
+    				created.add(logic);
     				logic.start();
     				
     	    		RobotMessage informLaunch = new RobotMessage("ALL", gvh.getName(), common.MSG_ACTIVITYLAUNCH, strvalues);
@@ -148,9 +150,9 @@ public class RobotsActivity extends Activity implements MessageListener, MotionL
     	private void abort() {
     		if(launched) {
     			gvh.traceSync("APPLICATION ABORT");
-    			attempt_connect();
+    			connect_disconnect();
     			launched = false;
-    			attempt_connect();
+    			connect_disconnect();
     			
         		RobotMessage informAbort = new RobotMessage("ALL", gvh.getName(), common.MSG_ACTIVITYABORT, null);
         		gvh.addOutgoingMessage(informAbort);
@@ -169,6 +171,8 @@ public class RobotsActivity extends Activity implements MessageListener, MotionL
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.main);
 
+        created = new HashSet<Cancellable>();
+        
         // Initialize preferences holder
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
         selected_robot = prefs.getInt(PREF_SELECTED_ROBOT, 0);
@@ -184,7 +188,7 @@ public class RobotsActivity extends Activity implements MessageListener, MotionL
         gvh = new globalVarHolder(hm_participants, debug_handler);
         
         // Connect
-        attempt_connect();
+        connect_disconnect();
         
         // Register message listener
         gvh.addMsgListener(common.MSG_ACTIVITYABORT, this);
@@ -200,10 +204,12 @@ public class RobotsActivity extends Activity implements MessageListener, MotionL
 		gvh.sendMainMsg(common.MESSAGE_BATTERY, motion.getBatteryPercentage());
     }
     
-	private void attempt_connect() {
+	private void connect_disconnect() {
 		if(!connected) {
+			// CONNECT
+			
 			// Update GUI
-			btnConnect.setText("Disconnect");
+			gvh.setDebugInfo("");
 			gvh.setName(participants[selected_robot]);
 	        Log.d(TAG, gvh.getName());
 	        
@@ -211,6 +217,7 @@ public class RobotsActivity extends Activity implements MessageListener, MotionL
 	        gvh.startComms();
 	        gps = new GPSReceiver(gvh, gps_host, gps_port);
 	        gps.start();
+	        created.add(gps);
 	        
 	        if(motion == null) {
 	        	motion = new RobotMotion(gvh, mac[selected_robot]);
@@ -219,24 +226,28 @@ public class RobotsActivity extends Activity implements MessageListener, MotionL
 	        	motion.resume();
 	        }
 		} else {
-			// Shut down the logic thread if it was running
-			if(launched) {
-				logic.cancel();
-				logic = null;
+			// DISCONNECT
+			
+			// Shut down any created Cancellable items
+			for(Cancellable c: created) {
+				try {
+					c.cancel();
+				} catch(NullPointerException e) {}
 			}
-			
-			// Update GUI
-			btnConnect.setText("Connect");
-			cbRunning.setChecked(false);
-			//gvh.sendMainMsg(common.MESSAGE_LOCATION, 0);
-			
-			// Shut down persistent threads
+			created.clear();
+
+			// Reset GVH's persistent threads
 			gvh.stopComms();
 			gvh.traceEnd();
-			gps.cancel();
+			
+			// Update GUI
+			gvh.setDebugInfo("");
+			txtRunNumber.setText("");
+			cbRunning.setChecked(false);
 
 			launched = false;
 			
+			// LIGHTPAINTING SPECIFIC:
 			// Restore the view to the main GUI
 			if(DISPLAY_MODE) {
 				setContentView(R.layout.main);
@@ -277,8 +288,8 @@ public class RobotsActivity extends Activity implements MessageListener, MotionL
 	private void setupGUI() {
 		// Set the brightness to the default level
 		defaultBrightness();
-		
-		btnConnect = (Button) findViewById(R.id.btnConnect);
+
+		txtRunNumber = (TextView) findViewById(R.id.txtRunNumber);
 		txtRobotName = (TextView) findViewById(R.id.txtRobotName);
 		cbGPS = (CheckBox) findViewById(R.id.cbGPS);
 		cbBluetooth = (CheckBox) findViewById(R.id.cbBluetooth);
@@ -288,10 +299,13 @@ public class RobotsActivity extends Activity implements MessageListener, MotionL
 		pbBattery = (ProgressBar) findViewById(R.id.pbBattery);
 		pbBattery.setMax(100);
 		
+		txtRunNumber.setText(" ");
 		txtRobotName.setText(participants[selected_robot]);
 		txtRobotName.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
-				pick_robot();
+				if(connected) connect_disconnect();
+ 				pick_robot();
+ 				connect_disconnect();
 			}
 		});
 		
@@ -302,12 +316,6 @@ public class RobotsActivity extends Activity implements MessageListener, MotionL
 		cbPaintMode.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 		    	saveToOptions();
-			}
-		});
-		
-		btnConnect.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				attempt_connect();
 			}
 		});
 	}
@@ -328,20 +336,6 @@ public class RobotsActivity extends Activity implements MessageListener, MotionL
 		super.onPause();
 	}
 	
-	@Override
-	public void onBackPressed() {
-		Log.e(TAG, "Exiting application");
-		if(connected) attempt_connect();
-		Timer timer = new Timer();
-		timer.schedule(new TimerTask() {
-			public void run() {
-				int pid = android.os.Process.myPid(); 
-				android.os.Process.killProcess(pid);
-			}
-		}, 300);
-		return;
-	}
-
 	public void messageReceied(RobotMessage m) {
 		switch(m.getMID()) {
 		case common.MSG_ACTIVITYLAUNCH:
@@ -376,5 +370,16 @@ public class RobotsActivity extends Activity implements MessageListener, MotionL
 		if(DISPLAY_MODE && launched) {
 			gvh.sendMainMsg(MESSAGE_SCREEN, reqBrightness);
 		}
+	}
+	
+	@Override
+	public void onBackPressed() {
+		Log.e(TAG, "Exiting application");
+		if(motion != null) {
+			motion.cancel();
+		}
+		if(connected) connect_disconnect();
+		finish();
+		return;
 	}
 }

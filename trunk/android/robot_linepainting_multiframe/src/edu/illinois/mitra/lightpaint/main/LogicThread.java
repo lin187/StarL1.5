@@ -1,10 +1,12 @@
 package edu.illinois.mitra.lightpaint.main;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.SortedSet;
 
 import android.util.Log;
-import edu.illinois.mitra.lightpaint.BotProgressThread;
+import edu.illinois.mitra.lightpaint.BotProgressTracker;
 import edu.illinois.mitra.lightpaint.ImagePoint;
 import edu.illinois.mitra.lightpaint.PointManager;
 import edu.illinois.mitra.starl.bluetooth.RobotMotion;
@@ -12,15 +14,18 @@ import edu.illinois.mitra.starl.comms.RobotMessage;
 import edu.illinois.mitra.starl.functions.BarrierSynchronizer;
 import edu.illinois.mitra.starl.functions.RandomLeaderElection;
 import edu.illinois.mitra.starl.functions.SingleHopMutualExclusion;
+import edu.illinois.mitra.starl.interfaces.Cancellable;
 import edu.illinois.mitra.starl.interfaces.LeaderElection;
 import edu.illinois.mitra.starl.interfaces.MessageListener;
 import edu.illinois.mitra.starl.interfaces.MutualExclusion;
 import edu.illinois.mitra.starl.interfaces.Synchronizer;
 import edu.illinois.mitra.starl.objects.globalVarHolder;
 
-public class LogicThread extends Thread implements MessageListener {
+public class LogicThread extends Thread implements MessageListener, Cancellable {
 	private static final String TAG = "Logic";
 	private static final String ERR = "Critical Error";
+	
+	private Collection<Cancellable> created;
 	
 	private boolean running = true;
 	private globalVarHolder gvh = null;
@@ -54,7 +59,7 @@ public class LogicThread extends Thread implements MessageListener {
 	
 	// Application specific:
 	private int timeSpentWaiting = 0;
-	private BotProgressThread prog = null;
+	private BotProgressTracker prog = null;
 	private PointManager points = null;
 	private ImagePoint dest = null;
 	private int assignment = -1;
@@ -63,15 +68,21 @@ public class LogicThread extends Thread implements MessageListener {
 	private Iterator<ImagePoint> pointIter = null;
 	
 	public LogicThread(globalVarHolder gvh, RobotMotion motion) {
+		created = new HashSet<Cancellable>();
+		
 		this.gvh = gvh;
 		this.motion = motion;
+		
 		name = gvh.getName();
 		points = new PointManager(gvh);
 		sync = new BarrierSynchronizer(gvh);
 		le = new RandomLeaderElection(gvh);
-		gvh.removeMsgListener(MSG_INFORMLINE);
+		
 		gvh.addMsgListener(MSG_INFORMLINE, this);
 		Log.i(TAG, "I AM " + name);
+		
+		created.add(sync);
+		created.add(le);
 	}
 	
 	@Override
@@ -126,6 +137,7 @@ public class LogicThread extends Thread implements MessageListener {
 				// Start the mutual exclusion thread
 				mutex = new SingleHopMutualExclusion(points.getNumMutex(),gvh,leader);
 				mutex.start();
+				created.add(mutex);
 
 				stage = STAGE.GO_TO_START;
 				
@@ -136,7 +148,7 @@ public class LogicThread extends Thread implements MessageListener {
 			case GO_TO_START:
 				// Go to the first assigned waypoint
 				ImagePoint start = pointIter.next();
-				if(!start.isStart()) throw new RuntimeException("My start point wasn't a start point! SortedSet might not be working, yeah?");
+				if(!start.isStart()) throw new RuntimeException("My start point wasn't a start point!");
 				dest = start;
 				
 				motion.go_to(dest.getPos());
@@ -160,7 +172,8 @@ public class LogicThread extends Thread implements MessageListener {
 					motion.song();
 					
 					// Create the progress tracker
-					prog = new BotProgressThread(gvh);
+					prog = new BotProgressTracker(gvh);
+					created.add(prog);
 					
 					stage = STAGE.CALC_NEXT_POINT;
 				}
@@ -233,6 +246,31 @@ public class LogicThread extends Thread implements MessageListener {
 		}
 	}
 
+	@Override
+	public synchronized void start() {
+		super.start();
+		running = true;
+	}
+	
+	public void cancel() {
+		Log.d(TAG, "CANCELLING LOGIC THREAD");
+		gvh.removeMsgListener(MSG_INFORMLINE);
+		running = false;
+		
+		// Cancel all created elements
+		for(Cancellable c: created) {
+			try {
+				c.cancel();
+			} catch(NullPointerException e) {}
+		}
+		created.clear();
+	}
+
+	public void messageReceied(RobotMessage m) {
+		Log.i(TAG, "Received assignment message " + m.getContents());
+		assignment = Integer.parseInt(m.getContents());
+	}	
+	
 	// Waits until all tokens have been obtained for the next intersection
 	// Triggers progress updates every 3000 milliseconds spent waiting
 	private STAGE intersectionWait() {
@@ -277,35 +315,9 @@ public class LogicThread extends Thread implements MessageListener {
 		return 0;
 	}
 	
-	@Override
-	public synchronized void start() {
-		super.start();
-		running = true;
-	}
-	
-	public void cancel() {
-		Log.d(TAG, "CANCELLING LOGIC THREAD");
-		
-		running = false;
-		if(prog != null) {
-			prog.cancel();
-		}
-		if(mutex != null) {
-			mutex.cancel();
-		}
-		if(sync != null) {
-			sync.cancel();
-		}
-	}
-
 	private void sleep(int time) {
 		try {
 			Thread.sleep(time);
 		} catch (InterruptedException e) {}	
 	}
-
-	public void messageReceied(RobotMessage m) {
-		Log.i(TAG, "Received assignment message " + m.getContents());
-		assignment = Integer.parseInt(m.getContents());
-	}	
 }
