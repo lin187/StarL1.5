@@ -1,9 +1,12 @@
 package edu.illinois.mitra.starl.objects;
 
-import edu.illinois.mitra.starl.exceptions.ItemFormattingException;
-import android.util.Log;
+import java.util.HashMap;
 
-public class itemPosition implements Comparable<itemPosition> {
+import android.util.Log;
+import edu.illinois.mitra.starl.exceptions.ItemFormattingException;
+import edu.illinois.mitra.starl.interfaces.Traceable;
+
+public class itemPosition implements Comparable<itemPosition>, Traceable {
 	private static final String TAG = "itemPosition";
 	private static final String ERR = "Critical Error";
 	
@@ -83,7 +86,7 @@ public class itemPosition implements Comparable<itemPosition> {
 		if(angle > 180) {
 			angle -= 360;
 		}
-		int retAngle = min_magitude((otherAngle - angle),(angle - otherAngle));
+		int retAngle = common.min_magitude((otherAngle - angle),(angle - otherAngle));
 		
 		if(retAngle > 180) {
 			retAngle = retAngle-360;
@@ -147,11 +150,13 @@ public class itemPosition implements Comparable<itemPosition> {
 		return true;
 	}
 
-	private int min_magitude(int a1, int a2) {
-		if(Math.abs(a1) < Math.abs(a2)) {
-			return a1;
-		} else {
-			return a2;
-		}
+	@Override
+	public HashMap<String, Object> getXML() {
+		HashMap<String, Object> retval = new HashMap<String,Object>();
+		retval.put("name", name);
+		retval.put("x", x);
+		retval.put("y", y);
+		retval.put("angle",angle);
+		return retval;
 	}
 }

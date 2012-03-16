@@ -6,8 +6,9 @@ import java.util.Random;
 
 import android.util.Log;
 import edu.illinois.mitra.starl.objects.globalVarHolder;
+import edu.illinois.mitra.starl.interfaces.Cancellable;
 
-public class CommsHandler extends Thread {
+public class CommsHandler extends Thread implements Cancellable {
 	public static final int TIMEOUT = 250;
 	public static final int MSG_LIFESPAN = 30000;
 	public static final int MAX_RETRIES = 15;
@@ -274,12 +275,9 @@ public class CommsHandler extends Thread {
     			&& (ack.getContents().getTo().equals(msg.getContents().getFrom()));
 	}
 
+    @Override
 	public void cancel() {
-        try {
-        	mConnectedThread.cancel();
-        } catch (Exception e) {
-            Log.e(ERR, "close() of connect socket failed", e);
-        }
+        mConnectedThread.cancel();
 		gvh.traceEvent(TAG, "Cancelled");
     }
 	

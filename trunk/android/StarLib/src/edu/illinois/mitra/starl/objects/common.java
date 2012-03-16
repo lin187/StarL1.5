@@ -63,6 +63,14 @@ public final class common {
 		return retval;
 	}
 	
+	public static int min_magitude(int a1, int a2) {
+		if(Math.abs(a1) < Math.abs(a2)) {
+			return a1;
+		} else {
+			return a2;
+		}
+	}
+	
 	public static int[] partsToInts(String str, String delimiter) {
 		String[] parts = str.split(delimiter);
 		return partsToInts(parts);

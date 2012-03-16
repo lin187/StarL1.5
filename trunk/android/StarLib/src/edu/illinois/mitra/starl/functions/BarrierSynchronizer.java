@@ -75,6 +75,7 @@ public class BarrierSynchronizer implements Synchronizer, MessageListener {
 		gvh.traceEvent(TAG, "messageReceived", m);
 	}
 	
+	@Override
 	public void cancel() {
 		gvh.removeMsgListener(common.MSG_BARRIERSYNC);
 		gvh.traceEvent(TAG, "Cancelled");

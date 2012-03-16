@@ -98,6 +98,7 @@ public class RandomLeaderElection implements LeaderElection, MessageListener {
 		return leader;
 	}	
 	
+	@Override
 	public void cancel() {
 		unregisterListeners();
 		gvh.traceEvent(TAG, "Cancelled");

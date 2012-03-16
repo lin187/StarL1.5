@@ -7,13 +7,14 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 
 import android.util.Log;
+import edu.illinois.mitra.starl.interfaces.Cancellable;
 import edu.illinois.mitra.starl.objects.common;
 import edu.illinois.mitra.starl.objects.globalVarHolder;
 
 /**
  * This thread handles all incoming and outgoing transmissions.
  */    
-class ComThread extends Thread {
+class ComThread extends Thread implements Cancellable {
 	private static final int BCAST_PORT = 2562;
 	private static String TAG = "ComThread";
 	private static String ERR = "Critical Error";
@@ -91,6 +92,7 @@ class ComThread extends Thread {
         }
     }
     
+    @Override
     public void cancel() {
     	running = false;
         try {

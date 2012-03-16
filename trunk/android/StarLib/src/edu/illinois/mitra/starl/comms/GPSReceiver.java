@@ -9,11 +9,14 @@ import java.net.SocketException;
 import java.util.Enumeration;
 
 import android.util.Log;
+import edu.illinois.mitra.starl.exceptions.ItemFormattingException;
+import edu.illinois.mitra.starl.interfaces.Cancellable;
 import edu.illinois.mitra.starl.objects.common;
 import edu.illinois.mitra.starl.objects.globalVarHolder;
+import edu.illinois.mitra.starl.objects.itemPosition;
 import edu.illinois.mitra.starl.objects.positionList;
 
-public class GPSReceiver extends Thread {
+public class GPSReceiver extends Thread implements Cancellable {
 	private static final String TAG = "GPSReceiver";
 	private static final String ERR = "Critical Error";
 	
@@ -83,12 +86,22 @@ public class GPSReceiver extends Thread {
     				if(parts[i].length() >= 2) {
 		    			switch(parts[i].charAt(0)) {
 		    			case '@':
-		    				gvh.traceEvent(TAG, "Received waypoint position", parts[i]);
-		    				waypointPositions.update(parts[i]);
+		    				try {
+		    					itemPosition newpos = new itemPosition(parts[i]);
+		    					waypointPositions.update(newpos);
+		    					gvh.traceEvent(TAG, "Received Waypoint Position", newpos);
+		    				} catch(ItemFormattingException e){
+		    					Log.e(TAG, "Invalid item formatting: " + e.getError());
+		    				}
 		    				break;
 		    			case '#':
-		    				gvh.traceEvent(TAG, "Received robot position", parts[i]);
-		    				robotPositions.update(parts[i]);
+		    				try {
+		    					itemPosition newpos = new itemPosition(parts[i]);
+		    					robotPositions.update(newpos);
+		    					gvh.traceEvent(TAG, "Received Robot Position", newpos);
+		    				} catch(ItemFormattingException e){
+		    					Log.e(TAG, "Invalid item formatting: " + e.getError());
+		    				}
 		    				break;
 		    			case 'G':
 		    				gvh.traceEvent(TAG, "Received launch command");
@@ -127,6 +140,7 @@ public class GPSReceiver extends Thread {
 		return null;
     }
     
+    @Override
     public void cancel() {
     	running = false;
     	gvh.sendMainMsg(common.MESSAGE_LOCATION, common.GPS_OFFLINE);

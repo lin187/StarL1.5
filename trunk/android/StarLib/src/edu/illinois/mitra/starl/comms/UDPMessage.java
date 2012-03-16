@@ -1,7 +1,10 @@
 package edu.illinois.mitra.starl.comms;
 
+import java.util.HashMap;
 
-public class UDPMessage {
+import edu.illinois.mitra.starl.interfaces.Traceable;
+
+public class UDPMessage implements Traceable {
 	public static final int MSG_QUEUED = 0;
 	public static final int MSG_SENT = 1;
 	public static final int MSG_ACKD = 2;
@@ -148,5 +151,15 @@ public class UDPMessage {
 
 	public void setHandler(MessageResult handler) {
 		this.handler = handler;
+	}
+
+	@Override
+	public HashMap<String, Object> getXML() {
+		HashMap<String, Object> retval = new HashMap<String, Object>();		
+		retval.put("seqnum", seqNum);
+		retval.put("state", state);
+		retval.put("retries", retries);
+		retval.putAll(contents.getXML());
+		return retval;
 	}
 }

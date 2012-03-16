@@ -1,6 +1,10 @@
 package edu.illinois.mitra.starl.comms;
 
-public class RobotMessage {
+import java.util.HashMap;
+
+import edu.illinois.mitra.starl.interfaces.Traceable;
+
+public class RobotMessage implements Traceable {
 	private String to;
 	private String from;
 	private int MID;
@@ -98,5 +102,15 @@ public class RobotMessage {
 		} else if (!to.equals(other.to))
 			return false;
 		return true;
+	}
+
+	@Override
+	public HashMap<String, Object> getXML() {
+		HashMap<String, Object> retval = new HashMap<String, Object>();
+		retval.put("to", to);
+		retval.put("from", from);
+		retval.put("mid", MID);
+		retval.put("contents", contents);
+		return retval;
 	}
 }

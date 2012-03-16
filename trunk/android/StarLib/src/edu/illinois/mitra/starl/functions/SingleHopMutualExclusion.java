@@ -138,6 +138,7 @@ public class SingleHopMutualExclusion extends Thread implements MutualExclusion,
 		gvh.addMsgListener(common.MSG_MUTEX_TOKEN_REQUEST, this);
 	}
 
+	@Override
 	public void cancel() {
 		gvh.traceEvent(TAG, "Cancelled");
 		Log.d(TAG, "CANCELLING MUTEX THREAD");

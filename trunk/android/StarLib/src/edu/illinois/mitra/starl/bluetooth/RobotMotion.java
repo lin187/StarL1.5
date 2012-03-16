@@ -4,6 +4,7 @@ import java.util.HashSet;
 
 import android.os.Handler;
 import android.util.Log;
+import edu.illinois.mitra.starl.interfaces.Cancellable;
 import edu.illinois.mitra.starl.interfaces.MotionEventProvider;
 import edu.illinois.mitra.starl.interfaces.MotionListener;
 import edu.illinois.mitra.starl.objects.common;
@@ -11,7 +12,7 @@ import edu.illinois.mitra.starl.objects.globalVarHolder;
 import edu.illinois.mitra.starl.objects.itemPosition;
 import edu.illinois.mitra.starl.objects.positionList;
 
-public class RobotMotion implements MotionEventProvider {
+public class RobotMotion implements MotionEventProvider, Cancellable {
 	private static final String TAG = "RobotMotion";
 	private static final String ERR = "Critical Error";
 	
@@ -435,7 +436,7 @@ public class RobotMotion implements MotionEventProvider {
 		positionList others = gvh.getPositions();
 		for(itemPosition current : others.getList()) {
 			if(!current.getName().equals(me.getName())) {
-				if(me.isFacing(current, 120) && me.distanceTo(current) < 450) {
+				if(me.isFacing(current, 160) && me.distanceTo(current) < 450) {
 					blocker = current;
 					return true;
 				}
@@ -477,6 +478,7 @@ public class RobotMotion implements MotionEventProvider {
 	    return i;
 	}
 
+	@Override
 	public void cancel() {
 		halt();
 		bti.disconnect();		

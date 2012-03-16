@@ -1,7 +1,7 @@
 package edu.illinois.mitra.starl.interfaces;
 
 
-public interface LeaderElection {
+public interface LeaderElection extends Cancellable {
 
 	public abstract String elect();
 
