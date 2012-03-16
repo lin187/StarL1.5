@@ -10,4 +10,5 @@ Y_MAX = 3700;       %mm
 LINE_LEN = 167;     %mm (should be iRobot Create radius)
 
 % Path tracing variables
-HISTORY_SIZE = 2500; %number of points in each history
+MOTION_HISTORY_SIZE = 5; % number of points used to determine if motion has occurred
+HISTORY_SIZE = 2500; %number of points in each history for drawing

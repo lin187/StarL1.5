@@ -41,13 +41,11 @@ send_launch = 0;
 % Get all trackable robots, set up a structure to hold them
 [robot_count robot_names] = track_getTrackables();
 bots = struct('X',{0},'Y',{0},'yaw',{0},'visible',{0},'name',robot_names,...
-    'history',{ones(HISTORY_SIZE,2)*-1},'histangle',{ones(HISTORY_SIZE,1)*-1},'hist_index',{1});
+    'history',{ones(MOTION_HISTORY_SIZE,2)*-1},'histangle',{ones(MOTION_HISTORY_SIZE,1)*-1},...
+    'hist_index',{1},'drawhistory',{ones(HISTORY_SIZE,2)*-1},'draw_hist_index',{1});
 
 % Set up the plot
 fig = figure('KeyPressFcn',@fig_key_handler);
-
-% IF THIS CRASHES, ERASE THIS LINE:
-%set(gcf,'CloseRequestFcn',@close_fig_handler);
 
 % Start the frame count for drawing and timer for transmitting
 frameCount = 0;
@@ -64,7 +62,7 @@ while 1
     if clear_history == 1
         disp('Clearing history');
         for i = 1:robot_count
-            bots(i).history = ones(HISTORY_SIZE,2)*-1;
+            bots(i).drawhistory = ones(HISTORY_SIZE,2)*-1;
         end
         clear_history = 0;
     end
@@ -80,10 +78,18 @@ while 1
             bots(i).visible = 1;
             
             % Append the new point to the history
-            hist_index = mod(bots(i).hist_index,HISTORY_SIZE)+1;
+            hist_index = mod(bots(i).hist_index,MOTION_HISTORY_SIZE)+1;
             bots(i).history(bots(i).hist_index,:) = [bots(i).X bots(i).Y];
             bots(i).histangle(bots(i).hist_index) = bots(i).yaw;
             bots(i).hist_index = hist_index;
+            
+            hist = bots(i).drawhistory;
+            if ~ismember([bots(i).X bots(i).Y], hist, 'rows')
+                draw_hist_index = mod(bots(i).draw_hist_index,HISTORY_SIZE)+1;
+                bots(i).drawhistory(bots(i).draw_hist_index,:) = [bots(i).X bots(i).Y];
+                bots(i).draw_hist_index = draw_hist_index;
+            end
+            
         else
             bots(i).visible = 0;
         end

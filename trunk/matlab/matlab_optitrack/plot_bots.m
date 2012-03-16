@@ -5,7 +5,7 @@ n_wal = length(walls);
 robot_count = size(bots,2);
 
 %Calculate history
-hist = [bots.history];
+hist = [bots.drawhistory];
 histX = reshape(hist(:,1:2:end),[],1);
 histY = reshape(hist(:,2:2:end),[],1);
 
