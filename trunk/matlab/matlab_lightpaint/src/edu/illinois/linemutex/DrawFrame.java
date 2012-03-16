@@ -20,7 +20,7 @@ import javax.swing.event.ChangeListener;
 @SuppressWarnings("serial")
 public class DrawFrame extends JFrame implements ActionListener, ChangeListener
 {
-	DrawPanel dp = new DrawPanel(this);
+	DrawPanel dp = null;
 	JButton clear = new JButton("Reset");	
 	JSpinner waypointSpacing;
 	JSpinner robotRadius;
@@ -30,7 +30,6 @@ public class DrawFrame extends JFrame implements ActionListener, ChangeListener
 	public DrawFrame()
 	{
 		getContentPane().setLayout(new BorderLayout());
-		getContentPane().add(dp, BorderLayout.CENTER);
 		
 		JPanel bottom = new JPanel();
 		getContentPane().add(bottom, BorderLayout.PAGE_END);
@@ -56,7 +55,6 @@ public class DrawFrame extends JFrame implements ActionListener, ChangeListener
 		                               1));  //step
 		
 		bottom.add(waypointSpacing);
-		waypointSpacing.addChangeListener(this);
 
 		bottom.add(Box.createRigidArea(new Dimension(25,0)));
 		bottom.add(new JLabel("Robot Radius:"));
@@ -66,7 +64,7 @@ public class DrawFrame extends JFrame implements ActionListener, ChangeListener
 		                               1, //min
 		                              9999, //max
 		                               1));                //step
-		robotRadius.addChangeListener(this);
+		
 		bottom.add(robotRadius);
 		
 		bottom.add(Box.createRigidArea(new Dimension(25,0)));
@@ -77,7 +75,7 @@ public class DrawFrame extends JFrame implements ActionListener, ChangeListener
 		                               1, //min
 		                              99, //max
 		                               1));                //step
-		numRobots.addChangeListener(this);
+		
 		bottom.add(numRobots);
 		
 		bottom.add(Box.createRigidArea(new Dimension(25,0)));
@@ -88,7 +86,7 @@ public class DrawFrame extends JFrame implements ActionListener, ChangeListener
 		                               1, //min
 		                              999999, //max
 		                               1));                //step
-		minTravelDistance.addChangeListener(this);
+		
 		bottom.add(minTravelDistance);
 	
 		
@@ -96,6 +94,13 @@ public class DrawFrame extends JFrame implements ActionListener, ChangeListener
 		setSize(1100,600);
 		setLocation(100, 100);
 		
+		dp = new DrawPanel(this);
+		getContentPane().add(dp, BorderLayout.CENTER);
+		
+		minTravelDistance.addChangeListener(this);
+		numRobots.addChangeListener(this);
+		waypointSpacing.addChangeListener(this);
+		robotRadius.addChangeListener(this);
 	}
 
 	@Override

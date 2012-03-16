@@ -280,10 +280,10 @@ MouseListener, MouseMotionListener
 		boolean handled = false;
 		
 		
-		if (e.getClickCount() == 2)
+		/*if (e.getClickCount() == 2)
 		{
 			defaultPosition();				
-		}
+		}*/
 		
 		Point p = e.getPoint();
 		

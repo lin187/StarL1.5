@@ -10,6 +10,12 @@ public class WayPoint
 		color = col;
 	}
 	
+	public String toString()
+	{
+		return "[WayPoint: point = " + point + ", color = " + color + ", mutexId = " + mutexId + ", start = " + start + ", end = " + end + "]";
+	}
+	
+	
 	public Point point;
 	public String color;
 	public int mutexId = -1;

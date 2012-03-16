@@ -92,7 +92,7 @@ public class LineMutexCompute
 		
 		public String toString()
 		{
-			return "[InternalWayPoint: pt = " + wp.point + ", color = " + wp.color + "]";
+			return "[InternalWayPoint: wp = " + wp + "]";
 		}
 		
 		WayPoint wp;
@@ -321,6 +321,20 @@ public class LineMutexCompute
 	}
 
 
+	public static void printWaypoints(ArrayList<ArrayList<InternalWaypoint>> dividedWaypoints)
+	{
+		for (ArrayList <InternalWaypoint> waypoints : dividedWaypoints)
+		{
+			for (InternalWaypoint i : waypoints)
+			{
+				System.out.println(i);
+			}
+			
+			System.out.println();
+		}
+	}
+
+
 	private static ArrayList<InternalWaypoint> inputToWaypoints(ArrayList<LineInput> lines)
 	{
 		boolean isFirst = true;
@@ -335,6 +349,8 @@ public class LineMutexCompute
 			{
 				// add first
 				rv.add(instance.new InternalWaypoint(l.start, l.color));
+				
+				isFirst = false;
 			}
 			
 			// add second
@@ -692,6 +708,9 @@ public class LineMutexCompute
 						// split line into multiple segments and replace the current segment
 						
 						String color = waypointsI.get(indexI).wp.color;
+						boolean isEnd = waypointsI.get(indexI).wp.end;
+						// since we start at index 1, we never remove the start waypoint
+						
 						int nextIndexI = indexI - 1; // after we split, we will recheck the new segments for intersections
 						
 						waypointsI.remove(indexI); // remove current one
@@ -728,7 +747,10 @@ public class LineMutexCompute
 						if (Geometry.getLength(afterIntersection) < distanceFromIntersection)
 						{
 							// add a single segment for after
-							waypointsI.add(indexI++, instance.new InternalWaypoint(iLine.getP2(), color));
+							InternalWaypoint iwp =  instance.new InternalWaypoint(iLine.getP2(), color);
+							iwp.wp.end = isEnd;
+							
+							waypointsI.add(indexI++,iwp);
 						}
 						else
 						{
@@ -738,7 +760,10 @@ public class LineMutexCompute
 							Point departPoint = new Point((int)Math.round(departPoint2D.x), (int)Math.round(departPoint2D.y));
 							
 							waypointsI.add(indexI++, instance.new InternalWaypoint(departPoint, color));
-							waypointsI.add(indexI++, instance.new InternalWaypoint(iLine.getP2(), color));
+							
+							InternalWaypoint iwp = instance.new InternalWaypoint(iLine.getP2(), color);
+							iwp.wp.end = isEnd;
+							waypointsI.add(indexI++,iwp);
 						}
 						
 						indexI = nextIndexI; // after we split, we need to recheck the segments
