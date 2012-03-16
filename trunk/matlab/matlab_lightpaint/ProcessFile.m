@@ -23,7 +23,7 @@ DIR = 'C:\pictures\tests';
 
 % Waypoint spacing and intersection radius constants
 SPACING = 500;
-ROBOT_RADIUS = 230;
+ROBOT_RADIUS = 270;
 
 % Enable/disable image scaling and centering
 CENTER = true;
