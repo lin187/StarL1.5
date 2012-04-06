@@ -3,19 +3,19 @@ package edu.illinois.mitra.starl.functions;
 import java.util.ArrayList;
 import java.util.Set;
 
-import android.util.Log;
+import edu.illinois.mitra.starl.comms.MessageContents;
 import edu.illinois.mitra.starl.comms.RobotMessage;
+import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.MessageListener;
 import edu.illinois.mitra.starl.interfaces.MutualExclusion;
-import edu.illinois.mitra.starl.objects.common;
-import edu.illinois.mitra.starl.objects.globalVarHolder;
+import edu.illinois.mitra.starl.objects.Common;
 
 public class SingleHopMutualExclusion extends Thread implements MutualExclusion, MessageListener {
 	private static final String TAG = "SingleHopMutex";
 	private static final String ERR = "Critical Error";
 	
 	private int num_sections = 0;
-	private globalVarHolder gvh;
+	private GlobalVarHolder gvh;
 	private String name;
 	
 	private ArrayList<ArrayList<String>> token_requesters;
@@ -24,10 +24,10 @@ public class SingleHopMutualExclusion extends Thread implements MutualExclusion,
 	
 	private boolean running = true;
 
-	public SingleHopMutualExclusion(int num_sections, globalVarHolder gvh, String leader) {
+	public SingleHopMutualExclusion(int num_sections, GlobalVarHolder gvh, String leader) {
 		this.num_sections = num_sections;
 		this.gvh = gvh;
-		this.name = gvh.getName();
+		this.name = gvh.id.getName();
 	
 		// Set leader as token owner for all tokens
 		token_owners = new String[num_sections];
@@ -38,7 +38,7 @@ public class SingleHopMutualExclusion extends Thread implements MutualExclusion,
 			using_token[i] = false;
 			token_requesters.add(i, new ArrayList<String>());
 		}
-		gvh.traceEvent(TAG, "Created");
+		gvh.trace.traceEvent(TAG, "Created");
 	}
 
 	@Override
@@ -51,45 +51,45 @@ public class SingleHopMutualExclusion extends Thread implements MutualExclusion,
 					// Pass the token. Include any additional requesters
 					String to = token_requesters.get(i).remove(0);
 					RobotMessage pass_token;
-					Log.d(TAG, "Passing token " + i + " to requester " + to);
-					gvh.traceEvent(TAG, "Passing token to new owner", i + " " + to);
+					gvh.log.d(TAG, "Passing token " + i + " to requester " + to);
+					gvh.trace.traceEvent(TAG, "Passing token to new owner", i + " " + to);
 					if(token_requesters.get(i).isEmpty()) {
-						pass_token = new RobotMessage(to, name, common.MSG_MUTEX_TOKEN, Integer.toString(i));
+						pass_token = new RobotMessage(to, name, Common.MSG_MUTEX_TOKEN, new MessageContents(i));
 					} else {
 						String reqs = token_requesters.get(i).toString().replaceAll("[\\[\\]\\s]", "");
 						token_requesters.get(i).clear();
-						pass_token = new RobotMessage(to, name, common.MSG_MUTEX_TOKEN, i + "," + reqs);
+						pass_token = new RobotMessage(to, name, Common.MSG_MUTEX_TOKEN, new MessageContents(Integer.toString(i),reqs));
 					}
-					gvh.addOutgoingMessage(pass_token);
+					gvh.comms.addOutgoingMessage(pass_token);
 					token_owners[i] = to;
 					
 					// Broadcast the new token owner
-					RobotMessage owner_broadcast = new RobotMessage("ALL", name, common.MSG_MUTEX_TOKEN_OWNER_BCAST, i + "," + to);
-					gvh.addOutgoingMessage(owner_broadcast);
-					gvh.traceVariable(TAG, "Owner " + i, to);
+					RobotMessage owner_broadcast = new RobotMessage("ALL", name, Common.MSG_MUTEX_TOKEN_OWNER_BCAST, new MessageContents(Integer.toString(i),to));
+					gvh.comms.addOutgoingMessage(owner_broadcast);
+					gvh.trace.traceVariable(TAG, "Owner " + i, to);
 				}
 			}
 		}
 	}
 
 	public synchronized void requestEntry(int id) {
-		gvh.traceEvent(TAG, "Requesting entry to section", id);
-		Log.d(TAG, "Requesting entry to section " + id);
+		gvh.trace.traceEvent(TAG, "Requesting entry to section", id);
+		gvh.log.d(TAG, "Requesting entry to section " + id);
 		if(!token_owners[id].equals(name)) {
 			// Send a token request message to the owner
-			RobotMessage token_request = new RobotMessage(token_owners[id], name, common.MSG_MUTEX_TOKEN_REQUEST, Integer.toString(id));
-			gvh.addOutgoingMessage(token_request);
-			Log.d(TAG, "Sent token " + id + " request to owner " + token_owners[id]);
-			gvh.traceEvent(TAG, "Requested token", id);
+			RobotMessage token_request = new RobotMessage(token_owners[id], name, Common.MSG_MUTEX_TOKEN_REQUEST, new MessageContents(id));
+			gvh.comms.addOutgoingMessage(token_request);
+			gvh.log.d(TAG, "Sent token " + id + " request to owner " + token_owners[id]);
+			gvh.trace.traceEvent(TAG, "Requested token", id);
 		} else {
 			using_token[id] = true;
-			gvh.traceEvent(TAG, "Using token", id);
-			gvh.traceVariable(TAG, "Using " + id, true);
+			gvh.trace.traceEvent(TAG, "Using token", id);
+			gvh.trace.traceVariable(TAG, "Using " + id, true);
 		}
 	}
 
 	public synchronized void requestEntry(Set<Integer> ids) {
-		gvh.traceEvent(TAG, "Requesting entry to set of sections", ids);
+		gvh.trace.traceEvent(TAG, "Requesting entry to set of sections", ids);
 		for(int id : ids) {
 			requestEntry(id);
 		}
@@ -109,8 +109,8 @@ public class SingleHopMutualExclusion extends Thread implements MutualExclusion,
 
 	public synchronized void exit(int id) {
 		if(using_token[id]) {
-			gvh.traceVariable(TAG, "Using " + id, false);
-			Log.d(TAG, "Exiting section " + id);
+			gvh.trace.traceVariable(TAG, "Using " + id, false);
+			gvh.log.d(TAG, "Exiting section " + id);
 			using_token[id] = false;
 		}
 	}
@@ -133,67 +133,66 @@ public class SingleHopMutualExclusion extends Thread implements MutualExclusion,
 		running = true;
 		
 		// Register message listeners
-		gvh.addMsgListener(common.MSG_MUTEX_TOKEN_OWNER_BCAST, this);
-		gvh.addMsgListener(common.MSG_MUTEX_TOKEN, this);
-		gvh.addMsgListener(common.MSG_MUTEX_TOKEN_REQUEST, this);
+		gvh.comms.addMsgListener(Common.MSG_MUTEX_TOKEN_OWNER_BCAST, this);
+		gvh.comms.addMsgListener(Common.MSG_MUTEX_TOKEN, this);
+		gvh.comms.addMsgListener(Common.MSG_MUTEX_TOKEN_REQUEST, this);
 	}
 
 	@Override
 	public void cancel() {
-		gvh.traceEvent(TAG, "Cancelled");
-		Log.d(TAG, "CANCELLING MUTEX THREAD");
+		gvh.trace.traceEvent(TAG, "Cancelled");
+		gvh.log.d(TAG, "CANCELLING MUTEX THREAD");
 		running = false;
 		
 		// Unregister message listeners
-		gvh.removeMsgListener(common.MSG_MUTEX_TOKEN_OWNER_BCAST);
-		gvh.removeMsgListener(common.MSG_MUTEX_TOKEN);
-		gvh.removeMsgListener(common.MSG_MUTEX_TOKEN_REQUEST);
+		gvh.comms.removeMsgListener(Common.MSG_MUTEX_TOKEN_OWNER_BCAST);
+		gvh.comms.removeMsgListener(Common.MSG_MUTEX_TOKEN);
+		gvh.comms.removeMsgListener(Common.MSG_MUTEX_TOKEN_REQUEST);
 	}
 
 	public void messageReceied(RobotMessage m) {
-		
-		
-		String[] msgparts = m.getContents().split(",");
-		int id = Integer.parseInt(msgparts[0]);
+		int id = Integer.parseInt(m.getContents(0));
 		
 		switch(m.getMID()) {
-		case common.MSG_MUTEX_TOKEN_OWNER_BCAST:
-			gvh.traceEvent(TAG, "Received token owner broadcast", id);
-			gvh.traceVariable(TAG, "Owner " + id, msgparts[1]);
-			token_owners[id] = msgparts[1];
-			Log.i(TAG, "--> Token " + id + " is now owned by " + msgparts[1]);
+		case Common.MSG_MUTEX_TOKEN_OWNER_BCAST:
+			String owner = m.getContents(1);
+			
+			gvh.trace.traceEvent(TAG, "Received token owner broadcast", id);
+			gvh.trace.traceVariable(TAG, "Owner " + id, owner);
+			token_owners[id] = owner;
+			gvh.log.i(TAG, "--> Token " + id + " is now owned by " + owner);
 			break;
 			
 			
-		case common.MSG_MUTEX_TOKEN:
-			gvh.traceEvent(TAG, "Received token", id);
+		case Common.MSG_MUTEX_TOKEN:
+			gvh.trace.traceEvent(TAG, "Received token", id);
 			token_owners[id] = name;
 			using_token[id] = true;
-			gvh.traceVariable(TAG, "Using " + id, true);
+			gvh.trace.traceVariable(TAG, "Using " + id, true);
 			// Parse any attached requesters
-			if(msgparts.length > 1) {
-				Log.i(TAG, "Parsing attached requesters...");
+			if(m.getContentsList().size() == 2) {
+				gvh.log.i(TAG, "Parsing attached requesters...");
 				token_requesters.get(id).clear();
-				for(int b = 1; b < msgparts.length; b++) {
-					token_requesters.get(id).add(msgparts[b]);
+				for(String req : m.getContents(1).split(",")) {
+					token_requesters.get(id).add(req);
 				}
-				Log.i(TAG, "requesters: " + token_requesters.get(id).toString());
+				gvh.log.i(TAG, "requesters: " + token_requesters.get(id).toString());
 			}
-			Log.e(TAG, "Received token " + id + "!");
+			gvh.log.e(TAG, "Received token " + id + "!");
 			break;
 		
 			
-		case common.MSG_MUTEX_TOKEN_REQUEST:
-			gvh.traceEvent(TAG, "Received token request", id + " " + m.getFrom());
+		case Common.MSG_MUTEX_TOKEN_REQUEST:
+			gvh.trace.traceEvent(TAG, "Received token request", id + " " + m.getFrom());
 			// If we own the token being requested, enqueue the requester
 			if(token_owners[id].equals(name)) {
 				token_requesters.get(id).add(m.getFrom());
 			} else {
 			// If we don't own the token, forward the request to the actual owner
 				m.setTo(token_owners[id]);
-				gvh.addOutgoingMessage(m);
+				gvh.comms.addOutgoingMessage(m);
 			}
-			Log.i(TAG, m.getFrom() + " has requested token " + id);
+			gvh.log.i(TAG, m.getFrom() + " has requested token " + id);
 			break;
 		}
 		

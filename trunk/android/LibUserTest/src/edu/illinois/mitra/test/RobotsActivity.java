@@ -1,8 +1,6 @@
 package edu.illinois.mitra.test;
 
 import java.util.HashMap;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -16,21 +14,23 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import edu.illinois.mitra.starl.bluetooth.RobotMotion;
-import edu.illinois.mitra.starl.comms.GPSReceiver;
-import edu.illinois.mitra.starl.objects.common;
-import edu.illinois.mitra.starl.objects.globalVarHolder;
+import edu.illinois.mitra.starl.bluetooth.BluetoothInterface;
+import edu.illinois.mitra.starl.bluetooth.MotionAutomaton;
+import edu.illinois.mitra.starl.comms.MessageContents;
+import edu.illinois.mitra.starl.comms.RobotMessage;
+import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
+import edu.illinois.mitra.starl.gvh.RealGlobalVarHolder;
+import edu.illinois.mitra.starl.objects.Common;
 
 public class RobotsActivity extends Activity {
 	private static final String TAG = "RobotsActivity";
 	private static final String ERR = "Critical Error";
 
-	private globalVarHolder gvh = null;
+	private GlobalVarHolder gvh = null;
 	private static String gps_host = "192.168.1.100";
 	private static int gps_port = 4000;
 	private boolean connected = false;
@@ -43,7 +43,6 @@ public class RobotsActivity extends Activity {
 	private static final String [] ips = {"192.168.1.101", "192.168.1.102", "192.168.1.103", "192.168.1.104"};
 	
 	// GUI variables
-	private Button btnConnect;
 	private TextView txtRobotName;
 	private TextView txtDebug;
 	private ProgressBar pbBluetooth;
@@ -57,56 +56,66 @@ public class RobotsActivity extends Activity {
 	private static final String PREF_SELECTED_ROBOT = "SELECTED_ROBOT";
 	private int selected_robot = 0;
 	
+    // Persistent threads
+    //private BluetoothRobotMotion motion = null;
+    private MotionAutomaton moat = null;
+    private LogicThread logic = null;
+	
     private final Handler main_handler = new Handler() {
     	public void handleMessage(Message msg) {	    	
 	    	switch(msg.what) {
-	    	case common.MESSAGE_TOAST:
+	    	case Common.MESSAGE_TOAST:
 	    		Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_LONG).show();
 	    		break;
-	    	case common.MESSAGE_LOCATION:
-	    		cbGPS.setChecked((Integer)msg.obj == common.GPS_RECEIVING);
+	    	case Common.MESSAGE_LOCATION:
+	    		cbGPS.setChecked((Integer)msg.obj == Common.GPS_RECEIVING);
 	    		break;
-	    	case common.MESSAGE_BLUETOOTH:
-	    		pbBluetooth.setVisibility((Integer)msg.obj == common.BLUETOOTH_CONNECTING?View.VISIBLE:View.INVISIBLE);
-	    		cbBluetooth.setChecked((Integer)msg.obj ==  common.BLUETOOTH_CONNECTED);
+	    	case Common.MESSAGE_BLUETOOTH:
+	    		pbBluetooth.setVisibility((Integer)msg.obj == Common.BLUETOOTH_CONNECTING?View.VISIBLE:View.INVISIBLE);
+	    		cbBluetooth.setChecked((Integer)msg.obj ==  Common.BLUETOOTH_CONNECTED);
 	    		break;
-	    	case common.MESSAGE_LAUNCH:
-	    		int wptcount = (Integer) msg.obj;
-    			if(gvh.getWaypointPositions().getNumPositions() == wptcount) {
-    				launch();   				
-    			} else {
-    				gvh.sendMainToast("Should have " + wptcount + " waypoints, but I have " + gvh.getWaypointPositions().getNumPositions());
-    			}
+	    	case Common.MESSAGE_LAUNCH:
+	    		launch(msg.arg1, msg.arg2);
 	    		break;
-	    	case common.MESSAGE_ABORT:
+	    	case Common.MESSAGE_ABORT:
     			// Disconnect and reconnect
     			connect_disconnect();
     			launched = false;
     			connect_disconnect();
 	    		break;
 	    		
-	    	case common.MESSAGE_DEBUG:
+	    	case Common.MESSAGE_DEBUG:
 	    		txtDebug.setText("DEBUG:\n" + (String) msg.obj);
 	    		break;
-	    	case common.MESSAGE_BATTERY:
+	    	case Common.MESSAGE_BATTERY:
 	    		pbBattery.setProgress((Integer) msg.obj);
 	    		break;
 	    	}	
     	}
 
-		private void launch() {
-			if(!launched) {
-				launched = true;
-				cbRunning.setChecked(true);
-				logic.start();
-			}
-		}
+    	private void launch(int numWaypoints, int runNum) {    		
+    		//gvh.traceStart(runNum);
+    		
+    		if(gvh.gps.getWaypointPositions().getNumPositions() == numWaypoints) {
+    			if(!launched) {
+    				// GUI Updates				
+    				launched = true;
+    				cbRunning.setChecked(true);
+    				
+    				gvh.trace.traceSync("APPLICATION LAUNCH");
+    				
+    				if(!moat.isAlive()) moat.start();
+    				logic = new LogicThread(gvh, moat);
+    				logic.start();
+    				
+    	    		RobotMessage informLaunch = new RobotMessage("ALL", gvh.id.getName(), Common.MSG_ACTIVITYLAUNCH, new MessageContents(Common.intsToStrings(numWaypoints, runNum)));
+    	    		gvh.comms.addOutgoingMessage(informLaunch);
+    			}
+    		} else {
+    			gvh.plat.sendMainToast("Should have " + numWaypoints + " waypoints, but I have " + gvh.gps.getWaypointPositions().getNumPositions());
+    		}
+    	}
     };
-	
-    // Persistent threads
-    private GPSReceiver gps = null;
-    private RobotMotion motion = null;
-    private LogicThread logic = null;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -123,11 +132,10 @@ public class RobotsActivity extends Activity {
         
         // Create the global variable holder
         HashMap<String,String> hm_participants = new HashMap<String,String>();
-        for(int i = 0; i < participants.length; i++) {
+        for(int i = 0; i < 1; i++) {
         	hm_participants.put(participants[i], ips[i]);
         }        
-        gvh = new globalVarHolder(hm_participants, main_handler);
-        //gvh = new globalVarHolder(main_handler);
+        gvh = new RealGlobalVarHolder(participants[selected_robot], hm_participants, main_handler, mac[selected_robot]);
         
         // Connect
         connect_disconnect();
@@ -136,23 +144,18 @@ public class RobotsActivity extends Activity {
 	private void connect_disconnect() {
 		if(!connected) {
 			// Update GUI
-			btnConnect.setText("Disconnect");
-			gvh.setName(participants[selected_robot]);
-	        Log.d(TAG, gvh.getName());
-	        gvh.setDebugInfo("Connected");
+	        Log.d(TAG, gvh.id.getName());
+	        gvh.plat.setDebugInfo("Connected");
 	        
 	        // Begin persistent background threads
-	        gvh.startComms();
-	        gps = new GPSReceiver(gvh, gps_host, gps_port);
-	        gps.start();
+	        gvh.comms.startComms();
+	        gvh.gps.startGps();        
 	        
-	        if(motion == null) {
-	        	motion = new RobotMotion(gvh, mac[selected_robot]);
-	        } else {
-	        	motion.resume();
+	        if(moat == null) {
+	        	BluetoothInterface bti = new BluetoothInterface(gvh, mac[selected_robot]);
+	        	moat = new MotionAutomaton(gvh, bti);
 	        }
-	        
-	        logic = new LogicThread(gvh, motion);
+
 		} else {
 			// Shut down the logic thread if it was running
 			if(launched) {
@@ -161,18 +164,17 @@ public class RobotsActivity extends Activity {
 			}
 			
 			// Update GUI
-			btnConnect.setText("Connect");
 			cbRunning.setChecked(false);
-			gvh.sendMainMsg(common.MESSAGE_LOCATION, 0);
-			gvh.setDebugInfo("Disconnected");
+			gvh.plat.sendMainMsg(Common.MESSAGE_LOCATION, 0);
+			gvh.plat.setDebugInfo("Disconnected");
 			
 			// Shut down persistent threads
-			gvh.stopComms();
-			gps.cancel();
+			gvh.log.i(TAG, "Stopping comms");
+			gvh.comms.stopComms();
 
 			launched = false;
-
-			motion.halt();
+			
+			moat.motionHalt();
 		}	
 		connected = !connected;
 	}
@@ -202,7 +204,6 @@ public class RobotsActivity extends Activity {
 	}
 
 	private void setupGUI() {	
-		btnConnect = (Button) findViewById(R.id.btnConnect);
 		txtRobotName = (TextView) findViewById(R.id.txtRobotName);
 		cbGPS = (CheckBox) findViewById(R.id.cbGPS);
 		cbBluetooth = (CheckBox) findViewById(R.id.cbBluetooth);
@@ -217,13 +218,6 @@ public class RobotsActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				pick_robot();
-			}
-		});
-		
-		btnConnect.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				connect_disconnect();
 			}
 		});
 	}
@@ -241,14 +235,14 @@ public class RobotsActivity extends Activity {
 	@Override
 	public void onBackPressed() {
 		Log.e(TAG, "Exiting application");
-		if(connected) connect_disconnect();
-		Timer timer = new Timer();
-		timer.schedule(new TimerTask() {
-			public void run() {
-				int pid = android.os.Process.myPid(); 
-				android.os.Process.killProcess(pid);
-			}
-		}, 300);
+		if(moat != null) {
+			moat.cancel();
+		}
+		if(connected) {
+			connect_disconnect();
+		}
+		gvh.gps.stopGps();
+		finish();
 		return;
 	}
 }

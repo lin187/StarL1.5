@@ -1,83 +1,96 @@
 package edu.illinois.mitra.starl.functions;
 
 import java.util.HashMap;
+import java.util.HashSet;
 
-import android.util.Log;
+import edu.illinois.mitra.starl.comms.MessageContents;
 import edu.illinois.mitra.starl.comms.RobotMessage;
+import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.MessageListener;
 import edu.illinois.mitra.starl.interfaces.Synchronizer;
-import edu.illinois.mitra.starl.objects.common;
-import edu.illinois.mitra.starl.objects.globalVarHolder;
+import edu.illinois.mitra.starl.objects.Common;
 
 public class BarrierSynchronizer implements Synchronizer, MessageListener {
 	private static final String TAG = "BarrierSynchronizer";
 	private static final String ERR = "Critical Error";
 	
-	private globalVarHolder gvh;
+	private GlobalVarHolder gvh;
 	// Barriers tracks which barriers are active and how many robots have reported ready to proceed for each
 	// Keys are barrier IDs, values are number of robots ready to proceed
-	private HashMap<String,Integer> barriers;
+	private HashMap<String,HashSet<String>> barriersNames;
 	private int n_participants;
 	private String name;
 	
-	public BarrierSynchronizer(globalVarHolder gvh) {
+	public BarrierSynchronizer(GlobalVarHolder gvh) {
 		this.gvh = gvh;
-		n_participants = gvh.getParticipants().size();
-		barriers = new HashMap<String,Integer>();
-		name = gvh.getName();
-		gvh.addMsgListener(common.MSG_BARRIERSYNC, this);
-		gvh.traceEvent(TAG, "Created");
+		n_participants = gvh.id.getParticipants().size();
+		barriersNames = new HashMap<String,HashSet<String>>();
+		name = gvh.id.getName();
+		gvh.comms.addMsgListener(Common.MSG_BARRIERSYNC, this);
+		gvh.trace.traceEvent(TAG, "Created");
+		gvh.log.i(TAG, "Created BarrierSynchronizer, registered message listener with GVH");
 	}
 	
-	public void barrier_sync(String barrierID) {
-		gvh.traceEvent(TAG, "Requested sync", barrierID);
-		
-		if(barriers.containsKey(barrierID)) {
-			int currentCount = barriers.get(barrierID);
-			barriers.put(barrierID, currentCount + 1);
-			Log.d(TAG, "Updated barrier for bID " + barrierID);
+	public void barrier_sync(String barrierID) {	 
+		HashSet<String> names;
+		if(barriersNames.containsKey(barrierID)) {
+			if(barriersNames.get(barrierID).contains(name)) {
+				// Already requested entry!
+				gvh.log.e(TAG, "TRIED TO SYNC MULTIPLE TIMES FOR BID " + barrierID);
+				return;
+			} else {
+				names = barriersNames.get(barrierID);
+			}
 		} else {
-			barriers.put(barrierID, 1);
-			Log.d(TAG, "Added barrier for bID " + barrierID);
+			names = new HashSet<String>();
 		}
-		RobotMessage notify_sync = new RobotMessage("ALL", name, common.MSG_BARRIERSYNC, barrierID);
-		gvh.addOutgoingMessage(notify_sync);
+		names.add(name);
+		barriersNames.put(barrierID, names);
 		
-		gvh.traceVariable(TAG, barrierID+"_count", barriers.get(barrierID));
-		gvh.traceEvent(TAG, "Notified all of sync", barrierID);
+		gvh.log.e(TAG, "SENDING SYNC FOR ID " + barrierID);
+		RobotMessage notify_sync = new RobotMessage("ALL", name, Common.MSG_BARRIERSYNC, new MessageContents(barrierID));
+		gvh.comms.addOutgoingMessage(notify_sync);
 	}
 	
 	public boolean barrier_proceed(String barrierID) {
-		if(barriers.get(barrierID) == n_participants) {
-			gvh.traceEvent(TAG, "Barrier ready to proceed", barrierID);
-			Log.i(TAG, "Barrier " + barrierID + " has all robots ready to proceed!");
-			barriers.remove(barrierID);
-			return true;
-		}
+		try {
+			if(barriersNames.get(barrierID).size() == n_participants) {
+				gvh.trace.traceEvent(TAG, "Barrier ready to proceed", barrierID);
+				gvh.log.i(TAG, "Barrier " + barrierID + " has all robots ready to proceed!");
+				barriersNames.remove(barrierID);
+				return true;
+			}
+		} catch(NullPointerException e) {}
 		return false;
 	}
 
+	@Override
 	public void messageReceied(RobotMessage m) {
 		// Update the barriers when a barrier sync message is received
-		String bID = m.getContents();
+		String bID = m.getContents(0);
 		
-		gvh.traceEvent(TAG, "Received barrier sync message", bID);
-		
-		if(barriers.containsKey(bID)) {
-			Integer currentCount = barriers.get(bID);
-			barriers.put(bID, Integer.valueOf(currentCount + 1));
-			Log.d(TAG, "Received barrier notice for bID " + bID + " from " + m.getFrom() + ". Current count: " + barriers.get(bID));
+		gvh.trace.traceEvent(TAG, "Received barrier sync message", bID);
+
+		HashSet<String> names;
+		if(barriersNames.containsKey(bID)) {
+			names = barriersNames.get(bID);
+			if(names.contains(m.getFrom())) {
+				gvh.log.e(TAG, "Received duplicate sync message from " + m.getFrom() + "!");
+				return;
+			} else {
+				names.add(m.getFrom());
+			}
 		} else {
-			Log.d(TAG, "Received first barrier notice for bID " + bID);
-			barriers.put(bID, new Integer(1));
+			names = new HashSet<String>();
+			names.add(m.getFrom());
 		}
-		
-		gvh.traceEvent(TAG, "messageReceived", m);
+		barriersNames.put(bID, names);
+		gvh.log.d(TAG, "Received barrier notice for bID " + bID + " from " + m.getFrom() + ". Current count: " + barriersNames.get(bID).size());
 	}
 	
 	@Override
 	public void cancel() {
-		gvh.removeMsgListener(common.MSG_BARRIERSYNC);
-		gvh.traceEvent(TAG, "Cancelled");
+		gvh.comms.removeMsgListener(Common.MSG_BARRIERSYNC);
+		gvh.trace.traceEvent(TAG, "Cancelled");
 	}
 }

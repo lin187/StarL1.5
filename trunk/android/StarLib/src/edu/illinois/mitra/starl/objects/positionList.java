@@ -4,32 +4,29 @@ package edu.illinois.mitra.starl.objects;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import android.util.Log;
-import edu.illinois.mitra.starl.exceptions.ItemFormattingException;
-
-public class positionList {
+public class PositionList {
 	private static final String TAG = "positionList";
 	private static final String ERR = "Critical Error";
 	
-	private HashMap<String,itemPosition> positions;
+	private HashMap<String,ItemPosition> positions;
 	
 	// Default constructor
-	public positionList() {
-		positions = new HashMap<String,itemPosition>();
+	public PositionList() {
+		positions = new HashMap<String,ItemPosition>();
 	}
 	
-	public void update(itemPosition received) {
+	public void update(ItemPosition received) {
 		positions.put(received.getName(), received);
 	}
 	
-	public itemPosition getPosition(String name) {
+	public ItemPosition getPosition(String name) {
 		if(positions.containsKey(name)) {
 			return positions.get(name);
 		}
 		return null;
 	}
 	
-	public itemPosition getPositionRegex(String exp) {
+	public ItemPosition getPositionRegex(String exp) {
 		for(String n : positions.keySet()) {
 			if(n.matches(exp)) {
 				return positions.get(n);
@@ -45,7 +42,7 @@ public class positionList {
 	@Override
 	public String toString() {
 		String toRet = "";
-		for(itemPosition i : positions.values()) {
+		for(ItemPosition i : positions.values()) {
 			toRet = toRet + i.toString() + "\n";
 		}
 		return toRet;
@@ -55,7 +52,7 @@ public class positionList {
 		return positions.size();
 	}
 	
-	public ArrayList<itemPosition> getList() {
-		return new ArrayList<itemPosition>(positions.values());
+	public ArrayList<ItemPosition> getList() {
+		return new ArrayList<ItemPosition>(positions.values());
 	}
 }

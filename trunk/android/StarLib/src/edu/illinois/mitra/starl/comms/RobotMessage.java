@@ -1,6 +1,7 @@
 package edu.illinois.mitra.starl.comms;
 
 import java.util.HashMap;
+import java.util.List;
 
 import edu.illinois.mitra.starl.interfaces.Traceable;
 
@@ -8,9 +9,9 @@ public class RobotMessage implements Traceable {
 	private String to;
 	private String from;
 	private int MID;
-	private String contents;
+	MessageContents contents;
 
-	public RobotMessage(String to, String from, int MID, String contents) {
+	public RobotMessage(String to, String from, int MID, MessageContents contents) {
 		super();
 		this.to = to;
 		this.from = from;
@@ -18,10 +19,18 @@ public class RobotMessage implements Traceable {
 		this.contents = contents;
 	}
 	
+	public RobotMessage(String to, String from, int MID, String contents) {
+		super();
+		this.to = to;
+		this.from = from;
+		this.MID = MID;
+		this.contents = new MessageContents(contents);
+	}
+	
 	public RobotMessage(RobotMessage other) {
 		this.to = other.getTo();
 		this.from = other.getFrom();
-		this.contents = other.getContents();
+		this.contents = other.contents;
 		this.MID = other.getMID();
 	}
 	
@@ -30,9 +39,11 @@ public class RobotMessage implements Traceable {
 		this.from = parts[2];
 		this.to = parts[3];
 		this.MID = Integer.parseInt(parts[4]);
-		this.contents = parts[5];
+		this.contents = new MessageContents(parts[5]);
 	}
-
+	public List<String> getContentsList() {
+		return contents.getContents();
+	}
 	public String getTo() {
 		return to;
 	}
@@ -42,8 +53,8 @@ public class RobotMessage implements Traceable {
 	public int getMID() {
 		return MID;
 	}
-	public String getContents() {
-		return contents;
+	public String getContents(int location) {
+		return contents.get(location);
 	}
 	public void setFrom(String from) {
 		this.from = from;
@@ -54,8 +65,8 @@ public class RobotMessage implements Traceable {
 	public void setMID(int mid) {
 		this.MID = mid;
 	}
-	public void setContents(String to) {
-		this.contents = to;
+	public void setContents(MessageContents new_contents) {
+		this.contents = new_contents;
 	}
 
 	@Override

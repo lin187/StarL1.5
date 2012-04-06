@@ -91,7 +91,7 @@ public class UDPMessage implements Traceable {
 	}
 	
 	public boolean isACK() {
-		return (contents.getMID() == 0 && contents.getContents().equals("ACK"));
+		return (contents.getMID() == 0);
 	}
 	
 	public boolean isBroadcast() {
@@ -135,7 +135,7 @@ public class UDPMessage implements Traceable {
 				return false;
 		} else if (!contents.getFrom().equals(other.contents.getFrom())) {
 			return false;
-		} else if (!contents.getContents().equals(other.contents.getContents())) {
+		} else if (!contents.getContentsList().equals(other.contents.getContentsList())) {
 			return false;
 		} else if (contents.getMID() != other.contents.getMID()) {
 			return false;

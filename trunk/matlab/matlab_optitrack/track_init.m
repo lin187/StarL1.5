@@ -7,8 +7,8 @@ end
 % load the NPTrackingTools library if it is not already loaded
 if ~libisloaded('NPTrackingTools')
     disp('THE LIBRARY HAS NOT BEEN LOADED');
-	addpath('C:\Program Files\NaturalPoint\TrackingTools\lib'); % change if necessary
-	addpath('C:\Program Files\NaturalPoint\TrackingTools\inc'); % change if necessary
+	addpath('C:\Program Files\OptiTrack\Tracking Tools\lib'); % change if necessary
+	addpath('C:\Program Files\OptiTrack\Tracking Tools\inc'); % change if necessary
 	[notfound,warnings]=loadlibrary('NPTrackingTools','NPTrackingTools.h');
 end
 

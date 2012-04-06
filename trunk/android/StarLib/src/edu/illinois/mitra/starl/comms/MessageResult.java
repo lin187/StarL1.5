@@ -11,13 +11,13 @@ public class MessageResult {
 	
 	public void setFailed() {
 		results_set ++;
-		//Log.i("Result", "Failure set #" + results_set + " out of " + recipients);
+		//gvh.i("Result", "Failure set #" + results_set + " out of " + recipients);
 		result = false;
 	}
 	
 	public void setReceived() {
 		results_set ++;
-		//Log.i("Result", "Received set #" + results_set + " out of " + recipients);
+		//gvh.i("Result", "Received set #" + results_set + " out of " + recipients);
 		result &= true;
 	}
 	

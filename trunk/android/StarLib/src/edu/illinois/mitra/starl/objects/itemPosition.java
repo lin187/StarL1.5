@@ -2,11 +2,10 @@ package edu.illinois.mitra.starl.objects;
 
 import java.util.HashMap;
 
-import android.util.Log;
 import edu.illinois.mitra.starl.exceptions.ItemFormattingException;
 import edu.illinois.mitra.starl.interfaces.Traceable;
 
-public class itemPosition implements Comparable<itemPosition>, Traceable {
+public class ItemPosition implements Comparable<ItemPosition>, Traceable {
 	private static final String TAG = "itemPosition";
 	private static final String ERR = "Critical Error";
 	
@@ -15,7 +14,7 @@ public class itemPosition implements Comparable<itemPosition>, Traceable {
 	private int y;
 	private int angle;
 	
-	public itemPosition(String name, int x, int y, int angle) {
+	public ItemPosition(String name, int x, int y, int angle) {
 		super();
 		if(name.contains(",")) {
 			String[] namePieces = name.split(",");
@@ -28,7 +27,14 @@ public class itemPosition implements Comparable<itemPosition>, Traceable {
 		this.angle = angle;
 	}
 	
-	public itemPosition(String received) throws ItemFormattingException {
+	public ItemPosition(ItemPosition other) {
+		this.name = other.name;
+		this.x = other.x;
+		this.y = other.y;
+		this.angle = other.angle;
+	}
+	
+	public ItemPosition(String received) throws ItemFormattingException {
 		String[] parts = received.replace(",", "").split("\\|");
 		if(parts.length == 6) {
 			this.name = parts[1];
@@ -41,7 +47,7 @@ public class itemPosition implements Comparable<itemPosition>, Traceable {
 	}
 	
 	// This compareTo implementation doesn't make tons of sense
-	public int compareTo(itemPosition other) {
+	public int compareTo(ItemPosition other) {
 		if(!name.equals(other.getName())) {
 			return 1;
 		}
@@ -49,18 +55,16 @@ public class itemPosition implements Comparable<itemPosition>, Traceable {
 	}
 	
 	//Return the distance to another position
-	public int distanceTo(itemPosition other) {
+	public int distanceTo(ItemPosition other) {
 		if(other == null) {
-			Log.e(ERR, "Called distanceTo on a null object!");
 			return 0;
 		}
 		return (int) Math.sqrt(Math.pow(getX() - other.getX(), 2) + Math.pow(getY() - other.getY(), 2));
 	}
 	
 	//Return true if this is facing towards another robot
-	public boolean isFacing(itemPosition other, int radius) { 
+	public boolean isFacing(ItemPosition other, int radius) { 
 		if(other == null) {
-			Log.e(ERR, "Called isFacing on a null object!");
 			return false;
 		}
 		
@@ -73,9 +77,8 @@ public class itemPosition implements Comparable<itemPosition>, Traceable {
 	}
 	
 	//Return how many degrees need to be rotated until facing a position
-	public int angleTo(itemPosition other) {
+	public int angleTo(ItemPosition other) {
 		if(other == null) {
-			Log.e(ERR, "Called angleTo on a null object!");
 			return 0;
 		}
 		
@@ -86,7 +89,7 @@ public class itemPosition implements Comparable<itemPosition>, Traceable {
 		if(angle > 180) {
 			angle -= 360;
 		}
-		int retAngle = common.min_magitude((otherAngle - angle),(angle - otherAngle));
+		int retAngle = Common.min_magitude((otherAngle - angle),(angle - otherAngle));
 		
 		if(retAngle > 180) {
 			retAngle = retAngle-360;
@@ -123,6 +126,12 @@ public class itemPosition implements Comparable<itemPosition>, Traceable {
 		this.angle = angle;
 	}
 	
+	public void setPos(ItemPosition other) {
+		this.x = other.x;
+		this.y = other.y;
+		this.angle = other.angle;
+	}
+	
 	// Hashing and equals checks are done only against the position's name. Position names are unique!
 	
 	@Override
@@ -141,7 +150,7 @@ public class itemPosition implements Comparable<itemPosition>, Traceable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		itemPosition other = (itemPosition) obj;
+		ItemPosition other = (ItemPosition) obj;
 		if (name == null) {
 			if (other.name != null)
 				return false;
@@ -150,7 +159,6 @@ public class itemPosition implements Comparable<itemPosition>, Traceable {
 		return true;
 	}
 
-	@Override
 	public HashMap<String, Object> getXML() {
 		HashMap<String, Object> retval = new HashMap<String,Object>();
 		retval.put("name", name);

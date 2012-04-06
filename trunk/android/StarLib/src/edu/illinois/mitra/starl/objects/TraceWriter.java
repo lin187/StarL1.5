@@ -7,23 +7,26 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import android.util.Log;
 import edu.illinois.mitra.starl.interfaces.Traceable;
 
 public class TraceWriter {
 	private static final String TAG = "RobotMotion";
 	private static final String ERR = "Critical Error";
 	
-	private File logFile;
-	private BufferedWriter buf;
+	protected File logFile;
+	protected BufferedWriter buf;
 	private int level = 0;
 
-	public TraceWriter(String filename) {
+	private boolean idealClocks = true;
+	private int drift = 0;
+	private double skew = 1.0;
+	
+	public TraceWriter(String filename, String dir) {
 		SimpleDateFormat df = new SimpleDateFormat("mm:HH dd/MM/yyyy");
 		String date = df.format(new Date());
 		
 		// Create the log file
-		logFile = new File("sdcard/trace/" + filename + ".xml");
+		logFile = new File(dir + filename + ".xml");
 		try {
 			logFile.createNewFile();
 		} catch(IOException e) {
@@ -36,9 +39,15 @@ public class TraceWriter {
 			open("trace");
 			writeTag("date", date);
 		} catch(IOException e) {
-			Log.e(ERR, "Couldn't create buffered writer!");
 			e.printStackTrace();
 		}
+	}
+	
+	public TraceWriter(String filename, String dir, int driftMax, float skewBound) {
+		this(filename, dir);
+		drift = (int)(Math.random()*2*driftMax) - driftMax;
+		skew += (Math.random()*2*skewBound) - skewBound; 
+		idealClocks = false;
 	}
 	
 	public synchronized void sync(String source) {
@@ -53,21 +62,23 @@ public class TraceWriter {
 		writeTag("source", source);
 		writeTimeTag();
 		writeTag("type", type);
-		try {
-			if(data instanceof Traceable) {
-				writeTag("class", data.getClass().getSimpleName());
-				open("data");
-				Traceable t = (Traceable) data;
-				for(String tag : t.getXML().keySet()) {
-					writeTag(tag,t.getXML().get(tag).toString());
+		if(data != null) {
+			try {
+				if(data instanceof Traceable) {
+					open("data");
+					writeTag("class", data.getClass().getName());
+					Traceable t = (Traceable) data;
+					for(String tag : t.getXML().keySet()) {
+						writeTag(tag,t.getXML().get(tag).toString());
+					}
+					close("data");
+				} else {
+					writeTag("data",data.toString());
 				}
+			} catch(NullPointerException e) {
+				// Don't write null data for event tags
 				close("data");
-			} else {
-				writeTag("data",data.toString());
 			}
-		} catch(NullPointerException e) {
-			// Don't write null data for event tags
-			//writeTag("data", "NULL");
 		}
 		close("event");
 	}
@@ -79,19 +90,19 @@ public class TraceWriter {
 		writeTag("varname", varname);
 		
 		try {
-			writeTag("class", value.getClass().getSimpleName());
 			if(value instanceof Traceable) {
-				open("value");
+				open("data");
+				writeTag("class", value.getClass().getName());
 				Traceable t = (Traceable) value;
 				for(String tag : t.getXML().keySet()) {
 					writeTag(tag,t.getXML().get(tag).toString());
 				}
-				close("value");
+				close("data");
 			} else {
-				writeTag("value",value.toString());
+				writeTag("data",value.toString());
 			}
 		} catch(NullPointerException e) {
-			writeTag("value", "NULL");
+			writeTag("data", "NULL");
 		}
 
 		close("variable");
@@ -109,30 +120,33 @@ public class TraceWriter {
 		}
 	}
 	
-	private void write(String text) {
+	protected void write(String text) {
 		try {
 			for(int i = 0; i < level; i++) {
 				buf.append("\t");
 			}
 			buf.append(text);
 			buf.newLine();
-			//buf.flush();
 		} catch(IOException e) {	
 		} catch(NullPointerException e) {
 		}
 	}
 	
-	private void writeTag(String tag, String contents) {
+	protected void writeTag(String tag, String contents) {
 		write("<" + tag + ">" + contents + "</" + tag + ">");
 	}
-	private void writeTimeTag() {
-		writeTag("time", Long.toString(System.currentTimeMillis()));
+	protected void writeTimeTag() {
+		if(idealClocks) {
+			writeTag("time", Long.toString(System.currentTimeMillis()));
+		} else {
+			writeTag("time", Long.toString((long)(drift + skew*System.currentTimeMillis())));
+		}
 	}
-	private void open(String field) {
+	protected void open(String field) {
 		write("<" + field + ">");
 		level ++;
 	}
-	private void close(String field) {
+	protected void close(String field) {
 		level --;
 		write("</" + field + ">");
 	}

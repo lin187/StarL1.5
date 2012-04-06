@@ -19,7 +19,7 @@ function [] = ProcessFile(varargin)
 format longg;
 FNAME = varargin{1};
 %% Options section
-DIR = 'C:\pictures\tests';
+DIR = 'C:\';
 
 % Waypoint spacing and intersection radius constants
 SPACING = 500;

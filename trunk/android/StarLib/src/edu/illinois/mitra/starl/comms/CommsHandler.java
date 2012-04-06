@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
-import android.util.Log;
-import edu.illinois.mitra.starl.objects.globalVarHolder;
+import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.Cancellable;
+import edu.illinois.mitra.starl.interfaces.ComThread;
 
 public class CommsHandler extends Thread implements Cancellable {
 	public static final int TIMEOUT = 250;
@@ -19,69 +19,88 @@ public class CommsHandler extends Thread implements Cancellable {
 	private String name;
 	    
     // Incoming and Outgoing message lists
-    private ArrayList<UDPMessage> InMsgList = new ArrayList<UDPMessage>();
-    private ArrayList<UDPMessage> OutMsgList = new ArrayList<UDPMessage>();
-    private ArrayList<UDPMessage> ReceivedMsgList = new ArrayList<UDPMessage>();
+    private ArrayList<UDPMessage> InMsgList;
+    private ArrayList<UDPMessage> OutMsgList;
+    private ArrayList<UDPMessage> ReceivedMsgList;
     
     // Participant names and IP addresses
     private HashMap<String,String> participants;
 	
     // Connected threads and objects
-    private globalVarHolder gvh;
+    private GlobalVarHolder gvh;
 	private ComThread mConnectedThread;
 	    
-	public CommsHandler(HashMap<String,String> participants, String name, globalVarHolder gvh) {
-		this.participants = participants;
-		this.name = name;
+	// Statistics tracking
+	private int stat_resendAcks = 0;
+	private int stat_timeouts = 0;	
+	private int stat_sends = 0;
+	private int stat_receives = 0;
+	
+	public CommsHandler(GlobalVarHolder gvh, ComThread mConnectedThread) {
+		this.participants = gvh.id.getParticipantsIPs();
+		this.name = gvh.id.getName();
 		this.gvh = gvh;
 		
-		Random rand = new Random();
-		seqNum = rand.nextInt(10000);
+		InMsgList = new ArrayList<UDPMessage>();
+		OutMsgList = new ArrayList<UDPMessage>();
+		ReceivedMsgList = new ArrayList<UDPMessage>();
+		 
+		seqNum = (new Random()).nextInt(10000);
 		
-        mConnectedThread = new ComThread(ReceivedMsgList,gvh);
-		gvh.traceEvent(TAG, "Created");
+		this.mConnectedThread = mConnectedThread;
+		this.mConnectedThread.setMsgList(ReceivedMsgList);
+		
+		gvh.trace.traceEvent(TAG, "Created");
 	}
 	
 	public synchronized void addOutgoing(RobotMessage msg, MessageResult result) {
 		UDPMessage newMsg = new UDPMessage(seqNum, UDPMessage.MSG_QUEUED, msg);
 		newMsg.setHandler(result);
 		OutMsgList.add(newMsg);
-		seqNum = (seqNum + 1) % 9999;
-		gvh.traceEvent(TAG, "Sending", msg);
+		seqNum = (seqNum + 1) % (Integer.MAX_VALUE-1);
+		gvh.trace.traceEvent(TAG, "Sending", newMsg);
+		gvh.log.i(TAG, "Sending " + newMsg);
+		stat_sends ++;
 	}
 	
 	public synchronized void clear() {
 		InMsgList.clear();
 		OutMsgList.clear();
 		ReceivedMsgList.clear();
-		gvh.traceEvent(TAG, "Cleared");
+		gvh.trace.traceEvent(TAG, "Cleared");
+		gvh.log.i(TAG, "Cleared");
 	}
 	
 	@Override
 	public synchronized void start() {
 		mConnectedThread.start();
-		Log.e(TAG, "Starting protocol thread...");
 		super.start();
-		gvh.traceEvent(TAG, "Starting");
+		gvh.trace.traceEvent(TAG, "Starting");
 	}
 	
     @Override
 	public void run() {
     	super.run();
-    	Log.i(TAG, "protocol thread running...");
     	while(true) {
+    		try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     		// Send any outgoing messages (queued or expired)
     		if(isPendingMessage()) {
     			UDPMessage toSend = nextPendingMessage();
     	        mConnectedThread.write(toSend, nameToIP(toSend));
-    			gvh.traceEvent(TAG, "Sent pending message", toSend);
+    	        gvh.log.d(TAG, "PHYSICALLY sent " + toSend);
     		}
     		
     		// Send any outgoing ACKs
     		if(isPendingACK()) {
     			UDPMessage toSend = nextPendingACK();
     			mConnectedThread.write(toSend, nameToIP(toSend));
-    			gvh.traceEvent(TAG, "Sent pending ACK", toSend);
+    			gvh.trace.traceEvent(TAG, "Sent ACK", toSend);
+    			gvh.log.d(TAG, "PHYSICALLY ACK'd " + toSend);
     		}
     		
     		// Handle any newly received messages
@@ -120,8 +139,7 @@ public class CommsHandler extends Thread implements Cancellable {
 				InMsgList.set(i, current);
 				
 				// Create an ACK msg to the sender from me for the received sequence number
-				RobotMessage ackmsg = new RobotMessage(current.getContents().getFrom(), name, 0, "ACK");
-				return new UDPMessage(current.getSeqNum(), -1, ackmsg);
+				return new UDPMessage(current.getSeqNum(), -1, new RobotMessage(current.getContents().getFrom(), name, 0, new MessageContents("ACK")));
 			}
 		}
 		return null;
@@ -167,15 +185,18 @@ public class CommsHandler extends Thread implements Cancellable {
 				InMsgList.add(current);
 			}
 			
-			gvh.traceEvent(TAG, "Incoming data message", current.getContents());
+			gvh.trace.traceEvent(TAG, "Received data message", current);
+			gvh.log.i(TAG, "Incoming data message " + current);
+			stat_receives ++;
 			
 			// Add it to the gvh in queue
-			gvh.addIncomingMessage(new RobotMessage(current.getContents()));
+			gvh.comms.addIncomingMessage(new RobotMessage(current.getContents()));
 		} else {
 		// If we've received it before, flag its duplicate for re-sending an ACK and reset it's received time
-			Log.d(TAG, "-> Received duplicate message: " + current + "\n-> Flagging for re-ACKing");
-			gvh.traceEvent(TAG, "Duplicate message", current);
+			gvh.log.e(TAG, "--> Received duplicate message: " + current + "\n--> Flagging for re-ACKing");
+			gvh.trace.traceEvent(TAG, "Duplicate message", current);
 			UDPMessage duplicate = InMsgList.get(msg_idx);
+			stat_resendAcks ++;
 			duplicate.setState(UDPMessage.MSG_RECEIVED);
 			duplicate.setReceivedTime(System.currentTimeMillis());
 			InMsgList.set(msg_idx, duplicate);
@@ -204,7 +225,6 @@ public class CommsHandler extends Thread implements Cancellable {
 								udp_new.setSentTime(System.currentTimeMillis());
 								udp_new.setHandler(current.getHandler());
 								OutMsgList.add(udp_new);
-								Log.d(TAG, "Adding: " + udp_new);
 							}
 						}
 					}
@@ -222,8 +242,8 @@ public class CommsHandler extends Thread implements Cancellable {
 	private boolean isPendingMessage() {
 		long time = System.currentTimeMillis();
 		for(int i = 0; i < OutMsgList.size(); i++) {
-			UDPMessage current = OutMsgList.get(i); 
-			
+			UDPMessage current = OutMsgList.get(i);
+			try {
 			if(current.getState() == UDPMessage.MSG_SENT && (time - current.getSentTime()) >= TIMEOUT) {
 				// If the message has been retried too many times, signal failure
 				if(current.getRetries() > MAX_RETRIES) {
@@ -232,7 +252,9 @@ public class CommsHandler extends Thread implements Cancellable {
 					i --;
 				} else {
 					// Otherwise, mark the message for resending
-					Log.i(TAG, "Found expired message: " + current);
+					gvh.log.i(TAG, "Found expired unacked outgoing message: " + current);
+					gvh.log.i(TAG, "\t Message age: " + (time - current.getSentTime()) + " ms");
+					stat_timeouts ++;
 					current.setState(UDPMessage.MSG_QUEUED);
 					current.retry();
 					OutMsgList.set(i, current);
@@ -242,7 +264,9 @@ public class CommsHandler extends Thread implements Cancellable {
 			
 			if(current.getState() == UDPMessage.MSG_QUEUED) {
 				return true;
-				
+			}
+			} catch(NullPointerException e) {
+				gvh.log.e(TAG, "CAUGHT A NULL POINTER EXCEPTION IN isPendingMessage()");
 			}
 		}
 		return false;
@@ -250,15 +274,14 @@ public class CommsHandler extends Thread implements Cancellable {
 
 	// Handle an ACK message by marking the associated sent message as ACK'd
 	private synchronized void handleAck(UDPMessage ReceivedAck) {
-		Log.d(TAG, "Entering handleAck for " + ReceivedAck);
+		gvh.log.i(TAG, "Handling ACK " + ReceivedAck);
+		gvh.trace.traceEvent(TAG, "Received ACK", ReceivedAck);
 		
 		// Check the outgoing list for a sent message matching this ACK
 		for(int i = 0; i < OutMsgList.size(); i++) {
 			UDPMessage current = OutMsgList.get(i);
-			Log.i(TAG, "--> Checking against " + current);
 			
 			if(current.getState() == UDPMessage.MSG_SENT && ackMatchesMessage(ReceivedAck, current)) {
-				Log.i(TAG, "--> MATCH! " + current.getSeqNum());
 				//Report that receipt was successful
 				current.getHandler().setReceived();
 				OutMsgList.remove(i);
@@ -266,7 +289,7 @@ public class CommsHandler extends Thread implements Cancellable {
 			}
 		}
 		
-		Log.e(TAG, "Received an unexpected ACK: " + ReceivedAck);
+		gvh.log.e(TAG, "Received an unexpected ACK: " + ReceivedAck);
 	}
 	
     private boolean ackMatchesMessage(UDPMessage ack, UDPMessage msg) {
@@ -275,10 +298,10 @@ public class CommsHandler extends Thread implements Cancellable {
     			&& (ack.getContents().getTo().equals(msg.getContents().getFrom()));
 	}
 
-    @Override
-	public void cancel() {
+    public void cancel() {
+    	gvh.log.i(TAG, "Cancelling comms handler");
         mConnectedThread.cancel();
-		gvh.traceEvent(TAG, "Cancelled");
+		gvh.trace.traceEvent(TAG, "Cancelled");
     }
 	
 	private String nameToIP(String to) {
@@ -286,7 +309,7 @@ public class CommsHandler extends Thread implements Cancellable {
 			return "192.168.1.255";
 		} else {
 			if(!participants.containsKey(to)) {
-				Log.e(ERR, "Can't find IP address for robot " + to);
+				gvh.log.e(ERR, "Can't find IP address for robot " + to);
 			}
 			return participants.get(to);
 		}
@@ -294,5 +317,13 @@ public class CommsHandler extends Thread implements Cancellable {
 	
 	private String nameToIP(UDPMessage msg_to_send) {
 		return nameToIP(msg_to_send.getContents().getTo());
+	}
+	
+	public void printStatistics() {
+		System.out.println("Sends: " + stat_sends);
+		System.out.println("Receives: " + stat_receives);
+		
+		System.out.println("Resends: " + stat_resendAcks);
+		System.out.println("Timeouts: " + stat_timeouts);
 	}
 }

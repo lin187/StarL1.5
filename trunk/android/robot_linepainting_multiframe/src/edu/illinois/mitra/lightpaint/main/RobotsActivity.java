@@ -22,24 +22,23 @@ import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import edu.illinois.mitra.starl.bluetooth.RobotMotion;
-import edu.illinois.mitra.starl.comms.GPSReceiver;
+import edu.illinois.mitra.starl.bluetooth.BluetoothRobotMotion;
+import edu.illinois.mitra.starl.comms.MessageContents;
 import edu.illinois.mitra.starl.comms.RobotMessage;
+import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
+import edu.illinois.mitra.starl.gvh.RealGlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.Cancellable;
 import edu.illinois.mitra.starl.interfaces.MessageListener;
-import edu.illinois.mitra.starl.interfaces.MotionListener;
-import edu.illinois.mitra.starl.objects.common;
-import edu.illinois.mitra.starl.objects.globalVarHolder;
+import edu.illinois.mitra.starl.interfaces.RobotEventListener;
+import edu.illinois.mitra.starl.objects.Common;
 
-public class RobotsActivity extends Activity implements MessageListener, MotionListener {
+public class RobotsActivity extends Activity implements MessageListener, RobotEventListener {
 	private static final String TAG = "RobotsActivity";
 	private static final String ERR = "Critical Error";
 	
 	private boolean DISPLAY_MODE = true;
 	
-	private globalVarHolder gvh = null;
-	private static String gps_host = "192.168.1.100";
-	private static int gps_port = 4000;
+	private GlobalVarHolder gvh = null;
 	private boolean connected = false;
 	private boolean launched = false;
 	private Collection<Cancellable> created;
@@ -60,7 +59,7 @@ public class RobotsActivity extends Activity implements MessageListener, MotionL
 	private CheckBox cbRunning;
 	private CheckBox cbPaintMode;
 	private ProgressBar pbBattery;
-	
+	private int batteryPercent = 0;
 	private int bluetoothStatus = 0;
 	
 	// SharedPreferences variables
@@ -82,30 +81,30 @@ public class RobotsActivity extends Activity implements MessageListener, MotionL
     private final Handler debug_handler = new Handler() {
     	public void handleMessage(Message msg) {	    	
 	    	switch(msg.what) {
-	    	case common.MESSAGE_TOAST:
+	    	case Common.MESSAGE_TOAST:
 	    		Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_LONG).show();
 	    		break;
-	    	case common.MESSAGE_LOCATION:
-	    		cbGPS.setChecked((Integer)msg.obj == common.GPS_RECEIVING);
+	    	case Common.MESSAGE_LOCATION:
+	    		cbGPS.setChecked((Integer)msg.obj == Common.GPS_RECEIVING);
 	    		break;
-	    	case common.MESSAGE_BLUETOOTH:
+	    	case Common.MESSAGE_BLUETOOTH:
 	    		bluetoothStatus = (Integer)msg.obj;
 	    		updateGUI();
 	    		break;
-	    	case common.MESSAGE_LAUNCH:
-	    		launch((String) msg.obj);
+	    	case Common.MESSAGE_LAUNCH:
+	    		launch(msg.arg1, msg.arg2);
 	    		break;
-	    	case common.MESSAGE_ABORT:
+	    	case Common.MESSAGE_ABORT:
     			// Disconnect and reconnect
 	    		abort();
 	    		break;
-	    	case common.MESSAGE_DEBUG:
+	    	case Common.MESSAGE_DEBUG:
 	    		txtDebug.setText("DEBUG:\n" + (String) msg.obj);
 	    		break;
 	    	case MESSAGE_SCREEN:
 	    		if(DISPLAY_MODE) {
 	    			reqBrightness = (Integer) msg.obj;
-		        	lp.screenBrightness = common.cap(reqBrightness*overrideBrightness, 1f, 100f) / 100.0f;
+		        	lp.screenBrightness = Common.cap(reqBrightness*overrideBrightness, 1f, 100f) / 100.0f;
 		        	getWindow().setAttributes(lp);
 	    		}
 	    		break;
@@ -113,19 +112,19 @@ public class RobotsActivity extends Activity implements MessageListener, MotionL
 	    		String colParse = "#" + (String) msg.obj;
 	    		vi.setBackgroundColor(Color.parseColor(colParse));
 	    		break;
-	    	case common.MESSAGE_BATTERY:
-	    		pbBattery.setProgress((Integer) msg.obj);
+	    	case Common.MESSAGE_BATTERY:
+	    		batteryPercent = (Integer) msg.obj;
+	    		Log.d(TAG, "Battery is at " + batteryPercent + "%");
+	    		updateGUI();
 	    		break;	
 	    	}
     	}
     	
-    	private void launch(String strvalues) {
-    		int[] values = common.partsToInts(strvalues, " ");
+    	private void launch(int numWaypoints, int runNum) {    		
+    		gvh.trace.traceStart(runNum);
+    		txtRunNumber.setText("Run: " + runNum);
     		
-    		gvh.traceStart(values[1]);
-    		txtRunNumber.setText("Run: " + values[1]);
-    		
-    		if(gvh.getWaypointPositions().getNumPositions() == values[0]) {
+    		if(gvh.gps.getWaypointPositions().getNumPositions() == numWaypoints) {
     			if(!launched) {
     				// GUI Updates				
     				launched = true;
@@ -133,36 +132,35 @@ public class RobotsActivity extends Activity implements MessageListener, MotionL
     				DISPLAY_MODE = cbPaintMode.isChecked();
     				if(DISPLAY_MODE) setContentView(vi);
     				
-    				gvh.traceSync("APPLICATION LAUNCH");
+    				gvh.trace.traceSync("APPLICATION LAUNCH");
     				
     				logic = new LogicThread(gvh, motion);
     				created.add(logic);
     				logic.start();
     				
-    	    		RobotMessage informLaunch = new RobotMessage("ALL", gvh.getName(), common.MSG_ACTIVITYLAUNCH, strvalues);
-    	    		gvh.addOutgoingMessage(informLaunch);
+    	    		RobotMessage informLaunch = new RobotMessage("ALL", gvh.id.getName(), Common.MSG_ACTIVITYLAUNCH, new MessageContents(Common.intsToStrings(numWaypoints, runNum)));
+    	    		gvh.comms.addOutgoingMessage(informLaunch);
     			}
     		} else {
-    			gvh.sendMainToast("Should have " + values[0] + " waypoints, but I have " + gvh.getWaypointPositions().getNumPositions());
+    			gvh.plat.sendMainToast("Should have " + numWaypoints + " waypoints, but I have " + gvh.gps.getWaypointPositions().getNumPositions());
     		}
     	}
     	
     	private void abort() {
     		if(launched) {
-    			gvh.traceSync("APPLICATION ABORT");
+    			gvh.trace.traceSync("APPLICATION ABORT");
     			connect_disconnect();
     			launched = false;
     			connect_disconnect();
     			
-        		RobotMessage informAbort = new RobotMessage("ALL", gvh.getName(), common.MSG_ACTIVITYABORT, null);
-        		gvh.addOutgoingMessage(informAbort);
+        		RobotMessage informAbort = new RobotMessage("ALL", gvh.id.getName(), Common.MSG_ACTIVITYABORT, (MessageContents) null);
+        		gvh.comms.addOutgoingMessage(informAbort);
     		}
     	}
     };
 	
     // Persistent threads
-    private GPSReceiver gps = null;
-    private RobotMotion motion = null;
+    private BluetoothRobotMotion motion = null;
     private LogicThread logic = null;
     
     @Override
@@ -185,23 +183,24 @@ public class RobotsActivity extends Activity implements MessageListener, MotionL
         for(int i = 0; i < participants.length; i++) {
         	hm_participants.put(participants[i], ips[i]);
         }        
-        gvh = new globalVarHolder(hm_participants, debug_handler);
+        gvh = new RealGlobalVarHolder(participants[selected_robot], hm_participants, debug_handler, mac[selected_robot]);
+        gvh.addEventListener(this);
         
         // Connect
         connect_disconnect();
         
         // Register message listener
-        gvh.addMsgListener(common.MSG_ACTIVITYABORT, this);
-        gvh.addMsgListener(common.MSG_ACTIVITYLAUNCH, this);
+        gvh.comms.addMsgListener(Common.MSG_ACTIVITYABORT, this);
+        gvh.comms.addMsgListener(Common.MSG_ACTIVITYLAUNCH, this);
         
-        // Set up brightness attribute
+        // Set up brightness attribute 
         vi = new View(this);
     }
     
     private void updateGUI() {
-    	pbBluetooth.setVisibility(bluetoothStatus == common.BLUETOOTH_CONNECTING?View.VISIBLE:View.INVISIBLE);
-		cbBluetooth.setChecked(bluetoothStatus ==  common.BLUETOOTH_CONNECTED);
-		gvh.sendMainMsg(common.MESSAGE_BATTERY, motion.getBatteryPercentage());
+    	pbBluetooth.setVisibility(bluetoothStatus == Common.BLUETOOTH_CONNECTING?View.VISIBLE:View.INVISIBLE);
+		cbBluetooth.setChecked(bluetoothStatus ==  Common.BLUETOOTH_CONNECTED);
+		pbBattery.setProgress(batteryPercent);
     }
     
 	private void connect_disconnect() {
@@ -209,19 +208,16 @@ public class RobotsActivity extends Activity implements MessageListener, MotionL
 			// CONNECT
 			
 			// Update GUI
-			gvh.setDebugInfo("");
-			gvh.setName(participants[selected_robot]);
-	        Log.d(TAG, gvh.getName());
+			gvh.plat.setDebugInfo("");
+	        Log.d(TAG, gvh.id.getName());
 	        
 	        // Begin persistent background threads
-	        gvh.startComms();
-	        gps = new GPSReceiver(gvh, gps_host, gps_port);
-	        gps.start();
-	        created.add(gps);
+	        gvh.comms.startComms();
+	        gvh.gps.startGps();
 	        
 	        if(motion == null) {
-	        	motion = new RobotMotion(gvh, mac[selected_robot]);
-	        	motion.addMotionListener(this);
+	        	Log.d(TAG, "Creating new RobotMotion");
+	        	motion = new BluetoothRobotMotion(gvh, mac[selected_robot]);
 	        } else {
 	        	motion.resume();
 	        }
@@ -237,11 +233,11 @@ public class RobotsActivity extends Activity implements MessageListener, MotionL
 			created.clear();
 
 			// Reset GVH's persistent threads
-			gvh.stopComms();
-			gvh.traceEnd();
+			gvh.comms.stopComms();
+			gvh.trace.traceEnd();
 			
 			// Update GUI
-			gvh.setDebugInfo("");
+			gvh.plat.setDebugInfo("");
 			txtRunNumber.setText("");
 			cbRunning.setChecked(false);
 
@@ -338,37 +334,39 @@ public class RobotsActivity extends Activity implements MessageListener, MotionL
 	
 	public void messageReceied(RobotMessage m) {
 		switch(m.getMID()) {
-		case common.MSG_ACTIVITYLAUNCH:
-			gvh.sendMainMsg(common.MESSAGE_LAUNCH, m.getContents());
+		case Common.MSG_ACTIVITYLAUNCH:
+			gvh.plat.sendMainMsg(Common.MESSAGE_LAUNCH, Integer.parseInt(m.getContents(0)),  Integer.parseInt(m.getContents(1)));
 			break;
-		case common.MSG_ACTIVITYABORT:
-			gvh.sendMainMsg(common.MESSAGE_ABORT, null);
+		case Common.MSG_ACTIVITYABORT:
+			gvh.plat.sendMainMsg(Common.MESSAGE_ABORT, null);
 			break;
 		}
 	}
 
-	public void motionEvent(int e) {
-		switch(e) {
-		case common.MOT_TURNING:
-			// Illuminate the screen if we're turning in place (assuming phones are in the middle!)
-			overrideBrightness = 0.21f;	    			
-			break;
-		case common.MOT_ARCING:
-			// Illuminate the screen if we're arcing 
-			overrideBrightness = 1;
-			break;
-		case common.MOT_STRAIGHT:
-			// Illuminate the screen if we're going straight 
-			overrideBrightness = 1;	    
-			break;
-		case common.MOT_STOPPED:
-			// Darken the screen if we've stopped 
-			overrideBrightness = 0;	    
-			break;
-		}
-		
-		if(DISPLAY_MODE && launched) {
-			gvh.sendMainMsg(MESSAGE_SCREEN, reqBrightness);
+	public void robotEvent(int type, int e) {
+		if(type == Common.EVENT_MOTION) {
+			switch(e) {
+			case Common.MOT_TURNING:
+				// Illuminate the screen if we're turning in place (assuming phones are in the middle!)
+				overrideBrightness = 0.21f;	    			
+				break;
+			case Common.MOT_ARCING:
+				// Illuminate the screen if we're arcing 
+				overrideBrightness = 1;
+				break;
+			case Common.MOT_STRAIGHT:
+				// Illuminate the screen if we're going straight 
+				overrideBrightness = 1;	    
+				break;
+			case Common.MOT_STOPPED:
+				// Darken the screen if we've stopped 
+				overrideBrightness = 0;	    
+				break;
+			}
+			
+			if(DISPLAY_MODE && launched) {
+				gvh.plat.sendMainMsg(MESSAGE_SCREEN, reqBrightness);
+			}
 		}
 	}
 	

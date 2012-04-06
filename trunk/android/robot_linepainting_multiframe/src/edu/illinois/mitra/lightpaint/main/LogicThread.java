@@ -9,17 +9,17 @@ import android.util.Log;
 import edu.illinois.mitra.lightpaint.BotProgressTracker;
 import edu.illinois.mitra.lightpaint.ImagePoint;
 import edu.illinois.mitra.lightpaint.PointManager;
-import edu.illinois.mitra.starl.bluetooth.RobotMotion;
+import edu.illinois.mitra.starl.bluetooth.BluetoothRobotMotion;
 import edu.illinois.mitra.starl.comms.RobotMessage;
 import edu.illinois.mitra.starl.functions.BarrierSynchronizer;
 import edu.illinois.mitra.starl.functions.RandomLeaderElection;
 import edu.illinois.mitra.starl.functions.SingleHopMutualExclusion;
+import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.Cancellable;
 import edu.illinois.mitra.starl.interfaces.LeaderElection;
 import edu.illinois.mitra.starl.interfaces.MessageListener;
 import edu.illinois.mitra.starl.interfaces.MutualExclusion;
 import edu.illinois.mitra.starl.interfaces.Synchronizer;
-import edu.illinois.mitra.starl.objects.globalVarHolder;
 
 public class LogicThread extends Thread implements MessageListener, Cancellable {
 	private static final String TAG = "Logic";
@@ -28,8 +28,8 @@ public class LogicThread extends Thread implements MessageListener, Cancellable 
 	private Collection<Cancellable> created;
 	
 	private boolean running = true;
-	private globalVarHolder gvh = null;
-	private RobotMotion motion = null;
+	private GlobalVarHolder gvh = null;
+	private BluetoothRobotMotion motion = null;
 	private Synchronizer sync = null;
 	private MutualExclusion mutex = null;
 	private LeaderElection le = null;
@@ -67,18 +67,18 @@ public class LogicThread extends Thread implements MessageListener, Cancellable 
 	private SortedSet<ImagePoint> myPoints = null;
 	private Iterator<ImagePoint> pointIter = null;
 	
-	public LogicThread(globalVarHolder gvh, RobotMotion motion) {
+	public LogicThread(GlobalVarHolder gvh, BluetoothRobotMotion motion) {
 		created = new HashSet<Cancellable>();
 		
 		this.gvh = gvh;
 		this.motion = motion;
 		
-		name = gvh.getName();
+		name = gvh.id.getName();
 		points = new PointManager(gvh);
 		sync = new BarrierSynchronizer(gvh);
 		le = new RandomLeaderElection(gvh);
 		
-		gvh.addMsgListener(MSG_INFORMLINE, this);
+		gvh.comms.addMsgListener(MSG_INFORMLINE, this);
 		Log.i(TAG, "I AM " + name);
 		
 		created.add(sync);
@@ -109,7 +109,7 @@ public class LogicThread extends Thread implements MessageListener, Cancellable 
 			case LEADERELECT:
 				leader = le.elect();
 				iamleader = (leader.equals(name));
-				gvh.sendMainToast(leader);
+				gvh.plat.sendMainToast(leader);
 				Log.d(TAG, "Leader elected!");
 				stage = STAGE.DIVIDE_LINES;
 				break;
@@ -151,7 +151,7 @@ public class LogicThread extends Thread implements MessageListener, Cancellable 
 				if(!start.isStart()) throw new RuntimeException("My start point wasn't a start point!");
 				dest = start;
 				
-				motion.go_to(dest.getPos());
+				motion.goTo(dest.getPos());
 				Log.d(TAG, "Going to start...");
 				motionHold();
 				
@@ -212,12 +212,12 @@ public class LogicThread extends Thread implements MessageListener, Cancellable 
 				
 			case WAIT_AT_INTERSECTION:
 				screenDark();	
-				gvh.setDebugInfo("Waiting for mutex " + intersection);
+				gvh.plat.setDebugInfo("Waiting for mutex " + intersection);
 				stage = intersectionWait();
 				break;
 				
 			case GO_NEXT_POINT:
-				gvh.setDebugInfo("");
+				gvh.plat.setDebugInfo("");
 				Log.d(TAG, "Next point: " + dest.getPoint());
 				
 				// Travel to the next point, keep curving to a minimum to prevent wavy images
@@ -229,7 +229,7 @@ public class LogicThread extends Thread implements MessageListener, Cancellable 
 				break;				
 				
 			case FINISH:
-				gvh.setDebugInfo("Done!");
+				gvh.plat.setDebugInfo("Done!");
 				mutex.exitAll();
 				prog.sendDone();
 				stage = STAGE.DONE;
@@ -254,7 +254,7 @@ public class LogicThread extends Thread implements MessageListener, Cancellable 
 	
 	public void cancel() {
 		Log.d(TAG, "CANCELLING LOGIC THREAD");
-		gvh.removeMsgListener(MSG_INFORMLINE);
+		gvh.comms.removeMsgListener(MSG_INFORMLINE);
 		running = false;
 		
 		// Cancel all created elements
@@ -267,8 +267,8 @@ public class LogicThread extends Thread implements MessageListener, Cancellable 
 	}
 
 	public void messageReceied(RobotMessage m) {
-		Log.i(TAG, "Received assignment message " + m.getContents());
-		assignment = Integer.parseInt(m.getContents());
+		Log.i(TAG, "Received assignment message " + m.getContents(0));
+		assignment = Integer.parseInt(m.getContents(0));
 	}	
 	
 	// Waits until all tokens have been obtained for the next intersection
@@ -298,16 +298,16 @@ public class LogicThread extends Thread implements MessageListener, Cancellable 
 	}
 	
 	private void screenColor(String color) {
-		gvh.sendMainMsg(RobotsActivity.MESSAGE_SCREEN_COLOR, color);
+		gvh.plat.sendMainMsg(RobotsActivity.MESSAGE_SCREEN_COLOR, color);
 	}
 
 	private void screenBright() {
-		gvh.sendMainMsg(RobotsActivity.MESSAGE_SCREEN, 100);
+		gvh.plat.sendMainMsg(RobotsActivity.MESSAGE_SCREEN, 100);
 	}
 	
 	private void screenDark() {
 		screenColor("000000");
-		gvh.sendMainMsg(RobotsActivity.MESSAGE_SCREEN, 0);
+		gvh.plat.sendMainMsg(RobotsActivity.MESSAGE_SCREEN, 0);
 	}
 	
 	private int motionHold() {

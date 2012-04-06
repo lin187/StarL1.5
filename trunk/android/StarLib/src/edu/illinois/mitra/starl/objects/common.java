@@ -6,9 +6,7 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
 
-import android.util.Log;
-
-public final class common {
+public final class Common {
 	private static final String TAG = "Common";
 	private static final String ERR = "Critical Error";
 	
@@ -25,6 +23,7 @@ public final class common {
 	public static final int MSG_BULLYWINNER				= 10;
 	public static final int MSG_ACTIVITYLAUNCH			= 11;
 	public static final int MSG_ACTIVITYABORT			= 12;
+	public static final int MSG_GEOCAST					= 13;
 	
 	// GUI Message handler
 	public static final int MESSAGE_TOAST = 0;
@@ -37,6 +36,7 @@ public final class common {
 	
 	public static final int BLUETOOTH_CONNECTING = 2;
 	public static final int BLUETOOTH_CONNECTED = 1;
+	public static final int BLUETOOTH_DISCONNECTED = 1;
 	public static final int GPS_RECEIVING = 1;
 	public static final int GPS_OFFLINE = 0;
 	
@@ -46,8 +46,13 @@ public final class common {
 	public static final int MOT_STRAIGHT	= 2;
 	public static final int MOT_STOPPED		= 3;
 
+	// Event types
+	public static final int EVENT_MOTION = 0;
+	public static final int EVENT_GPS = 1;
+	public static final int EVENT_GPS_SELF = 2;
+	public static final int EVENT_WAYPOINT_RECEIVED = 3;
 	
-	private common() {
+	private Common() {
 	}
 	
 	public static int[] partsToInts(String[] parts) {
@@ -56,7 +61,7 @@ public final class common {
 			try {
 				retval[i] = Integer.parseInt(parts[i]);
 			} catch(NumberFormatException e) {
-				Log.e(TAG, "Can't parse " + parts[i] + " as an integer!");
+				//Log.e(TAG, "Can't parse " + parts[i] + " as an integer!");
 				return null;
 			}
 		}
@@ -71,12 +76,25 @@ public final class common {
 		}
 	}
 	
+	public static String[] intsToStrings(Integer ... pieces) {
+		String[] retval = new String[pieces.length];
+		for(int i = 0; i < pieces.length; i++) {
+			retval[i] = pieces[i].toString();
+		}
+		return retval;
+	}
+	
 	public static int[] partsToInts(String str, String delimiter) {
 		String[] parts = str.split(delimiter);
 		return partsToInts(parts);
 	}
 	
-	// Common value manipulation functions	
+	// Common value manipulation and comparison functions
+	public static <T extends Comparable<T>> boolean inRange(T val, T min, T max) {
+		if(val.compareTo(min) >= 0 && val.compareTo(max) <= 0) return true;
+		return false;
+	}
+	
 	public static <T extends Comparable<T>> T cap(T val, T max) {
 		if(val.compareTo(max) < 0) {
 			return val;
@@ -107,8 +125,45 @@ public final class common {
 		        }
 		    }
 		} catch (SocketException ex) {
-		    Log.e(TAG, ex.toString());
+		    //Log.e(TAG, ex.toString());
 		}
 		return null;
     }
+    
+	/**
+	 * Converts a two byte array to an integer
+	 * @param b a byte array of length 2
+	 * @return an int representing the unsigned short
+	 */
+	public static final int unsignedShortToInt(byte[] b) 
+	{
+		if(b.length != 2){
+			return -99;
+		}
+	    int i = 0;
+	    i |= b[0] & 0xFF;
+	    i <<= 8;
+	    i |= b[1] & 0xFF;
+	    return i;
+	}
+	
+	public static final int signedShortToInt(byte[] b)
+	{
+		if(b.length != 2) {
+			return -99;
+		}
+		int i = ((b[0] & 0xFF) << 8) | (b[1] & 0xFF);
+//		i |= b[0];
+//		i <<= 8;
+//		i |= b[1];
+		return i;
+	}
+
+	public static int angleWrap(int i) {
+		int retval = i % 360;
+		if(retval < 0) {
+			retval = 360 + retval;
+		}		
+		return (retval-90);
+	}
 }

@@ -1,18 +1,19 @@
 package edu.illinois.mitra.starl.functions;
 
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
-import android.os.AsyncTask;
-import android.os.Handler;
-import android.util.Log;
+import edu.illinois.mitra.starl.comms.MessageContents;
 import edu.illinois.mitra.starl.comms.RobotMessage;
-import edu.illinois.mitra.starl.interfaces.Cancellable;
+import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.LeaderElection;
 import edu.illinois.mitra.starl.interfaces.MessageListener;
-import edu.illinois.mitra.starl.objects.common;
-import edu.illinois.mitra.starl.objects.globalVarHolder;
+import edu.illinois.mitra.starl.objects.Common;
 
-public class BullyLeaderElection implements LeaderElection, Cancellable {
+public class BullyLeaderElection implements Callable<String>, MessageListener, LeaderElection {
 	private static final String TAG = "BullyElection";
 	private static final String ERR = "Critical Error";
 	
@@ -20,37 +21,33 @@ public class BullyLeaderElection implements LeaderElection, Cancellable {
 	private boolean elected = false;
 	private boolean electing = false;
 	private String leader = null;
-	private globalVarHolder gvh = null;	
+	private GlobalVarHolder gvh = null;	
 	private String name = null;
-	private Handler timeout = null;
-	private BullyElection electionTask;
 	
-	public BullyLeaderElection(globalVarHolder gvh) {
+	private timeoutTask ttask = new timeoutTask();
+	private ScheduledThreadPoolExecutor timeout = new ScheduledThreadPoolExecutor(1);
+	private ExecutorService executor = new ScheduledThreadPoolExecutor(1);
+	
+	public BullyLeaderElection(GlobalVarHolder gvh) {
 		elected = false;
 		electing = false;
 		leader = null;
 		
 		this.gvh = gvh;
-		name = gvh.getName();
-		timeout = new Handler();
-		Log.e(TAG, "I am " + name);
+		name = gvh.id.getName();
 		
-		electionTask = new BullyElection();
-		registerMessages(electionTask);
+		registerMessages();
 	}
 	
 	@Override
 	public String elect() {
 		if(leader == null) {
-			electionTask.execute();
 			String electedLeader = "ERROR";
 			try {
-				electedLeader = electionTask.get();
+				electedLeader = executor.submit(this).get();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			unregisterMessages();
@@ -62,89 +59,90 @@ public class BullyLeaderElection implements LeaderElection, Cancellable {
 
 	@Override
 	public void cancel() {
+		timeout.shutdownNow();
+		executor.shutdownNow();
 		unregisterMessages();
-		electionTask.cancel(true);
 	}
 	
-	private void registerMessages(MessageListener l) {
-		gvh.addMsgListener(common.MSG_BULLYANSWER, l);
-		gvh.addMsgListener(common.MSG_BULLYELECTION, l);
-		gvh.addMsgListener(common.MSG_BULLYWINNER, l);
+	private void registerMessages() {
+		gvh.comms.addMsgListener(Common.MSG_BULLYANSWER, this);
+		gvh.comms.addMsgListener(Common.MSG_BULLYELECTION, this);
+		gvh.comms.addMsgListener(Common.MSG_BULLYWINNER, this);
 	}
 	private void unregisterMessages() {
-		gvh.removeMsgListener(common.MSG_BULLYANSWER);
-		gvh.removeMsgListener(common.MSG_BULLYELECTION);
-		gvh.removeMsgListener(common.MSG_BULLYWINNER);		
+		gvh.comms.removeMsgListener(Common.MSG_BULLYANSWER);
+		gvh.comms.removeMsgListener(Common.MSG_BULLYELECTION);
+		gvh.comms.removeMsgListener(Common.MSG_BULLYWINNER);		
 	}
 
-	private class BullyElection extends AsyncTask<Void, Void, String> implements MessageListener {
-
-		@Override
-		protected String doInBackground(Void... params) {
-			if(!elected) {
-				electing = true;
-				// Send an election start message to everyone with a higher ID
-				RobotMessage start = new RobotMessage(null,name,common.MSG_BULLYELECTION,null);
-				int sentTo = 0;
-				for(String other : gvh.getParticipants()) {
-					if(other.compareTo(name) > 0) {
-						Log.d(TAG,"Sending an election start message to " + other);
-						start.setTo(other);
-						gvh.addOutgoingMessage(new RobotMessage(start));
-						sentTo ++;
-					}
-				}
-		
-				Log.d(TAG,"Starting a timeout timer");
-				// Start a timeout timer
-				timeout.postDelayed(new Runnable() {
-					@Override
-					public void run() {
-						Log.e(TAG,"Timeout expired! I'm the leader!");
-						elected = true;
-						leader = name;
-						RobotMessage winner = new RobotMessage("ALL",name,common.MSG_BULLYWINNER,name);
-						gvh.addOutgoingMessage(winner);
-					}			
-				},TIMEOUT*common.cap(sentTo, 1));
-				
-				// TODO:
-				// This prevents the messageReceived function from executing somehow!!
-				// Let's see if it works in an AsyncTask!
-				while(!elected) {}
-				electing = false;
+	@Override
+	public void messageReceied(RobotMessage m) {
+		switch(m.getMID()) {
+		case Common.MSG_BULLYELECTION:
+			// Reply immediately and start my own election
+			RobotMessage reply = new RobotMessage(m.getFrom(), name, Common.MSG_BULLYANSWER, (MessageContents)null);
+			gvh.comms.addOutgoingMessage(reply);
+			if(!electing) {
+				gvh.log.d(TAG,"Received a message from " + m.getFrom() + ", replying and starting my own election");
+				leader = elect();
+			} else {
+				gvh.log.d(TAG,"Received an election start message from " + m.getFrom() + ". I'm already running an election though!");
 			}
-			return leader;
+			break;
+		case Common.MSG_BULLYANSWER:
+			// Stop the timeout timer
+			gvh.log.d(TAG,"Response received from " + m.getFrom() + " stopping the timeout timer.");
+			timeout.remove(ttask);
+			timeout.shutdownNow();
+			break;
+		case Common.MSG_BULLYWINNER:
+			// Stop the timeout timer
+			timeout.remove(ttask);
+			timeout.shutdownNow();
+			
+			leader = m.getContents(0);
+			gvh.log.i(TAG,"Received a leader announce message for " + leader);
+			elected = true;
+			break;
 		}
+	}
 
-		@Override
-		public void messageReceied(RobotMessage m) {
-			switch(m.getMID()) {
-			case common.MSG_BULLYELECTION:
-				// Reply immediately and start my own election
-				RobotMessage reply = new RobotMessage(m.getFrom(), name, common.MSG_BULLYANSWER, null);
-				gvh.addOutgoingMessage(reply);
-				if(!electing) {
-					Log.d(TAG,"Received a message from " + m.getFrom() + ", replying and starting my own election");
-					leader = elect();
-				} else {
-					Log.d(TAG,"Received an election start message from " + m.getFrom() + ". I'm already running an election though!");
+	@Override
+	public String call() throws Exception {
+		if(!elected) {
+			electing = true;
+			// Send an election start message to everyone with a higher ID
+			RobotMessage start = new RobotMessage(null,name,Common.MSG_BULLYELECTION,(MessageContents)null);
+			int sentTo = 0;
+			for(String other : gvh.id.getParticipants()) {
+				if(other.compareTo(name) > 0) {
+					gvh.log.d(TAG,"Sending an election start message to " + other);
+					start.setTo(other);
+					gvh.comms.addOutgoingMessage(new RobotMessage(start));
+					sentTo ++;
 				}
-				break;
-			case common.MSG_BULLYANSWER:
-				// Stop the timeout timer
-				Log.d(TAG,"Response received from " + m.getFrom() + " stopping the timeout timer.");
-				timeout.removeCallbacksAndMessages(null);
-				break;
-			case common.MSG_BULLYWINNER:
-				// Stop the timeout timer
-				timeout.removeCallbacksAndMessages(null);
-				leader = m.getContents();
-				Log.i(TAG,"Received a leader announce message for " + leader);
-				elected = true;
-				break;
 			}
+	
+			gvh.log.d(TAG,"Starting a timeout timer");
+			// Start a timeout timer
+			timeout.schedule(ttask,TIMEOUT*Common.cap(sentTo, 1), TimeUnit.MILLISECONDS);
+			while(!elected) {
+				Thread.sleep(10);
+			}
+			electing = false;
 		}
-		
+		return leader;
+	}
+	
+	class timeoutTask implements Runnable {
+		@Override
+		public void run() {
+			System.out.println("Timeout expired! I am the leader! " + name);
+			gvh.log.e(TAG,"Timeout expired! I'm the leader!");
+			elected = true;
+			leader = name;
+			RobotMessage winner = new RobotMessage("ALL",name,Common.MSG_BULLYWINNER, new MessageContents(name));
+			gvh.comms.addOutgoingMessage(winner);
+		}	
 	}
 }
