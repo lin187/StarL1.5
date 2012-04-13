@@ -12,7 +12,7 @@ import edu.illinois.mitra.starl.objects.Common;
 
 /**
  * A mutual exclusion implementation in which permission tokens are exchanged in a single message "hop". To ensure 
- * that no entity is locked out, token requestors are enqueued by the token holder and requestor queues are passed 
+ * that no entity is locked out, token requesters are enqueued by the token holder and requestor queues are passed 
  * along with the tokens. The number of mutex sections and the agent initially holding all tokens must be known at 
  * the time of construction.
  * 
