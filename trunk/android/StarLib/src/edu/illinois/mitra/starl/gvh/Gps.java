@@ -36,10 +36,6 @@ public class Gps {
 		return robot_positions;
 	}
 	
-	public PositionList getWaypoints() {
-		return waypoint_positions;
-	}
-	
 	public ItemPosition getPosition(String robot_name) {
 		return robot_positions.getPosition(robot_name);
 	}

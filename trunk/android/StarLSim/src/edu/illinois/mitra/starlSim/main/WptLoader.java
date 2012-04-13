@@ -26,7 +26,7 @@ public final class WptLoader {
 		String line;
 		try {
 			while((line = in.readLine()) != null) {
-				String[] parts = line.split(",");
+				String[] parts = line.replace(" ", "").split(",");
 				if(parts[0].equals("WAY") && parts.length == 5) {
 					ItemPosition wpt = new ItemPosition(parts[4], Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), Integer.parseInt(parts[3]));
 					waypoints.update(wpt);

@@ -9,6 +9,12 @@ import edu.illinois.mitra.starl.interfaces.RobotEventListener;
 import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 
+/**
+ * iRobot Create specific. Experimental location tracker using GPS broadcasts and iRobot Create sensor information
+ * to calculate the robot's position more frequently. <b>Currently slightly very wrong.</b> 
+ * @author Adam Zimmerman
+ * @version 1.0
+ */
 public class DeadReckoner extends Thread implements RobotEventListener {
 	private static final String TAG = "DeadReckoner";
 	private static final String ERR = "Critical Error";
@@ -50,8 +56,8 @@ public class DeadReckoner extends Thread implements RobotEventListener {
 			Yhat += yhat.get(i);
 			Ahat += ahat.get(i);
 		}
-		int angleGuess = Common.angleWrap(Ahat + latestpos.getAngle());
-		ItemPosition retval = new ItemPosition(latestpos.getName(), Xhat + latestpos.getX(), Yhat + latestpos.getY(), angleGuess);
+		int angleGuess = Common.angleWrap(Ahat + latestpos.angle);
+		ItemPosition retval = new ItemPosition(latestpos.name, Xhat + latestpos.x, Yhat + latestpos.y, angleGuess);
 		gvh.plat.setDebugInfo(latestpos.toString() + " " + writeidx + "\n" + retval.toString());
 		return retval;
 	}
@@ -81,8 +87,8 @@ public class DeadReckoner extends Thread implements RobotEventListener {
 				gvh.log.d(TAG, "Distance: " + dist + " angle: " + angle);
 			}
 			
-			xhat.add(writeidx, (int) (Math.cos(Math.toRadians(latestpos.getAngle()))*dist));
-			yhat.add(writeidx, (int) (Math.sin(Math.toRadians(latestpos.getAngle()))*dist));
+			xhat.add(writeidx, (int) (Math.cos(Math.toRadians(latestpos.angle))*dist));
+			yhat.add(writeidx, (int) (Math.sin(Math.toRadians(latestpos.angle))*dist));
 			ahat.add((int) angle);
 			writeidx ++;
 			

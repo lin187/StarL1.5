@@ -8,6 +8,12 @@ import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.PositionList;
 
+/**
+ * Soon to be deprecated motion controller for the iRobot Create platform.
+ * @author Adam Zimmerman
+ * @version 1.1
+ *
+ */
 public class BluetoothRobotMotion extends RobotMotion {
 	private static final String TAG = "RobotMotion";
 	private static final String ERR = "Critical Error";
@@ -78,6 +84,7 @@ public class BluetoothRobotMotion extends RobotMotion {
 	}
 	
 	public int getBatteryPercentage() {
+		if(!bti.isConnected) return 0;
 		int capacity, charge;
 		capacity = Common.unsignedShortToInt(bti.sendReceive(req_sensor(26), 2));
 		charge = Common.unsignedShortToInt(bti.sendReceive(req_sensor(25), 2));
@@ -277,12 +284,12 @@ public class BluetoothRobotMotion extends RobotMotion {
 				case 2:
 					// Turn to face goal
 					if(getAngleZone(angle) != NARROW) {
-						//gvh.d(TAG, "Turning to face goal...");
+						gvh.log.d(TAG, "Turning to face goal...");
 						bti.send(robot_turn(TURN, angle));
 						nextState = 2;
 					} else {
 						nextState = getNextState(dzone, azone);
-						//gvh.d(TAG, "Facing goal! Next state determined to be " + nextState);
+						gvh.log.d(TAG, "Facing goal! Next state determined to be " + nextState);
 					}
 					break;
 					
@@ -417,7 +424,7 @@ public class BluetoothRobotMotion extends RobotMotion {
 		ItemPosition me = gvh.gps.getMyPosition();
 		PositionList others = gvh.gps.getPositions();
 		for(ItemPosition current : others.getList()) {
-			if(!current.getName().equals(me.getName())) {
+			if(!current.name.equals(me.name)) {
 				if(me.isFacing(current, 160) && me.distanceTo(current) < 450) {
 					blocker = current;
 					return true;
@@ -454,11 +461,11 @@ public class BluetoothRobotMotion extends RobotMotion {
 	
 	// Calculates the radius of curvature to meet a target
 	private int curveRadius(ItemPosition destination) {
-		int x0 = gvh.gps.getMyPosition().getX();
-		int y0 = gvh.gps.getMyPosition().getY();
-		int x1 = destination.getX();
-		int y1 = destination.getY();
-		int theta = gvh.gps.getMyPosition().getAngle();
+		int x0 = gvh.gps.getMyPosition().x;
+		int y0 = gvh.gps.getMyPosition().y;
+		int x1 = destination.x;
+		int y1 = destination.y;
+		int theta = gvh.gps.getMyPosition().angle;
 			
 		double alpha = -180+Math.toDegrees(Math.atan2((y1-y0),(x1-x0)));
 

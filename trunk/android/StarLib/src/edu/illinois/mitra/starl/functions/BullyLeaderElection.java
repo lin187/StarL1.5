@@ -13,6 +13,12 @@ import edu.illinois.mitra.starl.interfaces.LeaderElection;
 import edu.illinois.mitra.starl.interfaces.MessageListener;
 import edu.illinois.mitra.starl.objects.Common;
 
+/**
+ * Elects a leader using the Bully algorithm. <b>Still slightly untested!</b>
+ * 
+ * @author Adam Zimmerman
+ * @version 1.2
+ */
 public class BullyLeaderElection implements Callable<String>, MessageListener, LeaderElection {
 	private static final String TAG = "BullyElection";
 	private static final String ERR = "Critical Error";

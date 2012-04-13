@@ -4,15 +4,15 @@ import edu.illinois.mitra.starlSim.simapps.*;
 
 public final class SimSettings {
 	// General simulation settings
-	public static final int 		N_BOTS 				= 4;
-	public static final String	 	waypoint_file		= "C:\\gpstest.wpt";
-	public static final String 		initial_positions 	= "C:\\ips.wpt";
-	public static final Class<?> 	app 				= CommsTestApp.class;
+	public static final int 		N_BOTS 				= 8;
+	public static final String	 	waypoint_file		= "C:/gpstest.wpt";
+	public static final String 		initial_positions 	= "C:/ips.wpt";
+	public static final Class<?> 	app 				= RaceApp.class;
 	
 	// Distance predicate (truth data) settings
 	public static final int			PREDICATE_RADIUS	= 200;		// Zero disables distance predicate checking and truth output
 	public static final int			N_PREDICATE_ROBOTS	= 2;		// (UNIMPLEMENTED) The number of robots that must be within radius to trigger a violation
-	public static final String		PREDICATE_OUT_DIR	= "C:\\";
+	public static final String		PREDICATE_OUT_DIR	= "C:/";
 	
 	// Clock skew settings
 	public static final int			TRACE_CLOCK_DRIFT_MAX	= 100; // Milliseconds

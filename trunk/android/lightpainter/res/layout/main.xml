@@ -19,7 +19,7 @@
             android:id="@+id/textView1"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="v1.3.0"
+            android:text="v1.5.0"
             android:textAppearance="?android:attr/textAppearanceSmall" android:gravity="right"/>
 
     </LinearLayout>

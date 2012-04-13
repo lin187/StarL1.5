@@ -9,12 +9,10 @@ import java.util.concurrent.Future;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,7 +20,6 @@ import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import edu.illinois.mitra.starl.comms.MessageContents;
 import edu.illinois.mitra.starl.comms.RobotMessage;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
@@ -30,6 +27,7 @@ import edu.illinois.mitra.starl.gvh.RealGlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.MessageListener;
 import edu.illinois.mitra.starl.interfaces.RobotEventListener;
 import edu.illinois.mitra.starl.objects.Common;
+import edu.illinois.mitra.starl.objects.ItemPosition;
 
 public class RobotsActivity extends Activity implements MessageListener, RobotEventListener {
 	private static final String TAG = "RobotsActivity";
@@ -38,7 +36,7 @@ public class RobotsActivity extends Activity implements MessageListener, RobotEv
 	private static final boolean ENABLE_TRACING = false;
 	
 	private GlobalVarHolder gvh = null;
-	private boolean launched = false;
+	public boolean launched = false;
 	
 	// THESE NAMES AND ASSOCIATED IP ADDRESSES ARE CONSTANT FOR TESTING.
 	//									ALICE				BOB					CARLOS				DIANA
@@ -67,78 +65,17 @@ public class RobotsActivity extends Activity implements MessageListener, RobotEv
 	
 	// TODO: Lightpainting specific
 	private CheckBox cbPaintMode;
-	private boolean DISPLAY_MODE = true;
-	private float overrideBrightness = 1.0f;
-	private int reqBrightness = 100;
-	private WindowManager.LayoutParams lp;	
-	private View vi;
-	public static final int MESSAGE_SCREEN = 50;
-    public static final int MESSAGE_SCREEN_COLOR = 51;
+	public  boolean DISPLAY_MODE = true;
+	public  float overrideBrightness = 1.0f;
+	public  int reqBrightness = 100;
+	public  WindowManager.LayoutParams lp;	
+	public	View vi;
+	public  static final int MESSAGE_SCREEN = 50;
+    public  static final int MESSAGE_SCREEN_COLOR = 51;
+    private LogicThread runThread;
 	// TODO: END
 	
-    private final Handler main_handler = new Handler() {
-    	public void handleMessage(Message msg) {	    	
-	    	switch(msg.what) {
-	    	case Common.MESSAGE_TOAST:
-	    		Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_LONG).show();
-	    		break;
-	    	case Common.MESSAGE_LOCATION:
-	    		cbGPS.setChecked((Integer)msg.obj == Common.GPS_RECEIVING);
-	    		break;
-	    	case Common.MESSAGE_BLUETOOTH:
-	    		pbBluetooth.setVisibility((Integer)msg.obj == Common.BLUETOOTH_CONNECTING?View.VISIBLE:View.INVISIBLE);
-	    		cbBluetooth.setChecked((Integer)msg.obj ==  Common.BLUETOOTH_CONNECTED);
-	    		break;
-	    	case Common.MESSAGE_LAUNCH:
-	    		launch(msg.arg1, msg.arg2);
-	    		break;
-	    	case Common.MESSAGE_ABORT:
-	    		if(launched) executor.shutdownNow();
-    			gvh.plat.moat.halt();
-    			launched = false;
-    			cbRunning.setChecked(false);
-    			cbGPS.setChecked(false);
-	    		break;
-	    	case Common.MESSAGE_DEBUG:
-	    		txtDebug.setText("DEBUG:\n" + (String) msg.obj);
-	    		break;
-	    	case Common.MESSAGE_BATTERY:
-	    		pbBattery.setProgress((Integer) msg.obj);
-	    		break;
-	    	case MESSAGE_SCREEN:
-	    		if(DISPLAY_MODE) {
-	    			reqBrightness = (Integer) msg.obj;
-		        	lp.screenBrightness = Common.cap(reqBrightness*overrideBrightness, 1f, 100f) / 100.0f;
-		        	getWindow().setAttributes(lp);
-	    		}
-	    		break;
-	    	case MESSAGE_SCREEN_COLOR:
-	    		String colParse = "#" + (String) msg.obj;
-	    		vi.setBackgroundColor(Color.parseColor(colParse));
-	    		break;
-	    	}	
-    	}
-
-    	private void launch(int numWaypoints, int runNum) {  
-    		if(!launched) {
-    			if(gvh.gps.getWaypointPositions().getNumPositions() == numWaypoints) {
-    				if(DISPLAY_MODE) setContentView(vi);
-    				
-    				if(ENABLE_TRACING) gvh.trace.traceStart(runNum);
-    				launched = true;
-    				cbRunning.setChecked(true);
-    				
-    				gvh.trace.traceSync("APPLICATION LAUNCH");
-    				
-    	    		RobotMessage informLaunch = new RobotMessage("ALL", gvh.id.getName(), Common.MSG_ACTIVITYLAUNCH, new MessageContents(Common.intsToStrings(numWaypoints, runNum)));
-    	    		gvh.comms.addOutgoingMessage(informLaunch);
-    	    		results = executor.submit(new LogicThread(gvh));
-				} else {
-	    			gvh.plat.sendMainToast("Should have " + numWaypoints + " waypoints, but I have " + gvh.gps.getWaypointPositions().getNumPositions());
-	    		}
-    		} 
-    	}
-    };
+    private MainHandler main_handler;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -153,12 +90,15 @@ public class RobotsActivity extends Activity implements MessageListener, RobotEv
         // Set up the GUI
         setupGUI();
         
+        main_handler = new MainHandler(this, pbBluetooth, pbBattery, cbGPS, cbBluetooth, cbRunning, txtDebug, executor);
+        
         // Create the global variable holder
         HashMap<String,String> hm_participants = new HashMap<String,String>();
-        for(int i = 0; i < 1; i++) {
+        for(int i = 0; i < participants.length; i++) {
         	hm_participants.put(participants[i], ips[i]);
         }        
         gvh = new RealGlobalVarHolder(participants[selected_robot], hm_participants, main_handler, mac[selected_robot]);
+        main_handler.setGvh(gvh);
         
         // Connect
         connect();
@@ -166,6 +106,27 @@ public class RobotsActivity extends Activity implements MessageListener, RobotEv
         // Set up brightness attribute 
         vi = new View(this);
     }
+    
+    public void launch(int numWaypoints, int runNum) {  
+		if(!launched) {
+			if(gvh.gps.getWaypointPositions().getNumPositions() == numWaypoints) {
+				if(DISPLAY_MODE) setContentView(vi);
+				
+				if(ENABLE_TRACING) gvh.trace.traceStart(runNum);
+				launched = true;
+				cbRunning.setChecked(true);
+				
+				gvh.trace.traceSync("APPLICATION LAUNCH");
+				
+	    		RobotMessage informLaunch = new RobotMessage("ALL", gvh.id.getName(), Common.MSG_ACTIVITYLAUNCH, new MessageContents(Common.intsToStrings(numWaypoints, runNum)));
+	    		gvh.comms.addOutgoingMessage(informLaunch);
+	    		runThread = new LogicThread(gvh);
+	    		results = executor.submit(runThread);
+			} else {
+    			gvh.plat.sendMainToast("Should have " + numWaypoints + " waypoints, but I have " + gvh.gps.getWaypointPositions().getNumPositions());
+    		}
+		} 
+	}
     
     public void connect() {
 		// Update GUI
@@ -182,7 +143,10 @@ public class RobotsActivity extends Activity implements MessageListener, RobotEv
     
 	private void disconnect() {
 		// Shut down the logic thread if it was running
-		if(launched) executor.shutdownNow();
+		if(launched) {
+			runThread.cancel();
+			executor.shutdownNow();
+		}
 		launched = false;
 
 		// Shut down persistent threads
@@ -193,6 +157,8 @@ public class RobotsActivity extends Activity implements MessageListener, RobotEv
 	}
 
 	private void setupGUI() {	
+		lp = getWindow().getAttributes();
+		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 		final SharedPreferences.Editor spe = prefs.edit();
 		
@@ -208,7 +174,7 @@ public class RobotsActivity extends Activity implements MessageListener, RobotEv
 		txtRobotName.setText(participants[selected_robot]);
 		txtRobotName.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
-				AlertDialog.Builder sel_robot_builder = new AlertDialog.Builder(getApplicationContext());
+				AlertDialog.Builder sel_robot_builder = new AlertDialog.Builder(RobotsActivity.this);
 				sel_robot_builder.setTitle("Who Am I?");
 				sel_robot_builder.setItems(participants, new DialogInterface.OnClickListener() {
 				    public void onClick(DialogInterface dialog, int item) {
@@ -216,6 +182,11 @@ public class RobotsActivity extends Activity implements MessageListener, RobotEv
 				    	txtRobotName.setText(participants[selected_robot]);
 						spe.putInt(PREF_SELECTED_ROBOT, selected_robot);
 						spe.commit();
+						// Restart the application
+						Intent restart = getIntent();
+						disconnect();
+						finish();
+						startActivity(restart);
 				    }
 				});
 				AlertDialog sel_robot = sel_robot_builder.create();
@@ -225,9 +196,11 @@ public class RobotsActivity extends Activity implements MessageListener, RobotEv
 		
 		cbPaintMode = (CheckBox) findViewById(R.id.cbDebugMode);
 		cbPaintMode.setChecked(prefs.getBoolean("PAINT_MODE", false));		
+		DISPLAY_MODE = cbPaintMode.isChecked();
 		
 		cbPaintMode.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
+				DISPLAY_MODE = cbPaintMode.isChecked();
 				spe.putBoolean(PREF_SELECTED_PAINTMODE, cbPaintMode.isChecked());	
 				spe.commit();
 			}

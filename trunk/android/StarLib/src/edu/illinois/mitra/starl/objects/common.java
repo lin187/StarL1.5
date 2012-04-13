@@ -6,6 +6,12 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
 
+/**
+ * The static Common class is used to store StarL constants used for messaging, event handling, and GUI updates. A series of useful functions
+ * are included as well.
+ * @author Adam Zimmerman
+ * @version 1.0
+ */
 public final class Common {
 	private static final String TAG = "Common";
 	private static final String ERR = "Critical Error";
@@ -159,8 +165,14 @@ public final class Common {
 		return i;
 	}
 
-	public static int angleWrap(int i) {
-		int retval = i % 360;
+	
+	/**
+	 * Converts an input value to an angle between -90 and 270 degrees (2 pi radian range) 
+	 * @param angle the angle to be rectified
+	 * @return a rectified angle value
+	 */
+	public static int angleWrap(int angle) {
+		int retval = angle % 360;
 		if(retval < 0) {
 			retval = 360 + retval;
 		}		

@@ -1,5 +1,12 @@
 package edu.illinois.mitra.starl.comms;
 
+/**
+ * A MessageResult object is returned whenever a RobotMessage is added to the outgoing queue to track its progress. 
+ * Once all receivers have acknowledged the message, getResult will return true. 
+ * 
+ * @author Adam Zimmerman
+ * @version 1.0
+ */
 public class MessageResult {
 	private boolean result = true;
 	private int results_set = 0;

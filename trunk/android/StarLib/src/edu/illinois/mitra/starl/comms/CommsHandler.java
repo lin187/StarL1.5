@@ -8,6 +8,11 @@ import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.Cancellable;
 import edu.illinois.mitra.starl.interfaces.ComThread;
 
+/**
+ * Implements the simple acknowledgment protocol (SAP!)
+ * @author Adam Zimmerman
+ * @version 1.2
+ */
 public class CommsHandler extends Thread implements Cancellable {
 	public static final int TIMEOUT = 250;
 	public static final int MSG_LIFESPAN = 30000;
@@ -310,6 +315,7 @@ public class CommsHandler extends Thread implements Cancellable {
 		} else {
 			if(!participants.containsKey(to)) {
 				gvh.log.e(ERR, "Can't find IP address for robot " + to);
+				gvh.log.e(ERR, participants.toString());
 			}
 			return participants.get(to);
 		}

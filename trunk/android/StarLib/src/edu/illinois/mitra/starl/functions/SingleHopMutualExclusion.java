@@ -10,6 +10,16 @@ import edu.illinois.mitra.starl.interfaces.MessageListener;
 import edu.illinois.mitra.starl.interfaces.MutualExclusion;
 import edu.illinois.mitra.starl.objects.Common;
 
+/**
+ * A mutual exclusion implementation in which permission tokens are exchanged in a single message "hop". To ensure 
+ * that no entity is locked out, token requestors are enqueued by the token holder and requestor queues are passed 
+ * along with the tokens. The number of mutex sections and the agent initially holding all tokens must be known at 
+ * the time of construction.
+ * 
+ * @author Adam Zimmerman
+ * @version 1.0
+ *
+ */
 public class SingleHopMutualExclusion extends Thread implements MutualExclusion, MessageListener {
 	private static final String TAG = "SingleHopMutex";
 	private static final String ERR = "Critical Error";
@@ -24,6 +34,13 @@ public class SingleHopMutualExclusion extends Thread implements MutualExclusion,
 	
 	private boolean running = true;
 
+	/**
+	 * Create a new SingleHopMutualExclusion
+	 * @param num_sections the number of mutex tokens to track
+	 * @param gvh the main GVH
+	 * @param leader the identifier of an agent who initially holds all tokens. All entities must
+	 * use the same value in order for mutex to function properly
+	 */
 	public SingleHopMutualExclusion(int num_sections, GlobalVarHolder gvh, String leader) {
 		this.num_sections = num_sections;
 		this.gvh = gvh;

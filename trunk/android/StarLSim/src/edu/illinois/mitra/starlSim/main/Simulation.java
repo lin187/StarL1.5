@@ -58,7 +58,7 @@ public class Simulation {
 			ItemPosition nextInitPos = new ItemPosition("bot"+i,0,0,0);
 			if(initpos != null) {
 				ItemPosition tmp = initpos.get(initposIdx); 
-				nextInitPos.setPos(tmp.getX(), tmp.getY(), tmp.getAngle());
+				nextInitPos.setPos(tmp.x, tmp.y, tmp.angle);
 				initposIdx ++;
 				initposIdx %= initpos.size();
 			}
@@ -100,11 +100,11 @@ public class Simulation {
 				ArrayList<RobotData> rd = new ArrayList<RobotData>();
 				// Add robots
 				for(ItemPosition ip : pos) {
-					rd.add(new RobotData(ip.getName(), ip.getX(), ip.getY(), ip.getAngle()));
+					rd.add(new RobotData(ip.name, ip.x, ip.y, ip.angle));
 				}
 				// Add waypoints
 				for(ItemPosition ip : gps.getWaypointPositions().getList()) {
-					RobotData nrd = new RobotData(ip.getName(), ip.getX(), ip.getY(), ip.getAngle());
+					RobotData nrd = new RobotData(ip.name, ip.x, ip.y, ip.angle);
 					nrd.radius = 5;
 					nrd.c = new Color(255, 0, 0);
 					rd.add(nrd);
@@ -138,7 +138,7 @@ public class Simulation {
 			while(!f.isDone()) {}
 			try {
 				List<String> res = f.get();
-				if(!res.isEmpty()) System.out.println(res);
+				if(res != null && !res.isEmpty()) System.out.println(res);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

@@ -10,6 +10,14 @@ import edu.illinois.mitra.starl.interfaces.MessageListener;
 import edu.illinois.mitra.starl.interfaces.Synchronizer;
 import edu.illinois.mitra.starl.objects.Common;
 
+/**
+ * The BarrierSynchronizer class is used to synchronize all agents to a known point. The synchronizer
+ * will not provide "permission" to proceed past a certain point (a barrier) until all participating 
+ * agents have signaled that they are at the barrier.
+ * 
+ * @author Adam Zimmerman
+ * @version 1.1
+ */
 public class BarrierSynchronizer implements Synchronizer, MessageListener {
 	private static final String TAG = "BarrierSynchronizer";
 	private static final String ERR = "Critical Error";
@@ -21,6 +29,11 @@ public class BarrierSynchronizer implements Synchronizer, MessageListener {
 	private int n_participants;
 	private String name;
 	
+	/**
+	 * Construct a new BarrierSynchronizer
+	 * 
+	 * @param gvh The main GlobalVarHolder
+	 */
 	public BarrierSynchronizer(GlobalVarHolder gvh) {
 		this.gvh = gvh;
 		n_participants = gvh.id.getParticipants().size();
@@ -31,6 +44,7 @@ public class BarrierSynchronizer implements Synchronizer, MessageListener {
 		gvh.log.i(TAG, "Created BarrierSynchronizer, registered message listener with GVH");
 	}
 	
+	@Override
 	public void barrier_sync(String barrierID) {	 
 		HashSet<String> names;
 		if(barriersNames.containsKey(barrierID)) {
@@ -52,6 +66,7 @@ public class BarrierSynchronizer implements Synchronizer, MessageListener {
 		gvh.comms.addOutgoingMessage(notify_sync);
 	}
 	
+	@Override
 	public boolean barrier_proceed(String barrierID) {
 		try {
 			if(barriersNames.get(barrierID).size() == n_participants) {

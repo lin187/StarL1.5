@@ -13,6 +13,8 @@ public class IdealSimMotionAutomaton extends RobotMotion implements RobotEventLi
 	
 	private GlobalVarHolder gvh;
 	
+	private ItemPosition dest;
+	
 	public IdealSimMotionAutomaton(GlobalVarHolder gvh, IdealSimGpsProvider gpspro) {
 		this.gvh = gvh;
 		this.gpspro = gpspro;
@@ -22,19 +24,21 @@ public class IdealSimMotionAutomaton extends RobotMotion implements RobotEventLi
 	}
 	@Override
 	public void goTo(ItemPosition dest) {
-		gvh.trace.traceEvent(TAG, "Go To", dest);
-		gpspro.setDestination(name, dest);
+		this.dest = new ItemPosition(dest);
+		gvh.trace.traceEvent(TAG, "Go To", this.dest);
+		gpspro.setDestination(name, this.dest);
 		inMotion = true;
 	}
 	
 	@Override
 	public void goTo(ItemPosition dest, int maxCurveAngle, boolean useCollisionAvoidance) {
-		this.goTo(dest);
+		this.dest = new ItemPosition(dest);
+		this.goTo(this.dest);
 	}
 
 	@Override
 	public void turnTo(ItemPosition dest) {
-		throw new RuntimeException("turnTo isn't implemented for ideal motion yet. TOO BAD FOR YOU.");		
+		// turnTo isn't implemented for ideal motion yet. TOO BAD FOR YOU.		
 	}
 
 	@Override
@@ -62,5 +66,9 @@ public class IdealSimMotionAutomaton extends RobotMotion implements RobotEventLi
 		if(type == Common.EVENT_MOTION) {
 			inMotion = (event!=Common.MOT_STOPPED);
 		}
+	}
+	@Override
+	public int getBatteryPercentage() {
+		return 0;
 	}
 }

@@ -12,6 +12,11 @@ import android.os.AsyncTask;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.objects.Common;
 
+/**
+ * Android specific. Maintains a Bluetooth socket connection to the iRobot Create platform.
+ * @author Adam Zimmerman
+ *
+ */
 public class BluetoothInterface {
 
 	private static final String ERR = "Critical Error";
@@ -34,6 +39,8 @@ public class BluetoothInterface {
 	private BluetoothConnectTask task;
 	
 	private boolean running = true;
+	
+	public boolean isConnected = false;
 
 	public BluetoothInterface(GlobalVarHolder gvh, String mac) {
 		this.gvh = gvh;
@@ -58,7 +65,7 @@ public class BluetoothInterface {
 		task.execute(mDevice);
 	}
 
-	public void send(byte[] to_send) {
+	public synchronized void send(byte[] to_send) {
 		if (mOutStream != null) {
 			try {
 				mOutStream.write(to_send);
@@ -70,10 +77,10 @@ public class BluetoothInterface {
 		}
 	}
 
-	public byte[] readBuffer(int n_bytes) {
+	public synchronized byte[] readBuffer(int n_bytes) {
 		byte[] buffer = new byte[n_bytes];
 		try {
-			int res = bufInStream.read(buffer);
+			bufInStream.read(buffer);
 		} catch (IOException e) {
 			gvh.log.i(TAG, "Failed to read anything!");
 		} catch (NullPointerException e) {
@@ -134,10 +141,16 @@ public class BluetoothInterface {
 				return 1;
 			}
 
+			isConnected = true;
 			gvh.log.i(TAG, "Connection established.");
 			send(ENABLE_CONTROL);
 			send(PROGRAM_SONG);
-			
+			try {
+				// Clear the buffer
+				bufInStream.read(new byte[bufInStream.available()],0,bufInStream.available());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			// Inform the GUI that bluetooth has been connected
 			gvh.plat.sendMainMsg(Common.MESSAGE_BLUETOOTH, Common.BLUETOOTH_CONNECTED);
 			return 0;

@@ -46,7 +46,7 @@ public class IdealSimGpsProvider extends Observable {
 	}
 	
 	public synchronized void addRobot(ItemPosition bot) {
-		robots.put(bot.getName(), new TrackedRobot(bot));
+		robots.put(bot.name, new TrackedRobot(bot));
 		robot_positions.update(bot);
 	}
 	
@@ -113,8 +113,8 @@ public class IdealSimGpsProvider extends Observable {
 			if(newdest) {
 				// Snap to heading
 				// Calculate angle and X/Y velocities
-				int deltaX = dest.getX()-start.getX();
-				int deltaY = dest.getY()-start.getY();
+				int deltaX = dest.x-start.x;
+				int deltaY = dest.y-start.y;
 				motAngle = Math.atan2(deltaY, deltaX);
 				vX = (Math.cos(motAngle) * VELOCITY);
 				vY = (Math.sin(motAngle) * VELOCITY);
@@ -122,7 +122,7 @@ public class IdealSimGpsProvider extends Observable {
 				// Set position to ideal angle +/- noise
 				int angle = (int)Math.toDegrees(Math.atan2(deltaY, deltaX));
 				if(angleNoise != 0) aNoise = rand.nextInt(angleNoise*2)-angleNoise;
-				pos.setPos(start.getX(), start.getY(), angle+aNoise);
+				pos.setPos(start.x, start.y, angle+aNoise);
 				newdest = false;
 			} else if(dest != null) {
 				// Calculate noise
@@ -138,9 +138,9 @@ public class IdealSimGpsProvider extends Observable {
 				if(totalTimeInMotion < totalMotionTime) {
 					int dX = (int)(vX * totalTimeInMotion)/1000;
 					int dY = (int)(vY * totalTimeInMotion)/1000;
-					pos.setPos(start.getX()+dX+xNoise, start.getY()+dY+yNoise, (int)Math.toDegrees(motAngle));
+					pos.setPos(start.x+dX+xNoise, start.y+dY+yNoise, (int)Math.toDegrees(motAngle));
 				} else {
-					pos.setPos(dest.getX()+xNoise, dest.getY()+yNoise, pos.getAngle()+aNoise);
+					pos.setPos(dest.x+xNoise, dest.y+yNoise, pos.angle+aNoise);
 					dest = null;
 					reportpos = true;
 				}
@@ -168,7 +168,7 @@ public class IdealSimGpsProvider extends Observable {
 			return dest != null;
 		}
 		public String getName() {
-			return pos.getName();
+			return pos.name;
 		}
 	}
 }

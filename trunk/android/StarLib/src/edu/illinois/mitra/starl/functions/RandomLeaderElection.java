@@ -18,6 +18,15 @@ import edu.illinois.mitra.starl.interfaces.LeaderElection;
 import edu.illinois.mitra.starl.interfaces.MessageListener;
 import edu.illinois.mitra.starl.objects.Common;
 
+/**
+ * Elects a leader. All agents broadcast a random integer, the robot with the largest number wins the election.
+ * Ties are broken by comparing agent identifiers lexicographically (word of the day). To ensure proper operation,
+ * robots should be synchronized before electing!
+ * 
+ * @author Adam Zimmerman
+ * @version 1.0
+ *
+ */
 public class RandomLeaderElection implements Callable<String>, LeaderElection, MessageListener {
 
 	private static final String TAG = "RandomLeaderElection";

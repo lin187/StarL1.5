@@ -33,7 +33,7 @@ public class GpsTestApp extends SimApp {
 		while(true) {			
 			switch (stage) {
 			case START:
-				Thread.sleep((long) (Math.random()*SimSettings.START_DELAY_MAX));
+				Thread.sleep(2000 + (long) (Math.random()*SimSettings.START_DELAY_MAX));
 				gvh.trace.traceSync("LAUNCH");
 				stage = STAGE.MOVE;
 				moat.goTo(gvh.gps.getWaypointPosition("DEST"+cur_waypoint));

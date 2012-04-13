@@ -5,28 +5,56 @@ import java.util.List;
 
 import edu.illinois.mitra.starl.interfaces.Traceable;
 
+/**
+ * The RobotMessage class is used to pass messages between agents. All messages have a recipient, sender,
+ * ID number, and contents. The ID number is used to target a message to a specific thread. Only threads
+ * which are registered MessageListeners for a particular ID will receive messages with that ID. No two
+ * threads may be registered for the same message ID.
+ * 
+ * @author Adam Zimmerman
+ * @version 1.0
+ * 
+ * @see edu.illinois.mitra.starl.interfaces.MessageListener
+ * @see edu.illinois.mitra.starl.comms.MessageContents
+ */
 public class RobotMessage implements Traceable {
 	private String to;
 	private String from;
 	private int MID;
 	MessageContents contents;
 
+	/**
+	 * Creates a new RobotMessage with contents in MessageContents form
+	 * @param to The message recipient
+	 * @param from The message sender or originator
+	 * @param MID The ID of this message
+	 * @param contents The contents of this message, in MessageContents form
+	 */
 	public RobotMessage(String to, String from, int MID, MessageContents contents) {
-		super();
 		this.to = to;
 		this.from = from;
 		this.MID = MID;
 		this.contents = contents;
 	}
 	
+	/**
+	 * Creates a new RobotMessage with contents in String form. This is equivalent to creating a
+	 * RobotMessage with contents being the MessageContents of a single string.
+	 * @param to The message recipient
+	 * @param from The message sender or originator
+	 * @param MID The ID of this message
+	 * @param contents The contents of this message in String form 
+	 */
 	public RobotMessage(String to, String from, int MID, String contents) {
-		super();
 		this.to = to;
 		this.from = from;
 		this.MID = MID;
 		this.contents = new MessageContents(contents);
 	}
 	
+	/**
+	 * @param other A RobotMessage to clone
+	 */
 	public RobotMessage(RobotMessage other) {
 		this.to = other.getTo();
 		this.from = other.getFrom();
@@ -34,6 +62,10 @@ public class RobotMessage implements Traceable {
 		this.MID = other.getMID();
 	}
 	
+	/**
+	 * Creates a new RobotMessage from a received broadcast
+	 * @param received The received message to be parsed
+	 */
 	public RobotMessage(String received) {
 		String parts[] = received.split("\\|");
 		this.from = parts[2];
@@ -61,9 +93,6 @@ public class RobotMessage implements Traceable {
 	}
 	public void setTo(String to) {
 		this.to = to;
-	}
-	public void setMID(int mid) {
-		this.MID = mid;
 	}
 	public void setContents(MessageContents new_contents) {
 		this.contents = new_contents;

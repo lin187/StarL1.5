@@ -4,18 +4,32 @@ import java.util.HashMap;
 
 import edu.illinois.mitra.starl.exceptions.ItemFormattingException;
 import edu.illinois.mitra.starl.interfaces.Traceable;
-
+/**
+ * This class represents a position and orientation in the XY plane. All robot and waypoint positions
+ * are represented by ItemPositions.
+ * 
+ * @author Adam Zimmerman
+ * @version 1.0
+ */
 public class ItemPosition implements Comparable<ItemPosition>, Traceable {
 	private static final String TAG = "itemPosition";
 	private static final String ERR = "Critical Error";
 	
-	private String name;
-	private int x;
-	private int y;
-	private int angle;
+	public String name;
+	public int x;
+	public int y;
+	public int angle;
 	
+	
+	/**
+	 * Construct an ItemPosition from a name, X, and Y positions, and an angle in degrees.
+	 * 
+	 * @param name The name of the new position
+	 * @param x X position
+	 * @param y Y position
+	 * @param angle Direction the position is facing in degrees.
+	 */
 	public ItemPosition(String name, int x, int y, int angle) {
-		super();
 		if(name.contains(",")) {
 			String[] namePieces = name.split(",");
 			this.name = namePieces[0];
@@ -27,6 +41,13 @@ public class ItemPosition implements Comparable<ItemPosition>, Traceable {
 		this.angle = angle;
 	}
 	
+	
+	
+	/**
+	 * Construct an ItemPosition by cloning another
+	 * 
+	 * @param other The ItemPosition to clone
+	 */
 	public ItemPosition(ItemPosition other) {
 		this.name = other.name;
 		this.x = other.x;
@@ -34,6 +55,13 @@ public class ItemPosition implements Comparable<ItemPosition>, Traceable {
 		this.angle = other.angle;
 	}
 	
+	
+	/**
+	 * Construct an ItemPosition from a received GPS broadcast message
+	 * 
+	 * @param received GPS broadcast received 
+	 * @throws ItemFormattingException
+	 */
 	public ItemPosition(String received) throws ItemFormattingException {
 		String[] parts = received.replace(",", "").split("\\|");
 		if(parts.length == 6) {
@@ -48,42 +76,54 @@ public class ItemPosition implements Comparable<ItemPosition>, Traceable {
 	
 	// This compareTo implementation doesn't make tons of sense
 	public int compareTo(ItemPosition other) {
-		if(!name.equals(other.getName())) {
+		if(!name.equals(other.name)) {
 			return 1;
 		}
 		return 0;
 	}
 	
-	//Return the distance to another position
+	/**
+	 * @param other The ItemPosition to measure against
+	 * @return Euclidean distance to ItemPosition other
+	 */
 	public int distanceTo(ItemPosition other) {
 		if(other == null) {
 			return 0;
 		}
-		return (int) Math.sqrt(Math.pow(getX() - other.getX(), 2) + Math.pow(getY() - other.getY(), 2));
+		return (int) Math.sqrt(Math.pow(x - other.x, 2) + Math.pow(this.y - other.y, 2));
 	}
 	
-	//Return true if this is facing towards another robot
+	/**
+	 * Determines if this ItemPosition is facing another position with a certain radius
+	 * 
+	 * @param other The position to check against
+	 * @param radius The radius (in distance units) of the other position
+	 * @return True if this position is facing a circle of radius with position other.
+	 */
 	public boolean isFacing(ItemPosition other, int radius) { 
 		if(other == null) {
 			return false;
 		}
 		
-		double isFacingCheck = (other.getY() - this.getY())*Math.sin(Math.toRadians(this.getAngle())) + (other.getX() - this.getX())*Math.cos(Math.toRadians(this.getAngle()));
-		double lineDistance = Math.abs(((other.getY() - this.getY()) - (other.getX() - this.getX())*Math.tan(Math.toRadians(this.getAngle()))/Math.sqrt(1+Math.pow(Math.tan(Math.toRadians(getAngle())),2))));
+		double isFacingCheck = (other.y - this.y)*Math.sin(Math.toRadians(this.angle)) + (other.x - this.x)*Math.cos(Math.toRadians(this.angle));
+		double lineDistance = Math.abs(((other.y - this.y) - (other.x - this.x)*Math.tan(Math.toRadians(this.angle))/Math.sqrt(1+Math.pow(Math.tan(Math.toRadians(angle)),2))));
 		if(lineDistance < (2*radius) && (isFacingCheck > 0)) {
 			return true;
 		}
 		return false;
 	}
-	
-	//Return how many degrees need to be rotated until facing a position
+
+	/** 
+	 * @param other The ItemPosition to measure against
+	 * @return Number of degrees this position must rotate to face position other
+	 */
 	public int angleTo(ItemPosition other) {
 		if(other == null) {
 			return 0;
 		}
 		
-		int delta_x = other.getX() - this.getX();
-		int delta_y = other.getY() - this.getY();
+		int delta_x = other.x - this.x;
+		int delta_y = other.y - this.y;
 		int angle = this.angle;
 		int otherAngle = (int) Math.toDegrees(Math.atan2(delta_y,delta_x));
 		if(angle > 180) {
@@ -100,24 +140,8 @@ public class ItemPosition implements Comparable<ItemPosition>, Traceable {
 		return  Math.round(retAngle);
 	}
 	
-	public String getName() {
-		return name;
-	}
-	
 	@Override public String toString() {
 		return name + ": " + x + ", " + y + " " + angle + "\u00B0";
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public int getAngle() {
-		return angle;
 	}
 
 	public void setPos(int x, int y, int angle) {
@@ -166,5 +190,22 @@ public class ItemPosition implements Comparable<ItemPosition>, Traceable {
 		retval.put("y", y);
 		retval.put("angle",angle);
 		return retval;
+	}
+	
+	@Deprecated
+	public int getX() {
+		return x;
+	}
+	@Deprecated
+	public int getY() {
+		return y;
+	}
+	@Deprecated
+	public int getAngle() {
+		return angle;
+	}
+	@Deprecated
+	public String getName() {
+		return name;
 	}
 }

@@ -8,6 +8,12 @@ import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.PositionList;
 
+/**
+ * iRobot Create specific. Experimental motion automaton set to replace BluetoothInterface once it's fully tested.
+ * @author Adam Zimmerman
+ * @version 1.1
+ * @see BluetoothRobotMotion
+ */
 public class MotionAutomaton extends Thread implements Cancellable {
 	private static final String TAG = "MotionAutomaton";
 	private static final String ERR = "Critical Error";
@@ -245,11 +251,11 @@ public class MotionAutomaton extends Thread implements Cancellable {
 	
 	// Calculates the radius of curvature to meet a target
 	private int curveRadius() {
-		int x0 = mypos.getX();
-		int y0 = mypos.getY();
-		int x1 = destination.getX();
-		int y1 = destination.getY();
-		int theta = mypos.getAngle();
+		int x0 = mypos.x;
+		int y0 = mypos.y;
+		int x1 = destination.x;
+		int y1 = destination.y;
+		int theta = mypos.angle;
 		double alpha = -180+Math.toDegrees(Math.atan2((y1-y0),(x1-x0)));
 		double rad = -(Math.sqrt(Math.pow(x1-x0,2) + Math.pow(y1-y0,2))/(2*Math.sin(Math.toRadians(alpha-theta))));
 		return (int) rad;
@@ -291,7 +297,7 @@ public class MotionAutomaton extends Thread implements Cancellable {
 		ItemPosition me = mypos; //gvh.getMyPosition();
 		PositionList others = gvh.gps.getPositions();
 		for(ItemPosition current : others.getList()) {
-			if(!current.getName().equals(me.getName())) {
+			if(!current.name.equals(me.name)) {
 				if(me.isFacing(current, 160) && me.distanceTo(current) < 450) {
 					blocker = current;
 					return true;

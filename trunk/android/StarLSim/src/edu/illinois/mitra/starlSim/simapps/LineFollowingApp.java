@@ -69,6 +69,6 @@ public class LineFollowingApp extends SimApp {
 		int x = rand.nextInt(500) - 250;
 		int y = rand.nextInt(500) - 250;
 		ItemPosition mypos = gvh.gps.getMyPosition();
-		return new ItemPosition("goHere", mypos.getX() + x, mypos.getY() + y, 0);
+		return new ItemPosition("goHere", mypos.x + x, mypos.y + y, 0);
 	}
 }

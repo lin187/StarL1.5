@@ -60,40 +60,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 	private ExecutorService executor = Executors.newFixedThreadPool(1);
 	private Future<LinkedList<Object>> results;
 	
-	// TODO: Determine if this works
-   /* private final Handler main_handler = new Handler() {
-    	public void handleMessage(Message msg) {	    	
-	    	switch(msg.what) {
-	    	case Common.MESSAGE_TOAST:
-	    		Toast.makeText(getApplicationContext(), msg.obj.toString(), Toast.LENGTH_LONG).show();
-	    		break;
-	    	case Common.MESSAGE_LOCATION:
-	    		cbGPS.setChecked((Integer)msg.obj == Common.GPS_RECEIVING);
-	    		break;
-	    	case Common.MESSAGE_BLUETOOTH:
-	    		pbBluetooth.setVisibility((Integer)msg.obj == Common.BLUETOOTH_CONNECTING?View.VISIBLE:View.INVISIBLE);
-	    		cbBluetooth.setChecked((Integer)msg.obj ==  Common.BLUETOOTH_CONNECTED);
-	    		break;
-	    	case Common.MESSAGE_LAUNCH:
-	    		launch(msg.arg1, msg.arg2);
-	    		break;
-	    	case Common.MESSAGE_ABORT:
-	    		if(launched) executor.shutdownNow();
-    			gvh.plat.moat.halt();
-    			launched = false;
-    			cbRunning.setChecked(false);
-    			cbGPS.setChecked(false);
-	    		break;
-	    	case Common.MESSAGE_DEBUG:
-	    		txtDebug.setText("DEBUG:\n" + (String) msg.obj);
-	    		break;
-	    	case Common.MESSAGE_BATTERY:
-	    		pbBattery.setProgress((Integer) msg.obj);
-	    		break;
-	    	}	
-    	}
-    };*/
-	private final MainHandler main_handler = new MainHandler(this, pbBluetooth, pbBattery, cbGPS, cbBluetooth, cbRunning, txtDebug, executor);
+	private MainHandler main_handler;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -107,6 +74,10 @@ public class RobotsActivity extends Activity implements MessageListener {
         
         // Set up the GUI
         setupGUI();
+        
+        // Create the main handler
+        main_handler = new MainHandler(this, pbBluetooth, pbBattery, cbGPS, cbBluetooth, cbRunning, txtDebug, executor);
+        
         
         // Create the global variable holder
         HashMap<String,String> hm_participants = new HashMap<String,String>();
@@ -158,7 +129,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 				
 	    		RobotMessage informLaunch = new RobotMessage("ALL", gvh.id.getName(), Common.MSG_ACTIVITYLAUNCH, new MessageContents(Common.intsToStrings(numWaypoints, runNum)));
 	    		gvh.comms.addOutgoingMessage(informLaunch);
-	    		results = executor.submit(new LogicThread());
+	    		results = executor.submit(new AppLogic(gvh));
 			} else {
     			gvh.plat.sendMainToast("Should have " + numWaypoints + " waypoints, but I have " + gvh.gps.getWaypointPositions().getNumPositions());
     		}
@@ -179,7 +150,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 		txtRobotName.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				AlertDialog.Builder sel_robot_builder = new AlertDialog.Builder(getApplicationContext());
+				AlertDialog.Builder sel_robot_builder = new AlertDialog.Builder(RobotsActivity.this);
 				sel_robot_builder.setTitle("Who Am I?");
 				sel_robot_builder.setItems(participants, new DialogInterface.OnClickListener() {
 				    public void onClick(DialogInterface dialog, int item) {

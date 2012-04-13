@@ -36,7 +36,7 @@ public class FlockingTestApp extends SimApp {
 
 	public List<String> call() throws Exception {
 		String robotName = gvh.id.getName();
-		Integer robotNum = Integer.parseInt(robotName.substring(3, robotName.length())); // assumes: botYYY
+		Integer robotNum = Integer.parseInt(robotName.substring(3)); // assumes: botYYY
 		
 		while(true) {			
 			switch (stage) {
@@ -56,7 +56,7 @@ public class FlockingTestApp extends SimApp {
 						String n = wpn + gvh.id.getName() + cur_waypoint;
 						moat.goTo(pl.getPosition(n));
 						
-						System.out.println(robotName + ": New destination is (" + pl.getPosition(n).getX() + ", " + pl.getPosition(n).getY() + ")!");
+						System.out.println(robotName + ": New destination is (" + pl.getPosition(n).x + ", " + pl.getPosition(n).y + ")!");
 
 						cur_waypoint ++;
 						n = wpn + gvh.id.getName() + cur_waypoint;
@@ -67,9 +67,9 @@ public class FlockingTestApp extends SimApp {
 						
 						PositionList plAll = gvh.gps.getPositions();
 						for (ItemPosition rp : plAll.getList()) {
-							x += rp.getX();
-							y += rp.getY();
-							theta += rp.getAngle();
+							x += rp.x;
+							y += rp.y;
+							theta += rp.angle;
 						}
 						int N = plAll.getNumPositions();
 						int r = 30; // ~30mm

@@ -11,7 +11,9 @@ import edu.illinois.mitra.starl.interfaces.ComThread;
 import edu.illinois.mitra.starl.objects.Common;
 
 /**
- * This thread handles all incoming and outgoing transmissions.
+ * Hardware specific. This thread handles all incoming and outgoing UDP transmissions.
+ * @author Adam Zimmerman
+ * @version 1.2
  */    
 public class UdpComThread extends Thread implements ComThread {
 	private static final int BCAST_PORT = 2562;
@@ -106,6 +108,6 @@ public class UdpComThread extends Thread implements ComThread {
 
 	@Override
 	public void setMsgList(ArrayList<UDPMessage> ReceivedMessageList) {
-		this.ReceivedMsgList = ReceivedMsgList;
+		this.ReceivedMsgList = ReceivedMessageList;
 	}
 } 

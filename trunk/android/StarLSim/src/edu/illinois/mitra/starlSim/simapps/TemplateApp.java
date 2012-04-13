@@ -17,7 +17,7 @@ public class TemplateApp extends SimApp {
 	public TemplateApp(String name, HashMap<String, String> participants,
 			SimComChannel channel, IdealSimGpsProvider gps,
 			ItemPosition initpos) {
-		super(name, participants, channel, gps, initpos, "C:\\traces\\");
+		super(name, participants, channel, gps, initpos, "C:/traces/");
 		
 		// TODO Auto-generated constructor stub
 	}

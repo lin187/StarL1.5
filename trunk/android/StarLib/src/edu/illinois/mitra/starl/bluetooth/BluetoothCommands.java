@@ -1,6 +1,10 @@
 package edu.illinois.mitra.starl.bluetooth;
 
 
+/**
+ * iRobot Create specific, contains functions used to control the Create platform.
+ * @author Adam Zimmerman
+ */
 public class BluetoothCommands {
 	// Roomba motion commands
 	public static byte[] turn(int velocity, int dir) {

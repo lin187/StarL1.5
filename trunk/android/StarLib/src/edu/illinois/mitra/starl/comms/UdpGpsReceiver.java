@@ -8,7 +8,6 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
 
-import android.util.Log;
 import edu.illinois.mitra.starl.exceptions.ItemFormattingException;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.GpsReceiver;
@@ -16,6 +15,11 @@ import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.PositionList;
 
+/**
+ * Hardware specific. Opens a UDP socket for receiving GPS broadcasts. 
+ * @author Adam Zimmerman
+ *
+ */
 public class UdpGpsReceiver extends Thread implements GpsReceiver {
 	private static final String TAG = "GPSReceiver";
 	private static final String ERR = "Critical Error";
@@ -97,7 +101,7 @@ public class UdpGpsReceiver extends Thread implements GpsReceiver {
 		    					ItemPosition newpos = new ItemPosition(parts[i]);
 		    					robotPositions.update(newpos);
 		    					gvh.sendRobotEvent(Common.EVENT_GPS);
-		    					if(newpos.getName().equals(name)) {
+		    					if(newpos.name.equals(name)) {
 		    						gvh.trace.traceEvent(TAG, "Received Position", newpos);
 		    						gvh.sendRobotEvent(Common.EVENT_GPS_SELF);
 		    					}

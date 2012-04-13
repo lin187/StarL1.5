@@ -1,18 +1,35 @@
 ----- StarLib Changelog -----
 
-4/3/12 Changelist:
+4/7/12 Changelist:
 
-- Added Geocaster to functions package with support for both rectangular and circular target regions
-- Changed RandomLeaderElection to run asynchronously when electing a leader. The interface remains the same.
-- Fixed BullyLeaderElection to operate asynchronously without using Android specific code. BLE now works properly.
+STARLIB CHANGES:
+- Changed ItemPosition values to be public variables and marked getter methods as deprecated. All references to these deprecated methods should be removed!
+- Added trace output to Geocaster
+- Removed the unnecessary "getWaypoints()" method from Gps
+- Removed interfaces associated with network discovery, which was removed for being glitchy and generally useless.
+- Added javadoc comments to nearly everything of importance
+
+
+4/6/12 Changelist:
+
+SIMULATOR CHANGES:
 - Added trace output to simulated GPS receiver and simulated motion automaton.
 - Added option to start TraceWriter with clock drift and skew to add "realism" to simulator.
 - Added a simple distance predicate checker to the simulator. If enabled in the main class, this records the times at which any two robots were closer than a predefined radius. Output is in an XML with the same formatting as trace files.
-- Created a public RobotMotion named "moat" in the gvh.plat object. RealGVH and SimGVH both instantiate the correct motion object. RealGVH's constructor now needs a MAC address to connect to.
 - Fixed IdealSimMotionAutomaton to properly implement the public boolean variable inMotion
+- Moved all simulation settings to the final SimSettings class. One day this will load settings from a file or GUI, and all will be good.
+- Simulation's WptLoader class can now handle WPT files with spaces in them.
+
+STARLIB CHANGES:
+- Added Geocaster to functions package with support for both rectangular and circular target regions
+- Changed RandomLeaderElection to run asynchronously when electing a leader. The interface remains the same.
+- Fixed BullyLeaderElection to operate asynchronously without using Android specific code. BLE now works properly.
+- Created a public RobotMotion named "moat" in the gvh.plat object. RealGVH and SimGVH both instantiate the correct motion object. RealGVH's constructor now needs a MAC address to connect to.
 - Fixed ACK messages not being correctly recorded in trace files by CommsHandler. This was caused by the "name" variable not being set in the Comms class and also prevented some message handling from occurring properly.
 - Increased the maximum number of message sequence numbers from 10000 to Integer.MAX_VALUE (apx 2.1 billion)
-- Moved all simulation settings to the final SimSettings class. One day this will load settings from a file or GUI, and all will be good.
+- Fixed a bug in the UdpComThread that prevented physical messages from being exchanged (!)
+- Fixed a bug in BluetoothInterface where reading information would incorrectly return the wrong bytes
 
-
-- Added a new project, "StarlTemplate", with a redesigned Activity class and LogicThread implementing Callable. This template project will become the base for all future StarL applications once it has been properly tested. LogicThreads which implement Callable are closer to the SimApp class, making the transition from simulation to implementation easier.
+OTHER CHANGES:
+- Added abstract class LogicThread to StarLib's "interfaces" package.
+- Added a new project, "StarlTemplate", with a redesigned Activity class and new "AppLogic" class extending LogicThread implementing Callable. This template project will become the base for all future StarL applications once it has been properly tested. LogicThreads which implement Callable are closer to the SimApp class, making the transition from simulation to implementation easier.

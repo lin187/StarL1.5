@@ -4,6 +4,13 @@ import java.util.HashMap;
 
 import edu.illinois.mitra.starl.interfaces.Traceable;
 
+/**
+ * UDPMessage is a wrapper for RobotMessage which includes additional information to track acknowledgments.
+ * This is used only by low level message handling and shouldn't be needed by StarL applications
+ * 
+ * @author Adam Zimmerman
+ * @version 1.0
+ */
 public class UDPMessage implements Traceable {
 	public static final int MSG_QUEUED = 0;
 	public static final int MSG_SENT = 1;

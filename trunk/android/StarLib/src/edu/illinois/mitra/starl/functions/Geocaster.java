@@ -9,8 +9,14 @@ import edu.illinois.mitra.starl.interfaces.MessageListener;
 import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 
+/**
+ * Sends and receives messages with a geographic destination instead of an agential (invented word) destination.
+ *  
+ * @author Adam Zimmerman
+ * @version 1.0
+ */
 public class Geocaster implements MessageListener {
-
+	private static final String TAG = "Geocaster";
 	private GlobalVarHolder gvh;
 	
 	public Geocaster(GlobalVarHolder gvh) {
@@ -19,18 +25,38 @@ public class Geocaster implements MessageListener {
 	}
 	
 	// Send a message with ID = MID and contents = msgcontents to all robots contained within the rectangle defined by x, y, width, and height
+	
+	/**
+	 * Send a geocast message to all agents within a rectangular area 
+	 * @param msgcontents the contents of the message to send
+	 * @param MID the ID of the message to send
+	 * @param x x origin of target rectangle
+	 * @param y y origin of target rectangle
+	 * @param width target rectangle width
+	 * @param height target rectangle height
+	 */
 	public void sendGeocast(MessageContents msgcontents, int MID, int x, int y, int width, int height) {
 		MessageContents geocastContents = new MessageContents("RECT", Integer.toString(x),Integer.toString(y),Integer.toString(width),Integer.toString(height),Integer.toString(MID));
 		geocastContents.append(msgcontents);
 		RobotMessage toSend = new RobotMessage("ALL", gvh.id.getName(), Common.MSG_GEOCAST, geocastContents);
 		gvh.comms.addOutgoingMessage(toSend);
+		gvh.trace.traceEvent(TAG, "Sent Geocast", toSend);
 	}
 	
+	/**
+	 * Send a geocast message to all agents within a circular area
+	 * @param msgcontents the contents of the message to send
+	 * @param MID the ID of the message to send
+	 * @param x the x center of the target circle
+	 * @param y the y center of the target circle
+	 * @param radius the radius of the target circle
+	 */
 	public void sendGeocast(MessageContents msgcontents, int MID, int x, int y, int radius) {
 		MessageContents geocastContents = new MessageContents("CIRCLE", Integer.toString(x),Integer.toString(y),Integer.toString(radius),Integer.toString(MID));
 		geocastContents.append(msgcontents);
 		RobotMessage toSend = new RobotMessage("ALL", gvh.id.getName(), Common.MSG_GEOCAST, geocastContents);
-		gvh.comms.addOutgoingMessage(toSend);		
+		gvh.comms.addOutgoingMessage(toSend);	
+		gvh.trace.traceEvent(TAG, "Sent Geocast", toSend);
 	}
 
 	@Override
@@ -47,10 +73,11 @@ public class Geocaster implements MessageListener {
 			
 			ItemPosition mypos = gvh.gps.getMyPosition();
 			
-			if(Common.inRange(mypos.getX(), minX, maxX) && Common.inRange(mypos.getY(), minY, maxY)) {
+			if(Common.inRange(mypos.x, minX, maxX) && Common.inRange(mypos.y, minY, maxY)) {
 				int MID = Integer.parseInt(contents.get(5));
 				MessageContents receiveContents = new MessageContents();
 				receiveContents.append(contents.subList(6, contents.size()));
+				gvh.trace.traceEvent(TAG, "Received Geocast", m);
 				gvh.comms.addIncomingMessage(new RobotMessage("ALL", m.getFrom(), MID, receiveContents));
 			}
 		} else if(type.equals("CIRCLE")) {
@@ -64,6 +91,7 @@ public class Geocaster implements MessageListener {
 				int MID = Integer.parseInt(contents.get(4));
 				MessageContents receiveContents = new MessageContents();
 				receiveContents.append(contents.subList(5, contents.size()));
+				gvh.trace.traceEvent(TAG, "Received Geocast", m);
 				gvh.comms.addIncomingMessage(new RobotMessage("ALL", m.getFrom(), MID, receiveContents));
 			}
 		}
