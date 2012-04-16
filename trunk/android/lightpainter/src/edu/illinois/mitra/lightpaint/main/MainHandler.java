@@ -66,7 +66,7 @@ public class MainHandler extends Handler {
     		break;
     	case Common.MESSAGE_ABORT:
     		if(app.launched) executor.shutdownNow();
-			gvh.plat.moat.halt();
+			gvh.plat.moat.motion_stop();
 			app.launched = false;
 			cbRunning.setChecked(false);
 			cbGPS.setChecked(false);

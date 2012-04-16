@@ -11,6 +11,7 @@ import android.util.Log;
 import edu.illinois.mitra.lightpaint.BotProgressTracker;
 import edu.illinois.mitra.lightpaint.ImagePoint;
 import edu.illinois.mitra.lightpaint.PointManager;
+import edu.illinois.mitra.starl.bluetooth.MotionParameters;
 import edu.illinois.mitra.starl.bluetooth.RobotMotion;
 import edu.illinois.mitra.starl.comms.RobotMessage;
 import edu.illinois.mitra.starl.functions.BarrierSynchronizer;
@@ -39,10 +40,6 @@ public class LogicThread implements Callable<LinkedList<Object>>, MessageListene
 	private String leader = null;
 	private boolean iamleader = false;
 	
-	// Maximum angle at which robots can curve to their destination.
-	// This prevents "soft" corners and forces robots to turn in place at sharper angles
-	private static final int MAXCURVEANGLE = 25;
-	
 	//---------------------
 	// Constant stage names
 	public enum STAGE {
@@ -69,6 +66,9 @@ public class LogicThread implements Callable<LinkedList<Object>>, MessageListene
 	private SortedSet<ImagePoint> myPoints = null;
 	private Iterator<ImagePoint> pointIter = null;
 	
+	// Motion parameters
+	private MotionParameters param = new MotionParameters();
+	
 	public LogicThread(GlobalVarHolder gvh) {
 		created = new HashSet<Cancellable>();
 		
@@ -85,6 +85,11 @@ public class LogicThread implements Callable<LinkedList<Object>>, MessageListene
 		
 		created.add(sync);
 		created.add(le);
+		
+		// Maximum angle at which robots can curve to their destination.
+		// This prevents "soft" corners and forces robots to turn in place at sharper angles		
+		param.ARCANGLE_MAX = 25;
+		param.ENABLE_COLAVOID = false;
 	}
 	
 	public void cancel() {
@@ -257,9 +262,7 @@ public class LogicThread implements Callable<LinkedList<Object>>, MessageListene
 				gvh.plat.setDebugInfo("");
 				Log.d(TAG, "Next point: " + dest.getPoint());
 				
-				// Travel to the next point, keep curving to a minimum to prevent wavy images
-				// Don't use collision avoidance, keep everyone on their lines.
-				motion.goTo(dest.getPos(), MAXCURVEANGLE, false);
+				motion.goTo(dest.getPos(), param);
 				updateScreen();
 				motionHold();		
 				stage = STAGE.CALC_NEXT_POINT;

@@ -57,8 +57,8 @@ public class RobotsActivity extends Activity implements MessageListener {
 	private int selected_robot = 0;
 	
 	// Logic thread executor
-	private ExecutorService executor = Executors.newFixedThreadPool(1);
-	private Future<LinkedList<Object>> results;
+	public ExecutorService executor = Executors.newSingleThreadExecutor();
+	public Future<LinkedList<Object>> results;
 	
 	private MainHandler main_handler;
     
@@ -76,7 +76,7 @@ public class RobotsActivity extends Activity implements MessageListener {
         setupGUI();
         
         // Create the main handler
-        main_handler = new MainHandler(this, pbBluetooth, pbBattery, cbGPS, cbBluetooth, cbRunning, txtDebug, executor);
+        main_handler = new MainHandler(this, pbBluetooth, pbBattery, cbGPS, cbBluetooth, cbRunning, txtDebug);
         
         
         // Create the global variable holder
@@ -108,8 +108,8 @@ public class RobotsActivity extends Activity implements MessageListener {
     public void disconnect() {
     	gvh.log.i(TAG, "Disconnecting and stopping all background threads");
     	
-		// Shut down the logic thread if it was running
-		if(launched) executor.shutdownNow();
+		executor.shutdownNow();
+		
 		launched = false;
 
 		// Shut down persistent threads

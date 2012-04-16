@@ -33,5 +33,6 @@ public class RealGlobalVarHolder extends GlobalVarHolder {
 		super.comms = new Comms(this, new UdpComThread(this));
 		super.gps = new Gps(this, new UdpGpsReceiver(this,"192.168.1.100",4000,new PositionList(),new PositionList()));
 		plat.moat = new MotionAutomaton(this, new BluetoothInterface(this, robotMac));
+		plat.moat.start();
 	}
 }

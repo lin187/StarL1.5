@@ -1,6 +1,7 @@
 package edu.illinois.mitra.template;
 
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import android.content.Context;
 import android.os.Handler;
@@ -25,11 +26,10 @@ public class MainHandler extends Handler {
 	private TextView txtDebug;
 	
 	private GlobalVarHolder gvh;
-	private ExecutorService executor;
 	
 	public MainHandler(RobotsActivity app, ProgressBar pbBluetooth,
 			ProgressBar pbBattery, CheckBox cbGPS, CheckBox cbBluetooth,
-			CheckBox cbRunning, TextView txtDebug, ExecutorService executor) {
+			CheckBox cbRunning, TextView txtDebug) {
 		super();
 		this.app = app;
 		this.appContext = app.getApplicationContext();
@@ -39,7 +39,6 @@ public class MainHandler extends Handler {
 		this.cbBluetooth = cbBluetooth;
 		this.cbRunning = cbRunning;
 		this.txtDebug = txtDebug;
-		this.executor = executor;
 	}
 	
 	public void setGvh(GlobalVarHolder gvh) {
@@ -64,8 +63,12 @@ public class MainHandler extends Handler {
     		app.launch(msg.arg1, msg.arg2);
     		break;
     	case Common.MESSAGE_ABORT:
-    		if(app.launched) executor.shutdownNow();
-			gvh.plat.moat.halt();
+    		if(app.launched) {
+    	    	app.results.cancel(true);
+    			app.executor.shutdownNow();
+    			app.executor = Executors.newSingleThreadExecutor();
+    		}
+			gvh.plat.moat.motion_stop();
 			app.launched = false;
 			cbRunning.setChecked(false);
 			cbGPS.setChecked(false);

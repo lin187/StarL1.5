@@ -16,7 +16,6 @@ public class AppLogic extends LogicThread {
 	public AppLogic(GlobalVarHolder gvh) {
 		super(gvh);
 		moat = gvh.plat.moat;
-		gvh.plat.moat.start();
 	}
 	
 	@Override
@@ -28,6 +27,7 @@ public class AppLogic extends LogicThread {
 			case START:
 				stage = STAGE.GO;
 				moat.goTo(gvh.gps.getWaypointPosition("middle"));
+				gvh.log.i("MotionAutomaton", "Sent go command");
 				break;
 				
 			case GO:
