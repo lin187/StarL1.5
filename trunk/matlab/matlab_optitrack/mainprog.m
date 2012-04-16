@@ -121,11 +121,13 @@ while 1
     if USE_SERVER == 1       
         % Send positions to all connected nodes
         if ((toc > TX_PERIOD && send_launch ~= 1))
-            midx = robot_has_moved(bots);
-            if ~isequal(midx,[])
-                server_send_robots(bots(midx));
+            % THIS WAS CAUSING THE OVERSHOOT ISSUES!!
+            %midx = robot_has_moved(bots)
+            %if ~isequal(midx,[])
+                %server_send_robots(bots(midx));
+                server_send_robots(bots);
                 tic;
-            end
+            %end
         end
         
         % Send waypoints and robot positions

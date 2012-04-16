@@ -76,7 +76,7 @@ public class RaceApp extends SimApp implements MessageListener {
 				break;
 				
 			case DONE:
-				gvh.plat.moat.halt();
+				gvh.plat.moat.motion_stop();
 				return null;
 			}
 		}
