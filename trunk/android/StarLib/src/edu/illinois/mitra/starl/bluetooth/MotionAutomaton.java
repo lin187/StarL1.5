@@ -33,7 +33,7 @@ public class MotionAutomaton extends RobotMotion  {
 	public static final int SAMPLING_PERIOD = 300;
 		
 	// COLLISION AVOIDANCE CONSTANTS
-	public static final int COLLISION_STRAIGHTTIME = 1000;
+	public static final int COLLISION_STRAIGHTTIME = 1250;
 	
 	private GlobalVarHolder gvh;
 	private BluetoothInterface bti;
@@ -104,12 +104,14 @@ public class MotionAutomaton extends RobotMotion  {
 	@Override
 	public synchronized void start() {
 		super.start();
+		gvh.log.d(TAG, "STARTED!");
 		//reckoner.start();
 	}
 	
 	@Override
 	public void run() {
 		super.run();
+		boolean colliding = false;
 		while(true) {
 			while(running) {
 				mypos = gvh.gps.getMyPosition();//reckoner.getLatestEstimate();
@@ -117,7 +119,9 @@ public class MotionAutomaton extends RobotMotion  {
 				int angle = mypos.angleTo(destination);
 				int absangle = Math.abs(angle);
 				
-				if(!collision() && stage != null) {
+				colliding = collision();
+				
+				if(!colliding && stage != null) {
 					if(stage != prev) gvh.log.e(TAG, "Stage is: " + stage.toString());
 					switch(stage) {
 					case INIT:
@@ -193,53 +197,65 @@ public class MotionAutomaton extends RobotMotion  {
 					}
 					next = null;
 					sleep(DELAY_TIME);
-				} else if(param.ENABLE_COLAVOID) {
+				} else if(param.ENABLE_COLAVOID) {					
 					// Collision imminent! Stop the robot
 					if(stage != null) {
 						gvh.log.d(TAG, "Imminent collision detected!");
 						stage = null;
 						straight(0);
+						colnext = null;
+						colprev = null;
 						colstage = COLSTAGE.TURN;
 					}
-					
-					colprev = colstage;
-					if(colnext != null) {
-						colstage = colnext;
-					}
-					colnext = null;
 					
 					switch(colstage) {
 					case TURN:
 						if(colstage != colprev) {
-							col_straightime = 0;
-							turn(param.TURNSPEED_MAX, (int)Math.copySign(1, -mypos.angleTo(blocker)));
+							gvh.log.d(TAG, "Colliding: sending turn command");
+							turn(param.TURNSPEED_MAX, -1*mypos.angleTo(blocker));
 						}
 						
-						if(!collision()) colnext = COLSTAGE.STRAIGHT;
+						if(!collision()) {
+							colnext = COLSTAGE.STRAIGHT;
+							gvh.log.i(TAG, "FREE OF BLOCKER!");
+						}
 						break;
 					case STRAIGHT:
 						if(colstage != colprev) {
+							gvh.log.d(TAG, "Colliding: sending straight command");
 							straight(param.LINSPEED_MAX);
-						}
-						col_straightime += DELAY_TIME;
-						
-						// If a collision is imminent (again), return to the turn stage
-						if(collision()) {
-							straight(0);
-							colnext = COLSTAGE.TURN;
-						}
-						// If we're collision free and have been for enough time, restart normal motion
-						if(!collision() && col_straightime >= COLLISION_STRAIGHTTIME) {
-							colprev = null;
-							colnext = null;
-							colstage = COLSTAGE.TURN;
-							stage = STAGE.INIT;
+							col_straightime = 0;
+						} else {
+							col_straightime += DELAY_TIME;
+							// If a collision is imminent (again), return to the turn stage
+							if(collision()) {
+								gvh.log.d(TAG, "Collision imminent! Cancelling straight stage");
+								straight(0);
+								colnext = COLSTAGE.TURN;
+							}
+							// If we're collision free and have been for enough time, restart normal motion
+							if(!collision() && col_straightime >= COLLISION_STRAIGHTTIME) {
+								gvh.log.d(TAG, "Free! Returning to normal execution");
+								colprev = null;
+								colnext = null;
+								colstage = null;
+								stage = STAGE.INIT;
+							}
 						}
 						break;
 					}
+					
 					sleep(DELAY_TIME);
-				} else if(!param.ENABLE_COLAVOID) {
+					colprev = colstage;
+					if(colnext != null) {
+						colstage = colnext;
+						gvh.log.i(TAG, "Advancing stage to " + colnext);
+					}
+					colnext = null;
+
+				} else if(colliding && !param.ENABLE_COLAVOID) {
 					// Stop the robot if collision avoidance is disabled and a collision is immminent
+					gvh.log.d(TAG, "No collision avoidance! Halting.");
 					straight(0);
 					stage = STAGE.INIT;
 				}
@@ -348,7 +364,7 @@ public class MotionAutomaton extends RobotMotion  {
 		PositionList others = gvh.gps.getPositions();
 		for(ItemPosition current : others.getList()) {
 			if(!current.name.equals(me.name)) {
-				if(me.isFacing(current, 160) && me.distanceTo(current) < 450) {
+				if(me.isFacing(current, 200) && me.distanceTo(current) < 475) {
 					blocker = current;
 					return true;
 				}
