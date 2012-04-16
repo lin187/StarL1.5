@@ -61,6 +61,11 @@ public final class Common {
 	private Common() {
 	}
 	
+	/**
+	 * Convert an array of strings to an array of integers. Returns null if any array element doesn't contain a number
+	 * @param parts an array integers in string form
+	 * @return an array of integers parsed from the array of strings.
+	 */
 	public static int[] partsToInts(String[] parts) {
 		int[] retval = new int[parts.length];
 		for(int i = 0; i < parts.length; i++) {
@@ -74,6 +79,11 @@ public final class Common {
 		return retval;
 	}
 	
+	/**
+	 * @param a1
+	 * @param a2
+	 * @return The input parameter with the smallest magnitude
+	 */
 	public static int min_magitude(int a1, int a2) {
 		if(Math.abs(a1) < Math.abs(a2)) {
 			return a1;
@@ -82,6 +92,11 @@ public final class Common {
 		}
 	}
 	
+	/**
+	 * Convert a series of integers to a string array
+	 * @param pieces
+	 * @return String representation of the input integers
+	 */
 	public static String[] intsToStrings(Integer ... pieces) {
 		String[] retval = new String[pieces.length];
 		for(int i = 0; i < pieces.length; i++) {
@@ -90,17 +105,33 @@ public final class Common {
 		return retval;
 	}
 	
+	/**
+	 * @param str The input string to process
+	 * @param delimiter The delimiting string used to split the input string
+	 * @return An array contining the integers parsed from the input string
+	 */
 	public static int[] partsToInts(String str, String delimiter) {
 		String[] parts = str.split(delimiter);
 		return partsToInts(parts);
 	}
 	
 	// Common value manipulation and comparison functions
+	/**
+	 * @param val value to test 
+	 * @param min minimum acceptable value
+	 * @param max maximum acceptable value
+	 * @return true if val is between min and max, false otherwise
+	 */
 	public static <T extends Comparable<T>> boolean inRange(T val, T min, T max) {
 		if(val.compareTo(min) >= 0 && val.compareTo(max) <= 0) return true;
 		return false;
 	}
 	
+	/**
+	 * @param val value to test
+	 * @param max maximum acceptable value
+	 * @return val if val is less than max, max otherwise
+	 */
 	public static <T extends Comparable<T>> T cap(T val, T max) {
 		if(val.compareTo(max) < 0) {
 			return val;
@@ -109,6 +140,12 @@ public final class Common {
 		}
 	}
 	
+	/**
+	 * @param val value to test
+	 * @param min minimum acceptable value
+	 * @param max maximum acceptable value
+	 * @return the value of val, capped between min and max
+	 */
 	public static <T extends Comparable<T>> T  cap(T val, T min, T max) {
 		if(val.compareTo(max) > 0) {
 			return max;

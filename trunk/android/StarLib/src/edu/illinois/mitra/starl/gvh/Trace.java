@@ -2,6 +2,13 @@ package edu.illinois.mitra.starl.gvh;
 
 import edu.illinois.mitra.starl.objects.TraceWriter;
 
+/**
+ * A thin wrapper for the TraceWriter class. Instantiated by the GlobalVarHolder.
+ * 
+ * @author Adam Zimmerman
+ * @version 1.0
+ *
+ */
 public class Trace {
 	private String name;
 	private TraceWriter trace;

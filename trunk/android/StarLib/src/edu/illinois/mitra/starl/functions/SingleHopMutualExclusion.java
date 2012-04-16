@@ -60,7 +60,6 @@ public class SingleHopMutualExclusion extends Thread implements MutualExclusion,
 
 	@Override
 	public void run() {
-		String output = "";
 		while(running) {		
 			// Send any unused tokens on to the next requester
 			for(int i = 0; i < num_sections; i ++) {

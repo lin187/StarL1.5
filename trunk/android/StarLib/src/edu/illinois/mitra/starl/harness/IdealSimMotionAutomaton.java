@@ -1,5 +1,6 @@
 package edu.illinois.mitra.starl.harness;
 
+import edu.illinois.mitra.starl.bluetooth.MotionParameters;
 import edu.illinois.mitra.starl.bluetooth.RobotMotion;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.RobotEventListener;
@@ -31,7 +32,7 @@ public class IdealSimMotionAutomaton extends RobotMotion implements RobotEventLi
 	}
 	
 	@Override
-	public void goTo(ItemPosition dest, int maxCurveAngle, boolean useCollisionAvoidance) {
+	public void goTo(ItemPosition dest, MotionParameters param) {
 		this.dest = new ItemPosition(dest);
 		this.goTo(this.dest);
 	}
@@ -40,26 +41,21 @@ public class IdealSimMotionAutomaton extends RobotMotion implements RobotEventLi
 	public void turnTo(ItemPosition dest) {
 		// turnTo isn't implemented for ideal motion yet. TOO BAD FOR YOU.		
 	}
-
 	@Override
-	public void cancel() {
-		gvh.trace.traceEvent(TAG, "Cancelled");
-		halt();
+	public void turnTo(ItemPosition dest, MotionParameters param) {
+		// turnTo isn't implemented for ideal motion yet. TOO BAD FOR YOU.		
 	}
 	
 	@Override
-	public void halt() {
+	public void cancel() {
+		gvh.trace.traceEvent(TAG, "Cancelled");
+		motion_stop();
+	}
+
+	@Override
+	public void motion_stop() {
 		gvh.trace.traceEvent(TAG, "Halt");
 		gpspro.halt(name);
-	}
-
-	@Override
-	public void resume() {		
-	}
-
-	@Override
-	public void stop() {
-		halt();
 	}
 	@Override
 	public void robotEvent(int type, int event) {
@@ -67,8 +63,9 @@ public class IdealSimMotionAutomaton extends RobotMotion implements RobotEventLi
 			inMotion = (event!=Common.MOT_STOPPED);
 		}
 	}
+
 	@Override
-	public int getBatteryPercentage() {
-		return 0;
+	public void motion_resume() {
+		// I don't think anything needs to happen here
 	}
 }

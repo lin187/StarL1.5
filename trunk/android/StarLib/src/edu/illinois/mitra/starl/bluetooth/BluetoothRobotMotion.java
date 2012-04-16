@@ -9,11 +9,13 @@ import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.PositionList;
 
 /**
- * Soon to be deprecated motion controller for the iRobot Create platform.
+ * Deprecated motion controller for the iRobot Create platform. Replaced by MotionAutomaton
  * @author Adam Zimmerman
  * @version 1.1
  *
+ * @see MotionAutomaton
  */
+@Deprecated
 public class BluetoothRobotMotion extends RobotMotion {
 	private static final String TAG = "RobotMotion";
 	private static final String ERR = "Critical Error";
@@ -445,12 +447,14 @@ public class BluetoothRobotMotion extends RobotMotion {
 		stop();
 	}
 	
-	public void stop() {
+	@Override
+	public void motion_stop() {
 		handler.removeCallbacksAndMessages(null);
 		bti.send(robot_stop());
 	}	
 	
-	public void resume() {
+	@Override
+	public void motion_resume() {
 		running = true;
 	}
 	
@@ -472,5 +476,15 @@ public class BluetoothRobotMotion extends RobotMotion {
 		double rad = -(Math.sqrt(Math.pow(x1-x0,2) + Math.pow(y1-y0,2))/(2*Math.sin(Math.toRadians(alpha-theta))));
 
 		return (int) rad;
+	}
+
+	@Override
+	public void goTo(ItemPosition dest, MotionParameters param) {
+		throw new RuntimeException("Custom motion parameters are not implemented for deprecated BluetoothRobotMotion class!");
+	}
+
+	@Override
+	public void turnTo(ItemPosition dest, MotionParameters param) {
+		throw new RuntimeException("Custom motion parameters are not implemented for deprecated BluetoothRobotMotion class!");
 	}
 }

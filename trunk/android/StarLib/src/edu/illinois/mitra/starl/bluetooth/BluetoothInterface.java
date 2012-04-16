@@ -90,9 +90,25 @@ public class BluetoothInterface {
 		
 		return buffer;
 	}
+	
+	public synchronized void clearBuffer() {
+		try {
+			bufInStream.skip(bufInStream.available());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public synchronized byte[] sendReceive(byte[] to_send, int expectedBytes) {
+		//clearBuffer();
 		send(to_send);
+		try {
+			Thread.sleep(1);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return readBuffer(expectedBytes);
 	}
 	

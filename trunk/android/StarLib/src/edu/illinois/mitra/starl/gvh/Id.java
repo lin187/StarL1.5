@@ -3,6 +3,14 @@ package edu.illinois.mitra.starl.gvh;
 import java.util.HashMap;
 import java.util.Set;
 
+/**
+ * Maintains identities of participating robots. Instantiated in the GlobalVarHolder
+ * 
+ * @author Adam Zimmerman
+ * @version 1.0
+ * @see GlobalVarHolder
+ *
+ */
 public class Id {
 	// Identification
 	private HashMap<String, String> participants = null;

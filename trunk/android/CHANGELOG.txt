@@ -8,7 +8,9 @@ STARLIB CHANGES:
 - Removed the unnecessary "getWaypoints()" method from Gps
 - Removed interfaces associated with network discovery, which was removed for being glitchy and generally useless.
 - Added javadoc comments to nearly everything of importance
-
+- Added MotionParameters class, implemented by MotionAutomaton. This allows every robot motion to have different user-specified parameters
+- Improved MotionAutomaton considerably. Movement speed now ramps linearly to minimize error.
+- BluetoothRobotMotion has been deprecated and will be removed soon
 
 4/6/12 Changelist:
 

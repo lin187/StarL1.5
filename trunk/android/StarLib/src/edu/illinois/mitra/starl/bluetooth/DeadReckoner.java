@@ -58,7 +58,7 @@ public class DeadReckoner extends Thread implements RobotEventListener {
 		}
 		int angleGuess = Common.angleWrap(Ahat + latestpos.angle);
 		ItemPosition retval = new ItemPosition(latestpos.name, Xhat + latestpos.x, Yhat + latestpos.y, angleGuess);
-		gvh.plat.setDebugInfo(latestpos.toString() + " " + writeidx + "\n" + retval.toString());
+		gvh.plat.setDebugInfo(retval.toString() + "   " + writeidx + "\n" + gvh.gps.getMyPosition().toString());
 		return retval;
 	}
 

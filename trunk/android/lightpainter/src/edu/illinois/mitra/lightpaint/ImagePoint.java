@@ -10,7 +10,7 @@ public class ImagePoint implements Comparable<ImagePoint> {
 
 	public ImagePoint(ItemPosition wpt) throws ImproperWaypointException {
 		pos = wpt;
-		String[] parts = wpt.getName().split(":");
+		String[] parts = wpt.name.split(":");
 		if(parts.length != 6) {
 			throw new ImproperWaypointException();
 		}

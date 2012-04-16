@@ -2,6 +2,13 @@ package edu.illinois.mitra.starl.gvh;
 
 import edu.illinois.mitra.starl.bluetooth.RobotMotion;
 
+/**
+ * Stub class implementing platform specific methods.
+ * 
+ * @author Adam Zimmerman
+ * @version 1.0
+ *
+ */
 public class AndroidPlatform {
 	
 	public RobotMotion moat;

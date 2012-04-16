@@ -4,6 +4,14 @@ import edu.illinois.mitra.starl.interfaces.GpsReceiver;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.PositionList;
 
+/**
+ * Handles receiving GPS broadcasts and updating the robot position and waypoints. Instantiated by the GlobalVarHolder
+ * 
+ * @author Adam Zimmerman
+ * @version 1.0
+ * @see GlobalVarHolder
+ *
+ */
 public class Gps {
 	private static final String TAG = "GPSReceiver";
 	private static final String ERR = "Critical Error";

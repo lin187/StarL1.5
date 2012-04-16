@@ -8,6 +8,13 @@ import edu.illinois.mitra.starl.comms.RobotMessage;
 import edu.illinois.mitra.starl.interfaces.ComThread;
 import edu.illinois.mitra.starl.interfaces.MessageListener;
 
+/**
+ * Handles all inter-agent communication threads. The Comms class is only instantiated by a GlobalVarHolder.
+ * 
+ * @author Adam Zimmerman
+ * @version 1.0
+ * @see GlobalVarHolder
+ */
 public class Comms {
 	private GlobalVarHolder gvh;
 	private CommsHandler comms;
