@@ -1,19 +1,18 @@
 package edu.illinois.mitra.starlSim.simapps;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import edu.illinois.mitra.starl.bluetooth.MotionParameters;
 import edu.illinois.mitra.starl.comms.RobotMessage;
-import edu.illinois.mitra.starl.harness.IdealSimGpsProvider;
+import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
+import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.interfaces.MessageListener;
-import edu.illinois.mitra.starl.interfaces.SimComChannel;
 import edu.illinois.mitra.starl.objects.ItemPosition;
-import edu.illinois.mitra.starlSim.main.SimApp;
 import edu.illinois.mitra.starlSim.main.SimSettings;
 
-public class RaceApp extends SimApp implements MessageListener {
+public class RaceApp extends LogicThread implements MessageListener {
 
 	SortedSet<String> toVisit = new TreeSet<String>();
 	
@@ -22,9 +21,8 @@ public class RaceApp extends SimApp implements MessageListener {
 	
 	private String destname = null;
 	
-	
-	public RaceApp(String name, HashMap<String, String> participants, SimComChannel channel, IdealSimGpsProvider gps, ItemPosition initpos) {
-		super(name, participants, channel, gps, initpos, "C:/");
+	public RaceApp(GlobalVarHolder gvh) {
+		super(gvh);
 		gvh.trace.traceStart(SimSettings.TRACE_CLOCK_DRIFT_MAX, SimSettings.TRACE_CLOCK_SKEW_MAX);
 		
 		// Get the list of positions to travel to
@@ -33,10 +31,13 @@ public class RaceApp extends SimApp implements MessageListener {
 		}
 		
 		gvh.comms.addMsgListener(99, this);
+		MotionParameters param = new MotionParameters();
+		param.COLAVOID_MODE = MotionParameters.USE_COLAVOID;
+		gvh.plat.moat.setParameters(param);
 	}
 
 	@Override
-	public List<String> call() throws Exception {
+	public List<Object> call() throws Exception {
 		while(true) {
 			Thread.sleep(100);
 			switch(stage) {

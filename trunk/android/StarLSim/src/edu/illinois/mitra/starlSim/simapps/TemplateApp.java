@@ -1,29 +1,23 @@
 package edu.illinois.mitra.starlSim.simapps;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
-import edu.illinois.mitra.starl.harness.IdealSimGpsProvider;
-import edu.illinois.mitra.starl.interfaces.SimComChannel;
-import edu.illinois.mitra.starl.objects.ItemPosition;
-import edu.illinois.mitra.starlSim.main.SimApp;
+import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
+import edu.illinois.mitra.starl.interfaces.LogicThread;
 
-public class TemplateApp extends SimApp {
+public class TemplateApp extends LogicThread {
 
 	private enum STAGE { START, DO_STUFF, DONE }
 	private STAGE stage = STAGE.START;
-	
-	public TemplateApp(String name, HashMap<String, String> participants,
-			SimComChannel channel, IdealSimGpsProvider gps,
-			ItemPosition initpos) {
-		super(name, participants, channel, gps, initpos, "C:/traces/");
-		
-		// TODO Auto-generated constructor stub
-	}
 
+	
+	public TemplateApp(GlobalVarHolder gvh) {
+		super(gvh);
+	}
+	
 	@Override
-	public List<String> call() throws Exception {
+	public List<Object> call() throws Exception {
 		while(true) {
 			try {
 				Thread.sleep(30);

@@ -1,21 +1,19 @@
 package edu.illinois.mitra.starlSim.simapps;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
 import edu.illinois.mitra.starl.comms.MessageContents;
 import edu.illinois.mitra.starl.comms.RobotMessage;
 import edu.illinois.mitra.starl.functions.Geocaster;
-import edu.illinois.mitra.starl.harness.IdealSimGpsProvider;
+import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
+import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.interfaces.MessageListener;
-import edu.illinois.mitra.starl.interfaces.SimComChannel;
 import edu.illinois.mitra.starl.objects.ItemPosition;
-import edu.illinois.mitra.starlSim.main.SimApp;
 import edu.illinois.mitra.starlSim.main.SimSettings;
 
-public class GeocastTestApp extends SimApp implements MessageListener {
+public class GeocastTestApp extends LogicThread implements MessageListener {
 	
 	private enum STAGE { START, MOVE, SEND, DONE }
 	private STAGE stage = STAGE.START;
@@ -26,8 +24,8 @@ public class GeocastTestApp extends SimApp implements MessageListener {
 	private int nextpt = -1;
 	private int visited_pts = 0;
 	
-	public GeocastTestApp(String name, HashMap<String, String> participants, SimComChannel channel, IdealSimGpsProvider gps, ItemPosition initpos) {
-		super(name, participants, channel, gps, initpos, "C:\\");
+	public GeocastTestApp(GlobalVarHolder gvh) {
+		super(gvh);
 		gvh.trace.traceStart(SimSettings.TRACE_CLOCK_DRIFT_MAX, SimSettings.TRACE_CLOCK_SKEW_MAX);
 		
 		geo = new Geocaster(gvh);
@@ -39,7 +37,7 @@ public class GeocastTestApp extends SimApp implements MessageListener {
 	}
 
 	@Override
-	public List<String> call() throws Exception {
+	public List<Object> call() throws Exception {
 		while(true) {
 			switch(stage) {
 			case START:

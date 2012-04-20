@@ -1,28 +1,25 @@
 package edu.illinois.mitra.starlSim.simapps;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 import edu.illinois.mitra.starl.functions.BarrierSynchronizer;
 import edu.illinois.mitra.starl.functions.RandomLeaderElection;
-import edu.illinois.mitra.starl.harness.IdealSimGpsProvider;
+import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.LeaderElection;
-import edu.illinois.mitra.starl.interfaces.SimComChannel;
+import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.interfaces.Synchronizer;
-import edu.illinois.mitra.starl.objects.ItemPosition;
-import edu.illinois.mitra.starlSim.main.SimApp;
 import edu.illinois.mitra.starlSim.main.SimSettings;
 
-public class CommsTestApp extends SimApp {
+public class CommsTestApp extends LogicThread {
 	private enum STAGE { START, SYNC, ELECT, DONE }
 	private STAGE stage = STAGE.START;
 	
 	private LeaderElection le;
 	private Synchronizer sn;
 	
-	public CommsTestApp(String name, HashMap<String,String> participants, SimComChannel channel, IdealSimGpsProvider gps, ItemPosition initpos) {
-		super(name, participants, channel, gps, initpos, "C:\\");
+	public CommsTestApp(GlobalVarHolder gvh) {
+		super(gvh);
 		gvh.trace.traceStart(SimSettings.TRACE_CLOCK_DRIFT_MAX, SimSettings.TRACE_CLOCK_SKEW_MAX);
 		
 		le = new RandomLeaderElection(gvh);
@@ -33,7 +30,7 @@ public class CommsTestApp extends SimApp {
 	}
 
 	@Override
-	public List<String> call() throws Exception {
+	public List<Object> call() throws Exception {
 		while(true) {			
 			switch(stage) {
 			case START:

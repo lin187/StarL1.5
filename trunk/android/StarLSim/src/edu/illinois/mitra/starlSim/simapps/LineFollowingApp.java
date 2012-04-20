@@ -1,18 +1,16 @@
 package edu.illinois.mitra.starlSim.simapps;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
 import edu.illinois.mitra.starl.bluetooth.RobotMotion;
-import edu.illinois.mitra.starl.harness.IdealSimGpsProvider;
-import edu.illinois.mitra.starl.interfaces.SimComChannel;
+import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
+import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.objects.ItemPosition;
-import edu.illinois.mitra.starlSim.main.SimApp;
 import edu.illinois.mitra.starlSim.main.SimSettings;
 
-public class LineFollowingApp extends SimApp {
+public class LineFollowingApp extends LogicThread {
 
 	private enum STAGE { START, MOVE, DONE }
 	private STAGE stage = STAGE.START;
@@ -24,14 +22,14 @@ public class LineFollowingApp extends SimApp {
 	
 	private Random rand = new Random();
 	
-	public LineFollowingApp(String name, HashMap<String,String> participants, SimComChannel channel, IdealSimGpsProvider gps, ItemPosition initpos) {
-		super(name, participants, channel, gps, initpos, "C:\\");
+	public LineFollowingApp(GlobalVarHolder gvh) {
+		super(gvh);
 		gvh.trace.traceStart(SimSettings.TRACE_CLOCK_DRIFT_MAX, SimSettings.TRACE_CLOCK_SKEW_MAX);
-		
 		moat = gvh.plat.moat;
 	}
-
-	public List<String> call() throws Exception {
+	
+	@Override
+	public List<Object> call() throws Exception {
 		while(true) {			
 			switch (stage) {
 			case START:

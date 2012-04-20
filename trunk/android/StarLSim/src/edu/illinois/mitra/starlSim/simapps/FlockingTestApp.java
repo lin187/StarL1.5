@@ -1,31 +1,28 @@
 package edu.illinois.mitra.starlSim.simapps;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 import edu.illinois.mitra.starl.bluetooth.RobotMotion;
-import edu.illinois.mitra.starl.harness.IdealSimGpsProvider;
-import edu.illinois.mitra.starl.interfaces.SimComChannel;
+import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
+import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.PositionList;
-import edu.illinois.mitra.starlSim.main.SimApp;
 
-public class FlockingTestApp extends SimApp {
+public class FlockingTestApp extends LogicThread {
 
 	private enum STAGE { START, MOVE, DONE }
 	private STAGE stage = STAGE.START;
 
 	private RobotMotion moat;
-	
-	
+
 	private int n_waypoints;
 	private int cur_waypoint = 0;
 	PositionList pl = new PositionList();
 	String wpn = "wp";
 	
-	public FlockingTestApp(String name, HashMap<String,String> participants, SimComChannel channel, IdealSimGpsProvider gps, ItemPosition initpos) {
-		super(name, participants, channel, gps, initpos, "C:\\");
+	public FlockingTestApp(GlobalVarHolder gvh) {
+		super(gvh);
 		
 		moat = gvh.plat.moat;
 		//n_waypoints = gvh.gps.getWaypointPositions().getNumPositions();
@@ -34,7 +31,8 @@ public class FlockingTestApp extends SimApp {
 		pl.update(new ItemPosition(n, 500, 500, 0));
 	}
 
-	public List<String> call() throws Exception {
+	@Override
+	public List<Object> call() throws Exception {
 		String robotName = gvh.id.getName();
 		Integer robotNum = Integer.parseInt(robotName.substring(3)); // assumes: botYYY
 		

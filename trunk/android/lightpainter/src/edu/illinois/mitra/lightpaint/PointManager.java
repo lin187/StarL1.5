@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import edu.illinois.mitra.lightpaint.main.LogicThread;
+import edu.illinois.mitra.lightpaint.main.AppLogic;
 import edu.illinois.mitra.starl.comms.MessageContents;
 import edu.illinois.mitra.starl.comms.RobotMessage;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
@@ -37,12 +37,14 @@ public class PointManager {
 				if(next.start) startingPoints.add(next);
 				numMutex = Math.max(numMutex, next.mutex+1);
 			} catch (ImproperWaypointException e) {
-				// The waypoint isn't for an image, skip it
+				gvh.log.e(ERR, "Improper waypoint received by PointManager!");
 			}
 		}
+		gvh.log.i(TAG, "Waypoinds parsed");
 	}
 		
 	public void Assign() {
+		gvh.log.i(TAG, "Assigning waypoints.");
 		if(startingPoints.size() != gvh.id.getParticipants().size()) {
 			throw new RuntimeException("Different numbers of participants and starting points!");
 		}
@@ -52,10 +54,11 @@ public class PointManager {
 		for(ImagePoint i : startingPoints) {
 			int closestIdx = closestRobot(robots, i.pos);
 			String current = robots[closestIdx];
-			RobotMessage sendAssignment = new RobotMessage(current, gvh.id.getName(), LogicThread.MSG_INFORMLINE, new MessageContents(i.robot));
+			RobotMessage sendAssignment = new RobotMessage(current, gvh.id.getName(), AppLogic.MSG_INFORMLINE, new MessageContents(i.robot));
 			gvh.comms.addOutgoingMessage(sendAssignment);
 			robots[closestIdx] = "";
 		}
+		gvh.log.i(TAG, "DONE!");
 	}
 	
 	public SortedSet<ImagePoint> getPoints(int robot) {

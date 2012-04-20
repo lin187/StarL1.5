@@ -4,15 +4,18 @@ import edu.illinois.mitra.starlSim.simapps.*;
 
 public final class SimSettings {
 	// General simulation settings
-	public static final int 		N_BOTS 				= 8;
+	public static final int 		N_BOTS 				= 5;
 	public static final String	 	waypoint_file		= "C:/gpstest.wpt";
 	public static final String 		initial_positions 	= "C:/ips.wpt";
-	public static final Class<?> 	app 				= RaceApp.class;
+	public static final Class<?> 	app 				= GeocastTestApp.class;
+	
+	public static final boolean		IDEAL_MOTION		= false;	// True enables ideal movement, false uses the simulated motion automaton
 	
 	// Distance predicate (truth data) settings
 	public static final int			PREDICATE_RADIUS	= 200;		// Zero disables distance predicate checking and truth output
 	public static final int			N_PREDICATE_ROBOTS	= 2;		// (UNIMPLEMENTED) The number of robots that must be within radius to trigger a violation
 	public static final String		PREDICATE_OUT_DIR	= "C:/";
+	public static final String		TRACE_OUT_DIR		= "C:/";
 	
 	// Clock skew settings
 	public static final int			TRACE_CLOCK_DRIFT_MAX	= 100; // Milliseconds
@@ -28,6 +31,6 @@ public final class SimSettings {
 	
 	// Position calculation period and noise options
 	public static final long 		GPS_PERIOD 				= 75;	// Milliseconds
-	public static final int 		GPS_ANGLE_NOISE 		= 5;	// Degrees
-	public static final int 		GPS_POSITION_NOISE 		= 5;	// Millimeters (distance units)
+	public static final double 		GPS_ANGLE_NOISE 		= 3;	// Degrees
+	public static final double 		GPS_POSITION_NOISE 		= 1;	// Millimeters (distance units)
 }

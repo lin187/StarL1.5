@@ -170,12 +170,12 @@ MouseListener, MouseMotionListener
 	/*
 	 * Set the default position for this panel and move to it
 	 */
-	public void setDefaultPosition(double x, double y)
+	public void setDefaultPosition(double x, double y, double z)
 	{
 		moveX = defaultMoveX = -x;
 		moveY = defaultMoveY = -y;
 		
-		zoomFactor = curZoomFactor = 0;
+		zoomFactor = curZoomFactor = z;
 	}
 	
 	/*

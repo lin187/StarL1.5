@@ -1,6 +1,5 @@
 package edu.illinois.mitra.starlSim.main;
 import java.awt.Color;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -16,6 +15,9 @@ import javax.swing.JFrame;
 
 import edu.illinois.mitra.starl.harness.AsyncSimComChannel;
 import edu.illinois.mitra.starl.harness.IdealSimGpsProvider;
+import edu.illinois.mitra.starl.harness.RealisticSimGpsProvider;
+import edu.illinois.mitra.starl.harness.SimGpsProvider;
+import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.interfaces.SimComChannel;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.PositionList;
@@ -26,16 +28,24 @@ public class Simulation {
 	private Collection<SimApp> bots = new HashSet<SimApp>();
 	private HashMap<String,String> participants = new HashMap<String, String>();
 	private SimComChannel channel = new AsyncSimComChannel(SimSettings.MSG_MEAN_DELAY,SimSettings.MSG_STDDEV_DELAY,SimSettings.MSG_LOSSES_PER_HUNDRED);
-	private IdealSimGpsProvider gps = new IdealSimGpsProvider(SimSettings.GPS_PERIOD, SimSettings.GPS_ANGLE_NOISE, SimSettings.GPS_POSITION_NOISE);
+	private SimGpsProvider gps;
+
 	private ExecutorService executor;
 
 	private DistancePredicate distpred;
 
 	public Simulation(int n_bots, String wptfile, String initposfile, Class<?> appToRun) {
 		// Ensure that the class to instantiate is an instance of SimApp
-		if(!SimApp.class.isAssignableFrom(appToRun)) throw new RuntimeException("The requested application does not extend SimApp!");
+		if(!LogicThread.class.isAssignableFrom(appToRun)) throw new RuntimeException("The requested application, " + appToRun.getSimpleName() + ", does not extend SimApp!");
 
 		executor = Executors.newFixedThreadPool(n_bots);
+		
+		// Create the sim gps
+		if(SimSettings.IDEAL_MOTION) {
+			gps = new IdealSimGpsProvider(SimSettings.GPS_PERIOD, SimSettings.GPS_ANGLE_NOISE, SimSettings.GPS_POSITION_NOISE);
+		} else {
+			gps = new RealisticSimGpsProvider(SimSettings.GPS_PERIOD, SimSettings.GPS_ANGLE_NOISE, SimSettings.GPS_POSITION_NOISE);
+		}
 		
 		// Load waypoints
 		if(wptfile != null) gps.setWaypoints(WptLoader.loadWaypoints(wptfile));
@@ -52,9 +62,7 @@ public class Simulation {
 		for(int i = 0; i < n_bots; i++) {
 			participants.put("bot"+i, Integer.toString(i));
 		}
-		for(int i = 0; i < n_bots; i++) {
-			SimApp n = null;
-			
+		for(int i = 0; i < n_bots; i++) {			
 			ItemPosition nextInitPos = new ItemPosition("bot"+i,0,0,0);
 			if(initpos != null) {
 				ItemPosition tmp = initpos.get(initposIdx); 
@@ -62,29 +70,7 @@ public class Simulation {
 				initposIdx ++;
 				initposIdx %= initpos.size();
 			}
-			
-			try {
-				// Generically instantiate an instance of the requested SimApp
-				n = (SimApp) appToRun.getConstructor(String.class, HashMap.class, SimComChannel.class, IdealSimGpsProvider.class, ItemPosition.class)
-						.newInstance("bot"+i,participants,channel, gps, nextInitPos);
-			} catch (InstantiationException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (IllegalArgumentException e) {
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				e.printStackTrace();
-			} catch (NoSuchMethodException e) {
-				e.printStackTrace();
-			} catch (SecurityException e) {
-				e.printStackTrace();
-			}
-			try {
-				bots.add(n);
-			} catch(NullPointerException e) {
-				System.out.println("Failed to instantiate a new " + appToRun.getSimpleName());
-			}
+			bots.add(new SimApp("bot"+i,participants,channel, gps, nextInitPos, SimSettings.TRACE_OUT_DIR, appToRun));
 		}
 		
 		// Initialize viewer
@@ -100,7 +86,9 @@ public class Simulation {
 				ArrayList<RobotData> rd = new ArrayList<RobotData>();
 				// Add robots
 				for(ItemPosition ip : pos) {
-					rd.add(new RobotData(ip.name, ip.x, ip.y, ip.angle));
+					RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.angle);
+					nextBot.radius = 170;
+					rd.add(nextBot);
 				}
 				// Add waypoints
 				for(ItemPosition ip : gps.getWaypointPositions().getList()) {
@@ -126,7 +114,7 @@ public class Simulation {
 		System.out.println("Starting with " + participants.size() + " robots");
 		
 		// Invoke all simulated robots
-		List<Future<List<String>>> results = null;
+		List<Future<List<Object>>> results = null;
 		try {
 			results = executor.invokeAll(bots);
 		} catch (InterruptedException e) {
@@ -134,10 +122,10 @@ public class Simulation {
 		}
 		
 		// Wait until all result values are available
-		for(Future<List<String>> f : results) {
+		for(Future<List<Object>> f : results) {
 			while(!f.isDone()) {}
 			try {
-				List<String> res = f.get();
+				List<Object> res = f.get();
 				if(res != null && !res.isEmpty()) System.out.println(res);
 			} catch (Exception e) {
 				e.printStackTrace();

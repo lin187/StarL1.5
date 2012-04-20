@@ -25,6 +25,7 @@ public class DrawFrame extends JFrame
 		setLocation(50, 50);
 		
 		dp = new DrawPanel();
+		dp.setDefaultPosition(-250, -250, 22);
 		getContentPane().add(dp);
 	}
 	

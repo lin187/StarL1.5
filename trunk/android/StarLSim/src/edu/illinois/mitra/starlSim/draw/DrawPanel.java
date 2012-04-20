@@ -46,13 +46,13 @@ public class DrawPanel extends ZoomablePanel
 		if (rd.radius != 0)
 			radius = rd.radius;
 		
-		g.drawOval(rd.x - radius / 2, rd.y - radius / 2, radius, radius);
+		g.drawOval(rd.x - radius, rd.y - radius, radius*2, radius*2);
 		
 		// draw angle
 		double radians = 2 * Math.PI * rd.degrees / 360.0;
 		
 		Point2D.Double from = new Point2D.Double(rd.x, rd.y);
-		Point2D.Double to = Geometry.projectPoint(from, 50, radians);
+		Point2D.Double to = Geometry.projectPoint(from, radius, radians);
 		
 		Line2D.Double l = new Line2D.Double(from, to);
 		
@@ -60,8 +60,8 @@ public class DrawPanel extends ZoomablePanel
 		
 		
 		// write name to the right of the robot
-		g.setFont(new Font("Tahoma", Font.PLAIN, 35) );
-		g.drawString(rd.name, rd.x + radius + 5, rd.y  + 15);
+		g.setFont(new Font("Tahoma", Font.PLAIN, 55) );
+		g.drawString(rd.name, rd.x - 55, rd.y + radius + 50);
 	}
 
 	public void updateData(ArrayList <RobotData> data)
