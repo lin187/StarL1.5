@@ -60,6 +60,8 @@ public class RobotsActivity extends Activity implements MessageListener {
 	public ExecutorService executor = Executors.newFixedThreadPool(1);
 	public Future<LinkedList<Object>> results;
 	
+	public AppLogic runThread;
+	
 	private MainHandler main_handler;
     
     @Override
@@ -90,6 +92,8 @@ public class RobotsActivity extends Activity implements MessageListener {
         
         // Connect
         connect();
+        
+        runThread = new AppLogic(gvh);
     }
     
     public void connect() {
@@ -129,7 +133,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 				
 	    		RobotMessage informLaunch = new RobotMessage("ALL", gvh.id.getName(), Common.MSG_ACTIVITYLAUNCH, new MessageContents(Common.intsToStrings(numWaypoints, runNum)));
 	    		gvh.comms.addOutgoingMessage(informLaunch);
-	    		results = executor.submit(new AppLogic(gvh));
+	    		results = executor.submit(runThread);
 			} else {
     			gvh.plat.sendMainToast("Should have " + numWaypoints + " waypoints, but I have " + gvh.gps.getWaypointPositions().getNumPositions());
     		}

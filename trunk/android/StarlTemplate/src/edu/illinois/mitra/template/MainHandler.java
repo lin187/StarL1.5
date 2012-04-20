@@ -67,6 +67,7 @@ public class MainHandler extends Handler {
     	    	app.results.cancel(true);
     			app.executor.shutdownNow();
     			app.executor = Executors.newSingleThreadExecutor();
+    			app.runThread = new AppLogic(gvh);
     		}
 			gvh.plat.moat.motion_stop();
 			app.launched = false;
