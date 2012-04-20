@@ -1,6 +1,6 @@
 ----- StarLib Changelog -----
 
-4/20/12 Changelist:
+4/20/12 Changelist: 
 
 SIMULATOR CHANGES:
 - Changed robot radius to actual iRobot Create size
