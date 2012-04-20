@@ -1,7 +1,7 @@
 package edu.illinois.mitra.lightpaint.main;
 
 import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -27,7 +27,6 @@ import edu.illinois.mitra.starl.gvh.RealGlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.MessageListener;
 import edu.illinois.mitra.starl.interfaces.RobotEventListener;
 import edu.illinois.mitra.starl.objects.Common;
-import edu.illinois.mitra.starl.objects.ItemPosition;
 
 public class RobotsActivity extends Activity implements MessageListener, RobotEventListener {
 	private static final String TAG = "RobotsActivity";
@@ -60,8 +59,8 @@ public class RobotsActivity extends Activity implements MessageListener, RobotEv
 	private int selected_robot = 0;
 	
 	// Logic thread executor
-	private ExecutorService executor = Executors.newFixedThreadPool(1);
-	private Future<LinkedList<Object>> results;
+	public ExecutorService executor = Executors.newFixedThreadPool(1);
+	public Future<List<Object>> results;
 	
 	// TODO: Lightpainting specific
 	private CheckBox cbPaintMode;
@@ -72,7 +71,7 @@ public class RobotsActivity extends Activity implements MessageListener, RobotEv
 	public	View vi;
 	public  static final int MESSAGE_SCREEN = 50;
     public  static final int MESSAGE_SCREEN_COLOR = 51;
-    private LogicThread runThread;
+    public AppLogic runThread;
 	// TODO: END
 	
     private MainHandler main_handler;
@@ -90,7 +89,7 @@ public class RobotsActivity extends Activity implements MessageListener, RobotEv
         // Set up the GUI
         setupGUI();
         
-        main_handler = new MainHandler(this, pbBluetooth, pbBattery, cbGPS, cbBluetooth, cbRunning, txtDebug, executor);
+        main_handler = new MainHandler(this, pbBluetooth, pbBattery, cbGPS, cbBluetooth, cbRunning, txtDebug);
         
         // Create the global variable holder
         HashMap<String,String> hm_participants = new HashMap<String,String>();
@@ -105,6 +104,8 @@ public class RobotsActivity extends Activity implements MessageListener, RobotEv
         
         // Set up brightness attribute 
         vi = new View(this);
+        
+        runThread = new AppLogic(gvh);
     }
     
     public void launch(int numWaypoints, int runNum) {  
@@ -120,7 +121,6 @@ public class RobotsActivity extends Activity implements MessageListener, RobotEv
 				
 	    		RobotMessage informLaunch = new RobotMessage("ALL", gvh.id.getName(), Common.MSG_ACTIVITYLAUNCH, new MessageContents(Common.intsToStrings(numWaypoints, runNum)));
 	    		gvh.comms.addOutgoingMessage(informLaunch);
-	    		runThread = new LogicThread(gvh);
 	    		results = executor.submit(runThread);
 			} else {
     			gvh.plat.sendMainToast("Should have " + numWaypoints + " waypoints, but I have " + gvh.gps.getWaypointPositions().getNumPositions());
@@ -156,7 +156,7 @@ public class RobotsActivity extends Activity implements MessageListener, RobotEv
 		gvh.plat.moat.cancel();
 	}
 
-	private void setupGUI() {	
+	public void setupGUI() {	
 		lp = getWindow().getAttributes();
 		
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -195,7 +195,7 @@ public class RobotsActivity extends Activity implements MessageListener, RobotEv
 		});
 		
 		cbPaintMode = (CheckBox) findViewById(R.id.cbDebugMode);
-		cbPaintMode.setChecked(prefs.getBoolean("PAINT_MODE", false));		
+		cbPaintMode.setChecked(prefs.getBoolean(PREF_SELECTED_PAINTMODE, false));		
 		DISPLAY_MODE = cbPaintMode.isChecked();
 		
 		cbPaintMode.setOnClickListener(new OnClickListener() {

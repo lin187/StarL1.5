@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.util.Log;
-import edu.illinois.mitra.lightpaint.main.LogicThread;
+import edu.illinois.mitra.lightpaint.main.AppLogic;
 import edu.illinois.mitra.starl.comms.MessageContents;
 import edu.illinois.mitra.starl.comms.RobotMessage;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
@@ -42,7 +42,7 @@ public class BotProgressTracker implements MessageListener, Cancellable {
 		}
 		
 		Log.i(TAG, "Starting progress tracker!");
-		gvh.comms.addMsgListener(LogicThread.MSG_LINEPROGRESS, this);
+		gvh.comms.addMsgListener(AppLogic.MSG_LINEPROGRESS, this);
 	}
 	
 	// Returns a string for the debug window indicating who has expired
@@ -86,18 +86,18 @@ public class BotProgressTracker implements MessageListener, Cancellable {
 	}
 	
 	public void updateMyProgress(int line, int seg) {
-		RobotMessage update = new RobotMessage("ALL", gvh.id.getName(), LogicThread.MSG_LINEPROGRESS, new MessageContents(Common.intsToStrings(line,seg)));
+		RobotMessage update = new RobotMessage("ALL", gvh.id.getName(), AppLogic.MSG_LINEPROGRESS, new MessageContents(Common.intsToStrings(line,seg)));
 		gvh.comms.addOutgoingMessage(update);
 	}
 	
 	public void sendDone() {
-		RobotMessage update = new RobotMessage("ALL", gvh.id.getName(), LogicThread.MSG_LINEPROGRESS, new MessageContents("DONE"));
+		RobotMessage update = new RobotMessage("ALL", gvh.id.getName(), AppLogic.MSG_LINEPROGRESS, new MessageContents("DONE"));
 		gvh.comms.addOutgoingMessage(update);
 	}
 	
 	public void cancel() {
 		Log.d(TAG, "CANCELLING PROGRESS TRACKER");
-		gvh.comms.removeMsgListener(LogicThread.MSG_LINEPROGRESS);
+		gvh.comms.removeMsgListener(AppLogic.MSG_LINEPROGRESS);
 	}
 
 	public void updateMyProgress(int[] curPos) {
