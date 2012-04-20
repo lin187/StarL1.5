@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.SortedSet;
-import java.util.concurrent.Callable;
 
 import android.util.Log;
 import edu.illinois.mitra.lightpaint.BotProgressTracker;
@@ -20,18 +19,19 @@ import edu.illinois.mitra.starl.functions.SingleHopMutualExclusion;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.Cancellable;
 import edu.illinois.mitra.starl.interfaces.LeaderElection;
+import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.interfaces.MessageListener;
 import edu.illinois.mitra.starl.interfaces.MutualExclusion;
 import edu.illinois.mitra.starl.interfaces.Synchronizer;
+import edu.illinois.mitra.starl.objects.ItemPosition;
 
-public class LogicThread implements Callable<LinkedList<Object>>, MessageListener {
+public class AppLogic extends LogicThread implements MessageListener {
 	private static final String TAG = "Logic";
 	private static final String ERR = "Critical Error";
 	
 	private Collection<Cancellable> created;
 	
 	private boolean running = true;
-	private GlobalVarHolder gvh = null;
 	private RobotMotion motion = null;
 	private Synchronizer sync = null;
 	private MutualExclusion mutex = null;
@@ -69,7 +69,8 @@ public class LogicThread implements Callable<LinkedList<Object>>, MessageListene
 	// Motion parameters
 	private MotionParameters param = new MotionParameters();
 	
-	public LogicThread(GlobalVarHolder gvh) {
+	public AppLogic(GlobalVarHolder gvh) {
+		super(gvh);
 		created = new HashSet<Cancellable>();
 		
 		this.gvh = gvh;
@@ -81,7 +82,7 @@ public class LogicThread implements Callable<LinkedList<Object>>, MessageListene
 		le = new RandomLeaderElection(gvh);
 		
 		gvh.comms.addMsgListener(MSG_INFORMLINE, this);
-		Log.i(TAG, "I AM " + name);
+		gvh.log.i(TAG, "I AM " + name);
 		
 		created.add(sync);
 		created.add(le);
@@ -89,11 +90,12 @@ public class LogicThread implements Callable<LinkedList<Object>>, MessageListene
 		// Maximum angle at which robots can curve to their destination.
 		// This prevents "soft" corners and forces robots to turn in place at sharper angles		
 		param.ARCANGLE_MAX = 25;
-		param.ENABLE_COLAVOID = false;
+		param.COLAVOID_MODE = MotionParameters.STOP_ON_COLLISION;
 	}
 	
+	@Override
 	public void cancel() {
-		Log.d(TAG, "CANCELLING LOGIC THREAD");
+		gvh.log.d(TAG, "CANCELLING LOGIC THREAD");
 		gvh.comms.removeMsgListener(MSG_INFORMLINE);
 		running = false;
 		
@@ -107,7 +109,7 @@ public class LogicThread implements Callable<LinkedList<Object>>, MessageListene
 	}
 
 	public void messageReceied(RobotMessage m) {
-		Log.i(TAG, "Received assignment message " + m.getContents(0));
+		gvh.log.i(TAG, "Received assignment message " + m.getContents(0));
 		assignment = Integer.parseInt(m.getContents(0));
 	}	
 	
@@ -138,7 +140,7 @@ public class LogicThread implements Callable<LinkedList<Object>>, MessageListene
 				
 				sync.barrier_sync(SYNC_BEGIN);
 				stage = STAGE.LEADERELECT_BARRIER;
-				Log.i(TAG, "Leaderelect barrier...");
+				gvh.log.i(TAG, "Leaderelect barrier...");
 				break;
 				
 			case LEADERELECT_BARRIER:
@@ -151,19 +153,21 @@ public class LogicThread implements Callable<LinkedList<Object>>, MessageListene
 			case LEADERELECT:
 				leader = le.elect();
 				iamleader = (leader.equals(name));
+				gvh.log.e(TAG, "Leader is " + leader + ". Is it me? " + iamleader);
 				gvh.plat.sendMainToast(leader);
-				Log.d(TAG, "Leader elected!");
+				gvh.log.d(TAG, "Leader elected!");
 				stage = STAGE.DIVIDE_LINES;
 				break;
 			
 			case DIVIDE_LINES:
 				points.parseWaypoints();
-				Log.d(TAG, "Waypoints processed");
+				gvh.log.d(TAG, "Waypoints processed");
 				
 				// Leader distributes line segments
 				if(iamleader) {
+					gvh.log.d(TAG, "I'm the leader! Sending assignments...");
 					points.Assign();
-					Log.d(TAG, "Waypoints divided");
+					gvh.log.d(TAG, "Waypoints divided");
 				}
 				
 				stage = STAGE.GET_LINE_ASSIGNMENT;
@@ -171,10 +175,10 @@ public class LogicThread implements Callable<LinkedList<Object>>, MessageListene
 				
 			case GET_LINE_ASSIGNMENT:				
 				// Receive line assignments
-				Log.d(TAG, "Waiting to receive assignment...");
+				gvh.log.d(TAG, "Waiting to receive assignment...");
 				while(assignment == -1) {}
 
-				Log.d(TAG, "Assigned as robot " + assignment);			
+				gvh.log.d(TAG, "Assigned as robot " + assignment);			
 				
 				// Start the mutual exclusion thread
 				mutex = new SingleHopMutualExclusion(points.getNumMutex(),gvh,leader);
@@ -194,14 +198,18 @@ public class LogicThread implements Callable<LinkedList<Object>>, MessageListene
 				dest = start;
 				
 				motion.goTo(dest.getPos());
-				Log.d(TAG, "Going to start...");
+				gvh.log.d(TAG, "Going to start...");
 				motionHold();
 				
-//				Log.d(TAG, "Turning to face next point...");
-//				nextdest = pointIter.next();
-//				motion.turn_to(nextdest.getPos());
-//				motionHold();
+				gvh.log.d(TAG, "Turning to face next point...");
+				ImagePoint nextdest = pointIter.next();
 				
+				// Reset the iterator
+				pointIter = myPoints.iterator();pointIter.next();
+				
+				motion.turnTo(nextdest.getPos());
+				motionHold();
+			
 				sync.barrier_sync(SYNC_START_DRAWING);
 				stage = STAGE.CALC_NEXT_POINT_BARRIER;
 				break;
@@ -260,7 +268,7 @@ public class LogicThread implements Callable<LinkedList<Object>>, MessageListene
 				
 			case GO_NEXT_POINT:
 				gvh.plat.setDebugInfo("");
-				Log.d(TAG, "Next point: " + dest.getPoint());
+				gvh.log.d(TAG, "Next point: " + dest.getPoint());
 				
 				motion.goTo(dest.getPos(), param);
 				updateScreen();
@@ -279,12 +287,14 @@ public class LogicThread implements Callable<LinkedList<Object>>, MessageListene
 				return null;
 				
 			default:
-				Log.e(ERR, "LogicThread somehow ended up in an uncovered stage: " + stage);
+				gvh.log.e(ERR, "LogicThread somehow ended up in an uncovered stage: " + stage);
 				break;
 			}	
 		}
 		return null;
 	}
+	
+	
 	
 	// Set the screen color and brightness for the current line
 	private void updateScreen() {

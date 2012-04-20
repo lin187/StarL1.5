@@ -1,0 +1,59 @@
+package edu.illinois.mitra.starl.harness;
+
+import edu.illinois.mitra.starl.bluetooth.MotionAutomaton;
+import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
+import edu.illinois.mitra.starl.objects.Common;
+
+public class RealisticSimMotionAutomaton extends MotionAutomaton {
+	private SimGpsProvider gpsp;
+	private String name;
+	
+	public RealisticSimMotionAutomaton(GlobalVarHolder gvh, SimGpsProvider gpsp) {
+		super(gvh, null);
+		super.R_goal = 75;
+		name = gvh.id.getName();
+		this.gpsp = gpsp;
+	}
+
+	@Override
+	public void motion_stop() {
+		super.running = false;
+		gpsp.setVelocity(name, 0, 0);
+	}
+
+	@Override
+	protected void curve(int velocity, int radius) {
+		if(running) {
+			sendMotionEvent(Common.MOT_ARCING, velocity, radius);
+			// TODO: Determine if angular velocity formula works! 
+			gpsp.setVelocity(name, velocity, (int) Math.round((velocity*360.0)/(2*Math.PI*radius)));
+		}
+	}
+
+	@Override
+	protected void straight(int velocity) {
+		gvh.log.i(TAG, "Straight at velocity " + velocity);
+		if(running) {
+			if(velocity != 0) {
+				sendMotionEvent(Common.MOT_STRAIGHT, velocity);
+			} else {
+				sendMotionEvent(Common.MOT_STOPPED, 0);
+			}
+			gpsp.setVelocity(name, velocity, 0);
+		}
+	}
+
+	@Override
+	protected void turn(int velocity, int angle) {
+		if(running) {
+			sendMotionEvent(Common.MOT_TURNING, velocity, angle);
+			gpsp.setVelocity(name, 0, (int) Math.copySign(velocity, -angle));
+		}
+	}	
+	
+
+	@Override
+	public void cancel() {
+		super.running = false;
+	}
+}

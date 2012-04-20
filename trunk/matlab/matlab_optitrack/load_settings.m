@@ -5,7 +5,7 @@ USE_HISTORY = 1;%Enable/disable history
 
 % Grid size and spacing parameters
 TX_PERIOD = 0.05;	%sec
-X_MAX = 3450;       %mm
+X_MAX = 3100;       %mm
 Y_MAX = 3700;       %mm
 LINE_LEN = 167;     %mm (should be iRobot Create radius)
 

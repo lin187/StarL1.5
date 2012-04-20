@@ -22,18 +22,18 @@ FNAME = varargin{1};
 DIR = 'C:\';
 
 % Waypoint spacing and intersection radius constants
-SPACING = 500;
+SPACING = 400;
 ROBOT_RADIUS = 270;
 
 % Enable/disable image scaling and centering
 CENTER = true;
 SCALE = true;
-SCALE_MAX = 2400;
+SCALE_MAX = 2700;
 CENTER_LOCATION = [1600 1750];
 
 % Snap to grid options
 SNAP_TO_GRID = false;
-GRIDDIM = [3200 3200];
+GRIDDIM = [3000 3200];
 GRIDSIZE = 300;
 
 % Settings
