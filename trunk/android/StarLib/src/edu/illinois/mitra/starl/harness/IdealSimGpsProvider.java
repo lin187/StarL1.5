@@ -2,6 +2,7 @@ package edu.illinois.mitra.starl.harness;
 
 import java.util.HashMap;
 import java.util.Observable;
+import java.util.Observer;
 import java.util.Random;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -9,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.PositionList;
 
-public class IdealSimGpsProvider extends Observable {
+public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 	private static final int VELOCITY = 200;	// Millimeters per second
 	
 	private HashMap<String, SimGpsReceiver> receivers;
@@ -27,10 +28,10 @@ public class IdealSimGpsProvider extends Observable {
 	
 	private ScheduledThreadPoolExecutor exec;
 		
-	public IdealSimGpsProvider(long period, int angleNoise, int posNoise) {
+	public IdealSimGpsProvider(long period, double angleNoise, double posNoise) {
 		this.period = period;
-		this.angleNoise = angleNoise;
-		this.posNoise = posNoise;
+		this.angleNoise = (int) angleNoise;
+		this.posNoise = (int) posNoise;
 		this.rand = new Random();
 		
 		receivers = new HashMap<String, SimGpsReceiver>();
@@ -41,36 +42,43 @@ public class IdealSimGpsProvider extends Observable {
 		waypoint_positions = new PositionList();
 	}
 	
+	@Override
 	public synchronized void registerReceiver(String name, SimGpsReceiver simGpsReceiver) {
 		receivers.put(name, simGpsReceiver);
 	}
 	
+	@Override
 	public synchronized void addRobot(ItemPosition bot) {
 		robots.put(bot.name, new TrackedRobot(bot));
 		robot_positions.update(bot);
 	}
-	
+
+	@Override
 	public synchronized void setDestination(String name, ItemPosition dest) {
 		robots.get(name).setDest(dest);
 	}
-	
+
+	@Override
 	public synchronized void halt(String name) {
 		robots.get(name).setDest(null);
 	}
 	
+	@Override
 	public PositionList getRobotPositions() {
 		return robot_positions;
 	}
 
-
+	@Override
 	public void setWaypoints(PositionList loadedWaypoints) {
 		if(loadedWaypoints != null) waypoint_positions = loadedWaypoints;
 	}
-	
+
+	@Override
 	public PositionList getWaypointPositions() {
 		return waypoint_positions;
 	}
-	
+
+	@Override
 	public void start() {
 		// Create a periodic runnable which repeats every "period" ms to report positions
 		exec.scheduleWithFixedDelay(new Runnable() {
@@ -170,5 +178,16 @@ public class IdealSimGpsProvider extends Observable {
 		public String getName() {
 			return pos.name;
 		}
+	}
+
+	@Override
+	public void setVelocity(String name, int fwd, int radial) {
+		throw new RuntimeException("IdealSimGpsProvider does not use the setVelocity method, but the setDestination method. " +
+				"Ideal motion does not use the motion automaton something went very wrong here.");
+	}
+
+	@Override
+	public void addObserver(Observer o) {
+		super.addObserver(o);
 	}
 }

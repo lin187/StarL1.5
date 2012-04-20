@@ -1,6 +1,25 @@
 ----- StarLib Changelog -----
 
-4/7/12 Changelist:
+4/20/12 Changelist:
+
+SIMULATOR CHANGES:
+- Changed robot radius to actual iRobot Create size
+- Fixed several bugs in the drawing code related to radius and direction drawing
+- Added a setting to switch between ideal and realistic simulated motion
+- Changed SimApp class to instantiate a LogicThread object. This allows ANY StarL's LogicThread to be run in simulation!
+
+STARLIB CHANGES:
+- Removed BluetoothRobotMotion class
+- Added additional parameters to MotionParameters class
+- Updated CommsHandler to no longer receive or ACK broadcasts from ourself
+- Added non-ideal simulated motion! This uses the RealisticSimMotionAutomaton, an extension of MotionAutomaton
+- Added harnesses and updated interfaces for the realistic simulated motion
+- Fixed a bug in MotionAutomaton that prevented stopped motion controllers from resuming correctly. This also reduces CPU usage!
+- Added different collision avoidance modes to the MotionParameters class. Robots can now use collision avoidance, stop on collsion,
+or run in "bumpercars" mode, where collisions don't matter.
+- Added setParameters method to all RobotMotion classes. This sets the default motion parameters so a MotionParameters object doesn't need to be passed with every motion.
+
+4/16/12 Changelist:
 
 STARLIB CHANGES:
 - Changed ItemPosition values to be public variables and marked getter methods as deprecated. All references to these deprecated methods should be removed!
@@ -10,7 +29,7 @@ STARLIB CHANGES:
 - Added javadoc comments to nearly everything of importance
 - Added MotionParameters class, implemented by MotionAutomaton. This allows every robot motion to have different user-specified parameters
 - Improved MotionAutomaton considerably. Movement speed now ramps linearly to minimize error.
-- BluetoothRobotMotion has been deprecated and will be removed soon
+- BluetoothRobotMotion has been deprecated and will be removed in the next release
 
 4/6/12 Changelist:
 

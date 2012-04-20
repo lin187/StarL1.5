@@ -9,14 +9,14 @@ import edu.illinois.mitra.starl.objects.ItemPosition;
 
 public class IdealSimMotionAutomaton extends RobotMotion implements RobotEventListener {
 	private static final String TAG = "MotionAutomaton";
-	private IdealSimGpsProvider gpspro;
+	private SimGpsProvider gpspro;
 	private String name;
 	
 	private GlobalVarHolder gvh;
 	
 	private ItemPosition dest;
 	
-	public IdealSimMotionAutomaton(GlobalVarHolder gvh, IdealSimGpsProvider gpspro) {
+	public IdealSimMotionAutomaton(GlobalVarHolder gvh, SimGpsProvider gpspro) {
 		this.gvh = gvh;
 		this.gpspro = gpspro;
 		name = gvh.id.getName();
@@ -33,8 +33,7 @@ public class IdealSimMotionAutomaton extends RobotMotion implements RobotEventLi
 	
 	@Override
 	public void goTo(ItemPosition dest, MotionParameters param) {
-		this.dest = new ItemPosition(dest);
-		this.goTo(this.dest);
+		this.goTo(dest);
 	}
 
 	@Override
@@ -66,6 +65,10 @@ public class IdealSimMotionAutomaton extends RobotMotion implements RobotEventLi
 
 	@Override
 	public void motion_resume() {
+		// I don't think anything needs to happen here
+	}
+	@Override
+	public void setParameters(MotionParameters param) {
 		// I don't think anything needs to happen here
 	}
 }

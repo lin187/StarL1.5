@@ -204,15 +204,17 @@ public final class Common {
 
 	
 	/**
-	 * Converts an input value to an angle between -90 and 270 degrees (2 pi radian range) 
+	 * Converts an input value to an angle between -90 and 270 degrees (360 degree range) 
 	 * @param angle the angle to be rectified
 	 * @return a rectified angle value
 	 */
 	public static int angleWrap(int angle) {
 		int retval = angle % 360;
-		if(retval < 0) {
-			retval = 360 + retval;
-		}		
-		return (retval-90);
+		if(retval > 270) {
+			retval = retval - 360;
+		} if(retval < -90) {
+			retval = retval + 360;
+		}
+		return retval;
 	}
 }

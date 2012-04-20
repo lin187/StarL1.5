@@ -54,6 +54,7 @@ public class RandomLeaderElection implements Callable<String>, LeaderElection, M
 	@Override
 	public String call() throws Exception {
 		gvh.trace.traceEvent(TAG, "Beginning Election");
+		gvh.log.d(TAG, "Beginning election...");
 		nodes = gvh.id.getParticipants().size();
 		error = false;
 
@@ -82,9 +83,12 @@ public class RandomLeaderElection implements Callable<String>, LeaderElection, M
 			Sleep(10);
 		}
 		
+		gvh.log.d(TAG, "Received all numbers, determining leader.");
+		
 		// Determine the leader
 		String leader = null;
 		if(!error) {
+			gvh.log.d(TAG, "No errors, determining leader now.");
 			// Retrieve all names that submitted the largest random number, sort them
 			SortedSet<String> leader_candidates = new TreeSet<String>(received.tailMap(Math.max(largest,myNum)).values());
 			
@@ -98,6 +102,7 @@ public class RandomLeaderElection implements Callable<String>, LeaderElection, M
 			gvh.trace.traceEvent(TAG, "Notified all of leader");
 		}
 		if(error) {
+			gvh.log.d(TAG, "An error occurred (waited too long?) must wait to receive announcement broadcasts.");
 			// Receive any MSG_LEADERELECT_ANNOUNCE messages, accept whoever they elect as leader
 			startWaitTime = System.currentTimeMillis();
 			endTime = startWaitTime+MAX_WAIT_TIME;
@@ -105,7 +110,7 @@ public class RandomLeaderElection implements Callable<String>, LeaderElection, M
 			while(announcedLeader == null) {
 				if(System.currentTimeMillis() > startWaitTime + MAX_WAIT_TIME) {
 					gvh.trace.traceEvent(TAG, "Waited timed out, leader election failed");
-					gvh.log.e(ERR, "Leader election failed!");
+					gvh.log.e(TAG, "Leader election failed!");
 					return "ERROR";
 				}
 			}
@@ -122,7 +127,6 @@ public class RandomLeaderElection implements Callable<String>, LeaderElection, M
 		case Common.MSG_RANDLEADERELECT:
 			String from = m.getFrom();
 			if(received.containsValue(from)) {
-				error = true;
 				gvh.log.e(TAG, "Received from " + from + " twice!");
 			} else {
 				int val = Integer.parseInt(m.getContents(0));

@@ -139,7 +139,8 @@ public class CommsHandler extends Thread implements Cancellable {
     private UDPMessage nextPendingACK() {
 		for(int i = 0; i < InMsgList.size(); i++) {
 			UDPMessage current = InMsgList.get(i);
-			if(current.getState() == UDPMessage.MSG_RECEIVED && !current.isACK()) {
+			if(current.getState() == UDPMessage.MSG_RECEIVED && !current.isACK() && !current.getContents().getFrom().equals(name)) {
+				// This message has been received but not ACK'd, it isn't an ACK, and it's not from ourself
 				current.setState(UDPMessage.MSG_ACK_SENT);
 				InMsgList.set(i, current);
 				
@@ -151,9 +152,9 @@ public class CommsHandler extends Thread implements Cancellable {
 	}
 
 	private boolean isPendingACK() {
-		for(int i = 0; i < InMsgList.size(); i++) {
-			// If there's a message in the RECEIVED state that isn't an ACK, it must be ACK'd
-			if(InMsgList.get(i).getState() == UDPMessage.MSG_RECEIVED && !InMsgList.get(i).isACK()) {
+		for(UDPMessage current : InMsgList) {
+			// If there's a message in the RECEIVED state that isn't an ACK and isn't from us, it must be ACK'd
+			if(current.getState() == UDPMessage.MSG_RECEIVED && !current.isACK() && !current.getContents().getFrom().equals(name)) {
 				return true;
 			}
 		}
@@ -188,6 +189,11 @@ public class CommsHandler extends Thread implements Cancellable {
 			if(!current.isDiscovery()) {
 				current.setState(UDPMessage.MSG_RECEIVED);
 				InMsgList.add(current);
+			}
+			
+			// If it's a broadcast from ourself, disregard it
+			if(current.isBroadcast() && current.getContents().getFrom().equals(name)) {
+				return;
 			}
 			
 			gvh.trace.traceEvent(TAG, "Received data message", current);

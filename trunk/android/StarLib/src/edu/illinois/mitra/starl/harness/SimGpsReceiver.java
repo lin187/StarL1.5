@@ -13,9 +13,9 @@ public class SimGpsReceiver implements GpsReceiver {
 	
 	public boolean inMotion = false;
 	
-	private IdealSimGpsProvider provider;
+	private SimGpsProvider provider;
 	
-	public SimGpsReceiver(GlobalVarHolder gvh, IdealSimGpsProvider provider, ItemPosition initpos) {
+	public SimGpsReceiver(GlobalVarHolder gvh, SimGpsProvider provider, ItemPosition initpos) {
 		this.gvh = gvh;
 		this.provider = provider;
 		provider.registerReceiver(gvh.id.getName(), this);

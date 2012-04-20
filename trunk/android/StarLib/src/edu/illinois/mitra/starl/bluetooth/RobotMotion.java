@@ -47,4 +47,10 @@ public abstract class RobotMotion extends Thread implements Cancellable {
 	 * Stop the robot and disable motion until motion_resume is called 
 	 */
 	public abstract void motion_stop();
+	
+	/**
+	 * Set the default motion parameters
+	 * @param param the parameters to use by default
+	 */
+	public abstract void setParameters(MotionParameters param);
 }

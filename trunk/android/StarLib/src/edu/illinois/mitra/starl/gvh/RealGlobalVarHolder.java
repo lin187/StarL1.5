@@ -4,11 +4,9 @@ import java.util.HashMap;
 
 import android.os.Handler;
 import edu.illinois.mitra.starl.bluetooth.BluetoothInterface;
-import edu.illinois.mitra.starl.bluetooth.BluetoothRobotMotion;
 import edu.illinois.mitra.starl.bluetooth.MotionAutomaton;
 import edu.illinois.mitra.starl.comms.UdpComThread;
 import edu.illinois.mitra.starl.comms.UdpGpsReceiver;
-import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.PositionList;
 
 /**

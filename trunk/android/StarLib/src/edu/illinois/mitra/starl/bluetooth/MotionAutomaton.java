@@ -14,17 +14,17 @@ import edu.illinois.mitra.starl.objects.PositionList;
  * @see BluetoothRobotMotion
  */
 public class MotionAutomaton extends RobotMotion  {
-	private static final String TAG = "MotionAutomaton";
-	private static final String ERR = "Critical Error";
+	protected static final String TAG = "MotionAutomaton";
+	protected static final String ERR = "Critical Error";
 	
 	// MOTION CONTROL CONSTANTS
-	public static final int R_arc = 700;
-	public static final int R_goal = 100;
-	public static final int R_slowfwd = 700;
-	public static final int A_smallturn = 3;
-	public static final int A_straight = 6;
-	public static final int A_arc = 25;
-	public static final int A_arcexit = 30;
+	public static int R_arc = 700;
+	public static int R_goal = 75; // TODO: WAS 100
+	public static int R_slowfwd = 700;
+	public static int A_smallturn = 3;
+	public static int A_straight = 6;
+	public static int A_arc = 25;
+	public static int A_arcexit = 30;
 	
 	public static final int A_slowturn = 25;
 	
@@ -35,8 +35,8 @@ public class MotionAutomaton extends RobotMotion  {
 	// COLLISION AVOIDANCE CONSTANTS
 	public static final int COLLISION_STRAIGHTTIME = 1250;
 	
-	private GlobalVarHolder gvh;
-	private BluetoothInterface bti;
+	protected GlobalVarHolder gvh;
+	protected BluetoothInterface bti;
 	//private DeadReckoner reckoner;
 	
 	// Motion tracking
@@ -49,7 +49,7 @@ public class MotionAutomaton extends RobotMotion  {
 	private STAGE next = null;
 	private STAGE stage = STAGE.INIT;
 	private STAGE prev = null;
-	private boolean running = false;
+	protected boolean running = false;
 	private enum OPMODE {
 		GO_TO, TURN_TO
 	}
@@ -74,10 +74,7 @@ public class MotionAutomaton extends RobotMotion  {
 	}
 	
 	public void goTo(ItemPosition dest) {
-		this.destination = dest;
-		this.param = defaultParam;
-		this.mode = OPMODE.GO_TO;
-		startMotion();
+		goTo(dest, defaultParam);
 	}
 	
 	public void goTo(ItemPosition dest, MotionParameters param) {
@@ -88,10 +85,7 @@ public class MotionAutomaton extends RobotMotion  {
 	}
 	
 	public void turnTo(ItemPosition dest) {
-		this.destination = dest;
-		this.param = defaultParam;
-		this.mode = OPMODE.TURN_TO;
-		startMotion();
+		turnTo(dest, defaultParam);
 	}
 	
 	public void turnTo(ItemPosition dest, MotionParameters param) {
@@ -113,13 +107,17 @@ public class MotionAutomaton extends RobotMotion  {
 		super.run();
 		boolean colliding = false;
 		while(true) {
-			while(running) {
+			if(running) {
 				mypos = gvh.gps.getMyPosition();//reckoner.getLatestEstimate();
 				int distance = mypos.distanceTo(destination);
 				int angle = mypos.angleTo(destination);
 				int absangle = Math.abs(angle);
 				
-				colliding = collision();
+				if(param.COLAVOID_MODE == MotionParameters.BUMPERCARS) {
+					colliding = false;
+				} else {
+					colliding = collision();
+				}
 				
 				if(!colliding && stage != null) {
 					if(stage != prev) gvh.log.e(TAG, "Stage is: " + stage.toString());
@@ -183,7 +181,7 @@ public class MotionAutomaton extends RobotMotion  {
 						break;
 					case GOAL:
 						gvh.log.i(TAG, "At goal!");
-						straight(0);
+						if(param.STOP_AT_DESTINATION) straight(0);
 						running = false;
 						inMotion = false;
 						break;
@@ -197,7 +195,7 @@ public class MotionAutomaton extends RobotMotion  {
 					}
 					next = null;
 					sleep(DELAY_TIME);
-				} else if(param.ENABLE_COLAVOID) {					
+				} else if(colliding && (param.COLAVOID_MODE == MotionParameters.USE_COLAVOID)) {					
 					// Collision imminent! Stop the robot
 					if(stage != null) {
 						gvh.log.d(TAG, "Imminent collision detected!");
@@ -244,8 +242,6 @@ public class MotionAutomaton extends RobotMotion  {
 						}
 						break;
 					}
-					
-					sleep(DELAY_TIME);
 					colprev = colstage;
 					if(colnext != null) {
 						colstage = colnext;
@@ -253,7 +249,7 @@ public class MotionAutomaton extends RobotMotion  {
 					}
 					colnext = null;
 
-				} else if(colliding && !param.ENABLE_COLAVOID) {
+				} else if(colliding && (param.COLAVOID_MODE == MotionParameters.STOP_ON_COLLISION)) {
 					// Stop the robot if collision avoidance is disabled and a collision is immminent
 					gvh.log.d(TAG, "No collision avoidance! Halting.");
 					straight(0);
@@ -307,19 +303,20 @@ public class MotionAutomaton extends RobotMotion  {
 		inMotion = true;
 	}
 	
-	private void sendMotionEvent(int motiontype, int ... argument) {
+	protected void sendMotionEvent(int motiontype, int ... argument) {
 		gvh.trace.traceEvent(TAG, "Motion", Arrays.asList(argument).toString());
 		gvh.sendRobotEvent(Common.EVENT_MOTION, motiontype);
 	}
 	
-	private void curve(int velocity, int radius) {
+	protected void curve(int velocity, int radius) {
 		if(running) {
 			sendMotionEvent(Common.MOT_ARCING, velocity, radius);
 			bti.send(BluetoothCommands.curve(velocity, radius));
 		}
 	}
 	
-	private void straight(int velocity) {
+	protected void straight(int velocity) {
+		gvh.log.i(TAG, "Straigt at velocity " + velocity);
 		if(running) {
 			if(velocity != 0) {
 				sendMotionEvent(Common.MOT_STRAIGHT, velocity);
@@ -330,7 +327,7 @@ public class MotionAutomaton extends RobotMotion  {
 		}
 	}
 	
-	private void turn(int velocity, int angle) {
+	protected void turn(int velocity, int angle) {
 		if(running) {
 			sendMotionEvent(Common.MOT_TURNING, velocity, angle);
 			bti.send(BluetoothCommands.turn(velocity, angle));
@@ -357,7 +354,6 @@ public class MotionAutomaton extends RobotMotion  {
 		return param.LINSPEED_MIN;
 	}	
 	
-	
 	// Detects an imminent collision with another robot
 	private boolean collision() {
 		ItemPosition me = mypos;
@@ -372,5 +368,10 @@ public class MotionAutomaton extends RobotMotion  {
 		}
 		blocker = null;
 		return false;
+	}
+
+	@Override
+	public void setParameters(MotionParameters param) {
+		this.defaultParam = param;
 	}
 }
