@@ -1,6 +1,5 @@
 package edu.illinois.mitra.starlSim.simapps;
 
-import java.util.Arrays;
 import java.util.List;
 
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
@@ -17,22 +16,21 @@ public class TemplateApp extends LogicThread {
 	}
 	
 	@Override
-	public List<Object> call() throws Exception {
+	public List<Object> callStarL() {
+		Thread.currentThread().setName("LT-"+gvh.id.getName());
 		while(true) {
-			try {
-				Thread.sleep(30);
-			} catch (InterruptedException e) {}
-			
 			switch(stage) {
 			case START:
 				stage = STAGE.DO_STUFF;
 				break;
 			case DO_STUFF:
 				// TODO: Do stuff here
+				stage = STAGE.DONE;
 				break;
 			case DONE:
-				return Arrays.asList(results);	
+				return returnResults();
 			}
+			gvh.sleep(200);
 		}
 	}
 }

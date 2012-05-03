@@ -1,9 +1,9 @@
 package edu.illinois.mitra.starl.harness;
 
-import edu.illinois.mitra.starl.bluetooth.MotionParameters;
-import edu.illinois.mitra.starl.bluetooth.RobotMotion;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.RobotEventListener;
+import edu.illinois.mitra.starl.motion.MotionParameters;
+import edu.illinois.mitra.starl.motion.RobotMotion;
 import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 

@@ -1,12 +1,10 @@
 package edu.illinois.mitra.starlSim.simapps;
 
-import java.util.Arrays;
 import java.util.List;
 
-import edu.illinois.mitra.starl.bluetooth.RobotMotion;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
-import edu.illinois.mitra.starlSim.main.SimSettings;
+import edu.illinois.mitra.starl.motion.RobotMotion;
 
 public class GpsTestApp extends LogicThread {
 
@@ -20,21 +18,20 @@ public class GpsTestApp extends LogicThread {
 	
 	public GpsTestApp(GlobalVarHolder gvh) {
 		super(gvh);
-		gvh.trace.traceStart(SimSettings.TRACE_CLOCK_DRIFT_MAX, SimSettings.TRACE_CLOCK_SKEW_MAX);
+		//gvh.trace.traceStart(SimSettings.TRACE_CLOCK_DRIFT_MAX, SimSettings.TRACE_CLOCK_SKEW_MAX);
 		moat = gvh.plat.moat;
 		n_waypoints = gvh.gps.getWaypointPositions().getNumPositions()-1;
+		if(n_waypoints == -1) System.out.println("The GpsTestApp requires N waypoints named DEST0 -> DESTN");
 	}
 
 	@Override
-	public List<Object> call() throws Exception {
+	public List<Object> callStarL() {
 		while(true) {			
 			switch (stage) {
 			case START:
-				Thread.sleep(2000 + (long) (Math.random()*SimSettings.START_DELAY_MAX));
 				gvh.trace.traceSync("LAUNCH");
 				stage = STAGE.MOVE;
 				moat.goTo(gvh.gps.getWaypointPosition("DEST"+cur_waypoint));
-				System.out.println("Starting motion!");
 				break;
 			
 			case MOVE:
@@ -51,12 +48,10 @@ public class GpsTestApp extends LogicThread {
 			case DONE:
 				System.out.println("Done");
 				gvh.trace.traceEnd();
-				return Arrays.asList(results);
+				return returnResults();
 			}
 			
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {}
+			gvh.sleep(100);
 		}
 	}
 }

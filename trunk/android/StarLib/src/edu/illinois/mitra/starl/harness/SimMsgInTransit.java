@@ -7,9 +7,9 @@ public class SimMsgInTransit implements Comparable<SimMsgInTransit> {
 	private long createTime = 0;
 	private long deliverTime = 0;
 	
-	public SimMsgInTransit(String msg, String dest, int delay) {
+	public SimMsgInTransit(String msg, String dest, int delay, long createTime) {
 		this.dest = dest;
-		createTime = System.currentTimeMillis();
+		this.createTime = createTime;
 		deliverTime = createTime + delay;
 		this.msg = msg;
 	}

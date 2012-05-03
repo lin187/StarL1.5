@@ -3,10 +3,10 @@ package edu.illinois.mitra.starl.gvh;
 import java.util.HashMap;
 
 import android.os.Handler;
-import edu.illinois.mitra.starl.bluetooth.BluetoothInterface;
-import edu.illinois.mitra.starl.bluetooth.MotionAutomaton;
-import edu.illinois.mitra.starl.comms.UdpComThread;
+import edu.illinois.mitra.starl.comms.SmartUdpComThread;
 import edu.illinois.mitra.starl.comms.UdpGpsReceiver;
+import edu.illinois.mitra.starl.motion.BluetoothInterface;
+import edu.illinois.mitra.starl.motion.MotionAutomaton;
 import edu.illinois.mitra.starl.objects.PositionList;
 
 /**
@@ -26,11 +26,35 @@ public class RealGlobalVarHolder extends GlobalVarHolder {
 		super(name, participants);
 
 		super.log = new AndroidLogging();
-		super.trace = new Trace(name, "/sdcard/trace/");
+		super.trace = new Trace(name, "/sdcard/trace/", this);
 		super.plat = new RealAndroidPlatform(handler);
-		super.comms = new Comms(this, new UdpComThread(this));
+		super.comms = new Comms(this, new SmartUdpComThread(this));
 		super.gps = new Gps(this, new UdpGpsReceiver(this,"192.168.1.100",4000,new PositionList(),new PositionList()));
 		plat.moat = new MotionAutomaton(this, new BluetoothInterface(this, robotMac));
 		plat.moat.start();
+	}
+
+	@Override
+	public void sleep(long time) {
+		try {
+			Thread.sleep(time);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public long time() {
+		return System.currentTimeMillis();
+	}
+
+	@Override
+	public void threadCreated(Thread thread) {
+		// Nothing happens here
+	}
+
+	@Override
+	public void threadDestroyed(Thread thread) {
+		// Nothing happens here		
 	}
 }

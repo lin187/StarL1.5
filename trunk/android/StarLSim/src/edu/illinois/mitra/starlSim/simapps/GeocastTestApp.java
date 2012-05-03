@@ -1,6 +1,5 @@
 package edu.illinois.mitra.starlSim.simapps;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -37,11 +36,11 @@ public class GeocastTestApp extends LogicThread implements MessageListener {
 	}
 
 	@Override
-	public List<Object> call() throws Exception {
+	public List<Object> callStarL() {
 		while(true) {
 			switch(stage) {
 			case START:
-				Thread.sleep((long) (Math.random()*SimSettings.START_DELAY_MAX));
+				gvh.sleep((long) (Math.random()*SimSettings.START_DELAY_MAX));
 				gvh.trace.traceSync("Launch");
 				stage = STAGE.MOVE;
 				break;
@@ -51,7 +50,7 @@ public class GeocastTestApp extends LogicThread implements MessageListener {
 				nextpt = go_to;
 				gvh.plat.moat.goTo(gvh.gps.getWaypointPosition("DEST" + nextpt));
 				// Move to the next waypoint
-				while(gvh.plat.moat.inMotion) {Thread.sleep(10);}
+				while(gvh.plat.moat.inMotion) {gvh.sleep(10);}
 				stage = STAGE.SEND;
 				visited_pts ++;
 				break;
@@ -73,11 +72,9 @@ public class GeocastTestApp extends LogicThread implements MessageListener {
 				break;
 			case DONE:
 				gvh.trace.traceEnd();
-				return Arrays.asList(results);
+				return returnResults();
 			}
-			try {
-				Thread.sleep(30);
-			} catch (InterruptedException e) {}
+			gvh.sleep(30);
 		}
 	}
 

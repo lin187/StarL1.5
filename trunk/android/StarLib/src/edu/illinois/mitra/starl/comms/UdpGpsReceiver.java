@@ -18,7 +18,7 @@ import edu.illinois.mitra.starl.objects.PositionList;
 /**
  * Hardware specific. Opens a UDP socket for receiving GPS broadcasts. 
  * @author Adam Zimmerman
- *
+ * @version 1.0
  */
 public class UdpGpsReceiver extends Thread implements GpsReceiver {
 	private static final String TAG = "GPSReceiver";
@@ -90,7 +90,7 @@ public class UdpGpsReceiver extends Thread implements GpsReceiver {
 		    			case '@':
 		    				try {
 		    					ItemPosition newpos = new ItemPosition(parts[i]);
-		    					waypointPositions.update(newpos);
+		    					waypointPositions.update(newpos, gvh.time());
 		    					gvh.trace.traceEvent(TAG, "Received Waypoint", newpos);
 		    				} catch(ItemFormattingException e){
 		    					gvh.log.e(TAG, "Invalid item formatting: " + e.getError());
@@ -99,7 +99,7 @@ public class UdpGpsReceiver extends Thread implements GpsReceiver {
 		    			case '#':
 		    				try {
 		    					ItemPosition newpos = new ItemPosition(parts[i]);
-		    					robotPositions.update(newpos);
+		    					robotPositions.update(newpos, gvh.time());
 		    					gvh.sendRobotEvent(Common.EVENT_GPS);
 		    					if(newpos.name.equals(name)) {
 		    						gvh.trace.traceEvent(TAG, "Received Position", newpos);

@@ -150,7 +150,6 @@ public class RobotsActivity extends Activity implements MessageListener, RobotEv
 		launched = false;
 
 		// Shut down persistent threads
-		gvh.log.i(TAG, "Stopping comms");
 		gvh.comms.stopComms();
 		gvh.gps.stopGps();
 		gvh.plat.moat.cancel();
@@ -222,7 +221,7 @@ public class RobotsActivity extends Activity implements MessageListener, RobotEv
     }
 	
 	@Override
-	protected void onPause() {
+	public void onPause() {
 		super.onPause();
 	}
 

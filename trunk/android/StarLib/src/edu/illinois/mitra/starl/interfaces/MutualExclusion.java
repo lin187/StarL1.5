@@ -3,8 +3,6 @@ package edu.illinois.mitra.starl.interfaces;
 import java.util.Set;
 
 public interface MutualExclusion extends Cancellable {
-
-	public abstract void start();
 	
 	public abstract void requestEntry(int id);
 

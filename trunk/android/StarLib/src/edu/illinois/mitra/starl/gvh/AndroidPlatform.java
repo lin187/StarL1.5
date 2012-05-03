@@ -1,6 +1,6 @@
 package edu.illinois.mitra.starl.gvh;
 
-import edu.illinois.mitra.starl.bluetooth.RobotMotion;
+import edu.illinois.mitra.starl.motion.RobotMotion;
 
 /**
  * Stub class implementing platform specific methods.

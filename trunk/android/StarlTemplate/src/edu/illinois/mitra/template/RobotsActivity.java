@@ -1,7 +1,7 @@
 package edu.illinois.mitra.template;
 
 import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -58,7 +58,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 	
 	// Logic thread executor
 	public ExecutorService executor = Executors.newFixedThreadPool(1);
-	public Future<LinkedList<Object>> results;
+	public Future<List<Object>> results;
 	
 	public AppLogic runThread;
 	
@@ -83,11 +83,10 @@ public class RobotsActivity extends Activity implements MessageListener {
         
         // Create the global variable holder
         HashMap<String,String> hm_participants = new HashMap<String,String>();
-        for(int i = 0; i < 1; i++) {
+        for(int i = 0; i < participants.length; i++) {
         	hm_participants.put(participants[i], ips[i]);
         }        
         gvh = new RealGlobalVarHolder(participants[selected_robot], hm_participants, main_handler, mac[selected_robot]);
-        // TODO: Determine if this works
         main_handler.setGvh(gvh);
         
         // Connect
@@ -96,32 +95,6 @@ public class RobotsActivity extends Activity implements MessageListener {
         runThread = new AppLogic(gvh);
     }
     
-    public void connect() {
-		// Update GUI
-        Log.d(TAG, gvh.id.getName());
-        
-        // Begin persistent background threads
-        gvh.comms.startComms();
-        gvh.gps.startGps();
-        
-        // Register this as a listener
-        gvh.comms.addMsgListener(Common.MSG_ACTIVITYLAUNCH, this);
-        gvh.comms.addMsgListener(Common.MSG_ACTIVITYABORT, this);
-    }
-    
-    public void disconnect() {
-    	gvh.log.i(TAG, "Disconnecting and stopping all background threads");
-    	
-		// Shut down the logic thread if it was running
-		if(launched) executor.shutdownNow();
-		launched = false;
-
-		// Shut down persistent threads
-		gvh.comms.stopComms();
-		gvh.gps.stopGps();
-		gvh.plat.moat.cancel();
-	}
-	
     public void launch(int numWaypoints, int runNum) {  
 		if(!launched) {
 			if(gvh.gps.getWaypointPositions().getNumPositions() == numWaypoints) {
@@ -139,8 +112,41 @@ public class RobotsActivity extends Activity implements MessageListener {
     		}
 		} 
 	}
+    
+    public void connect() {
+		// Update GUI
+        gvh.log.d(TAG, gvh.id.getName());
+        
+        // Begin persistent background threads
+        gvh.comms.startComms();
+        gvh.gps.startGps();
+        
+        // Register this as a listener
+        gvh.comms.addMsgListener(Common.MSG_ACTIVITYLAUNCH, this);
+        gvh.comms.addMsgListener(Common.MSG_ACTIVITYABORT, this);
+    }
+    
+    public void disconnect() {
+    	gvh.log.i(TAG, "Disconnecting and stopping all background threads");
+    	
+		// Shut down the logic thread if it was running
+		if(launched) {
+			runThread.cancel();
+			executor.shutdownNow();
+		}
+		launched = false;
+
+		// Shut down persistent threads
+		gvh.comms.stopComms();
+		gvh.gps.stopGps();
+		gvh.plat.moat.cancel();
+	}
 
 	private void setupGUI() {	
+		
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+		final SharedPreferences.Editor spe = prefs.edit();
+		
 		txtRobotName = (TextView) findViewById(R.id.txtRobotName);
 		cbGPS = (CheckBox) findViewById(R.id.cbGPS);
 		cbBluetooth = (CheckBox) findViewById(R.id.cbBluetooth);
@@ -160,8 +166,6 @@ public class RobotsActivity extends Activity implements MessageListener {
 				    public void onClick(DialogInterface dialog, int item) {
 				    	selected_robot = item;
 				    	txtRobotName.setText(participants[selected_robot]);
-						SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-						SharedPreferences.Editor spe = prefs.edit();
 						spe.putInt(PREF_SELECTED_ROBOT, selected_robot);
 						spe.commit();
 						// Restart the application
@@ -179,7 +183,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 	
 	@Override
 	public void onBackPressed() {
-		Log.e(TAG, "Exiting application");
+		gvh.log.e(TAG, "Exiting application");
 		disconnect();
 		finish();
 		return;

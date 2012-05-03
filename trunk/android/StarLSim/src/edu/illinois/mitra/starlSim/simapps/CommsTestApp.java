@@ -1,6 +1,5 @@
 package edu.illinois.mitra.starlSim.simapps;
 
-import java.util.Arrays;
 import java.util.List;
 
 import edu.illinois.mitra.starl.functions.BarrierSynchronizer;
@@ -9,7 +8,6 @@ import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.LeaderElection;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.interfaces.Synchronizer;
-import edu.illinois.mitra.starlSim.main.SimSettings;
 
 public class CommsTestApp extends LogicThread {
 	private enum STAGE { START, SYNC, ELECT, DONE }
@@ -20,7 +18,7 @@ public class CommsTestApp extends LogicThread {
 	
 	public CommsTestApp(GlobalVarHolder gvh) {
 		super(gvh);
-		gvh.trace.traceStart(SimSettings.TRACE_CLOCK_DRIFT_MAX, SimSettings.TRACE_CLOCK_SKEW_MAX);
+		//gvh.trace.traceStart(SimSettings.TRACE_CLOCK_DRIFT_MAX, SimSettings.TRACE_CLOCK_SKEW_MAX);
 		
 		le = new RandomLeaderElection(gvh);
 		sn = new BarrierSynchronizer(gvh);
@@ -30,7 +28,7 @@ public class CommsTestApp extends LogicThread {
 	}
 
 	@Override
-	public List<Object> call() throws Exception {
+	public List<Object> callStarL() {
 		while(true) {			
 			switch(stage) {
 			case START:
@@ -41,22 +39,23 @@ public class CommsTestApp extends LogicThread {
 			case SYNC:
 				if(sn.barrier_proceed("Start")) {
 					stage = STAGE.ELECT;
+					le.elect();
 				}
 				break;
 			case ELECT:
 				// Add the elected leader to the results
 				// these results are printed out by the simulator when the simulation ends
 				// This will let us easily verify that all robots elected the same leader
-				results[1] = le.elect();
-				stage = STAGE.DONE;
+				if(le.getLeader() != null) {
+					results[1] = le.getLeader();
+					stage = STAGE.DONE;
+				}
 				break;
 			case DONE:
 				gvh.trace.traceEnd();
-				return Arrays.asList(results);
+				return returnResults();
 			}
-			try {
-				Thread.sleep(30);
-			} catch (InterruptedException e) {}
+			gvh.sleep(30);
 		}
 	}
 }

@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import edu.illinois.mitra.starl.bluetooth.MotionParameters;
 import edu.illinois.mitra.starl.comms.RobotMessage;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.interfaces.MessageListener;
+import edu.illinois.mitra.starl.motion.MotionParameters;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starlSim.main.SimSettings;
 
@@ -34,12 +34,14 @@ public class RaceApp extends LogicThread implements MessageListener {
 		MotionParameters param = new MotionParameters();
 		param.COLAVOID_MODE = MotionParameters.USE_COLAVOID;
 		gvh.plat.moat.setParameters(param);
+		
+		if(gvh.gps.getWaypointPositions().getNumPositions() == 0) System.out.println("The race application requires waypoints to race to!");
 	}
 
 	@Override
-	public List<Object> call() throws Exception {
+	public List<Object> callStarL() {
 		while(true) {
-			Thread.sleep(100);
+			gvh.sleep(100);
 			switch(stage) {
 			case START:
 				stage = STAGE.GO;
@@ -54,7 +56,7 @@ public class RaceApp extends LogicThread implements MessageListener {
 			case WAIT_TO_ARRIVE:
 				boolean motionSuccess = true;
 				while(gvh.plat.moat.inMotion) { 
-					Thread.sleep(1);
+					gvh.sleep(10);
 					if(!toVisit.contains(destname)) {
 						motionSuccess = false;
 						break;
@@ -66,7 +68,7 @@ public class RaceApp extends LogicThread implements MessageListener {
 					RobotMessage inform = new RobotMessage("ALL", name, 99, destname);
 					gvh.comms.addOutgoingMessage(inform);
 					toVisit.remove(destname);
-					Thread.sleep(800);
+					gvh.sleep(800);
 				}
 				
 				if(toVisit.isEmpty()) { 

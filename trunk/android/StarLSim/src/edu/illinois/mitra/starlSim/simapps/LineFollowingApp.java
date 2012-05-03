@@ -1,12 +1,11 @@
 package edu.illinois.mitra.starlSim.simapps;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import edu.illinois.mitra.starl.bluetooth.RobotMotion;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
+import edu.illinois.mitra.starl.motion.RobotMotion;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starlSim.main.SimSettings;
 
@@ -29,12 +28,12 @@ public class LineFollowingApp extends LogicThread {
 	}
 	
 	@Override
-	public List<Object> call() throws Exception {
+	public List<Object> callStarL() {
 		while(true) {			
 			switch (stage) {
 			case START:
 				gvh.trace.traceSync("LAUNCH");
-				Thread.sleep(rand.nextInt(1500)+1000);
+				gvh.sleep(rand.nextInt(1500)+1000);
 				stage = STAGE.MOVE;
 				moat.goTo(generatePoint());
 				System.out.println("Starting motion!");
@@ -54,12 +53,9 @@ public class LineFollowingApp extends LogicThread {
 			case DONE:
 				System.out.println("Done");
 				gvh.trace.traceEnd();
-				return Arrays.asList(results);
+				return returnResults();
 			}
-			
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {}
+			gvh.sleep(100);
 		}
 	}
 	

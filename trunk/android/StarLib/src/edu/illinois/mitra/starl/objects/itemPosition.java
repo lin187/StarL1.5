@@ -19,7 +19,8 @@ public class ItemPosition implements Comparable<ItemPosition>, Traceable {
 	public int x;
 	public int y;
 	public int angle;
-	
+	public int velocity;
+	public long receivedTime;
 	
 	/**
 	 * Construct an ItemPosition from a name, X, and Y positions, and an angle in degrees.

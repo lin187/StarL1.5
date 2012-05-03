@@ -1,22 +1,21 @@
 package edu.illinois.mitra.starl.interfaces;
 
-import java.util.List;
-import java.util.concurrent.Callable;
-
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 
-public abstract class LogicThread implements Cancellable, Callable<List<Object>> {
+/**
+ * The base class for all StarL application main classes.
+ * @author Adam Zimmerman
+ * @version 1.0
+ */
+public abstract class LogicThread extends StarLCallable implements Cancellable {
 
-	protected GlobalVarHolder gvh;
 	protected String name;
-	protected Object[] results;
 	
 	public LogicThread(GlobalVarHolder gvh) {
-		this.gvh = gvh;
+		super(gvh, "LogicThread");
 		this.name = gvh.id.getName();
-		results = new Object[0];
 	}
-	
+
 	@Override
 	public void cancel() {
 		// TODO Auto-generated method stub

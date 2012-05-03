@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.Traceable;
 
 /**
@@ -14,7 +15,7 @@ import edu.illinois.mitra.starl.interfaces.Traceable;
  * @author Adam Zimmerman
  * @version 1.1
  *
- * @see edu.illinoit.mitra.starl.interfaces.Traceable 
+ * @see Traceable 
  */
 public class TraceWriter {
 	private static final String TAG = "RobotMotion";
@@ -28,12 +29,15 @@ public class TraceWriter {
 	private int drift = 0;
 	private double skew = 1.0;
 	
+	private GlobalVarHolder gvh;
+	
 	/**
 	 * Create a new TraceWriter and open a file for writing
 	 * @param filename the output filename
 	 * @param dir the output directory
 	 */
-	public TraceWriter(String filename, String dir) {
+	public TraceWriter(String filename, String dir, GlobalVarHolder gvh) {
+		this.gvh = gvh;
 		SimpleDateFormat df = new SimpleDateFormat("mm:HH dd/MM/yyyy");
 		String date = df.format(new Date());
 		
@@ -62,8 +66,8 @@ public class TraceWriter {
 	 * @param driftMax the maximum clock drift
 	 * @param skewBound the maximum clock skew
 	 */
-	public TraceWriter(String filename, String dir, int driftMax, float skewBound) {
-		this(filename, dir);
+	public TraceWriter(String filename, String dir, int driftMax, float skewBound, GlobalVarHolder gvh) {
+		this(filename, dir, gvh);
 		drift = (int)(Math.random()*2*driftMax) - driftMax;
 		skew += (Math.random()*2*skewBound) - skewBound; 
 		idealClocks = false;
@@ -193,9 +197,9 @@ public class TraceWriter {
 	 */
 	protected void writeTimeTag() {
 		if(idealClocks) {
-			writeTag("time", Long.toString(System.currentTimeMillis()));
+			writeTag("time", Long.toString(gvh.time()));
 		} else {
-			writeTag("time", Long.toString((long)(drift + skew*System.currentTimeMillis())));
+			writeTag("time", Long.toString((long)(drift + skew*gvh.time())));
 		}
 	}
 	/**

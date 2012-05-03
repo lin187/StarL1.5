@@ -2,11 +2,11 @@ package edu.illinois.mitra.starl.gvh;
 
 import java.util.HashMap;
 
-import edu.illinois.mitra.starl.comms.CommsHandler;
 import edu.illinois.mitra.starl.comms.MessageResult;
 import edu.illinois.mitra.starl.comms.RobotMessage;
-import edu.illinois.mitra.starl.interfaces.ComThread;
+import edu.illinois.mitra.starl.comms.SmartCommsHandler;
 import edu.illinois.mitra.starl.interfaces.MessageListener;
+import edu.illinois.mitra.starl.interfaces.SmartComThread;
 
 /**
  * Handles all inter-agent communication threads. The Comms class is only instantiated by a GlobalVarHolder.
@@ -17,21 +17,20 @@ import edu.illinois.mitra.starl.interfaces.MessageListener;
  */
 public class Comms {
 	private GlobalVarHolder gvh;
-	private CommsHandler comms;
-	private ComThread mConnectedThread;
+	private SmartCommsHandler comms;
+	private SmartComThread mConnectedThread;
 	private HashMap<Integer,MessageListener> listeners = new HashMap<Integer, MessageListener>();
 	private String name;
 	
-	public Comms(GlobalVarHolder gvh, ComThread mConnectedThread) {
+	public Comms(GlobalVarHolder gvh, SmartComThread mConnectedThread) {
 		this.gvh = gvh;
 		this.name = gvh.id.getName();
 		this.mConnectedThread = mConnectedThread;
 	}
 	
 	public void startComms() {	
-		this.comms = new CommsHandler(gvh, mConnectedThread);
+		this.comms = new SmartCommsHandler(gvh, mConnectedThread);
 		comms.start();
-		comms.clear();
 	}
 	
 	public MessageResult addOutgoingMessage(RobotMessage msg) {
@@ -87,12 +86,10 @@ public class Comms {
 		synchronized(listeners) {
 			listeners.clear();
 		}
-		comms.cancel();
 		comms = null;
 	}
 	
 	public void getCommStatistics() {
-		comms.printStatistics();
+		
 	}
-	
 }

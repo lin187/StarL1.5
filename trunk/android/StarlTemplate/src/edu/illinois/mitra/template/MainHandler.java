@@ -1,6 +1,5 @@
 package edu.illinois.mitra.template;
 
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import android.content.Context;
@@ -64,6 +63,7 @@ public class MainHandler extends Handler {
     		break;
     	case Common.MESSAGE_ABORT:
     		if(app.launched) {
+    			app.runThread.cancel();
     	    	app.results.cancel(true);
     			app.executor.shutdownNow();
     			app.executor = Executors.newSingleThreadExecutor();
@@ -72,7 +72,6 @@ public class MainHandler extends Handler {
 			gvh.plat.moat.motion_stop();
 			app.launched = false;
 			cbRunning.setChecked(false);
-			cbGPS.setChecked(false);
     		break;
     	case Common.MESSAGE_DEBUG:
     		txtDebug.setText("DEBUG:\n" + (String) msg.obj);

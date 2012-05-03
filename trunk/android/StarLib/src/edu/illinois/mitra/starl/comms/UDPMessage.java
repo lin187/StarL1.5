@@ -14,7 +14,7 @@ import edu.illinois.mitra.starl.interfaces.Traceable;
 public class UDPMessage implements Traceable {
 	public static final int MSG_QUEUED = 0;
 	public static final int MSG_SENT = 1;
-	public static final int MSG_ACKD = 2;
+	public static final int MSG_ACK = 2;
 	public static final int MSG_RECEIVED = 3;
 	public static final int MSG_ACK_SENT = 4;
 	
@@ -101,6 +101,11 @@ public class UDPMessage implements Traceable {
 		return (contents.getMID() == 0);
 	}
 	
+	public UDPMessage getAck(String from) {
+		RobotMessage ack = new RobotMessage(contents.getFrom(), from, 0, "ACK");
+		return new UDPMessage(seqNum, MSG_ACK, ack);
+	}
+	
 	public boolean isBroadcast() {
 		return contents.getTo().equals("ALL");
 	}
@@ -116,6 +121,7 @@ public class UDPMessage implements Traceable {
 	public void setReceivedTime(long receivedTime) {
 		this.receivedTime = receivedTime;
 	}
+
 	
 
 	@Override
@@ -124,7 +130,12 @@ public class UDPMessage implements Traceable {
 		int result = 1;
 		result = prime * result
 				+ ((contents == null) ? 0 : contents.hashCode());
+		result = prime * result + ((handler == null) ? 0 : handler.hashCode());
+		result = prime * result + (int) (receivedTime ^ (receivedTime >>> 32));
+		result = prime * result + retries;
+		result = prime * result + (int) (sentTime ^ (sentTime >>> 32));
 		result = prime * result + seqNum;
+		result = prime * result + state;
 		return result;
 	}
 
@@ -140,14 +151,22 @@ public class UDPMessage implements Traceable {
 		if (contents == null) {
 			if (other.contents != null)
 				return false;
-		} else if (!contents.getFrom().equals(other.contents.getFrom())) {
+		} else if (!contents.equals(other.contents))
 			return false;
-		} else if (!contents.getContentsList().equals(other.contents.getContentsList())) {
+		if (handler == null) {
+			if (other.handler != null)
+				return false;
+		} else if (!handler.equals(other.handler))
 			return false;
-		} else if (contents.getMID() != other.contents.getMID()) {
+		if (receivedTime != other.receivedTime)
 			return false;
-		}
+		if (retries != other.retries)
+			return false;
+		if (sentTime != other.sentTime)
+			return false;
 		if (seqNum != other.seqNum)
+			return false;
+		if (state != other.state)
 			return false;
 		return true;
 	}

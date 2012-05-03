@@ -19,11 +19,11 @@ function [] = ProcessFile(varargin)
 format longg;
 FNAME = varargin{1};
 %% Options section
-DIR = 'C:\';
+DIR = 'C:\Users\StarL\Dropbox\research\drawings';
 
 % Waypoint spacing and intersection radius constants
-SPACING = 400;
-ROBOT_RADIUS = 270;
+SPACING = 900;
+ROBOT_RADIUS = 325;
 
 % Enable/disable image scaling and centering
 CENTER = true;

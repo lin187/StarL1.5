@@ -13,27 +13,29 @@ public class Trace {
 	private String name;
 	private TraceWriter trace;
 	private String tracedir;
+	private GlobalVarHolder gvh;
 	
-	public Trace(String name, String tracedir) {
+	public Trace(String name, String tracedir, GlobalVarHolder gvh) {
 		this.name = name;
 		this.tracedir = tracedir;
+		this.gvh = gvh;
 	}
 
 	public void traceStart() {
 		if(trace == null) {
-			trace = new TraceWriter(name,tracedir);
+			trace = new TraceWriter(name,tracedir,gvh);
 		}
 	}
 	
 	public void traceStart(int runId) {
 		if(trace == null) {
-			trace = new TraceWriter(runId + "-" + name,tracedir);
+			trace = new TraceWriter(runId + "-" + name,tracedir,gvh);
 		}
 	}
 	
 	public void traceStart(int drift, float skew) {
 		if(trace == null) {
-			trace = new TraceWriter(name,tracedir,drift,skew);
+			trace = new TraceWriter(name,tracedir,drift,skew,gvh);
 		}		
 	}
 	

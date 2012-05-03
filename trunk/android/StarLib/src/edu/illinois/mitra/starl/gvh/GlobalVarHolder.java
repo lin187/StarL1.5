@@ -37,7 +37,7 @@ public abstract class GlobalVarHolder {
 	/**
 	 * Register a RobotEventListener to receive all future system events
 	 * @param el a listener to register
-	 * @see RobotEventListner
+	 * @see RobotEventListener
 	 */
 	public void addEventListener(RobotEventListener el) {
 		eventListeners.add(el);
@@ -45,7 +45,7 @@ public abstract class GlobalVarHolder {
 	/**
 	 * Remove a RobotEventListener from the list of registered event receivers
 	 * @param el a listener to unregister
-	 * @see RobotEventListner
+	 * @see RobotEventListener
 	 */
 	public void removeEventListener(RobotEventListener el) {
 		eventListeners.remove(el);
@@ -67,4 +67,27 @@ public abstract class GlobalVarHolder {
 	public void sendRobotEvent(int type) {
 		sendRobotEvent(type, -1);
 	}
+	
+	/**
+	 * Pauses the calling thread 
+	 * @param time the number of milliseconds to sleep for
+	 */
+	public abstract void sleep(long time);
+	
+	/**
+	 * @return the current system time in milliseconds since the Unix Epoch 
+	 */
+	public abstract long time();
+	
+	/**
+	 * Registers a thread with the simulation framework. In real implementations, this is a stub.
+	 * @param thread the thread to register
+	 */
+	public abstract void threadCreated(Thread thread);
+	
+	/**
+	 * Unregister a thread with the simulation framework. In real implementations, this is a stub.
+	 * @param thread the thread to unregister
+	 */
+	public abstract void threadDestroyed(Thread thread);
 }

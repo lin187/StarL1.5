@@ -27,9 +27,23 @@ public class PositionList {
 	 * @param received The ItemPosition to add to the list. If a position with the same name is present, it
 	 * will be overwritten. 
 	 */
-	public void update(ItemPosition received) {
+	public void update(ItemPosition received, long time) {
+		if(positions.containsKey(received.name)) {
+			try {
+				int velocity = (int) (received.distanceTo(positions.get(received.name))/(time - positions.get(received.name).receivedTime));
+				received.velocity =velocity;
+			} catch (ArithmeticException e) {
+				
+			}
+		}
+		received.receivedTime = time;
 		positions.put(received.name, received);
 	}
+	
+	public void update(ItemPosition received) {
+		update(received, 0);
+	}
+	
 	
 	/**
 	 * @param name The name to match

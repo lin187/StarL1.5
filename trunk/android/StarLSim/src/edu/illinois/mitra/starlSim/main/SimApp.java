@@ -6,9 +6,8 @@ import java.util.concurrent.Callable;
 
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.gvh.SimGlobalVarHolder;
-import edu.illinois.mitra.starl.harness.SimGpsProvider;
+import edu.illinois.mitra.starl.harness.SimulationEngine;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
-import edu.illinois.mitra.starl.interfaces.SimComChannel;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 
 public class SimApp implements Callable<List<Object>> {
@@ -17,9 +16,9 @@ public class SimApp implements Callable<List<Object>> {
 	
 	protected LogicThread logic;
 	
-	public SimApp(String name, HashMap<String,String> participants, SimComChannel channel, SimGpsProvider gps, ItemPosition initpos, String traceDir, Class<?> app) {	
+	public SimApp(String name, HashMap<String,String> participants, SimulationEngine engine, ItemPosition initpos, String traceDir, Class<?> app) {	
 		this.name = name;
-		gvh = new SimGlobalVarHolder(name, participants, channel, gps, initpos, traceDir);
+		gvh = new SimGlobalVarHolder(name, participants, engine, initpos, traceDir);
 		gvh.comms.startComms();
 		gvh.gps.startGps();
 		

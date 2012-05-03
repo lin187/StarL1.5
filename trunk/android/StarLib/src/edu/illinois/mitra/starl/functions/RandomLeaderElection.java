@@ -1,11 +1,11 @@
 package edu.illinois.mitra.starl.functions;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
-import java.util.SortedMap;
+import java.util.Set;
 import java.util.SortedSet;
-import java.util.TreeMap;
 import java.util.TreeSet;
-import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
@@ -16,6 +16,7 @@ import edu.illinois.mitra.starl.comms.RobotMessage;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.LeaderElection;
 import edu.illinois.mitra.starl.interfaces.MessageListener;
+import edu.illinois.mitra.starl.interfaces.StarLCallable;
 import edu.illinois.mitra.starl.objects.Common;
 
 /**
@@ -27,98 +28,101 @@ import edu.illinois.mitra.starl.objects.Common;
  * @version 1.0
  *
  */
-public class RandomLeaderElection implements Callable<String>, LeaderElection, MessageListener {
+public class RandomLeaderElection extends StarLCallable implements LeaderElection, MessageListener {
 
 	private static final String TAG = "RandomLeaderElection";
 	private static final String ERR = "Critical Error";
-	private GlobalVarHolder gvh = null;
 	private int nodes = 0;
-	private boolean error = false;
-	private static int MAX_WAIT_TIME = 4000;
+	private static int MAX_WAIT_TIME = 5000;
 	
-	private SortedMap<Integer,String> received;
+	private SortedSet<Ballot> ballots = new TreeSet<Ballot>();
+	private Set<String> receivedFrom = new HashSet<String>();
+	
 	private String announcedLeader = null;
-	private int largest = -1;
 	
 	private ExecutorService executor = new ScheduledThreadPoolExecutor(1);
 
+	private Future<List<Object>> elected;
+	
 	public RandomLeaderElection(GlobalVarHolder gvh) {
-		this.gvh = gvh;
+		super(gvh,"RandomLeaderElection");
+		results = new String[1];
 		nodes = gvh.id.getParticipants().size();
-		received = new TreeMap<Integer,String>();
-		received.clear();
 		gvh.trace.traceEvent(TAG, "Created");
 		registerListeners();
 	}
 			
 	@Override
-	public String call() throws Exception {
+	public List<Object> callStarL() {
 		gvh.trace.traceEvent(TAG, "Beginning Election");
 		gvh.log.d(TAG, "Beginning election...");
 		nodes = gvh.id.getParticipants().size();
-		error = false;
+		boolean error = false;
 
 		// Generate a random number
 		Random rand = new Random();
 		int myNum = rand.nextInt(1000);
-		received.put(myNum, gvh.id.getName());
+		receivedFrom.add(name);
+		ballots.add(new Ballot(name, myNum));
 
 		gvh.trace.traceVariable(TAG, "myNum", myNum);
 		gvh.log.i(TAG, "My number is " + myNum);
 		
 		// Broadcast
-		RobotMessage bcast = new RobotMessage("ALL", gvh.id.getName(), Common.MSG_RANDLEADERELECT, new MessageContents(myNum));
+		RobotMessage bcast = new RobotMessage("ALL", name, Common.MSG_RANDLEADERELECT, new MessageContents(myNum));
 		gvh.comms.addOutgoingMessage(bcast);
 		
 		// Wait to receive MSG_LEADERELECT messages
-		Long startWaitTime = System.currentTimeMillis();
-		Long endTime = startWaitTime+MAX_WAIT_TIME;
+		Long endTime = gvh.time()+MAX_WAIT_TIME;
 		gvh.trace.traceEvent(TAG, "Waiting for MSG_LEADERELECT messages");
-		while(!error && received.size() < nodes) {
-			if(System.currentTimeMillis() > endTime) {
+		while(!error && receivedFrom.size() < nodes) {
+			if(gvh.time() >= endTime) {
 				gvh.trace.traceEvent(TAG, "Waited timed out");
 				gvh.log.e(TAG, "Waited too long!");
+				
+				Set<String> ptc = new HashSet<String>(gvh.id.getParticipants());
+				ptc.removeAll(receivedFrom);
+				System.out.println(name + " has waited too long to receive election messages. Have only received " + receivedFrom.size() + "\n\t\tWe're missing from " + ptc.toString());
+				if(!receivedFrom.contains(name)) System.out.println("!!!!!" + name + " IS MISSING A VALUE FROM ITSELF??");
 				error = true;
 			}
-			Sleep(10);
+			gvh.sleep(10);
 		}
 		
 		gvh.log.d(TAG, "Received all numbers, determining leader.");
-		
 		// Determine the leader
 		String leader = null;
 		if(!error) {
 			gvh.log.d(TAG, "No errors, determining leader now.");
 			// Retrieve all names that submitted the largest random number, sort them
-			SortedSet<String> leader_candidates = new TreeSet<String>(received.tailMap(Math.max(largest,myNum)).values());
-			
-			// The leader is the first in the sorted list
-			leader = leader_candidates.first();
+			leader = ballots.first().toString();
 			gvh.trace.traceEvent(TAG, "Determined leader", leader);
 			
 			// Have determined a leader, broadcast the result
-			RobotMessage bcast_leader = new RobotMessage("ALL", gvh.id.getName(), Common.MSG_RANDLEADERELECT_ANNOUNCE, new MessageContents(leader));
+			RobotMessage bcast_leader = new RobotMessage("ALL", name, Common.MSG_RANDLEADERELECT_ANNOUNCE, new MessageContents(leader));
 			gvh.comms.addOutgoingMessage(bcast_leader);
 			gvh.trace.traceEvent(TAG, "Notified all of leader");
-		}
+		}		
 		if(error) {
 			gvh.log.d(TAG, "An error occurred (waited too long?) must wait to receive announcement broadcasts.");
 			// Receive any MSG_LEADERELECT_ANNOUNCE messages, accept whoever they elect as leader
-			startWaitTime = System.currentTimeMillis();
-			endTime = startWaitTime+MAX_WAIT_TIME;
+			endTime = gvh.time()+MAX_WAIT_TIME;
 			gvh.trace.traceEvent(TAG, "Waiting for MSG_LEADERELECT_ANNOUNCE messages");
 			while(announcedLeader == null) {
-				if(System.currentTimeMillis() > startWaitTime + MAX_WAIT_TIME) {
+				if(gvh.time() > endTime) {
 					gvh.trace.traceEvent(TAG, "Waited timed out, leader election failed");
 					gvh.log.e(TAG, "Leader election failed!");
-					return "ERROR";
+					results[0] = "ERROR";
+					return returnResults();
 				}
+				gvh.sleep(10);
 			}
 			leader = announcedLeader;
 		}
 		gvh.log.i(TAG, "Elected leader: " + leader);
 		gvh.trace.traceEvent(TAG, "Elected leader", leader);
-		return leader;
+		results[0] = leader;
+		return returnResults();
 	}
 	
 	public void messageReceied(RobotMessage m) {
@@ -126,16 +130,14 @@ public class RandomLeaderElection implements Callable<String>, LeaderElection, M
 		switch(m.getMID()) {
 		case Common.MSG_RANDLEADERELECT:
 			String from = m.getFrom();
-			if(received.containsValue(from)) {
+			if(receivedFrom.contains(from)) {
 				gvh.log.e(TAG, "Received from " + from + " twice!");
 			} else {
-				int val = Integer.parseInt(m.getContents(0));
-				if(val > largest) {
-					largest = val;
-				}
-				received.put(val, from);
-				gvh.log.i(TAG, "Received " + received.size());
-				if(received.size() == nodes) {
+				int val = Integer.parseInt(m.getContents(0));				
+				ballots.add(new Ballot(from, val));
+				receivedFrom.add(from);
+				gvh.log.i(TAG, "Received " + receivedFrom.size());
+				if(receivedFrom.size() == nodes) {
 					gvh.log.i(TAG, "READY TO ELECT A LEADER!");
 				}
 			}
@@ -149,18 +151,25 @@ public class RandomLeaderElection implements Callable<String>, LeaderElection, M
 		}
 	}
 	
-	public String elect() {
-		Future<String> elected = executor.submit(this);
-		try {
-			return elected.get();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			e.printStackTrace();
-		}
-		return "ERROR";
+	public void elect() {
+		elected = executor.submit(this);
 	}
 
+	@Override
+	public String getLeader() {
+		if(elected.isDone()) {
+			try {
+				return (String) elected.get().get(0);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				e.printStackTrace();
+			}
+			return "ERROR";
+		}
+		return null;
+	}
+	
 	private void registerListeners() {
 		gvh.comms.addMsgListener(Common.MSG_RANDLEADERELECT, this);
 		gvh.comms.addMsgListener(Common.MSG_RANDLEADERELECT_ANNOUNCE, this);
@@ -171,18 +180,34 @@ public class RandomLeaderElection implements Callable<String>, LeaderElection, M
 		gvh.comms.removeMsgListener(Common.MSG_RANDLEADERELECT_ANNOUNCE);		
 	}
 	
+	
+	private class Ballot implements Comparable<Ballot> {
+		public String candidate;
+		public int value;
+		
+		public Ballot(String candidate, int value) {
+			this.candidate = candidate;
+			this.value = value;
+		}
+		
+		public String toString() {
+			return candidate;
+		}
+
+
+		@Override
+		public int compareTo(Ballot other) {
+			if(other.value == this.value) {
+				return candidate.compareTo(other.candidate);
+			}
+			return value - other.value;
+		}		
+	}
+	
 	@Override
 	public void cancel() {
 		executor.shutdownNow();
 		unregisterListeners();
 		gvh.trace.traceEvent(TAG, "Cancelled");
-	}
-	
-	private void Sleep(int time) {
-		try {
-			Thread.sleep(time);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
 }

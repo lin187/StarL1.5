@@ -1,8 +1,6 @@
 package edu.illinois.mitra.starl.gvh;
 
 import android.os.Handler;
-import edu.illinois.mitra.starl.bluetooth.BluetoothInterface;
-import edu.illinois.mitra.starl.bluetooth.MotionAutomaton;
 import edu.illinois.mitra.starl.objects.Common;
 
 public class RealAndroidPlatform extends AndroidPlatform {

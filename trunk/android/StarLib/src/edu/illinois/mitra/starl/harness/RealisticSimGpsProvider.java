@@ -1,21 +1,19 @@
 package edu.illinois.mitra.starl.harness;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.ConcurrentHashMap;
 
 import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.PositionList;
 
-public class RealisticSimGpsProvider extends Observable implements SimGpsProvider {
-	private static final int VELOCITY = 200;	// Millimeters per second
-	
-	private HashMap<String, SimGpsReceiver> receivers;
-	private HashMap<String, TrackedRobot> robots;
+public class RealisticSimGpsProvider extends Observable implements SimGpsProvider {	
+	private Map<String, SimGpsReceiver> receivers;
+	private Map<String, TrackedRobot> robots;
 
 	// Waypoint positions and robot positions that are shared among all robots
 	private PositionList robot_positions;
@@ -24,20 +22,22 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 	private long period = 100;
 	private double angleNoise = 0;
 	private double posNoise = 0;
+	private int robotRadius = 0;
 
 	private Random rand;
 	
-	private ScheduledThreadPoolExecutor exec;
+	private SimulationEngine se;
 		
-	public RealisticSimGpsProvider(long period, double angleNoise, double posNoise) {
+	public RealisticSimGpsProvider(SimulationEngine se, long period, double angleNoise, double posNoise, int robotRadius) {
+		this.se = se;
 		this.period = period;
 		this.angleNoise = angleNoise;
 		this.posNoise = posNoise;
 		this.rand = new Random();
+		this.robotRadius = robotRadius;
 		
 		receivers = new HashMap<String, SimGpsReceiver>();
-		robots = new HashMap<String, TrackedRobot>();
-		exec = new ScheduledThreadPoolExecutor(1);
+		robots = new ConcurrentHashMap<String, TrackedRobot>();
 		
 		robot_positions = new PositionList();
 		waypoint_positions = new PositionList();
@@ -50,8 +50,10 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 	
 	@Override
 	public synchronized void addRobot(ItemPosition bot) {
-		robots.put(bot.name, new TrackedRobot(bot));
-		robot_positions.update(bot);
+		synchronized(robots) {
+			robots.put(bot.name, new TrackedRobot(bot));
+		}
+		robot_positions.update(bot, se.time);
 	}
 	
 	@Override
@@ -88,19 +90,33 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 	@Override
 	public void start() {
 		// Create a periodic runnable which repeats every "period" ms to report positions
-		exec.scheduleWithFixedDelay(new Runnable() {
+		Thread posupdate = new Thread() {
 			@Override
 			public void run() {
-				for(TrackedRobot r : robots.values()) {
-					if(r.inMotion()) {
-						r.updatePos();
-						receivers.get(r.getName()).receivePosition(r.inMotion());	
+				Thread.currentThread().setName("RealisticGpsProvider");
+				se.registerThread(this);
+				
+				while(true) {
+					synchronized(robots) {
+						for(TrackedRobot r : robots.values()) {
+							if(r.inMotion()) {
+								r.updatePos();
+								receivers.get(r.getName()).receivePosition(r.inMotion());	
+							}
+						}	
 					}
-				}	
-				setChanged();
-				notifyObservers(robot_positions);
+					setChanged();
+					notifyObservers(robot_positions);
+					
+					try {
+						se.threadSleep(period, this);
+						Thread.sleep(Long.MAX_VALUE);
+					} catch (InterruptedException e) {
+					}
+				}
 			}
-		}, period, period, TimeUnit.MILLISECONDS);
+		};
+		posupdate.start();
 	}	
 	
 	private class TrackedRobot {
@@ -116,28 +132,32 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 		public TrackedRobot(ItemPosition pos) {
 			this.cur = pos;
 			angle = cur.angle;
-			timeLastUpdate = System.currentTimeMillis();
+			timeLastUpdate = se.time;
 		}
 		public void updatePos() {
-			double timeSinceUpdate = (System.currentTimeMillis() - timeLastUpdate)/1000.0;
-
+			double timeSinceUpdate = (se.time - timeLastUpdate)/1000.0;
 			int dX = 0, dY = 0;
 			double dA = 0;
 			
 			// Arcing motion
-			dA = (vRad*timeSinceUpdate);
-			dX = (int) (Math.cos(Math.toRadians(cur.angle))*(vFwd*timeSinceUpdate));
-			dY = (int) (Math.sin(Math.toRadians(cur.angle))*(vFwd*timeSinceUpdate));
+			dA = aNoise + (vRad*timeSinceUpdate);
+			dX = (int) (xNoise + Math.cos(Math.toRadians(cur.angle))*(vFwd*timeSinceUpdate));
+			dY = (int) (yNoise + Math.sin(Math.toRadians(cur.angle))*(vFwd*timeSinceUpdate));
 			
-			cur.x += dX+xNoise;
-			cur.y += dY+yNoise;
+			cur.velocity = (int) (Math.sqrt(Math.pow(dX,2) + Math.pow(dY,2))/timeSinceUpdate);
+			cur.x += dX;
+			cur.y += dY;
 			angle = angle + dA;
 			cur.angle = Common.angleWrap((int)(Math.round(angle) + aNoise));
 			
-			timeLastUpdate = System.currentTimeMillis();
+			timeLastUpdate = se.time;
 		}
 		public void setVel(int fwd, int rad) {
-			if(hasChanged()) updatePos();
+			if(inMotion()) {
+				updatePos();
+			} else {
+				timeLastUpdate = se.time;
+			}
 			vFwd = fwd;
 			vRad = rad;
 		}
@@ -152,5 +172,14 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 	@Override
 	public void addObserver(Observer o) {
 		super.addObserver(o);
+	}
+	
+	// This isn't very functional at the moment
+	private boolean checkCollision(ItemPosition bot) {
+		for(ItemPosition ip : robot_positions.getList()) {
+			if(ip.equals(bot)) break;
+			if(bot.isFacing(ip, robotRadius) && bot.distanceTo(ip) <= robotRadius) return true;
+		}
+		return false;
 	}
 }

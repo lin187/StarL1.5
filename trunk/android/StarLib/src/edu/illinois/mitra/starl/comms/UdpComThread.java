@@ -11,10 +11,13 @@ import edu.illinois.mitra.starl.interfaces.ComThread;
 import edu.illinois.mitra.starl.objects.Common;
 
 /**
- * Hardware specific. This thread handles all incoming and outgoing UDP transmissions.
+ * Hardware specific. This thread handles all incoming and outgoing UDP transmissions. Works in conjunction with CommsHandler.java
+ * @deprecated Has been replaced by the new SmartUdpComThread class working in conjunction with SmartCommsHandler
+ * @see SmartUdpComThread
  * @author Adam Zimmerman
  * @version 1.2
- */    
+ */  
+@Deprecated
 public class UdpComThread extends Thread implements ComThread {
 	private static final int BCAST_PORT = 2562;
 	private static String TAG = "ComThread";
@@ -65,7 +68,7 @@ public class UdpComThread extends Thread implements ComThread {
     				continue;
 
     			String s = new String(packet.getData(), 0, packet.getLength());  
-    			UDPMessage recd = new UDPMessage(s, System.currentTimeMillis());
+    			UDPMessage recd = new UDPMessage(s, gvh.time());
 
     			gvh.log.d(TAG, "Received: " + s);
     			gvh.trace.traceEvent(TAG, "Received", recd);
@@ -79,7 +82,7 @@ public class UdpComThread extends Thread implements ComThread {
     }
 
     @Override
-	public void write(UDPMessage msg, String IP) {
+	public synchronized void write(UDPMessage msg, String IP) {
     	if(mSocket != null) {
 	        try {
 	        	String data = msg.toString();

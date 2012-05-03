@@ -1,5 +1,8 @@
 package edu.illinois.mitra.starl.functions;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -9,17 +12,18 @@ import java.util.concurrent.TimeUnit;
 import edu.illinois.mitra.starl.comms.MessageContents;
 import edu.illinois.mitra.starl.comms.RobotMessage;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
-import edu.illinois.mitra.starl.interfaces.LeaderElection;
 import edu.illinois.mitra.starl.interfaces.MessageListener;
+import edu.illinois.mitra.starl.interfaces.StarLCallable;
 import edu.illinois.mitra.starl.objects.Common;
 
 /**
- * Elects a leader using the Bully algorithm. <b>Still slightly untested!</b>
+ * Elects a leader using the Bully algorithm. <b>Still slightly untested! Currently broken!</b>
+ * You know what? Don't use this right now, it's a work in progress.
  * 
  * @author Adam Zimmerman
  * @version 1.2
  */
-public class BullyLeaderElection implements Callable<String>, MessageListener, LeaderElection {
+public class BullyLeaderElection extends StarLCallable implements MessageListener {
 	private static final String TAG = "BullyElection";
 	private static final String ERR = "Critical Error";
 	
@@ -27,28 +31,28 @@ public class BullyLeaderElection implements Callable<String>, MessageListener, L
 	private boolean elected = false;
 	private boolean electing = false;
 	private String leader = null;
-	private GlobalVarHolder gvh = null;	
 	private String name = null;
 	
 	private timeoutTask ttask = new timeoutTask();
 	private ScheduledThreadPoolExecutor timeout = new ScheduledThreadPoolExecutor(1);
 	private ExecutorService executor = new ScheduledThreadPoolExecutor(1);
 	
+	// TODO: Fix this entire class!
 	public BullyLeaderElection(GlobalVarHolder gvh) {
+		super(gvh, "BullyLeaderElection");
 		elected = false;
 		electing = false;
 		leader = null;
 		
-		this.gvh = gvh;
 		name = gvh.id.getName();
 		
 		registerMessages();
+		results = new String[1];
 	}
 	
-	@Override
 	public String elect() {
 		if(leader == null) {
-			String electedLeader = "ERROR";
+			List<Object> electedLeader = new LinkedList<Object>(Arrays.asList(new String[]{"ERROR"}));
 			try {
 				electedLeader = executor.submit(this).get();
 			} catch (InterruptedException e) {
@@ -57,13 +61,12 @@ public class BullyLeaderElection implements Callable<String>, MessageListener, L
 				e.printStackTrace();
 			}
 			unregisterMessages();
-			return electedLeader;
+			return (String) electedLeader.get(0);
 		} else {
 			return leader;
 		}
 	}
 
-	@Override
 	public void cancel() {
 		timeout.shutdownNow();
 		executor.shutdownNow();
@@ -81,7 +84,6 @@ public class BullyLeaderElection implements Callable<String>, MessageListener, L
 		gvh.comms.removeMsgListener(Common.MSG_BULLYWINNER);		
 	}
 
-	@Override
 	public void messageReceied(RobotMessage m) {
 		switch(m.getMID()) {
 		case Common.MSG_BULLYELECTION:
@@ -114,7 +116,7 @@ public class BullyLeaderElection implements Callable<String>, MessageListener, L
 	}
 
 	@Override
-	public String call() throws Exception {
+	public List<Object> callStarL() {
 		if(!elected) {
 			electing = true;
 			// Send an election start message to everyone with a higher ID
@@ -133,13 +135,13 @@ public class BullyLeaderElection implements Callable<String>, MessageListener, L
 			// Start a timeout timer
 			timeout.schedule(ttask,TIMEOUT*Common.cap(sentTo, 1), TimeUnit.MILLISECONDS);
 			while(!elected) {
-				Thread.sleep(10);
+				gvh.sleep(10);
 			}
 			electing = false;
 		}
-		return leader;
+		return returnResults();
 	}
-	
+		
 	class timeoutTask implements Runnable {
 		@Override
 		public void run() {
@@ -150,5 +152,9 @@ public class BullyLeaderElection implements Callable<String>, MessageListener, L
 			RobotMessage winner = new RobotMessage("ALL",name,Common.MSG_BULLYWINNER, new MessageContents(name));
 			gvh.comms.addOutgoingMessage(winner);
 		}	
+	}
+
+	public String getLeader() {
+		return null;
 	}
 }

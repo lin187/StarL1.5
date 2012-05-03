@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
+import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.PositionList;
 import edu.illinois.mitra.starl.objects.TraceWriter;
@@ -13,7 +14,8 @@ public class DistancePredicate extends TraceWriter implements Observer {
 	private int distance;
 	
 	public DistancePredicate(String filename, String dir, int distance) {
-		super(filename, dir);
+		// TODO: Remove the null and find a way of passing a time source to the distance predicate!
+		super(filename, dir, null);
 		this.distance = distance;
 		super.writeTag("distance", Integer.toString(distance));
 		super.open("truth");

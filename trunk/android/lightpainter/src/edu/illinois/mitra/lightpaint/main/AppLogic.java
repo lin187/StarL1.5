@@ -6,12 +6,9 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.SortedSet;
 
-import android.util.Log;
 import edu.illinois.mitra.lightpaint.BotProgressTracker;
 import edu.illinois.mitra.lightpaint.ImagePoint;
 import edu.illinois.mitra.lightpaint.PointManager;
-import edu.illinois.mitra.starl.bluetooth.MotionParameters;
-import edu.illinois.mitra.starl.bluetooth.RobotMotion;
 import edu.illinois.mitra.starl.comms.RobotMessage;
 import edu.illinois.mitra.starl.functions.BarrierSynchronizer;
 import edu.illinois.mitra.starl.functions.RandomLeaderElection;
@@ -23,7 +20,8 @@ import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.interfaces.MessageListener;
 import edu.illinois.mitra.starl.interfaces.MutualExclusion;
 import edu.illinois.mitra.starl.interfaces.Synchronizer;
-import edu.illinois.mitra.starl.objects.ItemPosition;
+import edu.illinois.mitra.starl.motion.MotionParameters;
+import edu.illinois.mitra.starl.motion.RobotMotion;
 
 public class AppLogic extends LogicThread implements MessageListener {
 	private static final String TAG = "Logic";
@@ -130,7 +128,7 @@ public class AppLogic extends LogicThread implements MessageListener {
 		}
 	}
 	
-	public LinkedList<Object> call() throws Exception {
+	public LinkedList<Object> callStarL() {
 		while(running) {
 			switch(stage) {
 			case START:
@@ -147,16 +145,19 @@ public class AppLogic extends LogicThread implements MessageListener {
 				sleep(50);
 				if(sync.barrier_proceed(SYNC_BEGIN)) {
 					stage = STAGE.LEADERELECT;
+					le.elect();
 				}
 				break;
 				
 			case LEADERELECT:
-				leader = le.elect();
-				iamleader = (leader.equals(name));
-				gvh.log.e(TAG, "Leader is " + leader + ". Is it me? " + iamleader);
-				gvh.plat.sendMainToast(leader);
-				gvh.log.d(TAG, "Leader elected!");
-				stage = STAGE.DIVIDE_LINES;
+				if(le.getLeader() != null) {
+					leader = le.getLeader();
+					iamleader = (leader.equals(name));
+					gvh.log.e(TAG, "Leader is " + leader + ". Is it me? " + iamleader);
+					gvh.plat.sendMainToast(leader);
+					gvh.log.d(TAG, "Leader elected!");
+					stage = STAGE.DIVIDE_LINES;
+				}
 				break;
 			
 			case DIVIDE_LINES:
@@ -182,7 +183,6 @@ public class AppLogic extends LogicThread implements MessageListener {
 				
 				// Start the mutual exclusion thread
 				mutex = new SingleHopMutualExclusion(points.getNumMutex(),gvh,leader);
-				mutex.start();
 				created.add(mutex);
 
 				stage = STAGE.GO_TO_START;
@@ -324,8 +324,6 @@ public class AppLogic extends LogicThread implements MessageListener {
 	}
 	
 	private void sleep(int time) {
-		try {
-			Thread.sleep(time);
-		} catch (InterruptedException e) {}	
+		gvh.sleep(time);
 	}
 }

@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.PositionList;
@@ -26,9 +24,10 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 
 	private Random rand;
 	
-	private ScheduledThreadPoolExecutor exec;
+	private SimulationEngine se;
 		
-	public IdealSimGpsProvider(long period, double angleNoise, double posNoise) {
+	public IdealSimGpsProvider(SimulationEngine se, long period, double angleNoise, double posNoise) {
+		this.se = se;
 		this.period = period;
 		this.angleNoise = (int) angleNoise;
 		this.posNoise = (int) posNoise;
@@ -36,7 +35,6 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 		
 		receivers = new HashMap<String, SimGpsReceiver>();
 		robots = new HashMap<String, TrackedRobot>();
-		exec = new ScheduledThreadPoolExecutor(1);
 		
 		robot_positions = new PositionList();
 		waypoint_positions = new PositionList();
@@ -50,7 +48,7 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 	@Override
 	public synchronized void addRobot(ItemPosition bot) {
 		robots.put(bot.name, new TrackedRobot(bot));
-		robot_positions.update(bot);
+		robot_positions.update(bot, se.time);
 	}
 
 	@Override
@@ -81,19 +79,31 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 	@Override
 	public void start() {
 		// Create a periodic runnable which repeats every "period" ms to report positions
-		exec.scheduleWithFixedDelay(new Runnable() {
+		Thread posupdate = new Thread() {
 			@Override
 			public void run() {
-				for(TrackedRobot r : robots.values()) {
-					if(r.hasChanged()) {
-						r.updatePos();
-						receivers.get(r.getName()).receivePosition(r.inMotion());	
+				Thread.currentThread().setName("IdealGpsProvider");
+				se.registerThread(this);
+				
+				while(true) {					
+					for(TrackedRobot r : robots.values()) {
+						if(r.inMotion()) {
+							r.updatePos();
+							receivers.get(r.getName()).receivePosition(r.inMotion());	
+						}
+					}	
+					setChanged();
+					notifyObservers(robot_positions);
+					
+					try {
+						se.threadSleep(period, this);
+						Thread.sleep(Long.MAX_VALUE);
+					} catch (InterruptedException e) {
 					}
-				}	
-				setChanged();
-				notifyObservers(robot_positions);
+				}
 			}
-		}, period, period, TimeUnit.MILLISECONDS);
+		};
+		posupdate.start();
 	}
 
 	private class TrackedRobot {
@@ -114,10 +124,10 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 		
 		public TrackedRobot(ItemPosition pos) {
 			this.pos = pos;
-			timeLastUpdate = System.currentTimeMillis();
+			timeLastUpdate = se.time;
 		}
 		public void updatePos() {
-			long timeSinceUpdate = (System.currentTimeMillis() - timeLastUpdate);
+			long timeSinceUpdate = (se.time - timeLastUpdate);
 			if(newdest) {
 				// Snap to heading
 				// Calculate angle and X/Y velocities
@@ -147,6 +157,7 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 					int dX = (int)(vX * totalTimeInMotion)/1000;
 					int dY = (int)(vY * totalTimeInMotion)/1000;
 					pos.setPos(start.x+dX+xNoise, start.y+dY+yNoise, (int)Math.toDegrees(motAngle));
+					pos.velocity = VELOCITY;
 				} else {
 					pos.setPos(dest.x+xNoise, dest.y+yNoise, pos.angle+aNoise);
 					dest = null;
@@ -155,7 +166,7 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 			} else {
 				reportpos = false;
 			}
-			timeLastUpdate = System.currentTimeMillis();
+			timeLastUpdate = se.time;
 		}
 		public void setDest(ItemPosition dest) {
 			if(hasChanged()) updatePos();

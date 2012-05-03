@@ -12,23 +12,23 @@ public class SimComThread implements ComThread {
 	private SimComChannel channel;
 	private String name;
 	private String IP;
-
+	private GlobalVarHolder gvh;
+	
 	public SimComThread(GlobalVarHolder gvh, SimComChannel channel) {
 		this.channel = channel;
+		this.gvh = gvh;
 		name = gvh.id.getName();
 		IP = gvh.id.getParticipantsIPs().get(name);
-		channel.registerMsgReceiver(this, IP);
+		// TODO: Was channel.registerMsgReceiver(this, IP);
 	}
 	
 	@Override
 	public void write(UDPMessage msg, String toIP) {
-		//System.out.println("Sending " + msg.getContents().getContentsList().toString() + " to " + toIP);
 		channel.sendMsg(IP, msg.toString(), toIP);
 	}
 	
 	public void receive(String msg) {
-		//System.out.println("Received " + msg);
-		receivedList.add(new UDPMessage(msg, System.currentTimeMillis()));
+		receivedList.add(new UDPMessage(msg, gvh.time()));
 	}
 
 	

@@ -1,7 +1,7 @@
 package edu.illinois.mitra.starl.harness;
 
-import edu.illinois.mitra.starl.bluetooth.MotionAutomaton;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
+import edu.illinois.mitra.starl.motion.MotionAutomaton;
 import edu.illinois.mitra.starl.objects.Common;
 
 public class RealisticSimMotionAutomaton extends MotionAutomaton {
@@ -10,15 +10,17 @@ public class RealisticSimMotionAutomaton extends MotionAutomaton {
 	
 	public RealisticSimMotionAutomaton(GlobalVarHolder gvh, SimGpsProvider gpsp) {
 		super(gvh, null);
-		super.R_goal = 75;
 		name = gvh.id.getName();
 		this.gpsp = gpsp;
 	}
 
 	@Override
 	public void motion_stop() {
-		super.running = false;
 		gpsp.setVelocity(name, 0, 0);
+		super.running = false;
+		super.stage = MotionAutomaton.STAGE.INIT;
+		super.destination = null;
+		super.inMotion = false;
 	}
 
 	@Override

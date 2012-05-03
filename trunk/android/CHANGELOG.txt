@@ -1,5 +1,35 @@
 ----- StarLib Changelog -----
 
+4/29/12 Changelist:
+STARLIB CHANGES:
+- Added StarLCallable. All Callables must implement StarLCallable in order to simulate properly!
+- Added gvh.pause and gvh.time methods. These must be used to pause methods and get the system time.
+- Removed Thread as the baseclass of SingleHopMutualExclusion. There was no need for it to be a thread!
+- Renamed "bluetooth" package to the more fitting "motion"
+- Added new SmartCommsHandler which will one day replace CommsHandler. SCH will schedule (get it?) sleep delays appropriately, allowing for faster simulations.
+
+SIMULATOR CHANGES:
+- Decoupled simulator from real time!
+- Added Decoupled message channel, removed all others
+- Modified ideal and realistic motion sim to use the decoupled timing mechanic
+- Added SimulationEngine class to maintiain decoupled simulation
+- Added time and scale to GUI
+- Added display of world grid
+- Flipped simulated world vertically to match the real world
+
+4/25/12 Changelist:
+
+STARLIB CHANGES:
+- Fixed a couple of bugs that could cause a CPU-consuming loop in Motion Automaton
+- Added velocity public var to ItemPosition class. PositionList automatically calculates velocity when updating positions
+- Fixed a case in which MotionAutomaton wouldn't correct for drift and would completely miss a target
+- Fixed a case in MotionAutomaton where repeatedly sending a goTo command with the same destination would prevent motion
+- Fixed a bug which would crash a simulated MotionAutomaton if motion_stop() was called
+
+SIMULATOR CHANGES:
+- Fixed "jumping" simulated robot motion problem
+
+
 4/20/12 Changelist: 
 
 SIMULATOR CHANGES:

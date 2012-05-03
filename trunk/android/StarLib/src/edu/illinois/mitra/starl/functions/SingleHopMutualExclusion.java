@@ -20,7 +20,7 @@ import edu.illinois.mitra.starl.objects.Common;
  * @version 1.0
  *
  */
-public class SingleHopMutualExclusion extends Thread implements MutualExclusion, MessageListener {
+public class SingleHopMutualExclusion implements MutualExclusion, MessageListener {
 	private static final String TAG = "SingleHopMutex";
 	private static final String ERR = "Critical Error";
 	
@@ -31,8 +31,6 @@ public class SingleHopMutualExclusion extends Thread implements MutualExclusion,
 	private ArrayList<ArrayList<String>> token_requesters;
 	private String[] token_owners;
 	private Boolean[] using_token;
-	
-	private boolean running = true;
 
 	/**
 	 * Create a new SingleHopMutualExclusion
@@ -56,36 +54,11 @@ public class SingleHopMutualExclusion extends Thread implements MutualExclusion,
 			token_requesters.add(i, new ArrayList<String>());
 		}
 		gvh.trace.traceEvent(TAG, "Created");
-	}
-
-	@Override
-	public void run() {
-		while(running) {		
-			// Send any unused tokens on to the next requester
-			for(int i = 0; i < num_sections; i ++) {
-				if(token_owners[i].equals(name) && !using_token[i] && !token_requesters.get(i).isEmpty()) {			
-					// Pass the token. Include any additional requesters
-					String to = token_requesters.get(i).remove(0);
-					RobotMessage pass_token;
-					gvh.log.d(TAG, "Passing token " + i + " to requester " + to);
-					gvh.trace.traceEvent(TAG, "Passing token to new owner", i + " " + to);
-					if(token_requesters.get(i).isEmpty()) {
-						pass_token = new RobotMessage(to, name, Common.MSG_MUTEX_TOKEN, new MessageContents(i));
-					} else {
-						String reqs = token_requesters.get(i).toString().replaceAll("[\\[\\]\\s]", "");
-						token_requesters.get(i).clear();
-						pass_token = new RobotMessage(to, name, Common.MSG_MUTEX_TOKEN, new MessageContents(Integer.toString(i),reqs));
-					}
-					gvh.comms.addOutgoingMessage(pass_token);
-					token_owners[i] = to;
-					
-					// Broadcast the new token owner
-					RobotMessage owner_broadcast = new RobotMessage("ALL", name, Common.MSG_MUTEX_TOKEN_OWNER_BCAST, new MessageContents(Integer.toString(i),to));
-					gvh.comms.addOutgoingMessage(owner_broadcast);
-					gvh.trace.traceVariable(TAG, "Owner " + i, to);
-				}
-			}
-		}
+		
+		// Register message listeners
+		gvh.comms.addMsgListener(Common.MSG_MUTEX_TOKEN_OWNER_BCAST, this);
+		gvh.comms.addMsgListener(Common.MSG_MUTEX_TOKEN, this);
+		gvh.comms.addMsgListener(Common.MSG_MUTEX_TOKEN_REQUEST, this);
 	}
 
 	public synchronized void requestEntry(int id) {
@@ -128,6 +101,33 @@ public class SingleHopMutualExclusion extends Thread implements MutualExclusion,
 			gvh.trace.traceVariable(TAG, "Using " + id, false);
 			gvh.log.d(TAG, "Exiting section " + id);
 			using_token[id] = false;
+			
+			passIfUnused(id);
+		}
+	}
+	
+	private synchronized void passIfUnused(int id) {
+		// If this token has a requester, send it
+		if(using_token[id] == false && token_owners[id].equals(name) && !token_requesters.get(id).isEmpty()) {			
+			// Pass the token. Include any additional requesters
+			String to = token_requesters.get(id).remove(0);
+			RobotMessage pass_token;
+			gvh.log.d(TAG, "Passing token " + id + " to requester " + to);
+			gvh.trace.traceEvent(TAG, "Passing token to new owner", id + " " + to);
+			if(token_requesters.get(id).isEmpty()) {
+				pass_token = new RobotMessage(to, name, Common.MSG_MUTEX_TOKEN, new MessageContents(id));
+			} else {
+				String reqs = token_requesters.get(id).toString().replaceAll("[\\[\\]\\s]", "");
+				token_requesters.get(id).clear();
+				pass_token = new RobotMessage(to, name, Common.MSG_MUTEX_TOKEN, new MessageContents(Integer.toString(id),reqs));
+			}
+			gvh.comms.addOutgoingMessage(pass_token);
+			token_owners[id] = to;
+			
+			// Broadcast the new token owner
+			RobotMessage owner_broadcast = new RobotMessage("ALL", name, Common.MSG_MUTEX_TOKEN_OWNER_BCAST, new MessageContents(Integer.toString(id),to));
+			gvh.comms.addOutgoingMessage(owner_broadcast);
+			gvh.trace.traceVariable(TAG, "Owner " + id, to);
 		}
 	}
 
@@ -144,21 +144,9 @@ public class SingleHopMutualExclusion extends Thread implements MutualExclusion,
 	}
 
 	@Override
-	public synchronized void start() {
-		super.start();
-		running = true;
-		
-		// Register message listeners
-		gvh.comms.addMsgListener(Common.MSG_MUTEX_TOKEN_OWNER_BCAST, this);
-		gvh.comms.addMsgListener(Common.MSG_MUTEX_TOKEN, this);
-		gvh.comms.addMsgListener(Common.MSG_MUTEX_TOKEN_REQUEST, this);
-	}
-
-	@Override
 	public void cancel() {
 		gvh.trace.traceEvent(TAG, "Cancelled");
 		gvh.log.d(TAG, "CANCELLING MUTEX THREAD");
-		running = false;
 		
 		// Unregister message listeners
 		gvh.comms.removeMsgListener(Common.MSG_MUTEX_TOKEN_OWNER_BCAST);
@@ -203,6 +191,9 @@ public class SingleHopMutualExclusion extends Thread implements MutualExclusion,
 			// If we own the token being requested, enqueue the requester
 			if(token_owners[id].equals(name)) {
 				token_requesters.get(id).add(m.getFrom());
+				
+				// Pass the token if we're not using it
+				passIfUnused(id);
 			} else {
 			// If we don't own the token, forward the request to the actual owner
 				m.setTo(token_owners[id]);
