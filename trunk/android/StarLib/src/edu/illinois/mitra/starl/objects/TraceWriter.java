@@ -41,6 +41,12 @@ public class TraceWriter {
 		SimpleDateFormat df = new SimpleDateFormat("mm:HH dd/MM/yyyy");
 		String date = df.format(new Date());
 		
+		// TODO: refactor / only do for simulation
+		logFile = new File(dir);
+		if (!logFile.exists()) {
+			logFile.mkdirs(); // create directory hierarchy if it doesn't exist
+		}
+		
 		// Create the log file
 		logFile = new File(dir + filename + ".xml");
 		try {

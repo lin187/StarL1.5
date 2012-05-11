@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
-import edu.illinois.mitra.starlSim.main.SimSettings;
-
 
 @SuppressWarnings("serial")
 public class DrawFrame extends JFrame

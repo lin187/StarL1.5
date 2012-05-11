@@ -8,6 +8,7 @@ public class RobotData
 	public int x;
 	public int y;
 	public double degrees;
+	public long time;
 
 	// optional
 	public int radius;
@@ -19,5 +20,10 @@ public class RobotData
 		this.x = x;
 		this.y = y;
 		this.degrees = degrees;
+	}
+	
+	public RobotData(String name, int x, int y, double degrees, long t) {
+		this(name, x, y, degrees);
+		this.time = t;
 	}
 }

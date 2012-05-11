@@ -22,6 +22,7 @@ import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.PositionList;
 import edu.illinois.mitra.starlSim.draw.DrawFrame;
+import edu.illinois.mitra.starlSim.draw.GlobalLogger;
 import edu.illinois.mitra.starlSim.draw.RobotData;
 
 public class Simulation {	
@@ -36,7 +37,7 @@ public class Simulation {
 
 	public Simulation(int n_bots, String wptfile, String initposfile, Class<?> appToRun) {
 		// Ensure that the class to instantiate is an instance of SimApp
-		if(!LogicThread.class.isAssignableFrom(appToRun)) throw new RuntimeException("The requested application, " + appToRun.getSimpleName() + ", does not extend SimApp!");
+		if(!LogicThread.class.isAssignableFrom(appToRun)) throw new RuntimeException("The requested application, " + appToRun.getSimpleName() + ", does not extend LogicThread!");
 
 		// Start the sim engine
 		se = new SimulationEngine(SimSettings.MSG_MEAN_DELAY,SimSettings.MSG_STDDEV_DELAY,SimSettings.MSG_LOSSES_PER_HUNDRED,SimSettings.MSG_RANDOM_SEED,SimSettings.TIC_TIME_RATE);
@@ -49,7 +50,9 @@ public class Simulation {
 		}
 		
 		// Load waypoints
-		if(wptfile != null) gps.setWaypoints(WptLoader.loadWaypoints(wptfile));
+		if(wptfile != null) {
+			gps.setWaypoints(WptLoader.loadWaypoints(wptfile));
+		}
 		se.gps = gps;
 		gps.start();
 		
@@ -86,6 +89,9 @@ public class Simulation {
 		d.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		d.setVisible(true);
 		
+		// Initialize global logger
+		final GlobalLogger gl = new GlobalLogger(SimSettings.TRACE_OUT_DIR, "global.txt");
+		
 		// GUI observer updates the viewer when new positions are calculated
 		Observer guiObserver = new Observer() {
 			@Override
@@ -109,6 +115,23 @@ public class Simulation {
 			}
 		};
 		gps.addObserver(guiObserver);
+		
+		// global logger observer updates the log file when new positions are calculated
+		Observer globalLogger = new Observer() {
+			@Override
+			public void update(Observable o, Object arg) {
+				ArrayList<ItemPosition> pos = ((PositionList) arg).getList();
+				ArrayList<RobotData> rd = new ArrayList<RobotData>();
+				// Add robots
+				for(ItemPosition ip : pos) {
+					RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.angle, ip.receivedTime);
+					nextBot.radius = SimSettings.BOT_RADIUS;
+					rd.add(nextBot);
+				}
+				gl.updateData(rd, se.time);
+			}
+		};
+		gps.addObserver(globalLogger);
 	}
 	
 	public void enableDistacePredicate(int radius, String dir) {

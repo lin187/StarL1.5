@@ -39,7 +39,6 @@ public class RealGlobalVarHolder extends GlobalVarHolder {
 		try {
 			Thread.sleep(time);
 		} catch (InterruptedException e) {
-			e.printStackTrace();
 		}
 	}
 

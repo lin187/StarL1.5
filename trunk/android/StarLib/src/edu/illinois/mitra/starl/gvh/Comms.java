@@ -86,6 +86,7 @@ public class Comms {
 		synchronized(listeners) {
 			listeners.clear();
 		}
+		mConnectedThread.cancel();
 		comms = null;
 	}
 	

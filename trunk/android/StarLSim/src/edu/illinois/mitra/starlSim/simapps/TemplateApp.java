@@ -17,7 +17,6 @@ public class TemplateApp extends LogicThread {
 	
 	@Override
 	public List<Object> callStarL() {
-		Thread.currentThread().setName("LT-"+gvh.id.getName());
 		while(true) {
 			switch(stage) {
 			case START:
@@ -30,7 +29,7 @@ public class TemplateApp extends LogicThread {
 			case DONE:
 				return returnResults();
 			}
-			gvh.sleep(200);
+			gvh.sleep(100);
 		}
 	}
 }

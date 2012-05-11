@@ -8,7 +8,6 @@ import edu.illinois.mitra.starl.comms.RobotMessage;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.interfaces.MessageListener;
-import edu.illinois.mitra.starl.motion.MotionParameters;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starlSim.main.SimSettings;
 
@@ -30,11 +29,10 @@ public class RaceApp extends LogicThread implements MessageListener {
 			toVisit.add(ip.name);
 		}
 		
+		// Race progress messages are broadcast with message ID 99
 		gvh.comms.addMsgListener(99, this);
-		MotionParameters param = new MotionParameters();
-		param.COLAVOID_MODE = MotionParameters.USE_COLAVOID;
-		gvh.plat.moat.setParameters(param);
-		
+
+		// Make sure waypoints were provided
 		if(gvh.gps.getWaypointPositions().getNumPositions() == 0) System.out.println("The race application requires waypoints to race to!");
 	}
 
@@ -63,11 +61,16 @@ public class RaceApp extends LogicThread implements MessageListener {
 					}				
 				}
 				
+				// If this robot got to the destination before any other robot
 				if(motionSuccess) {
 					System.out.println(name + " got to " + destname + " first!");
+					
+					// Send a message to all other robots informing them that they lost
 					RobotMessage inform = new RobotMessage("ALL", name, 99, destname);
 					gvh.comms.addOutgoingMessage(inform);
 					toVisit.remove(destname);
+					
+					// Penalty for winning: sleep for almost a full second
 					gvh.sleep(800);
 				}
 				
@@ -87,11 +90,16 @@ public class RaceApp extends LogicThread implements MessageListener {
 
 	@Override
 	public void messageReceied(RobotMessage m) {
+		// Called whenever a message with ID 99 is received
+		
+		
 		synchronized(toVisit) {
+			// Remove the received waypoint from the list of waypoints to visit
 			toVisit.remove(m.getContents(0));
 		}
 		
 		synchronized(stage) {
+			// If no waypoints remain, quit. Otherwise, go on to the next destination
 			if(toVisit.isEmpty()) { 
 				stage = STAGE.DONE;
 			} else {

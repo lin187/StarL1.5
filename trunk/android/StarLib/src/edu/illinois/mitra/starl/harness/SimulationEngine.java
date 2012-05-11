@@ -41,15 +41,20 @@ public class SimulationEngine extends Thread {
 	public void threadSleep(long time, Thread thread) {
 		synchronized(lock) {
 			int idx = regThreads.indexOf(thread);
-			if(idx == -1) throw new RuntimeException("Unregistered thread " + thread + " attempted to sleep for " + time);
+			if(idx == -1) {
+				throw new RuntimeException("Unregistered thread " + thread + " attempted to sleep for " + time);
+			}
 			sleeps.set(idx, time);
 			lastUpdateTime.set(idx, System.currentTimeMillis());
-			if(!this.isInterrupted()) this.interrupt();
+			if(!this.isInterrupted()) {
+				this.interrupt();
+			}
 		}
 	}
 		
 	@Override
 	public void run() {
+		//TODO: please comment this
 		while(!done) {
 			try {
 				Thread.sleep(5000);

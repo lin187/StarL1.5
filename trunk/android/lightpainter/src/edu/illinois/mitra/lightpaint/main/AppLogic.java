@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.SortedSet;
 
 import edu.illinois.mitra.lightpaint.BotProgressTracker;
@@ -128,7 +129,7 @@ public class AppLogic extends LogicThread implements MessageListener {
 		}
 	}
 	
-	public LinkedList<Object> callStarL() {
+	public List<Object> callStarL() {
 		while(running) {
 			switch(stage) {
 			case START:
