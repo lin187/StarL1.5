@@ -247,9 +247,10 @@ public class FlockingTestApp extends LogicThread {
 						//qr=qr + pr.*(tcyc/tdiv) + frvs.*((tcyc/tdiv)^2);
 		                //pr=pr + frvs.*(tcyc/tdiv);
 						
-						
-						pl.update(new ItemPosition(n, x, y, theta));
-						moat.goTo(pl.getPosition(n));
+						ItemPosition dest = new ItemPosition(n, x, y, theta);
+						pl.update(dest);
+						//moat.goTo(pl.getPosition(n));
+						moat.goTo(dest);
 						
 						
 						//olfati-saber controller
@@ -260,6 +261,8 @@ public class FlockingTestApp extends LogicThread {
 						
 						System.out.println(robotName + ": New destination is (" + pl.getPosition(n).x + ", " + pl.getPosition(n).y + ")!");
 						System.out.println(robotName + ": Current posn is (" + myRp.x + ", " + myRp.y + ")!");
+						
+						gvh.sleep(500);
 
 						
 						// todo: after circle formation, calculate new position based on positions of nearest left and right neighbor (on the circle)

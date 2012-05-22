@@ -1,11 +1,15 @@
-function plot_lines(cLines, lines, ghosts, id)  
+function plot_lines(cLines, lines, ghosts, id, GRIDDIM)  
 figure(1);
 clf;
 hold on
 if nargin == 3
     id = -1;
 else
-    title(['Robot ' num2str(id)]);
+    if id ~= -1
+        title(['Robot ' num2str(id)]);
+    else
+        title('All robots');
+    end
 end
 
 line([lines(:,1)';lines(:,3)'],[lines(:,2)';lines(:,4)'],'Color','r','Marker','.');
@@ -26,5 +30,5 @@ for i=1:size(cLines,2)
         text(cLines(i).ptx+25,cLines(i).pty,num2str(cLines(i).waypoint));
     end
 end
-axis([0 3450 0 3700])
+axis([0 GRIDDIM(1) 0 GRIDDIM(2)])
 hold off;

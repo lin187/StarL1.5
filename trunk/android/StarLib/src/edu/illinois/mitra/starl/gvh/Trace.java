@@ -15,28 +15,38 @@ public class Trace {
 	private String tracedir;
 	private GlobalVarHolder gvh;
 	
+	private int driftMax = 0;
+	private float skewBound = 0.0f;
+	
 	public Trace(String name, String tracedir, GlobalVarHolder gvh) {
 		this.name = name;
 		this.tracedir = tracedir;
 		this.gvh = gvh;
 	}
+	
+	public Trace(String name, String tracedir, GlobalVarHolder gvh, int driftMax, float skewBound) {
+		this(name, tracedir, gvh);
+		this.driftMax = driftMax;
+		this.skewBound = skewBound;
+	}
 
 	public void traceStart() {
-		if(trace == null) {
-			trace = new TraceWriter(name,tracedir,gvh);
-		}
+		openTraceFile(name);
 	}
 	
+	private void openTraceFile(String fname) {
+		if(trace == null) {
+			if(driftMax != 0 || skewBound != 0f)
+			{
+				trace = new TraceWriter(fname,tracedir,driftMax,skewBound,gvh);
+			} else {
+				trace = new TraceWriter(fname,tracedir,gvh);
+			}
+		}
+	}
+
 	public void traceStart(int runId) {
-		if(trace == null) {
-			trace = new TraceWriter(runId + "-" + name,tracedir,gvh);
-		}
-	}
-	
-	public void traceStart(int drift, float skew) {
-		if(trace == null) {
-			trace = new TraceWriter(name,tracedir,drift,skew,gvh);
-		}		
+		openTraceFile(runId + "-" + name);
 	}
 	
 	public void traceVariable(String source, String name, Object data) {

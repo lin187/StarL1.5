@@ -68,6 +68,7 @@ public class MotionAutomaton extends RobotMotion  {
 	private COLSTAGE colstage = COLSTAGE.TURN;
 	private COLSTAGE colnext = null; 
 	private int col_straightime = 0;
+	private boolean halted = false;
 
 	public MotionAutomaton(GlobalVarHolder gvh, BluetoothInterface bti) {
 		super(gvh.id.getName());
@@ -127,9 +128,11 @@ public class MotionAutomaton extends RobotMotion  {
 				}
 				
 				if(!colliding && stage != null) {
+					halted = false;
 					if(stage != prev) gvh.log.e(TAG, "Stage is: " + stage.toString());
 					switch(stage) {
 					case INIT:
+						halted = false;
 						if(mode == OPMODE.GO_TO) {
 							if(distance <= R_goal) {
 								next = STAGE.GOAL;
@@ -259,10 +262,15 @@ public class MotionAutomaton extends RobotMotion  {
 					}
 					colnext = null;
 				} else if(colliding && (param.COLAVOID_MODE == MotionParameters.STOP_ON_COLLISION)) {
-					// Stop the robot if collision avoidance is disabled and a collision is immminent
-					gvh.log.d(TAG, "No collision avoidance! Halting.");
-					straight(0);
-					stage = STAGE.INIT;
+					// Stop the robot if collision avoidance is disabled and a collision is imminent
+					if(!halted) {
+						halted = true;
+						System.out.println(gvh.id.getName() + " HAS COLLIDED!");
+						gvh.log.d(TAG, "No collision avoidance! Halting.");
+						gvh.trace.traceEvent(TAG, "Halting motion");
+						straight(0);
+						stage = STAGE.INIT;
+					}
 				}
 			}
 			gvh.sleep(DELAY_TIME);
@@ -308,6 +316,7 @@ public class MotionAutomaton extends RobotMotion  {
 	}
 	
 	protected void sendMotionEvent(int motiontype, int ... argument) {
+		// TODO: Is this needed??? Or even working properly??
 		gvh.trace.traceEvent(TAG, "Motion", Arrays.asList(argument).toString());
 		gvh.sendRobotEvent(Common.EVENT_MOTION, motiontype);
 	}

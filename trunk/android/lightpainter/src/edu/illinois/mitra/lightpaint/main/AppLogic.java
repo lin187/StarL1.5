@@ -57,7 +57,7 @@ public class AppLogic extends LogicThread implements MessageListener {
 	
 	// Application specific:
 	private int timeSpentWaiting = 0;
-	private BotProgressTracker prog = null;
+	// private BotProgressTracker prog = null;
 	private PointManager points = null;
 	private ImagePoint dest = null;
 	private int assignment = -1;
@@ -119,10 +119,10 @@ public class AppLogic extends LogicThread implements MessageListener {
 			timeSpentWaiting = 0;
 			return STAGE.GO_NEXT_POINT;
 		} else {
-			sleep(50);
+			gvh.sleep(50);
 			timeSpentWaiting += 50;
 			if(timeSpentWaiting >= 3000) {
-				prog.updateMyProgress(assignment,dest.getPoint());
+				// prog.updateMyProgress(assignment,dest.getPoint());
 				timeSpentWaiting = 0;
 			}
 			return STAGE.WAIT_AT_INTERSECTION;
@@ -130,7 +130,9 @@ public class AppLogic extends LogicThread implements MessageListener {
 	}
 	
 	public List<Object> callStarL() {
+		gvh.trace.traceStart();
 		while(running) {
+			gvh.sleep(50);
 			switch(stage) {
 			case START:
 				// Initially the screen should be dark
@@ -143,7 +145,6 @@ public class AppLogic extends LogicThread implements MessageListener {
 				break;
 				
 			case LEADERELECT_BARRIER:
-				sleep(50);
 				if(sync.barrier_proceed(SYNC_BEGIN)) {
 					stage = STAGE.LEADERELECT;
 					le.elect();
@@ -157,6 +158,7 @@ public class AppLogic extends LogicThread implements MessageListener {
 					gvh.log.e(TAG, "Leader is " + leader + ". Is it me? " + iamleader);
 					gvh.plat.sendMainToast(leader);
 					gvh.log.d(TAG, "Leader elected!");
+					System.out.println("I elected " + leader);
 					stage = STAGE.DIVIDE_LINES;
 				}
 				break;
@@ -167,9 +169,11 @@ public class AppLogic extends LogicThread implements MessageListener {
 				
 				// Leader distributes line segments
 				if(iamleader) {
+					System.out.println(name + " attempting to divide lines");
 					gvh.log.d(TAG, "I'm the leader! Sending assignments...");
 					points.Assign();
 					gvh.log.d(TAG, "Waypoints divided");
+					System.out.println("Assignments sent");
 				}
 				
 				stage = STAGE.GET_LINE_ASSIGNMENT;
@@ -210,21 +214,20 @@ public class AppLogic extends LogicThread implements MessageListener {
 				
 				motion.turnTo(nextdest.getPos());
 				motionHold();
-			
+				
 				sync.barrier_sync(SYNC_START_DRAWING);
 				stage = STAGE.CALC_NEXT_POINT_BARRIER;
 				break;
 				
 			case CALC_NEXT_POINT_BARRIER:
-				sleep(50);
 				if(sync.barrier_proceed(SYNC_START_DRAWING)){					
 					// Wait to give the photographer enough time to press the shutter
-					sleep(1000);
+					gvh.sleep(1000);
 					//motion.song();
 					
 					// Create the progress tracker
-					prog = new BotProgressTracker(gvh);
-					created.add(prog);
+					//prog = new BotProgressTracker(gvh);
+					//created.add(prog);
 					
 					stage = STAGE.CALC_NEXT_POINT;
 				}
@@ -240,7 +243,7 @@ public class AppLogic extends LogicThread implements MessageListener {
 				dest = pointIter.next();
 				
 				// Send a progress update
-				prog.updateMyProgress(assignment,dest.getPoint());
+				// prog.updateMyProgress(assignment,dest.getPoint());
 				
 				// If the next point requires a different mutex token than the currently held, release the current
 				if(dest.getMutex() != intersection && intersection != -1) {
@@ -257,7 +260,6 @@ public class AppLogic extends LogicThread implements MessageListener {
 						break;
 					}
 				}
-				
 				stage = STAGE.GO_NEXT_POINT;
 				break;
 				
@@ -280,7 +282,7 @@ public class AppLogic extends LogicThread implements MessageListener {
 			case FINISH:
 				gvh.plat.setDebugInfo("Done!");
 				mutex.exitAll();
-				prog.sendDone();
+				// prog.sendDone();
 				stage = STAGE.DONE;
 				break;
 				
@@ -320,11 +322,8 @@ public class AppLogic extends LogicThread implements MessageListener {
 	}
 	
 	private int motionHold() {
-		while(motion.inMotion) {sleep(10);}
+		while(motion.inMotion) {gvh.sleep(10);}
 		return 0;
 	}
-	
-	private void sleep(int time) {
-		gvh.sleep(time);
-	}
+
 }

@@ -22,7 +22,7 @@ public class RaceApp extends LogicThread implements MessageListener {
 	
 	public RaceApp(GlobalVarHolder gvh) {
 		super(gvh);
-		gvh.trace.traceStart(SimSettings.TRACE_CLOCK_DRIFT_MAX, SimSettings.TRACE_CLOCK_SKEW_MAX);
+		gvh.trace.traceStart();
 		
 		// Get the list of positions to travel to
 		for(ItemPosition ip : gvh.gps.getWaypointPositions().getList()) {

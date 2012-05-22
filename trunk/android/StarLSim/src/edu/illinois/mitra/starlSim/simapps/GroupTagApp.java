@@ -68,7 +68,7 @@ public class GroupTagApp extends LogicThread implements MessageListener {
 
 	public GroupTagApp(GlobalVarHolder gvh) {
 		super(gvh);
-		gvh.trace.traceStart(SimSettings.TRACE_CLOCK_DRIFT_MAX, SimSettings.TRACE_CLOCK_SKEW_MAX);
+		gvh.trace.traceStart();
 		gvh.log.i(TAG, "I AM " + name);
 
 		sync = new BarrierSynchronizer(gvh);

@@ -42,15 +42,15 @@ for i = 0:numRobots % for each line
         wp = points.get(j);
         cLines(idx).robot = i;
         cLines(idx).waypoint = j;
-        wppoint = wp.point;
-        cLines(idx).ptx = wppoint.x;
-        cLines(idx).pty = wppoint.y;
-        cLines(idx).color = char(wp.color);
-        cLines(idx).mutex = wp.mutexId;
-        cLines(idx).start = wp.start;
-        cLines(idx).end = wp.end;        
+        wppoint = points.get(j).point; %wp.point;
+        cLines(idx).ptx = points.get(j).point.x; %wppoint.x;
+        cLines(idx).pty = points.get(j).point.y; %wppoint.y;
+        cLines(idx).color = char(points.get(j).color); %char(wp.color);
+        cLines(idx).mutex = points.get(j).mutexId; %wp.mutexId;
+        cLines(idx).start = points.get(j).start; %wp.start;
+        cLines(idx).end = points.get(j).end; %wp.end;        
         
-        fprintf('%u %u   (%u,%u) %s %d [%u %u]\n', cLines(idx).robot, cLines(idx).waypoint, ...
+       fprintf('%u %u   (%u,%u) %s %d [%u %u]\n', cLines(idx).robot, cLines(idx).waypoint, ...
             cLines(idx).ptx, cLines(idx).pty, cLines(idx).color, cLines(idx).mutex, ...
             cLines(idx).start, cLines(idx).end);
         

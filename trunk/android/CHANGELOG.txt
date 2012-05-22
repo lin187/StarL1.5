@@ -1,5 +1,9 @@
 ----- StarLib Changelog -----
 
+5/22/2012, Taylor
+- Added relative path support for input and output files
+- Fixed some bugs preventing collision avoidance from working in FlockingTestTwo
+
 5/11/2012, Taylor
 - Added GlobalLogger.java: quick hack to get a "global truth" timeline; seems basically correct as far as positions go, but local times of robots may be wrong (not sure if I'm using the right time variable)
 - Added batch simulations runs on the number of robots, and directory handling to keep traces; see Main.java in StarlSim

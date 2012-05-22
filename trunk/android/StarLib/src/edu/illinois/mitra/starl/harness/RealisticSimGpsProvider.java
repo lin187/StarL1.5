@@ -119,6 +119,12 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 		posupdate.start();
 	}	
 	
+	@Override
+	public void notifyObservers(Object data) {
+		// Catch NullPointerExceptions by ignorning null data
+		if(data != null) super.notifyObservers(data);
+	}
+
 	private class TrackedRobot {
 		private ItemPosition cur = null;
 		private long timeLastUpdate = 0;		

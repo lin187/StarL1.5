@@ -27,13 +27,13 @@ public class SimGlobalVarHolder extends GlobalVarHolder {
 	 * @param initpos this agent's initial position
 	 * @param traceDir the directory to write trace files to
 	 */
-	public SimGlobalVarHolder(String name, HashMap<String,String> participants, SimulationEngine engine, ItemPosition initpos, String traceDir) {
+	public SimGlobalVarHolder(String name, HashMap<String,String> participants, SimulationEngine engine, ItemPosition initpos, String traceDir, int trace_driftMax, float trace_skewBound) {
 		super(name, participants);
 		this.engine = engine;
 		super.comms = new Comms(this, new SimSmartComThread(this, engine.comms));
 		super.gps = new Gps(this, new SimGpsReceiver(this, engine.gps, initpos));
 		super.log = new SimLogging(name,this);
-		super.trace = new Trace(name, traceDir,this);
+		super.trace = new Trace(name, traceDir, this);
 		super.plat = new AndroidPlatform();
 		if(engine.gps instanceof IdealSimGpsProvider) {
 			plat.moat = new IdealSimMotionAutomaton(this, engine.gps);

@@ -93,6 +93,7 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 						}
 					}	
 					setChanged();
+
 					notifyObservers(robot_positions);
 					
 					try {
@@ -104,6 +105,12 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 			}
 		};
 		posupdate.start();
+	}
+
+	@Override
+	public void notifyObservers(Object data) {
+		// Don't notify any observers of null data
+		if(data != null) super.notifyObservers(data);
 	}
 
 	private class TrackedRobot {

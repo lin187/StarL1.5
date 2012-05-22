@@ -184,6 +184,7 @@ public class TraceWriter {
 			}
 			buf.append(text);
 			buf.newLine();
+			buf.flush();
 		} catch(IOException e) {	
 		} catch(NullPointerException e) {
 		}

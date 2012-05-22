@@ -81,7 +81,7 @@ public class Simulation {
 			{
 				nextInitPos = new ItemPosition("bot" + i,rand.nextInt(SimSettings.GRID_XSIZE), rand.nextInt(SimSettings.GRID_YSIZE), rand.nextInt(360));
 			}
-			bots.add(new SimApp("bot"+i,participants, se, nextInitPos, SimSettings.TRACE_OUT_DIR, appToRun));
+			bots.add(new SimApp("bot"+i,participants, se, nextInitPos, SimSettings.TRACE_OUT_DIR, appToRun, SimSettings.TRACE_CLOCK_DRIFT_MAX, SimSettings.TRACE_CLOCK_SKEW_MAX));
 		}
 		
 		// Initialize viewer

@@ -23,7 +23,7 @@ public class LineFollowingApp extends LogicThread {
 	
 	public LineFollowingApp(GlobalVarHolder gvh) {
 		super(gvh);
-		gvh.trace.traceStart(SimSettings.TRACE_CLOCK_DRIFT_MAX, SimSettings.TRACE_CLOCK_SKEW_MAX);
+		gvh.trace.traceStart();
 		moat = gvh.plat.moat;
 	}
 	

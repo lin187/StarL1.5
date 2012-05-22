@@ -15,11 +15,12 @@ function [] = ProcessFile(varargin)
 %     'dir' - the directory images and wpt files are stored in
 %     'dist' - the minimum robot travel distance, default 1000
 %     'robots' - the number of participating robots, default 4
+%     'worldsize' - the size of the world in [WIDTH HEIGHT] form
 
 format longg;
 FNAME = varargin{1};
 %% Options section
-DIR = 'C:\Users\StarL\Dropbox\research\drawings';
+DIR = 'C:\';
 
 % Waypoint spacing and intersection radius constants
 SPACING = 900;
@@ -29,11 +30,11 @@ ROBOT_RADIUS = 325;
 CENTER = true;
 SCALE = true;
 SCALE_MAX = 2700;
-CENTER_LOCATION = [1600 1750];
 
 % Snap to grid options
 SNAP_TO_GRID = false;
 GRIDDIM = [3000 3200];
+CENTER_LOCATION = round(GRIDDIM./2);
 GRIDSIZE = 300;
 
 % Settings
@@ -71,6 +72,9 @@ elseif nargin > 1
             N_ROBOTS = varargin{i+1};
         elseif strcmpi(varargin{i},'dist')
             MIN_TRAVEL_DIST = varargin{i+1};
+		elseif  strcmpi(varargin{i},'worldsize')
+			GRIDDIM = varargin{i+1};
+			CENTER_LOCATION = round(GRIDDIM./2);
         else
             warning(['Unrecognized argument: ' varargin{i}]);
         end
@@ -116,13 +120,13 @@ export_wpt(cLines, INPUT, fullfile(DIR,OUTPUT));
 
 if ~LAUNCH_TRACKER
     for i=-1:N_ROBOTS-1
-        plot_lines(cLines, lines, ghosts,i);
+        plot_lines(cLines, lines, ghosts,i, GRIDDIM);
         if i ~= N_ROBOTS-1
             pause;
         end
     end
 else
-    plot_lines(cLines, lines, ghosts);
+    plot_lines(cLines, lines, ghosts, GRIDDIM);
     pause;
     addpath('..\matlab_optitrack');
     load_settings

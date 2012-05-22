@@ -20,7 +20,7 @@ public class SimulationEngine extends Thread {
 	public SimGpsProvider gps;
 	public DecoupledSimComChannel comms;
 	public long startTime;
-	public long time;
+	public long time = 0;
 	private Object lock = new Object();
 	private boolean done = false;
 	private double ticRate = 0;

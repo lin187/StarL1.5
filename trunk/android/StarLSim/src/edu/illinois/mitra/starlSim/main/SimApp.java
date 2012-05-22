@@ -16,9 +16,9 @@ public class SimApp implements Callable<List<Object>> {
 	
 	protected LogicThread logic;
 	
-	public SimApp(String name, HashMap<String,String> participants, SimulationEngine engine, ItemPosition initpos, String traceDir, Class<?> app) {	
+	public SimApp(String name, HashMap<String,String> participants, SimulationEngine engine, ItemPosition initpos, String traceDir, Class<?> app, int driftMax, float skewBound) {	
 		this.name = name;
-		gvh = new SimGlobalVarHolder(name, participants, engine, initpos, traceDir);
+		gvh = new SimGlobalVarHolder(name, participants, engine, initpos, traceDir, driftMax, skewBound);
 		gvh.comms.startComms();
 		gvh.gps.startGps();
 		
