@@ -1,9 +1,11 @@
-package edu.illinois.mitra.starlSim.draw;
+package edu.illinois.mitra.starlSim.main;
 
 import java.util.ArrayList;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+
+import edu.illinois.mitra.starlSim.draw.RobotData;
 
 /**
  * Global logger for ground truth --- basically the same as the DrawFrame viewer, but logs to text file
@@ -42,6 +44,8 @@ public class GlobalLogger {
 			_fw.flush();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} catch (NullPointerException e) {
+			// Catch the NPE
 		}
 		
 	}
