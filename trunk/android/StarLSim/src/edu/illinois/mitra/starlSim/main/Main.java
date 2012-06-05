@@ -9,7 +9,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		Date now = new Date();
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 		
 		// use relative directories for input and output files, if paths unspecified
 		String pwd = System.getProperty("user.dir") + "/";
