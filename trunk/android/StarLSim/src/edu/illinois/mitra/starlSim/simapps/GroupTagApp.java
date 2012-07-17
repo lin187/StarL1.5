@@ -118,7 +118,8 @@ public class GroupTagApp extends LogicThread implements MessageListener {
 				if (iamleader) {
 					ItemPosition dest = gvh.gps.getWaypointPosition("middle");
 					gvh.plat.moat.goTo(dest);
-					while (gvh.plat.moat.inMotion) {
+					while (gvh.plat.moat.inMotion) 
+					{
 						gvh.sleep(1);
 					}
 					System.out.println("Leader at middle");

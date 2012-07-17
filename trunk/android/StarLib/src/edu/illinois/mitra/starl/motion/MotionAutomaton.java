@@ -309,6 +309,7 @@ public class MotionAutomaton extends RobotMotion  {
 		return (int) rad;
 	}
 	
+		
 	private void startMotion() {
 		running = true;
 		stage = STAGE.INIT;

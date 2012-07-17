@@ -11,6 +11,9 @@ import edu.illinois.mitra.starl.interfaces.MessageListener;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starlSim.main.SimSettings;
 
+//UP HERE
+
+
 public class RaceApp extends LogicThread implements MessageListener {
 
 	SortedSet<String> toVisit = new TreeSet<String>();
