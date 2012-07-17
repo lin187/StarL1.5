@@ -9,7 +9,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		Date now = new Date();
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 		
 		// use relative directories for input and output files, if paths unspecified
 		String pwd = System.getProperty("user.dir") + "/";
@@ -67,13 +67,6 @@ public class Main {
 			}
 		} else {
 			Simulation sim = new Simulation(SimSettings.N_BOTS, SimSettings.waypoint_file, SimSettings.initial_file, SimSettings.app);
-			sim.enableDistacePredicate(SimSettings.PREDICATE_RADIUS, SimSettings.PREDICATE_OUT_DIR);
-			sim.start();
-		}
-				// TODO: close window on finish...
-			}
-		} else {
-			Simulation sim = new Simulation(SimSettings.N_BOTS, SimSettings.waypoint_file, SimSettings.initial_positions, SimSettings.app);
 			sim.enableDistacePredicate(SimSettings.PREDICATE_RADIUS, SimSettings.PREDICATE_OUT_DIR);
 			sim.start();
 		}

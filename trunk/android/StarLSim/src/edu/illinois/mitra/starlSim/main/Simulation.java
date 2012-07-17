@@ -22,7 +22,7 @@ import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.PositionList;
 import edu.illinois.mitra.starlSim.draw.DrawFrame;
-import edu.illinois.mitra.starlSim.draw.GlobalLogger;
+import edu.illinois.mitra.starlSim.main.GlobalLogger;
 import edu.illinois.mitra.starlSim.draw.RobotData;
 
 public class Simulation {	
@@ -69,6 +69,8 @@ public class Simulation {
 		for(int i = 0; i < n_bots; i++) {
 			participants.put(SimSettings.BOT_NAME+i, Integer.toString(i));
 		}
+		
+		// initial condition
 		for(int i = 0; i < n_bots; i++) {			
 			ItemPosition nextInitPos = new ItemPosition("bot"+i,0,0,0);
 			if(initpos != null && initpos.size() > 0) {
@@ -79,7 +81,9 @@ public class Simulation {
 			}
 			else
 			{
+				// random initial condition if unspecified
 				nextInitPos = new ItemPosition("bot" + i,rand.nextInt(SimSettings.GRID_XSIZE), rand.nextInt(SimSettings.GRID_YSIZE), rand.nextInt(360));
+				//nextInitPos = new ItemPosition("bot" + i, n_bots * 2 * (int)Math.toDegrees(Math.cos(2*Math.PI * (i-1) / n_bots)), n_bots * 2 *(int)Math.toDegrees(Math.sin(2*Math.PI * (i-1) / n_bots)), rand.nextInt(360));
 			}
 			bots.add(new SimApp("bot"+i,participants, se, nextInitPos, SimSettings.TRACE_OUT_DIR, appToRun, SimSettings.TRACE_CLOCK_DRIFT_MAX, SimSettings.TRACE_CLOCK_SKEW_MAX));
 		}

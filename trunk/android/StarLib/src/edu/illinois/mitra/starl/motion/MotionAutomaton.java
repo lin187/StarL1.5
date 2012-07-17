@@ -6,6 +6,7 @@ import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.PositionList;
+import edu.illinois.mitra.starl.motion.MotionParameters.COLAVOID_MODE_TYPE;
 
 /**
  * Motion controller which extends the RobotMotion abstract class. Capable of going to destination waypoints and turning to face waypoints using custom
@@ -28,7 +29,7 @@ public class MotionAutomaton extends RobotMotion  {
 	
 	public static final int A_slowturn = 25;
 	
-	public static final int ROBOT_RADIUS = 180;
+	public static final int ROBOT_RADIUS = 180; // TODO: put this in SimSettings and make consistent (mod a scaling factor): this is another (different valued) robot radius
 	
 	// DELAY BETWEEN EACH RUN OF THE AUTOMATON
 	public static final int DELAY_TIME = 60;
@@ -69,11 +70,17 @@ public class MotionAutomaton extends RobotMotion  {
 	private COLSTAGE colnext = null; 
 	private int col_straightime = 0;
 	private boolean halted = false;
+	
+	double LINSPEED_CONST;
+	double TURNSPEED_CONST;
 
 	public MotionAutomaton(GlobalVarHolder gvh, BluetoothInterface bti) {
 		super(gvh.id.getName());
 		this.gvh = gvh;
 		this.bti = bti;
+		this.param = defaultParam;
+		this.LINSPEED_CONST = (this.param.LINSPEED_MAX - this.param.LINSPEED_MIN)/(1.0*(R_slowfwd - R_goal)); // constant, don't recompute every time (division is expensive); relies on param
+		this.TURNSPEED_CONST = (this.param.TURNSPEED_MAX - this.param.TURNSPEED_MIN)/(A_slowturn - A_smallturn); // const, don't recompute every time (division is expensive); relies on param
 	}
 	
 	public void goTo(ItemPosition dest) {
@@ -121,7 +128,7 @@ public class MotionAutomaton extends RobotMotion  {
 				int angle = mypos.angleTo(destination);
 				int absangle = Math.abs(angle);
 				
-				if(param.COLAVOID_MODE == MotionParameters.BUMPERCARS) {
+				if(param.COLAVOID_MODE == COLAVOID_MODE_TYPE.BUMPERCARS) {
 					colliding = false;
 				} else {
 					colliding = collision();
@@ -206,7 +213,7 @@ public class MotionAutomaton extends RobotMotion  {
 					}
 					next = null;
 					//gvh.sleep(DELAY_TIME);
-				} else if((colliding && (param.COLAVOID_MODE == MotionParameters.USE_COLAVOID)) || stage == null) {					
+				} else if((colliding && (param.COLAVOID_MODE == COLAVOID_MODE_TYPE.USE_COLAVOID)) || stage == null) {					
 					// Collision imminent! Stop the robot
 					if(stage != null) {
 						gvh.log.d(TAG, "Imminent collision detected!");
@@ -261,7 +268,7 @@ public class MotionAutomaton extends RobotMotion  {
 						gvh.log.i(TAG, "Advancing stage to " + colnext);
 					}
 					colnext = null;
-				} else if(colliding && (param.COLAVOID_MODE == MotionParameters.STOP_ON_COLLISION)) {
+				} else if(colliding && (param.COLAVOID_MODE == COLAVOID_MODE_TYPE.STOP_ON_COLLISION)) {
 					// Stop the robot if collision avoidance is disabled and a collision is imminent
 					if(!halted) {
 						halted = true;
@@ -290,7 +297,6 @@ public class MotionAutomaton extends RobotMotion  {
 		running = false;
 		inMotion = false;
 	}
-	
 
 	@Override
 	public void motion_resume() {
@@ -309,6 +315,7 @@ public class MotionAutomaton extends RobotMotion  {
 		return (int) rad;
 	}
 	
+		
 	private void startMotion() {
 		running = true;
 		stage = STAGE.INIT;
@@ -352,17 +359,22 @@ public class MotionAutomaton extends RobotMotion  {
 		if(angle > A_slowturn) {
 			return param.TURNSPEED_MAX;
 		} else if(angle > A_smallturn && angle <= A_slowturn) {
-			double m = (param.TURNSPEED_MAX - param.TURNSPEED_MIN)/(A_slowturn-A_smallturn);
-			return param.TURNSPEED_MIN+ (int)((angle-A_smallturn)*m);
+			return param.TURNSPEED_MIN+ (int)((angle-A_smallturn)*TURNSPEED_CONST);
 		} else {
 			return param.TURNSPEED_MIN;
 		}
 	}
+	
+	/**
+	 * Slow down linearly upon coming within R_slowfwd of the goal
+	 * 
+	 * @param distance
+	 * @return
+	 */
 	private int LinSpeed(int distance) {
 		if(distance > R_slowfwd) return param.LINSPEED_MAX;
 		if(distance > R_goal && distance <= R_slowfwd) {
-			double m = (param.LINSPEED_MAX - param.LINSPEED_MIN)/(1.0*(R_slowfwd - R_goal));
-			return param.LINSPEED_MIN + (int)((distance-R_goal)*m);
+			return param.LINSPEED_MIN + (int)((distance - R_goal)*LINSPEED_CONST);
 		}
 		return param.LINSPEED_MIN;
 	}	
@@ -385,6 +397,8 @@ public class MotionAutomaton extends RobotMotion  {
 
 	@Override
 	public void setParameters(MotionParameters param) {
-		this.defaultParam = param;
+		this.defaultParam = param; // TODO: why doesn't this set this.param?
+		this.LINSPEED_CONST = (param.LINSPEED_MAX - param.LINSPEED_MIN)/(1.0*(R_slowfwd - R_goal)); // constant, don't recompute every time (division is expensive); relies on param
+		this.TURNSPEED_CONST = (param.TURNSPEED_MAX - param.TURNSPEED_MIN)/(A_slowturn - A_smallturn); // const, don't recompute every time (division is expensive); relies on param
 	}
 }

@@ -23,7 +23,7 @@ public class CommsTestApp extends LogicThread {
 		le = new RandomLeaderElection(gvh);
 		sn = new BarrierSynchronizer(gvh);
 		
-		results = new String[2];
+		results = new String[2]; // TODO: what does this do?
 		results[0] = name;
 	}
 

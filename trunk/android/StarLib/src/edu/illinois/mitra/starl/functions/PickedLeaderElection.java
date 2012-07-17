@@ -1,3 +1,8 @@
+//Written By Lucas Buccafusca
+//6-15-2012
+//PickedLeaderElection takes the 'first' robot and makes it the leader
+// The 'first' robot is the one with the alphabetical first name
+
 package edu.illinois.mitra.starl.functions;
 
 import java.util.HashSet;
@@ -28,44 +33,32 @@ import edu.illinois.mitra.starl.objects.Common;
  * @version 1.0
  *
  */
-public class RandomLeaderElection extends StarLCallable implements LeaderElection, MessageListener {
+public class PickedLeaderElection extends StarLCallable implements LeaderElection, MessageListener {
 
 	private static final String TAG = "RandomLeaderElection";
 	private static final String ERR = "Critical Error";
 	private int nodes = 0;
 	private static int MAX_WAIT_TIME = 5000;
 	
-	private SortedSet<Ballot> ballots;
-	private Set<String> receivedFrom;
+	private SortedSet<Ballot> ballots = new TreeSet<Ballot>();
+	private Set<String> receivedFrom = new HashSet<String>();
 	
-	private String announcedLeader;
+	private String announcedLeader = null;
 	
 	private ExecutorService executor = new ScheduledThreadPoolExecutor(1);
 
 	private Future<List<Object>> elected;
 	
-	public RandomLeaderElection(GlobalVarHolder gvh) {
+	public PickedLeaderElection(GlobalVarHolder gvh) {
 		super(gvh,"RandomLeaderElection");
-		//results = new String[1];
-		//nodes = gvh.id.getParticipants().size();
-		//gvh.trace.traceEvent(TAG, "Created");
-		registerListeners();
-	}
-
-	/**
-	 * Executor implementing random leader election
-	 */
-	@Override
-	public List<Object> callStarL() {
-		// clear sets between successive calls (needs to be here instead of above in class declaration)
-		ballots = new TreeSet<Ballot>();
-		receivedFrom = new HashSet<String>();
-		announcedLeader = null;
-		
 		results = new String[1];
 		nodes = gvh.id.getParticipants().size();
 		gvh.trace.traceEvent(TAG, "Created");
-		
+		registerListeners();
+	}
+			
+	@Override
+	public List<Object> callStarL() {
 		gvh.trace.traceEvent(TAG, "Beginning Election");
 		gvh.log.d(TAG, "Beginning election...");
 		nodes = gvh.id.getParticipants().size();
@@ -103,11 +96,14 @@ public class RandomLeaderElection extends StarLCallable implements LeaderElectio
 		
 		gvh.log.d(TAG, "Received all numbers, determining leader.");
 		// Determine the leader
-		String leader = null;
+		Object[] botarray;
+		String leader=null;
 		if(!error) {
 			gvh.log.d(TAG, "No errors, determining leader now.");
-			// Retrieve all names that submitted the largest random number, sort them
-			leader = ballots.first().toString();
+			// Retrieve all names and take the one whose name comes first (in order of the alphabet)
+			botarray =gvh.id.getParticipants().toArray();
+			leader=(String) botarray[0];
+			
 			gvh.trace.traceEvent(TAG, "Determined leader", leader);
 			
 			// Have determined a leader, broadcast the result
@@ -163,18 +159,10 @@ public class RandomLeaderElection extends StarLCallable implements LeaderElectio
 		}
 	}
 	
-	/**
-	 * Call the callStarL executor and initate leader election
-	 * 
-	 */
 	public void elect() {
 		elected = executor.submit(this);
 	}
 
-	/**
-	 * Return the name of the determined leader, if leader election is finished, or null if not
-	 * 
-	 */
 	@Override
 	public String getLeader() {
 		if(elected.isDone()) {
@@ -200,12 +188,7 @@ public class RandomLeaderElection extends StarLCallable implements LeaderElectio
 		gvh.comms.removeMsgListener(Common.MSG_RANDLEADERELECT_ANNOUNCE);		
 	}
 	
-	/**
-	 * Comparable class used to order agent votes lexicographically using agent identifiers 
-	 * 
-	 * @author Adam Zimmerman
-	 *
-	 */
+	
 	private class Ballot implements Comparable<Ballot> {
 		public String candidate;
 		public int value;
@@ -219,14 +202,14 @@ public class RandomLeaderElection extends StarLCallable implements LeaderElectio
 			return candidate;
 		}
 
+
 		@Override
 		public int compareTo(Ballot other) {
-			// compare using agent ids if their vote values are equal
 			if(other.value == this.value) {
 				return candidate.compareTo(other.candidate);
 			}
 			return value - other.value;
-		}
+		}		
 	}
 	
 	@Override

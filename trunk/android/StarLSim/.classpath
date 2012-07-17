@@ -4,6 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="lib" path="/StarLib/bin/starlib.jar" sourcepath="/StarLib/src"/>
 	<classpathentry kind="src" path="/StarLib"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/lightpainter"/>
+	<classpathentry kind="lib" path="C:/Users/Lucas/Desktop/Documents/ojalgo-32.6/bin/ojalgo-32.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

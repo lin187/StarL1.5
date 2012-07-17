@@ -12,16 +12,16 @@ public class MotionParameters {
 	public int TURNSPEED_MIN = 25;
 	
 	public int LINSPEED_MAX = 250;
-	public int LINSPEED_MIN = 175;
+	public int LINSPEED_MIN = 250;
 	
 	/**
 	 * If false, the robot will continue whatever motion was in progress when the destination is reached
 	 */
-	public boolean STOP_AT_DESTINATION = true;
+	public boolean STOP_AT_DESTINATION = false;
 	
-	public boolean ENABLE_ARCING = true;
-	public int ARCSPEED_MAX = 200;
-	public int ARCANGLE_MAX = 25;
+	public boolean ENABLE_ARCING = false;
+	public int ARCSPEED_MAX = 0;
+	public int ARCANGLE_MAX = 0;
 	
 	/**
 	 * Sets the collision avoidance mode. Options are:</br>
@@ -29,9 +29,7 @@ public class MotionParameters {
 	 * STOP_ON_COLLISION - stop if a collision is imminent and don't resume until the blocker moves</br>
 	 * BUMPERCARS - ignore collision detection and just keep going no matter what</br>
 	 */
-	public int COLAVOID_MODE = USE_COLAVOID;	
+	public COLAVOID_MODE_TYPE COLAVOID_MODE = COLAVOID_MODE_TYPE.USE_COLAVOID;	
 	
-	public static final int USE_COLAVOID = 0;
-	public static final int STOP_ON_COLLISION = 1;
-	public static final int BUMPERCARS = 2;
+	public static enum COLAVOID_MODE_TYPE { USE_COLAVOID, STOP_ON_COLLISION, BUMPERCARS };
 }

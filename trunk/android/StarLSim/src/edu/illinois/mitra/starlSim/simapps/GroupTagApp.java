@@ -15,6 +15,7 @@ import edu.illinois.mitra.starl.interfaces.MessageListener;
 import edu.illinois.mitra.starl.interfaces.MutualExclusion;
 import edu.illinois.mitra.starl.interfaces.Synchronizer;
 import edu.illinois.mitra.starl.motion.MotionParameters;
+import edu.illinois.mitra.starl.motion.MotionParameters.COLAVOID_MODE_TYPE;
 import edu.illinois.mitra.starl.motion.RobotMotion;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.PositionList;
@@ -81,7 +82,7 @@ public class GroupTagApp extends LogicThread implements MessageListener {
 	@Override
 	public List<Object> callStarL() {
 		MotionParameters mp = new MotionParameters();
-		mp.COLAVOID_MODE = MotionParameters.BUMPERCARS;
+		mp.COLAVOID_MODE = COLAVOID_MODE_TYPE.BUMPERCARS;
 		mp.STOP_AT_DESTINATION = false;
 		
 		gvh.plat.moat.setParameters(mp);
@@ -118,7 +119,8 @@ public class GroupTagApp extends LogicThread implements MessageListener {
 				if (iamleader) {
 					ItemPosition dest = gvh.gps.getWaypointPosition("middle");
 					gvh.plat.moat.goTo(dest);
-					while (gvh.plat.moat.inMotion) {
+					while (gvh.plat.moat.inMotion) 
+					{
 						gvh.sleep(1);
 					}
 					System.out.println("Leader at middle");

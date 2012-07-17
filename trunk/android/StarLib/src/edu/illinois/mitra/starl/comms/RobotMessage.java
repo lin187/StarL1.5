@@ -52,6 +52,8 @@ public class RobotMessage implements Traceable {
 		this.contents = new MessageContents(contents);
 	}
 	
+	
+	
 	/**
 	 * @param other A RobotMessage to clone
 	 */
