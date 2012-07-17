@@ -22,6 +22,7 @@ import edu.illinois.mitra.starl.interfaces.MessageListener;
 import edu.illinois.mitra.starl.interfaces.MutualExclusion;
 import edu.illinois.mitra.starl.interfaces.Synchronizer;
 import edu.illinois.mitra.starl.motion.MotionParameters;
+import edu.illinois.mitra.starl.motion.MotionParameters.COLAVOID_MODE_TYPE;
 import edu.illinois.mitra.starl.motion.RobotMotion;
 
 public class AppLogic extends LogicThread implements MessageListener {
@@ -89,7 +90,7 @@ public class AppLogic extends LogicThread implements MessageListener {
 		// Maximum angle at which robots can curve to their destination.
 		// This prevents "soft" corners and forces robots to turn in place at sharper angles		
 		param.ARCANGLE_MAX = 25;
-		param.COLAVOID_MODE = MotionParameters.STOP_ON_COLLISION;
+		param.COLAVOID_MODE = COLAVOID_MODE_TYPE.STOP_ON_COLLISION;
 	}
 	
 	@Override

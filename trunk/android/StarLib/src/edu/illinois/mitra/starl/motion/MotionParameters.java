@@ -29,9 +29,7 @@ public class MotionParameters {
 	 * STOP_ON_COLLISION - stop if a collision is imminent and don't resume until the blocker moves</br>
 	 * BUMPERCARS - ignore collision detection and just keep going no matter what</br>
 	 */
-	public int COLAVOID_MODE = USE_COLAVOID;	
+	public COLAVOID_MODE_TYPE COLAVOID_MODE = COLAVOID_MODE_TYPE.USE_COLAVOID;	
 	
-	public static final int USE_COLAVOID = 0;
-	public static final int STOP_ON_COLLISION = 1;
-	public static final int BUMPERCARS = 2;
+	public static enum COLAVOID_MODE_TYPE { USE_COLAVOID, STOP_ON_COLLISION, BUMPERCARS };
 }

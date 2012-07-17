@@ -10,7 +10,6 @@ import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.LeaderElection;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.interfaces.Synchronizer;
-import edu.illinois.mitra.starl.motion.MotionParameters;
 import edu.illinois.mitra.starl.motion.RobotMotion;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.PositionList;
@@ -39,9 +38,6 @@ public class FlockingTestTwo extends LogicThread {
         		sn = new BarrierSynchronizer(gvh);
                 
                 moat = gvh.plat.moat;
-                MotionParameters param = new MotionParameters();
-                //param.COLAVOID_MODE = MotionParameters.BUMPERCARS; // disable collision avoidance
-                moat.setParameters(param);
                 //n_waypoints = gvh.gps.getWaypointPositions().getNumPositions();
                 n_waypoints = Integer.MAX_VALUE;
                 String n = wpn + gvh.id.getName() + cur_waypoint;
@@ -121,18 +117,23 @@ public class FlockingTestTwo extends LogicThread {
                                             
                                             //int offset = (int)Math.sqrt(N)* count; // default is i-1
                                             
-                                            int offset = leaderNum * count;
+                                            int dir = leaderNum % 2 == 0 ? -1 : 1; // ccw vs. cw based on odd/even leader number
+                                            //int offset = dir * (int) (Math.min( Math.floor(Math.sqrt(N)) - 1, leaderNum) * count);
+                                            int offset = dir * 1;
                                             count += 1;
                                             ItemPosition dest;
                                             if (count % 2 == 0) {
-                                            	dest = new ItemPosition(n, N * 2 * (int)Math.toDegrees(Math.cos(2*Math.PI * (robotNum+offset) / N)), N * 2 *(int)Math.toDegrees(Math.sin(2*Math.PI * (robotNum+offset) / N)), 1);
+                                            	double rnx = N * 2;
+                                            	double rny = N * 2;
+                                            	dest = new ItemPosition(n, (int) rnx * (int)Math.toDegrees(Math.cos(2*Math.PI * (robotNum+offset) / N)), (int) rny *(int)Math.toDegrees(Math.sin(2*Math.PI * (robotNum+offset) / N)), 1);
                                             }
                                             else
                                             {
                                             	double tmpx = 2*Math.PI * (robotNum+offset) / N;
                                             	double tmpy = 2*Math.PI * (robotNum+offset) / N;
-                                            	
-                                            	dest = new ItemPosition(n, N * 4 * (int)Math.toDegrees(Math.cos(2*Math.PI * (robotNum+offset) / N)), N * 4 *(int)Math.toDegrees(Math.sin(2*Math.PI * (robotNum+offset) / N)), 1);
+                                            	double rnx = N * 2;
+                                            	double rny = N * 2;
+                                            	dest = new ItemPosition(n, (int)rnx * (int)Math.toDegrees(Math.cos(2*Math.PI * (robotNum+offset) / N)), (int)rny *(int)Math.toDegrees(Math.sin(2*Math.PI * (robotNum+offset) / N)), 1);
                                             }
                                             
                                             //offset = 0;

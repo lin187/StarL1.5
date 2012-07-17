@@ -11,6 +11,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
+import edu.illinois.mitra.starlSim.main.SimSettings;
 
 
 @SuppressWarnings("serial")
@@ -24,9 +25,13 @@ public class DrawPanel extends ZoomablePanel
 	NumberFormat format = new DecimalFormat("0.00");
 	int scaleFactor = 0;
 	
+	private ArrayList<RobotData> _trace = new ArrayList<RobotData>(); // trace of robot positions
+	
 	public DrawPanel()
 	{
-		 
+		if (SimSettings.DRAW_TRACE) {
+			_trace.ensureCapacity(SimSettings.DRAW_TRACE_LENGTH); // allocate enough memory (huge performance gains)
+		}
 	}
 
 	@Override
@@ -39,7 +44,7 @@ public class DrawPanel extends ZoomablePanel
 		{
 			for (RobotData rd : data)
 			{
-				drawRobot(g,rd);
+				drawRobot(g,rd,true);
 				
 				// Draw world bounding box
 				g.setColor(Color.gray);
@@ -48,6 +53,24 @@ public class DrawPanel extends ZoomablePanel
 				
 				// Determine scale
 				scaleFactor =  (int) toRealCoords(a).distance(toRealCoords(b));
+				
+				// keep past history of robot positions (very slow)
+				// TODO: do this smarter, e.g., is there a way to avoid clearing the previously drawn robot positions for up to SimSettings.DRAW_TRACE_LENGTH calls to draw? this would be significantly more efficient
+				if (SimSettings.DRAW_TRACE) {
+					_trace.add(rd);
+					if (_trace.size() > SimSettings.DRAW_TRACE_LENGTH)
+					{
+						_trace.remove(0);
+						
+					}
+				}
+			}
+			
+			// draw past history of robot positions
+			if (SimSettings.DRAW_TRACE) {
+				for (RobotData rd : _trace) {
+					drawRobot(g,rd,false);
+				}
 			}
 		}
 	}
@@ -63,7 +86,7 @@ public class DrawPanel extends ZoomablePanel
 		g.drawLine(getSize().width - 110, getSize().height-10, getSize().width-10, getSize().height-10);
 	}
 	
-	private void drawRobot(Graphics2D g, RobotData rd)
+	private void drawRobot(Graphics2D g, RobotData rd, boolean drawId)
 	{
 		g.setStroke(new BasicStroke(2));
 		
@@ -72,7 +95,7 @@ public class DrawPanel extends ZoomablePanel
 		else
 			g.setColor(Color.black);
 		
-		int radius = 50;
+		int radius = 50; // TODO: is this accurate / why doesn't it use the constants from SimSettings (perhaps with a scaling factor?) ; try to avoid duplicating constants
 		
 		if (rd.radius != 0)
 			radius = rd.radius;
@@ -89,10 +112,12 @@ public class DrawPanel extends ZoomablePanel
 		
 		g.draw(l);
 		
-		
-		// write name to the right of the robot
-		g.setFont(new Font("Tahoma", Font.PLAIN, 55) );
-		g.drawString(rd.name, rd.x - 55, rd.y + radius + 50);
+		if (drawId)
+		{
+			// write name to the right of the robot
+			g.setFont(new Font("Tahoma", Font.PLAIN, 55) ); // TODO: make this configurable in SimSettings
+			g.drawString(rd.name, rd.x - 55, rd.y + radius + 50);
+		}
 	}
 
 	public void updateData(ArrayList <RobotData> data, long time)
