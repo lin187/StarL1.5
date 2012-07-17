@@ -1,5 +1,6 @@
 % Main OptiTrack interface
 % Settings
-WPT_FILENAME = 'C:\tag.wpt';
+WPT_FILENAME = 'C:\flock.wpt';
 load_settings;
 mainprog;
+    

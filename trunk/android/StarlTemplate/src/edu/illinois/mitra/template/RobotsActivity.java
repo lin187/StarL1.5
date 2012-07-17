@@ -158,7 +158,6 @@ public class RobotsActivity extends Activity implements MessageListener {
 		
 		txtRobotName.setText(participants[selected_robot]);
 		txtRobotName.setOnClickListener(new OnClickListener() {
-			@Override
 			public void onClick(View arg0) {
 				AlertDialog.Builder sel_robot_builder = new AlertDialog.Builder(RobotsActivity.this);
 				sel_robot_builder.setTitle("Who Am I?");
@@ -200,7 +199,6 @@ public class RobotsActivity extends Activity implements MessageListener {
 		super.onPause();
 	}
 
-	@Override
 	public void messageReceied(RobotMessage m) {
 		switch(m.getMID()) {
 		case Common.MSG_ACTIVITYLAUNCH:

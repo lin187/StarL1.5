@@ -10,7 +10,6 @@ public class SimSettings {
 	public static String 		initial_path		= null;					// path for initial condition waypoint files; if null, uses relative paths
 	public static String 		initial_file		= null;			// filename for a .wpt file with positions or null to enable random starting locations (should be in initial_path)
 	public static Class<?> 		app 				= FlockingTestTwo.class;	// The application to be simulated
-	//public static Class<?> 		app 				= edu.illinois.mitra.lightpaint.main.AppLogic.class;	// lightpainting
 	
 	public static boolean		IDEAL_MOTION		= false;			// True enables ideal movement, false uses the simulated motion automaton
 	public static double		TIC_TIME_RATE		= 5;				// The desired rate of time passing. 0 = no limit, 0.5 = half real-time, 1.0 = real-time, etc. 
