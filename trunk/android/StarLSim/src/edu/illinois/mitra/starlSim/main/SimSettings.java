@@ -5,9 +5,6 @@ import edu.illinois.mitra.starlSim.simapps.*;
 public class SimSettings {
 	// General simulation settings
 	public static int 			N_BOTS 				= 16;					// The number of robots to simulate
-	public static String	 	waypoint_file		= "C:/Users/Lucas/Desktop/Documents/workspace/code/gpstest.wpt";		// Path to a .wpt file with waypoints
-	public static String 		initial_positions 	= "C:/Users/Lucas/Desktop/Documents/workspace/code/ips.wpt";				// Path to a .wpt file with positions or null to enable random starting locations
-	public static Class<?> 		app 				=FlockingWithoutComms.class;	// The application to be simulated
 
 	public static String	 	waypoint_path		= null;					// path for waypoint files; if null, uses relative paths		
 	public static String	 	waypoint_file		= "geocast_dest.wpt";	// filename for a .wpt file with waypoints (should be in waypoint_path)
