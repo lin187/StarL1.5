@@ -5,6 +5,10 @@ import edu.illinois.mitra.starlSim.simapps.*;
 public class SimSettings {
 	// General simulation settings
 	public static int 			N_BOTS 				= 16;					// The number of robots to simulate
+	public static String	 	waypoint_file		= "C:/Users/Lucas/Desktop/Documents/workspace/code/gpstest.wpt";		// Path to a .wpt file with waypoints
+	public static String 		initial_positions 	= "C:/Users/Lucas/Desktop/Documents/workspace/code/ips.wpt";				// Path to a .wpt file with positions or null to enable random starting locations
+	public static Class<?> 		app 				=FlockingWithoutComms.class;	// The application to be simulated
+
 	public static String	 	waypoint_path		= null;					// path for waypoint files; if null, uses relative paths		
 	public static String	 	waypoint_file		= "geocast_dest.wpt";	// filename for a .wpt file with waypoints (should be in waypoint_path)
 	public static String 		initial_path		= null;					// path for initial condition waypoint files; if null, uses relative paths
@@ -16,8 +20,8 @@ public class SimSettings {
 	public static double		TIC_TIME_RATE		= 10;				// The desired rate of time passing. 0 = no limit, 0.5 = half real-time, 1.0 = real-time, etc. 
 	
 	// Grid size (when generating random robot positions)
-	public static int			GRID_XSIZE	= 5000;
-	public static int			GRID_YSIZE	= 5000;
+	public static int			GRID_XSIZE	= 3000;
+	public static int			GRID_YSIZE	= 3000;
 	
 	// Position calculation period and noise options
 	public static long 			GPS_PERIOD 				= 75;	// Milliseconds
@@ -29,7 +33,7 @@ public class SimSettings {
 	public static float			TRACE_CLOCK_SKEW_MAX	= 0.00000015f;
 
 	// Initial start delay
-	public static int			START_DELAY_MAX	= 500;			// Milliseconds
+	public static int			START_DELAY_MAX	= 0;			// Milliseconds
 	
 	// Message delay and loss options
 	public static int 			MSG_MEAN_DELAY 			= 15;	// Milliseconds

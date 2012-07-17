@@ -60,8 +60,8 @@ public class LineFollowingApp extends LogicThread {
 	}
 	
 	private ItemPosition generateRandomPoint() {
-		int x = rand.nextInt(500) - 250;
-		int y = rand.nextInt(500) - 250;
+		int x = rand.nextInt(5000) - 250;
+		int y = rand.nextInt(5000) - 250;
 		ItemPosition mypos = gvh.gps.getMyPosition();
 		return new ItemPosition("goHere", mypos.x + x, mypos.y + y, 0);
 	}

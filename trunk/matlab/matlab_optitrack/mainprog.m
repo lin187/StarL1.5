@@ -47,6 +47,11 @@ bots = struct('X',{0},'Y',{0},'yaw',{0},'visible',{0},'name',robot_names,...
 % Set up the plot
 fig = figure('KeyPressFcn',@fig_key_handler);
 
+% Set up the file handle
+if(SAVE_TO_FILE)
+   fileHandle = fopen(OUTPUT_FILENAME,'w+'); 
+end
+
 % Start the frame count for drawing and timer for transmitting
 frameCount = 0;
 tic;
@@ -135,6 +140,9 @@ while 1
              waypoints_transmitted = 1;
              server_send_waypoints(waypoints);
              server_send_robots(bots);
+             if(SAVE_TO_FILE)
+                save_robot_data(bots, fileHandle);
+             end
          end
 
         % If launching the robots
@@ -161,5 +169,9 @@ if shutdown_track == 1
     track_shutdown();
     save('run_number.mat', 'run_number');
     clear
+end
+
+if(SAVE_TO_FILE)
+    fclose(fileHandle);
 end
 close all

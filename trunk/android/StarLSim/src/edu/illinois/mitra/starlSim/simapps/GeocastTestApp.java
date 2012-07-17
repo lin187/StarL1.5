@@ -37,9 +37,6 @@ public class GeocastTestApp extends LogicThread implements MessageListener {
 
 	@Override
 	public List<Object> callStarL() {
-		String robotName = gvh.id.getName();
-        Integer robotNum = Integer.parseInt(robotName.substring(3)); // assumes: botYYY
-		
 		while(true) {
 			switch(stage) {
 			case START:
@@ -48,40 +45,31 @@ public class GeocastTestApp extends LogicThread implements MessageListener {
 				stage = STAGE.MOVE;
 				break;
 			case MOVE:
-			{
 				int go_to = rand.nextInt(n_waypoints);
 				while(go_to == nextpt) {  go_to = rand.nextInt(n_waypoints); }
 				nextpt = go_to;
-				nextpt = nextpt % 2;
-				String wp = "BOT" + robotNum + "DEST" + nextpt;
-				gvh.plat.moat.goTo(gvh.gps.getWaypointPosition(wp));
+				gvh.plat.moat.goTo(gvh.gps.getWaypointPosition("DEST" + nextpt));
 				// Move to the next waypoint
 				while(gvh.plat.moat.inMotion) {gvh.sleep(10);}
 				stage = STAGE.SEND;
 				visited_pts ++;
 				break;
-			}
 			case SEND:
-			{
 				MessageContents contents = new MessageContents("hello from " + name);
 				
 				// Send a geocast to a random waypoint
 				// Circular target area:
 				int sendTo = rand.nextInt(n_waypoints);
-				sendTo = sendTo % 2;
-				int sendToBot = rand.nextInt(SimSettings.N_BOTS);
-				String wp = "BOT" + sendToBot + "DEST" + sendTo;
-				ItemPosition sendToPos = gvh.gps.getWaypointPosition(wp);
+				ItemPosition sendToPos = gvh.gps.getWaypointPosition("DEST" + sendTo);
 				geo.sendGeocast(contents, 99, sendToPos.x, sendToPos.y, 300);
-				System.out.println(name + " sending geocast to " + wp);
+				System.out.println(name + " sending geocast to DEST" + sendTo);
 				
-				if(visited_pts >= 10) {
+				if(visited_pts == 2) {
 					stage = STAGE.DONE;
 				} else {
 					stage = STAGE.MOVE;
 				}
 				break;
-			}
 			case DONE:
 				gvh.trace.traceEnd();
 				return returnResults();
