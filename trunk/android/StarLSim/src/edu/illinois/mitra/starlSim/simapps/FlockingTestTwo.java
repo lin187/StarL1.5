@@ -2,9 +2,14 @@ package edu.illinois.mitra.starlSim.simapps;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
+import edu.illinois.mitra.starl.functions.BarrierSynchronizer;
+import edu.illinois.mitra.starl.functions.RandomLeaderElection;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
+import edu.illinois.mitra.starl.interfaces.LeaderElection;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
+import edu.illinois.mitra.starl.interfaces.Synchronizer;
 import edu.illinois.mitra.starl.motion.MotionParameters;
 import edu.illinois.mitra.starl.motion.RobotMotion;
 import edu.illinois.mitra.starl.objects.ItemPosition;
@@ -12,7 +17,7 @@ import edu.illinois.mitra.starl.objects.PositionList;
 
 public class FlockingTestTwo extends LogicThread {
 
-		private enum STAGE { START, MOVE, DONE }
+		private enum STAGE { START, SYNC, ELECT, MOVE, DONE }
         private STAGE stage = STAGE.START;
 
         private RobotMotion moat;
@@ -22,17 +27,24 @@ public class FlockingTestTwo extends LogicThread {
         PositionList pl = new PositionList();
         String wpn = "wp";
         
+    	private LeaderElection le;
+    	private Synchronizer sn;
+    	
+        
         public FlockingTestTwo(GlobalVarHolder gvh) {
                 super(gvh);
+                gvh.trace.traceStart();
+                
+        		le = new RandomLeaderElection(gvh);
+        		sn = new BarrierSynchronizer(gvh);
                 
                 moat = gvh.plat.moat;
                 MotionParameters param = new MotionParameters();
-                param.COLAVOID_MODE = MotionParameters.BUMPERCARS;
+                //param.COLAVOID_MODE = MotionParameters.BUMPERCARS; // disable collision avoidance
                 moat.setParameters(param);
                 //n_waypoints = gvh.gps.getWaypointPositions().getNumPositions();
                 n_waypoints = Integer.MAX_VALUE;
                 String n = wpn + gvh.id.getName() + cur_waypoint;
-                //System.out.println(n);
                 pl.update(new ItemPosition(n, 2000, 2000, 0));
         }
 
@@ -40,72 +52,136 @@ public class FlockingTestTwo extends LogicThread {
         public List<Object> callStarL() {
                 String robotName = gvh.id.getName();
                 Integer robotNum = Integer.parseInt(robotName.substring(3)); // assumes: botYYY
-                
+                Integer count = 0;
+                Integer leaderNum = 1;
                 
                 while(true) {                   
-                        switch (stage) {
-                        case START:
-                                //gvh.trace.traceStart();
-                                stage = STAGE.MOVE;
-                               //moat.goTo(gvh.gps.getWaypointPosition("DEST"+cur_waypoint));
-                                //System.out.println(robotName + ": Starting motion!");
-                                break;
-                        
-                        case MOVE:
+                    switch (stage) {
+                        case START: {
+                        	sn.barrier_sync("round" + count.toString());
+            				stage = STAGE.SYNC;
+                        	
+            				System.out.printf("robot %3d, round" + count.toString() + "\n", robotNum);
+                        	
+                            //gvh.trace.traceStart();
+                            //stage = STAGE.MOVE;
+                            //moat.goTo(gvh.gps.getWaypointPosition("DEST"+cur_waypoint));
+                            //System.out.println(robotName + ": Starting motion!");
+                            break;
+                        }
+                        case SYNC: {
+                        	if (sn.barrier_proceed("round" + count.toString())) {
+            					stage = STAGE.ELECT;
+            					le.elect();
+            				}
+                        	break;
+                        }
+                        case ELECT: {
+                        	if(le.getLeader() != null) {
+                        		System.out.printf("robot %3d, leader is: " + le.getLeader() + "\n", robotNum);
+            					leaderNum = Integer.parseInt(le.getLeader().substring(3)); // assumes: botYYY
+            					stage = STAGE.MOVE;
+            				}
+                        	break;
+                        }
+                        case MOVE: {
                                 if(!moat.inMotion) {
-                                        if(cur_waypoint < n_waypoints) {
-                                                //System.out.println(robotName + ": I've stopped moving!");
-                                                
-                                                //moat.goTo(gvh.gps.getWaypointPosition(wpn + cur_waypoint));
-                                                String n = wpn + gvh.id.getName() + cur_waypoint;
-                                                
-                                                
-                                                moat.goTo(pl.getPosition(n));
-                                                
-                                               // System.out.println(robotName + ": New destination is (" + pl.getPosition(n).x + ", " + pl.getPosition(n).y + ")!");
+                                        //if(cur_waypoint < n_waypoints) {
+                                            //System.out.println(robotName + ": I've stopped moving!");
+                                        	String n = wpn + gvh.id.getName() + cur_waypoint;
+                                            
+                                            //System.out.println(robotName + ": New destination is (" + pl.getPosition(n).x + ", " + pl.getPosition(n).y + ")!");
 
-                                                cur_waypoint ++;
-                                                n = wpn + gvh.id.getName() + cur_waypoint;
-                                                
-                                                
-                                                // circle formation
-                                                int x = 0, y = 0, theta = 0;
-                                                
-                                                PositionList plAll = gvh.gps.getPositions();
-                                                for (ItemPosition rp : plAll.getList()) {
-                                                        x += rp.x;
-                                                        y += rp.y;
-                                                        theta += rp.angle;
-                                                }
-                                                int N = plAll.getNumPositions();
-                                                //System.out.println(plAll.getPosition(robotName));
-                                                int r = 130; // ~30mm
-                                                x /= N;
-                                                y /= N; // x and y define the centroid of a circle with radius N*r
-                                                theta /= N;
-                                                
-                                                //double m = (robotNum % 3 == 0) ? 0.33 : 1; // todo: concentric circles?
-                                                double m = 1.0;
-                                                
-                                                x += N*m*r*Math.sin(robotNum);
-                                                y += N*m*r*Math.cos(robotNum);
-                                                //pl.update(new ItemPosition(n, robotNum * 100, 100 * ((robotNum % 2 == 0) ? 0 : 1), 0));
-                                                pl.update(new ItemPosition(n, x, y, theta));
-                                                
-                                                
-                                                // todo: after circle formation, calculate new position based on positions of nearest left and right neighbor (on the circle)
-                                        } else {
-                                                stage = STAGE.DONE;
-                                        }
+                                            cur_waypoint ++;
+                                            n = wpn + gvh.id.getName() + cur_waypoint;
+                                            
+                                            // circle formation
+                                            int x = 0, y = 0, theta = 0;
+                                            
+                                            PositionList plAll = gvh.gps.getPositions();
+                                            for (ItemPosition rp : plAll.getList()) {
+                                                    x += rp.x;
+                                                    y += rp.y;
+                                                    theta += rp.angle;
+                                            }
+                                            int N = plAll.getNumPositions();
+                                            int r = 130; // ~30mm
+                                            x = x / N;
+                                            y = y / N; // x and y define the centroid of a circle with radius N*r
+                                            theta /= N;
+                                            
+                                            //double m = (robotNum % 3 == 0) ? 0.33 : 1; // TODO: concentric circles?
+                                            double m = 1.0;
+                                            
+                                            x += N*m*r*Math.sin(robotNum);
+                                            y += N*m*r*Math.cos(robotNum);
+                                            //pl.update(new ItemPosition(n, robotNum * 100, 100 * ((robotNum % 2 == 0) ? 0 : 1), 0));
+                                            
+                                            //ItemPosition dest = new ItemPosition(n, x, y, theta);
+                                            
+                                            //int offset = (int)Math.sqrt(N)* count; // default is i-1
+                                            
+                                            int offset = leaderNum * count;
+                                            count += 1;
+                                            ItemPosition dest;
+                                            if (count % 2 == 0) {
+                                            	dest = new ItemPosition(n, N * 2 * (int)Math.toDegrees(Math.cos(2*Math.PI * (robotNum+offset) / N)), N * 2 *(int)Math.toDegrees(Math.sin(2*Math.PI * (robotNum+offset) / N)), 1);
+                                            }
+                                            else
+                                            {
+                                            	double tmpx = 2*Math.PI * (robotNum+offset) / N;
+                                            	double tmpy = 2*Math.PI * (robotNum+offset) / N;
+                                            	
+                                            	dest = new ItemPosition(n, N * 4 * (int)Math.toDegrees(Math.cos(2*Math.PI * (robotNum+offset) / N)), N * 4 *(int)Math.toDegrees(Math.sin(2*Math.PI * (robotNum+offset) / N)), 1);
+                                            }
+                                            
+                                            //offset = 0;
+                                        	//double tmpx = 2*Math.PI * (robotNum+offset) / N;
+                                        	//double tmpy = 2*Math.PI * (robotNum+offset) / N;
+                                        	
+                                        	//dest = new ItemPosition(n, N * 4 * , N * 4 *(int)Math.toDegrees(Math.sin(2*Math.PI * (robotNum+offset) / N)), 1);
+                                        	//dest = new ItemPosition(n, N * 4 * (int)Math.toDegrees(Math.cos(2*Math.PI * (robotNum+offset) / N)), N * 4 *(int)Math.toDegrees(Math.sin(2*Math.PI * (robotNum+offset) / N)), 1);
+                                        	//x = 16*(Math.sin(t).^3);
+                                        	//y = 13*cos(t) - 5*cos(2*t) - 2*cos(3*t) - cos(4*t);
+                                        	//tmpx = 16*Math.sin(Math.pow(tmpx, 3));
+                                        	//tmpy = 13*Math.cos(tmpy) - 5*Math.cos(2*tmpy) - 2*Math.cos(3*tmpy) - Math.cos(4*tmpy);
+                                        	//dest = new ItemPosition(n, N*(int)Math.toDegrees(tmpx), N*(int)Math.toDegrees(tmpy), 0);
+                                        	
+                                        	//tmpx = 16*Math.toDegrees(Math.sin(Math.pow(tmpx, 3)));
+                                        	//tmpy = 13*Math.toDegrees(Math.cos(tmpy)) - 5*Math.toDegrees(Math.cos(2*tmpy)) - 2*Math.toDegrees(Math.cos(3*tmpy)) - Math.toDegrees(Math.cos(4*tmpy));
+                                        	//dest = new ItemPosition(n, N/2*(int)tmpx, N/2*(int)tmpy, 0);
+                                            
+                                            //pl.update();
+                                            //moat.goTo(pl.getPosition(n));
+                                            moat.goTo(dest);
+                                            
+                                            
+                                            
+                                            // TODO: after circle formation, calculate new position based on positions of nearest left and right neighbor (on the circle)
+                                        //} else {
+                                        //        stage = STAGE.DONE;
+                                        //}
                                 }
+                                
+                                // wait here while robot is in motion
+                                while (moat.inMotion) {
+                                	gvh.sleep(100);
+                                }
+                                
+                                stage = STAGE.START; // repeat
+                                
                                 break;
+                        }
 
-                        case DONE:
+                        case DONE: {
                                 gvh.trace.traceEnd();
                                 return Arrays.asList(results);
                         }
-                        
-                        gvh.sleep(100);
+                    }
+                    gvh.sleep(100);
+                    //Random rand = new Random();
+                    //gvh.sleep(100 + rand.nextInt(5)); // weird simulation behavior if things aren't sleep-synchronized
+                	//gvh.sleep( (robotNum + 1) * 25);
                 }
         }
 }

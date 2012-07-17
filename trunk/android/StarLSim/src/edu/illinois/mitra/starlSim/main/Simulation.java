@@ -22,6 +22,7 @@ import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.PositionList;
 import edu.illinois.mitra.starlSim.draw.DrawFrame;
+import edu.illinois.mitra.starlSim.main.GlobalLogger;
 import edu.illinois.mitra.starlSim.draw.RobotData;
 
 public class Simulation {	
