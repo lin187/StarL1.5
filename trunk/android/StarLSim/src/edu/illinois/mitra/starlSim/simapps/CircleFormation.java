@@ -15,7 +15,7 @@ import edu.illinois.mitra.starl.motion.RobotMotion;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.PositionList;
 
-public class FlockingTestTwo extends LogicThread {
+public class CircleFormation extends LogicThread {
 
 		private enum STAGE { START, SYNC, ELECT, MOVE, DONE }
         private STAGE stage = STAGE.START;
@@ -31,7 +31,7 @@ public class FlockingTestTwo extends LogicThread {
     	private Synchronizer sn;
     	
         
-        public FlockingTestTwo(GlobalVarHolder gvh) {
+        public CircleFormation(GlobalVarHolder gvh) {
                 super(gvh);
                 gvh.trace.traceStart();
                 

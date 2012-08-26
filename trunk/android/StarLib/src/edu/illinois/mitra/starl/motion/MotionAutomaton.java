@@ -128,10 +128,23 @@ public class MotionAutomaton extends RobotMotion  {
 				int angle = mypos.angleTo(destination);
 				int absangle = Math.abs(angle);
 				
-				if(param.COLAVOID_MODE == COLAVOID_MODE_TYPE.BUMPERCARS) {
-					colliding = false;
-				} else {
-					colliding = collision();
+				switch (param.COLAVOID_MODE)
+				{ 
+					case BUMPERCARS:
+					{
+						colliding = false;
+						break;
+					}
+					case USE_COLAVOID:
+					{
+						colliding = collision();
+						break;
+					}
+					default:
+					{
+						colliding = false;
+						break;
+					}
 				}
 				
 				if(!colliding && stage != null) {
