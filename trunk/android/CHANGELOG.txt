@@ -1,4 +1,10 @@
 ----- StarLib Changelog -----
+8/28/2012, Stan
+- Adjusted Project Build Properties to remove unnecessary dependencies
+- Removed 3 SimApps due to external dependence on ojalgo (if you want to readd them make a seperate project not integrated in the simulator please!). Removed LucasApp1.java, NewApp.java, and RoughTravelApp.java
+- 
+
+
 
 5/22/2012, Taylor
 - Added relative path support for input and output files
