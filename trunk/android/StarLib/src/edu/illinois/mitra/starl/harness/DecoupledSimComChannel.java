@@ -4,8 +4,10 @@ import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
+import java.util.TreeMap;
 
 import edu.illinois.mitra.starl.interfaces.SimComChannel;
 
@@ -32,13 +34,28 @@ public class DecoupledSimComChannel implements SimComChannel  {
 	
 	private Random rand;
 	
+	// for message blocking
+	private Map <String, String> ipToNameMap = new TreeMap <String, String>();
+	private Set <String> blockedRobot;
+	
 	// Drop rate is per 100 messages
-	public DecoupledSimComChannel(int meanDelay, int delayStdDev, int dropRate, int seed) {
+	public DecoupledSimComChannel(int meanDelay, int delayStdDev, int dropRate, int seed, Set <String> blockedRobot, 
+			Map <String, String> nameToIpMap) {
 		this.meanDelay = meanDelay;
 		this.dropRate = (100-dropRate);
 		this.delayStdDev = delayStdDev;
+		this.blockedRobot = blockedRobot;
+		
 		receivers = new HashMap<String,SimSmartComThread>();
 		rand = new Random(seed);
+		
+		for (Entry<String, String> e : nameToIpMap.entrySet())
+		{
+			String name = e.getKey();
+			String ip = e.getValue();
+			
+			ipToNameMap.put(ip, name);
+		}
 	}
 
 	public void registerMsgReceiver(SimSmartComThread hct, String IP) {
@@ -50,31 +67,52 @@ public class DecoupledSimComChannel implements SimComChannel  {
 	}
 	
 	private synchronized void addInTransit(String msg, String IP) {
+		addInTransit(msg, IP, false);
+	}
+	
+	private synchronized void addInTransit(String msg, String IP, boolean forceDrop) {
 		stat_totalMessages ++;
-		if(meanDelay > 0) {
-			if(rand.nextInt(100) < dropRate) {
-				int delay = Math.max(1,(rand.nextInt(2*delayStdDev+1)-delayStdDev)+meanDelay);
-				toAdd.add(new DeliveryEvent(msg,delay,receivers.get(IP)));
-				stat_overallDelay += delay;
-			} else {
-				stat_lostMessages ++;
+		
+		if (forceDrop)
+			stat_lostMessages ++;
+		else {
+			if(meanDelay > 0) {
+				if(rand.nextInt(100) < dropRate) {
+					int delay = Math.max(1,(rand.nextInt(2*delayStdDev+1)-delayStdDev)+meanDelay);
+					toAdd.add(new DeliveryEvent(msg,delay,receivers.get(IP)));
+					stat_overallDelay += delay;
+				} else {
+					stat_lostMessages ++;
+				}
+			} else if(receivers.containsKey(IP)){
+				receivers.get(IP).receive(msg);
 			}
-		} else if(receivers.containsKey(IP)){
-			receivers.get(IP).receive(msg);
 		}
 	}
 	
-	public void sendMsg(String from, String msg, String IP) {		
+	public void sendMsg(String from, String msg, String IP) {
+		
+		// if from or IP (ip = to?) are blocked, drop this message somehow 
+		boolean forceDrop = shouldForceDrop(from, IP ); // Stan - Assumption: I think these are from and to indicies as Strings
+		
 		if(IP.equals(BROADCAST_IP)) {
 			stat_bcastMessages ++;
 			for(String ip : receivers.keySet()) {
 				if(!ip.equals(from)) {
-					addInTransit(msg, ip);
+					addInTransit(msg, ip, forceDrop);
 				}
 			}
 		} else if(receivers.containsKey(IP)) {
-			addInTransit(msg,IP);
+			addInTransit(msg,IP, forceDrop);
 		}
+	}
+
+	private boolean shouldForceDrop(String fromIp, String toIp) 
+	{
+		String from = ipToNameMap.get(fromIp);
+		String to = ipToNameMap.get(toIp);
+		
+		return blockedRobot.contains(from) || blockedRobot.contains(to);
 	}
 
 	// Must not advance by more than the minimum delay!!

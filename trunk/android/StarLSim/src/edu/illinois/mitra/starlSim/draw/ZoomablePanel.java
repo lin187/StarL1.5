@@ -4,6 +4,7 @@ package edu.illinois.mitra.starlSim.draw;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -109,7 +110,15 @@ MouseListener, MouseMotionListener
 		AffineTransform a = g2d.getTransform();
 		myPreDraw(g2d);
 		g2d.setColor(Color.black);
+		
+		Font f = new Font("Tahoma", Font.PLAIN, 55); // TODO: make this configurable in SimSettings
+		f = f.deriveFont(AffineTransform.getScaleInstance(1, -1)); // flip y back around
+		g2d.setFont(f);
 		draw(g2d);
+		
+		if (g2d.getFont() != f)
+			throw new RuntimeException("Font was changed in draw method. You should use Font.deriveFont instead and then restore it before your method returns.");
+		
 		g2d.setTransform(a);
 		g2d.setStroke(med);
 		
@@ -261,6 +270,9 @@ MouseListener, MouseMotionListener
 		
 		// move
 		g.translate(moveX,moveY);
+
+		// flip y axis
+		g.scale(1,-1);
 	}
 
 	public void mouseWheelMoved(MouseWheelEvent e)
@@ -352,7 +364,7 @@ MouseListener, MouseMotionListener
 	{
 		double scale = getScale();
 		
-		return new Point((int)(p.x/scale - moveX) ,(int)(p.y/scale - moveY) );
+		return new Point((int)(p.x/scale - moveX) ,(int)-(p.y/scale - moveY) );
 	}
 	
 	public void mouseReleased(MouseEvent e) 

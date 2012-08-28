@@ -8,9 +8,7 @@ import java.util.Random;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.PositionList;
 
-public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
-	private static final int VELOCITY = 200;	// Millimeters per second
-	
+public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {	
 	private HashMap<String, SimGpsReceiver> receivers;
 	private HashMap<String, TrackedRobot> robots;
 
@@ -52,13 +50,13 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 	}
 
 	@Override
-	public synchronized void setDestination(String name, ItemPosition dest) {
-		robots.get(name).setDest(dest);
+	public synchronized void setDestination(String name, ItemPosition dest, int velocity) {
+		robots.get(name).setDest(dest, velocity);
 	}
 
 	@Override
 	public synchronized void halt(String name) {
-		robots.get(name).setDest(null);
+		robots.get(name).setDest(null, 1);
 	}
 	
 	@Override
@@ -114,6 +112,7 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 	}
 
 	private class TrackedRobot {
+		private int velocity = 200; // TODO was 0
 		private ItemPosition start = null;
 		private ItemPosition pos = null;
 		private ItemPosition dest = null;
@@ -141,8 +140,8 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 				int deltaX = dest.x-start.x;
 				int deltaY = dest.y-start.y;
 				motAngle = Math.atan2(deltaY, deltaX);
-				vX = (Math.cos(motAngle) * VELOCITY);
-				vY = (Math.sin(motAngle) * VELOCITY);
+				vX = (Math.cos(motAngle) * velocity);
+				vY = (Math.sin(motAngle) * velocity);
 				
 				// Set position to ideal angle +/- noise
 				int angle = (int)Math.toDegrees(Math.atan2(deltaY, deltaX));
@@ -164,7 +163,7 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 					int dX = (int)(vX * totalTimeInMotion)/1000;
 					int dY = (int)(vY * totalTimeInMotion)/1000;
 					pos.setPos(start.x+dX+xNoise, start.y+dY+yNoise, (int)Math.toDegrees(motAngle));
-					pos.velocity = VELOCITY;
+					pos.velocity = velocity;
 				} else {
 					pos.setPos(dest.x+xNoise, dest.y+yNoise, pos.angle+aNoise);
 					dest = null;
@@ -175,11 +174,23 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 			}
 			timeLastUpdate = se.time;
 		}
-		public void setDest(ItemPosition dest) {
+		public void setDest(ItemPosition dest, int velocity) 
+		{
+			if (velocity <= 0)
+			{
+				System.err.println("WARNING: setDest called with velocity<=0 (==" + velocity +")");
+				System.err.println("Overriding to 1. Fix this! Did you call goTo with a motion" +
+						"parameter with max linear speed of zero???");
+				
+				throw new RuntimeException("setDest called with velocity <= 0");
+			}
+			
 			if(hasChanged()) updatePos();
 			this.dest = dest;
 			this.start = new ItemPosition(pos);
-			totalMotionTime = (int)(this.start.distanceTo(dest)*1000.0)/VELOCITY;
+			this.velocity = velocity;
+			
+			totalMotionTime = (int)(this.start.distanceTo(dest)*1000.0)/velocity;
 			totalTimeInMotion = 0;
 			newdest = (dest != null);
 		}

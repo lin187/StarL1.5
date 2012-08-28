@@ -9,31 +9,36 @@ import edu.illinois.mitra.starl.objects.ItemPosition;
 
 public class IdealSimMotionAutomaton extends RobotMotion implements RobotEventListener {
 	private static final String TAG = "MotionAutomaton";
-	private SimGpsProvider gpspro;
+	private IdealSimGpsProvider gpspro;
 	private String name;
+	private MotionParameters defaultParam = new MotionParameters();
 	
 	private GlobalVarHolder gvh;
 	
 	private ItemPosition dest;
 	
-	public IdealSimMotionAutomaton(GlobalVarHolder gvh, SimGpsProvider gpspro) {
+	public IdealSimMotionAutomaton(GlobalVarHolder gvh, IdealSimGpsProvider gpspro) {
 		this.gvh = gvh;
-		this.gpspro = gpspro;
+		this.gpspro = gpspro; 
 		name = gvh.id.getName();
 		gvh.addEventListener(this);
 		gvh.trace.traceEvent(TAG, "Created");
 	}
 	@Override
 	public void goTo(ItemPosition dest) {
-		this.dest = new ItemPosition(dest);
-		gvh.trace.traceEvent(TAG, "Go To", this.dest);
-		gpspro.setDestination(name, this.dest);
-		inMotion = true;
+		goTo(dest, defaultParam);
 	}
 	
 	@Override
-	public void goTo(ItemPosition dest, MotionParameters param) {
-		this.goTo(dest);
+	public void goTo(ItemPosition dest, MotionParameters param) 
+	{
+		this.dest = new ItemPosition(dest);
+		
+		gvh.trace.traceEvent(TAG, "Go To", this.dest);
+		
+		gpspro.setDestination(name, this.dest, param.LINSPEED_MAX);
+		
+		inMotion = true;
 	}
 
 	@Override
@@ -68,7 +73,8 @@ public class IdealSimMotionAutomaton extends RobotMotion implements RobotEventLi
 		// I don't think anything needs to happen here
 	}
 	@Override
-	public void setParameters(MotionParameters param) {
-		// I don't think anything needs to happen here
+	public void setParameters(MotionParameters param) 
+	{
+		defaultParam = param;
 	}
 }

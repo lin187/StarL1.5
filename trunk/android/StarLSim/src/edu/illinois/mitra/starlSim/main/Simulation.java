@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -39,8 +40,17 @@ public class Simulation {
 		// Ensure that the class to instantiate is an instance of SimApp
 		if(!LogicThread.class.isAssignableFrom(appToRun)) throw new RuntimeException("The requested application, " + appToRun.getSimpleName() + ", does not extend LogicThread!");
 
-		// Start the sim engine
-		se = new SimulationEngine(SimSettings.MSG_MEAN_DELAY,SimSettings.MSG_STDDEV_DELAY,SimSettings.MSG_LOSSES_PER_HUNDRED,SimSettings.MSG_RANDOM_SEED,SimSettings.TIC_TIME_RATE);
+		// create set of robots whose wireless is blocked for passage between the GUI and the simulation communication object
+		Set <String> blockedRobots = new HashSet <String>();
+		
+		// Create participants and instantiate SimApps
+		for(int i = 0; i < n_bots; i++) {
+			participants.put(SimSettings.BOT_NAME+i, "192.168.0." + i); // mapping between robot name and ip
+		}
+		
+		// Start the simulation engine
+		se = new SimulationEngine(SimSettings.MSG_MEAN_DELAY,SimSettings.MSG_STDDEV_DELAY,SimSettings.MSG_LOSSES_PER_HUNDRED,SimSettings.MSG_RANDOM_SEED,
+				SimSettings.TIC_TIME_RATE, blockedRobots, participants);
 				
 		// Create the sim gps
 		if(SimSettings.IDEAL_MOTION) {
@@ -57,41 +67,37 @@ public class Simulation {
 		gps.start();
 		
 		// Load initial positions
-		ArrayList<ItemPosition> initpos = null;
+		PositionList initpos = null;
 		int initposIdx = 0;
-		if(initposfile != null) {
-			initpos = WptLoader.loadWaypoints(initposfile).getList();
+		if(initposfile != null) 
+		{
+			initpos = WptLoader.loadWaypoints(initposfile);
 		}
 		
 		Random rand = new Random();
-
-		// Create participants and instantiate SimApps
-		for(int i = 0; i < n_bots; i++) {
-			participants.put(SimSettings.BOT_NAME+i, Integer.toString(i));
-		}
-		
-		// initial condition
-		for(int i = 0; i < n_bots; i++) {			
-			ItemPosition nextInitPos = new ItemPosition("bot"+i,0,0,0);
-			if(initpos != null && initpos.size() > 0) {
-				ItemPosition tmp = initpos.get(initposIdx); 
-				nextInitPos.setPos(tmp.x, tmp.y, tmp.angle);
-				initposIdx ++;
-				initposIdx %= initpos.size();
-			}
-			else
-			{
-				// random initial condition if unspecified
-				nextInitPos = new ItemPosition("bot" + i,rand.nextInt(SimSettings.GRID_XSIZE), rand.nextInt(SimSettings.GRID_YSIZE), rand.nextInt(360));
-				//nextInitPos = new ItemPosition("bot" + i, n_bots * 2 * (int)Math.toDegrees(Math.cos(2*Math.PI * (i-1) / n_bots)), n_bots * 2 *(int)Math.toDegrees(Math.sin(2*Math.PI * (i-1) / n_bots)), rand.nextInt(360));
-			}
-			bots.add(new SimApp("bot"+i,participants, se, nextInitPos, SimSettings.TRACE_OUT_DIR, appToRun, SimSettings.TRACE_CLOCK_DRIFT_MAX, SimSettings.TRACE_CLOCK_SKEW_MAX));
-		}
 		
 		// Initialize viewer
-		final DrawFrame d = new DrawFrame(se.startTime, SimSettings.GRID_XSIZE, SimSettings.GRID_YSIZE);
+		final DrawFrame d = new DrawFrame(participants.keySet(), blockedRobots, se.startTime, SimSettings.GRID_XSIZE, SimSettings.GRID_YSIZE);
 		d.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		d.setVisible(true);
+		
+		// initial condition
+		for(int i = 0; i < n_bots; i++) 
+		{			
+			String botName = SimSettings.BOT_NAME + i;
+			
+			ItemPosition ip = initpos.getPosition(botName);
+			
+			if(ip == null)
+			{
+				System.out.println("Waypoint file did not contain a waypoint named '" + botName + "', using random position.");
+				// random initial condition if unspecified
+				ip = new ItemPosition("bot" + i,rand.nextInt(SimSettings.GRID_XSIZE), rand.nextInt(SimSettings.GRID_YSIZE), rand.nextInt(360));
+				//nextInitPos = new ItemPosition("bot" + i, n_bots * 2 * (int)Math.toDegrees(Math.cos(2*Math.PI * (i-1) / n_bots)), n_bots * 2 *(int)Math.toDegrees(Math.sin(2*Math.PI * (i-1) / n_bots)), rand.nextInt(360));
+			}
+			bots.add(new SimApp(SimSettings.BOT_NAME+i,participants, se, ip, SimSettings.TRACE_OUT_DIR, appToRun, d, 
+					SimSettings.TRACE_CLOCK_DRIFT_MAX, SimSettings.TRACE_CLOCK_SKEW_MAX));
+		}
 		
 		// Initialize global logger
 		final GlobalLogger gl = new GlobalLogger(SimSettings.TRACE_OUT_DIR, "global.txt");
@@ -104,13 +110,13 @@ public class Simulation {
 				ArrayList<RobotData> rd = new ArrayList<RobotData>();
 				// Add robots
 				for(ItemPosition ip : pos) {
-					RobotData nextBot = new RobotData(ip.name, ip.x, SimSettings.GRID_YSIZE-ip.y, -ip.angle);
+					RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.angle);
 					nextBot.radius = SimSettings.BOT_RADIUS;
 					rd.add(nextBot);
 				}
 				// Add waypoints
 				for(ItemPosition ip : gps.getWaypointPositions().getList()) {
-					RobotData nrd = new RobotData(ip.name, ip.x, SimSettings.GRID_YSIZE-ip.y, ip.angle);
+					RobotData nrd = new RobotData(ip.name, ip.x, ip.y, ip.angle);
 					nrd.radius = 5;
 					nrd.c = new Color(255, 0, 0);
 					rd.add(nrd);
@@ -148,6 +154,41 @@ public class Simulation {
 	public void start() {
 		executor = Executors.newFixedThreadPool(participants.size());
 		System.out.println("Starting with " + participants.size() + " robots");
+		
+		///////////// START EDITS ///////////////////
+		
+		// spawn threads manually
+		/*for (SimApp robotLogic : bots)
+		{
+			final SimApp simApp = robotLogic;
+			
+			new Thread()
+			{
+				public void run()
+				{
+					try
+					{
+						simApp.call();
+					}
+					catch (Exception e)
+					{
+						e.printStackTrace();
+					}
+				}
+			}.start();
+		}
+		
+		while (true)
+		{
+			try
+			{
+				Thread.sleep(Integer.MAX_VALUE);
+			}
+			catch (InterruptedException e) { break; }
+		}*/
+		
+		
+		////////////////// end edits ///////////////
 		
 		// Invoke all simulated robots
 		List<Future<List<Object>>> results = null;

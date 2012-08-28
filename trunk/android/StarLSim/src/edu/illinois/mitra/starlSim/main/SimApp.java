@@ -9,6 +9,7 @@ import edu.illinois.mitra.starl.gvh.SimGlobalVarHolder;
 import edu.illinois.mitra.starl.harness.SimulationEngine;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.objects.ItemPosition;
+import edu.illinois.mitra.starlSim.draw.DrawFrame;
 
 public class SimApp implements Callable<List<Object>> {
 	protected String name;
@@ -16,7 +17,8 @@ public class SimApp implements Callable<List<Object>> {
 	
 	protected LogicThread logic;
 	
-	public SimApp(String name, HashMap<String,String> participants, SimulationEngine engine, ItemPosition initpos, String traceDir, Class<?> app, int driftMax, float skewBound) {	
+	public SimApp(String name, HashMap<String,String> participants, SimulationEngine engine, ItemPosition initpos, String traceDir, 
+			Class<?> app, DrawFrame drawer, int driftMax, float skewBound) {	
 		this.name = name;
 		gvh = new SimGlobalVarHolder(name, participants, engine, initpos, traceDir, driftMax, skewBound);
 		gvh.comms.startComms();
@@ -26,6 +28,9 @@ public class SimApp implements Callable<List<Object>> {
 		try {
 			// Generically instantiate an instance of the requested LogicThread
 			logic = (LogicThread) app.getConstructor(GlobalVarHolder.class).newInstance(gvh);
+			drawer.addPredrawer(logic);
+			drawer.addPointInputAccepter(logic);
+			
 		} catch (InstantiationException e) {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
@@ -47,7 +52,20 @@ public class SimApp implements Callable<List<Object>> {
 	}
 
 	@Override
-	public List<Object> call() throws Exception {
-		return logic.call();
+	public List<Object> call() throws Exception 
+	{
+		// print exceptions explicitly instead of silently ignoring them
+		List <Object> rv = null;
+		
+		try
+		{
+			rv = logic.call();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return rv;
 	}
 }

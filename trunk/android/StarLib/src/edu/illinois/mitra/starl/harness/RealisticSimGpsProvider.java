@@ -57,7 +57,7 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 	}
 	
 	@Override
-	public synchronized void setDestination(String name, ItemPosition dest) {
+	public synchronized void setDestination(String name, ItemPosition dest, int vel) {
 		throw new RuntimeException("setDestination is not implemented for realistic simulated motion! " +
 				"RealisticSimGpsProvider MUST be used with RealisticSimMotionAutomaton");
 	}

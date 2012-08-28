@@ -1,9 +1,13 @@
 package edu.illinois.mitra.starlSim.draw;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;
+
+import edu.illinois.mitra.starl.interfaces.Drawer;
+import edu.illinois.mitra.starl.interfaces.LogicThread;
 
 
 @SuppressWarnings("serial")
@@ -11,7 +15,7 @@ public class DrawFrame extends JFrame
 {
 	private DrawPanel dp = null;
 	
-	public DrawFrame(long startTime, int xsize, int ysize)
+	public DrawFrame(Set <String> robotNames, Set <String> blockedWireless, long startTime, int xsize, int ysize)
 	{
 		try 
 		 {
@@ -24,14 +28,24 @@ public class DrawFrame extends JFrame
 		setSize(1000,700);
 		setLocation(50, 50);
 		
-		dp = new DrawPanel();
+		dp = new DrawPanel(robotNames, blockedWireless);
 		dp.setWorld(xsize, ysize, startTime);
-		dp.setDefaultPosition(-250, -250, 22);
+		dp.setDefaultPosition(-750, -3100, 24);
 		getContentPane().add(dp);
 	}
 	
 	public void updateData(ArrayList <RobotData> data, long time)
 	{
 		dp.updateData(data, time);
+	}
+
+	public void addPredrawer(Drawer d)
+	{
+		dp.addPredrawer(d);
+	}
+
+	public void addPointInputAccepter(LogicThread logic)
+	{
+		dp.addClickListener(logic);
 	}
 }

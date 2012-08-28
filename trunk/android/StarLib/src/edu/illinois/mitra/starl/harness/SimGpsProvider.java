@@ -13,7 +13,7 @@ public interface SimGpsProvider {
 	public abstract void addRobot(ItemPosition bot);
 
 	// Implemented only by ideal gps provider
-	public abstract void setDestination(String name, ItemPosition dest);
+	public abstract void setDestination(String name, ItemPosition dest, int vel);
 	
 	// Implemented only be realistic gps provider
 	public abstract void setVelocity(String name, int fwd, int radial);

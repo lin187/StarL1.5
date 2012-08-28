@@ -5,12 +5,20 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
+import java.awt.geom.RoundRectangle2D;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Set;
 
+import edu.illinois.mitra.starl.interfaces.AcceptsPointInput;
+import edu.illinois.mitra.starl.interfaces.Drawer;
 import edu.illinois.mitra.starlSim.main.SimSettings;
 
 
@@ -25,13 +33,28 @@ public class DrawPanel extends ZoomablePanel
 	NumberFormat format = new DecimalFormat("0.00");
 	int scaleFactor = 0;
 	
-	private ArrayList<RobotData> _trace = new ArrayList<RobotData>(); // trace of robot positions
+	private ArrayList <LinkedList <Point>> robotTraces = new ArrayList <LinkedList <Point>>(); // trace of robot positions
+	private final Color TRACE_COLOR = Color.gray;
 	
-	public DrawPanel()
+	private LinkedList <Drawer> preDrawers = new LinkedList <Drawer>();
+	private LinkedList <AcceptsPointInput> clickListeners = new LinkedList <AcceptsPointInput>();
+	
+	// wireless interface
+	RoundRectangle2D.Double toggle = new RoundRectangle2D.Double(5,5,20,20,15,15);
+	boolean showWireless = false;
+	ArrayList <String> robotNames = new ArrayList <String>();
+	boolean[] wirelessBlocked;
+	Set<String> blockedWirelessNames;
+
+	public DrawPanel(Set<String> robotNames, Set<String> blockedWirelessNames)
 	{
-		if (SimSettings.DRAW_TRACE) {
-			_trace.ensureCapacity(SimSettings.DRAW_TRACE_LENGTH); // allocate enough memory (huge performance gains)
-		}
+		super();
+		
+		this.robotNames.addAll(robotNames);
+		Collections.sort(this.robotNames);
+		
+		this.blockedWirelessNames = blockedWirelessNames;
+		wirelessBlocked = new boolean[robotNames.size()];
 	}
 
 	@Override
@@ -42,8 +65,13 @@ public class DrawPanel extends ZoomablePanel
 		
 		synchronized(this)
 		{
-			for (RobotData rd : data)
+			for (Drawer d : preDrawers)
+				d.draw(g);			
+			
+			for (int rIndex = 0; rIndex < data.size(); ++rIndex)
 			{
+				RobotData rd = data.get(rIndex);
+				
 				drawRobot(g,rd,true);
 				
 				// Draw world bounding box
@@ -54,27 +82,86 @@ public class DrawPanel extends ZoomablePanel
 				// Determine scale
 				scaleFactor =  (int) toRealCoords(a).distance(toRealCoords(b));
 				
-				// keep past history of robot positions (very slow)
-				// TODO: do this smarter, e.g., is there a way to avoid clearing the previously drawn robot positions for up to SimSettings.DRAW_TRACE_LENGTH calls to draw? this would be significantly more efficient
-				if (SimSettings.DRAW_TRACE) {
-					_trace.add(rd);
-					if (_trace.size() > SimSettings.DRAW_TRACE_LENGTH)
+				// keep past history of robot positions
+				if (SimSettings.DRAW_TRACE) 
+				{
+					// ensure size
+					if (robotTraces.size() != data.size())
 					{
-						_trace.remove(0);
+						robotTraces.clear();
 						
+						for (int i = 0; i < data.size(); ++i)
+							robotTraces.add(new LinkedList <Point>());
+					}
+					
+					LinkedList <Point> trace = robotTraces.get(rIndex);
+					
+					if (trace.size() == 0 || trace.getLast().x != rd.x || trace.getLast().y != rd.y)
+					{					
+						trace.add(new Point(rd.x, rd.y));
+						
+						if (trace.size() > SimSettings.DRAW_TRACE_LENGTH)
+							trace.removeFirst();
 					}
 				}
 			}
 			
 			// draw past history of robot positions
-			if (SimSettings.DRAW_TRACE) {
-				for (RobotData rd : _trace) {
-					drawRobot(g,rd,false);
+			if (SimSettings.DRAW_TRACE) 
+			{
+				g.setColor(TRACE_COLOR);
+				
+				for (LinkedList <Point> trace : robotTraces)
+				{
+					Point last = null;
+					
+					for (Point p : trace)
+					{
+						if (last != null)
+							g.drawLine(last.x, last.y, p.x, p.y);
+						
+						last = p;
+					}
 				}
 			}
 		}
 	}
 	
+	private void drawWireless(Graphics2D g)
+	{
+		int SPACING = 10;
+		int SIZE = 15;
+		int count = robotNames.size();
+		int endY = (int)toggle.y;
+		int x = (int)toggle.x;
+		int startY = endY - count * (SIZE+SPACING); 
+		
+		g.setColor(Color.black);
+		int curY = startY;
+		
+		int index = 0;
+		for (String s : robotNames)
+		{			
+			Rectangle r = new Rectangle(x,curY, SIZE, SIZE);
+			
+			g.draw(r);			
+			
+			if (!wirelessBlocked[index])
+			{
+				// draw cross
+				g.drawLine(x + 4, curY + 4, x + SIZE - 4, curY + SIZE - 4);
+				g.drawLine(x + 4, curY + SIZE - 4, x + SIZE - 4, curY + 4);
+			}
+			
+			g.drawString(s + "'s wireless",x + SIZE + SPACING, curY + SIZE - 3);
+			
+			curY += (SIZE+SPACING);
+			
+			++index;
+		}
+		
+	}
+
 	@Override
 	protected void postDraw(Graphics2D g) {
 		g.setColor(Color.black);
@@ -82,8 +169,90 @@ public class DrawPanel extends ZoomablePanel
 		
 		g.drawString((time-startTime)/1000 + " kTic   kTic/Sec:" + format.format(((time-startTime)/1000.0)/((lastUpdateTime-startTime)/1000.0)), 5, getSize().height-5);
 		
-		g.drawString("SCALE: " + scaleFactor, getSize().width - 95, getSize().height-15);
-		g.drawLine(getSize().width - 110, getSize().height-10, getSize().width-10, getSize().height-10);
+		g.drawString("SCALE: " + scaleFactor, getSize().width - 125, getSize().height-15);
+		g.drawLine(getSize().width - 140, getSize().height-10, getSize().width-40, getSize().height-10);
+		
+		// toggle
+		toggle.y = getHeight() - toggle.height - 30;
+		drawToggle(g);
+		
+		// show the interface to enable / disable wireless for each robot
+		if (showWireless)
+			drawWireless(g);
+	}
+	
+	protected void mousePressedAt(Point p, MouseEvent e) 
+	{
+		// right click to provide point input
+		
+		if (e.getButton() == MouseEvent.BUTTON3)
+		{
+			for (AcceptsPointInput c : clickListeners)
+				c.receivedPointInput(p);
+		}
+	}
+	
+	public void mousePressed(MouseEvent e) 
+	{
+		super.mousePressed(e);
+		
+		Point p = e.getPoint();
+		
+		if (toggle.contains(p))
+		{
+			showWireless = !showWireless;
+			repaint();
+		}
+		else if (showWireless)
+		{
+			// wireless checkboxes
+			
+			int SPACING = 10;
+			int SIZE = 15;
+			int count = robotNames.size();
+			int endY = (int)toggle.y;
+			int x = (int)toggle.x;
+			int startY = endY - count * (SIZE+SPACING); 
+			int curY = startY;
+			
+			for (int index = 0; index < robotNames.size(); ++index)
+			{			
+				Rectangle r = new Rectangle(x,curY, SIZE, SIZE);
+				
+				if (r.contains(p))
+				{
+					wirelessBlocked[index] = !wirelessBlocked[index];
+					
+					if (wirelessBlocked[index])
+						blockedWirelessNames.add(robotNames.get(index));
+					else
+						blockedWirelessNames.remove(robotNames.get(index));
+					
+					break;
+				}
+				
+				curY += (SIZE+SPACING);
+			}
+			
+		}
+	}
+
+	private void drawToggle(Graphics2D g)
+	{		
+		final int o = 5;
+		g.setColor(Color.white);
+		g.fill(toggle);
+		g.setColor(showWireless ? Color.red : Color.black);
+		g.draw(toggle);
+		
+		g.drawLine((int)toggle.x + o,(int)toggle.y + (int)toggle.height / 2,
+				(int)toggle.x + (int)toggle.width - o, (int)toggle.y + (int)toggle.height / 2);
+		
+		if (!showWireless)
+		{ // plus
+			g.drawLine((int)toggle.x + (int)toggle.width / 2,(int)toggle.y + o,
+					(int)toggle.x + (int)toggle.width / 2, (int)toggle.y + (int)toggle.height - o);
+		}
 	}
 	
 	private void drawRobot(Graphics2D g, RobotData rd, boolean drawId)
@@ -115,7 +284,6 @@ public class DrawPanel extends ZoomablePanel
 		if (drawId)
 		{
 			// write name to the right of the robot
-			g.setFont(new Font("Tahoma", Font.PLAIN, 55) ); // TODO: make this configurable in SimSettings
 			g.drawString(rd.name, rd.x - 55, rd.y + radius + 50);
 		}
 	}
@@ -139,5 +307,18 @@ public class DrawPanel extends ZoomablePanel
 			this.width = width;
 			this.height = height;
 		}
+	}
+
+	public void addPredrawer(Drawer d)
+	{
+		synchronized (this)
+		{
+			preDrawers.add(d);
+		}
+	}
+	
+	public void addClickListener(AcceptsPointInput d)
+	{
+		clickListeners.add(d);
 	}
 }

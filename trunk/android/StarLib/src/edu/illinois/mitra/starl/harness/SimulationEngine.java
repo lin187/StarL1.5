@@ -1,6 +1,8 @@
 package edu.illinois.mitra.starl.harness;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The core of the simulation. As simulated Guster would say, "the pseudo-king of it all, the virtual belle of the not-quite-real ball" (Yes, I'm making a joke about my other joke in GlobalVarHolder)
@@ -28,9 +30,10 @@ public class SimulationEngine extends Thread {
 	private double lastTicAdvance = -1;
 	private long lastTimeAdvance = -1;
 
-	public SimulationEngine(int meanDelay, int delayStdDev, int dropRate, int seed, double ticRate) {
+	public SimulationEngine(int meanDelay, int delayStdDev, int dropRate, int seed, double ticRate, Set <String> blockedRobots,
+			Map <String, String> nameToIpMap) {
 		super("SimulationEngine");
-		comms = new DecoupledSimComChannel(meanDelay, delayStdDev, dropRate, seed);
+		comms = new DecoupledSimComChannel(meanDelay, delayStdDev, dropRate, seed, blockedRobots, nameToIpMap);
 		time = System.currentTimeMillis();
 		startTime = time;
 		done = false;
@@ -55,15 +58,18 @@ public class SimulationEngine extends Thread {
 	@Override
 	public void run() {
 		//TODO: please comment this
+		
 		while(!done) {
 			try {
 				Thread.sleep(5000);
 			} catch (InterruptedException e) {
 			}
-
-			synchronized(lock) {
+			
+			synchronized(lock) 
+			{
 				if(sleeps.size() != regThreads.size()) throw new RuntimeException("DISJOINT!");
-				if(clearToAdvance()) advance();
+				if(clearToAdvance())
+					advance();
 			}
 		}
 	}

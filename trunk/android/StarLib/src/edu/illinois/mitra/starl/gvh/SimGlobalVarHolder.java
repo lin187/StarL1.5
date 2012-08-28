@@ -36,7 +36,7 @@ public class SimGlobalVarHolder extends GlobalVarHolder {
 		super.trace = new Trace(name, traceDir, this);
 		super.plat = new AndroidPlatform();
 		if(engine.gps instanceof IdealSimGpsProvider) {
-			plat.moat = new IdealSimMotionAutomaton(this, engine.gps);
+			plat.moat = new IdealSimMotionAutomaton(this, (IdealSimGpsProvider)engine.gps);
 		} else {
 			plat.moat = new RealisticSimMotionAutomaton(this, engine.gps);
 			plat.moat.start();
