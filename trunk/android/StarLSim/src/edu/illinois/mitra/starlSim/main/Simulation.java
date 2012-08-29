@@ -40,7 +40,7 @@ public class Simulation {
 	public Simulation(int n_bots, String wptfile, String initposfile, Class<? extends LogicThread> appToRun) {
 		// Create set of robots whose wireless is blocked for passage between
 		// the GUI and the simulation communication object
-		Set<String> blockedRobots = new HashSet<String>(); // TODO (Adam): Is this a set of robot names or robot IP addresses?
+		Set<String> blockedRobots = new HashSet<String>();
 
 		// Create participants and instantiate SimApps
 		for(int i = 0; i < n_bots; i++) {

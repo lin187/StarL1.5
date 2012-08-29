@@ -193,6 +193,20 @@ public class ItemPosition implements Comparable<ItemPosition>, Traceable {
 		return retval;
 	}
 	
+	public String toMessage() {
+		return x + "," + y + "," + angle + "," + name;
+	}
+	
+	public static ItemPosition fromMessage(String msg) {
+		String[] parts = msg.split(",");
+		if(parts.length != 4)
+			throw new IllegalArgumentException("Can not parse ItemPosition from " + msg + ".");
+		
+		return new ItemPosition(parts[3], Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), Integer.parseInt(parts[2]));
+	}
+
+	// TODO: Un-deprecate these methods and make x and y private
+	// (Or make this class immutable and leave it the way it is)
 	@Deprecated
 	public int getX() {
 		return x;
