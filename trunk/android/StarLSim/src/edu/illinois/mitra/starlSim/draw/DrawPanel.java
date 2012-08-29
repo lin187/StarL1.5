@@ -28,7 +28,7 @@ public class DrawPanel extends ZoomablePanel
 	private ArrayList <RobotData> data = new ArrayList <RobotData>();
 	private long time = 0l;
 	private long lastUpdateTime = 0l;
-	private long startTime = 0l;
+	private long startTime = Long.MAX_VALUE;
 	private int width = 1, height = 1;
 	NumberFormat format = new DecimalFormat("0.00");
 	int scaleFactor = 0;
@@ -167,6 +167,9 @@ public class DrawPanel extends ZoomablePanel
 		g.setColor(Color.black);
 		g.setFont(new Font("Tahoma", Font.PLAIN, 15) );
 		
+		if (startTime == Long.MAX_VALUE) // first time we called postDraw
+			startTime = System.currentTimeMillis();
+		
 		g.drawString((time-startTime)/1000 + " kTic   kTic/Sec:" + format.format(((time-startTime)/1000.0)/((lastUpdateTime-startTime)/1000.0)), 5, getSize().height-5);
 		
 		g.drawString("SCALE: " + scaleFactor, getSize().width - 125, getSize().height-15);
@@ -300,10 +303,9 @@ public class DrawPanel extends ZoomablePanel
 		repaint();
 	}
 	
-	public void setWorld(int width, int height, long startTime) {
+	public void setWorld(int width, int height) {
 		synchronized(this)
 		{
-			this.startTime = startTime;
 			this.width = width;
 			this.height = height;
 		}

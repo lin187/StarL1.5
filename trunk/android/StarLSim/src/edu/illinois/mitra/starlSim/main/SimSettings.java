@@ -1,7 +1,6 @@
 package edu.illinois.mitra.starlSim.main;
 
 import edu.illinois.mitra.starl.interfaces.LogicThread;
-import edu.illinois.mitra.starlSim.simapps.*;
 import edu.illinois.mitra.starlSim.simapps.deere_fardin.DeereFlockingWithDetours;
 
 public class SimSettings {
@@ -52,4 +51,7 @@ public class SimSettings {
 	// trace drawing
 	public static boolean		DRAW_TRACE			= false;
 	public static int			DRAW_TRACE_LENGTH	= 128; // points to save for each robot
+	
+	// drawing
+	public static final int 	MAX_FPS = 40; // maximum frames per second, if drawing takes too long, you can lower this
 }

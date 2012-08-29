@@ -15,7 +15,7 @@ public class DrawFrame extends JFrame
 {
 	private DrawPanel dp = null;
 	
-	public DrawFrame(Set <String> robotNames, Set <String> blockedWireless, long startTime, int xsize, int ysize)
+	public DrawFrame(Set <String> robotNames, Set <String> blockedWireless, int xsize, int ysize)
 	{
 		try 
 		 {
@@ -29,7 +29,7 @@ public class DrawFrame extends JFrame
 		setLocation(50, 50);
 		
 		dp = new DrawPanel(robotNames, blockedWireless);
-		dp.setWorld(xsize, ysize, startTime);
+		dp.setWorld(xsize, ysize);
 		dp.setDefaultPosition(-750, -3100, 24);
 		getContentPane().add(dp);
 	}
@@ -47,5 +47,10 @@ public class DrawFrame extends JFrame
 	public void addPointInputAccepter(LogicThread logic)
 	{
 		dp.addClickListener(logic);
+	}
+
+	public DrawPanel getPanel()
+	{
+		return dp;
 	}
 }

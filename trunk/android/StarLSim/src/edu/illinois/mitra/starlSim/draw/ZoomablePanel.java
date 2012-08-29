@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.RenderingHints;
@@ -23,9 +24,12 @@ import java.util.Date;
 
 import javax.swing.JPanel;
 
+import edu.illinois.mitra.starl.interfaces.ExplicitlyDrawable;
+import edu.illinois.mitra.starlSim.main.SimSettings;
+
 @SuppressWarnings("serial")
 public abstract class ZoomablePanel extends JPanel implements MouseWheelListener, 
-MouseListener, MouseMotionListener
+MouseListener, MouseMotionListener, ExplicitlyDrawable
 {
 //	 negative = zoom in, positive = zoom out
 	protected double zoomFactor = 0;
@@ -76,6 +80,9 @@ MouseListener, MouseMotionListener
 	protected static Stroke med = new BasicStroke(2);
 	private static Stroke thin = new BasicStroke(1);
 	
+	// this is the image drawn to when drawNow() is called
+	private Image drawBuffer = null;
+	
 	public ZoomablePanel()
 	{
 		addMouseWheelListener(this);
@@ -99,10 +106,51 @@ MouseListener, MouseMotionListener
 		
 	}
 	
+	long lastDrawTime = 0;
+	
+	public void drawNow()
+	{
+		long now = System.currentTimeMillis();
+		
+		final int MIN_REDRAW_MS = 1000 / SimSettings.MAX_FPS;
+		
+		if (Math.abs(now - lastDrawTime) > MIN_REDRAW_MS) // don't redraw too quickly
+		{
+			System.out.println("Drawing at time = " + now);
+			
+			synchronized(this)
+			{
+				Dimension size = this.getSize();
+				
+				if (drawBuffer == null || drawBuffer.getWidth(null) != size.width 
+						|| drawBuffer.getHeight(null) != size.height)
+				{
+					// allocate a new image object
+					drawBuffer = this.createImage(size.width, size.height);
+				}
+			
+				if (drawBuffer != null)
+					forceDrawComponent(drawBuffer.getGraphics());
+			}
+			
+			lastDrawTime = System.currentTimeMillis(); // use time AFTER the drawing
+		}
+	}
+	
 	protected void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
 		
+		synchronized(this)
+		{
+			if (drawBuffer != null)
+				g.drawImage(drawBuffer,0,0,null);
+		}
+	}
+	
+	// draws onto a buffered image which is later placed on the screen
+	protected void forceDrawComponent(Graphics g)
+	{
 		Graphics2D g2d = (Graphics2D)g;
 		
 		setupDrawing(g);

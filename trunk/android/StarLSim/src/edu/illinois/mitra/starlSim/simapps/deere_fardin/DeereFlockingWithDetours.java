@@ -39,9 +39,21 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 		new Point(-1000, 500),
 	};
 	
-	private static final int MSG_SYNC_TIME = 190;
-	private static final int MSG_PATH_UPDATE = 191;
-	private static final int MSG_PATH_ACK = 192;	
+	// leader periodically sends timer sync at start
+	private static final int MSG_SYNC_TIME = 190; 
+	
+	// sent by followers when a timer sync is received and the robot is in position
+	private static final int MSG_READY = 191;
+	
+	// sent by leader when all followers are in position
+	private static final int MSG_START = 192; 
+	
+	// sent by leader, new path
+	private static final int MSG_PATH_UPDATE = 193;
+	
+	// sent by followers when they're on the new path
+	private static final int MSG_PATH_ACK = 194;
+	
 	private static final long cycleLength  = 800 ;
 	private static final int CHECK_WINDOW = 50;
 
@@ -50,7 +62,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 	
 	
 	/////////// SHARED VARIABLES BETWEEN LEADER AND FOLLOWERS //////////
-	private LinkedList <WayPoint> currentPath = new LinkedList <WayPoint>(); // accesses should acquire monitor on this object (use synchronized block)
+	private LinkedList <WayPoint> currentPath = new LinkedList <WayPoint>(); 
 	private ArrayList <WayPoint> newPath = new ArrayList <WayPoint>();
 	ArrayList <String> participantsList = new ArrayList<String>() ;
 	
@@ -76,20 +88,16 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 	AckReport[] ackReport;  
 	long startingCycle ; 
 	
-	
+	int syncId = 0; // used to make sure the ready message correspond to the most recent sync
+	int readyCount = 0; // number of robots which responded with the correct sync id
 	
 	
 	
 	/////////// FOLLOWER VARIABLES ///////////////
 	private WayPoint desiredDistance = new WayPoint(400, 0, 0);
 	
-	
-	
-	
-	
-	
-	boolean recievedSync = false ; 
-	
+	boolean recievedStart = false ; 
+	boolean readyToStart = false;
 	
 	
 	public LinkedList<RobotMessage> mQueue = new LinkedList<RobotMessage>();
@@ -133,22 +141,25 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 		if (robotId == 0)
 		{
 			gvh.comms.addMsgListener(MSG_SYNC_TIME, this);
+			gvh.comms.addMsgListener(MSG_READY, this);
 			gvh.comms.addMsgListener(MSG_PATH_ACK, this);
 		}
 		else
 		{
+			gvh.comms.addMsgListener(MSG_START, this);
 			gvh.comms.addMsgListener(MSG_SYNC_TIME, this);
 			gvh.comms.addMsgListener(MSG_PATH_UPDATE, this);
 		}
 		
-	
-		
 		createInitialRobotPath();
-		synchronized (newPath) {
-			for ( WayPoint wpt:currentPath){
-				newPath.add(new WayPoint(wpt.x, wpt.y, wpt.time));
-			}	
-		}
+		
+		// assign initial position
+		ItemPosition pos = gvh.gps.getMyPosition();
+		movingFrom = movingTo = new WayPoint(pos.x, pos.y, 0);
+		
+		for ( WayPoint wpt:currentPath){
+			newPath.add(new WayPoint(wpt.x, wpt.y, wpt.time));
+		}	
 		
 	}
 	
@@ -167,7 +178,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 		final int INIT_PATH_POINTS = 150;
 		final Point INIT_PATH_START = new Point(0,500); // initial point for the offline path
 		
-		LinkedList <WayPoint> path = new LinkedList <WayPoint>();
+		currentPath.clear();
 		
 		for (int n = 0; n < INIT_PATH_POINTS; ++n)
 		{
@@ -176,13 +187,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 			int time = n * INIT_PATH_DELTA_TIME;
 			
 			WayPoint wp = new WayPoint(x,y,time);
-			path.add(wp);
-		}
-			
-		synchronized(currentPath)
-		{
-			currentPath = path;
-			movingFrom = movingTo = currentPath.getFirst();
+			currentPath.add(wp);
 		}
 	}
 
@@ -199,10 +204,23 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 		
 	public void runLeaderLogic()
 	{
-		// first, synchronize the time on the robots
-		gvh.comms.addOutgoingMessage(new RobotMessage("ALL", robotName, MSG_SYNC_TIME, ""));
-		initialTime = gvh.time();
+		// go to the first waypoint
+		WayPoint first = currentPath.removeFirst();
+		goToWayPoint(first);
 		
+		// send synchronize messages until all followers are in position
+		while (readyCount != numRobots - 1)
+		{
+			readyCount = 0;
+			
+			gvh.comms.addOutgoingMessage(new RobotMessage("ALL", robotName, MSG_SYNC_TIME, "" + (++syncId)));
+			initialTime = gvh.time();
+			
+			gvh.sleep(500);
+		}
+		
+		// send a start message and begin
+		gvh.comms.addOutgoingMessage(new RobotMessage("ALL", robotName, MSG_START, ""));
 
 		while (true) {
 		
@@ -227,12 +245,10 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 				 int flag = 0 ; 
 
 			
-				 synchronized (newPath) {
-						connectorLineGenerator();
-					}
+				connectorLineGenerator();
 						
 			
-								int incPercent = PERCENT ; 
+				int incPercent = PERCENT ; 
 				
 				for(int k = 0 ; k < 11 ; k++){
 					
@@ -255,7 +271,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 						incPercent = incPercent * 9/10 ;
 				//		System.out.println("true! " + k + " " + incPercent);
 						
-						interPath.clear() ; 
+						interPath.clear();
 						interPath.addAll(currentPath);
 						
 					//	if ( k > 8) {
@@ -278,11 +294,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 				}
 					
 				
-				synchronized(currentPath){
-					synchronized(newPath){
 						currentPathUpdate() ;
-					}
-				}
 				
 				leaderStage = LEADERSTAGE.PATH_GENERATION ;
 				
@@ -296,17 +308,9 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 				
 			case DONE: 
 				
-				synchronized(currentPath){
-					synchronized(newPath){
 						currentPathUpdate() ;
-					}
-				}
-				
-				
-				synchronized(currentPath){
+						
 					pathGeneration(paths, desiredDistance, currentPath)  ;
-				}
-				
 				
 				for(int k = 0 ; k < nBot ; k++) {
 			
@@ -335,9 +339,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 				
 			case PATH_GENERATION:
  
-				synchronized(currentPath){
-					pathGeneration(paths, desiredDistance, currentPath)  ;
-				}
+				pathGeneration(paths, desiredDistance, currentPath)  ;
 				
 				leaderStage = LEADERSTAGE.SEND_PATH ; 
 				break ; 
@@ -377,7 +379,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 			case ACK_CHECK:
 				//TODO check for all the acks and recalc or stop sneding!
 				
-				gvh.sleep(15);
+				gvh.sleep(45); // was 15
 		//		System.out.println("leader state is ACK_CHECK" + " " + allAcksRecieved(pathID) + " " + startingCycle + " " + GetCycleNumber());
 				
 				if ( allAcksRecieved(pathID) == true && GetCycleNumber() == startingCycle){
@@ -434,20 +436,12 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 				
 			case FOLLOW_PATH:
 				//System.out.println(leaderStage) ;
-				synchronized(newPath)
-				{
-					newPath.remove(0);
-				}
+				newPath.remove(0);
 				
-				if (currentPath.size() > 0)
+				WayPoint next = currentPath.removeFirst();
+				
+				if (next != null)
 				{
-					WayPoint next = null;
-					
-					synchronized(currentPath)
-					{
-						next = currentPath.removeFirst();
-					}
-					
 					goToWayPoint(next);
 					
 					ItemPosition nextPos = new ItemPosition("leader waypoint", next.x, next.y, 0);
@@ -460,20 +454,12 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 
 			case FOLLOW_PATH_WITHOUT_ACK:
 				//System.out.println(leaderStage) ;
-				synchronized(newPath)
-				{
-					newPath.remove(0);
-				}
+				newPath.remove(0);
 				
-				if (currentPath.size() > 0)
+				next = currentPath.removeFirst();
+				
+				if (next != null)
 				{
-					WayPoint next = null;
-					
-					synchronized(currentPath)
-					{
-						next = currentPath.removeFirst();
-					}
-					
 					goToWayPoint(next);
 					
 					ItemPosition nextPos = new ItemPosition("leader waypoint", next.x, next.y, 0);
@@ -483,10 +469,6 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 
 				leaderStage = LEADERSTAGE.ACK_CHECK ;
 				break ;
-
-				
-				
-				
 			}
 		}
 		
@@ -494,31 +476,29 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 	
 	public void runFollowerLogic()
 	{
-		while (!recievedSync)
-			gvh.sleep(20);
+		// go to the first waypoint
+		WayPoint first = currentPath.removeFirst();
+		goToWayPoint(first);
+		readyToStart = true;
 		
+		// wait until the start message is received
+		while (!recievedStart)
+			gvh.sleep(60); // was 20
+				
 		while (currentPath.size() > 0)
 		{
+			WayPoint next = currentPath.removeFirst();
+					
 			startingCycle = GetCycleNumber() ;
 			while(startingCycle == GetCycleNumber())
-				gvh.sleep(10);
+				gvh.sleep(30); // was 10
 			
-			WayPoint next = null;
-			
-			
-			synchronized(currentPath)
-			{
+			while (next.time < startingCycle*1000){
 				next = currentPath.removeFirst();
-				
-				while (next.time < startingCycle*1000){
-					next = currentPath.removeFirst();
-					System.out.println("NExt " + next.time + " " + startingCycle) ; 
-				}
-					
+				System.out.println("Next " + next.time + " " + startingCycle) ; 
 			}
 			
 			System.out.println(next.time + " " + startingCycle );
-			
 			
 			ItemPosition nextPos = new ItemPosition("followed waypoint", next.x, next.y, 0);
 			
@@ -527,11 +507,8 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 			motion.goTo(nextPos);
 		}
 	}
-	
-	
 
 	private void connectionLineGenerator() {
-
 		
 		for (int i = 0 ; i < oldNewWptConnectors.size() ; i++){
 //	//		System.out.println("salam: " + oldNewWptConnectors.size() + " " + interPath.size()) ;
@@ -636,9 +613,6 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 		while (motion.inMotion)
 			gvh.sleep(50);
 	}
-
-
-
 	
 	public long GetSystemTime(){
 		
@@ -686,108 +660,81 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 		return position ; 
 	}
 
-	public void connectorLineGenerator() {
+	public void connectorLineGenerator() 
+	{		
+		//generate the connector lines
+		oldNewWptConnectors.clear() ; 
 		
-		synchronized(newPath){
-			synchronized(currentPath){
-				//generate the connector lines
-				oldNewWptConnectors.clear() ; 
-				
-/*				// this is for when we connect the extra waypoints to the last waypoint in the current path
-
-				for (int j = 0 ; j < currentPath.size() ;  j ++)  
-					oldNewWptConnectors.add( new Line2D.Double(currentPath.get(j).x, currentPath.get(j).y, newPath.get(j).x, newPath.get(j).y)) ;
-
-				
-				//all the extra waypoints on the new path are connected to the last waypoint on the old path
-				if (currentPath.size() < newPath.size()) 
-					for (int j = currentPath.size() ; j < newPath.size()  ;  j ++){
-						
-						oldNewWptConnectors.add(new Line2D.Double(currentPath.getLast().x, currentPath.getLast().y , newPath.get(j).x, newPath.get(j).y)) ;
-						
-					}
-*/
+		int middle ; 
+		
+		// TODO Stan check if this is redundant code with just a different middle
+		
+		if (currentPath.size()%2 == 0 ) {
+			middle  = currentPath.size()/2 - 1 ; 
+//			System.out.println("middle: " + middle);
 			
-				int middle ; 
-				
-				
-		//		System.out.println("curent: " + currentPath.size());
-		//		System.out.println("new: " + newPath.size());
-				
-				
-				if (currentPath.size()%2 == 0 ) {
-					middle  = currentPath.size()/2 - 1 ; 
-		//			System.out.println("middle: " + middle);
-					
-					for (int j = 0 ; j <= middle ;  j ++) {  
-						oldNewWptConnectors.add( new Line2D.Double(currentPath.get(j).x, currentPath.get(j).y, newPath.get(j).x, newPath.get(j).y)) ;
+			for (int j = 0 ; j <= middle ;  j ++) {  
+				oldNewWptConnectors.add( new Line2D.Double(currentPath.get(j).x, currentPath.get(j).y, newPath.get(j).x, newPath.get(j).y)) ;
 
-		//				System.out.println(j); 
-					}
-					
+//				System.out.println(j); 
+			}
 
 //					System.out.println("salam1");
-					//all the extra waypoints on the new path are connected to the last waypoint on the old path
-					if (currentPath.size() < newPath.size()){ 
-						for (int j = middle +1 ; j < newPath.size() - middle - 1  ;  j ++)
-						{
-							oldNewWptConnectors.add(new Line2D.Double(currentPath.get(middle).x, currentPath.get(middle).y , newPath.get(j).x, newPath.get(j).y)) ;
-		//					System.out.println(j);
-						}
-						
-					}
-//					System.out.println("salam2");
-					for (int j =  middle +1 ; j < currentPath.size() ;  j ++) {
-						
-						int k = newPath.size() - 2 * middle -2+ j ; 
-		//				System.out.println(j + " " + k );
-						oldNewWptConnectors.add( new Line2D.Double(currentPath.get( j).x, currentPath.get(j).y, newPath.get(newPath.size() - 2 * middle -2+ j).x, newPath.get(newPath.size() - 2 * middle -2 +  j).y)) ;
-						
-					}
-
-					
+			//all the extra waypoints on the new path are connected to the last waypoint on the old path
+			if (currentPath.size() < newPath.size()){ 
+				for (int j = middle +1 ; j < newPath.size() - middle - 1  ;  j ++)
+				{
+					oldNewWptConnectors.add(new Line2D.Double(currentPath.get(middle).x, currentPath.get(middle).y , newPath.get(j).x, newPath.get(j).y)) ;
+//					System.out.println(j);
 				}
-				else {
-					
-					middle  = currentPath.size()/2  ; 
-					
-					
-		//			System.out.println("middle: " + middle);
-					for (int j = 0 ; j < middle ;  j ++) {  
-						oldNewWptConnectors.add( new Line2D.Double(currentPath.get(j).x, currentPath.get(j).y, newPath.get(j).x, newPath.get(j).y)) ;
-
-		//				System.out.println(j); 
-					}
-					
-					
-					
-					
-		//			System.out.println("salam1");
-					//all the extra waypoints on the new path are connected to the last waypoint on the old path
-					if (currentPath.size() <= newPath.size()){
-						for (int j = middle ; j < newPath.size() - (middle + 1)  ;  j ++)
-						{
-							oldNewWptConnectors.add(new Line2D.Double(currentPath.get(middle).x, currentPath.get(middle).y , newPath.get(j).x, newPath.get(j).y)) ;
-		//					System.out.println(j);
-						}
-						
-					}
-					
-		//			System.out.println("salam2");
-					for (int j = middle ; j < currentPath.size() ;  j ++) {
-						int k  = newPath.size() - 2*middle - 1  + j ; 
-			//			System.out.println(j + " " + k);
-						oldNewWptConnectors.add( new Line2D.Double(currentPath.get(j).x, currentPath.get(j).y, newPath.get(newPath.size() - 2*middle - 1  + j).x, newPath.get(newPath.size() -2* middle - 1  + j).y)) ;
-											
-					
-					}
-					
-				}
-				
-		//		System.out.println("line size: " + oldNewWptConnectors.size());
-				return ;
 				
 			}
+//					System.out.println("salam2");
+			for (int j =  middle +1 ; j < currentPath.size() ;  j ++) {
+				
+				int k = newPath.size() - 2 * middle -2+ j ; 
+//				System.out.println(j + " " + k );
+				oldNewWptConnectors.add( new Line2D.Double(currentPath.get( j).x, currentPath.get(j).y, newPath.get(newPath.size() - 2 * middle -2+ j).x, newPath.get(newPath.size() - 2 * middle -2 +  j).y)) ;
+				
+			}
+
+			
+		}
+		else {
+			
+			middle  = currentPath.size()/2  ; 
+			
+			
+//			System.out.println("middle: " + middle);
+			for (int j = 0 ; j < middle ;  j ++) {  
+				oldNewWptConnectors.add( new Line2D.Double(currentPath.get(j).x, currentPath.get(j).y, newPath.get(j).x, newPath.get(j).y)) ;
+
+//				System.out.println(j); 
+			}
+			
+			
+			
+			
+//			System.out.println("salam1");
+			//all the extra waypoints on the new path are connected to the last waypoint on the old path
+			if (currentPath.size() <= newPath.size()){
+				for (int j = middle ; j < newPath.size() - (middle + 1)  ;  j ++)
+				{
+					oldNewWptConnectors.add(new Line2D.Double(currentPath.get(middle).x, currentPath.get(middle).y , newPath.get(j).x, newPath.get(j).y)) ;
+//					System.out.println(j);
+				}
+				
+			}
+			
+//			System.out.println("salam2");
+			for (int j = middle ; j < currentPath.size() ;  j ++) {
+				int k  = newPath.size() - 2*middle - 1  + j ; 
+	//			System.out.println(j + " " + k);
+				oldNewWptConnectors.add( new Line2D.Double(currentPath.get(j).x, currentPath.get(j).y, newPath.get(newPath.size() - 2*middle - 1  + j).x, newPath.get(newPath.size() -2* middle - 1  + j).y)) ;
+									
+			
+			}
+			
 		}
 	}
 	
@@ -795,36 +742,22 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 	public void interPathGenerator(int increasePercent) {
 		
 //System.out.println("interPathGen " + currentPath.size() + " " + newPath.size()) ; 
-
 		
-		ArrayList<WayPoint> path = new ArrayList<WayPoint>() ; 
+		interPath.clear();
 		
 		for (int j = 0 ; j < newPath.size() ; j ++ ) {
 			
-			path.add(new WayPoint( (int) (oldNewWptConnectors.get(j).x1 + increasePercent *(oldNewWptConnectors.get(j).x2-oldNewWptConnectors.get(j).x1)/100) , (int) (oldNewWptConnectors.get(j).y1 + increasePercent * (oldNewWptConnectors.get(j).y2 - oldNewWptConnectors.get(j).y1)/100), newPath.get(j).time ));
-
-		
-
+			interPath.add(new WayPoint( (int) (oldNewWptConnectors.get(j).x1 + increasePercent *(oldNewWptConnectors.get(j).x2-oldNewWptConnectors.get(j).x1)/100) , (int) (oldNewWptConnectors.get(j).y1 + increasePercent * (oldNewWptConnectors.get(j).y2 - oldNewWptConnectors.get(j).y1)/100), newPath.get(j).time ));
 		}
-		
-
-		synchronized (interPath) {
-			
-			interPath.clear(); 
-			interPath.addAll(path) ; 
-			
-		}
-
 	}
 	
 	
 	
 	
-	public void currentPathUpdate() {
-		currentPath.remove() ; 
-
-		currentPath.clear() ; 
-		currentPath.addAll(interPath) ; 			
+	public void currentPathUpdate() 
+	{
+		currentPath.clear();
+		currentPath.addAll(interPath);
 	}
 	
 	
@@ -838,10 +771,11 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 		
 	}
 	
-	public void pathGeneration(Path[] pathsArray, WayPoint desiredDistance, LinkedList <WayPoint> leaderPath ) 
+	public void pathGeneration(Path[] pathsArray, WayPoint desiredDistance, List <WayPoint> leaderPath ) 
 	{
-		//After the pathsArray[0] which is the path for leader is filled, this funtion will generate the pathsArray[1], pathsArray[2] , and ... based
-		//on the leader's path
+		// After the pathsArray[0] which is the path for leader is filled, this funtion will 
+		// generate the pathsArray[1], pathsArray[2] , and ... based
+		// on the leader's path
 		
 		
 		
@@ -921,23 +855,37 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 			g.setColor(Color.BLACK);
 		else
 			g.setColor(Color.LIGHT_GRAY);
-	
-		g.setStroke(new BasicStroke(4));
 		
 		if (movingFrom != null && movingTo != null)
-			g.drawLine(movingFrom.x, movingFrom.y, movingTo.x, movingTo.y);
-		
-		if (movingFrom != null)
-			drawOval(g, movingFrom);
-		
-		if (movingTo != null)
-			drawOval(g, movingTo);
-		
-		synchronized(currentPath)
 		{
-			WayPoint last = movingTo;
+			// draw a dotted line showing the robot's current motion path
+			 g.setStroke(new BasicStroke(20.0f, BasicStroke.CAP_BUTT,
+					 BasicStroke.JOIN_MITER, 10.0f, new float[]{35.0f}, 0.0f));
+			 
+			g.drawLine(movingFrom.x, movingFrom.y, movingTo.x, movingTo.y);
+		}
+		
+		g.setStroke(new BasicStroke(4));
+		
+		WayPoint last = movingTo;
+		
+		for (WayPoint p : currentPath)
+		{
+			if (last != null)
+				g.drawLine(last.x, last.y, p.x, p.y);
 			
-			for (WayPoint p : currentPath)
+			drawOval(g, p);
+			
+			last = p;
+		}
+ 	
+		if (robotId == 0)
+		{
+			g.setColor(Color.orange);
+			
+			last = null;
+			
+			for (WayPoint p : newPath)
 			{
 				if (last != null)
 					g.drawLine(last.x, last.y, p.x, p.y);
@@ -947,44 +895,19 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 				last = p;
 			}
 		}
-	 	
-		if (robotId == 0)
+			
+		g.setColor(Color.red);
+		
+		last = null;
+		
+		for (WayPoint p : interPath)
 		{
-			g.setColor(Color.orange);
+			if (last != null)
+				g.drawLine(last.x, last.y, p.x, p.y);
 			
-			synchronized (newPath)
-			{
-				WayPoint last = null;
-				
-				for (WayPoint p : newPath)
-				{
-					if (last != null)
-						g.drawLine(last.x, last.y, p.x, p.y);
-					
-					drawOval(g, p);
-					
-					last = p;
-				}
-
-				
-			}
+			drawOval(g, p);
 			
-			g.setColor(Color.red);
-			
-			synchronized (interPath)
-			{
-				WayPoint last = null;
-				
-				for (WayPoint p : interPath)
-				{
-					if (last != null)
-						g.drawLine(last.x, last.y, p.x, p.y);
-					
-					drawOval(g, p);
-					
-					last = p;
-				}
-			}
+			last = p;
 		}
 	}
 
@@ -992,25 +915,20 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 	{
 		final int POINT_DRAW_SIZE = 10;
 		
-		g.fillOval((int)(p.x - POINT_DRAW_SIZE), (int)(p.y - POINT_DRAW_SIZE), 2 * POINT_DRAW_SIZE + 1, 2 * POINT_DRAW_SIZE + 1);
+		g.fillOval((int)(p.x - POINT_DRAW_SIZE), (int)(p.y - POINT_DRAW_SIZE), 
+				2 * POINT_DRAW_SIZE + 1, 2 * POINT_DRAW_SIZE + 1);
 	}
 		
-	public void ackProcess(ArrayList <WayPoint> receivedPath, int pathId){
-		
-		//TODO send ack
-		//determine the situations in which the ACK should be sent
-	
+	public void ackProcess(ArrayList <WayPoint> receivedPath, int pathId)
+	{
+		// TODO determine the situations in which the ACK should be sent
 		
 		gvh.comms.addOutgoingMessage(new RobotMessage(leaderName, gvh.id.getName(), MSG_PATH_ACK, robotId + "," + Integer.toString(pathId))) ;
-		//System.out.println(leaderName);
 		
-		synchronized(currentPath){
-			currentPath.clear() ;
-			currentPath.addAll(receivedPath) ;
-		}
-		
+		// we MIGHT have to protect currentPath with a synchronized block here!
+		currentPath.clear();
+		currentPath.addAll(currentPath);
 	}
-	
 	
 	@Override
 	public void messageReceied(RobotMessage m) {
@@ -1019,7 +937,26 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 		{
 			// followers received sync message
 			initialTime = gvh.time();
-			recievedSync = true ; 
+			
+			// send ready message if the robot is in position
+			if (readyToStart)
+			{
+				int syncId = Integer.parseInt(m.getContents(0));
+				
+				gvh.comms.addOutgoingMessage(new RobotMessage(leaderName, robotName, MSG_READY, "" + syncId));
+			}
+		}
+		else if (m.getMID() == MSG_READY)
+		{
+			int msgSyncId = Integer.parseInt(m.getContents(0));
+			
+			if (msgSyncId == syncId)
+				++readyCount;
+		}
+		else if (m.getMID() == MSG_START)
+		{
+			// all robots are in position, start!
+			recievedStart = true ;
 		}
 		else if (m.getMID() == MSG_PATH_UPDATE && robotId != 0 ){
 			
@@ -1072,13 +1009,11 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 			oldPath.addAll(currentPath);
 			Point2D.Double detourPoint = new Point2D.Double(p.x, p.y);
 			
-			synchronized(newPath)
-			{
 				
-				Main curveGenerator = new Main();
-				ArrayList <WayPoint> newPath = curveGenerator.createNewPath(oldPath, detourPoint, ANCHOR_DISTANCE, SEPARATION) ;
-				
-				
+			ArcCreator curveGenerator = new ArcCreator();
+			ArrayList <WayPoint> newPath = curveGenerator.createNewPath(oldPath, detourPoint, ANCHOR_DISTANCE, SEPARATION) ;
+			
+			
 //				This part works instead of zhenqi's
 /*				
 				ArrayList <WayPoint> newPath = new ArrayList <WayPoint>() ; 
@@ -1091,10 +1026,9 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 					newPath.add(new WayPoint(currentPath.get(j).x , currentPath.get(j).y + j* 30 , currentPath.get(j).time )) ;
 				}
 */				
-				if (newPath != null)
-					this.newPath = newPath;
-				
-				
+			if (newPath != null)
+			{
+				this.newPath = newPath;
 			}
 		}
 	//	System.out.println("Point Received!");

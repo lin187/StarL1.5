@@ -4,7 +4,7 @@ import java.awt.geom.CubicCurve2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
-public class Main 
+public class ArcCreator 
 {
 	
 	/**
@@ -14,11 +14,7 @@ public class Main
 	 * @param anchorDistance the anchor point distance when defining the Bezier curve
 	 * @param seperation the (maximum) separation desired between the output points
 	 * @return a list of new waypoints which starts and ends in the same points as 'path', but goes through 'detourPoint'
-	 */
-	
-	
-
-	
+	 */	
 	public  ArrayList<WayPoint> createNewPath(ArrayList<WayPoint> path, Point2D.Double detourPoint, 
 			double anchorDistance, double seperation)
 	{
@@ -46,55 +42,25 @@ public class Main
 		ArrayList<CubicCurve2D.Double> CurveSegs2 = new ArrayList<CubicCurve2D.Double>();
 		
 		int CS1size = CurveSegs1.size();
-		boolean done = false;
-		boolean overflow;
-		if(CS1size < path.size()-1){
-			overflow = false;
-			}else{
-				overflow = true;
-			}
-		int i = CS1size;
 		
-		// search among the old path to find a 
-		while(!done && !overflow){
-			reunionPoint.setLocation(path.get(i).x, path.get(i).y);
-			dirPoint2.setLocation(2*reunionPoint.x - path.get(i+1).x, 
-					2*reunionPoint.y - path.get(i+1).y);
-			detourPath2.setCurve(getCurve(detourPoint, reunionPoint, 
-					dirPoint1, dirPoint2, anchorDistance));
-			CurveSegs2 = subdivideCurve(detourPath2, sepSq);
-			if(i <= CurveSegs2.size() + CS1size - 1){
-				i++;
-				CurveSegs2.removeAll(CurveSegs2);
-			}else{
-				done = true;
-			}
-			if(i >= path.size()-2){ // reunion path cannot catch up with the old path in the given time bound
-				overflow = true;
-				CurveSegs2.removeAll(CurveSegs2);
-			}
-		}
+		// logic to find the reunion point: find the closest point on the path to the detour point
+		// and multiply it's index in the path by two to get the reunion point
 		
-		// overflow recalculation 
+		int reunionIndex = 2 * getClosestPointIndex(path, detourPoint); // STAN here
 		
-		if(overflow){
-			WayPoint lastPoint = path.get(path.size() - 1);
-			WayPoint seclastPoint = path.get(path.size() - 2);
-			reunionPoint.setLocation(lastPoint.x, lastPoint.y);
-			dirPoint2.setLocation(seclastPoint.x, seclastPoint.y);
-			detourPath2.setCurve(getCurve(detourPoint, reunionPoint, 
-					dirPoint1, dirPoint2, anchorDistance));
-			CurveSegs2 = subdivideCurve(detourPath2, sepSq);
-		}
-	//	System.out.println(detourPath2.getP1());
-	//	System.out.println(detourPath2.getCtrlP1());
-	//	System.out.println(detourPath2.getCtrlP2());
-	//	System.out.println(detourPath2.getP2());
+		reunionPoint.setLocation(path.get(reunionIndex).x, path.get(reunionIndex).y);
+		
+		dirPoint2.setLocation(2*reunionPoint.x - path.get(reunionIndex+1).x, 
+				2*reunionPoint.y - path.get(reunionIndex+1).y);
+		detourPath2.setCurve(getCurve(detourPoint, reunionPoint, 
+				dirPoint1, dirPoint2, anchorDistance));
+		CurveSegs2 = subdivideCurve(detourPath2, sepSq);
+		
 		// write newPath with the concatenation of CurveSegs1, CurveSegs2 and the last part of path.
 		Point2D.Double SegEnd = new Point2D.Double();
 		int cyclenth = path.get(1).time - path.get(0).time; 
 		int time;
-		for(i = 0; i<CurveSegs1.size(); i++){
+		for(int i = 0; i<CurveSegs1.size(); i++){
 			if(i + 1 < path.size()){
 				time = path.get(i+1).time;
 			}else{
@@ -103,7 +69,8 @@ public class Main
 			SegEnd.setLocation(CurveSegs1.get(i).getP2());
 			newPath.add( new WayPoint((int)SegEnd.x, (int)SegEnd.y, time) ) ;
 		}
-		for(i = 0; i<CurveSegs2.size(); i++){
+		
+		for(int i = 0; i<CurveSegs2.size(); i++){
 			if(i+CS1size + 1 < path.size()){
 				time = path.get(i+1+CS1size).time;
 			}else{
@@ -112,16 +79,37 @@ public class Main
 			SegEnd.setLocation(CurveSegs2.get(i).getP2());
 			newPath.add( new WayPoint((int)SegEnd.x, (int)SegEnd.y, time) ) ;
 		}
-		if(!overflow){
-			for(i = i+1+CS1size; i<path.size(); i++){
-				newPath.add(path.get(i));
-			}
+		
+		for(int i = 1 + CurveSegs1.size() + CurveSegs2.size(); i<path.size(); i++){
+			newPath.add(path.get(i));
 		}
 
 		
 		return newPath;
 	}
 	
+	private int getClosestPointIndex(ArrayList<WayPoint> path, Point2D.Double p) 
+	{
+		// start at index 1 since we never want the reunion point to be index 0
+		int rv = 1;
+		double minDistSq = p.distanceSq(path.get(0).x, path.get(0).y);
+		
+		for (int i = 2; i < path.size() - 1; ++i)
+		{
+			WayPoint wp = path.get(i);
+			
+			double distSq = p.distanceSq(wp.x, wp.y);
+			
+			if (distSq < minDistSq)
+			{
+				minDistSq = distSq;
+				rv = i;
+			}
+		}
+		
+		return rv;
+	}
+
 	private static CubicCurve2D.Double getCurve(Point2D.Double P1, Point2D.Double P2, 
 			Point2D.Double C1, Point2D.Double C2, double anchorDistance){
 		/**
@@ -182,7 +170,7 @@ public class Main
 		return CurveSegs;
 	}
 	
-	public Main()
+	public ArcCreator()
 	{
 		// test function
 		

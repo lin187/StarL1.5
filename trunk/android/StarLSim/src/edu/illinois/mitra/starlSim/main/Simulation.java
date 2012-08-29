@@ -47,9 +47,15 @@ public class Simulation {
 			// Mapping between robot name and IP address
 			participants.put(SimSettings.BOT_NAME + i, "192.168.0." + i);
 		}
+		
+		// Initialize viewer
+		final DrawFrame drawFrame = new DrawFrame(participants.keySet(), blockedRobots, SimSettings.GRID_XSIZE, SimSettings.GRID_YSIZE);
+		drawFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// Start the simulation engine
-		se = new SimulationEngine(SimSettings.MSG_MEAN_DELAY, SimSettings.MSG_STDDEV_DELAY, SimSettings.MSG_LOSSES_PER_HUNDRED, SimSettings.MSG_RANDOM_SEED, SimSettings.TIC_TIME_RATE, blockedRobots, participants);
+		se = new SimulationEngine(SimSettings.MSG_MEAN_DELAY, SimSettings.MSG_STDDEV_DELAY, 
+				SimSettings.MSG_LOSSES_PER_HUNDRED, SimSettings.MSG_RANDOM_SEED, SimSettings.TIC_TIME_RATE, 
+				blockedRobots, participants, drawFrame.getPanel());
 
 		// Create the sim gps
 		if(SimSettings.IDEAL_MOTION) {
@@ -73,9 +79,7 @@ public class Simulation {
 
 		Random rand = new Random();
 
-		// Initialize viewer
-		final DrawFrame drawFrame = new DrawFrame(participants.keySet(), blockedRobots, se.startTime, SimSettings.GRID_XSIZE, SimSettings.GRID_YSIZE);
-		drawFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// show viewer
 		drawFrame.setVisible(true);
 
 		// initial condition

@@ -137,6 +137,12 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 			if(newdest) {
 				// Snap to heading
 				// Calculate angle and X/Y velocities
+				if (dest == null)
+					throw new RuntimeException("dest is null in updatePos()");
+				
+				if (start == null)
+					throw new RuntimeException("start is null in updatePos()");
+				
 				int deltaX = dest.x-start.x;
 				int deltaY = dest.y-start.y;
 				motAngle = Math.atan2(deltaY, deltaX);
@@ -177,13 +183,7 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 		public void setDest(ItemPosition dest, int velocity) 
 		{
 			if (velocity <= 0)
-			{
-				System.err.println("WARNING: setDest called with velocity<=0 (==" + velocity +")");
-				System.err.println("Overriding to 1. Fix this! Did you call goTo with a motion" +
-						"parameter with max linear speed of zero???");
-				
 				throw new RuntimeException("setDest called with velocity <= 0");
-			}
 			
 			if(hasChanged()) updatePos();
 			this.dest = dest;

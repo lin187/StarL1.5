@@ -4,6 +4,7 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.util.LinkedList;
 import java.util.List;
 
 import edu.illinois.mitra.starl.comms.MessageContents;
@@ -43,10 +44,23 @@ public class StanTestApp extends LogicThread implements MessageListener
 	private int numWaypoints;
 	private int curWaypoint = 0;
 	
+	private ItemPosition waypoints[] = 
+	{
+		new ItemPosition("waypoint0", 100, 100, 0),
+		new ItemPosition("waypoint0", 1000, 100, 0),
+		new ItemPosition("waypoint0", 1000, 1000, 0),
+		new ItemPosition("waypoint0", 100, 1000, 0),
+		new ItemPosition("waypoint0", 200, 500, 0),
+	};
+	
 	// for follower
 	private boolean finishedFollowing = false;
 	private Point gotoPoint = null; 
 	private Point goingToPoint = null;
+	
+	// for testing concurrent modification issues
+	int lastSum = 0;
+	LinkedList <Integer> longList = new LinkedList <Integer>(); 
 	
 	public StanTestApp(GlobalVarHolder gvh) 
 	{
@@ -56,10 +70,7 @@ public class StanTestApp extends LogicThread implements MessageListener
 		
 		//gvh.trace.traceStart(SimSettings.TRACE_CLOCK_DRIFT_MAX, SimSettings.TRACE_CLOCK_SKEW_MAX);
 		motion = gvh.plat.moat;
-		numWaypoints = gvh.gps.getWaypointPositions().getNumPositions()-1;
-		
-		if(numWaypoints == -1) 
-			throw new RuntimeException("Waypoints were not defined in input file");
+		numWaypoints = waypoints.length;
 		
 		// set motion parameters
 		
@@ -125,17 +136,22 @@ public class StanTestApp extends LogicThread implements MessageListener
 				gvh.trace.traceSync("LAUNCH");
 				stage = STAGE.MOVE;
 				
-				leaderGoto(gvh.gps.getWaypointPosition("DEST"+curWaypoint));
+				leaderGoto(waypoints[curWaypoint]);
 				break;
 			
 			case MOVE:
 				if(!motion.inMotion) {
-					if(curWaypoint < numWaypoints) 
+					if(curWaypoint + 1 < numWaypoints) 
 						curWaypoint ++;
 					else 
 						curWaypoint = 0;
 					
-					leaderGoto(gvh.gps.getWaypointPosition("DEST"+curWaypoint));
+					longList.clear();
+					
+					for (int x = 0; x < 100000; ++x)
+						longList.add((int)Math.random());
+					
+					leaderGoto(waypoints[curWaypoint]);
 				}
 				break;
 			}
@@ -221,6 +237,18 @@ public class StanTestApp extends LogicThread implements MessageListener
 				g.drawLine(x - SIZE, y + SIZE, x + SIZE, y - SIZE);
 			}
 		}
+		else
+		{
+			int sum = 0;
+			for (int i : longList)
+				sum += i;
+			
+			if (sum != lastSum)
+			{
+				lastSum = sum;
+				System.out.println("sum = " + sum);
+			}
+		}
 	}
 	
 	int replaceWaypointIndex = 0;
@@ -229,11 +257,10 @@ public class StanTestApp extends LogicThread implements MessageListener
 	{
 		if (isLeader)
 		{
-			// replace replaceWaypointIndex
-			gvh.gps.getWaypointPosition("DEST"+replaceWaypointIndex).x = p.x;
-			gvh.gps.getWaypointPosition("DEST"+replaceWaypointIndex).y = p.y;
-
-			if(replaceWaypointIndex < numWaypoints) 
+			waypoints[replaceWaypointIndex].x = p.x;
+			waypoints[replaceWaypointIndex].y = p.y;
+					
+			if(replaceWaypointIndex + 1 < numWaypoints) 
 				replaceWaypointIndex ++;
 			else 
 				replaceWaypointIndex = 0;
