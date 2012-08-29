@@ -1,0 +1,6 @@
+Waypoint name scheme:
+[Line #]-0
+[Line #]-1
+
+All lines include both start and end points, 
+even if they overlap with other lines.

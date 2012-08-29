@@ -1,0 +1,10 @@
+<svg width="640" height="480" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+ <g>
+  <title>Layer 1</title>
+  <line id="svg_1" y2="134" x2="397" y1="48" x1="460" stroke-width="5" stroke="#000000" fill="none"/>
+  <line id="svg_2" y2="244" x2="456" y1="134" x1="397" stroke-width="5" stroke="#000000" fill="none"/>
+  <line id="svg_3" y2="328" x2="398" y1="244" x1="456" stroke-width="5" stroke="#000000" fill="none"/>
+  <line id="svg_4" y2="255" x2="578" y1="161" x1="577" stroke-width="5" stroke="#000000" fill="none"/>
+ </g>
+</svg>
