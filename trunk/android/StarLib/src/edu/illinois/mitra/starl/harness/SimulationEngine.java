@@ -5,18 +5,19 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * The core of the simulation. As simulated Guster would say, "the pseudo-king of it all, the virtual belle of the not-quite-real ball" (Yes, I'm making a joke about my other joke in GlobalVarHolder)
- * You really don't need to mess with this code. Please don't change anything in here.
+ * The core of the simulation. You really
+ * don't need to mess with this code. Please don't change anything in here.
+ * 
  * @author Adam Zimmerman
  * @version One million
  */
 public class SimulationEngine extends Thread {
-	
+
 	private static final int THREAD_DEADLOCK_TIMEOUT = 5000;
-	
+
 	// Matching lists of threads being tracked and their delays
-	private ArrayList<Long> lastUpdateTime = new ArrayList<Long>(); 
-	private ArrayList<Long> sleeps = new ArrayList<Long>(); 
+	private ArrayList<Long> lastUpdateTime = new ArrayList<Long>();
+	private ArrayList<Long> sleeps = new ArrayList<Long>();
 	private ArrayList<Thread> regThreads = new ArrayList<Thread>();
 
 	public SimGpsProvider gps;
@@ -26,12 +27,11 @@ public class SimulationEngine extends Thread {
 	private Object lock = new Object();
 	private boolean done = false;
 	private double ticRate = 0;
-	
+
 	private double lastTicAdvance = -1;
 	private long lastTimeAdvance = -1;
 
-	public SimulationEngine(int meanDelay, int delayStdDev, int dropRate, int seed, double ticRate, Set <String> blockedRobots,
-			Map <String, String> nameToIpMap) {
+	public SimulationEngine(int meanDelay, int delayStdDev, int dropRate, int seed, double ticRate, Set<String> blockedRobots, Map<String, String> nameToIpMap) {
 		super("SimulationEngine");
 		comms = new DecoupledSimComChannel(meanDelay, delayStdDev, dropRate, seed, blockedRobots, nameToIpMap);
 		time = System.currentTimeMillis();
@@ -40,7 +40,7 @@ public class SimulationEngine extends Thread {
 		this.ticRate = ticRate;
 		this.start();
 	}
-	
+
 	public void threadSleep(long time, Thread thread) {
 		synchronized(lock) {
 			int idx = regThreads.indexOf(thread);
@@ -54,40 +54,42 @@ public class SimulationEngine extends Thread {
 			}
 		}
 	}
-		
+
 	@Override
 	public void run() {
-		//TODO: please comment this
-		
+		// TODO: please comment this
+
 		while(!done) {
 			try {
 				Thread.sleep(5000);
-			} catch (InterruptedException e) {
+			} catch(InterruptedException e) {
 			}
-			
-			synchronized(lock) 
-			{
-				if(sleeps.size() != regThreads.size()) throw new RuntimeException("DISJOINT!");
+
+			synchronized(lock) {
+				if(sleeps.size() != regThreads.size())
+					throw new RuntimeException("DISJOINT!");
 				if(clearToAdvance())
 					advance();
 			}
 		}
 	}
-	
+
 	private void maintainRealTime() {
-		if(ticRate <= 0) return;
-		if(lastTicAdvance <= 0) return;
+		if(ticRate <= 0)
+			return;
+		if(lastTicAdvance <= 0)
+			return;
 
 		// Determine the rate of advance in tics/millisecond
-		double rate = lastTicAdvance/(System.currentTimeMillis()-lastTimeAdvance);
-		
+		double rate = lastTicAdvance / (System.currentTimeMillis() - lastTimeAdvance);
+
 		// While the rate is too large, sleep the thread
 		while(rate > ticRate) {
 			try {
 				Thread.sleep(1);
-			} catch (InterruptedException e) {
+			} catch(InterruptedException e) {
 			}
-			rate = lastTicAdvance/(System.currentTimeMillis()-lastTimeAdvance);
+			rate = lastTicAdvance / (System.currentTimeMillis() - lastTimeAdvance);
 		}
 	}
 
@@ -97,7 +99,7 @@ public class SimulationEngine extends Thread {
 
 			System.out.println("\n\nPossible deadlock encountered at " + now);
 			Thread t = regThreads.get(i);
-			
+
 			StackTraceElement[] st = t.getStackTrace();
 			System.out.println(t.getId() + " - " + t.getName() + " - " + sleeps.get(i));
 			for(StackTraceElement ste : st) {
@@ -105,35 +107,35 @@ public class SimulationEngine extends Thread {
 			}
 		}
 	}
-	
+
 	private void advance() {
 		// Determine if a pause is needed to maintain ties to real-time
 		maintainRealTime();
-		
+
 		long advance = comms.minDelay();
-		
+
 		for(Long l : sleeps) {
 			advance = Math.min(l, advance);
 		}
-		
+
 		// Advance time
-		time += advance;			
+		time += advance;
 		comms.advanceTime(advance);
-		
+
 		lastTicAdvance = advance;
 		lastTimeAdvance = System.currentTimeMillis();
 
 		// Detect threads to be woken
-		for(int i = 0; i < regThreads.size(); i ++) {
+		for(int i = 0; i < regThreads.size(); i++) {
 			sleeps.set(i, (sleeps.get(i) - advance));
-			
-			if(sleeps.get(i) == 0) {				
+
+			if(sleeps.get(i) == 0) {
 				sleeps.set(i, null);
 				regThreads.get(i).interrupt();
 			}
 		}
 	}
-	
+
 	public void registerThread(Thread thread) {
 		synchronized(lock) {
 			lastUpdateTime.add(System.currentTimeMillis());
@@ -145,28 +147,30 @@ public class SimulationEngine extends Thread {
 	public void removeThread(Thread thread) {
 		synchronized(lock) {
 			int idx = regThreads.indexOf(thread);
-			if(idx == -1) throw new RuntimeException("Thread " + thread + " tried to unregister itself without being registered! What a jerk.");
+			if(idx == -1)
+				throw new RuntimeException("Thread " + thread + " tried to unregister itself without being registered! What a jerk.");
 			regThreads.remove(idx);
 			sleeps.remove(idx);
 			lastUpdateTime.remove(idx);
 		}
-		if(!this.isInterrupted()) this.interrupt();
+		if(!this.isInterrupted())
+			this.interrupt();
 	}
-	
+
 	public void simulationDone() {
 		done = true;
 	}
-	
+
 	private boolean clearToAdvance() {
 		for(int i = 0; i < sleeps.size(); i++) {
 			if(sleeps.get(i) == null) {
 				deadlockCheck(i);
 				return false;
 			}
-		}	
+		}
 		return true;
 	}
-	
+
 	public Long getTime() {
 		return time;
 	}

@@ -38,13 +38,9 @@ public class Simulation {
 	private DistancePredicate distpred;
 
 	public Simulation(int n_bots, String wptfile, String initposfile, Class<? extends LogicThread> appToRun) {
-		// Ensure that the class to instantiate is an instance of SimApp
-		if(!LogicThread.class.isAssignableFrom(appToRun))
-			throw new RuntimeException("The requested application, " + appToRun.getSimpleName() + ", does not extend LogicThread!");
-
-		// create set of robots whose wireless is blocked for passage between
+		// Create set of robots whose wireless is blocked for passage between
 		// the GUI and the simulation communication object
-		Set<String> blockedRobots = new HashSet<String>();
+		Set<String> blockedRobots = new HashSet<String>(); // TODO (Adam): Is this a set of robot names or robot IP addresses?
 
 		// Create participants and instantiate SimApps
 		for(int i = 0; i < n_bots; i++) {
