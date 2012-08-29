@@ -22,6 +22,7 @@ public class RaceApp extends LogicThread implements MessageListener {
 	private STAGE stage = STAGE.START;
 	
 	private String destname = null;
+	private boolean run = true;
 	
 	public RaceApp(GlobalVarHolder gvh) {
 		super(gvh);
@@ -36,7 +37,10 @@ public class RaceApp extends LogicThread implements MessageListener {
 		gvh.comms.addMsgListener(99, this);
 
 		// Make sure waypoints were provided
-		if(gvh.gps.getWaypointPositions().getNumPositions() == 0) System.out.println("The race application requires waypoints to race to!");
+		if(gvh.gps.getWaypointPositions().getNumPositions() == 0) {
+			System.err.println("The race application requires waypoints to race to!");
+			run = false;
+		}
 	}
 
 	@Override
@@ -45,7 +49,10 @@ public class RaceApp extends LogicThread implements MessageListener {
 			gvh.sleep(100);
 			switch(stage) {
 			case START:
-				stage = STAGE.GO;
+				if(run)
+					stage = STAGE.GO;
+				else
+					stage = STAGE.DONE;
 				break;
 				
 			case GO:

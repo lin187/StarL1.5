@@ -1,4 +1,5 @@
 package edu.illinois.mitra.starlSim.main;
+
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
@@ -14,37 +15,36 @@ import edu.illinois.mitra.starlSim.draw.DrawFrame;
 public class SimApp implements Callable<List<Object>> {
 	protected String name;
 	protected GlobalVarHolder gvh;
-	
+
 	protected LogicThread logic;
-	
-	public SimApp(String name, HashMap<String,String> participants, SimulationEngine engine, ItemPosition initpos, String traceDir, 
-			Class<?> app, DrawFrame drawer, int driftMax, float skewBound) {	
+
+	public SimApp(String name, HashMap<String, String> participants, SimulationEngine engine, ItemPosition initpos, String traceDir, Class<? extends LogicThread> app, DrawFrame drawer, int driftMax, float skewBound) {
 		this.name = name;
 		gvh = new SimGlobalVarHolder(name, participants, engine, initpos, traceDir, driftMax, skewBound);
 		gvh.comms.startComms();
 		gvh.gps.startGps();
-		
+
 		// Create the class to be simulated
 		try {
 			// Generically instantiate an instance of the requested LogicThread
 			logic = (LogicThread) app.getConstructor(GlobalVarHolder.class).newInstance(gvh);
 			drawer.addPredrawer(logic);
 			drawer.addPointInputAccepter(logic);
-			
-		} catch (InstantiationException e) {
+		} catch(InstantiationException e) {
 			e.printStackTrace();
-		} catch (IllegalAccessException e) {
+		} catch(IllegalAccessException e) {
 			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
+		} catch(IllegalArgumentException e) {
 			e.printStackTrace();
-		} catch (InvocationTargetException e) {
+		} catch(InvocationTargetException e) {
 			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
+		} catch(NoSuchMethodException e) {
 			e.printStackTrace();
-		} catch (SecurityException e) {
+		} catch(SecurityException e) {
 			e.printStackTrace();
 		}
-		if(logic == null) throw new RuntimeException("Failed to create LogicThread in SimApp class.");
+		if(logic == null)
+			throw new RuntimeException("Failed to create LogicThread in SimApp class.");
 	}
 
 	public String getLog() {
@@ -52,20 +52,16 @@ public class SimApp implements Callable<List<Object>> {
 	}
 
 	@Override
-	public List<Object> call() throws Exception 
-	{
+	public List<Object> call() {
 		// print exceptions explicitly instead of silently ignoring them
-		List <Object> rv = null;
-		
-		try
-		{
+		List<Object> rv = null;
+
+		try {
 			rv = logic.call();
-		}
-		catch (Exception e)
-		{
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return rv;
 	}
 }
