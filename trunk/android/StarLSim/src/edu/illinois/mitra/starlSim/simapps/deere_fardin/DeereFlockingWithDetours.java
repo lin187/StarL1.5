@@ -484,12 +484,13 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 		// wait until the start message is received
 		while (!recievedStart)
 			gvh.sleep(60); // was 20
-				
+		
 		while (currentPath.size() > 0)
 		{
 			WayPoint next = currentPath.removeFirst();
 					
 			startingCycle = GetCycleNumber() ;
+			
 			while(startingCycle == GetCycleNumber())
 				gvh.sleep(30); // was 10
 			
@@ -927,7 +928,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 		
 		// we MIGHT have to protect currentPath with a synchronized block here!
 		currentPath.clear();
-		currentPath.addAll(currentPath);
+		currentPath.addAll(receivedPath);
 	}
 	
 	@Override
@@ -958,8 +959,8 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 			// all robots are in position, start!
 			recievedStart = true ;
 		}
-		else if (m.getMID() == MSG_PATH_UPDATE && robotId != 0 ){
-			
+		else if (m.getMID() == MSG_PATH_UPDATE && robotId != 0 )
+		{
 			
 			String[] waypoints = m.getContents(0).split(",") ;
 			String[] wptData ; 

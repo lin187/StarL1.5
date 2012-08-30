@@ -116,8 +116,6 @@ MouseListener, MouseMotionListener, ExplicitlyDrawable
 		
 		if (Math.abs(now - lastDrawTime) > MIN_REDRAW_MS) // don't redraw too quickly
 		{
-			System.out.println("Drawing at time = " + now);
-			
 			synchronized(this)
 			{
 				Dimension size = this.getSize();

@@ -14,7 +14,7 @@ public class SimSettings {
 	public static Class<? extends LogicThread> 		app 				= DeereFlockingWithDetours.class;	// The application to be simulated
 	
 	public static boolean		IDEAL_MOTION		= true;			// True enables ideal movement, false uses the simulated motion automaton
-	public static double		TIC_TIME_RATE		= 0;				// The desired rate of time passing. 0 = no limit, 0.5 = half real-time, 1.0 = real-time, etc. 
+	public static double		TIC_TIME_RATE		= 25;				// The desired rate of time passing. 0 = no limit, 0.5 = half real-time, 1.0 = real-time, etc. 
 	
 	// Grid size (when generating random robot positions)
 	public static int			GRID_XSIZE	= 3000;
