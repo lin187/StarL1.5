@@ -1,20 +1,22 @@
 package edu.illinois.mitra.starlSim.main;
 
 import edu.illinois.mitra.starl.interfaces.LogicThread;
+import edu.illinois.mitra.starlSim.simapps.CircleFormation;
 import edu.illinois.mitra.starlSim.simapps.deere_fardin.DeereFlockingWithDetours;
+import edu.illinois.mitra.starlSim.simapps.*;
 
 public class SimSettings {
 	// General simulation settings
-	public static int 			N_BOTS 				= 5;					// The number of robots to simulate
+	public static int 			N_BOTS 				= 1;					// The number of robots to simulate
 
 	public static String	 	waypoint_path		= null;					// path for waypoint files; if null, uses relative paths		
 	public static String	 	waypoint_file		= null;	// filename for a .wpt file with waypoints (should be in waypoint_path)
 	public static String 		initial_path		= null;					// path for initial condition waypoint files; if null, uses relative paths
 	public static String 		initial_file		= "init.wpt";			// filename for a .wpt file with positions or null to enable random starting locations (should be in initial_path)
-	public static Class<? extends LogicThread> 		app 				= DeereFlockingWithDetours.class;	// The application to be simulated
+	public static Class<? extends LogicThread> 		app = CircleMotion.class; // The application to be simulated
 	
-	public static boolean		IDEAL_MOTION		= true;			// True enables ideal movement, false uses the simulated motion automaton
-	public static double		TIC_TIME_RATE		= 25;				// The desired rate of time passing. 0 = no limit, 0.5 = half real-time, 1.0 = real-time, etc. 
+	public static boolean		IDEAL_MOTION		= false;			// True enables ideal movement, false uses the simulated motion automaton
+	public static double		TIC_TIME_RATE		= 5;				// The desired rate of time passing. 0 = no limit, 0.5 = half real-time, 1.0 = real-time, etc. 
 	
 	// Grid size (when generating random robot positions)
 	public static int			GRID_XSIZE	= 3000;

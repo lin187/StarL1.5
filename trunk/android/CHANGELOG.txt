@@ -1,4 +1,8 @@
 ----- StarLib Changelog -----
+8/30/2012, Adam
+- Cleaned up MotionAutomaton, removed commented out lines of code
+- Added straight line and circle motion applications
+
 8/29/2012, Stan
 - Made the simapp drawing occur only when logic thread is asleep to prevent having to worry about concurrent modification exceptions
 - added MAX_FPS variable to SimSettings, which you can adjust if drawing is blocking for too long
