@@ -1,5 +1,6 @@
 package edu.illinois.mitra.lightpaint.geometry;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -83,7 +84,7 @@ public class ImageEdge {
 		else
 			return Math.min(Math.min(distanceTo(other.a), distanceTo(other.b)), Math.min(other.distanceTo(a), other.distanceTo(b)));
 	}
-	
+		
 	public ImagePoint getIntersection(ImageEdge other) {
 		if(a.equals(other.a) || a.equals(other.b))
 			return a;
@@ -119,6 +120,18 @@ public class ImageEdge {
 		return new ImageEdge(b,a);
 	}
 	
+	
+	private static final Comparator<ImageEdge> LENGTH_COMPARATOR = new Comparator<ImageEdge>() {
+		@Override
+		public int compare(ImageEdge o1, ImageEdge o2) {
+			return Double.compare(o1.getLength(), o2.getLength());
+		}
+	};
+	
+	public static Comparator<ImageEdge> lengthComparator() {
+		return LENGTH_COMPARATOR;
+	}
+	
 	@Override
 	public String toString() {
 		return a + " -> " + b;
@@ -144,9 +157,6 @@ public class ImageEdge {
 		ImageEdge other = (ImageEdge) obj;
 		if(a.equals(other.a) && b.equals(other.b))
 			return true;
-//		if(a.equals(other.b) && b.equals(other.a))
-//			return true;
-		
 		return false;
 	}
 }

@@ -3,12 +3,17 @@ package edu.illinois.mitra.lightpaint;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import edu.illinois.mitra.lightpaint.geometry.ImageEdge;
 import edu.illinois.mitra.lightpaint.geometry.ImageGraph;
@@ -65,34 +70,33 @@ public class LpAlgorithm {
 	}
 
 	private static final List<ItemPosition> EMPTY_LIST = new ArrayList<ItemPosition>(0);
+
 	public List<ItemPosition> assignSegment(String currentRobot, ItemPosition robotPosition) {
 		List<ImagePoint> points = assignSegment(currentRobot, new ImagePoint(robotPosition.x, robotPosition.y));
 		if(points == null)
 			return EMPTY_LIST;
 		List<ItemPosition> positions = new ArrayList<ItemPosition>(points.size());
 		for(ImagePoint point : points) {
-			positions.add(new ItemPosition(point.toString(), (int)point.getX(), (int)point.getY(), 0));
+			positions.add(new ItemPosition(point.toString(), (int) point.getX(), (int) point.getY(), 0));
 		}
 		return positions;
 	}
-	
-	private Map<String, List<ImagePoint>> assignments = new HashMap<String, List<ImagePoint>>();
-	
+
 	public List<ImagePoint> assignSegment(String currentRobot, ImagePoint robotPosition) {
 		if(isDone())
 			return null;
-		
+
 		setRobotPosition(currentRobot, robotPosition);
 
 		// First make sure they're not in an unsafe region already
 		// TODO figure out how to get them out of an unsafe situation
-		if(unsafe.isColliding(robotPosition, unsafeRadius)) {
+		ImageGraph unsafeForCurrent = new ImageGraph(unsafe);
+		unsafeForCurrent.addAll(unsafeRobotGraph(currentRobot));
+
+		if(unsafeForCurrent.isColliding(robotPosition, unsafeRadius)) {
 			System.err.println(currentRobot + " is in an unsafe starting position");
 			return null;
 		}
-
-		ImageGraph unsafeForCurrent = new ImageGraph(unsafe);
-		unsafeForCurrent.addAll(this.unsafeRobotGraph(currentRobot));
 
 		// Get the closest vertices, removing any that are unsafe
 		List<ImagePoint> availableStartPoints = unsafeForCurrent.removeCollidingPoints(unpainted.getPointsInDistanceOrder(robotPosition), unsafeRadius);
@@ -122,7 +126,7 @@ public class LpAlgorithm {
 			double distToStart = Utility.cap(getPathLength(pathToStart), 1d, Double.POSITIVE_INFINITY);
 
 			// Find distance of achievable path
-			List<ImageEdge> path = getPathFromStart(start, new ImageGraph(unpainted), unsafeForCurrent, maxDrawPathLength);
+			List<ImageEdge> path = getPathFromStart(start, new ImageGraph(unpainted), unsafeForCurrent, maxDrawPathLength, true);
 			double pathLength = getPathLength(path);
 
 			// Discard if there are no viable paths from this start point
@@ -131,7 +135,7 @@ public class LpAlgorithm {
 
 			// Compute score
 			double score = pathLength / distToStart;
-
+			
 			if(score > maxScore) {
 				maxScore = score;
 				List<ImageEdge> fullPath = new ArrayList<ImageEdge>();
@@ -144,7 +148,7 @@ public class LpAlgorithm {
 		// If no acceptable starts were found, return null
 		if(bestPath == null)
 			return null;
-
+		
 		// Mark the best path as unsafe, remove it from unpainted
 		for(ImageEdge edge : bestPath) {
 			unsafe.addEdge(edge);
@@ -159,7 +163,7 @@ public class LpAlgorithm {
 		return unsafe.isEmpty() && drawing.equals(painted);
 	}
 
-	public void markSafeDrawn(String robotName, ImagePoint start, ImagePoint end) { //, int pointAchieved) { 
+	public void markSafeDrawn(String robotName, ImagePoint start, ImagePoint end) {
 		unsafe.removeEdge(start, end);
 		if(drawing.hasEdge(start, end))
 			painted.addEdge(start, end);
@@ -167,25 +171,35 @@ public class LpAlgorithm {
 		setRobotPosition(robotName, end);
 	}
 
-	private List<ImageEdge> getPathFromStart(ImagePoint start, ImageGraph unpainted, ImageGraph unsafe, double maxLength) {
+	private List<ImageEdge> getPathFromStart(ImagePoint start, ImageGraph unpainted, ImageGraph unsafe, double maxLength, boolean forceAcceptPath) {
 		List<ImageEdge> path = new ArrayList<ImageEdge>();
 
 		ImagePoint entry = start;
-		Set<ImageEdge> possibleEdges = new HashSet<ImageEdge>(unpainted.getEdgesOf(start));
+		SortedSet<ImageEdge> possibleEdges = getDistanceSortedEdgeSet(unpainted.getEdgesOf(entry));
+
 		double pathLength = 0;
+
+		// If the shortest edge available is longer than the maximum length,
+		// take it only if this is the first iteration
+		if(possibleEdges.last().getLength() > maxLength && forceAcceptPath) {
+			ImageEdge edgeToAdd = possibleEdges.last();
+			path.add(edgeToAdd);
+			unpainted.removeEdge(edgeToAdd);
+			pathLength += edgeToAdd.getLength();
+		}
 
 		// While the length parameter hasn't been exceeded and there are more
 		// possible edges, continue
 		while(pathLength < maxLength && !possibleEdges.isEmpty()) {
 			// Add the longest possible edge that's safe to the path
-			ImageEdge longest = getLongestEdge(possibleEdges);
+			ImageEdge longest = possibleEdges.first();
 			if(!unsafe.isColliding(longest, unsafeRadius) && longest.getLength() < maxLength) {
 				path.add(longest);
 				pathLength += longest.getLength();
 
 				// Determine which point to check next for edges
 				entry = longest.getOtherEnd(entry);
-				possibleEdges = new HashSet<ImageEdge>(unpainted.getEdgesOf(entry));
+				possibleEdges = getDistanceSortedEdgeSet(unpainted.getEdgesOf(entry));
 
 				// Remove the edge we just entered on to prevent infinite loops
 				// back and forth
@@ -196,9 +210,8 @@ public class LpAlgorithm {
 		}
 
 		// If the path is less than the maximum length and other drawable
-		// segments exists within the
-		// total distance remaining to travel, connect to the closest drawable
-		// segment and draw as much as possible
+		// segments exists within the total distance remaining to travel,
+		// connect to the closest drawable segment and draw as much as possible
 		if(pathLength < maxLength) {
 			double lengthRemaining = maxLength - pathLength;
 			List<ImagePoint> closestVertices = unpainted.getPointsInDistanceOrder(entry);
@@ -211,7 +224,7 @@ public class LpAlgorithm {
 					return path;
 				if(!unsafe.isColliding(pathToProspectiveStart, unsafeRadius)) {
 					lengthRemaining -= pathToProspectiveStart.getLength();
-					List<ImageEdge> continuation = getPathFromStart(point, unpainted, unsafe, pathLength);
+					List<ImageEdge> continuation = getPathFromStart(point, unpainted, unsafe, pathLength, false);
 					if(continuation.size() > 0) {
 						path.add(pathToProspectiveStart);
 						path.addAll(continuation);
@@ -224,21 +237,16 @@ public class LpAlgorithm {
 		return path;
 	}
 
-	private ImageEdge getLongestEdge(Set<ImageEdge> possibleEdges) {
-		if(possibleEdges.size() == 1)
-			return possibleEdges.iterator().next();
-
-		double maxLength = Double.NEGATIVE_INFINITY;
-		ImageEdge longestEdge = null;
-
-		for(ImageEdge edge : possibleEdges) {
-			if(edge.getLength() > maxLength) {
-				longestEdge = edge;
-				maxLength = edge.getLength();
-			}
-
-		}
-		return longestEdge;
+	/**
+	 * Create a set of image edges sorted by distance
+	 * First = longest, last = shortest
+	 * @param set a collection of image edges to be sorted
+	 * @return the sorted input set 
+	 */
+	private static SortedSet<ImageEdge> getDistanceSortedEdgeSet(Collection<ImageEdge> set) {
+		SortedSet<ImageEdge> edges = new TreeSet<ImageEdge>(ImageEdge.lengthComparator()).descendingSet();
+		edges.addAll(set);
+		return edges;
 	}
 
 	public static List<ImagePoint> edgesToPoints(List<ImageEdge> path) {
@@ -302,23 +310,23 @@ public class LpAlgorithm {
 	 */
 	private ImageGraph unsafeRobotGraph(String currentRobot) {
 		ImageGraph retval = new ImageGraph();
-		for(String robot : unsafeRobots.keySet()) {
-			if(!robot.equals(currentRobot))
-				retval.addPoint(unsafeRobots.get(robot));
+		for(Entry<String, ImagePoint> robot : unsafeRobots.entrySet()) {
+			if(!robot.getKey().equals(currentRobot))
+				retval.addPoint(robot.getValue());
 		}
 		return retval;
 	}
 
 	public void draw(Graphics2D g) {
 		drawing.draw(g, Color.LIGHT_GRAY, 12);
-		unsafe.draw(g, Color.RED, 12, (int)unsafeRadius);
+		unsafe.draw(g, Color.RED, 12, (int) unsafeRadius);
 		painted.draw(g, Color.GREEN, 12);
-		
+
 		// Draw each robot position with a red unsafe boundary around it
 		unsafeRobotGraph(null).draw(g, Color.PINK, 20);
 		g.setColor(Color.RED);
 		for(Entry<String, ImagePoint> robot : unsafeRobots.entrySet()) {
-			g.drawOval((int)(robot.getValue().getX()-unsafeRadius), (int)(robot.getValue().getY()-unsafeRadius), 2*(int)unsafeRadius, 2*(int)unsafeRadius);
+			g.drawOval((int) (robot.getValue().getX() - unsafeRadius), (int) (robot.getValue().getY() - unsafeRadius), 2 * (int) unsafeRadius, 2 * (int) unsafeRadius);
 		}
 	}
 }

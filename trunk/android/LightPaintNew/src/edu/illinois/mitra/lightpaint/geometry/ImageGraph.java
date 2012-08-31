@@ -135,7 +135,9 @@ public class ImageGraph {
 	}
 
 	public Set<ImageEdge> getEdgesOf(ImagePoint point) {
-		return graph.edgesOf(point);
+		if(graph.containsVertex(point))
+			return graph.edgesOf(point);
+		return null;
 	}
 
 	public boolean isColliding(ImageEdge edge, double radius) {

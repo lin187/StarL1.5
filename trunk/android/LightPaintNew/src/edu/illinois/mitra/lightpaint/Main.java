@@ -21,22 +21,22 @@ public class Main {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
 		}
-
 		DrawFrame frame = new DrawFrame();
-
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 
 		SvgParser parser = new SvgParser();
-		parser.enableScaling(5000, 5000);
-		parser.enableCentering(2500, 2500);
+		parser.enableScaling(6000, 6000);
+		parser.enableCentering(3000, 3000);
 		
 		Set<ImageEdge> image = parser.parseImage("linepath2.svg");
-		WptWriter.writeWpt("C:/linepath2.wpt", image);
-
-		LpAlgorithm alg = new LpAlgorithm(image, 50, 1000, 165);
-		alg.setRobotPosition("Sleepy", new ImagePoint(100,750));
-		alg.setRobotPosition("AlsoSleepy", new ImagePoint(1500, 600));
+//		WptWriter.writeWpt("C:/linepath2.wpt", image);
+		
+		LpAlgorithm alg = new LpAlgorithm(image, 50, 3300, 2*165);
+		alg.setRobotPosition("A", new ImagePoint(0,0));
+		alg.setRobotPosition("B", new ImagePoint(3350,1500));
+		alg.setRobotPosition("Sleepy", new ImagePoint(3000,150));
+		alg.setRobotPosition("AlsoSleepy", new ImagePoint(200, 2200));
 		frame.updateData(alg);
 		sleep(500);
 
@@ -46,16 +46,18 @@ public class Main {
 		sleep(500);
 
 		// Assign lines to two other robots
-		List<ImagePoint> toDrawB = alg.assignSegment("B", new ImagePoint(1350, 500));
+		List<ImagePoint> toDrawB = alg.assignSegment("B", new ImagePoint(3350, 1500));
 		if(toDrawB == null)
 			System.out.println("B has nowhere to go");
 		frame.repaint();
 
-/*		// Free the lines
-		for(int i = 1; i < toDraw.size(); i++) {
-			sleep(500);
-			alg.markSafeDrawn("A", toDraw.get(i - 1), toDraw.get(i));
-			frame.repaint();
+		// Free the lines
+/*		if(toDraw != null) {
+			for(int i = 1; i < toDraw.size(); i++) {
+				sleep(500);
+				alg.markSafeDrawn("A", toDraw.get(i - 1), toDraw.get(i));
+				frame.repaint();
+			}
 		}
 
 		System.out.println("Done? " + alg.isDone());
