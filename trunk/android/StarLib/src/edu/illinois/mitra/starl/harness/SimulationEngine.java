@@ -36,8 +36,7 @@ public class SimulationEngine extends Thread {
 	// for drawing the simulation
 	ExplicitlyDrawable drawer = null;
 
-	public SimulationEngine(int meanDelay, int delayStdDev, int dropRate, int seed, double ticRate, 
-			Set<String> blockedRobots, Map<String, String> nameToIpMap, ExplicitlyDrawable drawer) {
+	public SimulationEngine(int meanDelay, int delayStdDev, int dropRate, int seed, double ticRate, Set<String> blockedRobots, Map<String, String> nameToIpMap, ExplicitlyDrawable drawer) {
 		super("SimulationEngine");
 		comms = new DecoupledSimComChannel(meanDelay, delayStdDev, dropRate, seed, blockedRobots, nameToIpMap);
 		time = System.currentTimeMillis();
@@ -65,8 +64,6 @@ public class SimulationEngine extends Thread {
 
 	@Override
 	public void run() {
-		// TODO: please comment this
-
 		while(!done) {
 			try {
 				Thread.sleep(5000);

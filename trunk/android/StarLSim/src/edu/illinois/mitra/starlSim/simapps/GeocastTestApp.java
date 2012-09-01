@@ -40,7 +40,7 @@ public class GeocastTestApp extends LogicThread implements MessageListener {
 		while(true) {
 			switch(stage) {
 			case START:
-				gvh.sleep((long) (Math.random()*SimSettings.START_DELAY_MAX));
+				gvh.sleep((long) (Math.random()*1000));
 				gvh.trace.traceSync("Launch");
 				stage = STAGE.MOVE;
 				break;

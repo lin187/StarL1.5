@@ -8,6 +8,7 @@ import javax.swing.UIManager;
 
 import edu.illinois.mitra.starl.interfaces.Drawer;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
+import edu.illinois.mitra.starlSim.main.SimSettings;
 
 
 @SuppressWarnings("serial")
@@ -15,7 +16,7 @@ public class DrawFrame extends JFrame
 {
 	private DrawPanel dp = null;
 	
-	public DrawFrame(Set <String> robotNames, Set <String> blockedWireless, int xsize, int ysize)
+	public DrawFrame(Set <String> robotNames, Set <String> blockedWireless, SimSettings settings)
 	{
 		try 
 		 {
@@ -28,8 +29,8 @@ public class DrawFrame extends JFrame
 		setSize(1000,700);
 		setLocation(50, 50);
 		
-		dp = new DrawPanel(robotNames, blockedWireless);
-		dp.setWorld(xsize, ysize);
+		dp = new DrawPanel(robotNames, blockedWireless, settings);
+		dp.setWorld(settings.GRID_XSIZE, settings.GRID_YSIZE);
 		dp.setDefaultPosition(-750, -3100, 24);
 		getContentPane().add(dp);
 	}

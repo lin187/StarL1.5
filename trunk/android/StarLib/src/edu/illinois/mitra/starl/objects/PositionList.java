@@ -3,6 +3,7 @@ package edu.illinois.mitra.starl.objects;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 /**
  * PositionList is a thin wrapper for a HashMap (String -> ItemPosition). Collections of ItemPositions
@@ -61,9 +62,9 @@ public class PositionList {
 	 * @return The first ItemPosition in the PositionList whose name matches the regular expression
 	 */
 	public ItemPosition getPositionRegex(String exp) {
-		for(String n : positions.keySet()) {
-			if(n.matches(exp)) {
-				return positions.get(n);
+		for(Entry<String, ItemPosition> entry : positions.entrySet()) {
+			if(entry.getKey().matches(exp)) {
+				return entry.getValue();
 			}
 		}
 		return null;

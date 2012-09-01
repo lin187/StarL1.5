@@ -83,8 +83,11 @@ MouseListener, MouseMotionListener, ExplicitlyDrawable
 	// this is the image drawn to when drawNow() is called
 	private Image drawBuffer = null;
 	
-	public ZoomablePanel()
+	protected SimSettings settings;
+	
+	public ZoomablePanel(SimSettings settings)
 	{
+		this.settings = settings;
 		addMouseWheelListener(this);
 		addMouseListener(this);
 		addMouseMotionListener(this);
@@ -112,7 +115,7 @@ MouseListener, MouseMotionListener, ExplicitlyDrawable
 	{
 		long now = System.currentTimeMillis();
 		
-		final int MIN_REDRAW_MS = 1000 / SimSettings.MAX_FPS;
+		final int MIN_REDRAW_MS = 1000 / settings.MAX_FPS;
 		
 		if (Math.abs(now - lastDrawTime) > MIN_REDRAW_MS) // don't redraw too quickly
 		{

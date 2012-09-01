@@ -1,4 +1,4 @@
-package edu.illinois.mitra.draw;
+package edu.illinois.mitra.lightpaint.draw;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -7,7 +7,7 @@ import java.awt.Point;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-import edu.illinois.mitra.lightpaint.LpAlgorithm;
+import edu.illinois.mitra.lightpaint.algorithm.LpAlgorithm;
 
 @SuppressWarnings("serial")
 public class DrawPanel extends ZoomablePanel {

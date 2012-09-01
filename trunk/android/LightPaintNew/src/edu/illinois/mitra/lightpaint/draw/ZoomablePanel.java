@@ -1,4 +1,4 @@
-package edu.illinois.mitra.draw;
+package edu.illinois.mitra.lightpaint.draw;
 
 
 import java.awt.BasicStroke;

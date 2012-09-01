@@ -13,13 +13,13 @@ public final class WptLoader {
 	private WptLoader() {
 	}
 	
-	public static PositionList loadWaypoints(String dir) {
+	public static PositionList loadWaypoints(String file) {
 		PositionList waypoints = new PositionList();
 		BufferedReader in = null;
 		try {
-			in = new BufferedReader(new FileReader(dir));
+			in = new BufferedReader(new FileReader(file));
 		} catch (FileNotFoundException e) {
-			System.out.println("File " + dir + " not found! No waypoints loaded.");
+			System.err.println("File " + file + " not found! No waypoints loaded.");
 			return new PositionList();
 		}
 		

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+import edu.illinois.mitra.lightpaint.algorithm.LpAlgorithm;
 import edu.illinois.mitra.lightpaint.geometry.ImagePoint;
 import edu.illinois.mitra.lightpaint.utility.WptParser;
 import edu.illinois.mitra.starl.comms.MessageContents;

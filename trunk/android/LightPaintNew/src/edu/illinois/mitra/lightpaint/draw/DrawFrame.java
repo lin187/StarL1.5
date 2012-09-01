@@ -1,9 +1,9 @@
-package edu.illinois.mitra.draw;
+package edu.illinois.mitra.lightpaint.draw;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
-import edu.illinois.mitra.lightpaint.LpAlgorithm;
+import edu.illinois.mitra.lightpaint.algorithm.LpAlgorithm;
 
 
 @SuppressWarnings("serial")

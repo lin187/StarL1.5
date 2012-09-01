@@ -31,73 +31,70 @@ public class Simulation {
 	private Collection<SimApp> bots = new HashSet<SimApp>();
 	private HashMap<String, String> participants = new HashMap<String, String>();
 	private SimGpsProvider gps;
-	private SimulationEngine se;
+	private SimulationEngine simEngine;
 
 	private ExecutorService executor;
 
 	private DistancePredicate distpred;
 
-	public Simulation(int n_bots, String wptfile, String initposfile, Class<? extends LogicThread> appToRun) {
+	public static SimSettings getDefaultSettings() {
+		return new SimSettings();
+	}
+
+	public Simulation(Class<? extends LogicThread> app, final SimSettings settings) {
 		// Create set of robots whose wireless is blocked for passage between
 		// the GUI and the simulation communication object
 		Set<String> blockedRobots = new HashSet<String>();
 
 		// Create participants and instantiate SimApps
-		for(int i = 0; i < n_bots; i++) {
+		for(int i = 0; i < settings.N_BOTS; i++) {
 			// Mapping between robot name and IP address
-			participants.put(SimSettings.BOT_NAME + i, "192.168.0." + i);
+			participants.put(settings.BOT_NAME + i, "192.168.0." + i);
 		}
-		
+
 		// Initialize viewer
-		final DrawFrame drawFrame = new DrawFrame(participants.keySet(), blockedRobots, SimSettings.GRID_XSIZE, SimSettings.GRID_YSIZE);
+		final DrawFrame drawFrame = new DrawFrame(participants.keySet(), blockedRobots, settings);
 		drawFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// Start the simulation engine
-		se = new SimulationEngine(SimSettings.MSG_MEAN_DELAY, SimSettings.MSG_STDDEV_DELAY, 
-				SimSettings.MSG_LOSSES_PER_HUNDRED, SimSettings.MSG_RANDOM_SEED, SimSettings.TIC_TIME_RATE, 
-				blockedRobots, participants, drawFrame.getPanel());
+		simEngine = new SimulationEngine(settings.MSG_MEAN_DELAY, settings.MSG_STDDEV_DELAY, settings.MSG_LOSSES_PER_HUNDRED, settings.MSG_RANDOM_SEED, settings.TIC_TIME_RATE, blockedRobots, participants, drawFrame.getPanel());
 
 		// Create the sim gps
-		if(SimSettings.IDEAL_MOTION) {
-			gps = new IdealSimGpsProvider(se, SimSettings.GPS_PERIOD, SimSettings.GPS_ANGLE_NOISE, SimSettings.GPS_POSITION_NOISE);
+		if(settings.IDEAL_MOTION) {
+			gps = new IdealSimGpsProvider(simEngine, settings.GPS_PERIOD, settings.GPS_ANGLE_NOISE, settings.GPS_POSITION_NOISE);
 		} else {
-			gps = new RealisticSimGpsProvider(se, SimSettings.GPS_PERIOD, SimSettings.GPS_ANGLE_NOISE, SimSettings.GPS_POSITION_NOISE, SimSettings.BOT_RADIUS);
+			gps = new RealisticSimGpsProvider(simEngine, settings.GPS_PERIOD, settings.GPS_ANGLE_NOISE, settings.GPS_POSITION_NOISE, settings.BOT_RADIUS);
 		}
 
 		// Load waypoints
-		if(wptfile != null) {
-			gps.setWaypoints(WptLoader.loadWaypoints(wptfile));
-		}
-		se.gps = gps;
+		if(settings.WAYPOINT_FILE != null)
+			gps.setWaypoints(WptLoader.loadWaypoints(settings.WAYPOINT_FILE));
+
+		simEngine.gps = gps;
 		gps.start();
 
 		// Load initial positions
-		PositionList initpos = null;
-		if(initposfile != null) {
-			initpos = WptLoader.loadWaypoints(initposfile);
-		}
+		PositionList initialPositions;
+		if(settings.INITIAL_POSITIONS_FILE != null)
+			initialPositions = WptLoader.loadWaypoints(settings.INITIAL_POSITIONS_FILE);
+		else
+			initialPositions = new PositionList();
 
 		Random rand = new Random();
 
-		// show viewer
-		drawFrame.setVisible(true);
+		// Create each robot
+		for(int i = 0; i < settings.N_BOTS; i++) {
+			String botName = settings.BOT_NAME + i;
 
-		// initial condition
-		for(int i = 0; i < n_bots; i++) {
-			String botName = SimSettings.BOT_NAME + i;
+			ItemPosition initialPosition = initialPositions.getPosition(botName);
 
-			ItemPosition ip = initpos.getPosition(botName);
-
-			if(ip == null) {
+			// If no initial position was supplied, randomly generate one
+			if(initialPosition == null) {
 				System.out.println("Waypoint file did not contain a waypoint named '" + botName + "', using random position.");
-				// random initial condition if unspecified
-				ip = new ItemPosition("bot" + i, rand.nextInt(SimSettings.GRID_XSIZE), rand.nextInt(SimSettings.GRID_YSIZE), rand.nextInt(360));
+				initialPosition = new ItemPosition(botName, rand.nextInt(settings.GRID_XSIZE), rand.nextInt(settings.GRID_YSIZE), rand.nextInt(360));
 			}
-			bots.add(new SimApp(SimSettings.BOT_NAME + i, participants, se, ip, SimSettings.TRACE_OUT_DIR, appToRun, drawFrame, SimSettings.TRACE_CLOCK_DRIFT_MAX, SimSettings.TRACE_CLOCK_SKEW_MAX));
+			bots.add(new SimApp(botName, participants, simEngine, initialPosition, settings.TRACE_OUT_DIR, app, drawFrame, settings.TRACE_CLOCK_DRIFT_MAX, settings.TRACE_CLOCK_SKEW_MAX));
 		}
-
-		// Initialize global logger
-		final GlobalLogger gl = new GlobalLogger(SimSettings.TRACE_OUT_DIR, "global.txt");
 
 		// GUI observer updates the viewer when new positions are calculated
 		Observer guiObserver = new Observer() {
@@ -108,23 +105,36 @@ public class Simulation {
 				// Add robots
 				for(ItemPosition ip : pos) {
 					RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.angle);
-					nextBot.radius = SimSettings.BOT_RADIUS;
+					nextBot.radius = settings.BOT_RADIUS;
 					rd.add(nextBot);
 				}
 				// Add waypoints
 				for(ItemPosition ip : gps.getWaypointPositions().getList()) {
-					RobotData nrd = new RobotData(ip.name, ip.x, ip.y, ip.angle);
-					nrd.radius = 5;
-					nrd.c = new Color(255, 0, 0);
-					rd.add(nrd);
+					RobotData waypoint = new RobotData(ip.name, ip.x, ip.y, ip.angle);
+					waypoint.radius = 5;
+					waypoint.c = new Color(255, 0, 0);
+					rd.add(waypoint);
 				}
-				drawFrame.updateData(rd, se.time);
+				drawFrame.updateData(rd, simEngine.time);
 			}
 		};
 		gps.addObserver(guiObserver);
 
-		// global logger observer updates the log file when new positions are
-		// calculated
+		if(settings.USE_GLOBAL_LOGGER)
+			gps.addObserver(createGlobalLogger(settings));
+		
+		if(settings.USE_DISTANCE_PREDICATE)
+			enableDistancePredicate(settings.PREDICATE_RADIUS, settings.PREDICATE_OUT_DIR);
+
+		// show viewer
+		drawFrame.setVisible(true);
+	}
+	
+	
+	private Observer createGlobalLogger(final SimSettings settings) {
+		final GlobalLogger gl = new GlobalLogger(settings.TRACE_OUT_DIR, "global.txt");
+
+		// global logger observer updates the log file when new positions are calculated
 		Observer globalLogger = new Observer() {
 			@Override
 			public void update(Observable o, Object arg) {
@@ -133,17 +143,20 @@ public class Simulation {
 				// Add robots
 				for(ItemPosition ip : pos) {
 					RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.angle, ip.receivedTime);
-					nextBot.radius = SimSettings.BOT_RADIUS;
+					nextBot.radius = settings.BOT_RADIUS;
 					rd.add(nextBot);
 				}
-				gl.updateData(rd, se.time);
+				gl.updateData(rd, simEngine.time);
 			}
 		};
-		gps.addObserver(globalLogger);
+		return globalLogger;
 	}
 
-	public void enableDistacePredicate(int radius, String dir) {
-		if(radius > 0) {
+	private void enableDistancePredicate(int radius, String dir) {
+		if(dir == null) {
+			System.err.println("Distance predicate is enabled but the output directory is null!");
+			return;
+		} else if(radius > 0) {
 			distpred = new DistancePredicate("truth", dir, radius);
 			gps.addObserver(distpred);
 		}
@@ -154,7 +167,6 @@ public class Simulation {
 		System.out.println("Starting with " + participants.size() + " robots");
 
 		// /////////// START EDITS ///////////////////
-
 		// spawn threads manually
 		/*
 		 * for (SimApp robotLogic : bots) { final SimApp simApp = robotLogic;
@@ -165,7 +177,6 @@ public class Simulation {
 		 * while (true) { try { Thread.sleep(Integer.MAX_VALUE); } catch
 		 * (InterruptedException e) { break; } }
 		 */
-
 		// //////////////// end edits ///////////////
 
 		// Invoke all simulated robots
@@ -190,8 +201,8 @@ public class Simulation {
 		// Print communication statistics and shutdown
 		System.out.println("SIMULATION COMPLETE");
 		System.out.println("---Message Stats---");
-		se.comms.printStatistics();
-		se.simulationDone();
+		simEngine.comms.printStatistics();
+		simEngine.simulationDone();
 		shutdown();
 	}
 

@@ -1,4 +1,12 @@
 ----- StarLib Changelog -----
+9/1/2012, Adam
+- Cleaned up GlobalLogger
+- Changed simulator dataflow: Applications now call the simulator to simulate themselves instead of the other way around.
+- Updated SimSettings to contain nonstatic public variables. Removed unnecessary path variables for paths to WPT files. This broke every application that referenced SimSettings. These broken applications have been excluded from the build path until they can be split into their own projects and updated.
+- Added Javadoc comments to SimSettings. FUTURE CHANGE: SimSettings will be constructed using the builder pattern instead of a "settings initializer"
+- Removed StarLSim's Main.java file. This project is no longer runnable.
+
+
 8/30/2012, Adam
 - Cleaned up MotionAutomaton, removed commented out lines of code
 - Added straight line and circle motion applications

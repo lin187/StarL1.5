@@ -8,45 +8,53 @@ import java.io.IOException;
 import edu.illinois.mitra.starlSim.draw.RobotData;
 
 /**
- * Global logger for ground truth --- basically the same as the DrawFrame viewer, but logs to text file
+ * Global logger for ground truth --- basically the same as the DrawFrame
+ * viewer, but logs to text file
+ * 
  * @author tjohnson
- *
+ * 
  */
 public class GlobalLogger {
-	private File _f;
-	private FileWriter _fw;
-	
+	private FileWriter fileWriter;
+
 	/**
 	 * 
-	 * @param dir - directory for the log file
-	 * @param filename - name for the log
+	 * @param dir
+	 *            directory for the log file
+	 * @param filename
+	 *            name for the log
 	 */
 	public GlobalLogger(String dir, String filename) {
-		_f = new File(dir + filename);
-		try {
-			_f.createNewFile();
-			_fw = new FileWriter(_f);
-		}
-		catch (IOException e) {
-
-		}
-		
-	}
-	
-	public void updateData(ArrayList <RobotData> data, long time)
-	{
-		try {
-			_fw.write(Long.toString(time) + "\n");
-			for (RobotData d : data) {
-				_fw.write(d.name + "," + d.x + "," + d.y + "," + d.degrees + "," + d.time + "\n");
+		File file = new File(dir + filename);
+		if(!file.exists()) {
+			try {
+				file.createNewFile();
+			} catch(IOException e) {
 			}
-			_fw.write("\n\n");
-			_fw.flush();
-		} catch (IOException e) {
+		}
+
+		try {
+			fileWriter = new FileWriter(file);
+		} catch(IOException e) {
 			e.printStackTrace();
-		} catch (NullPointerException e) {
+		}
+	}
+
+	public void updateData(ArrayList<RobotData> data, long time) {
+		if(fileWriter == null)
+			return;
+
+		try {
+			fileWriter.write(Long.toString(time) + "\n");
+			for(RobotData d : data) {
+				fileWriter.write(d.name + "," + d.x + "," + d.y + "," + d.degrees + "," + d.time + "\n");
+			}
+			fileWriter.write("\n\n");
+			fileWriter.flush();
+		} catch(IOException e) {
+			e.printStackTrace();
+		} catch(NullPointerException e) {
 			// Catch the NPE
 		}
-		
 	}
 }

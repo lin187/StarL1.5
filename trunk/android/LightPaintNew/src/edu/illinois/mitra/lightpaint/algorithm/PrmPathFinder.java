@@ -1,4 +1,4 @@
-package edu.illinois.mitra.lightpaint;
+package edu.illinois.mitra.lightpaint.algorithm;
 
 import java.awt.Color;
 import java.awt.Graphics2D;

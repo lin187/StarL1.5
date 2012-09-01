@@ -46,10 +46,10 @@ public class DrawPanel extends ZoomablePanel
 	boolean[] wirelessBlocked;
 	Set<String> blockedWirelessNames;
 
-	public DrawPanel(Set<String> robotNames, Set<String> blockedWirelessNames)
+	public DrawPanel(Set<String> robotNames, Set<String> blockedWirelessNames, SimSettings settings)
 	{
-		super();
-		
+		super(settings);
+
 		this.robotNames.addAll(robotNames);
 		Collections.sort(this.robotNames);
 		
@@ -83,7 +83,7 @@ public class DrawPanel extends ZoomablePanel
 				scaleFactor =  (int) toRealCoords(a).distance(toRealCoords(b));
 				
 				// keep past history of robot positions
-				if (SimSettings.DRAW_TRACE) 
+				if (settings.DRAW_TRACE) 
 				{
 					// ensure size
 					if (robotTraces.size() != data.size())
@@ -100,14 +100,14 @@ public class DrawPanel extends ZoomablePanel
 					{					
 						trace.add(new Point(rd.x, rd.y));
 						
-						if (trace.size() > SimSettings.DRAW_TRACE_LENGTH)
+						if (trace.size() > settings.DRAW_TRACE_LENGTH)
 							trace.removeFirst();
 					}
 				}
 			}
 			
 			// draw past history of robot positions
-			if (SimSettings.DRAW_TRACE) 
+			if (settings.DRAW_TRACE) 
 			{
 				g.setColor(TRACE_COLOR);
 				
