@@ -52,7 +52,7 @@ public class Main {
 		frame.repaint();
 
 		// Free the lines
-/*		if(toDraw != null) {
+		if(toDraw != null) {
 			for(int i = 1; i < toDraw.size(); i++) {
 				sleep(500);
 				alg.markSafeDrawn("A", toDraw.get(i - 1), toDraw.get(i));
@@ -68,7 +68,7 @@ public class Main {
 				alg.markSafeDrawn("B", toDrawB.get(i - 1), toDrawB.get(i));
 				frame.repaint();
 			}
-		}*/
+		}
 		
 		System.out.println("Done? " + alg.isDone());
 	}
