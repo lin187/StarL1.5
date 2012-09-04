@@ -38,7 +38,7 @@ public class Main {
 			parser.enableScaling(6000, 6000);
 			parser.enableCentering(3000, 3000);
 			
-			Set<ImageEdge> image = parser.parseImage("input_images/linepath2.svg");
+			Set<ImageEdge> image = parser.parseImage("input_images/linepath.svg");
 			WptWriter.writeWpt("waypoints/linepath2.wpt", image);
 			
 			LpAlgorithm alg = new LpAlgorithm(image, 50, 3300, 2*165);
@@ -47,7 +47,7 @@ public class Main {
 			alg.setRobotPosition("Sleepy", new ImagePoint(3000,150));
 			alg.setRobotPosition("AlsoSleepy", new ImagePoint(200, 2200));
 			frame.updateData(alg);
-			sleep(500);
+			sleep(5000);
 	
 			// Assign lines to a robot
 			List<ImagePoint> toDraw = alg.assignSegment("A", new ImagePoint(0, 0));
