@@ -59,9 +59,9 @@ public class MainActivity extends LogicThread implements MessageListener {
 	}
 
 	private String leader;
-	private boolean iAmLeader = false;
 	private LeaderElection election;
-	private LpAlgorithm alg;
+	boolean iAmLeader = false;
+	LpAlgorithm alg;
 
 	private List<ItemPosition> assignment = Collections.synchronizedList(new LinkedList<ItemPosition>());
 
@@ -217,10 +217,5 @@ public class MainActivity extends LogicThread implements MessageListener {
 		stage = newstage;
 	}
 
-	@Override
-	public void draw(Graphics2D g) {
-		if(iAmLeader)
-			alg.draw(g);
-	}
 
 }

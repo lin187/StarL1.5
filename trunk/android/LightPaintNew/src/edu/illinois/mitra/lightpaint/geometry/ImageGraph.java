@@ -16,9 +16,7 @@ import org.jgrapht.EdgeFactory;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.Pseudograph;
 
-import edu.illinois.mitra.starl.interfaces.Drawer;
-
-public class ImageGraph implements Drawer {
+public class ImageGraph {
 	public static final EdgeFactory<ImagePoint, ImageEdge> IMAGE_EDGEFACTORY = new EdgeFactory<ImagePoint, ImageEdge>() {
 		@Override
 		public ImageEdge createEdge(ImagePoint arg0, ImagePoint arg1) {
@@ -26,7 +24,7 @@ public class ImageGraph implements Drawer {
 		}
 	};
 	private Graph<ImagePoint, ImageEdge> graph = new Pseudograph<ImagePoint, ImageEdge>(IMAGE_EDGEFACTORY);
- 
+
 	public ImageGraph() {
 	}
 
@@ -38,11 +36,11 @@ public class ImageGraph implements Drawer {
 	public Set<ImagePoint> getPoints() {
 		return graph.vertexSet();
 	}
-	
+
 	public Graph<ImagePoint, ImageEdge> getGraph() {
 		return graph;
 	}
-	
+
 	public List<ImagePoint> getPointsInDistanceOrder(final ImagePoint start) {
 		List<ImagePoint> retval = new ArrayList<ImagePoint>(graph.vertexSet());
 
@@ -80,9 +78,9 @@ public class ImageGraph implements Drawer {
 				toRemove.add(ie);
 
 		collection.removeAll(toRemove);
-		return collection;		
+		return collection;
 	}
-	
+
 	public <T extends Collection<ImagePoint>> T removeCollidingPoints(T collection, double radius) {
 		Set<ImagePoint> toRemove = new HashSet<ImagePoint>();
 		for(ImagePoint ip : collection)
@@ -92,11 +90,11 @@ public class ImageGraph implements Drawer {
 		collection.removeAll(toRemove);
 		return collection;
 	}
-	
+
 	public void addAll(ImageGraph other) {
 		for(ImageEdge edge : other.graph.edgeSet())
 			addEdge(edge);
-		
+
 		for(ImagePoint point : other.graph.vertexSet())
 			addPoint(point);
 	}
@@ -174,18 +172,18 @@ public class ImageGraph implements Drawer {
 				return true;
 		return false;
 	}
-	
+
 	public boolean isColliding(ImageGraph other, double radius) {
 		for(ImagePoint p : other.getPoints())
-			if(isColliding(p,radius))
+			if(isColliding(p, radius))
 				return true;
-				
+
 		for(ImageEdge e : other.getGraph().edgeSet())
-			if(isColliding(e,radius))
+			if(isColliding(e, radius))
 				return true;
 		return false;
 	}
-	
+
 	public double minDistanceTo(ImagePoint point) {
 		double distance = Double.MAX_VALUE;
 		for(ImagePoint p : graph.vertexSet())
@@ -201,37 +199,37 @@ public class ImageGraph implements Drawer {
 
 	private static final Stroke LINE_STROKE = new BasicStroke(6);
 
-	public void draw(Graphics2D g, Color color, int pointSize, int unsafeRadius) {		
+	public void draw(Graphics2D g, Color color, int pointSize, int unsafeRadius) {
 		g.setColor(color);
 		g.setStroke(LINE_STROKE);
 
 		for(ImagePoint p : graph.vertexSet()) {
 			g.fillOval((int) p.getX() - (pointSize / 2), (int) p.getY() - (pointSize / 2), pointSize, pointSize);
-			g.drawOval((int)(p.getX()-unsafeRadius), (int)(p.getY()-unsafeRadius), 2*(int)unsafeRadius, 2*(int)unsafeRadius);	
+			g.drawOval((int) (p.getX() - unsafeRadius), (int) (p.getY() - unsafeRadius), 2 * (int) unsafeRadius, 2 * (int) unsafeRadius);
 		}
 
 		for(ImageEdge edge : graph.edgeSet()) {
 			g.drawLine((int) edge.getStart().getX(), (int) edge.getStart().getY(), (int) edge.getEnd().getX(), (int) edge.getEnd().getY());
 			// Draw lines offset by unsafeRadius to either side
 			// Rotate the line by 90 degrees and scale to offset length
-			ImagePoint rotated = new ImagePoint(-edge.getdY(), edge.getdX()).scale(unsafeRadius/edge.getLength());
-			int xOffset = (int)rotated.getX();
-			int yOffset = (int)rotated.getY();
-			g.drawLine((int) edge.getStart().getX()-xOffset, (int) edge.getStart().getY()-yOffset, (int) edge.getEnd().getX()-xOffset, (int) edge.getEnd().getY()-yOffset);
-			g.drawLine((int) edge.getStart().getX()+xOffset, (int) edge.getStart().getY()+yOffset, (int) edge.getEnd().getX()+xOffset, (int) edge.getEnd().getY()+yOffset);
-		}	
+			ImagePoint rotated = new ImagePoint(-edge.getdY(), edge.getdX()).scale(unsafeRadius / edge.getLength());
+			int xOffset = (int) rotated.getX();
+			int yOffset = (int) rotated.getY();
+			g.drawLine((int) edge.getStart().getX() - xOffset, (int) edge.getStart().getY() - yOffset, (int) edge.getEnd().getX() - xOffset, (int) edge.getEnd().getY() - yOffset);
+			g.drawLine((int) edge.getStart().getX() + xOffset, (int) edge.getStart().getY() + yOffset, (int) edge.getEnd().getX() + xOffset, (int) edge.getEnd().getY() + yOffset);
+		}
 	}
-	
+
 	private Color drawColor = Color.BLACK;
+
 	public void setDrawColor(Color color) {
 		drawColor = color;
 	}
 
-	@Override
 	public void draw(Graphics2D g) {
 		draw(g, drawColor, 25);
 	}
-	
+
 	public void draw(Graphics2D g, Color color, int pointSize) {
 		g.setColor(color);
 		g.setStroke(LINE_STROKE);
@@ -272,7 +270,7 @@ public class ImageGraph implements Drawer {
 		// Make sure Graph b contains all of the vertices and edges of graph a
 		if(a.edgeSet().size() != b.edgeSet().size())
 			return false;
-		
+
 		for(ImageEdge edge : a.edgeSet())
 			if(!b.containsEdge(edge) && !b.containsEdge(edge.reversed()))
 				return false;
@@ -280,7 +278,7 @@ public class ImageGraph implements Drawer {
 		for(ImagePoint point : a.vertexSet())
 			if(!b.containsVertex(point))
 				return false;
-		
+
 		return true;
 	}
 }

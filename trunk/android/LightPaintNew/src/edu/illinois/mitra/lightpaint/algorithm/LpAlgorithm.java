@@ -12,17 +12,19 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import edu.illinois.mitra.lightpaint.MainActivity;
 import edu.illinois.mitra.lightpaint.geometry.ImageEdge;
 import edu.illinois.mitra.lightpaint.geometry.ImageGraph;
 import edu.illinois.mitra.lightpaint.geometry.ImagePoint;
 import edu.illinois.mitra.lightpaint.utility.Utility;
-import edu.illinois.mitra.starl.interfaces.Drawer;
+import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.objects.ItemPosition;
+import edu.illinois.mitra.starlSim.draw.Drawer;
 
 /**
  * @author Adam Zimmerman
  */
-public class LpAlgorithm implements Drawer {
+public class LpAlgorithm {
 	private final double unsafeRadius;
 	private final int unsafeDrawRadius;
 	private final double pointSnapRadius;
@@ -349,7 +351,7 @@ public class LpAlgorithm implements Drawer {
 	}
 
 	private Color[] unsafeColors = { Color.cyan, Color.blue, Color.orange, Color.PINK, Color.yellow, Color.MAGENTA };
-
+	
 	public void draw(Graphics2D g) {
 		drawing.draw(g, Color.LIGHT_GRAY, 12);
 		int color = 0;
