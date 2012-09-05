@@ -27,7 +27,7 @@ public class SimGlobalVarHolder extends GlobalVarHolder {
 	 * @param initpos this agent's initial position
 	 * @param traceDir the directory to write trace files to
 	 */
-	public SimGlobalVarHolder(String name, HashMap<String,String> participants, SimulationEngine engine, ItemPosition initpos, String traceDir, int trace_driftMax, float trace_skewBound) {
+	public SimGlobalVarHolder(String name, HashMap<String,String> participants, SimulationEngine engine, ItemPosition initpos, String traceDir, int trace_driftMax, double trace_skewBound) {
 		super(name, participants);
 		this.engine = engine;
 		super.comms = new Comms(this, new SimSmartComThread(this, engine.comms));

@@ -60,7 +60,7 @@ public class SimSettings {
 	/**
 	 * The maximum trace clock skew.
 	 */
-	public float TRACE_CLOCK_SKEW_MAX = 0.00000015f;
+	public double TRACE_CLOCK_SKEW_MAX = 0.00000015f;
 
 	// Message delay and loss options
 	/**
@@ -140,33 +140,33 @@ public class SimSettings {
 	}
 
 	public static class Builder {
-		private int N_BOTS;
+		private int N_BOTS = 4;
 		private String WAYPOINT_FILE;
 		private String INITIAL_POSITIONS_FILE;
-		private boolean IDEAL_MOTION;
-		private double TIC_TIME_RATE;
-		private int GRID_XSIZE;
-		private int GRID_YSIZE;
-		private long GPS_PERIOD;
-		private double GPS_ANGLE_NOISE;
-		private double GPS_POSITION_NOISE;
-		private int TRACE_CLOCK_DRIFT_MAX;
-		private float TRACE_CLOCK_SKEW_MAX;
-		private int MSG_MEAN_DELAY;
-		private int MSG_STDDEV_DELAY;
-		private int MSG_LOSSES_PER_HUNDRED;
-		private int MSG_RANDOM_SEED;
-		private String BOT_NAME;
-		private int BOT_RADIUS;
-		private boolean USE_DISTANCE_PREDICATE;
-		private int PREDICATE_RADIUS;
-		private int N_PREDICATE_ROBOTS;
+		private boolean IDEAL_MOTION = false;
+		private double TIC_TIME_RATE = 5;
+		private int GRID_XSIZE = 3000;
+		private int GRID_YSIZE = 3000;
+		private long GPS_PERIOD = 75;
+		private double GPS_ANGLE_NOISE = 0;
+		private double GPS_POSITION_NOISE = 0;
+		private int TRACE_CLOCK_DRIFT_MAX = 100;
+		private double TRACE_CLOCK_SKEW_MAX = 0.00000015;
+		private int MSG_MEAN_DELAY = 15;
+		private int MSG_STDDEV_DELAY = 5;
+		private int MSG_LOSSES_PER_HUNDRED = 0;
+		private int MSG_RANDOM_SEED = 0;
+		private String BOT_NAME = "bot";
+		private int BOT_RADIUS = 165;
+		private boolean USE_DISTANCE_PREDICATE = false;
+		private int PREDICATE_RADIUS = 0;
+		private int N_PREDICATE_ROBOTS = 2;
 		private String PREDICATE_OUT_DIR;
 		private String TRACE_OUT_DIR;
-		private boolean USE_GLOBAL_LOGGER;
-		private boolean DRAW_TRACE;
-		private int DRAW_TRACE_LENGTH;
-		private int MAX_FPS;
+		private boolean USE_GLOBAL_LOGGER = false;
+		private boolean DRAW_TRACE = false;
+		private int DRAW_TRACE_LENGTH = 128;
+		private int MAX_FPS = 40;
 
 		public Builder N_BOTS(int N_BOTS) {
 			this.N_BOTS = N_BOTS;
@@ -223,7 +223,7 @@ public class SimSettings {
 			return this;
 		}
 
-		public Builder TRACE_CLOCK_SKEW_MAX(float TRACE_CLOCK_SKEW_MAX) {
+		public Builder TRACE_CLOCK_SKEW_MAX(double TRACE_CLOCK_SKEW_MAX) {
 			this.TRACE_CLOCK_SKEW_MAX = TRACE_CLOCK_SKEW_MAX;
 			return this;
 		}

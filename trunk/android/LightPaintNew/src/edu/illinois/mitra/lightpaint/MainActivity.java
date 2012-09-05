@@ -1,5 +1,6 @@
 package edu.illinois.mitra.lightpaint;
 
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -25,7 +26,7 @@ public class MainActivity extends LogicThread implements MessageListener {
 	// Algorithm constants
 	private static final double POINT_SNAP_RADIUS = 25;
 	private static final double MAX_DRAW_LENGTH = 500;
-	private static final double UNSAFE_RADIUS = 75;
+	private static final double UNSAFE_RADIUS = 180;
 
 	private static final long MAX_REQUEST_WAIT_TIME = 2000;
 
@@ -156,8 +157,14 @@ public class MainActivity extends LogicThread implements MessageListener {
 			if(msg.getContents(0).equals("NONE"))
 				return;
 
-			for(String content : msg.getContentsList())
-				assignment.add(ItemPosition.fromMessage(content));
+			for(String content : msg.getContentsList()) {
+				try {
+					assignment.add(ItemPosition.fromMessage(content));
+				} catch(IllegalArgumentException e) {
+					System.err.println(msg);
+				}
+				
+			}
 
 			// Assignment[0] is the current robot position
 			lastVisitedPoint = assignment.remove(0);
@@ -196,6 +203,12 @@ public class MainActivity extends LogicThread implements MessageListener {
 	private void setStage(Stage newstage) {
 		System.out.println(super.name + "\t" + stage + "->" + newstage);
 		stage = newstage;
+	}
+
+	@Override
+	public void draw(Graphics2D g) {
+		if(iAmLeader)
+			alg.draw(g);
 	}
 
 }

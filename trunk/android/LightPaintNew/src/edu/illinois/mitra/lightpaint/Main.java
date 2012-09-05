@@ -21,9 +21,16 @@ public class Main {
 	private static String inputFilename = "hi";
 	
 	public static void main(String[] args) {
-
+		SvgParser parser = new SvgParser();
+		parser.enableScaling(6000, 6000);
+		parser.enableCentering(3000, 3000);
+		
+		Set<ImageEdge> image = parser.parseImage("input_images/" + inputFilename + ".svg");
+		WptWriter.writeWpt("waypoints/" + inputFilename + ".wpt", image);
+		
 		if(simulate) {
-			Simulation sim = new Simulation(MainActivity.class, SimSettings.defaultSettings());
+			SimSettings settings = new SimSettings.Builder().WAYPOINT_FILE("waypoints/" + inputFilename + ".wpt").build();
+			Simulation sim = new Simulation(MainActivity.class, settings);
 			sim.start();
 		} else {
 			try {
@@ -34,13 +41,6 @@ public class Main {
 			DrawFrame frame = new DrawFrame();
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.setVisible(true);
-	
-			SvgParser parser = new SvgParser();
-			parser.enableScaling(6000, 6000);
-			parser.enableCentering(3000, 3000);
-			
-			Set<ImageEdge> image = parser.parseImage("input_images/" + inputFilename + ".svg");
-			WptWriter.writeWpt("waypoints/" + inputFilename + ".wpt", image);
 			
 			LpAlgorithm alg = new LpAlgorithm(image, 50, 3300, 180);
 			alg.setRobotPosition("A", new ImagePoint(0,0));
