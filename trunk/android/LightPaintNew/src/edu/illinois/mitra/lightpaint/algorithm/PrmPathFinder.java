@@ -61,8 +61,6 @@ public class PrmPathFinder {
 			try {
 				path = DijkstraShortestPath.findPathBetween(points.getGraph(), start, end);
 			} catch (IllegalArgumentException e) {
-				// Failed to find path
-				System.err.println("PRM failed to find a path!");
 				return null;
 			}
 

@@ -46,10 +46,11 @@ public class RandomLeaderElection extends StarLCallable implements LeaderElectio
 	
 	public RandomLeaderElection(GlobalVarHolder gvh) {
 		super(gvh,"RandomLeaderElection");
-		//results = new String[1];
-		//nodes = gvh.id.getParticipants().size();
-		//gvh.trace.traceEvent(TAG, "Created");
 		registerListeners();
+		
+		ballots = new TreeSet<Ballot>();
+		receivedFrom = new HashSet<String>();
+		results = new String[1];
 	}
 
 	/**
@@ -58,11 +59,7 @@ public class RandomLeaderElection extends StarLCallable implements LeaderElectio
 	@Override
 	public List<Object> callStarL() {
 		// clear sets between successive calls (needs to be here instead of above in class declaration)
-		ballots = new TreeSet<Ballot>();
-		receivedFrom = new HashSet<String>();
-		announcedLeader = null;
-		
-		results = new String[1];
+		announcedLeader = null;		
 		nodes = gvh.id.getParticipants().size();
 		gvh.trace.traceEvent(TAG, "Created");
 		
@@ -134,6 +131,10 @@ public class RandomLeaderElection extends StarLCallable implements LeaderElectio
 		gvh.log.i(TAG, "Elected leader: " + leader);
 		gvh.trace.traceEvent(TAG, "Elected leader", leader);
 		results[0] = leader;
+		
+		receivedFrom.clear();
+		ballots.clear();
+		
 		return returnResults();
 	}
 	

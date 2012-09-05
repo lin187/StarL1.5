@@ -18,7 +18,7 @@ import edu.illinois.mitra.starlSim.main.Simulation;
 public class Main {
 
 	private static boolean simulate = true;
-	private static String inputFilename = "linepath2";
+	private static String inputFilename = "testimg";
 	
 	public static void main(String[] args) {
 		SvgParser parser = new SvgParser();
@@ -44,7 +44,7 @@ public class Main {
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			frame.setVisible(true);
 			
-			LpAlgorithm alg = new LpAlgorithm(image, 50, 3300, 180);
+			LpAlgorithm alg = new LpAlgorithm(image, 50, 3300, 220);
 			alg.setRobotPosition("A", new ImagePoint(0,0));
 			alg.setRobotPosition("B", new ImagePoint(3350,1500));
 			alg.setRobotPosition("Sleepy", new ImagePoint(3000,150));

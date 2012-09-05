@@ -170,7 +170,7 @@ public class ImageGraph implements Drawer {
 				return true;
 
 		for(ImagePoint p : graph.vertexSet())
-			if(point.distanceTo(p) <= radius)
+			if(p.distanceTo(point) <= radius)
 				return true;
 		return false;
 	}
