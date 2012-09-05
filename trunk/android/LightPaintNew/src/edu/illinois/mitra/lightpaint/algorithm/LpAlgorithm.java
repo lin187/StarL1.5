@@ -31,10 +31,8 @@ public class LpAlgorithm implements Drawer {
 	private final ImageGraph drawing = new ImageGraph();
 	private ImageGraph unpainted;
 	private final ImageGraph painted = new ImageGraph();
-	private final ImageGraph unsafe = new ImageGraph();
-	
+
 	private final Map<String, ImagePoint> unsafeRobots = new HashMap<String, ImagePoint>();
-	
 	private final Map<String, ImageGraph> reachTubes = new HashMap<String, ImageGraph>();
 
 	private final PrmPathFinder prm;
@@ -82,6 +80,27 @@ public class LpAlgorithm implements Drawer {
 		for(ImagePoint point : points) {
 			positions.add(new ItemPosition(point.toString(), (int) point.getX(), (int) point.getY(), 0));
 		}
+		System.out.println("### Returning assignment to " + currentRobot);
+		double closestRobot = Double.POSITIVE_INFINITY;
+		double closestTube = Double.POSITIVE_INFINITY;
+		for(Entry<String, ImagePoint> unsafeRobot : unsafeRobots.entrySet()) {
+			if(unsafeRobot.getKey().equals(currentRobot))
+				continue;
+			else
+				for(ImagePoint point : points)
+					closestRobot = Math.min(closestRobot, point.distanceTo(unsafeRobot.getValue()));
+		}
+		for(Entry<String, ImageGraph> unsafeTube : reachTubes.entrySet()) {
+			if(unsafeTube.getKey().equals(currentRobot))
+				continue;
+			else
+				for(ImagePoint point : points)
+					closestTube = Math.min(closestTube, unsafeTube.getValue().minDistanceTo(point));
+		}
+		System.out.println("\tClosest distance to an other robot: " + closestRobot);
+		System.out.println("\tClosest to other tube: " + closestTube);
+		if(closestRobot < unsafeRadius || closestTube < unsafeRadius)
+			System.err.println("VIOLATION! Safety radius is " + unsafeRadius);
 		return positions;
 	}
 
@@ -89,12 +108,17 @@ public class LpAlgorithm implements Drawer {
 		if(isDone())
 			return null;
 
+		// If the robot doesn't have an entry in the reach tube set, create one
+		if(!reachTubes.containsKey(currentRobot))
+			reachTubes.put(currentRobot, new ImageGraph());
+
 		setRobotPosition(currentRobot, robotPosition);
 
 		// First make sure they're not in an unsafe region already
 		// TODO figure out how to get them out of an unsafe situation
-		ImageGraph unsafeForCurrent = new ImageGraph(unsafe);
-		unsafeForCurrent.addAll(unsafeRobotGraph(currentRobot));
+		//		ImageGraph unsafeForCurrent = new ImageGraph(unsafe);
+		//		unsafeForCurrent.addAll(unsafeRobotGraph(currentRobot));
+		ImageGraph unsafeForCurrent = unsafeRobotGraph(currentRobot);
 
 		if(unsafeForCurrent.isColliding(robotPosition, unsafeRadius)) {
 			System.err.println(currentRobot + " is in an unsafe starting position");
@@ -109,7 +133,7 @@ public class LpAlgorithm implements Drawer {
 		// Remove any starting points with zero path available
 		double maxScore = Double.NEGATIVE_INFINITY;
 		List<ImageEdge> bestPath = null;
-		
+
 		for(int i = 0; i < availableStartPoints.size(); i++) {
 			ImagePoint start = availableStartPoints.get(i);
 
@@ -151,24 +175,26 @@ public class LpAlgorithm implements Drawer {
 		if(bestPath == null)
 			return null;
 
-		// Mark the best path as unsafe, remove it from unpainted
-		for(ImageEdge edge : bestPath) {
-			unsafe.addEdge(edge);
-			if(unpainted.hasEdge(edge))
-				unpainted.removeEdge(edge);
-		}
+		// Mark the best path as unsafe
+		ImageGraph robotTube = reachTubes.get(currentRobot);
+		for(ImageEdge edge : bestPath)
+			robotTube.addEdge(edge);
 
 		return edgesToPoints(bestPath);
 	}
 
 	public boolean isDone() {
-		return unsafe.isEmpty() && drawing.equals(painted);
+		return unpainted.isEmpty();
 	}
 
 	public void markSafeDrawn(String robotName, ImagePoint start, ImagePoint end) {
-		unsafe.removeEdge(start, end);
+		reachTubes.get(robotName).removeEdge(start, end);
+		//unsafe.removeEdge(start, end);
 		if(drawing.hasEdge(start, end))
 			painted.addEdge(start, end);
+
+		if(unpainted.hasEdge(start, end))
+			unpainted.removeEdge(start, end);
 
 		setRobotPosition(robotName, end);
 	}
@@ -303,8 +329,8 @@ public class LpAlgorithm implements Drawer {
 	}
 
 	/**
-	 * Generate a graph of all unsafe places for the current robot. Won't include
-	 * the position of the provided robot.
+	 * Generate a graph of all unsafe places for the current robot. Won't
+	 * include the position of the provided robot.
 	 * 
 	 * @param currentRobot
 	 * @return unsafe regions populated by robots
@@ -315,19 +341,27 @@ public class LpAlgorithm implements Drawer {
 			if(!robot.getKey().equals(currentRobot))
 				retval.addPoint(robot.getValue());
 		}
+		for(Entry<String, ImageGraph> tube : reachTubes.entrySet()) {
+			if(!tube.getKey().equals(currentRobot))
+				retval.addAll(tube.getValue());
+		}
 		return retval;
 	}
 
+	private Color[] unsafeColors = { Color.cyan, Color.blue, Color.orange, Color.PINK, Color.yellow, Color.MAGENTA };
+
 	public void draw(Graphics2D g) {
 		drawing.draw(g, Color.LIGHT_GRAY, 12);
-		unsafe.draw(g, Color.RED, 12, unsafeDrawRadius);
-		painted.draw(g, Color.GREEN, 12);
+		int color = 0;
+		for(ImageGraph tube : reachTubes.values())
+			tube.draw(g, unsafeColors[color++], 12, unsafeDrawRadius);
+		//		unsafe.draw(g, Color.RED, 12, unsafeDrawRadius);
 
 		// Draw each robot position with a red unsafe boundary around it
-		unsafeRobotGraph(null).draw(g, Color.PINK, 20);
 		g.setColor(Color.RED);
 		for(Entry<String, ImagePoint> robot : unsafeRobots.entrySet()) {
 			g.drawOval((int) (robot.getValue().getX() - unsafeDrawRadius), (int) (robot.getValue().getY() - unsafeDrawRadius), 2 * unsafeDrawRadius, 2 * unsafeDrawRadius);
 		}
+		painted.draw(g, Color.GREEN, 12);
 	}
 }

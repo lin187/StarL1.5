@@ -185,6 +185,15 @@ public class ImageGraph implements Drawer {
 				return true;
 		return false;
 	}
+	
+	public double minDistanceTo(ImagePoint point) {
+		double distance = Double.MAX_VALUE;
+		for(ImagePoint p : graph.vertexSet())
+			distance = Math.min(distance, p.distanceTo(point));
+		for(ImageEdge e : graph.edgeSet())
+			distance = Math.min(distance, e.distanceTo(point));
+		return distance;
+	}
 
 	public boolean isEmpty() {
 		return graph.edgeSet().isEmpty();

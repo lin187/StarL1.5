@@ -31,7 +31,7 @@ public class Main {
 		// TODO: Algorithm assigns overlapping regions sometimes! It looks like robot positions aren't always added into unsafe
 		
 		if(simulate) {
-			SimSettings settings = new SimSettings.Builder().WAYPOINT_FILE("waypoints/" + inputFilename + ".wpt").N_BOTS(4).TIC_TIME_RATE(5).build();
+			SimSettings settings = new SimSettings.Builder().WAYPOINT_FILE("waypoints/" + inputFilename + ".wpt").N_BOTS(4).TIC_TIME_RATE(1.5).build();
 			Simulation sim = new Simulation(MainActivity.class, settings);
 			sim.start();
 		} else {

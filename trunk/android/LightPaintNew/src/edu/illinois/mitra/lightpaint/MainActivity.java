@@ -83,8 +83,7 @@ public class MainActivity extends LogicThread implements MessageListener {
 					iAmLeader = leader.equals(gvh.id.getName());
 					if(iAmLeader) {
 						System.out.println(name + " is leader!");
-						// Create the algorithm, inform it of all robot
-						// positions
+						// Create the algorithm, inform it of all robot positions
 						alg = new LpAlgorithm(WptParser.parseWaypoints(gvh), POINT_SNAP_RADIUS, MAX_DRAW_LENGTH, UNSAFE_RADIUS);
 
 						for(String robot : gvh.id.getParticipants())
@@ -101,10 +100,12 @@ public class MainActivity extends LogicThread implements MessageListener {
 					if(!assignment.isEmpty()) {
 						lastVisitedPoint = assignment.remove(0);
 						setStage(Stage.DO_ASSIGNMENT);
-					} else if(alg.isDone() && (doneInformedCount == (gvh.id.getParticipants().size() - 1)))
+					} else if(alg.isDone() && (doneInformedCount == (gvh.id.getParticipants().size() - 1))) {
 						stage = Stage.DONE;
-					else
+					} else {
+						reqSentTime = gvh.time();
 						setStage(Stage.WAIT_FOR_ASSIGNMENT);
+					}
 				} else {
 					RobotMessage req = new RobotMessage(leader, name, ASSIGNMENT_REQ_ID, "");
 					gvh.comms.addOutgoingMessage(req);
@@ -151,7 +152,7 @@ public class MainActivity extends LogicThread implements MessageListener {
 	private static final MessageContents FINISHED_MSG_CONTENTS = new MessageContents("DONE");
 
 	private int doneInformedCount = 0;
-	
+
 	@Override
 	public void messageReceied(RobotMessage msg) {
 		switch(msg.getMID()) {
@@ -185,7 +186,7 @@ public class MainActivity extends LogicThread implements MessageListener {
 
 			if(alg.isDone()) {
 				response.setContents(FINISHED_MSG_CONTENTS);
-				doneInformedCount ++;
+				doneInformedCount++;
 			} else if(assigned != null && assigned.size() > 0) {
 				String[] assignedPieces = new String[assigned.size()];
 				for(int i = 0; i < assigned.size(); i++)
@@ -212,7 +213,7 @@ public class MainActivity extends LogicThread implements MessageListener {
 	}
 
 	private void setStage(Stage newstage) {
-//		System.out.println(super.name + "\t" + stage + "->" + newstage);
+		//		System.out.println(super.name + "\t" + stage + "->" + newstage);
 		stage = newstage;
 	}
 
