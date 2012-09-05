@@ -32,7 +32,10 @@ public class LpAlgorithm implements Drawer {
 	private ImageGraph unpainted;
 	private final ImageGraph painted = new ImageGraph();
 	private final ImageGraph unsafe = new ImageGraph();
+	
 	private final Map<String, ImagePoint> unsafeRobots = new HashMap<String, ImagePoint>();
+	
+	private final Map<String, ImageGraph> reachTubes = new HashMap<String, ImageGraph>();
 
 	private final PrmPathFinder prm;
 
@@ -102,11 +105,11 @@ public class LpAlgorithm implements Drawer {
 		List<ImagePoint> availableStartPoints = unsafeForCurrent.removeCollidingPoints(unpainted.getPointsInDistanceOrder(robotPosition), unsafeRadius);
 
 		// Score each available starting point
-		// Score = (distance of path available from start point) / (distance to
-		// start)
+		// Score = (distance of path available from start point) / (distance to start)
 		// Remove any starting points with zero path available
 		double maxScore = Double.NEGATIVE_INFINITY;
 		List<ImageEdge> bestPath = null;
+		
 		for(int i = 0; i < availableStartPoints.size(); i++) {
 			ImagePoint start = availableStartPoints.get(i);
 
@@ -114,13 +117,12 @@ public class LpAlgorithm implements Drawer {
 
 			// If no straight path is available, use PRM
 			// If no PRM path is available, give up
-			if(unsafeForCurrent.isColliding(new ImageEdge(start, robotPosition), unsafeRadius)) {
-				if((pathToStart = prm.findPath(unsafeForCurrent, robotPosition, start)) == null) {
+			ImageEdge robotToStart = new ImageEdge(robotPosition, start);
+			if(unsafeForCurrent.isColliding(robotToStart, unsafeRadius)) {
+				if((pathToStart = prm.findPath(unsafeForCurrent, robotPosition, start)) == null)
 					continue;
-				}
-			} else {
-				pathToStart.add(new ImageEdge(robotPosition, start));
-			}
+			} else
+				pathToStart.add(robotToStart);
 
 			// Find distance to start
 			double distToStart = Utility.cap(getPathLength(pathToStart), 1d, Double.POSITIVE_INFINITY);
@@ -301,7 +303,7 @@ public class LpAlgorithm implements Drawer {
 	}
 
 	/**
-	 * Generate a graph of only current unsafe robot positions. Won't include
+	 * Generate a graph of all unsafe places for the current robot. Won't include
 	 * the position of the provided robot.
 	 * 
 	 * @param currentRobot
