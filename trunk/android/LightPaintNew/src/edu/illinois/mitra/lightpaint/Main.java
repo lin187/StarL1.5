@@ -17,12 +17,13 @@ import edu.illinois.mitra.starlSim.main.Simulation;
 
 public class Main {
 
-	private static boolean simulate = false;
+	private static boolean simulate = true;
+	private static String inputFilename = "hi";
 	
 	public static void main(String[] args) {
 
 		if(simulate) {
-			Simulation sim = new Simulation(MainActivity.class, new SimSettings());
+			Simulation sim = new Simulation(MainActivity.class, SimSettings.defaultSettings());
 			sim.start();
 		} else {
 			try {
@@ -38,16 +39,16 @@ public class Main {
 			parser.enableScaling(6000, 6000);
 			parser.enableCentering(3000, 3000);
 			
-			Set<ImageEdge> image = parser.parseImage("input_images/linepath.svg");
-			WptWriter.writeWpt("waypoints/linepath2.wpt", image);
+			Set<ImageEdge> image = parser.parseImage("input_images/" + inputFilename + ".svg");
+			WptWriter.writeWpt("waypoints/" + inputFilename + ".wpt", image);
 			
-			LpAlgorithm alg = new LpAlgorithm(image, 50, 3300, 2*165);
+			LpAlgorithm alg = new LpAlgorithm(image, 50, 3300, 180);
 			alg.setRobotPosition("A", new ImagePoint(0,0));
 			alg.setRobotPosition("B", new ImagePoint(3350,1500));
 			alg.setRobotPosition("Sleepy", new ImagePoint(3000,150));
 			alg.setRobotPosition("AlsoSleepy", new ImagePoint(200, 2200));
 			frame.updateData(alg);
-			sleep(5000);
+			sleep(500);
 	
 			// Assign lines to a robot
 			List<ImagePoint> toDraw = alg.assignSegment("A", new ImagePoint(0, 0));

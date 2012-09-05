@@ -1,6 +1,6 @@
 package edu.illinois.mitra.starlSim.main;
 
-public class SimSettings {	
+public class SimSettings {
 	// General simulation settings
 	/**
 	 * The number of robots to simulate.
@@ -38,7 +38,6 @@ public class SimSettings {
 	 */
 	public int GRID_YSIZE = 3000;
 
-	
 	// Position calculation period and noise options
 	/**
 	 * Milliseconds. The time between simulated GPS position broadcasts.
@@ -135,6 +134,207 @@ public class SimSettings {
 	 */
 	public int MAX_FPS = 40;
 
-	public SimSettings() {
+	public static SimSettings defaultSettings() {
+		Builder builder = new Builder();
+		return builder.build();
+	}
+
+	public static class Builder {
+		private int N_BOTS;
+		private String WAYPOINT_FILE;
+		private String INITIAL_POSITIONS_FILE;
+		private boolean IDEAL_MOTION;
+		private double TIC_TIME_RATE;
+		private int GRID_XSIZE;
+		private int GRID_YSIZE;
+		private long GPS_PERIOD;
+		private double GPS_ANGLE_NOISE;
+		private double GPS_POSITION_NOISE;
+		private int TRACE_CLOCK_DRIFT_MAX;
+		private float TRACE_CLOCK_SKEW_MAX;
+		private int MSG_MEAN_DELAY;
+		private int MSG_STDDEV_DELAY;
+		private int MSG_LOSSES_PER_HUNDRED;
+		private int MSG_RANDOM_SEED;
+		private String BOT_NAME;
+		private int BOT_RADIUS;
+		private boolean USE_DISTANCE_PREDICATE;
+		private int PREDICATE_RADIUS;
+		private int N_PREDICATE_ROBOTS;
+		private String PREDICATE_OUT_DIR;
+		private String TRACE_OUT_DIR;
+		private boolean USE_GLOBAL_LOGGER;
+		private boolean DRAW_TRACE;
+		private int DRAW_TRACE_LENGTH;
+		private int MAX_FPS;
+
+		public Builder N_BOTS(int N_BOTS) {
+			this.N_BOTS = N_BOTS;
+			return this;
+		}
+
+		public Builder WAYPOINT_FILE(String WAYPOINT_FILE) {
+			this.WAYPOINT_FILE = WAYPOINT_FILE;
+			return this;
+		}
+
+		public Builder INITIAL_POSITIONS_FILE(String INITIAL_POSITIONS_FILE) {
+			this.INITIAL_POSITIONS_FILE = INITIAL_POSITIONS_FILE;
+			return this;
+		}
+
+		public Builder IDEAL_MOTION(boolean IDEAL_MOTION) {
+			this.IDEAL_MOTION = IDEAL_MOTION;
+			return this;
+		}
+
+		public Builder TIC_TIME_RATE(double TIC_TIME_RATE) {
+			this.TIC_TIME_RATE = TIC_TIME_RATE;
+			return this;
+		}
+
+		public Builder GRID_XSIZE(int GRID_XSIZE) {
+			this.GRID_XSIZE = GRID_XSIZE;
+			return this;
+		}
+
+		public Builder GRID_YSIZE(int GRID_YSIZE) {
+			this.GRID_YSIZE = GRID_YSIZE;
+			return this;
+		}
+
+		public Builder GPS_PERIOD(long GPS_PERIOD) {
+			this.GPS_PERIOD = GPS_PERIOD;
+			return this;
+		}
+
+		public Builder GPS_ANGLE_NOISE(double GPS_ANGLE_NOISE) {
+			this.GPS_ANGLE_NOISE = GPS_ANGLE_NOISE;
+			return this;
+		}
+
+		public Builder GPS_POSITION_NOISE(double GPS_POSITION_NOISE) {
+			this.GPS_POSITION_NOISE = GPS_POSITION_NOISE;
+			return this;
+		}
+
+		public Builder TRACE_CLOCK_DRIFT_MAX(int TRACE_CLOCK_DRIFT_MAX) {
+			this.TRACE_CLOCK_DRIFT_MAX = TRACE_CLOCK_DRIFT_MAX;
+			return this;
+		}
+
+		public Builder TRACE_CLOCK_SKEW_MAX(float TRACE_CLOCK_SKEW_MAX) {
+			this.TRACE_CLOCK_SKEW_MAX = TRACE_CLOCK_SKEW_MAX;
+			return this;
+		}
+
+		public Builder MSG_MEAN_DELAY(int MSG_MEAN_DELAY) {
+			this.MSG_MEAN_DELAY = MSG_MEAN_DELAY;
+			return this;
+		}
+
+		public Builder MSG_STDDEV_DELAY(int MSG_STDDEV_DELAY) {
+			this.MSG_STDDEV_DELAY = MSG_STDDEV_DELAY;
+			return this;
+		}
+
+		public Builder MSG_LOSSES_PER_HUNDRED(int MSG_LOSSES_PER_HUNDRED) {
+			this.MSG_LOSSES_PER_HUNDRED = MSG_LOSSES_PER_HUNDRED;
+			return this;
+		}
+
+		public Builder MSG_RANDOM_SEED(int MSG_RANDOM_SEED) {
+			this.MSG_RANDOM_SEED = MSG_RANDOM_SEED;
+			return this;
+		}
+
+		public Builder BOT_NAME(String BOT_NAME) {
+			this.BOT_NAME = BOT_NAME;
+			return this;
+		}
+
+		public Builder BOT_RADIUS(int BOT_RADIUS) {
+			this.BOT_RADIUS = BOT_RADIUS;
+			return this;
+		}
+
+		public Builder USE_DISTANCE_PREDICATE(boolean USE_DISTANCE_PREDICATE) {
+			this.USE_DISTANCE_PREDICATE = USE_DISTANCE_PREDICATE;
+			return this;
+		}
+
+		public Builder PREDICATE_RADIUS(int PREDICATE_RADIUS) {
+			this.PREDICATE_RADIUS = PREDICATE_RADIUS;
+			return this;
+		}
+
+		public Builder N_PREDICATE_ROBOTS(int N_PREDICATE_ROBOTS) {
+			this.N_PREDICATE_ROBOTS = N_PREDICATE_ROBOTS;
+			return this;
+		}
+
+		public Builder PREDICATE_OUT_DIR(String PREDICATE_OUT_DIR) {
+			this.PREDICATE_OUT_DIR = PREDICATE_OUT_DIR;
+			return this;
+		}
+
+		public Builder TRACE_OUT_DIR(String TRACE_OUT_DIR) {
+			this.TRACE_OUT_DIR = TRACE_OUT_DIR;
+			return this;
+		}
+
+		public Builder USE_GLOBAL_LOGGER(boolean USE_GLOBAL_LOGGER) {
+			this.USE_GLOBAL_LOGGER = USE_GLOBAL_LOGGER;
+			return this;
+		}
+
+		public Builder DRAW_TRACE(boolean DRAW_TRACE) {
+			this.DRAW_TRACE = DRAW_TRACE;
+			return this;
+		}
+
+		public Builder DRAW_TRACE_LENGTH(int DRAW_TRACE_LENGTH) {
+			this.DRAW_TRACE_LENGTH = DRAW_TRACE_LENGTH;
+			return this;
+		}
+
+		public Builder MAX_FPS(int MAX_FPS) {
+			this.MAX_FPS = MAX_FPS;
+			return this;
+		}
+
+		public SimSettings build() {
+			return new SimSettings(this);
+		}
+	}
+
+	private SimSettings(Builder builder) {
+		this.N_BOTS = builder.N_BOTS;
+		this.WAYPOINT_FILE = builder.WAYPOINT_FILE;
+		this.INITIAL_POSITIONS_FILE = builder.INITIAL_POSITIONS_FILE;
+		this.IDEAL_MOTION = builder.IDEAL_MOTION;
+		this.TIC_TIME_RATE = builder.TIC_TIME_RATE;
+		this.GRID_XSIZE = builder.GRID_XSIZE;
+		this.GRID_YSIZE = builder.GRID_YSIZE;
+		this.GPS_PERIOD = builder.GPS_PERIOD;
+		this.GPS_ANGLE_NOISE = builder.GPS_ANGLE_NOISE;
+		this.GPS_POSITION_NOISE = builder.GPS_POSITION_NOISE;
+		this.TRACE_CLOCK_DRIFT_MAX = builder.TRACE_CLOCK_DRIFT_MAX;
+		this.TRACE_CLOCK_SKEW_MAX = builder.TRACE_CLOCK_SKEW_MAX;
+		this.MSG_MEAN_DELAY = builder.MSG_MEAN_DELAY;
+		this.MSG_STDDEV_DELAY = builder.MSG_STDDEV_DELAY;
+		this.MSG_LOSSES_PER_HUNDRED = builder.MSG_LOSSES_PER_HUNDRED;
+		this.MSG_RANDOM_SEED = builder.MSG_RANDOM_SEED;
+		this.BOT_NAME = builder.BOT_NAME;
+		this.BOT_RADIUS = builder.BOT_RADIUS;
+		this.USE_DISTANCE_PREDICATE = builder.USE_DISTANCE_PREDICATE;
+		this.PREDICATE_RADIUS = builder.PREDICATE_RADIUS;
+		this.N_PREDICATE_ROBOTS = builder.N_PREDICATE_ROBOTS;
+		this.PREDICATE_OUT_DIR = builder.PREDICATE_OUT_DIR;
+		this.TRACE_OUT_DIR = builder.TRACE_OUT_DIR;
+		this.USE_GLOBAL_LOGGER = builder.USE_GLOBAL_LOGGER;
+		this.DRAW_TRACE = builder.DRAW_TRACE;
+		this.DRAW_TRACE_LENGTH = builder.DRAW_TRACE_LENGTH;
+		this.MAX_FPS = builder.MAX_FPS;
 	}
 }

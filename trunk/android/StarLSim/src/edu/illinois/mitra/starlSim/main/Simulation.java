@@ -37,10 +37,6 @@ public class Simulation {
 
 	private DistancePredicate distpred;
 
-	public static SimSettings getDefaultSettings() {
-		return new SimSettings();
-	}
-
 	public Simulation(Class<? extends LogicThread> app, final SimSettings settings) {
 		// Create set of robots whose wireless is blocked for passage between
 		// the GUI and the simulation communication object
