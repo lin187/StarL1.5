@@ -8,10 +8,11 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 import edu.illinois.mitra.lightpaint.algorithm.LpAlgorithm;
+import edu.illinois.mitra.starl.interfaces.Drawer;
 
 @SuppressWarnings("serial")
 public class DrawPanel extends ZoomablePanel {
-	private LpAlgorithm alg;
+	private Drawer alg;
 	NumberFormat format = new DecimalFormat("0.00");
 	int scaleFactor = 0;
 
@@ -40,7 +41,7 @@ public class DrawPanel extends ZoomablePanel {
 		g.drawLine(getSize().width - 110, getSize().height - 10, getSize().width - 10, getSize().height - 10);
 	}
 
-	public void updateData(LpAlgorithm alg) {
+	public void updateData(Drawer alg) {
 		synchronized(this) {
 			this.alg = alg;
 		}

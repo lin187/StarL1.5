@@ -18,7 +18,7 @@ import edu.illinois.mitra.starlSim.main.Simulation;
 public class Main {
 
 	private static boolean simulate = true;
-	private static String inputFilename = "hi";
+	private static String inputFilename = "linepath2";
 	
 	public static void main(String[] args) {
 		SvgParser parser = new SvgParser();
@@ -28,8 +28,10 @@ public class Main {
 		Set<ImageEdge> image = parser.parseImage("input_images/" + inputFilename + ".svg");
 		WptWriter.writeWpt("waypoints/" + inputFilename + ".wpt", image);
 		
+		// TODO: Algorithm assigns overlapping regions sometimes! It looks like robot positions aren't always added into unsafe
+		
 		if(simulate) {
-			SimSettings settings = new SimSettings.Builder().WAYPOINT_FILE("waypoints/" + inputFilename + ".wpt").N_BOTS(2).build();
+			SimSettings settings = new SimSettings.Builder().WAYPOINT_FILE("waypoints/" + inputFilename + ".wpt").N_BOTS(4).TIC_TIME_RATE(5).build();
 			Simulation sim = new Simulation(MainActivity.class, settings);
 			sim.start();
 		} else {

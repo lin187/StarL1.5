@@ -2,7 +2,7 @@
 9/4/2012, Adam
 - Changed SimSettings to use the builder pattern. A separate "settings initializer" is no longer required.
 - Changed MotionParameters defaults to values which provides smoother motion.
-
+- MessageContents can now be retrieved and compared
 
 9/1/2012, Adam
 - Cleaned up GlobalLogger

@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 
 import edu.illinois.mitra.lightpaint.algorithm.LpAlgorithm;
+import edu.illinois.mitra.starl.interfaces.Drawer;
 
 
 @SuppressWarnings("serial")
@@ -29,7 +30,7 @@ public class DrawFrame extends JFrame
 		getContentPane().add(dp);
 	}
 	
-	public void updateData(LpAlgorithm alg)
+	public void updateData(Drawer alg)
 	{
 		dp.updateData(alg);
 	}

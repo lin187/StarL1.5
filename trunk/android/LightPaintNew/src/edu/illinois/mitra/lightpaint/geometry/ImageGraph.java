@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -15,7 +16,9 @@ import org.jgrapht.EdgeFactory;
 import org.jgrapht.Graph;
 import org.jgrapht.graph.Pseudograph;
 
-public class ImageGraph {
+import edu.illinois.mitra.starl.interfaces.Drawer;
+
+public class ImageGraph implements Drawer {
 	public static final EdgeFactory<ImagePoint, ImageEdge> IMAGE_EDGEFACTORY = new EdgeFactory<ImagePoint, ImageEdge>() {
 		@Override
 		public ImageEdge createEdge(ImagePoint arg0, ImagePoint arg1) {
@@ -70,14 +73,24 @@ public class ImageGraph {
 		return retval;
 	}
 
-	public List<ImagePoint> removeCollidingPoints(List<ImagePoint> list, double radius) {
+	public <T extends Collection<ImageEdge>> T removeCollidingEdges(T collection, double radius) {
+		Set<ImageEdge> toRemove = new HashSet<ImageEdge>();
+		for(ImageEdge ie : collection)
+			if(isColliding(ie, radius))
+				toRemove.add(ie);
+
+		collection.removeAll(toRemove);
+		return collection;		
+	}
+	
+	public <T extends Collection<ImagePoint>> T removeCollidingPoints(T collection, double radius) {
 		Set<ImagePoint> toRemove = new HashSet<ImagePoint>();
-		for(ImagePoint ip : list)
+		for(ImagePoint ip : collection)
 			if(isColliding(ip, radius))
 				toRemove.add(ip);
 
-		list.removeAll(toRemove);
-		return list;
+		collection.removeAll(toRemove);
+		return collection;
 	}
 	
 	public void addAll(ImageGraph other) {
@@ -161,6 +174,17 @@ public class ImageGraph {
 				return true;
 		return false;
 	}
+	
+	public boolean isColliding(ImageGraph other, double radius) {
+		for(ImagePoint p : other.getPoints())
+			if(isColliding(p,radius))
+				return true;
+				
+		for(ImageEdge e : other.getGraph().edgeSet())
+			if(isColliding(e,radius))
+				return true;
+		return false;
+	}
 
 	public boolean isEmpty() {
 		return graph.edgeSet().isEmpty();
@@ -186,9 +210,17 @@ public class ImageGraph {
 			int yOffset = (int)rotated.getY();
 			g.drawLine((int) edge.getStart().getX()-xOffset, (int) edge.getStart().getY()-yOffset, (int) edge.getEnd().getX()-xOffset, (int) edge.getEnd().getY()-yOffset);
 			g.drawLine((int) edge.getStart().getX()+xOffset, (int) edge.getStart().getY()+yOffset, (int) edge.getEnd().getX()+xOffset, (int) edge.getEnd().getY()+yOffset);
-		}
-		
-		
+		}	
+	}
+	
+	private Color drawColor = Color.BLACK;
+	public void setDrawColor(Color color) {
+		drawColor = color;
+	}
+
+	@Override
+	public void draw(Graphics2D g) {
+		draw(g, drawColor, 25);
 	}
 	
 	public void draw(Graphics2D g, Color color, int pointSize) {
