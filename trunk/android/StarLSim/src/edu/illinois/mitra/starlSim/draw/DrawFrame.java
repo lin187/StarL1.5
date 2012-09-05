@@ -6,7 +6,6 @@ import java.util.Set;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
-import edu.illinois.mitra.starl.interfaces.Drawer;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starlSim.main.SimSettings;
 

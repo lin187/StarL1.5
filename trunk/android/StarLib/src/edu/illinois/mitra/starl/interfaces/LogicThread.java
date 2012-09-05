@@ -1,8 +1,5 @@
 package edu.illinois.mitra.starl.interfaces;
 
-import java.awt.Graphics2D;
-import java.awt.Point;
-
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 
 /**
@@ -10,7 +7,7 @@ import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
  * @author Adam Zimmerman
  * @version 1.0
  */
-public abstract class LogicThread extends StarLCallable implements Cancellable, Drawer, AcceptsPointInput {
+public abstract class LogicThread extends StarLCallable implements Cancellable, AcceptsPointInput {
 
 	protected String name;
 	
@@ -25,13 +22,7 @@ public abstract class LogicThread extends StarLCallable implements Cancellable, 
 	}
 	
 	@Override
-	public void draw(Graphics2D g) 
-	{
-		// used in simulation, you can draw something algorithm specific (debug information perhaps)
-	}
-	
-	@Override
-	public void receivedPointInput(Point p)
+	public void receivedPointInput(int x, int y)
 	{
 		// used if you want your code to respond to point-input from the user, in simulation this is done with right clicks
 	}

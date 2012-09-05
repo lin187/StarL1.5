@@ -1,4 +1,4 @@
-package edu.illinois.mitra.starlSim.simapps.deere_fardin ; 
+package edu.illinois.mitra.starlSim ; 
 
 import java.awt.geom.CubicCurve2D;
 import java.awt.geom.Point2D;
@@ -199,8 +199,8 @@ public class ArcCreator
 		ArrayList <WayPoint> newPath = createNewPath(oldPath, detourPoint, ANCHOR_DISTANCE, SEPARATION);
 		
 		// print paths
-	//	System.out.println("Old Path: " + oldPath);
-	//	System.out.println("\nNew Path: " + newPath);
+		System.out.println("Old Path: " + oldPath);
+		System.out.println("\nNew Path: " + newPath);
 	}
 
 } 

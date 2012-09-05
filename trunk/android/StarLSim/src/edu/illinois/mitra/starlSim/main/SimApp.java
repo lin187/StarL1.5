@@ -16,9 +16,10 @@ public class SimApp implements Callable<List<Object>> {
 	protected String name;
 	protected GlobalVarHolder gvh;
 
-	protected LogicThread logic;
+	public LogicThread logic;
 
-	public SimApp(String name, HashMap<String, String> participants, SimulationEngine engine, ItemPosition initpos, String traceDir, Class<? extends LogicThread> app, DrawFrame drawer, int driftMax, double skewBound) {
+	public SimApp(String name, HashMap<String, String> participants, SimulationEngine engine, ItemPosition initpos, String traceDir, Class<? extends LogicThread> app, 
+			DrawFrame drawFrame, int driftMax, double skewBound) {
 		this.name = name;
 		gvh = new SimGlobalVarHolder(name, participants, engine, initpos, traceDir, driftMax, skewBound);
 		gvh.comms.startComms();
@@ -28,8 +29,8 @@ public class SimApp implements Callable<List<Object>> {
 		try {
 			// Generically instantiate an instance of the requested LogicThread
 			logic = (LogicThread) app.getConstructor(GlobalVarHolder.class).newInstance(gvh);
-			drawer.addPredrawer(logic);
-			drawer.addPointInputAccepter(logic);
+			
+			drawFrame.addPointInputAccepter(logic);
 		} catch(InstantiationException e) {
 			e.printStackTrace();
 		} catch(IllegalAccessException e) {

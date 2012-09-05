@@ -1,10 +1,12 @@
 package edu.illinois.mitra.starl.harness;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import edu.illinois.mitra.starl.interfaces.ExplicitlyDrawable;
+import edu.illinois.mitra.starl.interfaces.LogicThread;
 
 /**
  * The core of the simulation. You really
@@ -35,8 +37,11 @@ public class SimulationEngine extends Thread {
 	
 	// for drawing the simulation
 	ExplicitlyDrawable drawer = null;
+	List <LogicThread> logicThreads = null;
 
-	public SimulationEngine(int meanDelay, int delayStdDev, int dropRate, int seed, double ticRate, Set<String> blockedRobots, Map<String, String> nameToIpMap, ExplicitlyDrawable drawer) {
+	public SimulationEngine(int meanDelay, int delayStdDev, int dropRate, int seed, double ticRate, 
+			Set<String> blockedRobots, Map<String, String> nameToIpMap, ExplicitlyDrawable drawer,
+			List <LogicThread> logicThreads) {
 		super("SimulationEngine");
 		comms = new DecoupledSimComChannel(meanDelay, delayStdDev, dropRate, seed, blockedRobots, nameToIpMap);
 		time = System.currentTimeMillis();
@@ -44,6 +49,7 @@ public class SimulationEngine extends Thread {
 		done = false;
 		this.ticRate = ticRate;
 		this.drawer = drawer;
+		this.logicThreads = logicThreads;
 		
 		this.start();
 	}
@@ -123,8 +129,9 @@ public class SimulationEngine extends Thread {
 			advance = Math.min(l, advance);
 		}
 		
-		// force a redraw now
-		drawer.drawNow();
+		// force a redraw now of every logic thread
+		if (drawer != null)
+			drawer.drawNow(logicThreads);
 
 		// Advance time
 		time += advance;

@@ -8,7 +8,7 @@ public class Main {
 	private static boolean circles = false;
 
 	public static void main(String[] args) {
-		SimSettings settings = new SimSettings();
+		SimSettings settings = SimSettings.defaultSettings();
 		settings.N_BOTS = 1;
 
 		if(circles) {

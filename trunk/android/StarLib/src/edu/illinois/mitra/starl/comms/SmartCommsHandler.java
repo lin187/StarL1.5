@@ -75,7 +75,13 @@ public class SmartCommsHandler extends Thread {
 		newMsg.setHandler(result);
 		
 		// Immediately send the outgoing message
-		mConnectedThread.write(newMsg, nameToIp(newMsg));
+		String ip = nameToIp(newMsg);
+		
+		if (ip == null)
+			throw new RuntimeException("Could not find robot ip for outgoing message. " +
+					"Destination name is '" + newMsg.getContents().getTo() + "'");
+		
+		mConnectedThread.write(newMsg, ip);
 
 		// Increment the sequence number
 		seqNum++;// = (seqNum + 1) % (Integer.MAX_VALUE-1);

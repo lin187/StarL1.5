@@ -18,7 +18,7 @@ import java.util.LinkedList;
 import java.util.Set;
 
 import edu.illinois.mitra.starl.interfaces.AcceptsPointInput;
-import edu.illinois.mitra.starl.interfaces.Drawer;
+import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starlSim.main.SimSettings;
 
 
@@ -58,7 +58,7 @@ public class DrawPanel extends ZoomablePanel
 	}
 
 	@Override
-	protected void draw(Graphics2D g)
+	protected void draw(Graphics2D g, LogicThread lt)
 	{
 		Point a = new Point(0, 0);
 		Point b = new Point(0, 100);
@@ -66,7 +66,7 @@ public class DrawPanel extends ZoomablePanel
 		synchronized(this)
 		{
 			for (Drawer d : preDrawers)
-				d.draw(g);			
+				d.draw(lt, g);			
 			
 			for (int rIndex = 0; rIndex < data.size(); ++rIndex)
 			{
@@ -191,7 +191,7 @@ public class DrawPanel extends ZoomablePanel
 		if (e.getButton() == MouseEvent.BUTTON3)
 		{
 			for (AcceptsPointInput c : clickListeners)
-				c.receivedPointInput(p);
+				c.receivedPointInput(p.x, p.y);
 		}
 	}
 	

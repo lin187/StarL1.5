@@ -85,9 +85,6 @@ public class DecoupledSimComChannel implements SimComChannel {
 
 	public void sendMsg(String from, String msg, String IP) {
 		boolean forceDrop = shouldForceDrop(from, IP);
-		// Stan - Assumption: I think these are from and to indicies as Strings
-		// TODO (Adam): Yes. From is the name of the robot the message is from,
-		// IP is the IP address it's being sent to
 
 		if(IP.equals(BROADCAST_IP)) {
 			stat_bcastMessages++;
@@ -102,6 +99,7 @@ public class DecoupledSimComChannel implements SimComChannel {
 	}
 
 	private boolean shouldForceDrop(String fromIp, String toIp) {
+		
 		String from = ipToNameMap.get(fromIp);
 		String to = ipToNameMap.get(toIp);
 		return blockedRobot.contains(from) || blockedRobot.contains(to);

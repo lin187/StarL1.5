@@ -1,12 +1,9 @@
 //package edu.illinois.mitra.test;
-package edu.illinois.mitra.starlSim.simapps.deere_fardin;
+package edu.illinois.mitra.starlSim;
 
 
 
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -20,7 +17,6 @@ import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.interfaces.MessageListener;
 import edu.illinois.mitra.starl.motion.RobotMotion;
 import edu.illinois.mitra.starl.objects.ItemPosition;
-import edu.illinois.mitra.starlSim.main.SimSettings;
 
 public class DeereFlockingWithDetours extends LogicThread implements MessageListener {
 
@@ -62,12 +58,12 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 	
 	
 	/////////// SHARED VARIABLES BETWEEN LEADER AND FOLLOWERS //////////
-	private LinkedList <WayPoint> currentPath = new LinkedList <WayPoint>(); 
-	private ArrayList <WayPoint> newPath = new ArrayList <WayPoint>();
+	public LinkedList <WayPoint> currentPath = new LinkedList <WayPoint>(); 
+	public ArrayList <WayPoint> newPath = new ArrayList <WayPoint>();
 	ArrayList <String> participantsList = new ArrayList<String>() ;
 	
 	private RobotMotion motion;
-	private int robotId; // robot 0 = leader
+	public int robotId; // robot 0 = leader
 	private String robotName;
 	private int numRobots;
 	private long initialTime; 
@@ -160,14 +156,17 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 		for ( WayPoint wpt:currentPath){
 			newPath.add(new WayPoint(wpt.x, wpt.y, wpt.time));
 		}	
-		
 	}
 	
 	private int getRobotId() {
 		System.out.println("Simulator only: using hardcoded robot names to extract robot ids...");
-		String robotNumStr = name.substring(SimSettings.BOT_NAME.length());
 		
-		return Integer.parseInt(robotNumStr);
+		String botString = "bot";
+		String robotNumStr = name.substring(botString.length());
+		
+		int id = Integer.parseInt(robotNumStr);
+		
+		return id;
 	}
 
 	private void createInitialRobotPath() 
@@ -242,7 +241,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 				
 				startingCycle = GetCycleNumber() ;  
 				
-				 int flag = 0 ; 
+				// int flag = 0 ; 
 
 			
 				connectorLineGenerator();
@@ -496,10 +495,10 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 			
 			while (next.time < startingCycle*1000){
 				next = currentPath.removeFirst();
-				System.out.println("Next " + next.time + " " + startingCycle) ; 
+			//	System.out.println("Next " + next.time + " " + startingCycle) ; 
 			}
 			
-			System.out.println(next.time + " " + startingCycle );
+			//System.out.println(next.time + " " + startingCycle );
 			
 			ItemPosition nextPos = new ItemPosition("followed waypoint", next.x, next.y, 0);
 			
@@ -693,7 +692,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 //					System.out.println("salam2");
 			for (int j =  middle +1 ; j < currentPath.size() ;  j ++) {
 				
-				int k = newPath.size() - 2 * middle -2+ j ; 
+			//	int k = newPath.size() - 2 * middle -2+ j ; 
 //				System.out.println(j + " " + k );
 				oldNewWptConnectors.add( new Line2D.Double(currentPath.get( j).x, currentPath.get(j).y, newPath.get(newPath.size() - 2 * middle -2+ j).x, newPath.get(newPath.size() - 2 * middle -2 +  j).y)) ;
 				
@@ -729,7 +728,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 			
 //			System.out.println("salam2");
 			for (int j = middle ; j < currentPath.size() ;  j ++) {
-				int k  = newPath.size() - 2*middle - 1  + j ; 
+			//	int k  = newPath.size() - 2*middle - 1  + j ; 
 	//			System.out.println(j + " " + k);
 				oldNewWptConnectors.add( new Line2D.Double(currentPath.get(j).x, currentPath.get(j).y, newPath.get(newPath.size() - 2*middle - 1  + j).x, newPath.get(newPath.size() -2* middle - 1  + j).y)) ;
 									
@@ -849,76 +848,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 	
 	
 	
-	@Override
-	public void draw(Graphics2D g)
-	{
-		if (robotId == 0)
-			g.setColor(Color.BLACK);
-		else
-			g.setColor(Color.LIGHT_GRAY);
-		
-		if (movingFrom != null && movingTo != null)
-		{
-			// draw a dotted line showing the robot's current motion path
-			 g.setStroke(new BasicStroke(20.0f, BasicStroke.CAP_BUTT,
-					 BasicStroke.JOIN_MITER, 10.0f, new float[]{35.0f}, 0.0f));
-			 
-			g.drawLine(movingFrom.x, movingFrom.y, movingTo.x, movingTo.y);
-		}
-		
-		g.setStroke(new BasicStroke(4));
-		
-		WayPoint last = movingTo;
-		
-		for (WayPoint p : currentPath)
-		{
-			if (last != null)
-				g.drawLine(last.x, last.y, p.x, p.y);
-			
-			drawOval(g, p);
-			
-			last = p;
-		}
- 	
-		if (robotId == 0)
-		{
-			g.setColor(Color.orange);
-			
-			last = null;
-			
-			for (WayPoint p : newPath)
-			{
-				if (last != null)
-					g.drawLine(last.x, last.y, p.x, p.y);
-				
-				drawOval(g, p);
-				
-				last = p;
-			}
-		}
-			
-		g.setColor(Color.red);
-		
-		last = null;
-		
-		for (WayPoint p : interPath)
-		{
-			if (last != null)
-				g.drawLine(last.x, last.y, p.x, p.y);
-			
-			drawOval(g, p);
-			
-			last = p;
-		}
-	}
-
-	private void drawOval(Graphics2D g, WayPoint p) 
-	{
-		final int POINT_DRAW_SIZE = 10;
-		
-		g.fillOval((int)(p.x - POINT_DRAW_SIZE), (int)(p.y - POINT_DRAW_SIZE), 
-				2 * POINT_DRAW_SIZE + 1, 2 * POINT_DRAW_SIZE + 1);
-	}
+	
 		
 	public void ackProcess(ArrayList <WayPoint> receivedPath, int pathId)
 	{
@@ -997,7 +927,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 		
 	}
 	@Override
-	public void receivedPointInput(Point p)
+	public void receivedPointInput(int x, int y)
 	{
 	//	System.out.println("Point Received!");
 	
@@ -1008,7 +938,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 			
 			ArrayList <WayPoint> oldPath = new ArrayList <WayPoint>();
 			oldPath.addAll(currentPath);
-			Point2D.Double detourPoint = new Point2D.Double(p.x, p.y);
+			Point2D.Double detourPoint = new Point2D.Double(x, y);
 			
 				
 			ArcCreator curveGenerator = new ArcCreator();

@@ -1,5 +1,5 @@
 //import java.awt.geom.*;
-package edu.illinois.mitra.starlSim.simapps.deere_fardin ;
+package edu.illinois.mitra.starlSim;
 
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
