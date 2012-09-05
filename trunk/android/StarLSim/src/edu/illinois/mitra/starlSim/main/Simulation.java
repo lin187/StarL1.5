@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
@@ -24,7 +25,6 @@ import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.PositionList;
 import edu.illinois.mitra.starlSim.draw.DrawFrame;
-import edu.illinois.mitra.starlSim.main.GlobalLogger;
 import edu.illinois.mitra.starlSim.draw.RobotData;
 
 public class Simulation {
@@ -53,7 +53,10 @@ public class Simulation {
 		drawFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// Start the simulation engine
-		simEngine = new SimulationEngine(settings.MSG_MEAN_DELAY, settings.MSG_STDDEV_DELAY, settings.MSG_LOSSES_PER_HUNDRED, settings.MSG_RANDOM_SEED, settings.TIC_TIME_RATE, blockedRobots, participants, drawFrame.getPanel());
+		LinkedList <LogicThread> logicThreads = new LinkedList <LogicThread>();
+		simEngine = new SimulationEngine(settings.MSG_MEAN_DELAY, settings.MSG_STDDEV_DELAY, 
+				settings.MSG_LOSSES_PER_HUNDRED, settings.MSG_RANDOM_SEED, settings.TIC_TIME_RATE, 
+				blockedRobots, participants, drawFrame.getPanel(), logicThreads);
 
 		// Create the sim gps
 		if(settings.IDEAL_MOTION) {
@@ -89,8 +92,18 @@ public class Simulation {
 				System.out.println("Waypoint file did not contain a waypoint named '" + botName + "', using random position.");
 				initialPosition = new ItemPosition(botName, rand.nextInt(settings.GRID_XSIZE), rand.nextInt(settings.GRID_YSIZE), rand.nextInt(360));
 			}
-			bots.add(new SimApp(botName, participants, simEngine, initialPosition, settings.TRACE_OUT_DIR, app, drawFrame, settings.TRACE_CLOCK_DRIFT_MAX, settings.TRACE_CLOCK_SKEW_MAX));
+			
+			SimApp sa = new SimApp(botName, participants, simEngine, initialPosition, settings.TRACE_OUT_DIR, app, 
+					drawFrame, settings.TRACE_CLOCK_DRIFT_MAX, settings.TRACE_CLOCK_SKEW_MAX); 
+			
+			bots.add(sa);
+			
+			logicThreads.add(sa.logic);
 		}
+		
+		// initialize debug drawer class if it was set in the settings
+		if (settings.DRAWER != null)
+			drawFrame.addPredrawer(settings.DRAWER);
 
 		// GUI observer updates the viewer when new positions are calculated
 		Observer guiObserver = new Observer() {

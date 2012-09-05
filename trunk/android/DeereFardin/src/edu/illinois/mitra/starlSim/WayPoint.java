@@ -1,4 +1,4 @@
-package edu.illinois.mitra.starlSim.simapps.deere_fardin;
+package edu.illinois.mitra.starlSim;
 	class WayPoint
 	{
 		public WayPoint(int x, int y, int time)

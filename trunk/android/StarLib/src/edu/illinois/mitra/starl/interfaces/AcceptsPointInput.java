@@ -4,5 +4,5 @@ import java.awt.Point;
 
 public interface AcceptsPointInput
 {
-	public void receivedPointInput(Point p);
+	public void receivedPointInput(int x, int y);
 }

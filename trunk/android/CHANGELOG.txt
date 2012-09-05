@@ -1,4 +1,8 @@
 ----- StarLib Changelog -----
+9/5/2012, Stan
+- Removed awt requirements from StarLib and LogicThread classes
+- Separated out FardinDeere app and StanTestApp into own project following Adam's changes
+
 9/4/2012, Adam
 - Changed SimSettings to use the builder pattern. A separate "settings initializer" is no longer required.
 - Changed MotionParameters defaults to values which provides smoother motion.

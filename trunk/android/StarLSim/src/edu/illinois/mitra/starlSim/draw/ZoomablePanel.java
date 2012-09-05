@@ -20,11 +20,13 @@ import java.awt.event.MouseWheelListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.RoundRectangle2D;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.swing.JPanel;
 
 import edu.illinois.mitra.starl.interfaces.ExplicitlyDrawable;
+import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starlSim.main.SimSettings;
 
 @SuppressWarnings("serial")
@@ -111,7 +113,7 @@ MouseListener, MouseMotionListener, ExplicitlyDrawable
 	
 	long lastDrawTime = 0;
 	
-	public void drawNow()
+	public void drawNow(Collection <LogicThread> lts)
 	{
 		long now = System.currentTimeMillis();
 		
@@ -131,7 +133,7 @@ MouseListener, MouseMotionListener, ExplicitlyDrawable
 				}
 			
 				if (drawBuffer != null)
-					forceDrawComponent(drawBuffer.getGraphics());
+					forceDrawComponent(drawBuffer.getGraphics(), lts);
 			}
 			
 			lastDrawTime = System.currentTimeMillis(); // use time AFTER the drawing
@@ -150,7 +152,7 @@ MouseListener, MouseMotionListener, ExplicitlyDrawable
 	}
 	
 	// draws onto a buffered image which is later placed on the screen
-	protected void forceDrawComponent(Graphics g)
+	protected void forceDrawComponent(Graphics g, Collection <LogicThread> lts)
 	{
 		Graphics2D g2d = (Graphics2D)g;
 		
@@ -163,10 +165,20 @@ MouseListener, MouseMotionListener, ExplicitlyDrawable
 		Font f = new Font("Tahoma", Font.PLAIN, 55); // TODO: make this configurable in SimSettings
 		f = f.deriveFont(AffineTransform.getScaleInstance(1, -1)); // flip y back around
 		g2d.setFont(f);
-		draw(g2d);
 		
-		if (g2d.getFont() != f)
-			throw new RuntimeException("Font was changed in draw method. You should use Font.deriveFont instead and then restore it before your method returns.");
+		AffineTransform preDrawersTransform = g2d.getTransform();;
+		
+		for (LogicThread lt : lts)
+		{
+			g2d.setTransform(preDrawersTransform);
+			g2d.setColor(Color.black);
+			g2d.setStroke(med);
+			
+			draw(g2d, lt);
+		
+			if (g2d.getFont() != f)
+				throw new RuntimeException("Font was changed in draw method. You should use Font.deriveFont instead and then restore it before your method returns.");
+		}
 		
 		g2d.setTransform(a);
 		g2d.setStroke(med);
@@ -296,7 +308,7 @@ MouseListener, MouseMotionListener, ExplicitlyDrawable
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 	}
 	
-	protected abstract void draw(Graphics2D g);
+	protected abstract void draw(Graphics2D g, LogicThread lt);
 	
 	private double getScale()
 	{

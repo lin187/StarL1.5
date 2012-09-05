@@ -1,5 +1,7 @@
 package edu.illinois.mitra.starlSim.main;
 
+import edu.illinois.mitra.starlSim.draw.Drawer;
+
 public class SimSettings {
 	// General simulation settings
 	/**
@@ -127,12 +129,17 @@ public class SimSettings {
 	 * The trace length for each robot.
 	 */
 	public int DRAW_TRACE_LENGTH = 128;
-
+	
 	// drawing
 	/**
 	 * The maximum frames per second to draw at. If drawing takes too long, lower this.
 	 */
 	public int MAX_FPS = 40;
+	
+	/**
+	 * The object which does the drawing of debug information for the simulator. Can be null if unused.
+	 */
+	public Drawer DRAWER = null;
 
 	public static SimSettings defaultSettings() {
 		Builder builder = new Builder();
@@ -167,6 +174,7 @@ public class SimSettings {
 		private boolean DRAW_TRACE = false;
 		private int DRAW_TRACE_LENGTH = 128;
 		private int MAX_FPS = 40;
+		private Drawer DRAWER = null;
 
 		public Builder N_BOTS(int N_BOTS) {
 			this.N_BOTS = N_BOTS;
@@ -302,6 +310,11 @@ public class SimSettings {
 			this.MAX_FPS = MAX_FPS;
 			return this;
 		}
+		
+		public Builder DRAWER(Drawer DRAWER) {
+			this.DRAWER = DRAWER;
+			return this;
+		}
 
 		public SimSettings build() {
 			return new SimSettings(this);
@@ -336,5 +349,6 @@ public class SimSettings {
 		this.DRAW_TRACE = builder.DRAW_TRACE;
 		this.DRAW_TRACE_LENGTH = builder.DRAW_TRACE_LENGTH;
 		this.MAX_FPS = builder.MAX_FPS;
+		this.DRAWER = builder.DRAWER;
 	}
 }

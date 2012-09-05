@@ -1,9 +1,5 @@
-package edu.illinois.mitra.starlSim.simapps.stan;
+package stan;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Point;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,7 +11,6 @@ import edu.illinois.mitra.starl.interfaces.MessageListener;
 import edu.illinois.mitra.starl.motion.MotionParameters;
 import edu.illinois.mitra.starl.motion.RobotMotion;
 import edu.illinois.mitra.starl.objects.ItemPosition;
-import edu.illinois.mitra.starlSim.main.SimSettings;
 
 /**
  * Stanley Bak's test application. Source copied from other projects, 
@@ -24,12 +19,12 @@ import edu.illinois.mitra.starlSim.main.SimSettings;
  * @author Stankey Bak (sbak2@illinois.edu)
  *
  */
-public class StanTestApp extends LogicThread implements MessageListener
+public class StanLogicThread extends LogicThread implements MessageListener
 {
-	private boolean isLeader;
-	final String LEADER_NAME = SimSettings.BOT_NAME + "0"; // only works for simulation
-	final String FOLLOWER_NAME = SimSettings.BOT_NAME + "1"; // only works for simulation
-	final String FOLLOWER2_NAME = SimSettings.BOT_NAME + "2"; // only works for simulation
+	boolean isLeader;
+	final String LEADER_NAME = "bot0"; // only works for simulation
+	final String FOLLOWER_NAME = "bot1"; // only works for simulation
+	final String FOLLOWER2_NAME = "bot2"; // only works for simulation
 	
 	private enum STAGE { START, MOVE }
 	private STAGE stage = STAGE.START;
@@ -55,14 +50,17 @@ public class StanTestApp extends LogicThread implements MessageListener
 	
 	// for follower
 	private boolean finishedFollowing = false;
-	private Point gotoPoint = null; 
-	private Point goingToPoint = null;
+	private int gotoX = Integer.MAX_VALUE;
+	private int gotoY = 0;
+	
+	int goingToX = Integer.MAX_VALUE;
+	int goingToY = 0;
 	
 	// for testing concurrent modification issues
 	int lastSum = 0;
 	LinkedList <Integer> longList = new LinkedList <Integer>(); 
 	
-	public StanTestApp(GlobalVarHolder gvh) 
+	public StanLogicThread(GlobalVarHolder gvh) 
 	{
 		super(gvh);
 		
@@ -110,14 +108,16 @@ public class StanTestApp extends LogicThread implements MessageListener
 		
 		while (!finishedFollowing) 
 		{
-			if (gotoPoint != null)
+			if (gotoX != Integer.MAX_VALUE)
 			{
-				ItemPosition ip = new ItemPosition("follower_pos", gotoPoint.x, gotoPoint.y, 0);
+				ItemPosition ip = new ItemPosition("follower_pos", gotoX, gotoY, 0);
 								
 				motion.goTo(ip);
 				
-				goingToPoint = gotoPoint; // for debug drawing
-				gotoPoint = null;
+				goingToX = gotoX; // for debug drawing
+				goingToY = gotoY; // for debug drawing
+				
+				gotoX = Integer.MAX_VALUE;
 			}
 			
 			gvh.sleep(100);
@@ -190,7 +190,8 @@ public class StanTestApp extends LogicThread implements MessageListener
 			int x = Integer.parseInt(parts.get(0));
 			int y = Integer.parseInt(parts.get(1));
 			
-			gotoPoint = new Point(x,y);
+			gotoX = x;
+			gotoY = y;
 			
 			break;
 			
@@ -217,48 +218,14 @@ public class StanTestApp extends LogicThread implements MessageListener
 		gvh.comms.removeMsgListener(MSG_DONE);		
 	}
 	
-	public void draw(Graphics2D g)
-	{
-		final int SIZE = 20; // for drawing the X
-		
-		if (!isLeader)
-		{
-			if (goingToPoint != null)
-			{
-				g.setColor(Color.gray);
-				g.setStroke(new BasicStroke(10));
-				
-				int x = goingToPoint.x;
-				int y = goingToPoint.y;
-				
-				g.drawString(x + ", " + y, x + 2*SIZE, y);
-				
-				g.drawLine(x - SIZE, y - SIZE, x + SIZE, y + SIZE);
-				g.drawLine(x - SIZE, y + SIZE, x + SIZE, y - SIZE);
-			}
-		}
-		else
-		{
-			int sum = 0;
-			for (int i : longList)
-				sum += i;
-			
-			if (sum != lastSum)
-			{
-				lastSum = sum;
-				System.out.println("sum = " + sum);
-			}
-		}
-	}
-	
 	int replaceWaypointIndex = 0;
 	
-	public void receivedPointInput(Point p)
+	public void receivedPointInput(int x, int y)
 	{
 		if (isLeader)
 		{
-			waypoints[replaceWaypointIndex].x = p.x;
-			waypoints[replaceWaypointIndex].y = p.y;
+			waypoints[replaceWaypointIndex].x = x;
+			waypoints[replaceWaypointIndex].y = y;
 					
 			if(replaceWaypointIndex + 1 < numWaypoints) 
 				replaceWaypointIndex ++;
