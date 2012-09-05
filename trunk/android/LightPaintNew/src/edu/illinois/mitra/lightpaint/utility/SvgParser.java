@@ -41,7 +41,7 @@ public class SvgParser extends XmlReader {
 	public Set<ImageEdge> parseImage(String filename) {
 		try {
 			super.buildDocument(new FileInputStream(filename));
-		} catch (FileNotFoundException e) {
+		} catch(FileNotFoundException e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -155,19 +155,20 @@ public class SvgParser extends XmlReader {
 			ImagePoint offset = center.subtract(new ImagePoint(centerX, centerY));
 
 			// Don't bother centering if we're moving by +/- 10 pixels or less
-			if(Math.hypot(offset.getX(), offset.getY()) < 10)
-				return retval;
+			if(Math.hypot(offset.getX(), offset.getY()) > 10) {
+				System.out.println("Translating by " + offset);
 
-			System.out.println("Translating by " + offset);
+				Set<ImageEdge> centered = new HashSet<ImageEdge>();
+				for(ImageEdge edge : retval)
+					centered.add(edge.translate(offset));
 
-			Set<ImageEdge> centered = new HashSet<ImageEdge>();
-			for(ImageEdge edge : retval)
-				centered.add(edge.translate(offset));
+				retval = centered;
 
-			retval = centered;
+				maxX += centerX;
+				maxY += centerY;
+			}
 		}
-		
-		
+
 		if(scaling) {
 			double scalefactor = Math.min(scale.getX() / maxX, scale.getY() / maxY);
 			// Skip scaling if we're only scaling by +/- 5% or less
@@ -181,6 +182,7 @@ public class SvgParser extends XmlReader {
 		} else {
 			retval.addAll(edges);
 		}
+
 		return retval;
 	}
 }

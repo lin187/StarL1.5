@@ -29,7 +29,7 @@ public class Main {
 		WptWriter.writeWpt("waypoints/" + inputFilename + ".wpt", image);
 		
 		if(simulate) {
-			SimSettings settings = new SimSettings.Builder().WAYPOINT_FILE("waypoints/" + inputFilename + ".wpt").build();
+			SimSettings settings = new SimSettings.Builder().WAYPOINT_FILE("waypoints/" + inputFilename + ".wpt").N_BOTS(2).build();
 			Simulation sim = new Simulation(MainActivity.class, settings);
 			sim.start();
 		} else {

@@ -1,12 +1,9 @@
 package edu.illinois.mitra.lightpaint;
 
 import java.awt.Graphics2D;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 import edu.illinois.mitra.lightpaint.algorithm.LpAlgorithm;
 import edu.illinois.mitra.lightpaint.geometry.ImagePoint;
@@ -45,7 +42,7 @@ public class MainActivity extends LogicThread implements MessageListener {
 		INIT, ELECT_LEADER, REQUEST_ASSIGNMENT, WAIT_FOR_ASSIGNMENT, DO_ASSIGNMENT, WAIT_TO_ARRIVE, DONE
 	};
 
-	private Stage stage = Stage.INIT;
+	private volatile Stage stage = Stage.INIT;
 
 	public MainActivity(GlobalVarHolder gvh) {
 		super(gvh);
@@ -85,6 +82,7 @@ public class MainActivity extends LogicThread implements MessageListener {
 				if((leader = election.getLeader()) != null) {
 					iAmLeader = leader.equals(gvh.id.getName());
 					if(iAmLeader) {
+						System.out.println(name + " is leader!");
 						// Create the algorithm, inform it of all robot
 						// positions
 						alg = new LpAlgorithm(WptParser.parseWaypoints(gvh), POINT_SNAP_RADIUS, MAX_DRAW_LENGTH, UNSAFE_RADIUS);
@@ -103,9 +101,10 @@ public class MainActivity extends LogicThread implements MessageListener {
 					if(!assignment.isEmpty()) {
 						lastVisitedPoint = assignment.remove(0);
 						setStage(Stage.DO_ASSIGNMENT);
-					} else {
+					} else if(alg.isDone() && (doneInformedCount == (gvh.id.getParticipants().size() - 1)))
+						stage = Stage.DONE;
+					else
 						setStage(Stage.WAIT_FOR_ASSIGNMENT);
-					}
 				} else {
 					RobotMessage req = new RobotMessage(leader, name, ASSIGNMENT_REQ_ID, "");
 					gvh.comms.addOutgoingMessage(req);
@@ -149,13 +148,20 @@ public class MainActivity extends LogicThread implements MessageListener {
 	}
 
 	private static final MessageContents EMPTY_MSG_CONTENTS = new MessageContents("NONE");
+	private static final MessageContents FINISHED_MSG_CONTENTS = new MessageContents("DONE");
 
+	private int doneInformedCount = 0;
+	
 	@Override
 	public void messageReceied(RobotMessage msg) {
 		switch(msg.getMID()) {
 		case ASSIGNMENT_ID:
-			if(msg.getContents(0).equals("NONE"))
+			if(msg.getContents().equals(EMPTY_MSG_CONTENTS)) {
 				return;
+			} else if(msg.getContents().equals(FINISHED_MSG_CONTENTS)) {
+				stage = Stage.DONE;
+				return;
+			}
 
 			for(String content : msg.getContentsList()) {
 				try {
@@ -163,7 +169,7 @@ public class MainActivity extends LogicThread implements MessageListener {
 				} catch(IllegalArgumentException e) {
 					System.err.println(msg);
 				}
-				
+
 			}
 
 			// Assignment[0] is the current robot position
@@ -172,17 +178,22 @@ public class MainActivity extends LogicThread implements MessageListener {
 		case ASSIGNMENT_REQ_ID:
 			if(!iAmLeader)
 				return;
+
 			List<ItemPosition> assigned = alg.assignSegment(msg.getFrom(), gvh.gps.getPosition(msg.getFrom()));
 
 			RobotMessage response = new RobotMessage(msg.getFrom(), super.name, ASSIGNMENT_ID, (MessageContents) null);
 
-			if(assigned != null) {
+			if(alg.isDone()) {
+				response.setContents(FINISHED_MSG_CONTENTS);
+				doneInformedCount ++;
+			} else if(assigned != null && assigned.size() > 0) {
 				String[] assignedPieces = new String[assigned.size()];
 				for(int i = 0; i < assigned.size(); i++)
 					assignedPieces[i] = assigned.get(i).toMessage();
 				response.setContents(new MessageContents(assignedPieces));
-			} else
+			} else {
 				response.setContents(EMPTY_MSG_CONTENTS);
+			}
 
 			gvh.comms.addOutgoingMessage(response);
 			break;
@@ -201,7 +212,7 @@ public class MainActivity extends LogicThread implements MessageListener {
 	}
 
 	private void setStage(Stage newstage) {
-		System.out.println(super.name + "\t" + stage + "->" + newstage);
+//		System.out.println(super.name + "\t" + stage + "->" + newstage);
 		stage = newstage;
 	}
 

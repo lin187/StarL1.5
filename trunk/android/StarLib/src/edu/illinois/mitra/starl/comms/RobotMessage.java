@@ -90,6 +90,9 @@ public class RobotMessage implements Traceable {
 	public String getContents(int location) {
 		return contents.get(location);
 	}
+	public MessageContents getContents() {
+		return contents;
+	}
 	public void setFrom(String from) {
 		this.from = from;
 	}
