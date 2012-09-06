@@ -1,4 +1,4 @@
-package edu.illinois.mitra.starlSim ; 
+package edu.illinois.mitra.starlSim.simapps.deere_fardin ; 
 
 import java.awt.geom.CubicCurve2D;
 import java.awt.geom.Point2D;
@@ -15,7 +15,7 @@ public class ArcCreator
 	 * @param seperation the (maximum) separation desired between the output points
 	 * @return a list of new waypoints which starts and ends in the same points as 'path', but goes through 'detourPoint'
 	 */	
-	public  ArrayList<WayPoint> createNewPath(ArrayList<WayPoint> path, Point2D.Double detourPoint, 
+	public static ArrayList<WayPoint>  createNewPath(ArrayList<WayPoint> path, Point2D.Double detourPoint, 
 			double anchorDistance, double seperation)
 	{
 		double sepSq = seperation * seperation;
@@ -47,6 +47,9 @@ public class ArcCreator
 		// and multiply it's index in the path by two to get the reunion point
 		
 		int reunionIndex = 2 * getClosestPointIndex(path, detourPoint); // STAN here
+		
+		if (reunionIndex > path.size() - 2)
+			reunionIndex = path.size() - 2;
 		
 		reunionPoint.setLocation(path.get(reunionIndex).x, path.get(reunionIndex).y);
 		
@@ -80,7 +83,34 @@ public class ArcCreator
 			newPath.add( new WayPoint((int)SegEnd.x, (int)SegEnd.y, time) ) ;
 		}
 		
-		for(int i = 1 + CurveSegs1.size() + CurveSegs2.size(); i<path.size(); i++){
+		// last part of path
+		
+		// find closest index
+		WayPoint last = newPath.get(newPath.size() - 1);
+		WayPoint cur = path.get(0);
+		
+		int closestIndex = 0;
+		double dx = last.x - cur.x;
+		double dy = last.y - cur.y;
+		double closestDistSq = dx * dx + dy * dy;
+		
+		for (int i = 1; i < path.size(); ++i)
+		{
+			cur = path.get(i);
+			
+			dx = last.x - cur.x;
+			dy = last.y - cur.y;
+			double distSq = dx * dx + dy * dy;
+			
+			if (distSq < closestDistSq)
+			{
+				closestDistSq = distSq;
+				closestIndex = i;
+			}
+		}
+		
+		for(int i = closestIndex; i<path.size(); i++)
+		{
 			newPath.add(path.get(i));
 		}
 
@@ -88,7 +118,7 @@ public class ArcCreator
 		return newPath;
 	}
 	
-	private int getClosestPointIndex(ArrayList<WayPoint> path, Point2D.Double p) 
+	private static int getClosestPointIndex(ArrayList<WayPoint> path, Point2D.Double p) 
 	{
 		// start at index 1 since we never want the reunion point to be index 0
 		int rv = 1;
@@ -199,8 +229,8 @@ public class ArcCreator
 		ArrayList <WayPoint> newPath = createNewPath(oldPath, detourPoint, ANCHOR_DISTANCE, SEPARATION);
 		
 		// print paths
-		System.out.println("Old Path: " + oldPath);
-		System.out.println("\nNew Path: " + newPath);
+	//	System.out.println("Old Path: " + oldPath);
+	//	System.out.println("\nNew Path: " + newPath);
 	}
 
 } 
