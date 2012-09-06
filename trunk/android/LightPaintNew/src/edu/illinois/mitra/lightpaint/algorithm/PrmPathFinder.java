@@ -65,7 +65,7 @@ public class PrmPathFinder {
 			}
 
 			if(path != null && path.size() > 0)
-				return straightenPath(path, unsafe, unsafeRadius);
+				return path;//straightenPath(path, unsafe, unsafeRadius);
 			else
 				return null;
 		}

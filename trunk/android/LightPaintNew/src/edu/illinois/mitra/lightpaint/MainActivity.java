@@ -1,6 +1,5 @@
 package edu.illinois.mitra.lightpaint;
 
-import java.awt.Graphics2D;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -23,7 +22,7 @@ public class MainActivity extends LogicThread implements MessageListener {
 	// Algorithm constants
 	private static final double POINT_SNAP_RADIUS = 25;
 	private static final double MAX_DRAW_LENGTH = 500;
-	private static final double UNSAFE_RADIUS = 180;
+	private static final double UNSAFE_RADIUS = 220;
 
 	private static final long MAX_REQUEST_WAIT_TIME = 2000;
 
@@ -77,6 +76,7 @@ public class MainActivity extends LogicThread implements MessageListener {
 			case INIT:
 				election.elect();
 				setStage(Stage.ELECT_LEADER);
+				gvh.sleep((long) (Math.random()*1000));
 				break;
 			case ELECT_LEADER:
 				if((leader = election.getLeader()) != null) {
