@@ -10,7 +10,7 @@ import edu.illinois.mitra.starlSim.main.Simulation;
 
 public class Main {
 
-	private static String inputFilename = "testimg";
+	private static String inputFilename = "curve_parse_test";
 
 	public static void main(String[] args) {
 		SvgParser parser = new SvgParser(5500,5500,3000,3000);
@@ -21,7 +21,7 @@ public class Main {
 		// TODO: Algorithm assigns overlapping regions sometimes! It looks like robot positions aren't always added into unsafe
 
 		SimSettings.Builder builder = new SimSettings.Builder().DRAWER(new LightPaintDrawer()).WAYPOINT_FILE("waypoints/" + inputFilename + ".wpt").TIC_TIME_RATE(5);
-		builder.N_BOTS(7);		
+		builder.N_BOTS(1);		
 		builder.GRID_XSIZE(6000);
 		builder.GRID_YSIZE(6000);
 		SimSettings settings = builder.build();

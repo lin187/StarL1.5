@@ -3,6 +3,7 @@ package edu.illinois.mitra.lightpaint.utility;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -61,8 +62,7 @@ public class SvgParser extends XmlReader {
 		return scaleAndCenterEdges(retval);
 	}
 
-	private static final String[] INVALID_PATH_COMMANDS = { "c", "C", "s", "S", "q", "Q", "t", "T", "a", "A" };
-	private static final Pattern PATH_PATTERN = Pattern.compile("[a-zA-Z]([\\s,]?[-]?[0-9]+[\\s,]?[-]?[0-9]+[\\s,]?){1,}");
+	private static final Pattern PATH_PATTERN = Pattern.compile("[a-zA-Z]([\\s,]?[-]?[0-9\\.]+[\\s,]?[-]?[0-9\\.]+[\\s,]?){1,}");
 	private static final Set<ImageEdge> EMPTY_EDGE_SET = new HashSet<ImageEdge>();
 
 	private Set<ImageEdge> pathToLines(String pathString) {
@@ -70,13 +70,6 @@ public class SvgParser extends XmlReader {
 		// Must split along any character, preserving which command the
 		// character is placed in
 		// For example "m50,100L60,200" -> "m50,100" and "L60,200"
-
-		for(String invalid : INVALID_PATH_COMMANDS) {
-			if(pathString.contains(invalid)) {
-				System.err.println("Image contains a path with curves! Skipping.");
-				return EMPTY_EDGE_SET;
-			}
-		}
 
 		List<String> commands = new ArrayList<String>(pathString.length() / 4);
 
@@ -94,19 +87,32 @@ public class SvgParser extends XmlReader {
 		ImagePoint current = new ImagePoint(0, 0);
 		for(String commandString : commands) {
 			char cmdType = commandString.charAt(0);
-			ImagePoint cmdCoordinates = ImagePoint.fromString(commandString.substring(1));
+			int[] cmdValues = Utility.partsToInts(commandString.substring(1), "[\\s,]+");
+			if(cmdValues.length < 2)
+				break;
+			ImagePoint cmdCoordinates = new ImagePoint(cmdValues[cmdValues.length-2],cmdValues[cmdValues.length-1]);
 			switch(cmdType) {
-			case 'm':
-				current = current.add(cmdCoordinates);
-				break;
-			case 'M':
-				current = cmdCoordinates;
-				break;
+			case 'a':
+			case 'q':
+			case 't':
+			case 'c':
+			case 's':
 			case 'l':
 				retval.add(new ImageEdge(current, current = current.add(cmdCoordinates)));
 				break;
+			case 'm':
+				current = current.add(cmdCoordinates);
+				break;
+			case 'A':
+			case 'Q':
+			case 'T':
+			case 'C':
+			case 'S':
 			case 'L':
 				retval.add(new ImageEdge(current, current = cmdCoordinates));
+				break;
+			case 'M':
+				current = cmdCoordinates;
 				break;
 			}
 		}

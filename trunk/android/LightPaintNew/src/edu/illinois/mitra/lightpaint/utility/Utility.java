@@ -40,7 +40,7 @@ public final class Utility {
 		int[] retval = new int[parts.length];
 		for(int i = 0; i < parts.length; i++) {
 			try {
-				retval[i] = Integer.parseInt(parts[i]);
+				retval[i] = (int) Double.parseDouble(parts[i]);
 			} catch(NumberFormatException e) {
 				//Log.e(TAG, "Can't parse " + parts[i] + " as an integer!");
 				return null;
