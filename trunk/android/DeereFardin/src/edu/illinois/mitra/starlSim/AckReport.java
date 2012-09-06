@@ -2,12 +2,14 @@ package edu.illinois.mitra.starlSim ;
 
 public class AckReport {
 	
-	int lastPathId ; 
+	int lastPathIdReceived ; 
 	int robotId ;
-	boolean received ; 
+	boolean received ;
+	public int lastPathIdSent; 
 
 	public AckReport(){
-		this.lastPathId = 0 ; 
+		this.lastPathIdSent = 0 ;
+		this.lastPathIdReceived = 0 ; 
 		this.received = false ; 
 	}	
 }

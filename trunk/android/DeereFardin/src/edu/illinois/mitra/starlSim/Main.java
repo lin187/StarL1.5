@@ -9,11 +9,11 @@ public class Main
 	public static void main(String[] args) 
 	{
 		SimSettings settings = SimSettings.defaultSettings();
-		
+
 		settings.N_BOTS = 5;
 		settings.IDEAL_MOTION = true;
 		settings.DRAWER = new FlockDrawer();
-		settings.TIC_TIME_RATE = 100;
+		settings.TIC_TIME_RATE = 10;
 
 		Simulation sim = new Simulation(DeereFlockingWithDetours.class, settings);
 		sim.start();

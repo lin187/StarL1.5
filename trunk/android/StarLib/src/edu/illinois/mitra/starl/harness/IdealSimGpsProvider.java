@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
+import java.util.Vector;
 
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.PositionList;
@@ -127,30 +128,42 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 		private int aNoise = 0;
 		private int xNoise = 0;
 		private int yNoise = 0;
-		
+				
 		public TrackedRobot(ItemPosition pos) {
 			this.pos = pos;
 			timeLastUpdate = se.time;
 		}
-		public void updatePos() {
+		public synchronized  void updatePos() {
+			
 			long timeSinceUpdate = (se.time - timeLastUpdate);
 			if(newdest) {
 				// Snap to heading
 				// Calculate angle and X/Y velocities
-				if (dest == null)
-					throw new RuntimeException("dest is null in updatePos()");
-				
 				if (start == null)
 					throw new RuntimeException("start is null in updatePos()");
 				
-				int deltaX = dest.x-start.x;
-				int deltaY = dest.y-start.y;
-				motAngle = Math.atan2(deltaY, deltaX);
-				vX = (Math.cos(motAngle) * velocity);
-				vY = (Math.sin(motAngle) * velocity);
+				int angle = 0;
 				
-				// Set position to ideal angle +/- noise
-				int angle = (int)Math.toDegrees(Math.atan2(deltaY, deltaX));
+				if (dest == null)
+				{
+					motAngle = 0;
+					angle = 0;
+					vX = 0;
+					vY = 0;
+				}
+				else
+				{
+					int deltaX = dest.x-start.x;
+					int deltaY = dest.y-start.y;
+					motAngle = Math.atan2(deltaY, deltaX);
+					
+					vX = (Math.cos(motAngle) * velocity);
+					vY = (Math.sin(motAngle) * velocity);
+					
+					// Set position to ideal angle +/- noise
+					angle = (int)Math.toDegrees(Math.atan2(deltaY, deltaX));
+				}
+				
 				if(angleNoise != 0) aNoise = rand.nextInt(angleNoise*2)-angleNoise;
 				pos.setPos(start.x, start.y, angle+aNoise);
 				newdest = false;
@@ -171,7 +184,18 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 					pos.setPos(start.x+dX+xNoise, start.y+dY+yNoise, (int)Math.toDegrees(motAngle));
 					pos.velocity = velocity;
 				} else {
+					
+				
+					if (dest==null )
+					{
+						throw new RuntimeException("dest is null");
+					}
+					
+					if (pos==null )
+						throw new RuntimeException("pos is null");
+					
 					pos.setPos(dest.x+xNoise, dest.y+yNoise, pos.angle+aNoise);
+					
 					dest = null;
 					reportpos = true;
 				}
@@ -180,12 +204,13 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 			}
 			timeLastUpdate = se.time;
 		}
-		public void setDest(ItemPosition dest, int velocity) 
+		public synchronized void setDest(ItemPosition dest, int velocity) 
 		{
 			if (velocity <= 0)
 				throw new RuntimeException("setDest called with velocity <= 0");
 			
 			if(hasChanged()) updatePos();
+			
 			this.dest = dest;
 			this.start = new ItemPosition(pos);
 			this.velocity = velocity;
