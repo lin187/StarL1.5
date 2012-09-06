@@ -3,6 +3,7 @@ package edu.illinois.mitra.lightpaint.utility;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -18,25 +19,14 @@ import edu.illinois.mitra.lightpaint.geometry.ImagePoint;
 
 public class SvgParser extends XmlReader {
 
-	public SvgParser() {
+	public SvgParser(int maxSizeX, int maxSizeY, int centerX, int centerY) {
 		super(false);
-	}
-
-	private boolean centering = false;
-	private ImagePoint center;
-
-	public void enableCentering(int centerX, int centerY) {
-		centering = true;
+		scale = new ImagePoint(maxSizeX, maxSizeY);
 		center = new ImagePoint(centerX, centerY);
 	}
 
-	private boolean scaling = false;
+	private ImagePoint center;
 	private ImagePoint scale;
-
-	public void enableScaling(int maxSizeX, int maxSizeY) {
-		scaling = true;
-		scale = new ImagePoint(maxSizeX, maxSizeY);
-	}
 
 	public Set<ImageEdge> parseImage(String filename) {
 		try {
@@ -68,10 +58,7 @@ public class SvgParser extends XmlReader {
 			retval.addAll(pathToLines(pathString));
 		}
 
-		if(scaling || centering)
-			retval = scaleAndCenterEdges(retval);
-
-		return retval;
+		return scaleAndCenterEdges(retval);
 	}
 
 	private static final String[] INVALID_PATH_COMMANDS = { "c", "C", "s", "S", "q", "Q", "t", "T", "a", "A" };
@@ -127,10 +114,7 @@ public class SvgParser extends XmlReader {
 		return retval;
 	}
 
-	private Set<ImageEdge> scaleAndCenterEdges(Set<ImageEdge> edges) {
-		if(!scaling && !centering)
-			return edges;
-
+	private Set<ImageEdge> scaleAndCenterEdges(Collection<ImageEdge> edges) {
 		// Find X range and Y range
 		double minX = Double.POSITIVE_INFINITY, maxX = Double.NEGATIVE_INFINITY;
 		double minY = Double.POSITIVE_INFINITY, maxY = Double.NEGATIVE_INFINITY;
@@ -146,43 +130,30 @@ public class SvgParser extends XmlReader {
 
 		double width = maxX - minX;
 		double height = maxY - minY;
+		
+		List<ImageEdge> retval = new ArrayList<ImageEdge>();
 
-		Set<ImageEdge> retval = new HashSet<ImageEdge>();
+		// Subtract minX and minY from all points to base the image at 0,0
+		ImagePoint offset = new ImagePoint(-minX, -minY);
+		for(ImageEdge edge : edges)
+			retval.add(edge.translate(offset));
+		
+		// Scaling
+		double scalefactor = Math.min(scale.getX() / width, scale.getY() / height);
+		System.out.println("Scaling by " + scalefactor);
+		for(int i = 0; i < retval.size(); i++)
+			retval.set(i, retval.get(i).scale(scalefactor));
+		
+		// Centering
 
-		if(centering) {
-			double centerX = minX + width / 2;
-			double centerY = minY + height / 2;
-			ImagePoint offset = center.subtract(new ImagePoint(centerX, centerY));
+		double centerX = (scalefactor*width) / 2.0;
+		double centerY = (scalefactor*height) / 2.0;
+		offset = center.subtract(new ImagePoint(centerX, centerY));
+		System.out.println("Translating by " + offset);
 
-			// Don't bother centering if we're moving by +/- 10 pixels or less
-			if(Math.hypot(offset.getX(), offset.getY()) > 10) {
-				System.out.println("Translating by " + offset);
+		for(int i = 0; i < retval.size(); i++)
+			retval.set(i, retval.get(i).translate(offset));
 
-				Set<ImageEdge> centered = new HashSet<ImageEdge>();
-				for(ImageEdge edge : retval)
-					centered.add(edge.translate(offset));
-
-				retval = centered;
-
-				maxX += centerX;
-				maxY += centerY;
-			}
-		}
-
-		if(scaling) {
-			double scalefactor = Math.min(scale.getX() / maxX, scale.getY() / maxY);
-			// Skip scaling if we're only scaling by +/- 5% or less
-			if(Utility.inRange(scalefactor, 0.95, 1.05))
-				retval.addAll(edges);
-			else {
-				System.out.println("Scaling by " + scalefactor);
-				for(ImageEdge edge : edges)
-					retval.add(edge.scale(scalefactor));
-			}
-		} else {
-			retval.addAll(edges);
-		}
-
-		return retval;
+		return new HashSet<ImageEdge>(retval);
 	}
 }

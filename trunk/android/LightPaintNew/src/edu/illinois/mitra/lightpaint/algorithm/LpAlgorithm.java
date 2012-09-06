@@ -84,7 +84,7 @@ public class LpAlgorithm {
 		}
 		
 		
-		System.out.println("### Returning assignment to " + currentRobot);
+/*		System.out.println("### Returning assignment to " + currentRobot);
 		double closestRobot = Double.POSITIVE_INFINITY;
 		String closestRobotName = "none";
 		double closestTube = Double.POSITIVE_INFINITY;
@@ -117,7 +117,7 @@ public class LpAlgorithm {
 		System.out.println("\tClosest to other tube: " + closestTube + " = " + closestTubeName);
 		if(closestRobot < unsafeRadius || closestTube < unsafeRadius)
 			System.err.println("VIOLATION! Safety radius is " + unsafeRadius);
-		
+		*/
 		
 		return positions;
 	}
@@ -366,14 +366,12 @@ public class LpAlgorithm {
 		return retval;
 	}
 
-	private Color[] unsafeColors = { Color.cyan, Color.blue, Color.orange, Color.PINK, Color.yellow, Color.MAGENTA };
+//	private Color[] unsafeColors = { Color.cyan, Color.blue, Color.orange, Color.PINK, Color.yellow, Color.MAGENTA };
 	
 	public void draw(Graphics2D g) {
 		drawing.draw(g, Color.LIGHT_GRAY, 12);
-		int color = 0;
 		for(ImageGraph tube : reachTubes.values())
-			tube.draw(g, unsafeColors[color++], 12, unsafeDrawRadius);
-		//		unsafe.draw(g, Color.RED, 12, unsafeDrawRadius);
+			tube.draw(g, Color.red, 12, unsafeDrawRadius);
 
 		// Draw each robot position with a red unsafe boundary around it
 		g.setColor(Color.RED);

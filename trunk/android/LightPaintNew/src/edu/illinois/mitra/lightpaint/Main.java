@@ -13,9 +13,7 @@ public class Main {
 	private static String inputFilename = "testimg";
 
 	public static void main(String[] args) {
-		SvgParser parser = new SvgParser();
-		parser.enableScaling(6000, 6000);
-		parser.enableCentering(3000, 3000);
+		SvgParser parser = new SvgParser(5500,5500,3000,3000);
 
 		Set<ImageEdge> image = parser.parseImage("input_images/" + inputFilename + ".svg");
 		WptWriter.writeWpt("waypoints/" + inputFilename + ".wpt", image);
@@ -23,9 +21,9 @@ public class Main {
 		// TODO: Algorithm assigns overlapping regions sometimes! It looks like robot positions aren't always added into unsafe
 
 		SimSettings.Builder builder = new SimSettings.Builder().DRAWER(new LightPaintDrawer()).WAYPOINT_FILE("waypoints/" + inputFilename + ".wpt").TIC_TIME_RATE(5);
-		builder.N_BOTS(3);		
-//		builder.GRID_XSIZE(6000);
-//		builder.GRID_YSIZE(3000);
+		builder.N_BOTS(7);		
+		builder.GRID_XSIZE(6000);
+		builder.GRID_YSIZE(6000);
 		SimSettings settings = builder.build();
 		Simulation sim = new Simulation(MainActivity.class, settings);
 		sim.start();
