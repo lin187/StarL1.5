@@ -83,42 +83,6 @@ public class LpAlgorithm {
 			positions.add(new ItemPosition(point.toString(), (int) point.getX(), (int) point.getY(), 0));
 		}
 		
-		
-/*		System.out.println("### Returning assignment to " + currentRobot);
-		double closestRobot = Double.POSITIVE_INFINITY;
-		String closestRobotName = "none";
-		double closestTube = Double.POSITIVE_INFINITY;
-		String closestTubeName = "none";
-		for(Entry<String, ImagePoint> unsafeRobot : unsafeRobots.entrySet()) {
-			if(unsafeRobot.getKey().equals(currentRobot))
-				continue;
-			else
-				for(ImagePoint point : points) {
-					double dist = point.distanceTo(unsafeRobot.getValue());
-					if(dist < closestRobot) {
-						closestRobot = dist;
-						closestRobotName = unsafeRobot.getKey();
-					}
-				}
-		}
-		for(Entry<String, ImageGraph> unsafeTube : reachTubes.entrySet()) {
-			if(unsafeTube.getKey().equals(currentRobot))
-				continue;
-			else
-				for(ImagePoint point : points) {
-					double dist = unsafeTube.getValue().minDistanceTo(point);
-					if(dist < closestTube) {
-						closestTube = dist;
-						closestTubeName = unsafeTube.getKey();
-					}
-				}
-		}
-		System.out.println("\tClosest distance to other robot: " + closestRobot + " = " + closestRobotName);
-		System.out.println("\tClosest to other tube: " + closestTube + " = " + closestTubeName);
-		if(closestRobot < unsafeRadius || closestTube < unsafeRadius)
-			System.err.println("VIOLATION! Safety radius is " + unsafeRadius);
-		*/
-		
 		return positions;
 	}
 
@@ -256,26 +220,26 @@ public class LpAlgorithm {
 		// If the path is less than the maximum length and other drawable
 		// segments exists within the total distance remaining to travel,
 		// connect to the closest drawable segment and draw as much as possible
-//		if(pathLength < maxLength) {
-//			double lengthRemaining = maxLength - pathLength;
-//			List<ImagePoint> closestVertices = unpainted.getPointsInDistanceOrder(entry);
-//
-//			for(ImagePoint point : closestVertices) {
-//				// If we can connect to this next point safely, explore that point for paths
-//				ImageEdge pathToProspectiveStart = new ImageEdge(entry, point);
-//				if(pathToProspectiveStart.getLength() > lengthRemaining)
-//					return path;
-//				if(!unsafe.isColliding(pathToProspectiveStart, unsafeRadius)) {
-//					lengthRemaining -= pathToProspectiveStart.getLength();
-//					List<ImageEdge> continuation = getPathFromStart(point, unpainted, unsafe, pathLength, false);
-//					if(continuation.size() > 0) {
-//						path.add(pathToProspectiveStart);
-//						path.addAll(continuation);
-//					}
-//					return path;
-//				}
-//			}
-//		}
+		if(pathLength < maxLength) {
+			double lengthRemaining = maxLength - pathLength;
+			List<ImagePoint> closestVertices = unpainted.getPointsInDistanceOrder(entry);
+
+			for(ImagePoint point : closestVertices) {
+				// If we can connect to this next point safely, explore that point for paths
+				ImageEdge pathToProspectiveStart = new ImageEdge(entry, point);
+				if(pathToProspectiveStart.getLength() > lengthRemaining)
+					return path;
+				if(!unsafe.isColliding(pathToProspectiveStart, unsafeRadius)) {
+					lengthRemaining -= pathToProspectiveStart.getLength();
+					List<ImageEdge> continuation = getPathFromStart(point, unpainted, unsafe, pathLength, false);
+					if(continuation.size() > 0) {
+						path.add(pathToProspectiveStart);
+						path.addAll(continuation);
+					}
+					return path;
+				}
+			}
+		}
 
 		return path;
 	}

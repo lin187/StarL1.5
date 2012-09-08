@@ -27,7 +27,6 @@ import edu.illinois.mitra.starl.gvh.RealGlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.interfaces.MessageListener;
 import edu.illinois.mitra.starl.objects.Common;
-import edu.illinois.mitra.starlSim.simapps.CircleMotion;
 
 public class RobotsActivity extends Activity implements MessageListener {
 	private static final String TAG = "RobotsActivity";
@@ -44,27 +43,15 @@ public class RobotsActivity extends Activity implements MessageListener {
 	private static final String[] participants = { "Alice", "Bob", "Carlos", "Diana" };
 	private static final String[] ips = { "192.168.1.101", "192.168.1.102", "192.168.1.103", "192.168.1.104" };
 
-	// GUI variables
-	private TextView txtRobotName;
-	private TextView txtDebug;
-	private ProgressBar pbBluetooth;
-	private CheckBox cbGPS;
-	private CheckBox cbBluetooth;
-	private CheckBox cbRunning;
-	private ProgressBar pbBattery;
-
 	// SharedPreferences variables
-	SharedPreferences prefs;
 	private static final String PREF_SELECTED_ROBOT = "SELECTED_ROBOT";
-	private int selected_robot = 0;
+	private int selectedRobot = 0;
 
 	// Logic thread executor
-	public ExecutorService executor = Executors.newFixedThreadPool(1);
-	public Future<List<Object>> results;
-
-	public LogicThread runThread;
-
-	private MainHandler main_handler;
+	private ExecutorService executor = Executors.newFixedThreadPool(1);
+	private Future<List<Object>> results;
+	private LogicThread runThread;
+	private MainHandler mainHandler;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -73,34 +60,30 @@ public class RobotsActivity extends Activity implements MessageListener {
 		setContentView(R.layout.main);
 
 		// Initialize preferences holder
-		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		selected_robot = prefs.getInt(PREF_SELECTED_ROBOT, 0);
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		selectedRobot = prefs.getInt(PREF_SELECTED_ROBOT, 0);
 
 		// Set up the GUI
 		setupGUI();
 
 		// Create the main handler
-		main_handler = new MainHandler(this, pbBluetooth, pbBattery, cbGPS, cbBluetooth, cbRunning, txtDebug);
+		mainHandler = new MainHandler(this, pbBluetooth, pbBattery, cbGPS, cbBluetooth, cbRunning, txtDebug);
 
 		// Create the global variable holder
 		HashMap<String, String> hm_participants = new HashMap<String, String>();
 		for(int i = 0; i < participants.length; i++) {
 			hm_participants.put(participants[i], ips[i]);
 		}
-		gvh = new RealGlobalVarHolder(participants[selected_robot], hm_participants, main_handler, mac[selected_robot]);
-		main_handler.setGvh(gvh);
+		gvh = new RealGlobalVarHolder(participants[selectedRobot], hm_participants, mainHandler, mac[selectedRobot]);
+		mainHandler.setGvh(gvh);
 
 		// Connect
 		connect();
 
-		runThread = new CircleMotion(gvh);
+		createAppInstance(gvh);
 	}
 
-	public void abort() {
-		runThread.cancel();
-		results.cancel(true);
-		executor.shutdownNow();
-		executor = Executors.newSingleThreadExecutor();
+	public void createAppInstance(GlobalVarHolder gvh) {
 		runThread = new CircleMotion(gvh);
 	}
 
@@ -121,6 +104,14 @@ public class RobotsActivity extends Activity implements MessageListener {
 				gvh.plat.sendMainToast("Should have " + numWaypoints + " waypoints, but I have " + gvh.gps.getWaypointPositions().getNumPositions());
 			}
 		}
+	}
+	
+	public void abort() {
+		runThread.cancel();
+		results.cancel(true);
+		executor.shutdownNow();
+		executor = Executors.newSingleThreadExecutor();
+		createAppInstance(gvh);
 	}
 
 	public void connect() {
@@ -152,8 +143,15 @@ public class RobotsActivity extends Activity implements MessageListener {
 		gvh.plat.moat.cancel();
 	}
 
-	private void setupGUI() {
+	private TextView txtRobotName;
+	private TextView txtDebug;
+	private ProgressBar pbBluetooth;
+	private CheckBox cbGPS;
+	private CheckBox cbBluetooth;
+	private CheckBox cbRunning;
+	private ProgressBar pbBattery;
 
+	private void setupGUI() {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 		final SharedPreferences.Editor spe = prefs.edit();
 
@@ -166,16 +164,16 @@ public class RobotsActivity extends Activity implements MessageListener {
 		pbBattery = (ProgressBar) findViewById(R.id.pbBattery);
 		pbBattery.setMax(100);
 
-		txtRobotName.setText(participants[selected_robot]);
+		txtRobotName.setText(participants[selectedRobot]);
 		txtRobotName.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
 				AlertDialog.Builder sel_robot_builder = new AlertDialog.Builder(RobotsActivity.this);
 				sel_robot_builder.setTitle("Who Am I?");
 				sel_robot_builder.setItems(participants, new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int item) {
-						selected_robot = item;
-						txtRobotName.setText(participants[selected_robot]);
-						spe.putInt(PREF_SELECTED_ROBOT, selected_robot);
+						selectedRobot = item;
+						txtRobotName.setText(participants[selectedRobot]);
+						spe.putInt(PREF_SELECTED_ROBOT, selectedRobot);
 						spe.commit();
 						// Restart the application
 						Intent restart = getIntent();
@@ -196,16 +194,6 @@ public class RobotsActivity extends Activity implements MessageListener {
 		disconnect();
 		finish();
 		return;
-	}
-
-	@Override
-	public void onStart() {
-		super.onStart();
-	}
-
-	@Override
-	public void onPause() {
-		super.onPause();
 	}
 
 	public void messageReceied(RobotMessage m) {

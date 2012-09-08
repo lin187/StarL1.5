@@ -21,10 +21,10 @@ public class MainActivity extends LogicThread implements MessageListener {
 
 	// Algorithm constants
 	private static final double POINT_SNAP_RADIUS = 25;
-	private static final double MAX_DRAW_LENGTH = 500;
+	private static final double MAX_DRAW_LENGTH = 1200;
 	private static final double UNSAFE_RADIUS = 220;
 
-	private static final long MAX_REQUEST_WAIT_TIME = 2000;
+	private static final long MAX_REQUEST_WAIT_TIME = 3000;
 
 	// Message IDs
 	private static final int ASSIGNMENT_REQ_ID = 50;

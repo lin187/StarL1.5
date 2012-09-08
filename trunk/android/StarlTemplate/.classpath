@@ -5,6 +5,5 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/StarLib"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/MovementExampleApps"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

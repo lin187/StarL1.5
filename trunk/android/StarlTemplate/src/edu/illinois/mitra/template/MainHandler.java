@@ -58,9 +58,8 @@ public class MainHandler extends Handler {
 			app.launch(msg.arg1, msg.arg2);
 			break;
 		case Common.MESSAGE_ABORT:
-			if(app.launched) {
+			if(app.launched)
 				app.abort();
-			}
 			gvh.plat.moat.motion_stop();
 			app.launched = false;
 			cbRunning.setChecked(false);
