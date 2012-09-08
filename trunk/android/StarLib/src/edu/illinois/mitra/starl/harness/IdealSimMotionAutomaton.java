@@ -63,8 +63,8 @@ public class IdealSimMotionAutomaton extends RobotMotion implements RobotEventLi
 		gpspro.halt(name);
 	}
 	@Override
-	public void robotEvent(int type, int event) {
-		if(type == Common.EVENT_MOTION) {
+	public void robotEvent(Event type, int event) {
+		if(type == Event.MOTION) {
 			inMotion = (event!=Common.MOT_STOPPED);
 		}
 	}

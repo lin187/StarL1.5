@@ -11,7 +11,9 @@ import java.util.Enumeration;
 import edu.illinois.mitra.starl.exceptions.ItemFormattingException;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.GpsReceiver;
+import edu.illinois.mitra.starl.interfaces.RobotEventListener.Event;
 import edu.illinois.mitra.starl.objects.Common;
+import edu.illinois.mitra.starl.objects.HandlerMessage;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.PositionList;
 
@@ -81,7 +83,7 @@ public class UdpGpsReceiver extends Thread implements GpsReceiver {
     			String [] parts = line.split("\n");
     			if(received == false) {
     				gvh.log.i(TAG, "RECEIVED FIRST PACKET!");
-    				gvh.plat.sendMainMsg(Common.MESSAGE_LOCATION, Common.GPS_RECEIVING);
+    				gvh.plat.sendMainMsg(HandlerMessage.MESSAGE_LOCATION, HandlerMessage.GPS_RECEIVING);
     				received = true;
     			}    			
     			for(int i = 0; i < parts.length; i++) {
@@ -100,10 +102,10 @@ public class UdpGpsReceiver extends Thread implements GpsReceiver {
 		    				try {
 		    					ItemPosition newpos = new ItemPosition(parts[i]);
 		    					robotPositions.update(newpos, gvh.time());
-		    					gvh.sendRobotEvent(Common.EVENT_GPS);
+		    					gvh.sendRobotEvent(Event.GPS);
 		    					if(newpos.name.equals(name)) {
 		    						gvh.trace.traceEvent(TAG, "Received Position", newpos);
-		    						gvh.sendRobotEvent(Common.EVENT_GPS_SELF);
+		    						gvh.sendRobotEvent(Event.GPS_SELF);
 		    					}
 		    				} catch(ItemFormattingException e){
 		    					gvh.log.e(TAG, "Invalid item formatting: " + e.getError());
@@ -112,11 +114,11 @@ public class UdpGpsReceiver extends Thread implements GpsReceiver {
 		    			case 'G':
 		    				gvh.trace.traceEvent(TAG, "Received launch command");
 		    				int[] args = Common.partsToInts(parts[i].substring(3).split(" "));
-		    				gvh.plat.sendMainMsg(Common.MESSAGE_LAUNCH, args[0], args[1]);
+		    				gvh.plat.sendMainMsg(HandlerMessage.MESSAGE_LAUNCH, args[0], args[1]);
 		    				break;
 		    			case 'A':
 		    				gvh.trace.traceEvent(TAG, "Received abort command");
-		    				gvh.plat.sendMainMsg(Common.MESSAGE_ABORT, null);
+		    				gvh.plat.sendMainMsg(HandlerMessage.MESSAGE_ABORT, null);
 		    				break;
 		    			default:
 		    				gvh.log.e(ERR, "Unknown GPS message received: " + line);
@@ -125,7 +127,7 @@ public class UdpGpsReceiver extends Thread implements GpsReceiver {
     				}
     			}
 			} catch (IOException e) {
-				gvh.plat.sendMainMsg(Common.MESSAGE_LOCATION, Common.GPS_OFFLINE);
+				gvh.plat.sendMainMsg(HandlerMessage.MESSAGE_LOCATION, HandlerMessage.GPS_OFFLINE);
 			}
     	}
 	}
@@ -153,7 +155,7 @@ public class UdpGpsReceiver extends Thread implements GpsReceiver {
     @Override
     public void cancel() {
     	running = false;
-    	gvh.plat.sendMainMsg(Common.MESSAGE_LOCATION, Common.GPS_OFFLINE);
+    	gvh.plat.sendMainMsg(HandlerMessage.MESSAGE_LOCATION, HandlerMessage.GPS_OFFLINE);
         try {
         	mSocket.disconnect();
             mSocket.close();

@@ -3,6 +3,7 @@ package edu.illinois.mitra.starl.motion;
 import java.util.Arrays;
 
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
+import edu.illinois.mitra.starl.interfaces.RobotEventListener.Event;
 import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.PositionList;
@@ -356,7 +357,7 @@ public class MotionAutomaton extends RobotMotion {
 	protected void sendMotionEvent(int motiontype, int... argument) {
 		// TODO: Is this needed??? Or even working properly??
 		gvh.trace.traceEvent(TAG, "Motion", Arrays.asList(argument).toString());
-		gvh.sendRobotEvent(Common.EVENT_MOTION, motiontype);
+		gvh.sendRobotEvent(Event.MOTION, motiontype);
 	}
 
 	protected void curve(int velocity, int radius) {

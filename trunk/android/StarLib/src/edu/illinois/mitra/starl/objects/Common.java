@@ -32,19 +32,19 @@ public final class Common {
 	public static final int MSG_GEOCAST					= 13;
 	
 	// GUI Message handler
-	public static final int MESSAGE_TOAST = 0;
-	public static final int MESSAGE_LOCATION = 1;
-	public static final int MESSAGE_BLUETOOTH = 2;
-	public static final int MESSAGE_LAUNCH = 3;
-	public static final int MESSAGE_ABORT = 4;
-	public static final int MESSAGE_DEBUG = 5;
-	public static final int MESSAGE_BATTERY = 6;
-	
-	public static final int BLUETOOTH_CONNECTING = 2;
-	public static final int BLUETOOTH_CONNECTED = 1;
-	public static final int BLUETOOTH_DISCONNECTED = 1;
-	public static final int GPS_RECEIVING = 1;
-	public static final int GPS_OFFLINE = 0;
+//	public static final int MESSAGE_TOAST = 0;
+//	public static final int MESSAGE_LOCATION = 1;
+//	public static final int MESSAGE_BLUETOOTH = 2;
+//	public static final int MESSAGE_LAUNCH = 3;
+//	public static final int MESSAGE_ABORT = 4;
+//	public static final int MESSAGE_DEBUG = 5;
+//	public static final int MESSAGE_BATTERY = 6;
+//	
+//	public static final int BLUETOOTH_CONNECTING = 2;
+//	public static final int BLUETOOTH_CONNECTED = 1;
+//	public static final int BLUETOOTH_DISCONNECTED = 1;
+//	public static final int GPS_RECEIVING = 1;
+//	public static final int GPS_OFFLINE = 0;
 	
 	// Motion types
 	public static final int MOT_TURNING		= 0;

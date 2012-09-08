@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 import edu.illinois.mitra.starl.interfaces.RobotEventListener;
+import edu.illinois.mitra.starl.interfaces.RobotEventListener.Event;
 
 /**
  * The GlobalVarHolder encapsulates all communication, location, identification, logging, tracing, and platform specific functionality. It is the core of
@@ -55,7 +56,7 @@ public abstract class GlobalVarHolder {
 	 * @param type the event type
 	 * @param event any additional event information
 	 */
-	public void sendRobotEvent(int type, int event) {
+	public void sendRobotEvent(Event type, int event) {
 		for(RobotEventListener el : eventListeners) {
 			el.robotEvent(type, event);
 		}
@@ -64,7 +65,7 @@ public abstract class GlobalVarHolder {
 	 * Sends a new event to all registered RobotEventLitseners without including additional event information
 	 * @param type the event type
 	 */
-	public void sendRobotEvent(int type) {
+	public void sendRobotEvent(Event type) {
 		sendRobotEvent(type, -1);
 	}
 	

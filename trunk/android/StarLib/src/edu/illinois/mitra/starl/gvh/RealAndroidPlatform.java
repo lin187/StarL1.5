@@ -2,6 +2,7 @@ package edu.illinois.mitra.starl.gvh;
 
 import android.os.Handler;
 import edu.illinois.mitra.starl.objects.Common;
+import edu.illinois.mitra.starl.objects.HandlerMessage;
 
 public class RealAndroidPlatform extends AndroidPlatform {
 
@@ -12,11 +13,11 @@ public class RealAndroidPlatform extends AndroidPlatform {
 	}
 	
     public synchronized void setDebugInfo(String debugInfo) {
-        sendMainMsg(Common.MESSAGE_DEBUG, debugInfo);
+        sendMainMsg(HandlerMessage.MESSAGE_DEBUG, debugInfo);
 	}
 	
 	public synchronized void sendMainToast(String debugInfo) {
-        sendMainMsg(Common.MESSAGE_TOAST, debugInfo);
+        sendMainMsg(HandlerMessage.MESSAGE_TOAST, debugInfo);
 	}
 	
 	public synchronized void sendMainMsg(int type, Object data) {
