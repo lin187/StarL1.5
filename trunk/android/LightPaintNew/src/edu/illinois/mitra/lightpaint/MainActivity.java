@@ -76,7 +76,7 @@ public class MainActivity extends LogicThread implements MessageListener {
 			case INIT:
 				election.elect();
 				setStage(Stage.ELECT_LEADER);
-				gvh.sleep((long) (Math.random()*1000));
+				gvh.sleep((long) Math.abs((Math.random()*1000)) + 1);
 				break;
 			case ELECT_LEADER:
 				if((leader = election.getLeader()) != null) {
