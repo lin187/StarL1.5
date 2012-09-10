@@ -12,26 +12,42 @@ public class MessageResult {
 	private int results_set = 0;
 	private int recipients = 1;
 	
+	public static interface ResultCallback {
+		public void messageFailed();
+		public void messageReceived();
+	}
+	
+	private static final ResultCallback DEFAULT_CALLBACK = new ResultCallback() {
+		@Override
+		public void messageReceived() {
+		}
+		
+		@Override
+		public void messageFailed() {
+		}
+	};
+
+	private ResultCallback callback = DEFAULT_CALLBACK;
+	
 	public MessageResult(int recipients) {
 		this.recipients = recipients;
 	}
 	
+	public void setCallback(ResultCallback callback) {
+		this.callback = callback;
+	}
+	
 	public void setFailed() {
 		results_set ++;
-		//gvh.i("Result", "Failure set #" + results_set + " out of " + recipients);
 		result = false;
+		callback.messageFailed();
 	}
 	
 	public void setReceived() {
 		results_set ++;
-		//gvh.i("Result", "Received set #" + results_set + " out of " + recipients);
 		result &= true;
-	}
-	
-	public Boolean getResult() {
-		if(results_set >= recipients || result == false) {
-			return result;
-		}
-		return null;
+		
+		if(results_set == recipients && result == true)
+			callback.messageReceived();
 	}
 }

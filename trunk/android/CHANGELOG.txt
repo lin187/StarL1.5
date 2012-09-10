@@ -1,4 +1,11 @@
 ----- StarLib Changelog -----
+
+9/8/2012, Adam
+- Cleaned up pieces of StarLib, including Android specific code
+- Removed DeadReckoner because it's useless with the iRobot Create chassis
+- Changed robot event listener interface to be more extensible for future event types
+- Added message reception callback
+
 9/5/2012, Stan
 - Removed awt requirements from StarLib and LogicThread classes
 - Separated out FardinDeere app and StanTestApp into own project following Adam's changes
