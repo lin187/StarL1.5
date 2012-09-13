@@ -12,7 +12,7 @@ import edu.illinois.mitra.starl.harness.DelayedRunnable;
 import edu.illinois.mitra.starl.interfaces.SmartComThread;
 
 /**
- * Implements the simple acknowledgment protocol (SAP!) in a much more efficient manner than the deprecated CommsHandler class.
+ * Implements the simple acknowledgment protocol (SAP) in an efficient manner. No spinning threads are left running.
  * @author Adam Zimmerman
  * @version 1.0
  * @see RobotMessage
@@ -83,8 +83,8 @@ public class SmartCommsHandler extends Thread {
 		
 		mConnectedThread.write(newMsg, ip);
 
-		// Increment the sequence number
-		seqNum++;// = (seqNum + 1) % (Integer.MAX_VALUE-1);
+		// Increment the sequence number. Negative values are OK, so wraparounds don't matter.
+		seqNum++;
 
 		// Handle the sent message list
 		Collection<String> recipients = new HashSet<String>();
@@ -109,7 +109,7 @@ public class SmartCommsHandler extends Thread {
 	}
 	
 	/**
-	 * Handles a received message. <b>Do not call this function in your code!</b> This is only to be called from the SmartCommsHandler to which this is linked!
+	 * Handles a received message. This is only to be called from the SmartCommsHandler to which this is linked!
 	 * @param msg the received UDPMessage
 	 */
 	public synchronized void handleReceived(UDPMessage msg) {
@@ -137,6 +137,7 @@ public class SmartCommsHandler extends Thread {
 	
     @Override
 	public void run() {
+		//Register this thread with the main GVH. This allows the GVH to wake the thread if necessary.
     	gvh.threadCreated(this);
     	scheduleCleaner();    	
     	while(true) {

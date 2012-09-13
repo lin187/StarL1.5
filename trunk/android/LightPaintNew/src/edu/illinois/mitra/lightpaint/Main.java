@@ -23,7 +23,7 @@ public class Main {
 		builder.GRID_XSIZE(6000);
 		builder.GRID_YSIZE(6000);
 		SimSettings settings = builder.build();
-		Simulation sim = new Simulation(MainActivity.class, settings);
+		Simulation sim = new Simulation(LightPaintActivity.class, settings);
 		sim.start();
 	}
 

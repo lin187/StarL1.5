@@ -20,6 +20,7 @@ import android.view.View.OnClickListener;
 import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import edu.illinois.mitra.lightpaint.LightPaintActivity;
 import edu.illinois.mitra.starl.comms.MessageContents;
 import edu.illinois.mitra.starl.comms.RobotMessage;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
@@ -27,6 +28,7 @@ import edu.illinois.mitra.starl.gvh.RealGlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.interfaces.MessageListener;
 import edu.illinois.mitra.starl.objects.Common;
+import edu.illinois.mitra.starl.objects.HandlerMessage;
 
 public class RobotsActivity extends Activity implements MessageListener {
 	private static final String TAG = "RobotsActivity";
@@ -84,7 +86,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 	}
 
 	public void createAppInstance(GlobalVarHolder gvh) {
-		runThread = new CircleMotion(gvh);
+		runThread = new LightPaintActivity(gvh);
 	}
 
 	public void launch(int numWaypoints, int runNum) {
@@ -199,10 +201,10 @@ public class RobotsActivity extends Activity implements MessageListener {
 	public void messageReceied(RobotMessage m) {
 		switch(m.getMID()) {
 		case Common.MSG_ACTIVITYLAUNCH:
-			gvh.plat.sendMainMsg(Common.MESSAGE_LAUNCH, Integer.parseInt(m.getContents(0)), Integer.parseInt(m.getContents(1)));
+			gvh.plat.sendMainMsg(HandlerMessage.MESSAGE_LAUNCH, Integer.parseInt(m.getContents(0)), Integer.parseInt(m.getContents(1)));
 			break;
 		case Common.MSG_ACTIVITYABORT:
-			gvh.plat.sendMainMsg(Common.MESSAGE_ABORT, null);
+			gvh.plat.sendMainMsg(HandlerMessage.MESSAGE_ABORT, null);
 			break;
 		}
 	}

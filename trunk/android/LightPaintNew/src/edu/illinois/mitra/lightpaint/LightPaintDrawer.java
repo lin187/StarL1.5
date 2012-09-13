@@ -9,7 +9,7 @@ public class LightPaintDrawer extends Drawer {
 
 	@Override
 	public void draw(LogicThread lt, Graphics2D g) {
-		MainActivity instance = (MainActivity)lt;
+		LightPaintActivity instance = (LightPaintActivity)lt;
 		if(instance.iAmLeader)
 			instance.alg.draw(g);
 	}

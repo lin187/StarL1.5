@@ -12,7 +12,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import edu.illinois.mitra.lightpaint.MainActivity;
+import edu.illinois.mitra.lightpaint.LightPaintActivity;
 import edu.illinois.mitra.lightpaint.geometry.ImageEdge;
 import edu.illinois.mitra.lightpaint.geometry.ImageGraph;
 import edu.illinois.mitra.lightpaint.geometry.ImagePoint;

@@ -7,7 +7,6 @@ import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
 
 public class DecoupledDelayQueue<E extends Delayed> extends DelayQueue<E> {
-	// See http://www.javacodegeeks.com/2012/04/using-delayed-queues-in-practice.html
 	public long getMinimumDelay(TimeUnit t) {
 		try {
 			return peek().getDelay(t);

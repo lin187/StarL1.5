@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.objects.Common;
+import edu.illinois.mitra.starl.objects.HandlerMessage;
 
 public class MainHandler extends Handler {
 
@@ -44,30 +45,30 @@ public class MainHandler extends Handler {
 	public void handleMessage(Message msg) {
 		super.handleMessage(msg);
 		switch(msg.what) {
-		case Common.MESSAGE_TOAST:
+		case HandlerMessage.MESSAGE_TOAST:
 			Toast.makeText(appContext, msg.obj.toString(), Toast.LENGTH_LONG).show();
 			break;
-		case Common.MESSAGE_LOCATION:
-			cbGPS.setChecked((Integer) msg.obj == Common.GPS_RECEIVING);
+		case HandlerMessage.MESSAGE_LOCATION:
+			cbGPS.setChecked((Integer) msg.obj == HandlerMessage.GPS_RECEIVING);
 			break;
-		case Common.MESSAGE_BLUETOOTH:
-			pbBluetooth.setVisibility((Integer) msg.obj == Common.BLUETOOTH_CONNECTING ? View.VISIBLE : View.INVISIBLE);
-			cbBluetooth.setChecked((Integer) msg.obj == Common.BLUETOOTH_CONNECTED);
+		case HandlerMessage.MESSAGE_BLUETOOTH:
+			pbBluetooth.setVisibility((Integer) msg.obj == HandlerMessage.BLUETOOTH_CONNECTING ? View.VISIBLE : View.INVISIBLE);
+			cbBluetooth.setChecked((Integer) msg.obj == HandlerMessage.BLUETOOTH_CONNECTED);
 			break;
-		case Common.MESSAGE_LAUNCH:
+		case HandlerMessage.MESSAGE_LAUNCH:
 			app.launch(msg.arg1, msg.arg2);
 			break;
-		case Common.MESSAGE_ABORT:
+		case HandlerMessage.MESSAGE_ABORT:
 			if(app.launched)
 				app.abort();
 			gvh.plat.moat.motion_stop();
 			app.launched = false;
 			cbRunning.setChecked(false);
 			break;
-		case Common.MESSAGE_DEBUG:
+		case HandlerMessage.MESSAGE_DEBUG:
 			txtDebug.setText("DEBUG:\n" + (String) msg.obj);
 			break;
-		case Common.MESSAGE_BATTERY:
+		case HandlerMessage.MESSAGE_BATTERY:
 			pbBattery.setProgress((Integer) msg.obj);
 			break;
 		}

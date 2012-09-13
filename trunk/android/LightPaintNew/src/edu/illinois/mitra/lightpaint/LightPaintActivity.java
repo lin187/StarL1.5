@@ -17,7 +17,7 @@ import edu.illinois.mitra.starl.interfaces.MessageListener;
 import edu.illinois.mitra.starl.motion.MotionParameters;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 
-public class MainActivity extends LogicThread implements MessageListener {
+public class LightPaintActivity extends LogicThread implements MessageListener {
 
 	// Algorithm constants
 	private static final double POINT_SNAP_RADIUS = 25;
@@ -43,7 +43,7 @@ public class MainActivity extends LogicThread implements MessageListener {
 
 	private volatile Stage stage = Stage.INIT;
 
-	public MainActivity(GlobalVarHolder gvh) {
+	public LightPaintActivity(GlobalVarHolder gvh) {
 		super(gvh);
 
 		// Register as message listeners
@@ -216,6 +216,4 @@ public class MainActivity extends LogicThread implements MessageListener {
 		//		System.out.println(super.name + "\t" + stage + "->" + newstage);
 		stage = newstage;
 	}
-
-
 }
