@@ -3,7 +3,6 @@ package edu.illinois.mitra.lightpaint.utility;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -20,6 +19,8 @@ import edu.illinois.mitra.lightpaint.geometry.ImagePoint;
 
 public class SvgParser extends XmlReader {
 
+	// TODO: Vertically flip all loaded images
+	
 	public SvgParser(int maxSizeX, int maxSizeY, int centerX, int centerY) {
 		super(false);
 		scale = new ImagePoint(maxSizeX, maxSizeY);
@@ -63,8 +64,7 @@ public class SvgParser extends XmlReader {
 	}
 
 	private static final Pattern PATH_PATTERN = Pattern.compile("[a-zA-Z]([\\s,]?[-]?[0-9\\.]+[\\s,]?[-]?[0-9\\.]+[\\s,]?){1,}");
-	private static final Set<ImageEdge> EMPTY_EDGE_SET = new HashSet<ImageEdge>();
-
+	
 	private Set<ImageEdge> pathToLines(String pathString) {
 		// Break the string into commands first
 		// Must split along any character, preserving which command the

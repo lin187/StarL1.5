@@ -14,10 +14,14 @@ import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.LeaderElection;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.interfaces.MessageListener;
+import edu.illinois.mitra.starl.interfaces.RobotEventListener;
 import edu.illinois.mitra.starl.motion.MotionParameters;
+import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 
-public class LightPaintActivity extends LogicThread implements MessageListener {
+public class LightPaintActivity extends LogicThread implements MessageListener, RobotEventListener {
+	// Handler message
+	public static final int HANDLER_SCREEN = 9724;
 
 	// Algorithm constants
 	private static final double POINT_SNAP_RADIUS = 25;
@@ -55,6 +59,8 @@ public class LightPaintActivity extends LogicThread implements MessageListener {
 
 		// Set up motion parameters
 		gvh.plat.moat.setParameters(motionParameters);
+
+		gvh.addEventListener(this);
 	}
 
 	private String leader;
@@ -76,14 +82,15 @@ public class LightPaintActivity extends LogicThread implements MessageListener {
 			case INIT:
 				election.elect();
 				setStage(Stage.ELECT_LEADER);
-				gvh.sleep((long) Math.abs((Math.random()*1000)) + 1);
+				gvh.sleep((long) Math.abs((Math.random() * 1000)) + 1);
 				break;
 			case ELECT_LEADER:
 				if((leader = election.getLeader()) != null) {
 					iAmLeader = leader.equals(gvh.id.getName());
 					if(iAmLeader) {
 						System.out.println(name + " is leader!");
-						// Create the algorithm, inform it of all robot positions
+						// Create the algorithm, inform it of all robot
+						// positions
 						alg = new LpAlgorithm(WptParser.parseWaypoints(gvh), POINT_SNAP_RADIUS, MAX_DRAW_LENGTH, UNSAFE_RADIUS);
 
 						for(String robot : gvh.id.getParticipants())
@@ -125,6 +132,7 @@ public class LightPaintActivity extends LogicThread implements MessageListener {
 				break;
 			case DO_ASSIGNMENT:
 				gvh.plat.moat.goTo(currentDestination = assignment.remove(0));
+				illuminatePoint = currentDestination.getName().equals("Y");
 				setStage(Stage.WAIT_TO_ARRIVE);
 				break;
 			case WAIT_TO_ARRIVE:
@@ -132,10 +140,11 @@ public class LightPaintActivity extends LogicThread implements MessageListener {
 					RobotMessage informProgress = new RobotMessage(leader, super.name, POSITION_UPDATE_ID, new MessageContents(lastVisitedPoint.toMessage(), currentDestination.toMessage()));
 					gvh.comms.addOutgoingMessage(informProgress);
 					lastVisitedPoint = currentDestination;
-					if(assignment.isEmpty())
+					if(assignment.isEmpty()) {
 						setStage(Stage.REQUEST_ASSIGNMENT);
-					else
+					} else {
 						setStage(Stage.DO_ASSIGNMENT);
+					}
 					break;
 				}
 
@@ -167,13 +176,16 @@ public class LightPaintActivity extends LogicThread implements MessageListener {
 			for(String content : msg.getContentsList()) {
 				try {
 					assignment.add(ItemPosition.fromMessage(content));
-				} catch(IllegalArgumentException e) {
+				} catch (IllegalArgumentException e) {
 					System.err.println(msg);
 				}
 
 			}
 
 			// Assignment[0] is the current robot position
+
+			System.out.println(assignment);
+
 			lastVisitedPoint = assignment.remove(0);
 			break;
 		case ASSIGNMENT_REQ_ID:
@@ -213,7 +225,38 @@ public class LightPaintActivity extends LogicThread implements MessageListener {
 	}
 
 	private void setStage(Stage newstage) {
-		//		System.out.println(super.name + "\t" + stage + "->" + newstage);
+		// System.out.println(super.name + "\t" + stage + "->" + newstage);
 		stage = newstage;
 	}
+
+	private boolean inMotion = false;
+	private boolean illuminatePoint = false;
+
+	@Override
+	public void robotEvent(Event eventType, int eventData) {
+		if(eventType == Event.MOTION) {
+			switch(eventData) {
+			case Common.MOT_STOPPED:
+			case Common.MOT_TURNING:
+				inMotion = false;
+				break;
+			default:
+				inMotion = true;
+			}
+		}
+		updateScreen();
+	}
+
+	private void updateScreen() {
+		if(inMotion && illuminatePoint) {
+			gvh.plat.sendMainMsg(HANDLER_SCREEN, 1, 0);
+			if(iAmLeader)
+				System.out.println("Screen on! ");
+		} else {
+			gvh.plat.sendMainMsg(HANDLER_SCREEN, 0, 0);
+			if(iAmLeader)
+				System.out.println("** SCREEN OFF **");
+		}
+	}
+
 }

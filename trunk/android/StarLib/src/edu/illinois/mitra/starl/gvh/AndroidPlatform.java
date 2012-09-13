@@ -16,12 +16,12 @@ public class AndroidPlatform {
     public void setDebugInfo(String debugInfo) {
 	}
 	
-	public synchronized void sendMainToast(String debugInfo) {
+	public void sendMainToast(String debugInfo) {
 	}
 	
-	public synchronized void sendMainMsg(int type, Object data) {
+	public void sendMainMsg(int type, Object data) {
 	}
 	
-	public synchronized void sendMainMsg(int type, int arg1, int arg2) {		
+	public void sendMainMsg(int type, int arg1, int arg2) {		
 	}
 }

@@ -10,6 +10,12 @@ public class SimSettings {
 	public int N_BOTS = 4;
 
 	/**
+	 * The maximum number of seconds (real time) the simulation may be executing
+	 * for. Setting to zero will allow simulations to run indefinitely.
+	 */
+	public int TIMEOUT = 0;
+
+	/**
 	 * Filename for a .wpt file with waypoints.
 	 */
 	public String WAYPOINT_FILE = null;
@@ -27,7 +33,8 @@ public class SimSettings {
 	public boolean IDEAL_MOTION = false;
 
 	/**
-	 * The desired rate of time passing. 0 = no limit, 0.5 = half real-time, 1.0 = real-time, etc.
+	 * The desired rate of time passing. 0 = no limit, 0.5 = half real-time, 1.0
+	 * = real-time, etc.
 	 */
 	public double TIC_TIME_RATE = 5;
 
@@ -46,11 +53,12 @@ public class SimSettings {
 	 */
 	public long GPS_PERIOD = 75;
 	/**
-	 * Degrees. The maximum angular noise of simulated GPS positions. 
+	 * Degrees. The maximum angular noise of simulated GPS positions.
 	 */
 	public double GPS_ANGLE_NOISE = 0;
 	/**
-	 * Millimeters. The maximum position X and Y offset of simulated GPS positions.
+	 * Millimeters. The maximum position X and Y offset of simulated GPS
+	 * positions.
 	 */
 	public double GPS_POSITION_NOISE = 0;
 
@@ -92,7 +100,8 @@ public class SimSettings {
 	 */
 	public int BOT_RADIUS = 165;
 
-	// Distance predicate (truth data) settings. THIS IS CURRENTLY NON-FUNCTIONAL.
+	// Distance predicate (truth data) settings. THIS IS CURRENTLY
+	// NON-FUNCTIONAL.
 	/**
 	 * Enable/disable the distance predicate
 	 */
@@ -100,12 +109,16 @@ public class SimSettings {
 	/**
 	 * Millimeters. Distance predicate radius.
 	 */
-	public int PREDICATE_RADIUS = 0; // Zero disables distance predicate checking and truth output
+	public int PREDICATE_RADIUS = 0; // Zero disables distance predicate
+										// checking and truth output
 	/**
-	 * The number of robots that must be within PREDICATE_RADIUS of each other to trigger a predicate violation. CURRENTLY UNIMPLEMENTED.
+	 * The number of robots that must be within PREDICATE_RADIUS of each other
+	 * to trigger a predicate violation. CURRENTLY UNIMPLEMENTED.
 	 */
 	@Deprecated
-	public int N_PREDICATE_ROBOTS = 2; // (UNIMPLEMENTED) The number of robots that must be within radius to trigger a violation
+	public int N_PREDICATE_ROBOTS = 2; // (UNIMPLEMENTED) The number of robots
+										// that must be within radius to trigger
+										// a violation
 	/**
 	 * Predicate output directory.
 	 */
@@ -129,15 +142,17 @@ public class SimSettings {
 	 * The trace length for each robot.
 	 */
 	public int DRAW_TRACE_LENGTH = 128;
-	
+
 	// drawing
 	/**
-	 * The maximum frames per second to draw at. If drawing takes too long, lower this.
+	 * The maximum frames per second to draw at. If drawing takes too long,
+	 * lower this.
 	 */
 	public int MAX_FPS = 40;
-	
+
 	/**
-	 * The object which does the drawing of debug information for the simulator. Can be null if unused.
+	 * The object which does the drawing of debug information for the simulator.
+	 * Can be null if unused.
 	 */
 	public Drawer DRAWER = null;
 
@@ -148,6 +163,7 @@ public class SimSettings {
 
 	public static class Builder {
 		private int N_BOTS = 4;
+		private int TIMEOUT = 0;
 		private String WAYPOINT_FILE;
 		private String INITIAL_POSITIONS_FILE;
 		private boolean IDEAL_MOTION = false;
@@ -183,6 +199,11 @@ public class SimSettings {
 
 		public Builder WAYPOINT_FILE(String WAYPOINT_FILE) {
 			this.WAYPOINT_FILE = WAYPOINT_FILE;
+			return this;
+		}
+		
+		public Builder TIMEOUT(int TIMEOUT) {
+			this.TIMEOUT = TIMEOUT;
 			return this;
 		}
 
@@ -310,7 +331,7 @@ public class SimSettings {
 			this.MAX_FPS = MAX_FPS;
 			return this;
 		}
-		
+
 		public Builder DRAWER(Drawer DRAWER) {
 			this.DRAWER = DRAWER;
 			return this;
