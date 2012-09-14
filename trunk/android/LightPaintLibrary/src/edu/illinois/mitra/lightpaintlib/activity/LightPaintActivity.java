@@ -31,7 +31,7 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 	private static final double MAX_DRAW_LENGTH = 1200;
 	private static final double UNSAFE_RADIUS = 220;
 
-	private static final long MAX_REQUEST_WAIT_TIME = 3000;
+	private static final long MAX_REQUEST_WAIT_TIME = 6000;
 
 	// Message IDs
 	private static final int ASSIGNMENT_REQ_ID = 50;
@@ -146,6 +146,7 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 			case DO_ASSIGNMENT:
 				gvh.plat.moat.goTo(currentDestination = assignment.remove(0));
 				illuminatePoint = currentDestination.getName().equals("Y");
+				gvh.log.d(TAG, "Assignment has " + assignment.size() + " points remaining.");
 				setStage(Stage.WAIT_TO_ARRIVE);
 				break;
 			case WAIT_TO_ARRIVE:
@@ -276,4 +277,16 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 		}
 	}
 
+	@Override
+	public void cancel() {
+		sync.cancel();
+		election.cancel();
+		setStage(Stage.DONE);
+		gvh.comms.removeMsgListener(ASSIGNMENT_ID);
+		gvh.comms.removeMsgListener(POSITION_UPDATE_ID);
+		gvh.comms.removeMsgListener(ASSIGNMENT_REQ_ID);
+	}
+
+	
+	
 }
