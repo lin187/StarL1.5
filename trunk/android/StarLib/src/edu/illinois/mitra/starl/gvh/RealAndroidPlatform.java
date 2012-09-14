@@ -25,6 +25,6 @@ public class RealAndroidPlatform extends AndroidPlatform {
 	}
 	
 	public synchronized void sendMainMsg(int type, int arg1, int arg2) {	
-		handler.obtainMessage(type, arg1, arg2, null).sendToTarget();
+		handler.obtainMessage(type, arg1, arg2).sendToTarget();
 	}
 }

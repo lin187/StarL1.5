@@ -33,11 +33,11 @@ public class CommsTestApp extends LogicThread {
 			switch(stage) {
 			case START:
 				gvh.trace.traceSync("Launch");
-				sn.barrier_sync("Start");
+				sn.barrierSync("Start");
 				stage = STAGE.SYNC;
 				break;
 			case SYNC:
-				if(sn.barrier_proceed("Start")) {
+				if(sn.barrierProceed("Start")) {
 					stage = STAGE.ELECT;
 					le.elect();
 				}

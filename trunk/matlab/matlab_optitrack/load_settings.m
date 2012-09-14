@@ -14,5 +14,5 @@ MOTION_HISTORY_SIZE = 5; % number of points used to determine if motion has occu
 HISTORY_SIZE = 2500; %number of points in each history for drawing
 
 % File export settings
-SAVE_TO_FILE = true;
+SAVE_TO_FILE = false;
 OUTPUT_FILENAME = 'C:\data.xml';

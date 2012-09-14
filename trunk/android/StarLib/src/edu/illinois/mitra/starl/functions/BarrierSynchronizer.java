@@ -45,7 +45,7 @@ public class BarrierSynchronizer implements Synchronizer, MessageListener {
 	}
 	
 	@Override
-	public void barrier_sync(String barrierID) {	 
+	public void barrierSync(String barrierID) {	 
 		HashSet<String> names;
 		if(barriersNames.containsKey(barrierID)) {
 			if(barriersNames.get(barrierID).contains(name)) {
@@ -67,7 +67,7 @@ public class BarrierSynchronizer implements Synchronizer, MessageListener {
 	}
 	
 	@Override
-	public boolean barrier_proceed(String barrierID) {
+	public boolean barrierProceed(String barrierID) {
 		try {
 			if(barriersNames.get(barrierID).size() == n_participants) {
 				gvh.trace.traceEvent(TAG, "Barrier ready to proceed", barrierID);

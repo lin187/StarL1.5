@@ -75,13 +75,13 @@ public class Waypointselect extends LogicThread implements MessageListener {
 			gvh.plat.setDebugInfo(gvh.id.getParticipants().toString());
 			switch (stage) {
 			case START:
-				sync.barrier_sync(SYNC_START);
+				sync.barrierSync(SYNC_START);
 				stage = STAGE.SYNC;
 				gvh.log.d(TAG, "Syncing...");
 				System.out.println("Syncing..." + name);
 				break;
 			case SYNC:
-				if (sync.barrier_proceed(SYNC_START)) {
+				if (sync.barrierProceed(SYNC_START)) {
 					stage = STAGE.PICK;
 					gvh.log.d(TAG, "Synced!");
 				}

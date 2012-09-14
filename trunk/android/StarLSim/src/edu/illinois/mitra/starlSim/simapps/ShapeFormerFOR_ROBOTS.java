@@ -96,13 +96,13 @@ public class ShapeFormerFOR_ROBOTS extends LogicThread implements MessageListene
 			gvh.plat.setDebugInfo(gvh.id.getParticipants().toString());
 			switch (stage) {
 			case START:
-				sync.barrier_sync(SYNC_START);
+				sync.barrierSync(SYNC_START);
 				stage = STAGE.SYNC;
 				gvh.log.d(TAG, "Syncing...");
 				System.out.println("Syncing..." + name);
 				break;
 			case SYNC:
-				if (sync.barrier_proceed(SYNC_START)) {
+				if (sync.barrierProceed(SYNC_START)) {
 					stage = STAGE.LE;
 					le.elect();
 					gvh.log.d(TAG, "Synced!");
@@ -138,7 +138,7 @@ public class ShapeFormerFOR_ROBOTS extends LogicThread implements MessageListene
 					gvh.plat.moat.goTo(startpoint());
 					
 				}
-				sync.barrier_sync(SYNC_BEGINFOLLOW);
+				sync.barrierSync(SYNC_BEGINFOLLOW);
 				stage = STAGE.WAIT_TO_ARRIVE;
 				
 				break;

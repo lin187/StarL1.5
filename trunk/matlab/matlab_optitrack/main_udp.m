@@ -1,6 +1,6 @@
 % Main OptiTrack interface
 % Settings
-WPT_FILENAME = 'C:\flock.wpt';
+WPT_FILENAME = 'waypoints\simpleTest.wpt';
 load_settings;
 mainprog;
     

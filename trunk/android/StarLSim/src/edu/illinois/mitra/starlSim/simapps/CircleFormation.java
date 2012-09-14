@@ -59,7 +59,7 @@ public class CircleFormation extends LogicThread {
                 while(true) {                   
                     switch (stage) {
                         case START: {
-                        	sn.barrier_sync("round" + count.toString());
+                        	sn.barrierSync("round" + count.toString());
             				stage = STAGE.SYNC;
                         	
             				System.out.printf("robot %3d, round" + count.toString() + "\n", robotNum);
@@ -71,7 +71,7 @@ public class CircleFormation extends LogicThread {
                             break;
                         }
                         case SYNC: {
-                        	if (sn.barrier_proceed("round" + count.toString())) {
+                        	if (sn.barrierProceed("round" + count.toString())) {
             					stage = STAGE.ELECT;
             					le.elect();
             				}

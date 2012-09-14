@@ -35,8 +35,8 @@ public class RandomLeaderElection extends StarLCallable implements LeaderElectio
 	private int nodes = 0;
 	private static int MAX_WAIT_TIME = 5000;
 	
-	private SortedSet<Ballot> ballots;
-	private Set<String> receivedFrom;
+	private SortedSet<Ballot> ballots = new TreeSet<Ballot>();
+	private Set<String> receivedFrom = new HashSet<String>();
 	
 	private String announcedLeader;
 	
@@ -47,9 +47,7 @@ public class RandomLeaderElection extends StarLCallable implements LeaderElectio
 	public RandomLeaderElection(GlobalVarHolder gvh) {
 		super(gvh,"RandomLeaderElection");
 		registerListeners();
-		
-		ballots = new TreeSet<Ballot>();
-		receivedFrom = new HashSet<String>();
+
 		results = new String[1];
 	}
 
@@ -91,14 +89,13 @@ public class RandomLeaderElection extends StarLCallable implements LeaderElectio
 				
 				Set<String> ptc = new HashSet<String>(gvh.id.getParticipants());
 				ptc.removeAll(receivedFrom);
-				System.out.println(name + " has waited too long to receive election messages. Have only received " + receivedFrom.size() + "\n\t\tWe're missing from " + ptc.toString());
-				if(!receivedFrom.contains(name)) System.out.println("!!!!!" + name + " IS MISSING A VALUE FROM ITSELF??");
+				gvh.log.e(TAG, name + " has waited too long to receive election messages. Have only received " + receivedFrom.size() + ", missing ballots from " + ptc.toString());
 				error = true;
 			}
 			gvh.sleep(10);
 		}
 		
-		gvh.log.d(TAG, "Received all numbers, determining leader.");
+		gvh.log.d(TAG, "Received all numbers, determining leader. Error = " + error);
 		// Determine the leader
 		String leader = null;
 		if(!error) {
@@ -120,7 +117,7 @@ public class RandomLeaderElection extends StarLCallable implements LeaderElectio
 			while(announcedLeader == null) {
 				if(gvh.time() > endTime) {
 					gvh.trace.traceEvent(TAG, "Waited timed out, leader election failed");
-					gvh.log.e(TAG, "Leader election failed!");
+					gvh.log.e(TAG, "Waited too long, leader election failed!");
 					results[0] = "ERROR";
 					return returnResults();
 				}
@@ -223,9 +220,8 @@ public class RandomLeaderElection extends StarLCallable implements LeaderElectio
 		@Override
 		public int compareTo(Ballot other) {
 			// compare using agent ids if their vote values are equal
-			if(other.value == this.value) {
+			if(other.value == this.value)
 				return candidate.compareTo(other.candidate);
-			}
 			return value - other.value;
 		}
 	}

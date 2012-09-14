@@ -12,12 +12,12 @@ public interface Synchronizer extends Cancellable {
 	 * Signals to all agents that this robot has arrived at a barrier and is ready to proceed
 	 * @param barrierID The identifier of the barrier
 	 */
-	public abstract void barrier_sync(String barrierID);
+	public abstract void barrierSync(String barrierID);
 
 	/**
 	 * Checks whether all robots have arrived at a barrier
 	 * @param barrierID The identifier of the barrier to check against
 	 * @return True if all robots have signaled their arrival at the barrier, false otherwise
 	 */
-	public abstract boolean barrier_proceed(String barrierID);
+	public abstract boolean barrierProceed(String barrierID);
 }

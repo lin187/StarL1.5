@@ -93,13 +93,13 @@ public class GroupTagApp extends LogicThread implements MessageListener {
 
 			switch (stage) {
 			case START:
-				sync.barrier_sync(SYNC_START);
+				sync.barrierSync(SYNC_START);
 				stage = STAGE.SYNC;
 				gvh.log.d(TAG, "Syncing...");
 				//System.out.println("Syncing..." + name);
 				break;
 			case SYNC:
-				if (sync.barrier_proceed(SYNC_START)) {
+				if (sync.barrierProceed(SYNC_START)) {
 					stage = STAGE.LE;
 					le.elect();
 					gvh.log.d(TAG, "Synced!");
@@ -125,11 +125,11 @@ public class GroupTagApp extends LogicThread implements MessageListener {
 					}
 					System.out.println("Leader at middle");
 				}
-				sync.barrier_sync(SYNC_BEGINTAG);
+				sync.barrierSync(SYNC_BEGINTAG);
 				stage = STAGE.SYNC_BEGINTAG;
 				break;
 			case SYNC_BEGINTAG:
-				if (sync.barrier_proceed(SYNC_BEGINTAG)) {
+				if (sync.barrierProceed(SYNC_BEGINTAG)) {
 					stage = STAGE.PLAYING;
 					//System.out.println("Synced!");
 				}

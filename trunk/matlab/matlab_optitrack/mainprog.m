@@ -160,13 +160,14 @@ while 1
     
 end
 
+if(SAVE_TO_FILE)
+    fclose(fileHandle);
+end
+
 if shutdown_track == 1
     track_shutdown();
     save('run_number.mat', 'run_number');
     clear
 end
 
-if(SAVE_TO_FILE)
-    fclose(fileHandle);
-end
 close all

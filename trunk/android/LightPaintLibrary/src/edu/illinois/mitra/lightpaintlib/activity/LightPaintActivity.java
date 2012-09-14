@@ -1,4 +1,4 @@
-package edu.illinois.mitra.lightpaint;
+package edu.illinois.mitra.lightpaintlib.activity;
 
 import java.util.Collections;
 import java.util.LinkedList;
@@ -9,6 +9,7 @@ import edu.illinois.mitra.lightpaint.geometry.ImagePoint;
 import edu.illinois.mitra.lightpaint.utility.WptParser;
 import edu.illinois.mitra.starl.comms.MessageContents;
 import edu.illinois.mitra.starl.comms.RobotMessage;
+import edu.illinois.mitra.starl.functions.BarrierSynchronizer;
 import edu.illinois.mitra.starl.functions.RandomLeaderElection;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.LeaderElection;
@@ -20,6 +21,8 @@ import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 
 public class LightPaintActivity extends LogicThread implements MessageListener, RobotEventListener {
+	private static final String TAG = "LP";
+	
 	// Handler message
 	public static final int HANDLER_SCREEN = 9724;
 
@@ -34,7 +37,8 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 	private static final int ASSIGNMENT_REQ_ID = 50;
 	private static final int POSITION_UPDATE_ID = 51;
 	private static final int ASSIGNMENT_ID = 52;
-
+	private static final String BEGIN_BARRIER = "BEGIN";
+	
 	private static final MotionParameters motionParameters = new MotionParameters();
 	static {
 		motionParameters.COLAVOID_MODE = MotionParameters.COLAVOID_MODE_TYPE.STOP_ON_COLLISION;
@@ -42,7 +46,7 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 	}
 
 	private static enum Stage {
-		INIT, ELECT_LEADER, REQUEST_ASSIGNMENT, WAIT_FOR_ASSIGNMENT, DO_ASSIGNMENT, WAIT_TO_ARRIVE, DONE
+		INIT, ELECT_BARRIER, ELECT_LEADER, REQUEST_ASSIGNMENT, WAIT_FOR_ASSIGNMENT, DO_ASSIGNMENT, WAIT_TO_ARRIVE, DONE
 	};
 
 	private volatile Stage stage = Stage.INIT;
@@ -56,7 +60,8 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 		gvh.comms.addMsgListener(ASSIGNMENT_REQ_ID, this);
 
 		election = new RandomLeaderElection(gvh);
-
+		sync = new BarrierSynchronizer(gvh);
+		
 		// Set up motion parameters
 		gvh.plat.moat.setParameters(motionParameters);
 
@@ -64,6 +69,7 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 	}
 
 	private String leader;
+	private BarrierSynchronizer sync;
 	private LeaderElection election;
 	boolean iAmLeader = false;
 	LpAlgorithm alg;
@@ -80,15 +86,20 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 		while(true) {
 			switch(stage) {
 			case INIT:
-				election.elect();
-				setStage(Stage.ELECT_LEADER);
-				gvh.sleep((long) Math.abs((Math.random() * 1000)) + 1);
+				sync.barrierSync(BEGIN_BARRIER);
+				setStage(Stage.ELECT_BARRIER);
+				break;
+			case ELECT_BARRIER:
+				if(sync.barrierProceed(BEGIN_BARRIER)) {
+					election.elect();
+					setStage(Stage.ELECT_LEADER);
+				}
 				break;
 			case ELECT_LEADER:
 				if((leader = election.getLeader()) != null) {
 					iAmLeader = leader.equals(gvh.id.getName());
 					if(iAmLeader) {
-						System.out.println(name + " is leader!");
+						gvh.log.d(TAG, name + " is leader!");
 						// Create the algorithm, inform it of all robot
 						// positions
 						alg = new LpAlgorithm(WptParser.parseWaypoints(gvh), POINT_SNAP_RADIUS, MAX_DRAW_LENGTH, UNSAFE_RADIUS);
@@ -183,8 +194,7 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 			}
 
 			// Assignment[0] is the current robot position
-
-			System.out.println(assignment);
+			gvh.log.i(TAG, assignment.toString());
 
 			lastVisitedPoint = assignment.remove(0);
 			break;
@@ -225,7 +235,7 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 	}
 
 	private void setStage(Stage newstage) {
-		// System.out.println(super.name + "\t" + stage + "->" + newstage);
+		gvh.plat.setDebugInfo(newstage.toString());
 		stage = newstage;
 	}
 
@@ -247,15 +257,20 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 		updateScreen();
 	}
 
+	private boolean screenOn = false;
 	private void updateScreen() {
 		if(inMotion && illuminatePoint) {
-			gvh.plat.sendMainMsg(HANDLER_SCREEN, 1, 0);
-			if(iAmLeader)
-				System.out.println("Screen on! ");
-		} else {
+			if(!screenOn) {
+				screenOn = true;
+				gvh.plat.sendMainMsg(HANDLER_SCREEN, 1, 0);
+				if(iAmLeader)
+					gvh.log.d(TAG, "Screen on! ");
+			}
+		} else if(screenOn) {
+			screenOn = false;
 			gvh.plat.sendMainMsg(HANDLER_SCREEN, 0, 0);
 			if(iAmLeader)
-				System.out.println("** SCREEN OFF **");
+				gvh.log.d(TAG, "** SCREEN OFF **");
 		}
 	}
 

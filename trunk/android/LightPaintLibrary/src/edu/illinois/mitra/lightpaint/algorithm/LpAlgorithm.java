@@ -1,7 +1,5 @@
 package edu.illinois.mitra.lightpaint.algorithm;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -12,14 +10,11 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import edu.illinois.mitra.lightpaint.LightPaintActivity;
 import edu.illinois.mitra.lightpaint.geometry.ImageEdge;
 import edu.illinois.mitra.lightpaint.geometry.ImageGraph;
 import edu.illinois.mitra.lightpaint.geometry.ImagePoint;
 import edu.illinois.mitra.lightpaint.utility.Utility;
-import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.objects.ItemPosition;
-import edu.illinois.mitra.starlSim.draw.Drawer;
 
 /**
  * @author Adam Zimmerman
@@ -351,18 +346,5 @@ public class LpAlgorithm {
 				retval.addAll(tube.getValue());
 		}
 		return retval;
-	}
-
-	public void draw(Graphics2D g) {
-		drawing.draw(g, Color.LIGHT_GRAY, 12);
-		for(ImageGraph tube : reachTubes.values())
-			tube.draw(g, Color.red, 12, unsafeDrawRadius);
-
-		// Draw each robot position with a red unsafe boundary around it
-		g.setColor(Color.RED);
-		for(Entry<String, ImagePoint> robot : unsafeRobots.entrySet()) {
-			g.drawOval((int) (robot.getValue().getX() - unsafeDrawRadius), (int) (robot.getValue().getY() - unsafeDrawRadius), 2 * unsafeDrawRadius, 2 * unsafeDrawRadius);
-		}
-		painted.draw(g, Color.GREEN, 12);
 	}
 }

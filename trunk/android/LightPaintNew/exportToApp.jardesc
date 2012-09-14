@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="WINDOWS-1252" standalone="no"?>
+<jardesc>
+    <jar path="LightPaintApp/libs/lightpaintalgorithm.jar"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/LightPaintNew/exportToApp.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="false" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+    <selectedProjects/>
+    <manifest generateManifest="true" manifestLocation="" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
+        <sealing sealJar="false">
+            <packagesToSeal/>
+            <packagesToUnSeal/>
+        </sealing>
+    </manifest>
+    <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
+        <file path="/LightPaintNew/.project"/>
+        <javaElement handleIdentifier="=LightPaintNew/src&lt;edu.illinois.mitra.lightpaint{LightPaintActivity.java"/>
+        <file path="/LightPaintNew/ICD.txt"/>
+        <javaElement handleIdentifier="=LightPaintNew/src&lt;edu.illinois.mitra.lightpaint.utility"/>
+        <javaElement handleIdentifier="=LightPaintNew/src&lt;edu.illinois.mitra.lightpaint.algorithm"/>
+        <file path="/LightPaintNew/Plan.jnt"/>
+        <file path="/LightPaintNew/.classpath"/>
+        <folder path="/LightPaintNew/libs"/>
+        <javaElement handleIdentifier="=LightPaintNew/src&lt;edu.illinois.mitra.lightpaint.geometry"/>
+    </selectedElements>
+</jardesc>

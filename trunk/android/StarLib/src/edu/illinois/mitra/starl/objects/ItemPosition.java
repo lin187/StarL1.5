@@ -207,19 +207,15 @@ public class ItemPosition implements Comparable<ItemPosition>, Traceable {
 
 	// TODO: Un-deprecate these methods and make x and y private
 	// (Or make this class immutable and leave it the way it is)
-	@Deprecated
 	public int getX() {
 		return x;
 	}
-	@Deprecated
 	public int getY() {
 		return y;
 	}
-	@Deprecated
 	public int getAngle() {
 		return angle;
 	}
-	@Deprecated
 	public String getName() {
 		return name;
 	}
