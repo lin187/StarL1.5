@@ -71,8 +71,10 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 	private String leader;
 	private BarrierSynchronizer sync;
 	private LeaderElection election;
-	boolean iAmLeader = false;
-	LpAlgorithm alg;
+	
+	// Public to be accessed by Drawer
+	public boolean iAmLeader = false;
+	public LpAlgorithm alg;
 
 	private List<ItemPosition> assignment = Collections.synchronizedList(new LinkedList<ItemPosition>());
 

@@ -69,13 +69,6 @@ public class PrmPathFinder {
 		}
 	}
 
-//	public void draw(Graphics2D g) {
-//		synchronized(this) {
-//			if(points != null)
-//				points.draw(g, Color.BLUE, 12);
-//		}
-//	}
-
 	private ImageGraph connectNeighbors(ImageGraph points, ImagePoint point, ImageGraph unsafe) {
 		List<ImagePoint> neighbors = points.getPointsInDistanceOrder(point);
 

@@ -193,50 +193,6 @@ public class ImageGraph {
 		return graph.edgeSet().isEmpty();
 	}
 
-//	private static final Stroke LINE_STROKE = new BasicStroke(6);
-//
-//	public void draw(Graphics2D g, Color color, int pointSize, int unsafeRadius) {
-//		g.setColor(color);
-//		g.setStroke(LINE_STROKE);
-//
-//		for(ImagePoint p : graph.vertexSet()) {
-//			g.fillOval((int) p.getX() - (pointSize / 2), (int) p.getY() - (pointSize / 2), pointSize, pointSize);
-//			g.drawOval((int) (p.getX() - unsafeRadius), (int) (p.getY() - unsafeRadius), 2 * (int) unsafeRadius, 2 * (int) unsafeRadius);
-//		}
-//
-//		for(ImageEdge edge : graph.edgeSet()) {
-//			g.drawLine((int) edge.getStart().getX(), (int) edge.getStart().getY(), (int) edge.getEnd().getX(), (int) edge.getEnd().getY());
-//			// Draw lines offset by unsafeRadius to either side
-//			// Rotate the line by 90 degrees and scale to offset length
-//			ImagePoint rotated = new ImagePoint(-edge.getdY(), edge.getdX()).scale(unsafeRadius / edge.getLength());
-//			int xOffset = (int) rotated.getX();
-//			int yOffset = (int) rotated.getY();
-//			g.drawLine((int) edge.getStart().getX() - xOffset, (int) edge.getStart().getY() - yOffset, (int) edge.getEnd().getX() - xOffset, (int) edge.getEnd().getY() - yOffset);
-//			g.drawLine((int) edge.getStart().getX() + xOffset, (int) edge.getStart().getY() + yOffset, (int) edge.getEnd().getX() + xOffset, (int) edge.getEnd().getY() + yOffset);
-//		}
-//	}
-//
-//	private Color drawColor = Color.BLACK;
-//
-//	public void setDrawColor(Color color) {
-//		drawColor = color;
-//	}
-//
-//	public void draw(Graphics2D g) {
-//		draw(g, drawColor, 25);
-//	}
-//
-//	public void draw(Graphics2D g, Color color, int pointSize) {
-//		g.setColor(color);
-//		g.setStroke(LINE_STROKE);
-//
-//		for(ImagePoint p : graph.vertexSet())
-//			g.fillOval((int) p.getX() - (pointSize / 2), (int) p.getY() - (pointSize / 2), pointSize, pointSize);
-//
-//		for(ImageEdge edge : graph.edgeSet())
-//			g.drawLine((int) edge.getStart().getX(), (int) edge.getStart().getY(), (int) edge.getEnd().getX(), (int) edge.getEnd().getY());
-//	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -20,23 +20,22 @@ import edu.illinois.mitra.starl.objects.ItemPosition;
  * @author Adam Zimmerman
  */
 public class LpAlgorithm {
-	private final double unsafeRadius;
-	private final int unsafeDrawRadius;
+	public final double unsafeRadius;
 	private final double pointSnapRadius;
 	private final double maxDrawPathLength;
 
-	private final ImageGraph drawing = new ImageGraph();
+	// Public to be accessed by drawer
+	public final ImageGraph drawing = new ImageGraph();
 	private ImageGraph unpainted;
-	private final ImageGraph painted = new ImageGraph();
+	public final ImageGraph painted = new ImageGraph();
 
-	private final Map<String, ImagePoint> unsafeRobots = new HashMap<String, ImagePoint>();
-	private final Map<String, ImageGraph> reachTubes = new HashMap<String, ImageGraph>();
+	public final Map<String, ImagePoint> unsafeRobots = new HashMap<String, ImagePoint>();
+	public final Map<String, ImageGraph> reachTubes = new HashMap<String, ImageGraph>();
 
 	private final PrmPathFinder prm;
 
 	public LpAlgorithm(Set<ImageEdge> edges, double pointSnapRadius, double maxDrawPathLength, double unsafeRadius) {
 		this.unsafeRadius = 2 * unsafeRadius;
-		this.unsafeDrawRadius = (int) unsafeRadius;
 		this.pointSnapRadius = pointSnapRadius;
 		this.maxDrawPathLength = maxDrawPathLength;
 
