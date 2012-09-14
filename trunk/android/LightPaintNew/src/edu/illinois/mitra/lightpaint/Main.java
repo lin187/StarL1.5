@@ -14,7 +14,7 @@ public class Main {
 	private static String inputFilename = "simpleTest";
 
 	public static void main(String[] args) {
-		SvgParser parser = new SvgParser(2700,2700,1500,1500);
+		SvgParser parser = new SvgParser(2600,2600,1500,1500);
 
 		Set<ImageEdge> image = parser.parseImage("input_images/" + inputFilename + ".svg");
 		WptWriter.writeWpt("waypoints/" + inputFilename + ".wpt", image);

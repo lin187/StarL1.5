@@ -76,9 +76,9 @@ public class MainHandler extends Handler {
 		case LightPaintActivity.HANDLER_SCREEN:
 			boolean illuminate = (msg.arg1 == 1);
 			System.out.println(illuminate);
-//			app.lp.screenBrightness = illuminate ? 100 : 1;
-//			app.mainLayout.setBackgroundColor(illuminate ? Color.WHITE : Color.BLACK);
-//			app.getWindow().setAttributes(app.lp);
+			app.lp.screenBrightness = illuminate ? 100 : 1;
+			app.mainLayout.setBackgroundColor(illuminate ? Color.WHITE : Color.BLACK);
+			app.getWindow().setAttributes(app.lp);
 			break;
 		}
 	}

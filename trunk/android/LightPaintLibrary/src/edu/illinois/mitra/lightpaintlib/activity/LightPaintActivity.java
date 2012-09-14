@@ -22,22 +22,21 @@ import edu.illinois.mitra.starl.objects.ItemPosition;
 
 public class LightPaintActivity extends LogicThread implements MessageListener, RobotEventListener {
 	private static final String TAG = "LP";
-	
-	// Handler message
-	public static final int HANDLER_SCREEN = 9724;
 
 	// Algorithm constants
 	private static final double POINT_SNAP_RADIUS = 25;
 	private static final double MAX_DRAW_LENGTH = 1200;
 	private static final double UNSAFE_RADIUS = 220;
 
-	private static final long MAX_REQUEST_WAIT_TIME = 6000;
+	private static final long MAX_REQUEST_WAIT_TIME = 10000;
 
 	// Message IDs
 	private static final int ASSIGNMENT_REQ_ID = 50;
 	private static final int POSITION_UPDATE_ID = 51;
 	private static final int ASSIGNMENT_ID = 52;
 	private static final String BEGIN_BARRIER = "BEGIN";
+	// Handler message
+	public static final int HANDLER_SCREEN = 9724;
 	
 	private static final MotionParameters motionParameters = new MotionParameters();
 	static {
@@ -102,8 +101,7 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 					iAmLeader = leader.equals(gvh.id.getName());
 					if(iAmLeader) {
 						gvh.log.d(TAG, name + " is leader!");
-						// Create the algorithm, inform it of all robot
-						// positions
+						// Create the algorithm, inform it of all robot positions
 						alg = new LpAlgorithm(WptParser.parseWaypoints(gvh), POINT_SNAP_RADIUS, MAX_DRAW_LENGTH, UNSAFE_RADIUS);
 
 						for(String robot : gvh.id.getParticipants())
@@ -115,6 +113,7 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 			case REQUEST_ASSIGNMENT:
 				// Send a request to the leader
 				assignment.clear();
+				gvh.log.e(TAG, "Requesting an assignment");
 				if(iAmLeader) {
 					assignment.addAll(alg.assignSegment(super.name, gvh.gps.getMyPosition()));
 					if(!assignment.isEmpty()) {
@@ -134,10 +133,6 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 				}
 				break;
 			case WAIT_FOR_ASSIGNMENT:
-				if(!assignment.isEmpty()) {
-					setStage(Stage.DO_ASSIGNMENT);
-					break;
-				}
 				if((gvh.time() - reqSentTime) > MAX_REQUEST_WAIT_TIME) {
 					// Request timed out, request again
 					setStage(Stage.REQUEST_ASSIGNMENT);
@@ -183,7 +178,10 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 			if(msg.getContents().equals(EMPTY_MSG_CONTENTS)) {
 				return;
 			} else if(msg.getContents().equals(FINISHED_MSG_CONTENTS)) {
-				stage = Stage.DONE;
+				setStage(Stage.DONE);
+				return;
+			} else if(stage != Stage.WAIT_FOR_ASSIGNMENT) {
+				gvh.log.e(TAG, "Rejected assignment! I'm not expecting to receive one!");
 				return;
 			}
 
@@ -193,20 +191,23 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 				} catch (IllegalArgumentException e) {
 					System.err.println(msg);
 				}
-
 			}
+			gvh.log.d(TAG, name + " new assignment has " + assignment.size() + " points");
 
 			// Assignment[0] is the current robot position
-			gvh.log.i(TAG, assignment.toString());
-
 			lastVisitedPoint = assignment.remove(0);
+
+			setStage(Stage.DO_ASSIGNMENT);
 			break;
 		case ASSIGNMENT_REQ_ID:
-			if(!iAmLeader)
+			if(!iAmLeader || alg == null)
 				return;
 
+			gvh.log.i(TAG, msg.getFrom() + " requesting a new assignment...");
+			long now = System.nanoTime();
 			List<ItemPosition> assigned = alg.assignSegment(msg.getFrom(), gvh.gps.getPosition(msg.getFrom()));
-
+			gvh.log.i(TAG, "Assignment took " + (System.nanoTime()-now)/(double)1e9 + " nanoseconds for " + assignment.size() + " points.");
+			
 			RobotMessage response = new RobotMessage(msg.getFrom(), super.name, ASSIGNMENT_ID, (MessageContents) null);
 
 			if(alg.isDone()) {
@@ -233,12 +234,13 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 			ImagePoint start = ImagePoint.fromItemPosition(startIp);
 			ImagePoint end = ImagePoint.fromItemPosition(endIp);
 			alg.markSafeDrawn(msg.getFrom(), start, end);
+			gvh.log.e(TAG, "Marked point from " + msg.getFrom() + " clear");
 			break;
 		}
 	}
 
 	private void setStage(Stage newstage) {
-		gvh.plat.setDebugInfo(newstage.toString());
+		gvh.plat.setDebugInfo(newstage.toString() + " - " + leader + " - " + assignment.size());
 		stage = newstage;
 	}
 
@@ -281,12 +283,10 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 	public void cancel() {
 		sync.cancel();
 		election.cancel();
+		gvh.removeEventListener(this);
 		setStage(Stage.DONE);
 		gvh.comms.removeMsgListener(ASSIGNMENT_ID);
 		gvh.comms.removeMsgListener(POSITION_UPDATE_ID);
 		gvh.comms.removeMsgListener(ASSIGNMENT_REQ_ID);
-	}
-
-	
-	
+	}	
 }

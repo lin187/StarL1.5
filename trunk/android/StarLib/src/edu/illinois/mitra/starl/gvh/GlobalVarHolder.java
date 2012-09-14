@@ -1,7 +1,9 @@
 package edu.illinois.mitra.starl.gvh;
 
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Set;
+import java.util.WeakHashMap;
 
 import edu.illinois.mitra.starl.interfaces.RobotEventListener;
 import edu.illinois.mitra.starl.interfaces.RobotEventListener.Event;
@@ -9,8 +11,6 @@ import edu.illinois.mitra.starl.interfaces.RobotEventListener.Event;
 /**
  * The GlobalVarHolder encapsulates all communication, location, identification, logging, tracing, and platform specific functionality. It is the core of
  * the StarL framework and is used by nearly all StarL functions.
- * 
- * As Guster would say, "The king of it all, the belle of the ball"
  * 
  * @author Adam Zimmerman
  * @version 2.0
@@ -33,7 +33,7 @@ public abstract class GlobalVarHolder {
 	}
 	
 	// Events
-	private HashSet<RobotEventListener> eventListeners = new HashSet<RobotEventListener>();
+	private Set<RobotEventListener> eventListeners = Collections.newSetFromMap(new WeakHashMap<RobotEventListener,Boolean>());
 	
 	/**
 	 * Register a RobotEventListener to receive all future system events

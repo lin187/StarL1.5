@@ -14,10 +14,9 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -57,6 +56,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 	private LogicThread runThread;
 	private MainHandler mainHandler;
 	
+	// TODO: Set lp to be the window parameters!!
 	public WindowManager.LayoutParams lp;
 	public RelativeLayout mainLayout;
 
@@ -165,8 +165,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 	private ProgressBar pbBattery;
 
 	private void setupGUI() {
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-		final SharedPreferences.Editor spe = prefs.edit();
+		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
 		mainLayout = (RelativeLayout) findViewById(R.id.mainLayout);
 		txtRobotName = (TextView) findViewById(R.id.txtRobotName);
@@ -187,6 +186,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 					public void onClick(DialogInterface dialog, int item) {
 						selectedRobot = item;
 						txtRobotName.setText(participants[selectedRobot]);
+						SharedPreferences.Editor spe = prefs.edit();
 						spe.putInt(PREF_SELECTED_ROBOT, selectedRobot);
 						spe.commit();
 						// Restart the application
