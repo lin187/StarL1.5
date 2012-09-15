@@ -1,6 +1,6 @@
 % Main OptiTrack interface
 % Settings
-WPT_FILENAME = 'waypoints\simpleTest.wpt';
+WPT_FILENAME = 'waypoints\pong.wpt';
 load_settings;
 mainprog;
     

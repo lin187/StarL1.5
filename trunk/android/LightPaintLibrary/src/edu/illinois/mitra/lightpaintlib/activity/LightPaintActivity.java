@@ -3,6 +3,13 @@ package edu.illinois.mitra.lightpaintlib.activity;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import edu.illinois.mitra.lightpaint.algorithm.LpAlgorithm;
 import edu.illinois.mitra.lightpaint.geometry.ImagePoint;
@@ -24,11 +31,11 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 	private static final String TAG = "LP";
 
 	// Algorithm constants
-	private static final double POINT_SNAP_RADIUS = 25;
+	private static final double POINT_SNAP_RADIUS = 50;
 	private static final double MAX_DRAW_LENGTH = 1200;
-	private static final double UNSAFE_RADIUS = 220;
+	private static final double UNSAFE_RADIUS = 230;
 
-	private static final long MAX_REQUEST_WAIT_TIME = 10000;
+	private static final long MAX_REQUEST_WAIT_TIME = 5000;
 
 	// Message IDs
 	private static final int ASSIGNMENT_REQ_ID = 50;
@@ -84,6 +91,7 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 
 	@Override
 	public List<Object> callStarL() {
+		responseService.submit(new Assigner());
 		while(true) {
 			switch(stage) {
 			case INIT:
@@ -115,27 +123,20 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 				assignment.clear();
 				gvh.log.e(TAG, "Requesting an assignment");
 				if(iAmLeader) {
-					assignment.addAll(alg.assignSegment(super.name, gvh.gps.getMyPosition()));
-					if(!assignment.isEmpty()) {
-						lastVisitedPoint = assignment.remove(0);
-						setStage(Stage.DO_ASSIGNMENT);
-					} else if(alg.isDone() && (doneInformedCount == (gvh.id.getParticipants().size() - 1))) {
-						stage = Stage.DONE;
-					} else {
-						reqSentTime = gvh.time();
-						setStage(Stage.WAIT_FOR_ASSIGNMENT);
-					}
+					assignmentRequesters.add(name);					
+//					assignment.addAll(alg.assignSegment(super.name, gvh.gps.getMyPosition()));
 				} else {
 					RobotMessage req = new RobotMessage(leader, name, ASSIGNMENT_REQ_ID, "");
 					gvh.comms.addOutgoingMessage(req);
-					reqSentTime = gvh.time();
-					setStage(Stage.WAIT_FOR_ASSIGNMENT);
 				}
+				reqSentTime = gvh.time();
+				setStage(Stage.WAIT_FOR_ASSIGNMENT);
 				break;
 			case WAIT_FOR_ASSIGNMENT:
 				if((gvh.time() - reqSentTime) > MAX_REQUEST_WAIT_TIME) {
 					// Request timed out, request again
 					setStage(Stage.REQUEST_ASSIGNMENT);
+					gvh.log.e(TAG, "Assignment request had timed out: " + gvh.time() + ", " + reqSentTime + ", " + (gvh.time() - reqSentTime));
 				}
 				break;
 			case DO_ASSIGNMENT:
@@ -204,25 +205,8 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 				return;
 
 			gvh.log.i(TAG, msg.getFrom() + " requesting a new assignment...");
-			long now = System.nanoTime();
-			List<ItemPosition> assigned = alg.assignSegment(msg.getFrom(), gvh.gps.getPosition(msg.getFrom()));
-			gvh.log.i(TAG, "Assignment took " + (System.nanoTime()-now)/(double)1e9 + " nanoseconds for " + assignment.size() + " points.");
-			
-			RobotMessage response = new RobotMessage(msg.getFrom(), super.name, ASSIGNMENT_ID, (MessageContents) null);
-
-			if(alg.isDone()) {
-				response.setContents(FINISHED_MSG_CONTENTS);
-				doneInformedCount++;
-			} else if(assigned != null && assigned.size() > 0) {
-				String[] assignedPieces = new String[assigned.size()];
-				for(int i = 0; i < assigned.size(); i++)
-					assignedPieces[i] = assigned.get(i).toMessage();
-				response.setContents(new MessageContents(assignedPieces));
-			} else {
-				response.setContents(EMPTY_MSG_CONTENTS);
-			}
-
-			gvh.comms.addOutgoingMessage(response);
+			if(!assignmentRequesters.contains(msg.getFrom()))
+				assignmentRequesters.add(msg.getFrom());
 			break;
 		case POSITION_UPDATE_ID:
 			if(!iAmLeader)
@@ -239,6 +223,60 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 		}
 	}
 
+	
+
+	private BlockingQueue<String> assignmentRequesters = new LinkedBlockingQueue<String>();
+	private ExecutorService responseService = Executors.newSingleThreadExecutor(); 
+	
+	private class Assigner implements Runnable {
+		@Override
+		public void run() {
+			while(true) {
+				try {
+					assign(assignmentRequesters.take());
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	private void assign(String from) {
+		long now = System.nanoTime();
+		List<ItemPosition> assigned = alg.assignSegment(from, gvh.gps.getPosition(from));
+		gvh.log.i(TAG, "Assignment took " + (System.nanoTime()-now)/(double)1e9 + " seconds for " + assignment.size() + " points.");
+		
+		// If the requester was another robot, respond with a message
+		if(!from.equals(name)) {		
+			RobotMessage response = new RobotMessage(from, super.name, ASSIGNMENT_ID, (MessageContents) null);
+			if(alg.isDone()) {
+				response.setContents(FINISHED_MSG_CONTENTS);
+				doneInformedCount++;
+			} else if(assigned != null && assigned.size() > 0) {
+				String[] assignedPieces = new String[assigned.size()];
+				for(int i = 0; i < assigned.size(); i++)
+					assignedPieces[i] = assigned.get(i).toMessage();
+				response.setContents(new MessageContents(assignedPieces));
+			} else {
+				response.setContents(EMPTY_MSG_CONTENTS);
+			}
+			gvh.comms.addOutgoingMessage(response);
+		} else {
+			// If the requester was me, skip the message handling.
+			assignment.addAll(assigned);
+			if(!assignment.isEmpty()) {
+				lastVisitedPoint = assignment.remove(0);
+				setStage(Stage.DO_ASSIGNMENT);
+			} else if(alg.isDone() && (doneInformedCount == (gvh.id.getParticipants().size() - 1))) {
+				setStage(Stage.DONE);
+			} else {
+				reqSentTime = gvh.time();
+				setStage(Stage.WAIT_FOR_ASSIGNMENT);
+			}
+		}
+	}
+	
+	
 	private void setStage(Stage newstage) {
 		gvh.plat.setDebugInfo(newstage.toString() + " - " + leader + " - " + assignment.size());
 		stage = newstage;
@@ -262,18 +300,20 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 		updateScreen();
 	}
 
+	private static final int ILLUMINATED_LEVEL = 100;
+	private static final int DARK_LEVEL = 1;
 	private boolean screenOn = false;
 	private void updateScreen() {
 		if(inMotion && illuminatePoint) {
 			if(!screenOn) {
 				screenOn = true;
-				gvh.plat.sendMainMsg(HANDLER_SCREEN, 1, 0);
+				gvh.plat.sendMainMsg(HANDLER_SCREEN, 1, ILLUMINATED_LEVEL);
 				if(iAmLeader)
 					gvh.log.d(TAG, "Screen on! ");
 			}
 		} else if(screenOn) {
 			screenOn = false;
-			gvh.plat.sendMainMsg(HANDLER_SCREEN, 0, 0);
+			gvh.plat.sendMainMsg(HANDLER_SCREEN, 0, DARK_LEVEL);
 			if(iAmLeader)
 				gvh.log.d(TAG, "** SCREEN OFF **");
 		}

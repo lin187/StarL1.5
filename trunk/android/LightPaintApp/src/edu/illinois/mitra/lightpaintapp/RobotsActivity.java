@@ -70,6 +70,8 @@ public class RobotsActivity extends Activity implements MessageListener {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		selectedRobot = prefs.getInt(PREF_SELECTED_ROBOT, 0);
 
+		lp = getWindow().getAttributes();
+		
 		// Set up the GUI
 		setupGUI();
 
@@ -108,6 +110,8 @@ public class RobotsActivity extends Activity implements MessageListener {
 				gvh.comms.addOutgoingMessage(informLaunch);
 				
 				mainHandler.obtainMessage(LightPaintActivity.HANDLER_SCREEN, 0, 0);
+
+				gvh.plat.sendMainMsg(LightPaintActivity.HANDLER_SCREEN, 0,0);
 				
 				results = executor.submit(runThread);
 			} else {
@@ -124,6 +128,8 @@ public class RobotsActivity extends Activity implements MessageListener {
 		gvh.plat.moat.motion_resume();
 		executor = Executors.newSingleThreadExecutor();
 		createAppInstance(gvh);
+		gvh.plat.sendMainMsg(LightPaintActivity.HANDLER_SCREEN, 0,-1);
+		gvh.gps.getWaypointPositions().clear();
 	}
 
 	public void connect() {

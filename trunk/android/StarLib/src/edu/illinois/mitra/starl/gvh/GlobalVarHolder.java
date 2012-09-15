@@ -2,6 +2,7 @@ package edu.illinois.mitra.starl.gvh;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.WeakHashMap;
 
@@ -33,7 +34,7 @@ public abstract class GlobalVarHolder {
 	}
 	
 	// Events
-	private Set<RobotEventListener> eventListeners = Collections.newSetFromMap(new WeakHashMap<RobotEventListener,Boolean>());
+	private Set<RobotEventListener> eventListeners = new HashSet<RobotEventListener>();
 	
 	/**
 	 * Register a RobotEventListener to receive all future system events

@@ -87,6 +87,10 @@ public class PositionList {
 		return positions.size();
 	}
 	
+	public void clear() {
+		positions.clear();
+	}
+	
 	/**
 	 * @return An ArrayList representation of all contained ItemPositions
 	 */
