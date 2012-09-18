@@ -201,7 +201,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 		// create the initial path
 		final int INIT_PATH_DELTA_DIST = 100; // distance per offline path waypoint
 		final int INIT_PATH_DELTA_TIME = 1000; // time per offline path waypoint
-		final int INIT_PATH_POINTS = 100;
+		final int INIT_PATH_POINTS = 300;
 		final Point INIT_PATH_START = new Point(0,500); // initial point for the offline path
 		
 		currentPath.clear();
@@ -464,9 +464,9 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 			
 			
 			if (distance == 0 )
-				velocity = 0 ; 
+				velocity = 1 ; 
 			else {
-				velocity = (int)( distance * 1000/ CYCLE_LENGTH );
+				velocity = (int)( Math.abs(distance) * 1000/ CYCLE_LENGTH );
 				
 				if (velocity < VELOCITY_MIN)
 					velocity = VELOCITY_MIN ; 
@@ -481,7 +481,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 			//If robot is not on time
 			velocity = VELOCITY_MAX ; 
 		}
-		System.out.println("distance: " + distance + " velocity: " + velocity);
+	//	System.out.println("distance: " + distance + " velocity: " + velocity);
 		
 		return velocity;
 	}
@@ -1259,9 +1259,9 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 					newPoint.x = x ; 
 					newPoint.y = y ; 
 					
-	if (fullCheck(newPath, currentPath) == true)
-	if (newPath != null)
-		this.receivedDesiredPath = newPath;				
+//	if (fullCheck(newPath, currentPath) == true)
+		if (newPath != null)
+			this.receivedDesiredPath = newPath;				
 }
 }
 else
