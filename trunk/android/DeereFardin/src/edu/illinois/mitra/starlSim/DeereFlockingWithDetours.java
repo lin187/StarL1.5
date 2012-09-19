@@ -1,9 +1,5 @@
 package edu.illinois.mitra.starlSim;
 
-
-
-
-
 import java.awt.Point;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -13,6 +9,7 @@ import java.util.List;
 
 import edu.illinois.mitra.starl.comms.RobotMessage;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
+import edu.illinois.mitra.starl.gvh.Gps;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.interfaces.MessageListener;
 import edu.illinois.mitra.starl.motion.MotionParameters;
@@ -72,7 +69,8 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 	
 	ArrayList <String> participantsList = new ArrayList<String>() ;
 	
-	private RobotMotion motion;
+	RobotMotion motion;
+	Gps gps;
 	int robotId; // robot 0 = leader
 	private String robotName;
 	private int numRobots;
@@ -130,6 +128,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 	public DeereFlockingWithDetours(GlobalVarHolder gvh) {
 		super(gvh);
 		
+		gps = gvh.gps;
 		motion = gvh.plat.moat;
 		robotName = gvh.id.getName();
 		robotId = getRobotId();

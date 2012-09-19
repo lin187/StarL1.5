@@ -45,6 +45,7 @@ public class DrawPanel extends ZoomablePanel
 	ArrayList <String> robotNames = new ArrayList <String>();
 	boolean[] wirelessBlocked;
 	Set<String> blockedWirelessNames;
+	Point clicked = null;
 
 	public DrawPanel(Set<String> robotNames, Set<String> blockedWirelessNames, SimSettings settings)
 	{
@@ -184,14 +185,24 @@ public class DrawPanel extends ZoomablePanel
 			drawWireless(g);
 	}
 	
+	public void notifyClickListeners()
+	{
+		if (clicked != null)
+		{
+			for (AcceptsPointInput c : clickListeners)
+				c.receivedPointInput(clicked.x, clicked.y);
+			
+			clicked = null;
+		}
+	}
+	
 	protected void mousePressedAt(Point p, MouseEvent e) 
 	{
 		// right click to provide point input
 		
 		if (e.getButton() == MouseEvent.BUTTON3)
 		{
-			for (AcceptsPointInput c : clickListeners)
-				c.receivedPointInput(p.x, p.y);
+			clicked = p;
 		}
 	}
 	

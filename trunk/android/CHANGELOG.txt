@@ -1,5 +1,9 @@
 ----- StarLib Changelog -----
 
+9/19/2012, Stan
+- Modified Deere Fardin App
+- Synchronized Point Input in Simulator with drawing (and therefore with logic thread)
+
 9/8/2012, Adam
 - Cleaned up pieces of StarLib, including Android specific code
 - Removed DeadReckoner because it's useless with the iRobot Create chassis

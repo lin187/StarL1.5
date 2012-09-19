@@ -111,10 +111,15 @@ MouseListener, MouseMotionListener, ExplicitlyDrawable
 		
 	}
 	
+	public abstract void notifyClickListeners();
+	
 	long lastDrawTime = 0;
 	
 	public void drawNow(Collection <LogicThread> lts)
 	{
+		// hackish, also send point input events now (so it's synchronized withl logic threads)
+		notifyClickListeners();
+		
 		long now = System.currentTimeMillis();
 		
 		final int MIN_REDRAW_MS = 1000 / settings.MAX_FPS;
