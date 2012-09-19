@@ -5,6 +5,7 @@
 - Added timestamp variable to TraceWriter methods
 - Removed StarLSim's "simapps" package from the build path
 - Simulated apps now start their own trace files, no need to call trace.traceStart()
+- Removed the broken distance predicate, added ability to include custom position observers for a simulation.
 
 9/8/2012, Adam
 - Cleaned up pieces of StarLib, including Android specific code

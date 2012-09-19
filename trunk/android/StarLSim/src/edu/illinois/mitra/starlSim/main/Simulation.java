@@ -2,9 +2,7 @@ package edu.illinois.mitra.starlSim.main;
 
 import java.awt.Color;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -41,11 +39,12 @@ public class Simulation {
 
 	private ExecutorService executor;
 
-	private DistancePredicate distpred;
-
 	private final SimSettings settings;
 
 	public Simulation(Class<? extends LogicThread> app, final SimSettings settings) {
+		if(settings.N_BOTS <= 0)
+			throw new IllegalArgumentException("Must have more than zero robots to simulate!");
+
 		// Create set of robots whose wireless is blocked for passage between
 		// the GUI and the simulation communication object
 		Set<String> blockedRobots = new HashSet<String>();
@@ -138,11 +137,18 @@ public class Simulation {
 		if(settings.USE_GLOBAL_LOGGER)
 			gps.addObserver(createGlobalLogger(settings));
 
-		if(settings.USE_DISTANCE_PREDICATE)
-			enableDistancePredicate(settings.PREDICATE_RADIUS, settings.PREDICATE_OUT_DIR);
-
 		// show viewer
 		drawFrame.setVisible(true);
+	}
+	
+	/**
+	 * Add an Observer to the list of GPS observers. This Observer's update method will be passed a PositionList object as the argument.  
+	 * This must be called before the simulation is started! 
+	 * @param o
+	 */
+	public void addPositionObserver(Observer o) {
+		if(executor == null)
+			gps.addObserver(o);
 	}
 
 	private Observer createGlobalLogger(final SimSettings settings) {
@@ -164,16 +170,6 @@ public class Simulation {
 			}
 		};
 		return globalLogger;
-	}
-
-	private void enableDistancePredicate(int radius, String dir) {
-		if(dir == null) {
-			System.err.println("Distance predicate is enabled but the output directory is null!");
-			return;
-		} else if(radius > 0) {
-			distpred = new DistancePredicate("truth", dir, radius);
-			gps.addObserver(distpred);
-		}
 	}
 
 	public void start() {
@@ -222,8 +218,6 @@ public class Simulation {
 	}
 
 	public void shutdown() {
-		if(distpred != null)
-			distpred.close();
 		executor.shutdownNow();
 	}
 }
