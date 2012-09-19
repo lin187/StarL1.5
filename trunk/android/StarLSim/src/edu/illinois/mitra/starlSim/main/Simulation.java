@@ -1,8 +1,6 @@
 package edu.illinois.mitra.starlSim.main;
 
 import java.awt.Color;
-import java.io.File;
-import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -18,8 +16,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import javax.swing.JFrame;
-
-import com.google.gson.Gson;
 
 import edu.illinois.mitra.starl.harness.IdealSimGpsProvider;
 import edu.illinois.mitra.starl.harness.RealisticSimGpsProvider;
@@ -178,16 +174,8 @@ public class Simulation {
 
 		// Save settings to JSON file
 		if(settings.TRACE_OUT_DIR != null) {
-			Gson gson = new Gson();
-			String json = gson.toJson(settings);
-			try {
-				FileWriter fos = new FileWriter(new File(settings.TRACE_OUT_DIR, "settings.json"));
-				fos.write(json);
-				fos.close();
-			} catch(Exception e) {
-				e.printStackTrace();
-				System.err.println("Failed to write settings JSON file");
-			}
+			
+			SettingsWriter.writeSettings(settings);
 		}
 
 		// Invoke all simulated robots

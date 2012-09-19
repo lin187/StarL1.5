@@ -1,6 +1,9 @@
 ----- StarLib Changelog -----
 
 9/19/2012, Stan
+- Created a SettingsWriter class to contain the Gson code so that I can run the simulator without having to download the library
+
+9/19/2012, Stan
 - Modified Deere Fardin App
 - Synchronized Point Input in Simulator with drawing (and therefore with logic thread)
 

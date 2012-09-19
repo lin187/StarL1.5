@@ -133,7 +133,6 @@ public class StanLogicThread extends LogicThread implements MessageListener
 		while(keepLooping == true) {			
 			switch (stage) {
 			case START:
-				gvh.trace.traceSync("LAUNCH");
 				stage = STAGE.MOVE;
 				
 				leaderGoto(waypoints[curWaypoint]);
