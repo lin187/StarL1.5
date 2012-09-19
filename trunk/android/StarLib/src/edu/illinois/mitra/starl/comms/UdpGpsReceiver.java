@@ -54,7 +54,7 @@ public class UdpGpsReceiver extends Thread implements GpsReceiver {
 		}
 		
 		gvh.log.i(TAG, "Listening to GPS host on port " + port);
-		gvh.trace.traceEvent(TAG, "Created");
+		gvh.trace.traceEvent(TAG, "Created", gvh.time());
 	}
 
 	@Override
@@ -93,7 +93,7 @@ public class UdpGpsReceiver extends Thread implements GpsReceiver {
 		    				try {
 		    					ItemPosition newpos = new ItemPosition(parts[i]);
 		    					waypointPositions.update(newpos, gvh.time());
-		    					gvh.trace.traceEvent(TAG, "Received Waypoint", newpos);
+		    					gvh.trace.traceEvent(TAG, "Received Waypoint", newpos, gvh.time());
 		    				} catch(ItemFormattingException e){
 		    					gvh.log.e(TAG, "Invalid item formatting: " + e.getError());
 		    				}
@@ -104,7 +104,7 @@ public class UdpGpsReceiver extends Thread implements GpsReceiver {
 		    					robotPositions.update(newpos, gvh.time());
 		    					gvh.sendRobotEvent(Event.GPS);
 		    					if(newpos.name.equals(name)) {
-		    						gvh.trace.traceEvent(TAG, "Received Position", newpos);
+		    						gvh.trace.traceEvent(TAG, "Received Position", newpos, gvh.time());
 		    						gvh.sendRobotEvent(Event.GPS_SELF);
 		    					}
 		    				} catch(ItemFormattingException e){
@@ -112,12 +112,12 @@ public class UdpGpsReceiver extends Thread implements GpsReceiver {
 		    				}
 		    				break;
 		    			case 'G':
-		    				gvh.trace.traceEvent(TAG, "Received launch command");
+		    				gvh.trace.traceEvent(TAG, "Received launch command", gvh.time());
 		    				int[] args = Common.partsToInts(parts[i].substring(3).split(" "));
 		    				gvh.plat.sendMainMsg(HandlerMessage.MESSAGE_LAUNCH, args[0], args[1]);
 		    				break;
 		    			case 'A':
-		    				gvh.trace.traceEvent(TAG, "Received abort command");
+		    				gvh.trace.traceEvent(TAG, "Received abort command", gvh.time());
 		    				gvh.plat.sendMainMsg(HandlerMessage.MESSAGE_ABORT, null);
 		    				break;
 		    			default:
@@ -164,7 +164,7 @@ public class UdpGpsReceiver extends Thread implements GpsReceiver {
             e.printStackTrace();
         }
         gvh.log.i(TAG, "Closed UDP GPS socket");
-		gvh.trace.traceEvent(TAG, "Cancelled");
+		gvh.trace.traceEvent(TAG, "Cancelled", gvh.time());
     }
 
 	@Override

@@ -105,10 +105,12 @@ public class SimSettings {
 	/**
 	 * Enable/disable the distance predicate
 	 */
+	@Deprecated
 	public boolean USE_DISTANCE_PREDICATE = false;
 	/**
 	 * Millimeters. Distance predicate radius.
 	 */
+	@Deprecated
 	public int PREDICATE_RADIUS = 0; // Zero disables distance predicate
 										// checking and truth output
 	/**
@@ -122,6 +124,7 @@ public class SimSettings {
 	/**
 	 * Predicate output directory.
 	 */
+	@Deprecated
 	public String PREDICATE_OUT_DIR = null;
 
 	/**
@@ -371,5 +374,6 @@ public class SimSettings {
 		this.DRAW_TRACE_LENGTH = builder.DRAW_TRACE_LENGTH;
 		this.MAX_FPS = builder.MAX_FPS;
 		this.DRAWER = builder.DRAWER;
+		this.TIMEOUT = builder.TIMEOUT;
 	}
 }

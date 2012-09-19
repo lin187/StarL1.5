@@ -21,7 +21,7 @@ import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import edu.illinois.mitra.lightpaintlib.activity.LightPaintActivity;
+import edu.illinois.mitra.lightpaint.activity.LightPaintActivity;
 import edu.illinois.mitra.starl.comms.MessageContents;
 import edu.illinois.mitra.starl.comms.RobotMessage;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
@@ -55,8 +55,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 	private Future<List<Object>> results;
 	private LogicThread runThread;
 	private MainHandler mainHandler;
-	
-	// TODO: Set lp to be the window parameters!!
+
 	public WindowManager.LayoutParams lp;
 	public RelativeLayout mainLayout;
 
@@ -104,7 +103,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 				launched = true;
 				cbRunning.setChecked(true);
 
-				gvh.trace.traceSync("APPLICATION LAUNCH");
+				gvh.trace.traceSync("APPLICATION LAUNCH", gvh.time());
 
 				RobotMessage informLaunch = new RobotMessage("ALL", gvh.id.getName(), Common.MSG_ACTIVITYLAUNCH, new MessageContents(Common.intsToStrings(numWaypoints, runNum)));
 				gvh.comms.addOutgoingMessage(informLaunch);
@@ -171,6 +170,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 	private ProgressBar pbBattery;
 
 	private void setupGUI() {
+		lp = getWindow().getAttributes();
 		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
 		mainLayout = (RelativeLayout) findViewById(R.id.mainLayout);

@@ -22,7 +22,7 @@ public class IdealSimMotionAutomaton extends RobotMotion implements RobotEventLi
 		this.gpspro = gpspro; 
 		name = gvh.id.getName();
 		gvh.addEventListener(this);
-		gvh.trace.traceEvent(TAG, "Created");
+		gvh.trace.traceEvent(TAG, "Created", gvh.time());
 	}
 	@Override
 	public void goTo(ItemPosition dest) {
@@ -35,7 +35,7 @@ public class IdealSimMotionAutomaton extends RobotMotion implements RobotEventLi
 		ItemPosition ip = new ItemPosition(dest);
 		this.dest = ip;
 		
-		gvh.trace.traceEvent(TAG, "Go To", ip);
+		gvh.trace.traceEvent(TAG, "Go To", ip, gvh.time());
 		
 		gpspro.setDestination(name, ip, param.LINSPEED_MAX);
 		
@@ -53,13 +53,13 @@ public class IdealSimMotionAutomaton extends RobotMotion implements RobotEventLi
 	
 	@Override
 	public void cancel() {
-		gvh.trace.traceEvent(TAG, "Cancelled");
+		gvh.trace.traceEvent(TAG, "Cancelled", gvh.time());
 		motion_stop();
 	}
 
 	@Override
 	public void motion_stop() {
-		gvh.trace.traceEvent(TAG, "Halt");
+		gvh.trace.traceEvent(TAG, "Halt", gvh.time());
 		gpspro.halt(name);
 	}
 	@Override

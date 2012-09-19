@@ -1,5 +1,11 @@
 ----- StarLib Changelog -----
 
+9/19/2012, Adam
+- Simulator now saves settings for each simulation in trace directory in JSON
+- Added timestamp variable to TraceWriter methods
+- Removed StarLSim's "simapps" package from the build path
+- Simulated apps now start their own trace files, no need to call trace.traceStart()
+
 9/8/2012, Adam
 - Cleaned up pieces of StarLib, including Android specific code
 - Removed DeadReckoner because it's useless with the iRobot Create chassis

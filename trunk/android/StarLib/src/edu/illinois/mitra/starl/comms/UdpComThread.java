@@ -49,7 +49,7 @@ public class UdpComThread extends Thread implements ComThread {
 				retries ++;
 			}
 		}
-		gvh.trace.traceEvent(TAG, "Created");
+		gvh.trace.traceEvent(TAG, "Created", gvh.time());
 		running = true;
 	}
     
@@ -71,7 +71,7 @@ public class UdpComThread extends Thread implements ComThread {
     			UDPMessage recd = new UDPMessage(s, gvh.time());
 
     			gvh.log.d(TAG, "Received: " + s);
-    			gvh.trace.traceEvent(TAG, "Received", recd);
+    			gvh.trace.traceEvent(TAG, "Received", recd, gvh.time());
     			
     			// Add the message to the received queue
     			ReceivedMsgList.add(recd);
@@ -89,7 +89,7 @@ public class UdpComThread extends Thread implements ComThread {
 	            DatagramPacket packet = new DatagramPacket(data.getBytes(), data.length(), InetAddress.getByName(IP), BCAST_PORT);
 	            mSocket.send(packet); 
 	            gvh.log.i(TAG, "Sent: " + data + " to " + IP);
-	            gvh.trace.traceEvent(TAG, "Sent", msg);
+	            gvh.trace.traceEvent(TAG, "Sent", msg, gvh.time());
 	        } catch (Exception e) {
 	            gvh.log.e(ERR, "Exception during write" + e);
 	        }
@@ -106,7 +106,7 @@ public class UdpComThread extends Thread implements ComThread {
             gvh.log.e(ERR, "close of connect socket failed" + e);
         }
         gvh.log.i(TAG, "Cancelled UDP com thread");
-        gvh.trace.traceEvent(TAG, "Cancelled");
+        gvh.trace.traceEvent(TAG, "Cancelled", gvh.time());
     }
 
 	@Override

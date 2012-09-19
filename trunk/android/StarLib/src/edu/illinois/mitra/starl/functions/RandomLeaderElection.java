@@ -59,9 +59,9 @@ public class RandomLeaderElection extends StarLCallable implements LeaderElectio
 		// clear sets between successive calls (needs to be here instead of above in class declaration)
 		announcedLeader = null;		
 		nodes = gvh.id.getParticipants().size();
-		gvh.trace.traceEvent(TAG, "Created");
+		gvh.trace.traceEvent(TAG, "Created", gvh.time());
 		
-		gvh.trace.traceEvent(TAG, "Beginning Election");
+		gvh.trace.traceEvent(TAG, "Beginning Election", gvh.time());
 		gvh.log.d(TAG, "Beginning election...");
 		nodes = gvh.id.getParticipants().size();
 		boolean error = false;
@@ -72,7 +72,7 @@ public class RandomLeaderElection extends StarLCallable implements LeaderElectio
 		receivedFrom.add(name);
 		ballots.add(new Ballot(name, myNum));
 
-		gvh.trace.traceVariable(TAG, "myNum", myNum);
+		gvh.trace.traceVariable(TAG, "myNum", myNum, gvh.time());
 		gvh.log.i(TAG, "My number is " + myNum);
 		
 		// Broadcast
@@ -81,10 +81,10 @@ public class RandomLeaderElection extends StarLCallable implements LeaderElectio
 		
 		// Wait to receive MSG_LEADERELECT messages
 		Long endTime = gvh.time()+MAX_WAIT_TIME;
-		gvh.trace.traceEvent(TAG, "Waiting for MSG_LEADERELECT messages");
+		gvh.trace.traceEvent(TAG, "Waiting for MSG_LEADERELECT messages", gvh.time());
 		while(!error && receivedFrom.size() < nodes) {
 			if(gvh.time() >= endTime) {
-				gvh.trace.traceEvent(TAG, "Waited timed out");
+				gvh.trace.traceEvent(TAG, "Waited timed out", gvh.time());
 				gvh.log.e(TAG, "Waited too long!");
 				
 				Set<String> ptc = new HashSet<String>(gvh.id.getParticipants());
@@ -102,21 +102,21 @@ public class RandomLeaderElection extends StarLCallable implements LeaderElectio
 			gvh.log.d(TAG, "No errors, determining leader now.");
 			// Retrieve all names that submitted the largest random number, sort them
 			leader = ballots.first().toString();
-			gvh.trace.traceEvent(TAG, "Determined leader", leader);
+			gvh.trace.traceEvent(TAG, "Determined leader", leader, gvh.time());
 			
 			// Have determined a leader, broadcast the result
 			RobotMessage bcast_leader = new RobotMessage("ALL", name, Common.MSG_RANDLEADERELECT_ANNOUNCE, new MessageContents(leader));
 			gvh.comms.addOutgoingMessage(bcast_leader);
-			gvh.trace.traceEvent(TAG, "Notified all of leader");
+			gvh.trace.traceEvent(TAG, "Notified all of leader", gvh.time());
 		}		
 		if(error) {
 			gvh.log.d(TAG, "An error occurred (waited too long?) must wait to receive announcement broadcasts.");
 			// Receive any MSG_LEADERELECT_ANNOUNCE messages, accept whoever they elect as leader
 			endTime = gvh.time()+MAX_WAIT_TIME;
-			gvh.trace.traceEvent(TAG, "Waiting for MSG_LEADERELECT_ANNOUNCE messages");
+			gvh.trace.traceEvent(TAG, "Waiting for MSG_LEADERELECT_ANNOUNCE messages", gvh.time());
 			while(announcedLeader == null) {
 				if(gvh.time() > endTime) {
-					gvh.trace.traceEvent(TAG, "Waited timed out, leader election failed");
+					gvh.trace.traceEvent(TAG, "Waited timed out, leader election failed", gvh.time());
 					gvh.log.e(TAG, "Waited too long, leader election failed!");
 					results[0] = "ERROR";
 					return returnResults();
@@ -126,7 +126,7 @@ public class RandomLeaderElection extends StarLCallable implements LeaderElectio
 			leader = announcedLeader;
 		}
 		gvh.log.i(TAG, "Elected leader: " + leader);
-		gvh.trace.traceEvent(TAG, "Elected leader", leader);
+		gvh.trace.traceEvent(TAG, "Elected leader", leader, gvh.time());
 		results[0] = leader;
 		
 		receivedFrom.clear();
@@ -151,12 +151,12 @@ public class RandomLeaderElection extends StarLCallable implements LeaderElectio
 					gvh.log.i(TAG, "READY TO ELECT A LEADER!");
 				}
 			}
-			gvh.trace.traceEvent(TAG, "Received MSG_RANDLEADERELECT message", m);
+			gvh.trace.traceEvent(TAG, "Received MSG_RANDLEADERELECT message", m, gvh.time());
 			break;
 			
 		case Common.MSG_RANDLEADERELECT_ANNOUNCE:
 			announcedLeader = m.getContents(0);
-			gvh.trace.traceEvent(TAG, "Received MSG_RANDLEADERELECT_ANNOUNCE message", announcedLeader);
+			gvh.trace.traceEvent(TAG, "Received MSG_RANDLEADERELECT_ANNOUNCE message", announcedLeader, gvh.time());
 			break;
 		}
 	}
@@ -230,6 +230,6 @@ public class RandomLeaderElection extends StarLCallable implements LeaderElectio
 	public void cancel() {
 		executor.shutdownNow();
 		unregisterListeners();
-		gvh.trace.traceEvent(TAG, "Cancelled");
+		gvh.trace.traceEvent(TAG, "Cancelled", gvh.time());
 	}
 }

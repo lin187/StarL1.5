@@ -40,7 +40,7 @@ public class BarrierSynchronizer implements Synchronizer, MessageListener {
 		barriersNames = new HashMap<String,HashSet<String>>();
 		name = gvh.id.getName();
 		gvh.comms.addMsgListener(Common.MSG_BARRIERSYNC, this);
-		gvh.trace.traceEvent(TAG, "Created");
+		gvh.trace.traceEvent(TAG, "Created", gvh.time());
 		gvh.log.i(TAG, "Created BarrierSynchronizer, registered message listener with GVH");
 	}
 	
@@ -70,7 +70,7 @@ public class BarrierSynchronizer implements Synchronizer, MessageListener {
 	public boolean barrierProceed(String barrierID) {
 		try {
 			if(barriersNames.get(barrierID).size() == n_participants) {
-				gvh.trace.traceEvent(TAG, "Barrier ready to proceed", barrierID);
+				gvh.trace.traceEvent(TAG, "Barrier ready to proceed", barrierID, gvh.time());
 				gvh.log.i(TAG, "Barrier " + barrierID + " has all robots ready to proceed!");
 				barriersNames.remove(barrierID);
 				return true;
@@ -84,7 +84,7 @@ public class BarrierSynchronizer implements Synchronizer, MessageListener {
 		// Update the barriers when a barrier sync message is received
 		String bID = m.getContents(0);
 		
-		gvh.trace.traceEvent(TAG, "Received barrier sync message", bID);
+		gvh.trace.traceEvent(TAG, "Received barrier sync message", bID, gvh.time());
 
 		HashSet<String> names;
 		if(barriersNames.containsKey(bID)) {
@@ -106,6 +106,6 @@ public class BarrierSynchronizer implements Synchronizer, MessageListener {
 	@Override
 	public void cancel() {
 		gvh.comms.removeMsgListener(Common.MSG_BARRIERSYNC);
-		gvh.trace.traceEvent(TAG, "Cancelled");
+		gvh.trace.traceEvent(TAG, "Cancelled", gvh.time());
 	}
 }

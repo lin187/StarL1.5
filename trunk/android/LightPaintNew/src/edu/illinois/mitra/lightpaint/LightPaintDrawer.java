@@ -6,11 +6,11 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.util.Map.Entry;
 
+import edu.illinois.mitra.lightpaint.activity.LightPaintActivity;
 import edu.illinois.mitra.lightpaint.algorithm.LpAlgorithm;
 import edu.illinois.mitra.lightpaint.geometry.ImageEdge;
 import edu.illinois.mitra.lightpaint.geometry.ImageGraph;
 import edu.illinois.mitra.lightpaint.geometry.ImagePoint;
-import edu.illinois.mitra.lightpaintlib.activity.LightPaintActivity;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starlSim.draw.Drawer;
 

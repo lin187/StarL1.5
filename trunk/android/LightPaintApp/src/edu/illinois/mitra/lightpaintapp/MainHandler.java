@@ -7,12 +7,11 @@ import android.os.Message;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import edu.illinois.mitra.lightpaint.activity.LightPaintActivity;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.objects.HandlerMessage;
-import edu.illinois.mitra.lightpaintlib.activity.*;
 
 public class MainHandler extends Handler {
 

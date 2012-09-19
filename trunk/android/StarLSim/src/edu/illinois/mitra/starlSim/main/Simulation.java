@@ -1,6 +1,10 @@
 package edu.illinois.mitra.starlSim.main;
 
 import java.awt.Color;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -16,6 +20,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 import javax.swing.JFrame;
+
+import com.google.gson.Gson;
 
 import edu.illinois.mitra.starl.harness.IdealSimGpsProvider;
 import edu.illinois.mitra.starl.harness.RealisticSimGpsProvider;
@@ -37,6 +43,8 @@ public class Simulation {
 
 	private DistancePredicate distpred;
 
+	private final SimSettings settings;
+
 	public Simulation(Class<? extends LogicThread> app, final SimSettings settings) {
 		// Create set of robots whose wireless is blocked for passage between
 		// the GUI and the simulation communication object
@@ -53,10 +61,8 @@ public class Simulation {
 		drawFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// Start the simulation engine
-		LinkedList <LogicThread> logicThreads = new LinkedList <LogicThread>();
-		simEngine = new SimulationEngine(settings.MSG_MEAN_DELAY, settings.MSG_STDDEV_DELAY, 
-				settings.MSG_LOSSES_PER_HUNDRED, settings.MSG_RANDOM_SEED, settings.TIC_TIME_RATE, 
-				blockedRobots, participants, drawFrame.getPanel(), logicThreads);
+		LinkedList<LogicThread> logicThreads = new LinkedList<LogicThread>();
+		simEngine = new SimulationEngine(settings.MSG_MEAN_DELAY, settings.MSG_STDDEV_DELAY, settings.MSG_LOSSES_PER_HUNDRED, settings.MSG_RANDOM_SEED, settings.TIC_TIME_RATE, blockedRobots, participants, drawFrame.getPanel(), logicThreads);
 
 		// Create the sim gps
 		if(settings.IDEAL_MOTION) {
@@ -69,6 +75,7 @@ public class Simulation {
 		if(settings.WAYPOINT_FILE != null)
 			gps.setWaypoints(WptLoader.loadWaypoints(settings.WAYPOINT_FILE));
 
+		this.settings = settings;
 		simEngine.gps = gps;
 		gps.start();
 
@@ -92,17 +99,16 @@ public class Simulation {
 				System.out.println("Waypoint file did not contain a waypoint named '" + botName + "', using random position.");
 				initialPosition = new ItemPosition(botName, rand.nextInt(settings.GRID_XSIZE), rand.nextInt(settings.GRID_YSIZE), rand.nextInt(360));
 			}
-			
-			SimApp sa = new SimApp(botName, participants, simEngine, initialPosition, settings.TRACE_OUT_DIR, app, 
-					drawFrame, settings.TRACE_CLOCK_DRIFT_MAX, settings.TRACE_CLOCK_SKEW_MAX); 
-			
+
+			SimApp sa = new SimApp(botName, participants, simEngine, initialPosition, settings.TRACE_OUT_DIR, app, drawFrame, settings.TRACE_CLOCK_DRIFT_MAX, settings.TRACE_CLOCK_SKEW_MAX);
+
 			bots.add(sa);
-			
+
 			logicThreads.add(sa.logic);
 		}
-		
+
 		// initialize debug drawer class if it was set in the settings
-		if (settings.DRAWER != null)
+		if(settings.DRAWER != null)
 			drawFrame.addPredrawer(settings.DRAWER);
 
 		// GUI observer updates the viewer when new positions are calculated
@@ -131,15 +137,14 @@ public class Simulation {
 
 		if(settings.USE_GLOBAL_LOGGER)
 			gps.addObserver(createGlobalLogger(settings));
-		
+
 		if(settings.USE_DISTANCE_PREDICATE)
 			enableDistancePredicate(settings.PREDICATE_RADIUS, settings.PREDICATE_OUT_DIR);
 
 		// show viewer
 		drawFrame.setVisible(true);
 	}
-	
-	
+
 	private Observer createGlobalLogger(final SimSettings settings) {
 		final GlobalLogger gl = new GlobalLogger(settings.TRACE_OUT_DIR, "global.txt");
 
@@ -175,18 +180,19 @@ public class Simulation {
 		executor = Executors.newFixedThreadPool(participants.size());
 		System.out.println("Starting with " + participants.size() + " robots");
 
-		// /////////// START EDITS ///////////////////
-		// spawn threads manually
-		/*
-		 * for (SimApp robotLogic : bots) { final SimApp simApp = robotLogic;
-		 * 
-		 * new Thread() { public void run() { try { simApp.call(); } catch
-		 * (Exception e) { e.printStackTrace(); } } }.start(); }
-		 * 
-		 * while (true) { try { Thread.sleep(Integer.MAX_VALUE); } catch
-		 * (InterruptedException e) { break; } }
-		 */
-		// //////////////// end edits ///////////////
+		// Save settings to JSON file
+		if(settings.TRACE_OUT_DIR != null) {
+			Gson gson = new Gson();
+			String json = gson.toJson(settings);
+			try {
+				FileWriter fos = new FileWriter(new File(settings.TRACE_OUT_DIR, "settings.json"));
+				fos.write(json);
+				fos.close();
+			} catch(Exception e) {
+				e.printStackTrace();
+				System.err.println("Failed to write settings JSON file");
+			}
+		}
 
 		// Invoke all simulated robots
 		List<Future<List<Object>>> results = null;

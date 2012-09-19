@@ -9,7 +9,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
-import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.HandlerMessage;
 
 public class MainHandler extends Handler {

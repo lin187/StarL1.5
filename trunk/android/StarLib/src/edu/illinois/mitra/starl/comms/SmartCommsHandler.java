@@ -56,7 +56,7 @@ public class SmartCommsHandler extends Thread {
 		this.mConnectedThread = mConnectedThread;
 		mConnectedThread.setCommsHandler(this);
 		
-		gvh.trace.traceEvent(TAG, "Created");
+		gvh.trace.traceEvent(TAG, "Created", gvh.time());
 		
 		for(String s : participants.keySet()) {
 			if(!s.equals(name)) {

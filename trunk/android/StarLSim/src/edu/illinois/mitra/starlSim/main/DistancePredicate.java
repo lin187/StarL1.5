@@ -27,7 +27,7 @@ public class DistancePredicate extends TraceWriter implements Observer {
 			for(ItemPosition q : pos) {
 				if(!p.equals(q) && p.distanceTo(q) < distance) {
 					super.open("violation");
-					super.writeTimeTag();
+					super.writeTimeTag(0l);
 					super.close("violation");
 					return;
 				}

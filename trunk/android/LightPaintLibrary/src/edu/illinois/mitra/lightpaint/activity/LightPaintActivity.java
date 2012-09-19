@@ -1,12 +1,9 @@
-package edu.illinois.mitra.lightpaintlib.activity;
+package edu.illinois.mitra.lightpaint.activity;
 
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -91,7 +88,6 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 
 	@Override
 	public List<Object> callStarL() {
-		responseService.submit(new Assigner());
 		while(true) {
 			switch(stage) {
 			case INIT:
@@ -114,6 +110,10 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 
 						for(String robot : gvh.id.getParticipants())
 							alg.setRobotPosition(robot, ImagePoint.fromItemPosition(gvh.gps.getPosition(robot)));
+								
+						responseService = Executors.newSingleThreadExecutor();
+						responseService.submit(new Assigner());
+						assignmentRequesters = new LinkedBlockingQueue<String>();
 					}
 					setStage(Stage.REQUEST_ASSIGNMENT);
 				}
@@ -201,7 +201,7 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 			setStage(Stage.DO_ASSIGNMENT);
 			break;
 		case ASSIGNMENT_REQ_ID:
-			if(!iAmLeader || alg == null)
+			if(!iAmLeader || alg == null || assignmentRequesters == null)
 				return;
 
 			gvh.log.i(TAG, msg.getFrom() + " requesting a new assignment...");
@@ -225,8 +225,8 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 
 	
 
-	private BlockingQueue<String> assignmentRequesters = new LinkedBlockingQueue<String>();
-	private ExecutorService responseService = Executors.newSingleThreadExecutor(); 
+	private BlockingQueue<String> assignmentRequesters;
+	private ExecutorService responseService;
 	
 	private class Assigner implements Runnable {
 		@Override
@@ -325,6 +325,8 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 		election.cancel();
 		gvh.removeEventListener(this);
 		setStage(Stage.DONE);
+		if(iAmLeader)
+			responseService.shutdownNow();
 		gvh.comms.removeMsgListener(ASSIGNMENT_ID);
 		gvh.comms.removeMsgListener(POSITION_UPDATE_ID);
 		gvh.comms.removeMsgListener(ASSIGNMENT_REQ_ID);

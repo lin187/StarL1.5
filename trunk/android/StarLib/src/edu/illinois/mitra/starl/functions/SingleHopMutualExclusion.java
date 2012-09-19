@@ -53,7 +53,7 @@ public class SingleHopMutualExclusion implements MutualExclusion, MessageListene
 			using_token[i] = false;
 			token_requesters.add(i, new ArrayList<String>());
 		}
-		gvh.trace.traceEvent(TAG, "Created");
+		gvh.trace.traceEvent(TAG, "Created", gvh.time());
 		
 		// Register message listeners
 		gvh.comms.addMsgListener(Common.MSG_MUTEX_TOKEN_OWNER_BCAST, this);
@@ -73,12 +73,12 @@ public class SingleHopMutualExclusion implements MutualExclusion, MessageListene
 		} else {
 			using_token[id] = true;
 			gvh.trace.traceEvent(TAG, "Using token", id);
-			gvh.trace.traceVariable(TAG, "Using " + id, true);
+			gvh.trace.traceVariable(TAG, "Using " + id, true, gvh.time());
 		}
 	}
 
 	public synchronized void requestEntry(Set<Integer> ids) {
-		gvh.trace.traceEvent(TAG, "Requesting entry to set of sections", ids);
+		gvh.trace.traceEvent(TAG, "Requesting entry to set of sections", ids, gvh.time());
 		for(int id : ids) {
 			requestEntry(id);
 		}
@@ -98,7 +98,7 @@ public class SingleHopMutualExclusion implements MutualExclusion, MessageListene
 
 	public synchronized void exit(int id) {
 		if(using_token[id]) {
-			gvh.trace.traceVariable(TAG, "Using " + id, false);
+			gvh.trace.traceVariable(TAG, "Using " + id, false, gvh.time());
 			gvh.log.d(TAG, "Exiting section " + id);
 			using_token[id] = false;
 			
@@ -113,7 +113,7 @@ public class SingleHopMutualExclusion implements MutualExclusion, MessageListene
 			String to = token_requesters.get(id).remove(0);
 			RobotMessage pass_token;
 			gvh.log.d(TAG, "Passing token " + id + " to requester " + to);
-			gvh.trace.traceEvent(TAG, "Passing token to new owner", id + " " + to);
+			gvh.trace.traceEvent(TAG, "Passing token to new owner", id + " " + to, gvh.time());
 			if(token_requesters.get(id).isEmpty()) {
 				pass_token = new RobotMessage(to, name, Common.MSG_MUTEX_TOKEN, new MessageContents(id));
 			} else {
@@ -127,7 +127,7 @@ public class SingleHopMutualExclusion implements MutualExclusion, MessageListene
 			// Broadcast the new token owner
 			RobotMessage owner_broadcast = new RobotMessage("ALL", name, Common.MSG_MUTEX_TOKEN_OWNER_BCAST, new MessageContents(Integer.toString(id),to));
 			gvh.comms.addOutgoingMessage(owner_broadcast);
-			gvh.trace.traceVariable(TAG, "Owner " + id, to);
+			gvh.trace.traceVariable(TAG, "Owner " + id, to, gvh.time());
 		}
 	}
 
@@ -145,7 +145,7 @@ public class SingleHopMutualExclusion implements MutualExclusion, MessageListene
 
 	@Override
 	public void cancel() {
-		gvh.trace.traceEvent(TAG, "Cancelled");
+		gvh.trace.traceEvent(TAG, "Cancelled", gvh.time());
 		gvh.log.d(TAG, "CANCELLING MUTEX THREAD");
 		
 		// Unregister message listeners
@@ -162,7 +162,7 @@ public class SingleHopMutualExclusion implements MutualExclusion, MessageListene
 			String owner = m.getContents(1);
 			
 			gvh.trace.traceEvent(TAG, "Received token owner broadcast", id);
-			gvh.trace.traceVariable(TAG, "Owner " + id, owner);
+			gvh.trace.traceVariable(TAG, "Owner " + id, owner, gvh.time());
 			token_owners[id] = owner;
 			gvh.log.i(TAG, "--> Token " + id + " is now owned by " + owner);
 			break;
@@ -172,7 +172,7 @@ public class SingleHopMutualExclusion implements MutualExclusion, MessageListene
 			gvh.trace.traceEvent(TAG, "Received token", id);
 			token_owners[id] = name;
 			using_token[id] = true;
-			gvh.trace.traceVariable(TAG, "Using " + id, true);
+			gvh.trace.traceVariable(TAG, "Using " + id, true, gvh.time());
 			// Parse any attached requesters
 			if(m.getContentsList().size() == 2) {
 				gvh.log.i(TAG, "Parsing attached requesters...");
@@ -187,7 +187,7 @@ public class SingleHopMutualExclusion implements MutualExclusion, MessageListene
 		
 			
 		case Common.MSG_MUTEX_TOKEN_REQUEST:
-			gvh.trace.traceEvent(TAG, "Received token request", id + " " + m.getFrom());
+			gvh.trace.traceEvent(TAG, "Received token request", id + " " + m.getFrom(), gvh.time());
 			// If we own the token being requested, enqueue the requester
 			if(token_owners[id].equals(name)) {
 				token_requesters.get(id).add(m.getFrom());
