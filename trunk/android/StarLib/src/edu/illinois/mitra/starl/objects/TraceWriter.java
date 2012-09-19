@@ -24,10 +24,6 @@ public class TraceWriter {
 	protected File logFile;
 	protected BufferedWriter buf;
 	private int level = 0;
-
-	private boolean idealClocks = true;
-	private int drift = 0;
-	private double skew = 1.0;
 	
 	private GlobalVarHolder gvh;
 	
@@ -64,30 +60,16 @@ public class TraceWriter {
 			e.printStackTrace();
 		}
 	}
-	
-	/**
-	 * <b>INTENDED FOR SIMULATION ONLY!</b> Create a new TraceWriter with an imperfect clock  
-	 * @param filename the output filename
-	 * @param dir the output directory
-	 * @param driftMax the maximum clock drift
-	 * @param skewBound the maximum clock skew
-	 */
-	public TraceWriter(String filename, String dir, int driftMax, float skewBound, GlobalVarHolder gvh) {
-		this(filename, dir, gvh);
-		drift = (int)(Math.random()*2*driftMax) - driftMax;
-		skew += (Math.random()*2*skewBound) - skewBound; 
-		idealClocks = false;
-	}
-	
+		
 	/**
 	 * Write a synchronization tag featuring the sync source and current timestamp. Used to
 	 * align trace files of the same execution from multiple agents. 
 	 * @param source the thread which triggered the synchronization
 	 */
-	public synchronized void sync(String source) {
+	public synchronized void sync(String source, long timestamp) {
 		open("sync");
 		writeTag("source", source);
-		writeTimeTag();
+		writeTimeTag(timestamp);
 		close("sync");
 	}
 	
@@ -99,10 +81,10 @@ public class TraceWriter {
 	 * method will be called to write object specific information to the trace file.
 	 * @see edu.illinois.mitra.starl.interfaces.Traceable 
 	 */
-	public synchronized void event(String source, String type, Object data) {
+	public synchronized void event(String source, String type, Object data, long timestamp) {
 		open("event");
 		writeTag("source", source);
-		writeTimeTag();
+		writeTimeTag(timestamp);
 		writeTag("type", type);
 		if(data != null) {
 			try {
@@ -134,10 +116,10 @@ public class TraceWriter {
 	 * object has no toString() method defined, this will not print useful information to the trace.
 	 * @see edu.illinois.mitra.starl.interfaces.Traceable 
 	 */
-	public synchronized void variable(String source, String varname, Object value) {
+	public synchronized void variable(String source, String varname, Object value, long timestamp) {
 		open("variable");
 		writeTag("source", source);
-		writeTimeTag();
+		writeTimeTag(timestamp);
 		writeTag("varname", varname);
 		
 		try {
@@ -202,12 +184,8 @@ public class TraceWriter {
 	/**
 	 * Writes an XML tag, time, containing a timestamp 
 	 */
-	protected void writeTimeTag() {
-		if(idealClocks) {
-			writeTag("time", Long.toString(gvh.time()));
-		} else {
-			writeTag("time", Long.toString((long)(drift + skew*gvh.time())));
-		}
+	protected void writeTimeTag(long timestamp) {
+		writeTag("time", Long.toString(timestamp));
 	}
 	/**
 	 * Writes an XML opening tag

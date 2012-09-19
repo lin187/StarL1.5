@@ -59,7 +59,7 @@ public class CommsHandler extends Thread implements Cancellable {
 		this.mConnectedThread = mConnectedThread;
 		this.mConnectedThread.setMsgList(ReceivedMsgList);
 		
-		gvh.trace.traceEvent(TAG, "Created");
+		gvh.trace.traceEvent(TAG, "Created", gvh.time());
 	}
 	
 	public synchronized void addOutgoing(RobotMessage msg, MessageResult result) {
@@ -67,7 +67,7 @@ public class CommsHandler extends Thread implements Cancellable {
 		newMsg.setHandler(result);
 		OutMsgList.add(newMsg);
 		seqNum = (seqNum + 1) % (Integer.MAX_VALUE-1);
-		gvh.trace.traceEvent(TAG, "Sending", newMsg);
+		gvh.trace.traceEvent(TAG, "Sending", newMsg, gvh.time());
 		gvh.log.i(TAG, "Sending " + newMsg);
 		stat_sends ++;
 	}
@@ -76,7 +76,7 @@ public class CommsHandler extends Thread implements Cancellable {
 		InMsgList.clear();
 		OutMsgList.clear();
 		ReceivedMsgList.clear();
-		gvh.trace.traceEvent(TAG, "Cleared");
+		gvh.trace.traceEvent(TAG, "Cleared", gvh.time());
 		gvh.log.i(TAG, "Cleared");
 	}
 	
@@ -84,7 +84,7 @@ public class CommsHandler extends Thread implements Cancellable {
 	public synchronized void start() {
 		mConnectedThread.start();
 		super.start();
-		gvh.trace.traceEvent(TAG, "Starting");
+		gvh.trace.traceEvent(TAG, "Starting", gvh.time());
 	}
 	
     @Override
@@ -105,7 +105,7 @@ public class CommsHandler extends Thread implements Cancellable {
     		if(isPendingACK()) {
     			UDPMessage toSend = nextPendingACK();
     			mConnectedThread.write(toSend, nameToIp(toSend));
-    			gvh.trace.traceEvent(TAG, "Sent ACK", toSend);
+    			gvh.trace.traceEvent(TAG, "Sent ACK", toSend, gvh.time());
     			gvh.log.d(TAG, "PHYSICALLY ACK'd " + toSend);
     		}
     		
@@ -197,7 +197,7 @@ public class CommsHandler extends Thread implements Cancellable {
 				return;
 			}
 			
-			gvh.trace.traceEvent(TAG, "Received data message", current);
+			gvh.trace.traceEvent(TAG, "Received data message", current, gvh.time());
 			gvh.log.i(TAG, "Incoming data message " + current);
 			stat_receives ++;
 			
@@ -206,7 +206,7 @@ public class CommsHandler extends Thread implements Cancellable {
 		} else {
 		// If we've received it before, flag its duplicate for re-sending an ACK and reset it's received time
 			gvh.log.e(TAG, "--> Received duplicate message: " + current + "\n--> Flagging for re-ACKing");
-			gvh.trace.traceEvent(TAG, "Duplicate message", current);
+			gvh.trace.traceEvent(TAG, "Duplicate message", current, gvh.time());
 			UDPMessage duplicate = InMsgList.get(msg_idx);
 			stat_resendAcks ++;
 			duplicate.setState(UDPMessage.MSG_RECEIVED);
@@ -287,7 +287,7 @@ public class CommsHandler extends Thread implements Cancellable {
 	// Handle an ACK message by marking the associated sent message as ACK'd
 	protected synchronized void handleAck(UDPMessage ReceivedAck) {
 		gvh.log.i(TAG, "Handling ACK " + ReceivedAck);
-		gvh.trace.traceEvent(TAG, "Received ACK", ReceivedAck);
+		gvh.trace.traceEvent(TAG, "Received ACK", ReceivedAck, gvh.time());
 		
 		// Check the outgoing list for a sent message matching this ACK
 		for(int i = 0; i < OutMsgList.size(); i++) {
@@ -313,7 +313,7 @@ public class CommsHandler extends Thread implements Cancellable {
     public void cancel() {
     	gvh.log.i(TAG, "Cancelling comms handler");
         mConnectedThread.cancel();
-		gvh.trace.traceEvent(TAG, "Cancelled");
+		gvh.trace.traceEvent(TAG, "Cancelled", gvh.time());
     }
 	
     protected String nameToIp(String to) {

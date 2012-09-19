@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry excluding="edu/illinois/mitra/starlSim/simapps/ArrowTravelApp.java|edu/illinois/mitra/starlSim/simapps/LawnmowerApp.java|edu/illinois/mitra/starlSim/simapps/LineFollowingApp.java|edu/illinois/mitra/starlSim/simapps/LucasApp2.java|edu/illinois/mitra/starlSim/simapps/ShapeFormer.java|edu/illinois/mitra/starlSim/simapps/deere_fardin/DeereFlockingWithDetours.java|edu/illinois/mitra/starlSim/simapps/stan/StanTestApp.java" kind="src" path="src"/>
+	<classpathentry excluding="edu/illinois/mitra/starlSim/simapps/ArrowTravelApp.java|edu/illinois/mitra/starlSim/simapps/LawnmowerApp.java|edu/illinois/mitra/starlSim/simapps/LineFollowingApp.java|edu/illinois/mitra/starlSim/simapps/LucasApp2.java|edu/illinois/mitra/starlSim/simapps/ShapeFormer.java|edu/illinois/mitra/starlSim/simapps/deere_fardin/DeereFlockingWithDetours.java|edu/illinois/mitra/starlSim/simapps/stan/StanTestApp.java|edu/illinois/mitra/starlSim/simapps/|edu/illinois/mitra/starlSim/main/DistancePredicate.java" kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="src" path="/StarLib"/>
+	<classpathentry kind="lib" path="libs/gson-2.2.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

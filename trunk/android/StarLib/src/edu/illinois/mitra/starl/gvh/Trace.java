@@ -15,19 +15,10 @@ public class Trace {
 	private String tracedir;
 	private GlobalVarHolder gvh;
 	
-	private int driftMax = 0;
-	private float skewBound = 0.0f;
-	
 	public Trace(String name, String tracedir, GlobalVarHolder gvh) {
 		this.name = name;
 		this.tracedir = tracedir;
 		this.gvh = gvh;
-	}
-	
-	public Trace(String name, String tracedir, GlobalVarHolder gvh, int driftMax, float skewBound) {
-		this(name, tracedir, gvh);
-		this.driftMax = driftMax;
-		this.skewBound = skewBound;
 	}
 
 	public void traceStart() {
@@ -36,12 +27,7 @@ public class Trace {
 	
 	private void openTraceFile(String fname) {
 		if(trace == null) {
-			if(driftMax != 0 || skewBound != 0f)
-			{
-				trace = new TraceWriter(fname,tracedir,driftMax,skewBound,gvh);
-			} else {
-				trace = new TraceWriter(fname,tracedir,gvh);
-			}
+			trace = new TraceWriter(fname,tracedir,gvh);
 		}
 	}
 
@@ -49,20 +35,20 @@ public class Trace {
 		openTraceFile(runId + "-" + name);
 	}
 	
-	public void traceVariable(String source, String name, Object data) {
-		if(trace != null) trace.variable(source, name, data);
+	public void traceVariable(String source, String name, Object data, long timestamp) {
+		if(trace != null) trace.variable(source, name, data, timestamp);
 	}
 	
-	public void traceEvent(String source, String type, Object data) {
-		if(trace != null) trace.event(source, type, data);
+	public void traceEvent(String source, String type, Object data, long timestamp) {
+		if(trace != null) trace.event(source, type, data, timestamp);
 	}
 	
-	public void traceEvent(String source, String type) {
-		if(trace != null) trace.event(source, type, null);
+	public void traceEvent(String source, String type, long timestamp) {
+		if(trace != null) trace.event(source, type, null, timestamp);
 	}
 	
-	public void traceSync(String source) {
-		if(trace != null) trace.sync(source);
+	public void traceSync(String source, long timestamp) {
+		if(trace != null) trace.sync(source, timestamp);
 	}
 	
 	public void traceEnd() {

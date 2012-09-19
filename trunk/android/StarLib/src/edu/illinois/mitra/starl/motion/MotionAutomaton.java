@@ -239,7 +239,7 @@ public class MotionAutomaton extends RobotMotion {
 					if(next != null) {
 						stage = next;
 						gvh.log.i(TAG, "Stage transition to " + stage.toString());
-						gvh.trace.traceEvent(TAG, "Stage transition", stage.toString());
+						gvh.trace.traceEvent(TAG, "Stage transition", stage.toString(), gvh.time());
 					}
 					next = null;
 					// gvh.sleep(DELAY_TIME);
@@ -307,7 +307,7 @@ public class MotionAutomaton extends RobotMotion {
 						halted = true;
 						System.out.println(gvh.id.getName() + " HAS COLLIDED!");
 						gvh.log.d(TAG, "No collision avoidance! Halting.");
-						gvh.trace.traceEvent(TAG, "Halting motion");
+						gvh.trace.traceEvent(TAG, "Halting motion", gvh.time());
 						straight(0);
 						stage = STAGE.INIT;
 					}
@@ -356,7 +356,7 @@ public class MotionAutomaton extends RobotMotion {
 
 	protected void sendMotionEvent(int motiontype, int... argument) {
 		// TODO: Is this needed??? Or even working properly??
-		gvh.trace.traceEvent(TAG, "Motion", Arrays.asList(argument).toString());
+		gvh.trace.traceEvent(TAG, "Motion", Arrays.toString(argument), gvh.time());
 		gvh.sendRobotEvent(Event.MOTION, motiontype);
 	}
 

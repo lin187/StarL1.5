@@ -45,7 +45,7 @@ public class SmartUdpComThread extends Thread implements SmartComThread {
 				retries ++;
 			}
 		}
-		gvh.trace.traceEvent(TAG, "Created");
+		gvh.trace.traceEvent(TAG, "Created", gvh.time());
 		running = true;
 		this.start();
 	}
@@ -68,7 +68,7 @@ public class SmartUdpComThread extends Thread implements SmartComThread {
     			UDPMessage recd = new UDPMessage(s, gvh.time());
 
     			gvh.log.d(TAG, "Received: " + s);
-    			gvh.trace.traceEvent(TAG, "Received", recd);
+    			gvh.trace.traceEvent(TAG, "Received", recd, gvh.time());
     			
     			// Pass the received message to the comms handler
     			if(commsHandler != null) {
@@ -90,7 +90,7 @@ public class SmartUdpComThread extends Thread implements SmartComThread {
 	            DatagramPacket packet = new DatagramPacket(data.getBytes(), data.length(), InetAddress.getByName(IP), BCAST_PORT);
 	            mSocket.send(packet); 
 	            gvh.log.i(TAG, "Sent: " + data + " to " + IP);
-	            gvh.trace.traceEvent(TAG, "Sent", msg);
+	            gvh.trace.traceEvent(TAG, "Sent", msg, gvh.time());
 	        } catch (Exception e) {
 	            gvh.log.e(ERR, "Exception during write" + e);
 	        }
@@ -107,7 +107,7 @@ public class SmartUdpComThread extends Thread implements SmartComThread {
             gvh.log.e(ERR, "close of connect socket failed" + e);
         }
         gvh.log.i(TAG, "Cancelled UDP com thread");
-        gvh.trace.traceEvent(TAG, "Cancelled");
+        gvh.trace.traceEvent(TAG, "Cancelled", gvh.time());
     }
 
 	@Override

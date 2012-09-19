@@ -40,7 +40,7 @@ public class Geocaster implements MessageListener {
 		geocastContents.append(msgcontents);
 		RobotMessage toSend = new RobotMessage("ALL", gvh.id.getName(), Common.MSG_GEOCAST, geocastContents);
 		gvh.comms.addOutgoingMessage(toSend);
-		gvh.trace.traceEvent(TAG, "Sent Geocast", toSend);
+		gvh.trace.traceEvent(TAG, "Sent Geocast", toSend, gvh.time());
 	}
 	
 	/**
@@ -56,7 +56,7 @@ public class Geocaster implements MessageListener {
 		geocastContents.append(msgcontents);
 		RobotMessage toSend = new RobotMessage("ALL", gvh.id.getName(), Common.MSG_GEOCAST, geocastContents);
 		gvh.comms.addOutgoingMessage(toSend);	
-		gvh.trace.traceEvent(TAG, "Sent Geocast", toSend);
+		gvh.trace.traceEvent(TAG, "Sent Geocast", toSend, gvh.time());
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class Geocaster implements MessageListener {
 				int MID = Integer.parseInt(contents.get(5));
 				MessageContents receiveContents = new MessageContents();
 				receiveContents.append(contents.subList(6, contents.size()));
-				gvh.trace.traceEvent(TAG, "Received Geocast", m);
+				gvh.trace.traceEvent(TAG, "Received Geocast", m, gvh.time());
 				gvh.comms.addIncomingMessage(new RobotMessage("ALL", m.getFrom(), MID, receiveContents));
 			}
 		} else if(type.equals("CIRCLE")) {
@@ -91,7 +91,7 @@ public class Geocaster implements MessageListener {
 				int MID = Integer.parseInt(contents.get(4));
 				MessageContents receiveContents = new MessageContents();
 				receiveContents.append(contents.subList(5, contents.size()));
-				gvh.trace.traceEvent(TAG, "Received Geocast", m);
+				gvh.trace.traceEvent(TAG, "Received Geocast", m, gvh.time());
 				gvh.comms.addIncomingMessage(new RobotMessage("ALL", m.getFrom(), MID, receiveContents));
 			}
 		}

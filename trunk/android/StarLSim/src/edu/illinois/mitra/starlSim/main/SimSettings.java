@@ -100,30 +100,6 @@ public class SimSettings {
 	 */
 	public int BOT_RADIUS = 165;
 
-	// Distance predicate (truth data) settings. THIS IS CURRENTLY
-	// NON-FUNCTIONAL.
-	/**
-	 * Enable/disable the distance predicate
-	 */
-	public boolean USE_DISTANCE_PREDICATE = false;
-	/**
-	 * Millimeters. Distance predicate radius.
-	 */
-	public int PREDICATE_RADIUS = 0; // Zero disables distance predicate
-										// checking and truth output
-	/**
-	 * The number of robots that must be within PREDICATE_RADIUS of each other
-	 * to trigger a predicate violation. CURRENTLY UNIMPLEMENTED.
-	 */
-	@Deprecated
-	public int N_PREDICATE_ROBOTS = 2; // (UNIMPLEMENTED) The number of robots
-										// that must be within radius to trigger
-										// a violation
-	/**
-	 * Predicate output directory.
-	 */
-	public String PREDICATE_OUT_DIR = null;
-
 	/**
 	 * Trace output directory.
 	 */
@@ -181,10 +157,6 @@ public class SimSettings {
 		private int MSG_RANDOM_SEED = 0;
 		private String BOT_NAME = "bot";
 		private int BOT_RADIUS = 165;
-		private boolean USE_DISTANCE_PREDICATE = false;
-		private int PREDICATE_RADIUS = 0;
-		private int N_PREDICATE_ROBOTS = 2;
-		private String PREDICATE_OUT_DIR;
 		private String TRACE_OUT_DIR;
 		private boolean USE_GLOBAL_LOGGER = false;
 		private boolean DRAW_TRACE = false;
@@ -287,26 +259,6 @@ public class SimSettings {
 			return this;
 		}
 
-		public Builder USE_DISTANCE_PREDICATE(boolean USE_DISTANCE_PREDICATE) {
-			this.USE_DISTANCE_PREDICATE = USE_DISTANCE_PREDICATE;
-			return this;
-		}
-
-		public Builder PREDICATE_RADIUS(int PREDICATE_RADIUS) {
-			this.PREDICATE_RADIUS = PREDICATE_RADIUS;
-			return this;
-		}
-
-		public Builder N_PREDICATE_ROBOTS(int N_PREDICATE_ROBOTS) {
-			this.N_PREDICATE_ROBOTS = N_PREDICATE_ROBOTS;
-			return this;
-		}
-
-		public Builder PREDICATE_OUT_DIR(String PREDICATE_OUT_DIR) {
-			this.PREDICATE_OUT_DIR = PREDICATE_OUT_DIR;
-			return this;
-		}
-
 		public Builder TRACE_OUT_DIR(String TRACE_OUT_DIR) {
 			this.TRACE_OUT_DIR = TRACE_OUT_DIR;
 			return this;
@@ -361,15 +313,12 @@ public class SimSettings {
 		this.MSG_RANDOM_SEED = builder.MSG_RANDOM_SEED;
 		this.BOT_NAME = builder.BOT_NAME;
 		this.BOT_RADIUS = builder.BOT_RADIUS;
-		this.USE_DISTANCE_PREDICATE = builder.USE_DISTANCE_PREDICATE;
-		this.PREDICATE_RADIUS = builder.PREDICATE_RADIUS;
-		this.N_PREDICATE_ROBOTS = builder.N_PREDICATE_ROBOTS;
-		this.PREDICATE_OUT_DIR = builder.PREDICATE_OUT_DIR;
 		this.TRACE_OUT_DIR = builder.TRACE_OUT_DIR;
 		this.USE_GLOBAL_LOGGER = builder.USE_GLOBAL_LOGGER;
 		this.DRAW_TRACE = builder.DRAW_TRACE;
 		this.DRAW_TRACE_LENGTH = builder.DRAW_TRACE_LENGTH;
 		this.MAX_FPS = builder.MAX_FPS;
 		this.DRAWER = builder.DRAWER;
+		this.TIMEOUT = builder.TIMEOUT;
 	}
 }
