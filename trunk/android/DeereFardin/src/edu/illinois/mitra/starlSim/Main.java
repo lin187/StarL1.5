@@ -13,7 +13,7 @@ public class Main
 		settings.N_BOTS = 5;
 		settings.IDEAL_MOTION = true;
 		settings.DRAWER = new FlockDrawer();
-		settings.TIC_TIME_RATE = 2;
+		settings.TIC_TIME_RATE = 40;
 		settings.INITIAL_POSITIONS_FILE = "C:/gpsTest/initPos.wpt"; 
 
 		Simulation sim = new Simulation(DeereFlockingWithDetours.class, settings);

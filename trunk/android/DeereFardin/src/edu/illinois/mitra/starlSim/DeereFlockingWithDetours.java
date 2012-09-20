@@ -99,6 +99,8 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 	List <WayPoint> potentialLeaderPath = new ArrayList <WayPoint>();
 	int pathID = 0 ;
 	Point newPoint = new Point() ; 
+	int missedAckCounter = 0 ;
+	boolean allAckRec = true ; 
 	
 	
 	
@@ -279,7 +281,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 				break; 
 	
 			case PATH_UPDATE:
-				
+				System.out.println(leaderStage);
 //TODO
 	/*			
 				// this part of the code is for testing purposes!
@@ -345,6 +347,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 				
 				
 			case ACK_CHECK:
+				System.out.println(leaderStage);
 
 				
 				gvh.sleep(100); // was 15
@@ -370,6 +373,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 				break;
 	
 			case RESEND_PATH:
+				System.out.println(leaderStage);
 
 				// generate and send the path to the followers who have not sent any ack back.
 				
@@ -393,6 +397,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 				break; 
 				
 			case FOLLOW_PATH:
+				System.out.println(leaderStage);
 				 
 				
 				int velocity = VELOCITY_MIN; 
@@ -562,8 +567,11 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 				else if ( GetSystemTime() > movingTo.time ){
 						
 					// if robot is not early
-	//				//  //System.out.println("on time not moving : " +movingFrom.time + " " + movingTo.time + " " + GetSystemTime());				
+					//System.out.println("on time not moving : " +movingFrom.time + " " + movingTo.time + " " + GetSystemTime());				
 					next = currentPath.removeFirst();
+					while(next.time < movingTo.time){
+						next = currentPath.removeFirst();
+					}
 
 					movingFrom = movingTo;
 					movingTo = next;
@@ -593,8 +601,9 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 				
 			}
 
-				goToWayPoint(next, velocity);
-				gvh.sleep(100) ;
+				
+			goToWayPoint(next, velocity);
+			gvh.sleep(100) ;
 			
 
 		}
@@ -695,12 +704,25 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 
 		
 		
-		if (counter == numRobots - 1) 
+		if (counter == numRobots - 1){
+			missedAckCounter = 0 ; 
 			return true;
-
+		}
+			
+		missedAckCounter++ ; 
 		return false;
 	}
 
+	
+
+	private boolean acceptNewDetourPoint(){
+
+		if (missedAckCounter > 20)
+			return false ; 
+		else 
+			return true ; 
+	
+	}
 
 	private void goToWayPoint(WayPoint next, int velocity) 
 	{
@@ -1232,7 +1254,8 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 		System.out.println("position: " + x + " " + y + "System cycle: " + GetCycleNumber());
 		
 		if (robotId == 0)
-			if( allAcksRecieved()){
+			if(x > gvh.gps.getMyPosition().x ) 
+			if( acceptNewDetourPoint() ){
 				{
 					double ANCHOR_DISTANCE = 1000;
 					double SEPARATION = 100;
@@ -1272,7 +1295,7 @@ System.out.println("not all acks are received!");
 		{
 			//TODO Copy this to the original function
 			if (robotId == 0)
-				if( allAcksRecieved()){
+				if( acceptNewDetourPoint()){
 					if (true)
 					{
 						double ANCHOR_DISTANCE = 1000;
