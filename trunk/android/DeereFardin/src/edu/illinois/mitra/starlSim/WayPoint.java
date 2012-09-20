@@ -22,4 +22,18 @@ package edu.illinois.mitra.starlSim;
 		public int x;
 		public int y;
 		public int time;
+
+	
+	
+	@Override public boolean equals(Object other) {
+		
+	    boolean result = false;
+	    if (other instanceof WayPoint) {
+	        WayPoint that = (WayPoint) other;
+	        result = (this.x == that.x && this.y == that.y);
+	    }
+	    
+	    return result;
+	}
+	
 	}

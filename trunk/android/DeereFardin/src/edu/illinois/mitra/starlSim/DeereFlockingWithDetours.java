@@ -20,7 +20,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 
 	//////////// CONSTANTS /////////////////
 	private static final int PERCENT = 10 ; 
-	private static final int SAFE_DISTANCE  = 150; 
+	private static final int SAFE_DISTANCE  = 100; 
 	private static final int SAFE_DISTANCE_SELF_CHECK =  30 ; 
 	
 		
@@ -316,7 +316,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 					if (interferes(potentialIntermediatePaths, currentPaths)){
 						//System.out.println("intereference! " + k);
 						incPercent = incPercent * 9/10 ;
-						gvh.sleep(30) ;
+						gvh.sleep(10) ;
 						
 					}
 					else {
@@ -657,7 +657,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 //									System.out.println("distance: " + dist);
 									
 									if (dist < SAFE_DISTANCE) {
-						//				System.out.println("Interference!! dist: " + dist + " " + " j: " + j + " k: " + k + " "  + " i: " + i + " p: " + p + " "  +currentWpt1.x+ " " +  currentWpt1.y+ " " +  currentWpt2.x+ " " +  currentWpt2.y+ " " +  interWpt1.x+ " " +  interWpt1.y+ " " +  intertWpt2.x+ " " +  intertWpt2.y + " " + "starting: " + starting + " end: " + end) ;
+										System.out.println("Interference!! dist: " + dist + " " + " j: " + j + " k: " + k + " "  + " i: " + i + " p: " + p + " "  +currentWpt1.x+ " " +  currentWpt1.y+ " " +  currentWpt2.x+ " " +  currentWpt2.y+ " " +  interWpt1.x+ " " +  interWpt1.y+ " " +  intertWpt2.x+ " " +  intertWpt2.y + " " + "starting: " + starting + " end: " + end) ;
 		
 										return true ; 
 									}
