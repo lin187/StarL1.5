@@ -23,6 +23,11 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 	private static final int SAFE_DISTANCE  = 100; 
 	private static final int SAFE_DISTANCE_SELF_CHECK =  30 ; 
 	
+	final int INIT_PATH_DELTA_DIST = 100; // distance per offline path waypoint
+	final int INIT_PATH_DELTA_TIME = 1000; // time per offline path waypoint
+	final int INIT_PATH_POINTS = 300;
+	final Point INIT_PATH_START = new Point(0,500); // initial point for the offline path
+	
 		
 	// assume flock is facing towards the right, what are the positional offsets?
 	private static final Point[] FLOCK_OFFSETS = 
@@ -200,10 +205,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 	private void createInitialRobotPath() 
 	{
 		// create the initial path
-		final int INIT_PATH_DELTA_DIST = 100; // distance per offline path waypoint
-		final int INIT_PATH_DELTA_TIME = 1000; // time per offline path waypoint
-		final int INIT_PATH_POINTS = 300;
-		final Point INIT_PATH_START = new Point(0,500); // initial point for the offline path
+
 		
 		currentPath.clear();
 		
@@ -304,7 +306,14 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 				
 				startingCycle = GetCycleNumber() ;
 
-				currentDesiredPath = receivedDesiredPath ; 					
+				currentDesiredPath = receivedDesiredPath ;
+				int firstTime = receivedDesiredPath.get(0).time ; 
+				for(WayPoint wpt:currentDesiredPath){
+					wpt.time = firstTime ; 
+					firstTime += INIT_PATH_DELTA_TIME ; 
+				}
+				
+				
 				
 				oldNewWptConnectors = connectorLineGenerator(oldNewWptConnectors, currentPath, currentDesiredPath) ;
 				//////  //System.out.println("before loop  current path size :" + currentPath.size() + " currentDesiredPath size: " + currentDesiredPath.size() + " oldNewWptConnectors size: " + oldNewWptConnectors.size()) ;
@@ -1158,6 +1167,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 			ArrayList <WayPoint> receivedPath = new ArrayList <WayPoint>() ;
 							
 			newPathID =  Integer.valueOf(waypoints[0]) ; 
+			System.out.println(m.getContents(0)); 
 			
 			for(int j = 1 ; j <waypoints.length; j ++) { 
 				
@@ -1165,6 +1175,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 				wptData = wpt.split(":") ; 	
 				receivedPath.add(new WayPoint( Integer.valueOf(wptData[0] ),Integer.valueOf(wptData[1]) , Integer.valueOf(wptData[2]) )) ; 
 			}
+			System.out.println(receivedPath.size());
 
 			ackProcess(receivedPath) ; 
 			//System.out.println("new PAth " + robotId + " " + newPathID + " " +  currentPathID);
