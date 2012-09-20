@@ -173,10 +173,8 @@ public class Simulation {
 		System.out.println("Starting with " + participants.size() + " robots");
 
 		// Save settings to JSON file
-		if(settings.TRACE_OUT_DIR != null) {
-			
+		if(settings.TRACE_OUT_DIR != null)
 			SettingsWriter.writeSettings(settings);
-		}
 
 		// Invoke all simulated robots
 		List<Future<List<Object>>> results = null;
