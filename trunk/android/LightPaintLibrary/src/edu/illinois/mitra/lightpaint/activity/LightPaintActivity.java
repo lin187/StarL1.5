@@ -124,7 +124,6 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 				gvh.log.e(TAG, "Requesting an assignment");
 				if(iAmLeader) {
 					assignmentRequesters.add(name);					
-//					assignment.addAll(alg.assignSegment(super.name, gvh.gps.getMyPosition()));
 				} else {
 					RobotMessage req = new RobotMessage(leader, name, ASSIGNMENT_REQ_ID, "");
 					gvh.comms.addOutgoingMessage(req);
@@ -141,7 +140,9 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 				break;
 			case DO_ASSIGNMENT:
 				gvh.plat.moat.goTo(currentDestination = assignment.remove(0));
-				illuminatePoint = currentDestination.getName().equals("Y");
+				// TODO Add screen colors
+				System.out.println(lastVisitedPoint.getAngle());
+				illuminatePoint = (lastVisitedPoint.getAngle() != 0);
 				gvh.log.d(TAG, "Assignment has " + assignment.size() + " points remaining.");
 				setStage(Stage.WAIT_TO_ARRIVE);
 				break;

@@ -49,23 +49,35 @@ public class SvgParser extends XmlReader {
 			int x2 = (int) Double.parseDouble(attrib.getNamedItem("x2").getNodeValue());
 			int y1 = (int) Double.parseDouble(attrib.getNamedItem("y1").getNodeValue());
 			int y2 = (int) Double.parseDouble(attrib.getNamedItem("y2").getNodeValue());
-
-			retval.add(new ImageEdge(new ImagePoint(x1, y1), new ImagePoint(x2, y2)));
+			
+			int color = sanitizeColor(Integer.parseInt(attrib.getNamedItem("stroke").getNodeValue().substring(1),16));
+			
+			retval.add(new ImageEdge(new ImagePoint(x1, y1, color), new ImagePoint(x2, y2, color)));
 		}
 
 		NodeList paths = super.getExpression("//path");
 		for(int i = 0; i < paths.getLength(); i++) {
 			Node path = paths.item(i);
-			String pathString = path.getAttributes().getNamedItem("d").getNodeValue();
-			retval.addAll(pathToLines(pathString));
+			NamedNodeMap attrib = path.getAttributes();
+			String pathString = attrib.getNamedItem("d").getNodeValue();
+			int color = sanitizeColor(Integer.parseInt(attrib.getNamedItem("stroke").getNodeValue().substring(1),16));
+			retval.addAll(pathToLines(pathString, color));
 		}
 
 		return scaleAndCenterEdges(retval);
 	}
 
+	// Turn black lines into white lines. Color 0 is mapped to "do not illuminate"
+	private int sanitizeColor(int color) {
+		if(color == 0)
+			return 16777215;
+		else
+			return color;
+	}
+	
 	private static final Pattern PATH_PATTERN = Pattern.compile("[a-zA-Z]([\\s,]?[-]?[0-9\\.]+[\\s,]?[-]?[0-9\\.]+[\\s,]?){1,}");
 	
-	private Set<ImageEdge> pathToLines(String pathString) {
+	private Set<ImageEdge> pathToLines(String pathString, int color) {
 		// Break the string into commands first
 		// Must split along any character, preserving which command the
 		// character is placed in
@@ -84,7 +96,7 @@ public class SvgParser extends XmlReader {
 		Set<ImageEdge> retval = new HashSet<ImageEdge>();
 
 		// Step through the commands
-		ImagePoint current = new ImagePoint(0, 0);
+		ImagePoint current = new ImagePoint(0, 0, color);
 		for(String commandString : commands) {
 			char cmdType = commandString.charAt(0);
 			int[] cmdValues = Utility.partsToInts(commandString.substring(1), "[\\s,]+");
@@ -150,7 +162,7 @@ public class SvgParser extends XmlReader {
 		for(int i = 0; i < retval.size(); i++)
 			retval.set(i, retval.get(i).scale(scalefactor));
 		
-		// Centering & flipping vertically
+		// Centering
 		double centerX = (scalefactor*width) / 2.0;
 		double centerY = (scalefactor*height) / 2.0;
 		offset = center.subtract(new ImagePoint(centerX, centerY));
@@ -160,11 +172,7 @@ public class SvgParser extends XmlReader {
 		maxY += centerY/2;
 		
 		for(int i = 0; i < retval.size(); i++) {
-			ImageEdge newEdge = retval.get(i).translate(offset);
-			ImagePoint newStart = new ImagePoint(newEdge.getStart().getX(), maxY - newEdge.getStart().getY());
-			ImagePoint newEnd = new ImagePoint(newEdge.getEnd().getX(), maxY - newEdge.getEnd().getY());
-			retval.set(i, new ImageEdge(newStart, newEnd));
-//			retval.set(i, retval.get(i).translate(offset));
+			retval.set(i, retval.get(i).translate(offset));
 		}
 
 		return new HashSet<ImageEdge>(retval);

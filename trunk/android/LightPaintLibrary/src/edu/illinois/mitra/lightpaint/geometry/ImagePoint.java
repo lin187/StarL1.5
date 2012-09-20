@@ -5,21 +5,31 @@ import edu.illinois.mitra.starl.objects.ItemPosition;
 public class ImagePoint {
 	protected final double x;
 	protected final double y;
-	
-	public ImagePoint(double x, double y) {
+	protected final int color;
+
+	public ImagePoint(double x, double y, int color) {
+		this.color = color;
 		this.x = x;
 		this.y = y;
 	}
-	
-	public static ImagePoint fromItemPosition(ItemPosition ip) {
-		return new ImagePoint(ip.x, ip.y);
+
+	public ImagePoint(double x, double y) {
+		this(x, y, 0);
 	}
-	
+
+	public int getColor() {
+		return color;
+	}
+
+	public static ImagePoint fromItemPosition(ItemPosition ip) {
+		return new ImagePoint(ip.x, ip.y, ip.getAngle());
+	}
+
 	public static ImagePoint fromString(String s) {
 		String[] parts = s.split("[\\s,]+");
 		if(parts.length < 2)
 			throw new IllegalArgumentException("Can't parse an ImagePoint from " + s);
-		return new ImagePoint(Double.parseDouble(parts[0]), Double.parseDouble(parts[1]));		
+		return new ImagePoint(Double.parseDouble(parts[0]), Double.parseDouble(parts[1]));
 	}
 
 	public double getX() {
@@ -29,35 +39,36 @@ public class ImagePoint {
 	public double getY() {
 		return y;
 	}
-	
+
 	public ImagePoint subtract(ImagePoint other) {
-		return new ImagePoint(x-other.x, y-other.y);
+		return new ImagePoint(x - other.x, y - other.y, color);
 	}
-	
+
 	public ImagePoint add(ImagePoint other) {
-		return new ImagePoint(x+other.x, y+other.y);
+		return new ImagePoint(x + other.x, y + other.y, color);
 	}
-	
+
 	public double distanceTo(ImagePoint other) {
-		return Math.hypot(x-other.x,y-other.y);
+		return Math.hypot(x - other.x, y - other.y);
 	}
-	
+
 	public ImagePoint scale(double scale) {
-		return new ImagePoint(x*scale,y*scale);
+		return new ImagePoint(x * scale, y * scale, color);
 	}
-	
+
 	/**
 	 * Treats two ImagePoints as 2-vectors and computes the dot product
+	 * 
 	 * @param other
 	 * @return
 	 */
 	public double dot(ImagePoint other) {
-		return x*other.x + y*other.y;
+		return x * other.x + y * other.y;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "("+x+", "+y+")";
+		return "(" + x + ", " + y + ")[" + color + "]";
 	}
 
 	@Override

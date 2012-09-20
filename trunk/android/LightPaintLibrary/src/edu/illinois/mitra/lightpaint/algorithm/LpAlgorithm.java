@@ -68,33 +68,17 @@ public class LpAlgorithm {
 
 	private static final List<ItemPosition> EMPTY_LIST = new ArrayList<ItemPosition>(0);
 
-	public boolean[] illuminatePoints(List<ImagePoint> input) {
-		Set<ImagePoint> points = drawing.getPoints();
-		boolean[] retval = new boolean[input.size()];
-		for(int i = 0; i < input.size(); i++) {
-			ImagePoint test = input.get(i);
-			if(points.contains(test))
-				retval[i] = true;
-			else
-				retval[i] = false;
-		}
-
-		return retval;
-	}
-
 	public synchronized List<ItemPosition> assignSegment(String currentRobot, ItemPosition robotPosition) {
-		List<ImagePoint> points = assignSegment(currentRobot, new ImagePoint(robotPosition.x, robotPosition.y));
+		List<ImagePoint> points = assignSegment(currentRobot, new ImagePoint(robotPosition.x, robotPosition.y));				
 		if(points == null)
 			return EMPTY_LIST;
 
 		// Name each item position Y or N depending on what the light status
 		// should be as approaching that point
 		List<ItemPosition> positions = new ArrayList<ItemPosition>(points.size());
-		boolean[] illuminate = illuminatePoints(points);
-		for(int i = 0; i < points.size(); i++) {
-			String name = (i != 0) && illuminate[i - 1] ? "Y" : "N";
-			positions.add(new ItemPosition(name, (int) points.get(i).getX(), (int) points.get(i).getY(), 0));
-		}
+		for(int i = 0; i < points.size(); i++)
+			positions.add(new ItemPosition("x", (int) points.get(i).getX(), (int) points.get(i).getY(), points.get(i).getColor()));
+
 		return positions;
 	}
 
@@ -110,8 +94,6 @@ public class LpAlgorithm {
 
 		// First make sure they're not in an unsafe region already
 		// TODO figure out how to get them out of an unsafe situation
-		// ImageGraph unsafeForCurrent = new ImageGraph(unsafe);
-		// unsafeForCurrent.addAll(unsafeRobotGraph(currentRobot));
 		ImageGraph unsafeForCurrent = unsafeRobotGraph(currentRobot);
 
 		if(unsafeForCurrent.isColliding(robotPosition, unsafeRadius)) {
@@ -123,8 +105,7 @@ public class LpAlgorithm {
 		List<ImagePoint> availableStartPoints = unsafeForCurrent.removeCollidingPoints(unpainted.getPointsInDistanceOrder(robotPosition), unsafeRadius);
 
 		// Score each available starting point
-		// Score = (distance of path available from start point) / (distance to
-		// start)
+		// Score = (distance of path available from start point) / (distance to start)
 		// Remove any starting points with zero path available
 		double maxScore = Double.NEGATIVE_INFINITY;
 		List<ImageEdge> bestPath = null;
@@ -277,20 +258,20 @@ public class LpAlgorithm {
 
 	public static List<ImagePoint> edgesToPoints(List<ImageEdge> path) {
 		List<ImagePoint> pathPoints = new ArrayList<ImagePoint>();
-		int idx = 0;
+
+		ImageEdge previous = null;
 		for(ImageEdge edge : path) {
-			if(idx == 0) {
+			if(previous == null) {
 				pathPoints.add(edge.getStart());
 				pathPoints.add(edge.getEnd());
-				idx++;
-			} else if(pathPoints.get(idx - 1).equals(edge.getStart()) || pathPoints.get(idx - 2).equals(edge.getStart())) {
-				pathPoints.add(edge.getEnd());
-			} else if(pathPoints.get(idx - 1).equals(edge.getEnd()) || pathPoints.get(idx - 2).equals(edge.getEnd())) {
+			} else if(edge.getEnd().equals(previous.getStart()) || edge.getEnd().equals(previous.getEnd())) {
 				pathPoints.add(edge.getStart());
+			} else if(edge.getStart().equals(previous.getStart()) || edge.getStart().equals(previous.getEnd())) {
+				pathPoints.add(edge.getEnd());
 			} else {
 				throw new RuntimeException("Disjoint path: " + pathPoints + " " + edge);
 			}
-			idx++;
+			previous = edge;
 		}
 		return pathPoints;
 	}
