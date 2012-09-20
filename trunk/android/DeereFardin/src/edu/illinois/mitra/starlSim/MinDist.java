@@ -61,11 +61,25 @@ class MinDist{
 		this.P22 = (Double) L2.getP2();
 		
 		this.IsIntersect = L1.intersectsLine(L2);
+		
+		
 		this.dist = CalMinDist();
 	}
 	
+	
+	public boolean doesIntersect(){
+		
+		return IsIntersect ; 
+		
+	}
 	private double CalMinDist(){
-		if(IsIntersect){
+
+		if (	P11.x == P12.x && P11.y == P12.y  && P21.x == P22.x && P21.y == P22.y ){
+			dist = P11.distance(P22) ; 
+		}
+		
+			
+		else if(IsIntersect){
 			dist = 0;
 		}
 		else{
@@ -98,6 +112,7 @@ class MinDist{
 	}
 	
 	public double returnMinDit(){
+		
 		return this.dist ; 
 	}
 }

@@ -87,29 +87,10 @@ public class ArcCreator
 		
 		// find closest index
 		WayPoint last = newPath.get(newPath.size() - 1);
-		WayPoint cur = path.get(0);
 		
-		int closestIndex = 0;
-		double dx = last.x - cur.x;
-		double dy = last.y - cur.y;
-		double closestDistSq = dx * dx + dy * dy;
+		int closestIndex = getClosestPointIndex(path, new Point2D.Double(last.x, last.y)); 
 		
-		for (int i = 1; i < path.size(); ++i)
-		{
-			cur = path.get(i);
-			
-			dx = last.x - cur.x;
-			dy = last.y - cur.y;
-			double distSq = dx * dx + dy * dy;
-			
-			if (distSq < closestDistSq)
-			{
-				closestDistSq = distSq;
-				closestIndex = i;
-			}
-		}
-		
-		for(int i = closestIndex; i<path.size(); i++)
+		for(int i = closestIndex+1; i<path.size(); i++)
 		{
 			newPath.add(path.get(i));
 		}
@@ -229,8 +210,8 @@ public class ArcCreator
 		ArrayList <WayPoint> newPath = createNewPath(oldPath, detourPoint, ANCHOR_DISTANCE, SEPARATION);
 		
 		// print paths
-	//	System.out.println("Old Path: " + oldPath);
-	//	System.out.println("\nNew Path: " + newPath);
+		System.out.println("Old Path: " + oldPath);
+		System.out.println("\nNew Path: " + newPath);
 	}
 
 } 

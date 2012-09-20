@@ -87,6 +87,12 @@ public class FlockDrawer extends Drawer
 			
 			last = p;
 		}
+	
+		//draw the circle for the new waypoint
+	    g.fillOval(o.newPoint.x, o.newPoint.y, 100, 100);
+	    g.setColor(Color.darkGray);
+	    g.drawOval(o.newPoint.x, o.newPoint.y, 100, 100);
+
 	}
 
 	boolean initedJoystick = false;
