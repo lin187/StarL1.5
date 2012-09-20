@@ -283,7 +283,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 				break; 
 	
 			case PATH_UPDATE:
-				System.out.println(leaderStage);
+		//		System.out.println(leaderStage);
 //TODO
 	/*			
 				// this part of the code is for testing purposes!
@@ -356,7 +356,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 				
 				
 			case ACK_CHECK:
-				System.out.println(leaderStage);
+		//		System.out.println(leaderStage);
 
 				
 				gvh.sleep(100); // was 15
@@ -382,7 +382,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 				break;
 	
 			case RESEND_PATH:
-				System.out.println(leaderStage);
+		//		System.out.println(leaderStage);
 
 				// generate and send the path to the followers who have not sent any ack back.
 				
@@ -406,7 +406,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 				break; 
 				
 			case FOLLOW_PATH:
-				System.out.println(leaderStage);
+			//	System.out.println(leaderStage);
 				 
 				
 				int velocity = VELOCITY_MIN; 
@@ -1167,7 +1167,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 			ArrayList <WayPoint> receivedPath = new ArrayList <WayPoint>() ;
 							
 			newPathID =  Integer.valueOf(waypoints[0]) ; 
-			System.out.println(m.getContents(0)); 
+	//		System.out.println(m.getContents(0)); 
 			
 			for(int j = 1 ; j <waypoints.length; j ++) { 
 				
@@ -1175,7 +1175,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 				wptData = wpt.split(":") ; 	
 				receivedPath.add(new WayPoint( Integer.valueOf(wptData[0] ),Integer.valueOf(wptData[1]) , Integer.valueOf(wptData[2]) )) ; 
 			}
-			System.out.println(receivedPath.size());
+		//	System.out.println(receivedPath.size());
 
 			ackProcess(receivedPath) ; 
 			//System.out.println("new PAth " + robotId + " " + newPathID + " " +  currentPathID);
@@ -1265,43 +1265,49 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 		System.out.println("position: " + x + " " + y + "System cycle: " + GetCycleNumber());
 		
 		if (robotId == 0)
-			if(x > gvh.gps.getMyPosition().x ) 
-			if( acceptNewDetourPoint() ){
-				{
-					double ANCHOR_DISTANCE = 1000;
-					double SEPARATION = 100;
-					
-					ArrayList <WayPoint> oldPath = new ArrayList <WayPoint>();
-					oldPath.addAll(currentPath);
-					Point2D.Double detourPoint = new Point2D.Double(x, y);
-					
-					ArrayList <WayPoint> newPath = 	
-							ArcCreator.createNewPath(oldPath, detourPoint, ANCHOR_DISTANCE, SEPARATION) ;
-					
-					//				This part works instead of zhenqi's
-					/*				
-					ArrayList <WayPoint> newPath = new ArrayList <WayPoint>() ; 
-					ArrayList<Line2D.Double> oldNewWptConnectors = new ArrayList<Line2D.Double>();
-					////////  //System.out.println("New point recieved.");
-					
-					for(int j = 0 ; j < currentPath.size() ; j++){
-						newPath.add(new WayPoint(currentPath.get(j).x , currentPath.get(j).y + j* 30 , currentPath.get(j).time )) ;
+			if(x > gvh.gps.getMyPosition().x + 100 &&  y < gvh.gps.getMyPosition().y + 3000 && y > gvh.gps.getMyPosition().y - 3000) 
+				if( acceptNewDetourPoint() ){
+					{
+						double ANCHOR_DISTANCE = 1000;
+						double SEPARATION = 100;
+						
+						ArrayList <WayPoint> oldPath = new ArrayList <WayPoint>();
+						oldPath.addAll(currentPath);
+						Point2D.Double detourPoint = new Point2D.Double(x, y);
+						
+						ArrayList <WayPoint> newPath = 	
+								ArcCreator.createNewPath(oldPath, detourPoint, ANCHOR_DISTANCE, SEPARATION) ;
+						
+						//				This part works instead of zhenqi's
+						/*				
+						ArrayList <WayPoint> newPath = new ArrayList <WayPoint>() ; 
+						ArrayList<Line2D.Double> oldNewWptConnectors = new ArrayList<Line2D.Double>();
+						////////  //System.out.println("New point recieved.");
+						
+						for(int j = 0 ; j < currentPath.size() ; j++){
+							newPath.add(new WayPoint(currentPath.get(j).x , currentPath.get(j).y + j* 30 , currentPath.get(j).time )) ;
+						}
+		 */	
+
+						newPoint.x = x ; 
+						newPoint.y = y ; 
+						
+//		if (fullCheck(newPath, currentPath) == true)
+		
+						if (newPath != null)
+							this.receivedDesiredPath = newPath;				
 					}
-	 */	
+				
+				}
+				else
+					System.out.println("not all acks are received!");
 
-					newPoint.x = x ; 
-					newPoint.y = y ; 
-					
-//	if (fullCheck(newPath, currentPath) == true)
-		if (newPath != null)
-			this.receivedDesiredPath = newPath;				
-}
-}
-else
-System.out.println("not all acks are received!");
-////////System.out.println("Point Received!");
-}
+			else
+				System.out.println("the Point is too close!");
+	}
 
+	
+	
 		public void testPointInsert(int x, int y)
 		{
 			//TODO Copy this to the original function
