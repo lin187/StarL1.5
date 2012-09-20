@@ -748,6 +748,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 		
 		motion.goTo(ip, motionParam) ; 
 		
+		
 
 	}
 	
@@ -960,22 +961,6 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 				Math.toDegrees( Math.atan2( leaderPath.get(1).y - leaderPath.get(0).y , 
 						leaderPath.get(1).x - leaderPath.get(0).x ) );
 		int angle;
-		int angle0 , angle1 , angle2 , angle3,  avgAngle =0;
-		
-		angle0 = (int) 
-				Math.toDegrees( Math.atan2( leaderPath.get(1).y - leaderPath.get(0).y , 
-						leaderPath.get(1).x - leaderPath.get(0).x ) );
-		
-		angle1 = (int) 
-				Math.toDegrees( Math.atan2( leaderPath.get(2).y - leaderPath.get(1).y , 
-						leaderPath.get(2).x - leaderPath.get(1).x ) );
-		
-		angle2 = (int) 
-				Math.toDegrees( Math.atan2( leaderPath.get(3).y - leaderPath.get(2).y , 
-						leaderPath.get(3).x - leaderPath.get(2).x ) );
-		angle3 = (int) 
-				Math.toDegrees( Math.atan2( leaderPath.get(4).y - leaderPath.get(3).y , 
-						leaderPath.get(4).x - leaderPath.get(3).x ) );
 
 		
 		double xOld =0, yOld=0, xNew, yNew ;
@@ -1002,9 +987,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 			else 
 				angle =(int) Math.toDegrees( Math.atan2( yNew - yOld , xNew - xOld ) );
 
-			if (counter > 3)
-				avgAngle  = (angle0 + angle1 + angle2 + angle3 + angle)/5 ; 
-			
+
 			WayPoint lastRight = new WayPoint(wpt.x, wpt.y, wpt.time);
 			WayPoint lastLeft = new WayPoint(wpt.x, wpt.y, wpt.time); 
 			
@@ -1026,12 +1009,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 			xOld = (double)wpt.x ; 
 			yOld = (double)wpt.y ;
 			
-			if (counter > 3 ){
-				angle3 = angle ; 
-				angle2 = angle3 ;
-				angle1 = angle2 ; 
-				angle0 = angle1 ; 
-			}
+
 
 			
 			counter ++ ; 
