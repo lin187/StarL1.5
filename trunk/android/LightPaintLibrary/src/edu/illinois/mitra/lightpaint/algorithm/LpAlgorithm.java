@@ -77,7 +77,7 @@ public class LpAlgorithm {
 		// should be as approaching that point
 		List<ItemPosition> positions = new ArrayList<ItemPosition>(points.size());
 		for(int i = 0; i < points.size(); i++)
-			positions.add(new ItemPosition("x", (int) points.get(i).getX(), (int) points.get(i).getY(), points.get(i).getColor()));
+			positions.add(new ItemPosition(Integer.toString(points.get(i).getSize()), (int) points.get(i).getX(), (int) points.get(i).getY(), points.get(i).getColor()));
 
 		return positions;
 	}

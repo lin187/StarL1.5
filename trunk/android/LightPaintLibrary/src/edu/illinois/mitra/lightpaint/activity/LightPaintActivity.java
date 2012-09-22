@@ -142,8 +142,8 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 			case DO_ASSIGNMENT:
 				gvh.plat.moat.goTo(currentDestination = assignment.remove(0));
 				// TODO Add screen colors
-				System.out.println(lastVisitedPoint.getAngle());
-				screenColor = lastVisitedPoint.getAngle();
+				//System.out.println(lastVisitedPoint.getAngle());
+				screenColor = getColorFromPosition(lastVisitedPoint);
 				screenLineSize = getSizeFromPosition(lastVisitedPoint);
 				updateScreen();
 				gvh.log.d(TAG, "Assignment has " + assignment.size() + " points remaining.");
@@ -171,9 +171,12 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 		}
 	}
 
+	private int getColorFromPosition(ItemPosition pos) {
+		return pos.getAngle();
+	}
+
 	private static int getSizeFromPosition(ItemPosition pos) {
-		String[] parts = pos.getName().split("_");
-		return Integer.parseInt(parts[1]);
+		return Integer.parseInt(pos.getName());
 	}
 
 	private static final MessageContents EMPTY_MSG_CONTENTS = new MessageContents("NONE");

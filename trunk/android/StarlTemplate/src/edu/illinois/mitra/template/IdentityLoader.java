@@ -1,7 +1,6 @@
 package edu.illinois.mitra.template;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -41,7 +40,7 @@ public class IdentityLoader {
 			if(line.startsWith("%") || line.trim().isEmpty())
 				continue;
 			
-			String[] components = line.split(",");
+			String[] components = line.split("[\\s]{0,},[\\s]{0,}");
 			if(linesize < 0) {
 				linesize = components.length;
 			} else if(components.length != linesize) {
@@ -60,7 +59,10 @@ public class IdentityLoader {
 		if(identityRows.isEmpty())
 			return null;
 
-		return (String[][]) identityRows.toArray();
+		String[][] retval = new String[3][];
+		for(int i = 0; i < 3; i ++)
+			retval[i] = identityRows.get(i);
+		return retval;
 	}
 
 	/**
@@ -88,7 +90,7 @@ public class IdentityLoader {
 					
 					int bytesRead = 0;
 					BufferedInputStream in = new BufferedInputStream(conn.getInputStream());
-					BufferedOutputStream out = new BufferedOutputStream(new ByteArrayOutputStream());
+					ByteArrayOutputStream out = new ByteArrayOutputStream();
 
 					if(conn.getResponseCode() != HttpURLConnection.HTTP_NOT_FOUND) {
 						int toRead = conn.getContentLength();

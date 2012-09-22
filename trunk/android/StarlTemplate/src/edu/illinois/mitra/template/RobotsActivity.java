@@ -34,7 +34,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 	private static final String TAG = "RobotsActivity";
 	private static final String ERR = "Critical Error";
 
-	private static final String IDENTITY_FILE_URL = "https://www.dropbox.com/s/dwfqdhbf5vdtz18/robots.rif";
+	private static final String IDENTITY_FILE_URL = "https://dl.dropbox.com/s/dwfqdhbf5vdtz18/robots.rif?dl=1";
 	private static final String[][] ERROR_PARTICIPANTS = {{"ERROR"}, {"ERROR"}, {"ERROR"}};
 	
 	private static final boolean ENABLE_TRACING = false;
@@ -73,14 +73,14 @@ public class RobotsActivity extends Activity implements MessageListener {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		selectedRobot = prefs.getInt(PREF_SELECTED_ROBOT, 0);
 
+		// Load the participants
+		participants = IdentityLoader.loadIdentities(IDENTITY_FILE_URL);
+		
 		// Set up the GUI
 		setupGUI();
 
 		// Create the main handler
 		mainHandler = new MainHandler(this, pbBluetooth, pbBattery, cbGPS, cbBluetooth, cbRunning, txtDebug);
-
-		// Load the participants
-		participants = IdentityLoader.loadIdentities(IDENTITY_FILE_URL);
 		
 		if(participants == null) {
 			Toast.makeText(this, "Error loading identity file!", Toast.LENGTH_LONG).show();
@@ -103,7 +103,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 	}
 
 	public void createAppInstance(GlobalVarHolder gvh) {
-		runThread = new LightPaintActivity(gvh);
+		runThread = null;// new LightPaintActivity(gvh);
 	}
 
 	public void launch(int numWaypoints, int runNum) {
