@@ -1,6 +1,7 @@
 package edu.illinois.mitra.starl.gvh;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import android.os.Handler;
 import edu.illinois.mitra.starl.comms.SmartUdpComThread;
@@ -22,7 +23,7 @@ public class RealGlobalVarHolder extends GlobalVarHolder {
 	 * @param handler the main application handler capable of receiving GUI update messages
 	 * @param robotMac the MAC address of this agent's iRobot Create chassis
 	 */
-	public RealGlobalVarHolder(String name, HashMap<String,String> participants, Handler handler, String robotMac) {
+	public RealGlobalVarHolder(String name, Map<String,String> participants, Handler handler, String robotMac) {
 		super(name, participants);
 
 		super.log = new AndroidLogging();
@@ -30,7 +31,7 @@ public class RealGlobalVarHolder extends GlobalVarHolder {
 		super.plat = new RealAndroidPlatform(handler);
 		super.comms = new Comms(this, new SmartUdpComThread(this));
 		super.gps = new Gps(this, new UdpGpsReceiver(this,"192.168.1.100",4000,new PositionList(),new PositionList()));
-		plat.moat = new MotionAutomaton(this, new BluetoothInterface(this, robotMac));
+		plat.moat = new MotionAutomaton(this, new BluetoothInterface(this, robotMac.trim()));
 		plat.moat.start();
 	}
 

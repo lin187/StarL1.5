@@ -42,12 +42,6 @@ public class RobotsActivity extends Activity implements MessageListener {
 	private GlobalVarHolder gvh = null;
 	public boolean launched = false;
 
-	// THESE NAMES AND ASSOCIATED IP ADDRESSES ARE CONSTANT FOR TESTING.
-	//									ALICE				BOB					CARLOS				DIANA
-//	private static final String[] mac = { "00:0A:3A:2E:C9:CA", "00:0A:3A:2E:C8:21", "00:0A:3A:2E:CB:73", "00:0A:3A:2E:CB:43" };
-//	private static final String[] participants = { "Alice", "Bob", "Carlos", "Diana" };
-//	private static final String[] ips = { "192.168.1.101", "192.168.1.102", "192.168.1.103", "192.168.1.104" };
-
 	// SharedPreferences variables
 	private static final String PREF_SELECTED_ROBOT = "SELECTED_ROBOT";
 	private int selectedRobot = 0;
@@ -69,12 +63,17 @@ public class RobotsActivity extends Activity implements MessageListener {
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		setContentView(R.layout.main);
 
+		// Load the participants
+		participants = IdentityLoader.loadIdentities(IDENTITY_FILE_URL);
+		
 		// Initialize preferences holder
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		selectedRobot = prefs.getInt(PREF_SELECTED_ROBOT, 0);
-
-		// Load the participants
-		participants = IdentityLoader.loadIdentities(IDENTITY_FILE_URL);
+		
+		if(selectedRobot >= participants[0].length) {
+			Toast.makeText(this, "Identity error! Reselect robot identity", Toast.LENGTH_LONG).show();
+			selectedRobot = 0;
+		}
 		
 		// Set up the GUI
 		setupGUI();
@@ -90,7 +89,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 		
 		// Create the global variable holder
 		HashMap<String, String> hm_participants = new HashMap<String, String>();
-		for(int i = 0; i < participants.length; i++) {
+		for(int i = 0; i < participants[0].length; i++) {
 			hm_participants.put(participants[0][i], participants[2][i]);
 		}
 		gvh = new RealGlobalVarHolder(participants[0][selectedRobot], hm_participants, mainHandler, participants[1][selectedRobot]);

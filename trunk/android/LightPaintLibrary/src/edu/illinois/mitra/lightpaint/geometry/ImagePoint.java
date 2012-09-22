@@ -28,7 +28,7 @@ public class ImagePoint {
 	}
 	
 	public static ImagePoint fromItemPosition(ItemPosition ip) {
-		return new ImagePoint(ip.x, ip.y, ip.getAngle(), 10);
+		return new ImagePoint(ip.x, ip.y, ip.getAngle(), Integer.parseInt(ip.getName()));
 	}
 
 	public static ImagePoint fromString(String s) {

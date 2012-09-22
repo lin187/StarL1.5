@@ -2,6 +2,7 @@
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
@@ -32,7 +33,7 @@ public class CommsHandler extends Thread implements Cancellable {
 	protected ArrayList<UDPMessage> ReceivedMsgList;
     
     // Participant names and IP addresses
-    protected HashMap<String,String> participants;
+    protected Map<String,String> participants;
 	
     // Connected threads and objects
     protected GlobalVarHolder gvh;

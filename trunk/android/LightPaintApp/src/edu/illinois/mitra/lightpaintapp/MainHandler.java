@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ProgressBar;
@@ -84,8 +85,9 @@ public class MainHandler extends Handler {
 				illuminate = (IlluminationControl) app.findViewById(R.id.illuminaitionControl1);
 				drawMode = true;
 			}
-			
-			app.lp.screenBrightness = (color != 0) ? 1f : 1/100f;
+			System.out.println("Setting screen to " + color + " = " + linewidth);
+			//app.lp.screenBrightness = (color != 0) ? 1f : 1/100f;
+			app.lp.screenBrightness = 1f;
 			app.getWindow().setAttributes(app.lp);
 			illuminate.setColor(color);
 			illuminate.setWidth(linewidth/MAX_LINEWIDTH);
@@ -103,5 +105,6 @@ public class MainHandler extends Handler {
 		app.getWindow().setAttributes(app.lp);
 		app.mainLayout.setBackgroundColor(Color.BLACK);
 		app.setContentView(R.layout.main);
+		app.setupGUI();
 	}
 }

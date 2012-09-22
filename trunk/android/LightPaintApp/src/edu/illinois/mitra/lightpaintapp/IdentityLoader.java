@@ -1,4 +1,4 @@
-package edu.illinois.mitra.template;
+package edu.illinois.mitra.lightpaintapp;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;

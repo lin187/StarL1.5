@@ -104,13 +104,15 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 			case ELECT_LEADER:
 				if((leader = election.getLeader()) != null) {
 					iAmLeader = leader.equals(gvh.id.getName());
+					gvh.log.d(TAG, leader + " is leader!");
 					if(iAmLeader) {
-						gvh.log.d(TAG, name + " is leader!");
+						gvh.log.d(TAG, "I'm the leader!");
 						// Create the algorithm, inform it of all robot positions
 						alg = new LpAlgorithm(WptParser.parseWaypoints(gvh), POINT_SNAP_RADIUS, MAX_DRAW_LENGTH, UNSAFE_RADIUS);
-
-						for(String robot : gvh.id.getParticipants())
-							alg.setRobotPosition(robot, ImagePoint.fromItemPosition(gvh.gps.getPosition(robot)));
+						for(String robot : gvh.id.getParticipants()) {
+							ItemPosition ip = gvh.gps.getPosition(robot);
+							alg.setRobotPosition(robot, new ImagePoint(ip.getX(), ip.getY(), 0, 0));
+						}
 
 						responseService = Executors.newSingleThreadExecutor();
 						responseService.submit(new Assigner());
@@ -252,6 +254,7 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 	}
 
 	private void assign(String from) {
+		gvh.log.e(TAG, "Assigning to " + from);
 		long now = System.nanoTime();
 		List<ItemPosition> assigned = alg.assignSegment(from, gvh.gps.getPosition(from));
 		gvh.log.i(TAG, "Assignment took " + (System.nanoTime() - now) / (double) 1e9 + " seconds for " + assignment.size() + " points.");
@@ -310,19 +313,20 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 		updateScreen();
 	}
 
-	private boolean screenOn = false;
-
+	private int currentScreenColor = 0;
+	
+	
 	private void updateScreen() {
-		if(inMotion && screenColor != 0) {
-			if(!screenOn) {
-				screenOn = true;
+		if(inMotion) {
+			if(currentScreenColor != screenColor) {
+				currentScreenColor = screenColor;
 				gvh.plat.sendMainMsg(HANDLER_SCREEN, screenColor, screenLineSize);
 				if(iAmLeader)
 					gvh.log.d(TAG, "Screen on!");
 			}
-		} else if(screenOn) {
-			screenOn = false;
-			gvh.plat.sendMainMsg(HANDLER_SCREEN, 0, 0);
+		} else if(currentScreenColor != 0) {
+			currentScreenColor = 0;
+			gvh.plat.sendMainMsg(HANDLER_SCREEN, 0, screenLineSize);
 			if(iAmLeader)
 				gvh.log.d(TAG, "** SCREEN OFF **");
 		}

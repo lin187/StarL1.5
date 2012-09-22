@@ -47,6 +47,8 @@ public class IlluminationControl extends View {
 	}
 	
 	public void setColor(int color) {
+		// Correct for the alpha not being set
+		color &= 0xff000000;
 		paint.setColor(color);
 		this.invalidate();
 	}

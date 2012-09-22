@@ -63,6 +63,9 @@ public class BluetoothInterface {
 		if(btAdapter.isDiscovering())
 			btAdapter.cancelDiscovery();
 
+		if(!BluetoothAdapter.checkBluetoothAddress(targetMacAddress))
+			gvh.log.e(TAG, "Not a valid Bluetooth address!");
+		
 		// Acquire the remote device
 		mDevice = btAdapter.getRemoteDevice(targetMacAddress);
 

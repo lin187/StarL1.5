@@ -1,6 +1,7 @@
 package edu.illinois.mitra.starl.gvh;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -13,10 +14,10 @@ import java.util.Set;
  */
 public class Id {
 	// Identification
-	private HashMap<String, String> participants = null;
+	private Map<String, String> participants = null;
 	private String name = null;
 
-	public Id(String name, HashMap<String, String> participants) {
+	public Id(String name, Map<String, String> participants) {
 		this.participants = participants;
 		this.name = name;
 	}
@@ -25,7 +26,7 @@ public class Id {
 		return participants.keySet();
 	}
 
-	public HashMap<String,String> getParticipantsIPs() {
+	public Map<String,String> getParticipantsIPs() {
 		return participants;
 	}
 	

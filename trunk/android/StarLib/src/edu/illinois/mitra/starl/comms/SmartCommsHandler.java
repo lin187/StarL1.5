@@ -3,6 +3,7 @@ package edu.illinois.mitra.starl.comms;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -30,7 +31,7 @@ public class SmartCommsHandler extends Thread {
 	protected String name;
 	
     // Participant names and IP addresses
-    protected HashMap<String,String> participants;
+    protected Map<String,String> participants;
 	
     // Connected threads and objects
     protected GlobalVarHolder gvh;
