@@ -18,9 +18,10 @@ import edu.illinois.mitra.lightpaint.geometry.ImageEdge;
 import edu.illinois.mitra.lightpaint.geometry.ImagePoint;
 
 public class SvgParser extends XmlReader {
+	private static final int DEFAULT_LINE_SIZE = 10;
 
 	// TODO: Vertically flip all loaded images
-	
+
 	public SvgParser(int maxSizeX, int maxSizeY, int centerX, int centerY) {
 		super(false);
 		scale = new ImagePoint(maxSizeX, maxSizeY);
@@ -49,10 +50,11 @@ public class SvgParser extends XmlReader {
 			int x2 = (int) Double.parseDouble(attrib.getNamedItem("x2").getNodeValue());
 			int y1 = (int) Double.parseDouble(attrib.getNamedItem("y1").getNodeValue());
 			int y2 = (int) Double.parseDouble(attrib.getNamedItem("y2").getNodeValue());
-			
-			int color = sanitizeColor(Integer.parseInt(attrib.getNamedItem("stroke").getNodeValue().substring(1),16));
-			
-			retval.add(new ImageEdge(new ImagePoint(x1, y1, color), new ImagePoint(x2, y2, color)));
+
+			int color = sanitizeColor(Integer.parseInt(attrib.getNamedItem("stroke").getNodeValue().substring(1), 16));
+			int size = getLineSize(attrib.getNamedItem("stroke-width"));
+
+			retval.add(new ImageEdge(new ImagePoint(x1, y1, color, size), new ImagePoint(x2, y2, color, size)));
 		}
 
 		NodeList paths = super.getExpression("//path");
@@ -60,11 +62,18 @@ public class SvgParser extends XmlReader {
 			Node path = paths.item(i);
 			NamedNodeMap attrib = path.getAttributes();
 			String pathString = attrib.getNamedItem("d").getNodeValue();
-			int color = sanitizeColor(Integer.parseInt(attrib.getNamedItem("stroke").getNodeValue().substring(1),16));
-			retval.addAll(pathToLines(pathString, color));
+			int color = sanitizeColor(Integer.parseInt(attrib.getNamedItem("stroke").getNodeValue().substring(1), 16));
+			int size = getLineSize(attrib.getNamedItem("stroke-width"));
+			retval.addAll(pathToLines(pathString, color, size));
 		}
 
 		return scaleAndCenterEdges(retval);
+	}
+
+	private int getLineSize(Node node) {
+		if(node != null)
+			return Integer.parseInt(node.getNodeValue());
+		return DEFAULT_LINE_SIZE;
 	}
 
 	// Turn black lines into white lines. Color 0 is mapped to "do not illuminate"
@@ -74,10 +83,10 @@ public class SvgParser extends XmlReader {
 		else
 			return color;
 	}
-	
+
 	private static final Pattern PATH_PATTERN = Pattern.compile("[a-zA-Z]([\\s,]?[-]?[0-9\\.]+[\\s,]?[-]?[0-9\\.]+[\\s,]?){1,}");
-	
-	private Set<ImageEdge> pathToLines(String pathString, int color) {
+
+	private Set<ImageEdge> pathToLines(String pathString, int color, int size) {
 		// Break the string into commands first
 		// Must split along any character, preserving which command the
 		// character is placed in
@@ -96,13 +105,13 @@ public class SvgParser extends XmlReader {
 		Set<ImageEdge> retval = new HashSet<ImageEdge>();
 
 		// Step through the commands
-		ImagePoint current = new ImagePoint(0, 0, color);
+		ImagePoint current = new ImagePoint(0, 0, color, size);
 		for(String commandString : commands) {
 			char cmdType = commandString.charAt(0);
 			int[] cmdValues = Utility.partsToInts(commandString.substring(1), "[\\s,]+");
 			if(cmdValues.length < 2)
 				break;
-			ImagePoint cmdCoordinates = new ImagePoint(cmdValues[cmdValues.length-2],cmdValues[cmdValues.length-1]);
+			ImagePoint cmdCoordinates = new ImagePoint(cmdValues[cmdValues.length - 2], cmdValues[cmdValues.length - 1]);
 			switch(cmdType) {
 			case 'a':
 			case 'q':
@@ -148,29 +157,29 @@ public class SvgParser extends XmlReader {
 
 		double width = maxX - minX;
 		double height = maxY - minY;
-		
+
 		List<ImageEdge> retval = new ArrayList<ImageEdge>();
 
 		// Subtract minX and minY from all points to base the image at 0,0
 		ImagePoint offset = new ImagePoint(-minX, -minY);
 		for(ImageEdge edge : edges)
 			retval.add(edge.translate(offset));
-		
+
 		// Scaling
 		double scalefactor = Math.min(scale.getX() / width, scale.getY() / height);
 		System.out.println("Scaling by " + scalefactor);
 		for(int i = 0; i < retval.size(); i++)
 			retval.set(i, retval.get(i).scale(scalefactor));
-		
+
 		// Centering
-		double centerX = (scalefactor*width) / 2.0;
-		double centerY = (scalefactor*height) / 2.0;
+		double centerX = (scalefactor * width) / 2.0;
+		double centerY = (scalefactor * height) / 2.0;
 		offset = center.subtract(new ImagePoint(centerX, centerY));
 		System.out.println("Translating by " + offset);
 
 		maxY *= scalefactor;
-		maxY += centerY/2;
-		
+		maxY += centerY / 2;
+
 		for(int i = 0; i < retval.size(); i++) {
 			retval.set(i, retval.get(i).translate(offset));
 		}

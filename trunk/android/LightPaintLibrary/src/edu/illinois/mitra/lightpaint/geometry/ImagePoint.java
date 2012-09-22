@@ -6,23 +6,29 @@ public class ImagePoint {
 	protected final double x;
 	protected final double y;
 	protected final int color;
+	protected final int size;
 
-	public ImagePoint(double x, double y, int color) {
+	public ImagePoint(double x, double y, int color, int size) {
 		this.color = color;
 		this.x = x;
 		this.y = y;
+		this.size = size;
 	}
 
 	public ImagePoint(double x, double y) {
-		this(x, y, 0);
+		this(x, y, 0, 10);
 	}
 
 	public int getColor() {
 		return color;
 	}
-
+	
+	public int getSize() {
+		return size;
+	}
+	
 	public static ImagePoint fromItemPosition(ItemPosition ip) {
-		return new ImagePoint(ip.x, ip.y, ip.getAngle());
+		return new ImagePoint(ip.x, ip.y, ip.getAngle(), 10);
 	}
 
 	public static ImagePoint fromString(String s) {
@@ -41,11 +47,11 @@ public class ImagePoint {
 	}
 
 	public ImagePoint subtract(ImagePoint other) {
-		return new ImagePoint(x - other.x, y - other.y, color);
+		return new ImagePoint(x - other.x, y - other.y, color, size);
 	}
 
 	public ImagePoint add(ImagePoint other) {
-		return new ImagePoint(x + other.x, y + other.y, color);
+		return new ImagePoint(x + other.x, y + other.y, color, size);
 	}
 
 	public double distanceTo(ImagePoint other) {
@@ -53,7 +59,7 @@ public class ImagePoint {
 	}
 
 	public ImagePoint scale(double scale) {
-		return new ImagePoint(x * scale, y * scale, color);
+		return new ImagePoint(x * scale, y * scale, color, size);
 	}
 
 	/**

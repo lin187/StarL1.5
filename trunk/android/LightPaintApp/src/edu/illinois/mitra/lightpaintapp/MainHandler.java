@@ -72,15 +72,36 @@ public class MainHandler extends Handler {
 		case HandlerMessage.MESSAGE_BATTERY:
 			pbBattery.setProgress((Integer) msg.obj);
 			break;
-		case LightPaintActivity.HANDLER_SCREEN:
-			boolean illuminate = (msg.arg1 == 1);
-			if(msg.arg2 < 0)
-				app.lp.screenBrightness = -1;
-			else
-				app.lp.screenBrightness = illuminate ? msg.arg2/100f : 1/100f;
+		case LightPaintActivity.HANDLER_SCREEN:			
+			int color = msg.arg1;
+			float linewidth = msg.arg2;
+
+			if(linewidth < 0) {
+				restoreWindow();
+				break;
+			} else if(!drawMode) {
+				app.setContentView(R.layout.drawview);
+				illuminate = (IlluminationControl) app.findViewById(R.id.illuminaitionControl1);
+				drawMode = true;
+			}
+			
+			app.lp.screenBrightness = (color != 0) ? 1f : 1/100f;
 			app.getWindow().setAttributes(app.lp);
-			app.mainLayout.setBackgroundColor(illuminate ? Color.WHITE : Color.BLACK);
+			illuminate.setColor(color);
+			illuminate.setWidth(linewidth/MAX_LINEWIDTH);
 			break;
 		}
+	}
+
+	private static final float MAX_LINEWIDTH = 10f;
+	private boolean drawMode = false;
+	private IlluminationControl illuminate;
+	
+	private void restoreWindow() {
+		drawMode = false;
+		app.lp.screenBrightness = -1f;
+		app.getWindow().setAttributes(app.lp);
+		app.mainLayout.setBackgroundColor(Color.BLACK);
+		app.setContentView(R.layout.main);
 	}
 }

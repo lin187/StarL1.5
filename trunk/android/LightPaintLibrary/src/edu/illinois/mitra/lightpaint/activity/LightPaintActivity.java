@@ -39,9 +39,10 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 	private static final int POSITION_UPDATE_ID = 51;
 	private static final int ASSIGNMENT_ID = 52;
 	private static final String BEGIN_BARRIER = "BEGIN";
+
 	// Handler message
 	public static final int HANDLER_SCREEN = 9724;
-	
+
 	private static final MotionParameters motionParameters = new MotionParameters();
 	static {
 		motionParameters.COLAVOID_MODE = MotionParameters.COLAVOID_MODE_TYPE.STOP_ON_COLLISION;
@@ -64,7 +65,7 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 
 		election = new RandomLeaderElection(gvh);
 		sync = new BarrierSynchronizer(gvh);
-		
+
 		// Set up motion parameters
 		gvh.plat.moat.setParameters(motionParameters);
 
@@ -74,7 +75,7 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 	private String leader;
 	private BarrierSynchronizer sync;
 	private LeaderElection election;
-	
+
 	// Public to be accessed by Drawer
 	public boolean iAmLeader = false;
 	public LpAlgorithm alg;
@@ -110,7 +111,7 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 
 						for(String robot : gvh.id.getParticipants())
 							alg.setRobotPosition(robot, ImagePoint.fromItemPosition(gvh.gps.getPosition(robot)));
-								
+
 						responseService = Executors.newSingleThreadExecutor();
 						responseService.submit(new Assigner());
 						assignmentRequesters = new LinkedBlockingQueue<String>();
@@ -123,7 +124,7 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 				assignment.clear();
 				gvh.log.e(TAG, "Requesting an assignment");
 				if(iAmLeader) {
-					assignmentRequesters.add(name);					
+					assignmentRequesters.add(name);
 				} else {
 					RobotMessage req = new RobotMessage(leader, name, ASSIGNMENT_REQ_ID, "");
 					gvh.comms.addOutgoingMessage(req);
@@ -142,7 +143,9 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 				gvh.plat.moat.goTo(currentDestination = assignment.remove(0));
 				// TODO Add screen colors
 				System.out.println(lastVisitedPoint.getAngle());
-				illuminatePoint = (lastVisitedPoint.getAngle() != 0);
+				screenColor = lastVisitedPoint.getAngle();
+				screenLineSize = getSizeFromPosition(lastVisitedPoint);
+				updateScreen();
 				gvh.log.d(TAG, "Assignment has " + assignment.size() + " points remaining.");
 				setStage(Stage.WAIT_TO_ARRIVE);
 				break;
@@ -168,6 +171,11 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 		}
 	}
 
+	private static int getSizeFromPosition(ItemPosition pos) {
+		String[] parts = pos.getName().split("_");
+		return Integer.parseInt(parts[1]);
+	}
+
 	private static final MessageContents EMPTY_MSG_CONTENTS = new MessageContents("NONE");
 	private static final MessageContents FINISHED_MSG_CONTENTS = new MessageContents("DONE");
 
@@ -190,7 +198,7 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 			for(String content : msg.getContentsList()) {
 				try {
 					assignment.add(ItemPosition.fromMessage(content));
-				} catch (IllegalArgumentException e) {
+				} catch(IllegalArgumentException e) {
 					System.err.println(msg);
 				}
 			}
@@ -224,31 +232,29 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 		}
 	}
 
-	
-
 	private BlockingQueue<String> assignmentRequesters;
 	private ExecutorService responseService;
-	
+
 	private class Assigner implements Runnable {
 		@Override
 		public void run() {
 			while(true) {
 				try {
 					assign(assignmentRequesters.take());
-				} catch (InterruptedException e) {
+				} catch(InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
 		}
 	}
-	
+
 	private void assign(String from) {
 		long now = System.nanoTime();
 		List<ItemPosition> assigned = alg.assignSegment(from, gvh.gps.getPosition(from));
-		gvh.log.i(TAG, "Assignment took " + (System.nanoTime()-now)/(double)1e9 + " seconds for " + assignment.size() + " points.");
-		
+		gvh.log.i(TAG, "Assignment took " + (System.nanoTime() - now) / (double) 1e9 + " seconds for " + assignment.size() + " points.");
+
 		// If the requester was another robot, respond with a message
-		if(!from.equals(name)) {		
+		if(!from.equals(name)) {
 			RobotMessage response = new RobotMessage(from, super.name, ASSIGNMENT_ID, (MessageContents) null);
 			if(alg.isDone()) {
 				response.setContents(FINISHED_MSG_CONTENTS);
@@ -276,15 +282,15 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 			}
 		}
 	}
-	
-	
+
 	private void setStage(Stage newstage) {
 		gvh.plat.setDebugInfo(newstage.toString() + " - " + leader + " - " + assignment.size());
 		stage = newstage;
 	}
 
 	private boolean inMotion = false;
-	private boolean illuminatePoint = false;
+	private int screenColor = 0;
+	private int screenLineSize = 0;
 
 	@Override
 	public void robotEvent(Event eventType, int eventData) {
@@ -301,20 +307,19 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 		updateScreen();
 	}
 
-	private static final int ILLUMINATED_LEVEL = 100;
-	private static final int DARK_LEVEL = 1;
 	private boolean screenOn = false;
+
 	private void updateScreen() {
-		if(inMotion && illuminatePoint) {
+		if(inMotion && screenColor != 0) {
 			if(!screenOn) {
 				screenOn = true;
-				gvh.plat.sendMainMsg(HANDLER_SCREEN, 1, ILLUMINATED_LEVEL);
+				gvh.plat.sendMainMsg(HANDLER_SCREEN, screenColor, screenLineSize);
 				if(iAmLeader)
-					gvh.log.d(TAG, "Screen on! ");
+					gvh.log.d(TAG, "Screen on!");
 			}
 		} else if(screenOn) {
 			screenOn = false;
-			gvh.plat.sendMainMsg(HANDLER_SCREEN, 0, DARK_LEVEL);
+			gvh.plat.sendMainMsg(HANDLER_SCREEN, 0, 0);
 			if(iAmLeader)
 				gvh.log.d(TAG, "** SCREEN OFF **");
 		}
@@ -331,5 +336,5 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 		gvh.comms.removeMsgListener(ASSIGNMENT_ID);
 		gvh.comms.removeMsgListener(POSITION_UPDATE_ID);
 		gvh.comms.removeMsgListener(ASSIGNMENT_REQ_ID);
-	}	
+	}
 }
