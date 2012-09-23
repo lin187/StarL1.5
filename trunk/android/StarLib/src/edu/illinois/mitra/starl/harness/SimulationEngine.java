@@ -9,8 +9,8 @@ import edu.illinois.mitra.starl.interfaces.ExplicitlyDrawable;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
 
 /**
- * The core of the simulation. You really
- * don't need to mess with this code. Please don't change anything in here.
+ * The core of the simulation. You really don't need to mess with this code.
+ * Please don't change anything in here.
  * 
  * @author Adam Zimmerman
  * @version One million
@@ -34,14 +34,12 @@ public class SimulationEngine extends Thread {
 
 	private double lastTicAdvance = -1;
 	private long lastTimeAdvance = -1;
-	
+
 	// for drawing the simulation
 	ExplicitlyDrawable drawer = null;
-	List <LogicThread> logicThreads = null;
+	List<LogicThread> logicThreads = null;
 
-	public SimulationEngine(int meanDelay, int delayStdDev, int dropRate, int seed, double ticRate, 
-			Set<String> blockedRobots, Map<String, String> nameToIpMap, ExplicitlyDrawable drawer,
-			List <LogicThread> logicThreads) {
+	public SimulationEngine(int meanDelay, int delayStdDev, int dropRate, int seed, double ticRate, Set<String> blockedRobots, Map<String, String> nameToIpMap, ExplicitlyDrawable drawer, List<LogicThread> logicThreads) {
 		super("SimulationEngine");
 		comms = new DecoupledSimComChannel(meanDelay, delayStdDev, dropRate, seed, blockedRobots, nameToIpMap);
 		time = System.currentTimeMillis();
@@ -50,7 +48,7 @@ public class SimulationEngine extends Thread {
 		this.ticRate = ticRate;
 		this.drawer = drawer;
 		this.logicThreads = logicThreads;
-		
+
 		this.start();
 	}
 
@@ -128,9 +126,9 @@ public class SimulationEngine extends Thread {
 		for(Long l : sleeps) {
 			advance = Math.min(l, advance);
 		}
-		
+
 		// force a redraw now of every logic thread
-		if (drawer != null)
+		if(drawer != null)
 			drawer.drawNow(logicThreads);
 
 		// Advance time

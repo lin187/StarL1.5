@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
@@ -91,8 +93,9 @@ public class Simulation {
 
 			// If no initial position was supplied, randomly generate one
 			if(initialPosition == null) {
-				System.out.println("Waypoint file did not contain a waypoint named '" + botName + "', using random position.");
-				initialPosition = new ItemPosition(botName, rand.nextInt(settings.GRID_XSIZE), rand.nextInt(settings.GRID_YSIZE), rand.nextInt(360));
+				int retries = 0;
+				while(retries++ < 1000 && !acceptableStart(initialPosition))
+					initialPosition = new ItemPosition(botName, rand.nextInt(settings.GRID_XSIZE), rand.nextInt(settings.GRID_YSIZE), rand.nextInt(360));
 			}
 
 			SimApp sa = new SimApp(botName, participants, simEngine, initialPosition, settings.TRACE_OUT_DIR, app, drawFrame, settings.TRACE_CLOCK_DRIFT_MAX, settings.TRACE_CLOCK_SKEW_MAX);
@@ -137,6 +140,21 @@ public class Simulation {
 
 		// show viewer
 		drawFrame.setVisible(true);
+	}
+
+	private static final double BOT_SPACING_FACTOR = 2.6;
+	private Map<String, ItemPosition> startingPositions = new HashMap<String, ItemPosition>();
+	private boolean acceptableStart(ItemPosition pos) {
+		if(pos == null)
+			return false;
+		startingPositions.put(pos.getName(), pos);
+		for(Entry<String, ItemPosition> entry : startingPositions.entrySet()) {
+			if(!entry.getKey().equals(pos.getName())) {
+				if(entry.getValue().distanceTo(pos) < (BOT_SPACING_FACTOR*settings.BOT_RADIUS))
+					return false;
+			}
+		}
+		return true;
 	}
 
 	/**

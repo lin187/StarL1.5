@@ -93,7 +93,8 @@ public class LpAlgorithm {
 			return null;
 
 		// If the robot doesn't have an entry in the reach tube set, create one
-		if(!reachTubes.containsKey(currentRobot))
+		// If the robot is asking for a new assignment, clear its old reach tube
+//		if(!reachTubes.containsKey(currentRobot))
 			reachTubes.put(currentRobot, new ImageGraph());
 
 		setRobotPosition(currentRobot, robotPosition);
