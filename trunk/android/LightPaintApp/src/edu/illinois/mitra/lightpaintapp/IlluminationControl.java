@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 public class IlluminationControl extends View {
@@ -33,10 +34,15 @@ public class IlluminationControl extends View {
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		setMeasuredDimension(DIMENSION, DIMENSION);
-		centerX = getWidth()/2;
-		centerY = getHeight()/2;
 	}
-	
+
+	@Override
+	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+		super.onSizeChanged(w, h, oldw, oldh);
+		centerX = (int) (getWidth()/2.0);
+		centerY = (int) (getHeight()/2.0);
+	}
+
 	private Paint paint;
 	private float width = 1f;
 	

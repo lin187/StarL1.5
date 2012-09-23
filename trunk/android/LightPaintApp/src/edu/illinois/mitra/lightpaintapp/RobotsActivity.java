@@ -87,7 +87,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 		setupGUI();
 
 		// Create the main handler
-		mainHandler = new MainHandler(this, pbBluetooth, pbBattery, cbGPS, cbBluetooth, cbRunning, txtDebug);
+		mainHandler = new MainHandler(this);
 
 		// Create the global variable holder
 		Map<String, String> mapParticipants = new HashMap<String, String>();
@@ -178,13 +178,13 @@ public class RobotsActivity extends Activity implements MessageListener {
 		gvh.plat.moat.cancel();
 	}
 
-	private TextView txtRobotName;
-	private TextView txtDebug;
-	private ProgressBar pbBluetooth;
-	private CheckBox cbGPS;
-	private CheckBox cbBluetooth;
-	private CheckBox cbRunning;
-	private ProgressBar pbBattery;
+	public TextView txtRobotName;
+	public TextView txtDebug;
+	public ProgressBar pbBluetooth;
+	public CheckBox cbGPS;
+	public CheckBox cbBluetooth;
+	public CheckBox cbRunning;
+	public ProgressBar pbBattery;
 
 	public void setupGUI() {
 		lp = getWindow().getAttributes();
