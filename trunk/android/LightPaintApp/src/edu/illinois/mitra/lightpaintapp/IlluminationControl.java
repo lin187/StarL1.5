@@ -47,8 +47,7 @@ public class IlluminationControl extends View {
 	}
 	
 	public void setColor(int color) {
-		// Correct for the alpha not being set
-		color &= 0xff000000;
+		color |= 0xff000000; // Set to 100% opacity
 		paint.setColor(color);
 		this.invalidate();
 	}

@@ -2,9 +2,9 @@ package edu.illinois.mitra.lightpaintapp;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ProgressBar;
@@ -51,11 +51,15 @@ public class MainHandler extends Handler {
 			Toast.makeText(appContext, msg.obj.toString(), Toast.LENGTH_LONG).show();
 			break;
 		case HandlerMessage.MESSAGE_LOCATION:
-			cbGPS.setChecked((Integer) msg.obj == HandlerMessage.GPS_RECEIVING);
+			boolean cbGpsValue = (Integer) msg.obj == HandlerMessage.GPS_RECEIVING;
+			savedInstance.putBoolean("GPS", cbGpsValue);
+			cbGPS.setChecked(cbGpsValue);
 			break;
 		case HandlerMessage.MESSAGE_BLUETOOTH:
 			pbBluetooth.setVisibility((Integer) msg.obj == HandlerMessage.BLUETOOTH_CONNECTING ? View.VISIBLE : View.INVISIBLE);
-			cbBluetooth.setChecked((Integer) msg.obj == HandlerMessage.BLUETOOTH_CONNECTED);
+			boolean cbBtValue = (Integer) msg.obj == HandlerMessage.BLUETOOTH_CONNECTED;
+			cbBluetooth.setChecked(cbBtValue);
+			savedInstance.putBoolean("BLUETOOTH", cbBtValue);
 			break;
 		case HandlerMessage.MESSAGE_LAUNCH:
 			app.launch(msg.arg1, msg.arg2);
@@ -73,7 +77,7 @@ public class MainHandler extends Handler {
 		case HandlerMessage.MESSAGE_BATTERY:
 			pbBattery.setProgress((Integer) msg.obj);
 			break;
-		case LightPaintActivity.HANDLER_SCREEN:			
+		case LightPaintActivity.HANDLER_SCREEN:
 			int color = msg.arg1;
 			float linewidth = msg.arg2;
 
@@ -81,16 +85,14 @@ public class MainHandler extends Handler {
 				restoreWindow();
 				break;
 			} else if(!drawMode) {
-				app.setContentView(R.layout.drawview);
-				illuminate = (IlluminationControl) app.findViewById(R.id.illuminaitionControl1);
-				drawMode = true;
+				hideWindow();
 			}
 			System.out.println("Setting screen to " + color + " = " + linewidth);
-			//app.lp.screenBrightness = (color != 0) ? 1f : 1/100f;
+			app.lp.screenBrightness = (color != 0) ? 1f : 1 / 100f;
 			app.lp.screenBrightness = 1f;
 			app.getWindow().setAttributes(app.lp);
 			illuminate.setColor(color);
-			illuminate.setWidth(linewidth/MAX_LINEWIDTH);
+			illuminate.setWidth(linewidth / MAX_LINEWIDTH);
 			break;
 		}
 	}
@@ -98,7 +100,15 @@ public class MainHandler extends Handler {
 	private static final float MAX_LINEWIDTH = 10f;
 	private boolean drawMode = false;
 	private IlluminationControl illuminate;
-	
+
+	private Bundle savedInstance = new Bundle();
+
+	private void hideWindow() {
+		drawMode = true;
+		app.setContentView(R.layout.drawview);
+		illuminate = (IlluminationControl) app.findViewById(R.id.illuminaitionControl1);
+	}
+
 	private void restoreWindow() {
 		drawMode = false;
 		app.lp.screenBrightness = -1f;
@@ -106,5 +116,8 @@ public class MainHandler extends Handler {
 		app.mainLayout.setBackgroundColor(Color.BLACK);
 		app.setContentView(R.layout.main);
 		app.setupGUI();
+
+		cbBluetooth.setChecked(savedInstance.getBoolean("BLUETOOTH"));
+		cbGPS.setChecked(savedInstance.getBoolean("GPS"));
 	}
 }
