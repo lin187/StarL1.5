@@ -1,5 +1,9 @@
 ----- StarLib Changelog -----
 
+9/23/2012, Adam
+- Made SimSettings immutable to prevent any simulated code from ever changing simulation parameters. A new SimSettings must be built for each execution with different parameters.
+- Added variables to SimSettings to control drawing waypoints
+
 9/19/2012, Stan
 - Created a SettingsWriter class to contain the Gson code so that I can run the simulator without having to download the library
 

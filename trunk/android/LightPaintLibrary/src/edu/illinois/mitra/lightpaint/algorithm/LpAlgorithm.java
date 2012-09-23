@@ -73,25 +73,18 @@ public class LpAlgorithm {
 		if(points == null)
 			return EMPTY_LIST;
 
-		// Name each item position Y or N depending on what the light status should be as approaching that point
+		// Name waypoints based on their existence in the final image
 		List<ItemPosition> positions = new ArrayList<ItemPosition>(points.size());
 		for(int i = 0; i < points.size(); i++) {
 			ImagePoint current = points.get(i);
 			String name = Integer.toString(current.getSize());
 			int color = current.getColor();
-			if(i < points.size() - 1) {
-				if(!drawing.hasEdge(current, points.get(i + 1))) {
-					name = "0";
-					color = 0;
-				}
+			if(i < points.size()-1 && !drawing.hasEdge(current, points.get(i + 1))) {
+				name = "0";
+				color = 0;
 			}
 			positions.add(new ItemPosition(name, (int) current.getX(), (int) current.getY(), color));
 		}
-
-		for(ItemPosition ip : positions)
-			System.out.println(ip);
-		System.out.println("\n\n");
-
 		return positions;
 	}
 

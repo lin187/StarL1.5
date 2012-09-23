@@ -119,11 +119,13 @@ public class Simulation {
 					rd.add(nextBot);
 				}
 				// Add waypoints
-				for(ItemPosition ip : gps.getWaypointPositions().getList()) {
-					RobotData waypoint = new RobotData(ip.name, ip.x, ip.y, ip.angle);
-					waypoint.radius = 5;
-					waypoint.c = new Color(255, 0, 0);
-					rd.add(waypoint);
+				if(settings.DRAW_WAYPOINTS) {
+					for(ItemPosition ip : gps.getWaypointPositions().getList()) {
+						RobotData waypoint = new RobotData((settings.DRAW_WAYPOINT_NAMES ? ip.name : ""), ip.x, ip.y, ip.angle);
+						waypoint.radius = 5;
+						waypoint.c = new Color(255, 0, 0);
+						rd.add(waypoint);
+					}
 				}
 				drawFrame.updateData(rd, simEngine.time);
 			}
@@ -136,10 +138,12 @@ public class Simulation {
 		// show viewer
 		drawFrame.setVisible(true);
 	}
-	
+
 	/**
-	 * Add an Observer to the list of GPS observers. This Observer's update method will be passed a PositionList object as the argument.  
-	 * This must be called before the simulation is started! 
+	 * Add an Observer to the list of GPS observers. This Observer's update
+	 * method will be passed a PositionList object as the argument. This must be
+	 * called before the simulation is started!
+	 * 
 	 * @param o
 	 */
 	public void addPositionObserver(Observer o) {

@@ -7,130 +7,141 @@ public class SimSettings {
 	/**
 	 * The number of robots to simulate.
 	 */
-	public int N_BOTS = 4;
+	public final int N_BOTS;
 
 	/**
 	 * The maximum number of seconds (real time) the simulation may be executing
 	 * for. Setting to zero will allow simulations to run indefinitely.
 	 */
-	public int TIMEOUT = 0;
+	public final int TIMEOUT;
 
 	/**
 	 * Filename for a .wpt file with waypoints.
 	 */
-	public String WAYPOINT_FILE = null;
+	public final String WAYPOINT_FILE;
 
 	/**
 	 * Filename for a .wpt file with initial positions for robots, or null to
 	 * enable random starting locations.
 	 */
-	public String INITIAL_POSITIONS_FILE = null;
+	public final String INITIAL_POSITIONS_FILE;
 
 	/**
 	 * Enable/disable ideal motion. False uses simulated motion automaton, true
 	 * uses unrealistic motion model
 	 */
-	public boolean IDEAL_MOTION = false;
+	public final boolean IDEAL_MOTION;
 
 	/**
 	 * The desired rate of time passing. 0 = no limit, 0.5 = half real-time, 1.0
 	 * = real-time, etc.
 	 */
-	public double TIC_TIME_RATE = 5;
+	public final double TIC_TIME_RATE;
 
 	/**
 	 * Simulated world width.
 	 */
-	public int GRID_XSIZE = 3000;
+	public final int GRID_XSIZE;
 	/**
 	 * Simulated world height.
 	 */
-	public int GRID_YSIZE = 3000;
+	public final int GRID_YSIZE;
 
 	// Position calculation period and noise options
 	/**
 	 * Milliseconds. The time between simulated GPS position broadcasts.
 	 */
-	public long GPS_PERIOD = 75;
+	public final long GPS_PERIOD;
 	/**
 	 * Degrees. The maximum angular noise of simulated GPS positions.
 	 */
-	public double GPS_ANGLE_NOISE = 0;
+	public final double GPS_ANGLE_NOISE;
 	/**
 	 * Millimeters. The maximum position X and Y offset of simulated GPS
 	 * positions.
 	 */
-	public double GPS_POSITION_NOISE = 0;
+	public final double GPS_POSITION_NOISE;
 
 	// Clock skew settings
 	/**
 	 * Milliseconds. The maximum trace clock drift.
 	 */
-	public int TRACE_CLOCK_DRIFT_MAX = 100;
+	public final int TRACE_CLOCK_DRIFT_MAX;
 	/**
 	 * The maximum trace clock skew.
 	 */
-	public double TRACE_CLOCK_SKEW_MAX = 0.00000015f;
+	public final double TRACE_CLOCK_SKEW_MAX;
 
 	// Message delay and loss options
 	/**
 	 * Milliseconds. The average message transit time.
 	 */
-	public int MSG_MEAN_DELAY = 15;
+	public final int MSG_MEAN_DELAY;
 	/**
 	 * Milliseconds. The standard deviation of message transmission times.
 	 */
-	public int MSG_STDDEV_DELAY = 5;
+	public final int MSG_STDDEV_DELAY;
 	/**
 	 * Number of messages to drop per hundred messages sent.
 	 */
-	public int MSG_LOSSES_PER_HUNDRED = 0;
+	public final int MSG_LOSSES_PER_HUNDRED;
 	/**
 	 * Seed for random number generator used by the communication channel.
 	 */
-	public int MSG_RANDOM_SEED = 0;
+	public final int MSG_RANDOM_SEED;
 
 	// Robot specific settings
 	/**
 	 * Robot name prefix
 	 */
-	public String BOT_NAME = "bot";
+	public final String BOT_NAME;
 	/**
 	 * Millimeters. The radius of simulated robots.
 	 */
-	public int BOT_RADIUS = 165;
+	public final int BOT_RADIUS;
 
 	/**
 	 * Trace output directory.
 	 */
-	public String TRACE_OUT_DIR = null;
+	public final String TRACE_OUT_DIR;
 	/**
 	 * Enable/disable the global logger.
 	 */
-	public boolean USE_GLOBAL_LOGGER = false;
+	public final boolean USE_GLOBAL_LOGGER;
 
 	// trace drawing
 	/**
 	 * Enable/disable trace drawing
 	 */
-	public boolean DRAW_TRACE = false;
+	public final boolean DRAW_TRACE;
 	/**
 	 * The trace length for each robot.
 	 */
-	public int DRAW_TRACE_LENGTH = 128;
+	public final int DRAW_TRACE_LENGTH;
 
 	// drawing
 	/**
 	 * The maximum frames per second to draw at. If drawing takes too long,
 	 * lower this.
 	 */
-	public int MAX_FPS = 40;
+	public final int MAX_FPS;
 
 	/**
 	 * The object which does the drawing of debug information for the simulator.
 	 * Can be null if unused.
 	 */
-	public Drawer DRAWER = null;
+	public final Drawer DRAWER;
+
+	/**
+	 * Enables/disables drawing waypoints in the visualizer
+	 */
+	public final boolean DRAW_WAYPOINTS;
+
+	/**
+	 * Enables/disables drawing waypoint names next to each waypoint in the
+	 * visualizer. Unaffected by the value of DRAW_WAYPOINTS
+	 */
+	public final boolean DRAW_WAYPOINT_NAMES;
 
 	public static SimSettings defaultSettings() {
 		Builder builder = new Builder();
@@ -163,6 +174,8 @@ public class SimSettings {
 		private int DRAW_TRACE_LENGTH = 128;
 		private int MAX_FPS = 40;
 		private Drawer DRAWER = null;
+		private boolean DRAW_WAYPOINTS = true;
+		private boolean DRAW_WAYPOINT_NAMES = true;
 
 		public Builder N_BOTS(int N_BOTS) {
 			this.N_BOTS = N_BOTS;
@@ -173,7 +186,7 @@ public class SimSettings {
 			this.WAYPOINT_FILE = WAYPOINT_FILE;
 			return this;
 		}
-		
+
 		public Builder TIMEOUT(int TIMEOUT) {
 			this.TIMEOUT = TIMEOUT;
 			return this;
@@ -289,6 +302,16 @@ public class SimSettings {
 			return this;
 		}
 
+		public Builder DRAW_WAYPOINTS(boolean DRAW_WAYPOINTS) {
+			this.DRAW_WAYPOINTS = DRAW_WAYPOINTS;
+			return this;
+		}
+
+		public Builder DRAW_WAYPOINT_NAMES(boolean DRAW_WAYPOINT_NAMES) {
+			this.DRAW_WAYPOINT_NAMES = DRAW_WAYPOINT_NAMES;
+			return this;
+		}
+
 		public SimSettings build() {
 			return new SimSettings(this);
 		}
@@ -320,5 +343,7 @@ public class SimSettings {
 		this.MAX_FPS = builder.MAX_FPS;
 		this.DRAWER = builder.DRAWER;
 		this.TIMEOUT = builder.TIMEOUT;
+		this.DRAW_WAYPOINTS = builder.DRAW_WAYPOINTS;
+		this.DRAW_WAYPOINT_NAMES = builder.DRAW_WAYPOINT_NAMES;
 	}
 }

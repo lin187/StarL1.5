@@ -22,7 +22,10 @@ public class Main {
 		Set<ImageEdge> image = parser.parseImage("input_images/" + inputFilename + ".svg");
 		WptWriter.writeWpt(WPT_PATH + inputFilename + ".wpt", image);
 
-		SimSettings.Builder builder = new SimSettings.Builder().DRAWER(new LightPaintDrawer()).WAYPOINT_FILE(WPT_PATH + inputFilename + ".wpt").TIC_TIME_RATE(1);
+		SimSettings.Builder builder = new SimSettings.Builder().DRAWER(new LightPaintDrawer()).WAYPOINT_FILE(WPT_PATH + inputFilename + ".wpt");
+		builder.TIC_TIME_RATE(1);
+		builder.DRAW_WAYPOINT_NAMES(false);
+		builder.DRAW_WAYPOINTS(false);
 		builder.N_BOTS(1);		
 		builder.GRID_XSIZE(3000);
 		builder.GRID_YSIZE(3000);
