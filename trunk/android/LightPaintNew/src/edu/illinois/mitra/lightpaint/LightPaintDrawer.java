@@ -12,18 +12,31 @@ import edu.illinois.mitra.lightpaint.geometry.ImageEdge;
 import edu.illinois.mitra.lightpaint.geometry.ImageGraph;
 import edu.illinois.mitra.lightpaint.geometry.ImagePoint;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
+import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starlSim.draw.Drawer;
 
 public class LightPaintDrawer extends Drawer {
 
+	private static final int BULB_WIDTH = 25;
+	
 	@Override
 	public void draw(LogicThread lt, Graphics2D g) {
 		LightPaintActivity instance = (LightPaintActivity) lt;
-		if(instance.iAmLeader)
-			drawAlgorithm(g, instance.alg);
+		
+		drawAlgorithm(g, instance.getAlgorithm());
+		
+		if(instance.getScreenColor() != 0) {
+			ItemPosition pos = instance.getMyPosition();
+			g.setColor(Color.BLACK);
+			g.drawOval(pos.getX()-BULB_WIDTH, pos.getY()-BULB_WIDTH, 2*BULB_WIDTH, 2*BULB_WIDTH);
+			g.setColor(new Color(instance.getScreenColor()));
+			g.fillOval(pos.getX()-BULB_WIDTH, pos.getY()-BULB_WIDTH, 2*BULB_WIDTH, 2*BULB_WIDTH);
+		}
 	}
 
 	private void drawAlgorithm(Graphics2D g, LpAlgorithm alg) {
+		if(alg == null)
+			return;
 		int unsafeDrawRadius = (int) alg.unsafeRadius/2;
 
 		drawImageGraph(alg.drawing, g, Color.LIGHT_GRAY, 12);

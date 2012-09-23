@@ -69,15 +69,28 @@ public class LpAlgorithm {
 	private static final List<ItemPosition> EMPTY_LIST = new ArrayList<ItemPosition>(0);
 
 	public synchronized List<ItemPosition> assignSegment(String currentRobot, ItemPosition robotPosition) {
-		List<ImagePoint> points = assignSegment(currentRobot, new ImagePoint(robotPosition.x, robotPosition.y));				
+		List<ImagePoint> points = assignSegment(currentRobot, new ImagePoint(robotPosition.x, robotPosition.y));
 		if(points == null)
 			return EMPTY_LIST;
 
-		// Name each item position Y or N depending on what the light status
-		// should be as approaching that point
+		// Name each item position Y or N depending on what the light status should be as approaching that point
 		List<ItemPosition> positions = new ArrayList<ItemPosition>(points.size());
-		for(int i = 0; i < points.size(); i++)
-			positions.add(new ItemPosition(Integer.toString(points.get(i).getSize()), (int) points.get(i).getX(), (int) points.get(i).getY(), points.get(i).getColor()));
+		for(int i = 0; i < points.size(); i++) {
+			ImagePoint current = points.get(i);
+			String name = Integer.toString(current.getSize());
+			int color = current.getColor();
+			if(i < points.size() - 1) {
+				if(!drawing.hasEdge(current, points.get(i + 1))) {
+					name = "0";
+					color = 0;
+				}
+			}
+			positions.add(new ItemPosition(name, (int) current.getX(), (int) current.getY(), color));
+		}
+
+		for(ItemPosition ip : positions)
+			System.out.println(ip);
+		System.out.println("\n\n");
 
 		return positions;
 	}

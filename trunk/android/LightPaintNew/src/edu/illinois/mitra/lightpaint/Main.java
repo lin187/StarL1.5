@@ -10,19 +10,19 @@ import edu.illinois.mitra.starlSim.main.SimSettings;
 import edu.illinois.mitra.starlSim.main.Simulation;
 
 public class Main {
-	private static final String WPT_PATH = "C:/Users/StarL/Documents/Workspace/starl/trunk/matlab/matlab_optitrack/waypoints/";
+	private static final String WPT_PATH = "waypoints/";//"C:/Users/StarL/Documents/Workspace/starl/trunk/matlab/matlab_optitrack/waypoints/";
 	
 	private static final String inputFilename = "knot";
 
 	public static void main(String[] args) {
-		SvgParser parser = new SvgParser(2400,2400,1400,1400);
+		SvgParser parser = new SvgParser(3000,3000,1500,1500);
 
 		// TODO: Sometimes a segment is painted over twice, some line segments are absent. See box.svg for example
 		
 		Set<ImageEdge> image = parser.parseImage("input_images/" + inputFilename + ".svg");
 		WptWriter.writeWpt(WPT_PATH + inputFilename + ".wpt", image);
 
-		SimSettings.Builder builder = new SimSettings.Builder().DRAWER(new LightPaintDrawer()).WAYPOINT_FILE(WPT_PATH + inputFilename + ".wpt").TIC_TIME_RATE(5);
+		SimSettings.Builder builder = new SimSettings.Builder().DRAWER(new LightPaintDrawer()).WAYPOINT_FILE(WPT_PATH + inputFilename + ".wpt").TIC_TIME_RATE(1);
 		builder.N_BOTS(1);		
 		builder.GRID_XSIZE(3000);
 		builder.GRID_YSIZE(3000);

@@ -156,6 +156,8 @@ MouseListener, MouseMotionListener, ExplicitlyDrawable
 		}
 	}
 	
+	private static Font drawFont = new Font("Tahoma", Font.PLAIN, 55).deriveFont(AffineTransform.getScaleInstance(1, -1));
+	
 	// draws onto a buffered image which is later placed on the screen
 	protected void forceDrawComponent(Graphics g, Collection <LogicThread> lts)
 	{
@@ -167,11 +169,11 @@ MouseListener, MouseMotionListener, ExplicitlyDrawable
 		myPreDraw(g2d);
 		g2d.setColor(Color.black);
 		
-		Font f = new Font("Tahoma", Font.PLAIN, 55); // TODO: make this configurable in SimSettings
-		f = f.deriveFont(AffineTransform.getScaleInstance(1, -1)); // flip y back around
-		g2d.setFont(f);
+//		Font f = new Font("Tahoma", Font.PLAIN, 55); // TODO: make this configurable in SimSettings
+//		f = f.deriveFont(AffineTransform.getScaleInstance(1, -1)); // flip y back around
+		g2d.setFont(drawFont);
 		
-		AffineTransform preDrawersTransform = g2d.getTransform();;
+		AffineTransform preDrawersTransform = g2d.getTransform();
 		
 		for (LogicThread lt : lts)
 		{
@@ -181,8 +183,8 @@ MouseListener, MouseMotionListener, ExplicitlyDrawable
 			
 			draw(g2d, lt);
 		
-			if (g2d.getFont() != f)
-				throw new RuntimeException("Font was changed in draw method. You should use Font.deriveFont instead and then restore it before your method returns.");
+//			if (g2d.getFont() != f)
+//				throw new RuntimeException("Font was changed in draw method. You should use Font.deriveFont instead and then restore it before your method returns.");
 		}
 		
 		g2d.setTransform(a);

@@ -77,8 +77,8 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 	private LeaderElection election;
 
 	// Public to be accessed by Drawer
-	public boolean iAmLeader = false;
-	public LpAlgorithm alg;
+	private boolean iAmLeader = false;
+	private LpAlgorithm alg;
 
 	private List<ItemPosition> assignment = Collections.synchronizedList(new LinkedList<ItemPosition>());
 
@@ -143,10 +143,9 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 				break;
 			case DO_ASSIGNMENT:
 				gvh.plat.moat.goTo(currentDestination = assignment.remove(0));
-				// TODO Add screen colors
-				//System.out.println(lastVisitedPoint.getAngle());
 				screenColor = getColorFromPosition(lastVisitedPoint);
 				screenLineSize = getSizeFromPosition(lastVisitedPoint);
+				System.out.println(lastVisitedPoint);
 				updateScreen();
 				gvh.log.d(TAG, "Assignment has " + assignment.size() + " points remaining.");
 				setStage(Stage.WAIT_TO_ARRIVE);
@@ -297,7 +296,19 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 	private boolean inMotion = false;
 	private int screenColor = 0;
 	private int screenLineSize = 0;
+	
+	public LpAlgorithm getAlgorithm() {
+		return alg;
+	}
+	
+	public int getScreenColor() {
+		return screenColor;
+	}
 
+	public ItemPosition getMyPosition() {
+		return gvh.gps.getMyPosition();
+	}
+	
 	@Override
 	public void robotEvent(Event eventType, int eventData) {
 		if(eventType == Event.MOTION) {
