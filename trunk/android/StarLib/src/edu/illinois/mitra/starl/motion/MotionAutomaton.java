@@ -23,8 +23,7 @@ public class MotionAutomaton extends RobotMotion {
 	protected static final String ERR = "Critical Error";
 
 	// MOTION CONTROL CONSTANTS
-	public static int R_arc = 700;
-	public static int R_goal = 75;
+	//	public static int R_arc = 700;
 	public static int R_slowfwd = 700;
 	public static int A_smallturn = 3;
 	public static int A_straight = 6;
@@ -69,8 +68,8 @@ public class MotionAutomaton extends RobotMotion {
 
 	private OPMODE mode = OPMODE.GO_TO;
 
-	private MotionParameters param;
 	private static final MotionParameters DEFAULT_PARAMETERS = new MotionParameters();
+	private volatile MotionParameters param = DEFAULT_PARAMETERS;
 
 	// Collision avoidance
 	private enum COLSTAGE {
@@ -90,32 +89,21 @@ public class MotionAutomaton extends RobotMotion {
 		super(gvh.id.getName());
 		this.gvh = gvh;
 		this.bti = bti;
-		this.param = DEFAULT_PARAMETERS;
-		this.linspeed = (this.param.LINSPEED_MAX - this.param.LINSPEED_MIN) / (1.0 * (R_slowfwd - R_goal));
-		this.turnspeed = (this.param.TURNSPEED_MAX - this.param.TURNSPEED_MIN) / (A_slowturn - A_smallturn);
+		this.linspeed = (param.LINSPEED_MAX - param.LINSPEED_MIN) / (double) (R_slowfwd - param.GOAL_RADIUS);
+		this.turnspeed = (param.TURNSPEED_MAX - param.TURNSPEED_MIN) / (A_slowturn - A_smallturn);
 	}
 
 	public void goTo(ItemPosition dest) {
-		goTo(dest, DEFAULT_PARAMETERS);
-	}
-
-	public void goTo(ItemPosition dest, MotionParameters param) {
 		if((inMotion && !this.destination.equals(dest)) || !inMotion) {
 			this.destination = dest;
-			this.param = param;
 			this.mode = OPMODE.GO_TO;
 			startMotion();
 		}
 	}
 
 	public void turnTo(ItemPosition dest) {
-		turnTo(dest, DEFAULT_PARAMETERS);
-	}
-
-	public void turnTo(ItemPosition dest, MotionParameters param) {
 		if((inMotion && !this.destination.equals(dest)) || !inMotion) {
 			this.destination = dest;
-			this.param = param;
 			this.mode = OPMODE.TURN_TO;
 			startMotion();
 		}
@@ -159,9 +147,9 @@ public class MotionAutomaton extends RobotMotion {
 					case INIT:
 						halted = false;
 						if(mode == OPMODE.GO_TO) {
-							if(distance <= R_goal) {
+							if(distance <= param.GOAL_RADIUS) {
 								next = STAGE.GOAL;
-							} else if(distance <= R_arc && absangle <= param.ARCANGLE_MAX && param.ENABLE_ARCING) {
+							} else if(distance <= param.ARC_RADIUS && absangle <= param.ARCANGLE_MAX && param.ENABLE_ARCING) {
 								next = STAGE.ARCING;
 							} else {
 								next = STAGE.TURN;
@@ -181,7 +169,7 @@ public class MotionAutomaton extends RobotMotion {
 								next = STAGE.TURN;
 							if(absangle < A_straight)
 								next = STAGE.STRAIGHT;
-							if(distance <= R_goal)
+							if(distance <= param.GOAL_RADIUS)
 								next = STAGE.GOAL;
 						}
 						break;
@@ -189,13 +177,13 @@ public class MotionAutomaton extends RobotMotion {
 						if(stage != prev) {
 							straight(LinSpeed(distance));
 						} else {
-							if(Common.inRange(distance, R_goal, R_slowfwd))
+							if(Common.inRange(distance, param.GOAL_RADIUS, R_slowfwd))
 								straight(LinSpeed(distance));
 							if(Common.inRange(absangle, A_smallturn, param.ARCANGLE_MAX))
 								next = STAGE.SMALLTURN;
 							if(absangle > param.ARCANGLE_MAX)
 								next = STAGE.TURN;
-							if(distance <= R_goal)
+							if(distance <= param.GOAL_RADIUS)
 								next = STAGE.GOAL;
 						}
 						break;
@@ -222,7 +210,7 @@ public class MotionAutomaton extends RobotMotion {
 								next = STAGE.STRAIGHT;
 							if(absangle > param.ARCANGLE_MAX)
 								next = STAGE.TURN;
-							if(distance <= R_goal)
+							if(distance <= param.GOAL_RADIUS)
 								next = STAGE.GOAL;
 						}
 						break;
@@ -406,8 +394,8 @@ public class MotionAutomaton extends RobotMotion {
 	private int LinSpeed(int distance) {
 		if(distance > R_slowfwd)
 			return param.LINSPEED_MAX;
-		if(distance > R_goal && distance <= R_slowfwd) {
-			return param.LINSPEED_MIN + (int) ((distance - R_goal) * linspeed);
+		if(distance > param.GOAL_RADIUS && distance <= R_slowfwd) {
+			return param.LINSPEED_MIN + (int) ((distance - param.GOAL_RADIUS) * linspeed);
 		}
 		return param.LINSPEED_MIN;
 	}
@@ -431,7 +419,7 @@ public class MotionAutomaton extends RobotMotion {
 	@Override
 	public void setParameters(MotionParameters param) {
 		this.param = param;
-		this.linspeed = (param.LINSPEED_MAX - param.LINSPEED_MIN) / (1.0 * (R_slowfwd - R_goal));
+		this.linspeed = (double) (param.LINSPEED_MAX - param.LINSPEED_MIN) / Math.abs((R_slowfwd - param.GOAL_RADIUS));
 		this.turnspeed = (param.TURNSPEED_MAX - param.TURNSPEED_MIN) / (A_slowturn - A_smallturn);
 	}
 }

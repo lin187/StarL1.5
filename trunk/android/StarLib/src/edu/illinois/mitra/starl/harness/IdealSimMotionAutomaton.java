@@ -26,31 +26,21 @@ public class IdealSimMotionAutomaton extends RobotMotion implements RobotEventLi
 	}
 	@Override
 	public void goTo(ItemPosition dest) {
-		goTo(dest, defaultParam);
-	}
-	
-	@Override
-	public void goTo(ItemPosition dest, MotionParameters param) 
-	{
 		ItemPosition ip = new ItemPosition(dest);
 		this.dest = ip;
 		
 		gvh.trace.traceEvent(TAG, "Go To", ip, gvh.time());
 		
-		gpspro.setDestination(name, ip, param.LINSPEED_MAX);
+		gpspro.setDestination(name, ip, defaultParam.LINSPEED_MAX);
 		
 		inMotion = true;
 	}
 
 	@Override
 	public void turnTo(ItemPosition dest) {
-		// turnTo isn't implemented for ideal motion yet. TOO BAD FOR YOU.		
+		// turnTo isn't implemented for ideal motion		
 	}
-	@Override
-	public void turnTo(ItemPosition dest, MotionParameters param) {
-		// turnTo isn't implemented for ideal motion yet. TOO BAD FOR YOU.		
-	}
-	
+
 	@Override
 	public void cancel() {
 		gvh.trace.traceEvent(TAG, "Cancelled", gvh.time());

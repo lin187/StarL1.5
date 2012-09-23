@@ -11,8 +11,11 @@ public class MotionParameters {
 	public int TURNSPEED_MAX = 110;
 	public int TURNSPEED_MIN = 25;
 	
-	public int LINSPEED_MAX = 175;
-	public int LINSPEED_MIN = 250;
+	public int LINSPEED_MAX = 250;
+	public int LINSPEED_MIN = 175;
+	
+	public int GOAL_RADIUS = 75;
+	public int ARC_RADIUS = 700;
 	
 	/**
 	 * If false, the robot will continue whatever motion was in progress when the destination is reached

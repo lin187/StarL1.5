@@ -45,6 +45,8 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 
 	private static final MotionParameters motionParameters = new MotionParameters();
 	static {
+		motionParameters.GOAL_RADIUS = 25;
+		motionParameters.ARCANGLE_MAX = 15;
 		motionParameters.COLAVOID_MODE = MotionParameters.COLAVOID_MODE_TYPE.STOP_ON_COLLISION;
 		motionParameters.STOP_AT_DESTINATION = true;
 	}
@@ -145,7 +147,6 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 				gvh.plat.moat.goTo(currentDestination = assignment.remove(0));
 				screenColor = getColorFromPosition(lastVisitedPoint);
 				screenLineSize = getSizeFromPosition(lastVisitedPoint);
-				System.out.println(lastVisitedPoint);
 				updateScreen();
 				gvh.log.d(TAG, "Assignment has " + assignment.size() + " points remaining.");
 				setStage(Stage.WAIT_TO_ARRIVE);
