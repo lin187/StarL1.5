@@ -12,7 +12,7 @@ import edu.illinois.mitra.starlSim.main.Simulation;
 public class Main {
 	private static final String WPT_PATH = "waypoints/";//"C:/Users/StarL/Documents/Workspace/starl/trunk/matlab/matlab_optitrack/waypoints/";
 	
-	private static final String inputFilename = "knot";
+	private static final String inputFilename = "box";
 
 	public static void main(String[] args) {
 		SvgParser parser = new SvgParser(3000,3000,1500,1500);
