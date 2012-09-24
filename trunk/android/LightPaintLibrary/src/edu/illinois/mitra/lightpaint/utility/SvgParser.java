@@ -167,7 +167,6 @@ public class SvgParser extends XmlReader {
 
 		// Scaling
 		double scalefactor = Math.min(scale.getX() / width, scale.getY() / height);
-		System.out.println("Scaling by " + scalefactor);
 		for(int i = 0; i < retval.size(); i++)
 			retval.set(i, retval.get(i).scale(scalefactor));
 
@@ -175,7 +174,6 @@ public class SvgParser extends XmlReader {
 		double centerX = (scalefactor * width) / 2.0;
 		double centerY = (scalefactor * height) / 2.0;
 		offset = center.subtract(new ImagePoint(centerX, centerY));
-		System.out.println("Translating by " + offset);
 
 		maxY *= scalefactor;
 		maxY += centerY / 2;
