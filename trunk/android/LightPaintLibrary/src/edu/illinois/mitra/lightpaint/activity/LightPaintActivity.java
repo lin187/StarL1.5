@@ -43,12 +43,14 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 	// Handler message
 	public static final int HANDLER_SCREEN = 9724;
 
-	private static final MotionParameters motionParameters = new MotionParameters();
+	private static final MotionParameters motionParameters;
 	static {
-		motionParameters.GOAL_RADIUS = 25;
-		motionParameters.ARCANGLE_MAX = 15;
-		motionParameters.COLAVOID_MODE = MotionParameters.COLAVOID_MODE_TYPE.STOP_ON_COLLISION;
-		motionParameters.STOP_AT_DESTINATION = true;
+		MotionParameters.Builder builder = new MotionParameters.Builder();
+		builder.GOAL_RADIUS(25);
+		builder.ARCANGLE_MAX(15);
+		builder.COLAVOID_MODE(MotionParameters.COLAVOID_MODE_TYPE.STOP_ON_COLLISION);
+		builder.STOP_AT_DESTINATION(true);
+		motionParameters = builder.build();
 	}
 
 	private static enum Stage {
@@ -297,11 +299,11 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 	private boolean inMotion = false;
 	private int screenColor = 0;
 	private int screenLineSize = 0;
-	
+
 	public LpAlgorithm getAlgorithm() {
 		return alg;
 	}
-	
+
 	public int getScreenColor() {
 		return screenColor;
 	}
@@ -309,7 +311,7 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 	public ItemPosition getMyPosition() {
 		return gvh.gps.getMyPosition();
 	}
-	
+
 	@Override
 	public void robotEvent(Event eventType, int eventData) {
 		if(eventType == Event.MOTION) {
@@ -326,8 +328,7 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 	}
 
 	private int currentScreenColor = 0;
-	
-	
+
 	private void updateScreen() {
 		if(inMotion) {
 			if(currentScreenColor != screenColor) {

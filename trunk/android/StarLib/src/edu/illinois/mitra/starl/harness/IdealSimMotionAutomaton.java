@@ -11,7 +11,7 @@ public class IdealSimMotionAutomaton extends RobotMotion implements RobotEventLi
 	private static final String TAG = "MotionAutomaton";
 	private IdealSimGpsProvider gpspro;
 	private String name;
-	private MotionParameters defaultParam = new MotionParameters();
+	private MotionParameters defaultParam = MotionParameters.defaultParameters();
 	
 	private GlobalVarHolder gvh;
 	

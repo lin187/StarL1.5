@@ -24,26 +24,20 @@ public class MotionAutomaton extends RobotMotion {
 
 	// MOTION CONTROL CONSTANTS
 	//	public static int R_arc = 700;
-	public static int R_slowfwd = 700;
-	public static int A_smallturn = 3;
-	public static int A_straight = 6;
-	public static int A_arc = 25;
-	public static int A_arcexit = 30;
-
-	public static final int A_slowturn = 25;
-
-	public static final int ROBOT_RADIUS = 180; // TODO: put this in SimSettings
-												// and make consistent (mod a
-												// scaling factor): this is
-												// another (different valued)
-												// robot radius
+//	public static int R_slowfwd = 700;
+//	public static int A_smallturn = 3;
+//	public static int A_straight = 6;
+//	public static int A_arc = 25;
+//	public static int A_arcexit = 30;
+//	public static final int param.SLOWTURN_ANGLE = 25;
+//	public static final int ROBOT_RADIUS = 180;
 
 	// DELAY BETWEEN EACH RUN OF THE AUTOMATON
-	public static final int DELAY_TIME = 60;
-	public static final int SAMPLING_PERIOD = 300;
+//	private static final int AUTOMATON_PERIOD = 60;
+//	public static final int SAMPLING_PERIOD = 300;
 
 	// COLLISION AVOIDANCE CONSTANTS
-	public static final int COLLISION_STRAIGHTTIME = 1250;
+//	public static final int COLLISION_STRAIGHTTIME = 1250;
 
 	protected GlobalVarHolder gvh;
 	protected BluetoothInterface bti;
@@ -68,7 +62,7 @@ public class MotionAutomaton extends RobotMotion {
 
 	private OPMODE mode = OPMODE.GO_TO;
 
-	private static final MotionParameters DEFAULT_PARAMETERS = new MotionParameters();
+	private static final MotionParameters DEFAULT_PARAMETERS = MotionParameters.defaultParameters();
 	private volatile MotionParameters param = DEFAULT_PARAMETERS;
 
 	// Collision avoidance
@@ -89,8 +83,8 @@ public class MotionAutomaton extends RobotMotion {
 		super(gvh.id.getName());
 		this.gvh = gvh;
 		this.bti = bti;
-		this.linspeed = (param.LINSPEED_MAX - param.LINSPEED_MIN) / (double) (R_slowfwd - param.GOAL_RADIUS);
-		this.turnspeed = (param.TURNSPEED_MAX - param.TURNSPEED_MIN) / (A_slowturn - A_smallturn);
+		this.linspeed = (param.LINSPEED_MAX - param.LINSPEED_MIN) / (double) (param.SLOWFWD_RADIUS - param.GOAL_RADIUS);
+		this.turnspeed = (param.TURNSPEED_MAX - param.TURNSPEED_MIN) / (param.SLOWTURN_ANGLE - param.SMALLTURN_ANGLE);
 	}
 
 	public void goTo(ItemPosition dest) {
@@ -149,7 +143,7 @@ public class MotionAutomaton extends RobotMotion {
 						if(mode == OPMODE.GO_TO) {
 							if(distance <= param.GOAL_RADIUS) {
 								next = STAGE.GOAL;
-							} else if(distance <= param.ARC_RADIUS && absangle <= param.ARCANGLE_MAX && param.ENABLE_ARCING) {
+							} else if(param.ENABLE_ARCING && distance <= param.ARC_RADIUS && absangle <= param.ARCANGLE_MAX) {
 								next = STAGE.ARCING;
 							} else {
 								next = STAGE.TURN;
@@ -165,9 +159,9 @@ public class MotionAutomaton extends RobotMotion {
 							curve(param.ARCSPEED_MAX, radius);
 						} else {
 							// Otherwise, check exit conditions
-							if(absangle > A_arcexit)
+							if(absangle > param.ARC_EXIT_ANGLE)
 								next = STAGE.TURN;
-							if(absangle < A_straight)
+							if(absangle < param.STRAIGHT_ANGLE)
 								next = STAGE.STRAIGHT;
 							if(distance <= param.GOAL_RADIUS)
 								next = STAGE.GOAL;
@@ -177,9 +171,9 @@ public class MotionAutomaton extends RobotMotion {
 						if(stage != prev) {
 							straight(LinSpeed(distance));
 						} else {
-							if(Common.inRange(distance, param.GOAL_RADIUS, R_slowfwd))
+							if(Common.inRange(distance, param.GOAL_RADIUS, param.SLOWFWD_RADIUS))
 								straight(LinSpeed(distance));
-							if(Common.inRange(absangle, A_smallturn, param.ARCANGLE_MAX))
+							if(Common.inRange(absangle, param.SMALLTURN_ANGLE, param.ARCANGLE_MAX))
 								next = STAGE.SMALLTURN;
 							if(absangle > param.ARCANGLE_MAX)
 								next = STAGE.TURN;
@@ -191,10 +185,10 @@ public class MotionAutomaton extends RobotMotion {
 						if(stage != prev) {
 							turn(TurnSpeed(absangle), angle);
 						} else {
-							if(absangle <= A_smallturn) {
+							if(absangle <= param.SMALLTURN_ANGLE) {
 								gvh.log.i(TAG, "Turn stage: within angle bounds!");
 								next = (mode == OPMODE.GO_TO) ? STAGE.STRAIGHT : STAGE.GOAL;
-							} else if(absangle <= A_slowturn) {
+							} else if(absangle <= param.SLOWTURN_ANGLE) {
 								// Resend a reduced-speed turn command if we're
 								// within the slow-turn window
 								turn(TurnSpeed(absangle), angle);
@@ -206,7 +200,7 @@ public class MotionAutomaton extends RobotMotion {
 							int radius = curveRadius() / 2;
 							curve(LinSpeed(distance), radius);
 						} else {
-							if(absangle <= A_smallturn)
+							if(absangle <= param.SMALLTURN_ANGLE)
 								next = STAGE.STRAIGHT;
 							if(absangle > param.ARCANGLE_MAX)
 								next = STAGE.TURN;
@@ -262,7 +256,7 @@ public class MotionAutomaton extends RobotMotion {
 							straight(param.LINSPEED_MAX);
 							col_straightime = 0;
 						} else {
-							col_straightime += DELAY_TIME;
+							col_straightime += param.AUTOMATON_PERIOD;
 							// If a collision is imminent (again), return to the
 							// turn stage
 							if(collision()) {
@@ -272,7 +266,7 @@ public class MotionAutomaton extends RobotMotion {
 							}
 							// If we're collision free and have been for enough
 							// time, restart normal motion
-							if(!collision() && col_straightime >= COLLISION_STRAIGHTTIME) {
+							if(!collision() && col_straightime >= param.COLLISION_AVOID_STRAIGHTTIME) {
 								gvh.log.d(TAG, "Free! Returning to normal execution");
 								colprev = null;
 								colnext = null;
@@ -301,7 +295,7 @@ public class MotionAutomaton extends RobotMotion {
 					}
 				}
 			}
-			gvh.sleep(DELAY_TIME);
+			gvh.sleep(param.AUTOMATON_PERIOD);
 		}
 	}
 
@@ -343,7 +337,7 @@ public class MotionAutomaton extends RobotMotion {
 	}
 
 	protected void sendMotionEvent(int motiontype, int... argument) {
-		// TODO: Is this needed??? Or even working properly??
+		// TODO: This might not be necessary
 		gvh.trace.traceEvent(TAG, "Motion", Arrays.toString(argument), gvh.time());
 		gvh.sendRobotEvent(Event.MOTION, motiontype);
 	}
@@ -374,12 +368,12 @@ public class MotionAutomaton extends RobotMotion {
 		}
 	}
 
-	// Ramp linearly from min at a_smallturn to max at a_slowturn
+	// Ramp linearly from min at param.SMALLTURN_ANGLE to max at param.SLOWTURN_ANGLE
 	public int TurnSpeed(int angle) {
-		if(angle > A_slowturn) {
+		if(angle > param.SLOWTURN_ANGLE) {
 			return param.TURNSPEED_MAX;
-		} else if(angle > A_smallturn && angle <= A_slowturn) {
-			return param.TURNSPEED_MIN + (int) ((angle - A_smallturn) * turnspeed);
+		} else if(angle > param.SMALLTURN_ANGLE && angle <= param.SLOWTURN_ANGLE) {
+			return param.TURNSPEED_MIN + (int) ((angle - param.SMALLTURN_ANGLE) * turnspeed);
 		} else {
 			return param.TURNSPEED_MIN;
 		}
@@ -392,9 +386,9 @@ public class MotionAutomaton extends RobotMotion {
 	 * @return
 	 */
 	private int LinSpeed(int distance) {
-		if(distance > R_slowfwd)
+		if(distance > param.SLOWFWD_RADIUS)
 			return param.LINSPEED_MAX;
-		if(distance > param.GOAL_RADIUS && distance <= R_slowfwd) {
+		if(distance > param.GOAL_RADIUS && distance <= param.SLOWFWD_RADIUS) {
 			return param.LINSPEED_MIN + (int) ((distance - param.GOAL_RADIUS) * linspeed);
 		}
 		return param.LINSPEED_MIN;
@@ -406,7 +400,7 @@ public class MotionAutomaton extends RobotMotion {
 		PositionList others = gvh.gps.getPositions();
 		for(ItemPosition current : others.getList()) {
 			if(!current.name.equals(me.name)) {
-				if(me.isFacing(current, ROBOT_RADIUS) && me.distanceTo(current) < 2 * ROBOT_RADIUS) {
+				if(me.isFacing(current, param.ROBOT_RADIUS) && me.distanceTo(current) < 2 * param.ROBOT_RADIUS) {
 					blocker = current;
 					return true;
 				}
@@ -419,7 +413,7 @@ public class MotionAutomaton extends RobotMotion {
 	@Override
 	public void setParameters(MotionParameters param) {
 		this.param = param;
-		this.linspeed = (double) (param.LINSPEED_MAX - param.LINSPEED_MIN) / Math.abs((R_slowfwd - param.GOAL_RADIUS));
-		this.turnspeed = (param.TURNSPEED_MAX - param.TURNSPEED_MIN) / (A_slowturn - A_smallturn);
+		this.linspeed = (double) (param.LINSPEED_MAX - param.LINSPEED_MIN) / Math.abs((param.SLOWFWD_RADIUS - param.GOAL_RADIUS));
+		this.turnspeed = (param.TURNSPEED_MAX - param.TURNSPEED_MIN) / (param.SLOWTURN_ANGLE - param.SMALLTURN_ANGLE);
 	}
 }

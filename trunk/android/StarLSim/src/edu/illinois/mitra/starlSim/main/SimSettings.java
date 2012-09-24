@@ -143,9 +143,10 @@ public class SimSettings {
 	 */
 	public final boolean DRAW_WAYPOINT_NAMES;
 
+	private static final SimSettings defaultInstance = new Builder().build();
+
 	public static SimSettings defaultSettings() {
-		Builder builder = new Builder();
-		return builder.build();
+		return defaultInstance;
 	}
 
 	public static class Builder {
