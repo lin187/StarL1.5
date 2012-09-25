@@ -1,6 +1,5 @@
 package edu.illinois.mitra.lightpaintapp;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -73,6 +72,8 @@ public class RobotsActivity extends Activity implements MessageListener {
 
 		// Load the participants
 		participants = IdentityLoader.loadIdentities(IDENTITY_FILE_URL);
+		if(participants == null)
+			participants = ERROR_PARTICIPANTS;
 		
 		// Initialize preferences holder
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);

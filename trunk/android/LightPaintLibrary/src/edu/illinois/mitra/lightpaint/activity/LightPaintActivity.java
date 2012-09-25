@@ -46,7 +46,7 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 	private static final MotionParameters motionParameters;
 	static {
 		MotionParameters.Builder builder = new MotionParameters.Builder();
-		builder.GOAL_RADIUS(25);
+		builder.GOAL_RADIUS(50);
 		builder.ARCANGLE_MAX(15);
 		builder.COLAVOID_MODE(MotionParameters.COLAVOID_MODE_TYPE.STOP_ON_COLLISION);
 		builder.STOP_AT_DESTINATION(true);
@@ -142,7 +142,7 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 				if((gvh.time() - reqSentTime) > MAX_REQUEST_WAIT_TIME) {
 					// Request timed out, request again
 					setStage(Stage.REQUEST_ASSIGNMENT);
-					gvh.log.e(TAG, "Assignment request had timed out: " + gvh.time() + ", " + reqSentTime + ", " + (gvh.time() - reqSentTime));
+					gvh.log.e(TAG, "Assignment request had timed out!");
 				}
 				break;
 			case DO_ASSIGNMENT:
