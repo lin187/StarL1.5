@@ -84,7 +84,7 @@ public class BullyLeaderElection extends StarLCallable implements MessageListene
 		gvh.comms.removeMsgListener(Common.MSG_BULLYWINNER);		
 	}
 
-	public void messageReceied(RobotMessage m) {
+	public void messageReceived(RobotMessage m) {
 		switch(m.getMID()) {
 		case Common.MSG_BULLYELECTION:
 			// Reply immediately and start my own election

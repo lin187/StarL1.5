@@ -1,5 +1,10 @@
 ----- StarLib Changelog -----
 
+9/29/2012, Adam
+- Deleted StarLSim's package "simapps"
+- Added sleep() method to LogicThread class which delivers pending messages before sleeping. LogicThread now implements MessageListener by default, and subclasses of LogicThread may receive messages by registering themselves as message listeners and overriding the receive() method.
+- HOW DID NO ONE NOTICE THAT "messageReceied" WAS SPELLED WRONG???
+
 9/23/2012, Adam
 - Made SimSettings immutable to prevent any simulated code from ever changing simulation parameters. A new SimSettings must be built for each execution with different parameters.
 - Added variables to SimSettings to control drawing waypoints

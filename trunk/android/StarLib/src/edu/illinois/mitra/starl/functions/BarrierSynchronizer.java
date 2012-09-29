@@ -80,7 +80,7 @@ public class BarrierSynchronizer implements Synchronizer, MessageListener {
 	}
 
 	@Override
-	public void messageReceied(RobotMessage m) {
+	public void messageReceived(RobotMessage m) {
 		// Update the barriers when a barrier sync message is received
 		String bID = m.getContents(0);
 		

@@ -108,9 +108,7 @@ public class BluetoothInterface {
 	}
 
 	public synchronized byte[] sendReceive(byte[] to_send, int expectedBytes) {
-		//clearBuffer();
 		send(to_send);
-		gvh.sleep(1);
 		return readBuffer(expectedBytes);
 	}
 

@@ -154,7 +154,7 @@ public class SingleHopMutualExclusion implements MutualExclusion, MessageListene
 		gvh.comms.removeMsgListener(Common.MSG_MUTEX_TOKEN_REQUEST);
 	}
 
-	public void messageReceied(RobotMessage m) {
+	public void messageReceived(RobotMessage m) {
 		int id = Integer.parseInt(m.getContents(0));
 		
 		switch(m.getMID()) {

@@ -18,13 +18,12 @@ import edu.illinois.mitra.starl.functions.RandomLeaderElection;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.LeaderElection;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
-import edu.illinois.mitra.starl.interfaces.MessageListener;
 import edu.illinois.mitra.starl.interfaces.RobotEventListener;
 import edu.illinois.mitra.starl.motion.MotionParameters;
 import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 
-public class LightPaintActivity extends LogicThread implements MessageListener, RobotEventListener {
+public class LightPaintActivity extends LogicThread implements RobotEventListener {
 	private static final String TAG = "LP";
 
 	// Algorithm constants
@@ -156,7 +155,11 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 			case WAIT_TO_ARRIVE:
 				if(!gvh.plat.moat.inMotion) {
 					RobotMessage informProgress = new RobotMessage(leader, super.name, POSITION_UPDATE_ID, new MessageContents(lastVisitedPoint.toMessage(), currentDestination.toMessage()));
-					gvh.comms.addOutgoingMessage(informProgress);
+					if(iAmLeader) {
+						receive(informProgress);
+					} else {
+						gvh.comms.addOutgoingMessage(informProgress);
+					}
 					lastVisitedPoint = currentDestination;
 					if(assignment.isEmpty()) {
 						setStage(Stage.REQUEST_ASSIGNMENT);
@@ -171,7 +174,7 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 				return null;
 			}
 
-			gvh.sleep(100);
+			sleep(100);
 		}
 	}
 
@@ -189,7 +192,7 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 	private int doneInformedCount = 0;
 
 	@Override
-	public void messageReceied(RobotMessage msg) {
+	protected void receive(RobotMessage msg) {
 		switch(msg.getMID()) {
 		case ASSIGNMENT_ID:
 			if(msg.getContents().equals(EMPTY_MSG_CONTENTS)) {
@@ -357,4 +360,5 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 		gvh.comms.removeMsgListener(POSITION_UPDATE_ID);
 		gvh.comms.removeMsgListener(ASSIGNMENT_REQ_ID);
 	}
+
 }

@@ -215,7 +215,8 @@ public class RobotsActivity extends Activity implements MessageListener {
 		return;
 	}
 
-	public void messageReceied(RobotMessage m) {
+	@Override
+	public void messageReceived(RobotMessage m) {
 		switch(m.getMID()) {
 		case Common.MSG_ACTIVITYLAUNCH:
 			gvh.plat.sendMainMsg(HandlerMessage.MESSAGE_LAUNCH, Integer.parseInt(m.getContents(0)), Integer.parseInt(m.getContents(1)));

@@ -74,7 +74,7 @@ public class Comms {
 
 	public void addIncomingMessage(RobotMessage m) {
 		if(listeners.containsKey(m.getMID())) {
-			listeners.get(m.getMID()).messageReceied(m);
+			listeners.get(m.getMID()).messageReceived(m);
 		} else {
 			gvh.log.e("Critical Error", "No handler for MID " + m.getMID());
 		}

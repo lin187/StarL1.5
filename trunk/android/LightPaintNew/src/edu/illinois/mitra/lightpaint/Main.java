@@ -10,7 +10,7 @@ import edu.illinois.mitra.starlSim.main.SimSettings;
 import edu.illinois.mitra.starlSim.main.Simulation;
 
 public class Main {
-	private static final String WPT_PATH = "C:/Users/StarL/Documents/Workspace/starl/trunk/matlab/matlab_optitrack/waypoints/";
+	private static final String WPT_PATH = "/waypoints";//"C:/Users/StarL/Documents/Workspace/starl/trunk/matlab/matlab_optitrack/waypoints/";
 	
 	private static final String inputFilename = "knot";
 
@@ -24,7 +24,7 @@ public class Main {
 		WptWriter.writeWpt(WPT_PATH + inputFilename + ".wpt", image);
 
 		SimSettings.Builder builder = new SimSettings.Builder().DRAWER(new LightPaintDrawer()).WAYPOINT_FILE(WPT_PATH + inputFilename + ".wpt");
-		builder.N_BOTS(1);
+		builder.N_BOTS(5);
 		builder.TIC_TIME_RATE(2.5);
 		builder.DRAW_WAYPOINT_NAMES(false);
 		builder.DRAW_WAYPOINTS(false);

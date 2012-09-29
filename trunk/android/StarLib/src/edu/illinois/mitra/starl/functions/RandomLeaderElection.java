@@ -93,7 +93,7 @@ public class RandomLeaderElection implements LeaderElection, MessageListener {
 	}
 
 	@Override
-	public void messageReceied(RobotMessage m) {
+	public void messageReceived(RobotMessage m) {
 		String from = m.getFrom();
 		switch(m.getMID()) {
 		case Common.MSG_RANDLEADERELECT:

@@ -14,5 +14,5 @@ public interface MessageListener {
 	/**
 	 * @param m The received RobotMessage
 	 */
-	public void messageReceied(RobotMessage m);	
+	public void messageReceived(RobotMessage m);	
 }

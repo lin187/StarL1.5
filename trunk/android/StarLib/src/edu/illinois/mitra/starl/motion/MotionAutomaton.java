@@ -224,7 +224,6 @@ public class MotionAutomaton extends RobotMotion {
 						gvh.trace.traceEvent(TAG, "Stage transition", stage.toString(), gvh.time());
 					}
 					next = null;
-					// gvh.sleep(DELAY_TIME);
 				} else if((colliding && (param.COLAVOID_MODE == COLAVOID_MODE_TYPE.USE_COLAVOID)) || stage == null) {
 					// Collision imminent! Stop the robot
 					if(stage != null) {
