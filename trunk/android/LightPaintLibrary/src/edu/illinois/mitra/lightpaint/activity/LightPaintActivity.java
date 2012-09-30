@@ -250,6 +250,7 @@ public class LightPaintActivity extends LogicThread implements RobotEventListene
 		public void run() {
 			while(true) {
 				try {
+					gvh.log.d(TAG, "Waiting for a new assignment...");
 					assign(assignmentRequesters.take());
 				} catch(InterruptedException e) {
 					e.printStackTrace();

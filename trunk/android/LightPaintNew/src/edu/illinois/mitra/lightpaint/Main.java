@@ -10,9 +10,9 @@ import edu.illinois.mitra.starlSim.main.SimSettings;
 import edu.illinois.mitra.starlSim.main.Simulation;
 
 public class Main {
-	private static final String WPT_PATH = "/waypoints";//"C:/Users/StarL/Documents/Workspace/starl/trunk/matlab/matlab_optitrack/waypoints/";
+	private static final String WPT_PATH = "C:/Users/StarL/Documents/Workspace/starl/trunk/matlab/matlab_optitrack/waypoints/";
 	
-	private static final String inputFilename = "knot";
+	private static final String inputFilename = "leia";
 
 	public static void main(String[] args) {
 		SvgParser parser = new SvgParser(2200,2200,1200,1300);

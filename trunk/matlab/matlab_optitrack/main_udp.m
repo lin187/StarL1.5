@@ -1,6 +1,6 @@
 % Main OptiTrack interface
 % Settings
-WPT_FILENAME = 'waypoints\knot.wpt';
+WPT_FILENAME = 'waypoints\leia.wpt';
 load_settings;
 mainprog;
     
