@@ -2,8 +2,11 @@ package edu.illinois.mitra.starlSim.main;
 
 import edu.illinois.mitra.starlSim.draw.Drawer;
 
+/**
+ * @author Adam
+ *
+ */
 public class SimSettings {
-	// General simulation settings
 	/**
 	 * The number of robots to simulate.
 	 */
@@ -47,7 +50,6 @@ public class SimSettings {
 	 */
 	public final int GRID_YSIZE;
 
-	// Position calculation period and noise options
 	/**
 	 * Milliseconds. The time between simulated GPS position broadcasts.
 	 */
@@ -62,7 +64,6 @@ public class SimSettings {
 	 */
 	public final double GPS_POSITION_NOISE;
 
-	// Clock skew settings
 	/**
 	 * Milliseconds. The maximum trace clock drift.
 	 */
@@ -72,7 +73,6 @@ public class SimSettings {
 	 */
 	public final double TRACE_CLOCK_SKEW_MAX;
 
-	// Message delay and loss options
 	/**
 	 * Milliseconds. The average message transit time.
 	 */
@@ -90,7 +90,6 @@ public class SimSettings {
 	 */
 	public final int MSG_RANDOM_SEED;
 
-	// Robot specific settings
 	/**
 	 * Robot name prefix
 	 */
@@ -109,7 +108,6 @@ public class SimSettings {
 	 */
 	public final boolean USE_GLOBAL_LOGGER;
 
-	// trace drawing
 	/**
 	 * Enable/disable trace drawing
 	 */
@@ -119,7 +117,6 @@ public class SimSettings {
 	 */
 	public final int DRAW_TRACE_LENGTH;
 
-	// drawing
 	/**
 	 * The maximum frames per second to draw at. If drawing takes too long,
 	 * lower this.
@@ -173,7 +170,7 @@ public class SimSettings {
 		private boolean USE_GLOBAL_LOGGER = false;
 		private boolean DRAW_TRACE = false;
 		private int DRAW_TRACE_LENGTH = 128;
-		private int MAX_FPS = 40;
+		private int MAX_FPS = 30;
 		private Drawer DRAWER = null;
 		private boolean DRAW_WAYPOINTS = true;
 		private boolean DRAW_WAYPOINT_NAMES = true;

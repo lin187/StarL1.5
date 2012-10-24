@@ -47,7 +47,7 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 	@Override
 	public synchronized void addRobot(ItemPosition bot) {
 		robots.put(bot.name, new TrackedRobot(bot));
-		robot_positions.update(bot, se.time);
+		robot_positions.update(bot, se.getTime());
 	}
 
 	@Override
@@ -131,11 +131,11 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 				
 		public TrackedRobot(ItemPosition pos) {
 			this.pos = pos;
-			timeLastUpdate = se.time;
+			timeLastUpdate = se.getTime();
 		}
 		public synchronized  void updatePos() {
 			
-			long timeSinceUpdate = (se.time - timeLastUpdate);
+			long timeSinceUpdate = (se.getTime() - timeLastUpdate);
 			if(newdest) {
 				// Snap to heading
 				// Calculate angle and X/Y velocities
@@ -202,7 +202,7 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 			} else {
 				reportpos = false;
 			}
-			timeLastUpdate = se.time;
+			timeLastUpdate = se.getTime();
 		}
 		public synchronized void setDest(ItemPosition dest, int velocity) 
 		{

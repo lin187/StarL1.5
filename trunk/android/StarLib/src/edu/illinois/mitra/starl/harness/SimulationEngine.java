@@ -24,10 +24,10 @@ public class SimulationEngine extends Thread {
 	private ArrayList<Long> sleeps = new ArrayList<Long>();
 	private ArrayList<Thread> regThreads = new ArrayList<Thread>();
 
-	public SimGpsProvider gps;
-	public DecoupledSimComChannel comms;
-	public long startTime;
-	public long time = 0;
+	private SimGpsProvider gps;
+	private DecoupledSimComChannel comms;
+	private long startTime;
+	private long time = 0;
 	private Object lock = new Object();
 	private boolean done = false;
 	private double ticRate = 0;
@@ -186,5 +186,21 @@ public class SimulationEngine extends Thread {
 
 	public Long getTime() {
 		return time;
+	}
+	
+	public Long getDuration() {
+		return (time - startTime);
+	}
+	
+	public SimGpsProvider getGps() {
+		return gps;
+	}
+	
+	public void setGps(SimGpsProvider gps) {
+		this.gps = gps;
+	}
+	
+	public DecoupledSimComChannel getComChannel() {
+		return comms;
 	}
 }

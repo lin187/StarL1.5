@@ -30,17 +30,17 @@ public class SimGlobalVarHolder extends GlobalVarHolder {
 	public SimGlobalVarHolder(String name, HashMap<String,String> participants, SimulationEngine engine, ItemPosition initpos, String traceDir, int trace_driftMax, double trace_skewBound) {
 		super(name, participants);
 		this.engine = engine;
-		super.comms = new Comms(this, new SimSmartComThread(this, engine.comms));
-		super.gps = new Gps(this, new SimGpsReceiver(this, engine.gps, initpos));
+		super.comms = new Comms(this, new SimSmartComThread(this, engine.getComChannel()));
+		super.gps = new Gps(this, new SimGpsReceiver(this, engine.getGps(), initpos));
 		super.log = new SimLogging(name,this);
 		super.trace = new Trace(name, traceDir, this);
 		if(traceDir != null)
 			trace.traceStart();
 		super.plat = new AndroidPlatform();
-		if(engine.gps instanceof IdealSimGpsProvider) {
-			plat.moat = new IdealSimMotionAutomaton(this, (IdealSimGpsProvider)engine.gps);
+		if(engine.getGps() instanceof IdealSimGpsProvider) {
+			plat.moat = new IdealSimMotionAutomaton(this, (IdealSimGpsProvider)engine.getGps());
 		} else {
-			plat.moat = new RealisticSimMotionAutomaton(this, engine.gps);
+			plat.moat = new RealisticSimMotionAutomaton(this, engine.getGps());
 			plat.moat.start();
 		}
 	}

@@ -13,9 +13,11 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
 import java.util.Set;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
 
@@ -73,7 +75,7 @@ public class Simulation {
 			gps.setWaypoints(WptLoader.loadWaypoints(settings.WAYPOINT_FILE));
 
 		this.settings = settings;
-		simEngine.gps = gps;
+		simEngine.setGps(gps);
 		gps.start();
 
 		// Load initial positions
@@ -130,7 +132,7 @@ public class Simulation {
 						rd.add(waypoint);
 					}
 				}
-				drawFrame.updateData(rd, simEngine.time);
+				drawFrame.updateData(rd, simEngine.getTime());
 			}
 		};
 		gps.addObserver(guiObserver);
@@ -144,13 +146,14 @@ public class Simulation {
 
 	private static final double BOT_SPACING_FACTOR = 2.6;
 	private Map<String, ItemPosition> startingPositions = new HashMap<String, ItemPosition>();
+
 	private boolean acceptableStart(ItemPosition pos) {
 		if(pos == null)
 			return false;
 		startingPositions.put(pos.getName(), pos);
 		for(Entry<String, ItemPosition> entry : startingPositions.entrySet()) {
 			if(!entry.getKey().equals(pos.getName())) {
-				if(entry.getValue().distanceTo(pos) < (BOT_SPACING_FACTOR*settings.BOT_RADIUS))
+				if(entry.getValue().distanceTo(pos) < (BOT_SPACING_FACTOR * settings.BOT_RADIUS))
 					return false;
 			}
 		}
@@ -184,12 +187,15 @@ public class Simulation {
 					nextBot.radius = settings.BOT_RADIUS;
 					rd.add(nextBot);
 				}
-				gl.updateData(rd, simEngine.time);
+				gl.updateData(rd, simEngine.getTime());
 			}
 		};
 		return globalLogger;
 	}
 
+	/**
+	 * Begins executing a simulation. This call will block until the simulation completes.
+	 */
 	public void start() {
 		executor = Executors.newFixedThreadPool(participants.size());
 		System.out.println("Starting with " + participants.size() + " robots");
@@ -201,7 +207,10 @@ public class Simulation {
 		// Invoke all simulated robots
 		List<Future<List<Object>>> results = null;
 		try {
-			results = executor.invokeAll(bots);
+			if(settings.TIMEOUT > 0)
+				results = executor.invokeAll(bots, settings.TIMEOUT, TimeUnit.SECONDS);
+			else
+				results = executor.invokeAll(bots);
 		} catch(InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -212,6 +221,10 @@ public class Simulation {
 				List<Object> res = f.get();
 				if(res != null && !res.isEmpty())
 					System.out.println(res);
+			} catch(CancellationException e) {
+				// If the executor timed out, the result is cancelled
+				System.err.println("Simulation timed out! Execution reached " + settings.TIMEOUT + " sec duration. Aborting.");
+				break;
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
@@ -220,12 +233,16 @@ public class Simulation {
 		// Print communication statistics and shutdown
 		System.out.println("SIMULATION COMPLETE");
 		System.out.println("---Message Stats---");
-		simEngine.comms.printStatistics();
-		simEngine.simulationDone();
+		simEngine.getComChannel().printStatistics();
 		shutdown();
 	}
 
 	public void shutdown() {
+		simEngine.simulationDone();
 		executor.shutdownNow();
+	}
+	
+	public long getSimulationDuration() {
+		return simEngine.getDuration();
 	}
 }
