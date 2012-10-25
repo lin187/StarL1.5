@@ -1,11 +1,8 @@
 package edu.illinois.mitra.starl.gvh;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.WeakHashMap;
 
 import edu.illinois.mitra.starl.interfaces.RobotEventListener;
 import edu.illinois.mitra.starl.interfaces.RobotEventListener.Event;

@@ -1,6 +1,5 @@
 package edu.illinois.mitra.starl.gvh;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import android.os.Handler;

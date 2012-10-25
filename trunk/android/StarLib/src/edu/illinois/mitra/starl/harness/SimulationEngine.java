@@ -28,6 +28,7 @@ public class SimulationEngine extends Thread {
 	private DecoupledSimComChannel comms;
 	private long startTime;
 	private long time = 0;
+	private long timeout = 0;
 	private Object lock = new Object();
 	private boolean done = false;
 	private double ticRate = 0;
@@ -39,7 +40,7 @@ public class SimulationEngine extends Thread {
 	ExplicitlyDrawable drawer = null;
 	List<LogicThread> logicThreads = null;
 
-	public SimulationEngine(int meanDelay, int delayStdDev, int dropRate, int seed, double ticRate, Set<String> blockedRobots, Map<String, String> nameToIpMap, ExplicitlyDrawable drawer, List<LogicThread> logicThreads) {
+	public SimulationEngine(long timeout, int meanDelay, int delayStdDev, int dropRate, int seed, double ticRate, Set<String> blockedRobots, Map<String, String> nameToIpMap, ExplicitlyDrawable drawer, List<LogicThread> logicThreads) {
 		super("SimulationEngine");
 		comms = new DecoupledSimComChannel(meanDelay, delayStdDev, dropRate, seed, blockedRobots, nameToIpMap);
 		time = System.currentTimeMillis();
@@ -48,7 +49,7 @@ public class SimulationEngine extends Thread {
 		this.ticRate = ticRate;
 		this.drawer = drawer;
 		this.logicThreads = logicThreads;
-
+		this.timeout = startTime + timeout;
 		this.start();
 	}
 
@@ -133,6 +134,13 @@ public class SimulationEngine extends Thread {
 
 		// Advance time
 		time += advance;
+
+		if(timeout != startTime && time > timeout) {
+			System.err.println("Simulation timed out! Aborting.");
+			simulationDone();
+			return;
+		}
+
 		comms.advanceTime(advance);
 
 		lastTicAdvance = advance;
@@ -187,19 +195,19 @@ public class SimulationEngine extends Thread {
 	public Long getTime() {
 		return time;
 	}
-	
+
 	public Long getDuration() {
 		return (time - startTime);
 	}
-	
+
 	public SimGpsProvider getGps() {
 		return gps;
 	}
-	
+
 	public void setGps(SimGpsProvider gps) {
 		this.gps = gps;
 	}
-	
+
 	public DecoupledSimComChannel getComChannel() {
 		return comms;
 	}

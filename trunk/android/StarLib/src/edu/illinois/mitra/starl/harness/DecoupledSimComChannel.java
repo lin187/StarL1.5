@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
-import java.util.TreeMap;
 
 import edu.illinois.mitra.starl.interfaces.SimComChannel;
 
@@ -193,14 +192,16 @@ public class DecoupledSimComChannel implements SimComChannel {
 		}
 	}
 
-	public void printStatistics() {
+	public String getStatistics() {
+		StringBuilder sb = new StringBuilder();
 		if(stat_totalMessages > 0) {
-			System.out.println("Total messages: " + stat_totalMessages);
-			System.out.println("Broadcast messages: " + stat_bcastMessages);
-			System.out.println("Dropped messages: " + stat_lostMessages + " = " + 100 * (float) stat_lostMessages / stat_totalMessages + "%");
-			System.out.println("Average delay: " + (float) stat_overallDelay / stat_totalMessages + " ms");
+			sb.append("Total messages: ").append(stat_totalMessages).append('\n');
+			sb.append("Broadcast messages: ").append(stat_bcastMessages).append('\n');
+			sb.append("Dropped messages: ").append(stat_lostMessages).append(" = ").append(100 * (float) stat_lostMessages / stat_totalMessages + "%").append('\n');
+			sb.append("Average delay: ").append((float) stat_overallDelay / stat_totalMessages + " ms\n");
+			return sb.toString();
 		} else {
-			System.out.println("No messages were sent.");
+			return "No messages were sent.";
 		}
 	}
 }

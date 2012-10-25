@@ -24,16 +24,21 @@ public class Main {
 		WptWriter.writeWpt(WPT_PATH + inputFilename + ".wpt", image);
 
 		SimSettings.Builder builder = new SimSettings.Builder().DRAWER(new LightPaintDrawer()).WAYPOINT_FILE(WPT_PATH + inputFilename + ".wpt");
-		builder.N_BOTS(3);
-		builder.TIC_TIME_RATE(2.5);
+		builder.N_BOTS(8);
+		builder.TIC_TIME_RATE(50);
 		builder.DRAW_WAYPOINT_NAMES(false);
 		builder.DRAW_WAYPOINTS(false);
 		builder.GRID_XSIZE(3000);
 		builder.GRID_YSIZE(3000);
+		builder.TRACE_OUT_DIR(null);
+		builder.MSG_LOSSES_PER_HUNDRED(2);
+	
 		SimSettings settings = builder.build();
+		System.out.println("Starting with " + settings.N_BOTS + " robots.");
 		Simulation sim = new Simulation(LightPaintActivity.class, settings);
 		sim.start();
-		System.out.println("DURATION: " + sim.getSimulationDuration() + " ms");
+		System.out.println(sim.getMessageStatistics());
+		System.out.println("Elapsed simulation time: " + sim.getSimulationDuration() + " ms");
 	}
 
 }

@@ -2,13 +2,12 @@ package edu.illinois.mitra.starl.gvh;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
 import edu.illinois.mitra.starl.comms.MessageResult;
 import edu.illinois.mitra.starl.comms.RobotMessage;
 import edu.illinois.mitra.starl.comms.SmartCommsHandler;
+import edu.illinois.mitra.starl.comms.UdpMessage;
 import edu.illinois.mitra.starl.interfaces.MessageListener;
 import edu.illinois.mitra.starl.interfaces.SmartComThread;
 
@@ -38,7 +37,7 @@ public class Comms {
 		comms.start();
 	}
 
-	public MessageResult addOutgoingMessage(RobotMessage msg) {
+	public MessageResult addOutgoingMessage(RobotMessage msg, int maxRetries) {
 		if(comms != null) {
 			// If the message is being sent to myself, add it to the in queue
 			if(msg.getTo().equals(name)) {
@@ -51,13 +50,17 @@ public class Comms {
 			MessageResult result = new MessageResult(receivers);
 
 			// Add the message to the queue, link it to the message result object
-			comms.addOutgoing(msg, result);
+			comms.addOutgoing(msg, result, maxRetries);
 
 			// Return the message result object
 			return result;
 		} else {
 			return null;
 		}
+	}
+
+	public MessageResult addOutgoingMessage(RobotMessage msg) {
+		return addOutgoingMessage(msg, UdpMessage.DEFAULT_MAX_RETRIES);
 	}
 
 	// Message event code

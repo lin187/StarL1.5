@@ -10,7 +10,6 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.os.AsyncTask;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
-import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.HandlerMessage;
 
 /**

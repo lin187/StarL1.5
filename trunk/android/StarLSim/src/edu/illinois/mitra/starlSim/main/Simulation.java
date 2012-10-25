@@ -61,7 +61,7 @@ public class Simulation {
 
 		// Start the simulation engine
 		LinkedList<LogicThread> logicThreads = new LinkedList<LogicThread>();
-		simEngine = new SimulationEngine(settings.MSG_MEAN_DELAY, settings.MSG_STDDEV_DELAY, settings.MSG_LOSSES_PER_HUNDRED, settings.MSG_RANDOM_SEED, settings.TIC_TIME_RATE, blockedRobots, participants, drawFrame.getPanel(), logicThreads);
+		simEngine = new SimulationEngine(settings.SIM_TIMEOUT, settings.MSG_MEAN_DELAY, settings.MSG_STDDEV_DELAY, settings.MSG_LOSSES_PER_HUNDRED, settings.MSG_RANDOM_SEED, settings.TIC_TIME_RATE, blockedRobots, participants, drawFrame.getPanel(), logicThreads);
 
 		// Create the sim gps
 		if(settings.IDEAL_MOTION) {
@@ -198,7 +198,6 @@ public class Simulation {
 	 */
 	public void start() {
 		executor = Executors.newFixedThreadPool(participants.size());
-		System.out.println("Starting with " + participants.size() + " robots");
 
 		// Save settings to JSON file
 		if(settings.TRACE_OUT_DIR != null)
@@ -231,9 +230,6 @@ public class Simulation {
 		}
 
 		// Print communication statistics and shutdown
-		System.out.println("SIMULATION COMPLETE");
-		System.out.println("---Message Stats---");
-		simEngine.getComChannel().printStatistics();
 		shutdown();
 	}
 
@@ -244,5 +240,9 @@ public class Simulation {
 	
 	public long getSimulationDuration() {
 		return simEngine.getDuration();
+	}
+	
+	public String getMessageStatistics() {
+		return 	simEngine.getComChannel().getStatistics();
 	}
 }

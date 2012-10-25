@@ -4,10 +4,10 @@ import java.util.Arrays;
 
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.RobotEventListener.Event;
+import edu.illinois.mitra.starl.motion.MotionParameters.COLAVOID_MODE_TYPE;
 import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.PositionList;
-import edu.illinois.mitra.starl.motion.MotionParameters.COLAVOID_MODE_TYPE;
 
 /**
  * Motion controller which extends the RobotMotion abstract class. Capable of

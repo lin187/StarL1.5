@@ -4,7 +4,7 @@ import edu.illinois.mitra.starlSim.draw.Drawer;
 
 /**
  * @author Adam
- *
+ * 
  */
 public class SimSettings {
 	/**
@@ -13,10 +13,19 @@ public class SimSettings {
 	public final int N_BOTS;
 
 	/**
+	 * Default 0.
 	 * The maximum number of seconds (real time) the simulation may be executing
 	 * for. Setting to zero will allow simulations to run indefinitely.
 	 */
-	public final int TIMEOUT;
+	public final long TIMEOUT;
+
+	/**
+	 * Default 0.
+	 * The maximum number of milliseconds (simulated time) the simulation may
+	 * execute for before timing out. Setting to zero will allow simulations to
+	 * run indefinitely.
+	 */
+	public final long SIM_TIMEOUT;
 
 	/**
 	 * Filename for a .wpt file with waypoints.
@@ -148,7 +157,8 @@ public class SimSettings {
 
 	public static class Builder {
 		private int N_BOTS = 4;
-		private int TIMEOUT = 0;
+		private long SIM_TIMEOUT = 0;
+		private long TIMEOUT = 0;
 		private String WAYPOINT_FILE;
 		private String INITIAL_POSITIONS_FILE;
 		private boolean IDEAL_MOTION = false;
@@ -185,7 +195,12 @@ public class SimSettings {
 			return this;
 		}
 
-		public Builder TIMEOUT(int TIMEOUT) {
+		public Builder SIM_TIMEOUT(long SIM_TIMEOUT) {
+			this.SIM_TIMEOUT = SIM_TIMEOUT;
+			return this;
+		}
+		
+		public Builder TIMEOUT(long TIMEOUT) {
 			this.TIMEOUT = TIMEOUT;
 			return this;
 		}
@@ -340,6 +355,7 @@ public class SimSettings {
 		this.DRAW_TRACE_LENGTH = builder.DRAW_TRACE_LENGTH;
 		this.MAX_FPS = builder.MAX_FPS;
 		this.DRAWER = builder.DRAWER;
+		this.SIM_TIMEOUT = builder.SIM_TIMEOUT;
 		this.TIMEOUT = builder.TIMEOUT;
 		this.DRAW_WAYPOINTS = builder.DRAW_WAYPOINTS;
 		this.DRAW_WAYPOINT_NAMES = builder.DRAW_WAYPOINT_NAMES;

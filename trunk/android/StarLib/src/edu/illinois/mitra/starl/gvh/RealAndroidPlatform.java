@@ -1,7 +1,6 @@
 package edu.illinois.mitra.starl.gvh;
 
 import android.os.Handler;
-import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.HandlerMessage;
 
 public class RealAndroidPlatform extends AndroidPlatform {

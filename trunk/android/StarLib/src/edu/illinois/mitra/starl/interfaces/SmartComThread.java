@@ -1,7 +1,7 @@
 package edu.illinois.mitra.starl.interfaces;
 
 import edu.illinois.mitra.starl.comms.SmartCommsHandler;
-import edu.illinois.mitra.starl.comms.UDPMessage;
+import edu.illinois.mitra.starl.comms.UdpMessage;
 
 /**
  * Low level communication thread which handles sending and receiving of packets. Received packets are passed to the associated SmartCommsHandler.
@@ -22,5 +22,5 @@ public interface SmartComThread extends Cancellable {
 	 * @param msg the message to send
 	 * @param IP the destination IP address
 	 */
-	abstract void write(UDPMessage msg, String IP);
+	abstract void write(UdpMessage msg, String IP);
 }

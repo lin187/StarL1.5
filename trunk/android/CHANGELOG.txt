@@ -1,5 +1,10 @@
 ----- StarLib Changelog -----
 
+10/25/2012, Adam
+- Optimized the UDPMessage class.
+- Added custom # retries to message transmission.
+- Added simulation time timeout to halt simulation after a certain length of simulated time has elapsed.
+
 10/24/2012, Adam
 - Added simulation timeout functionality. If the TIMEOUT value is positive the simulation will abort when the duration reaches TIMEOUT seconds.
 - Lowered MAX_FPS default value to 30
