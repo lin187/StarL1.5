@@ -24,8 +24,8 @@ public class Main {
 		WptWriter.writeWpt(WPT_PATH + inputFilename + ".wpt", image);
 
 		SimSettings.Builder builder = new SimSettings.Builder().DRAWER(new LightPaintDrawer()).WAYPOINT_FILE(WPT_PATH + inputFilename + ".wpt");
-		builder.N_BOTS(8);
-		builder.TIC_TIME_RATE(50);
+		builder.N_BOTS(4);
+		builder.TIC_TIME_RATE(3);
 		builder.DRAW_WAYPOINT_NAMES(false);
 		builder.DRAW_WAYPOINTS(false);
 		builder.GRID_XSIZE(3000);
