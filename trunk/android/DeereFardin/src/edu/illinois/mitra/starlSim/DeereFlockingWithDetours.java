@@ -211,8 +211,8 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 		
 		for (int n = 0; n < INIT_PATH_POINTS; ++n)
 		{
-			int x = INIT_PATH_START.x + n * INIT_PATH_DELTA_DIST + FLOCK_OFFSETS[robotId].x; 
-			int y = INIT_PATH_START.y + FLOCK_OFFSETS[robotId].y;
+			int y = INIT_PATH_START.x + n * INIT_PATH_DELTA_DIST + FLOCK_OFFSETS[robotId].x; 
+			int x = INIT_PATH_START.y + FLOCK_OFFSETS[robotId].y;
 			int time = n * INIT_PATH_DELTA_TIME ;
 			
 			WayPoint wp = new WayPoint(x,y,time);
@@ -675,7 +675,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 //									System.out.println("distance: " + dist);
 									
 									if (dist < SAFE_DISTANCE) {
-										System.out.println("Interference!! dist: " + dist + " " + " j: " + j + " k: " + k + " "  + " i: " + i + " p: " + p + " "  +currentWpt1.x+ " " +  currentWpt1.y+ " " +  currentWpt2.x+ " " +  currentWpt2.y+ " " +  interWpt1.x+ " " +  interWpt1.y+ " " +  intertWpt2.x+ " " +  intertWpt2.y + " " + "starting: " + starting + " end: " + end) ;
+										//System.out.println("Interference!! dist: " + dist + " " + " j: " + j + " k: " + k + " "  + " i: " + i + " p: " + p + " "  +currentWpt1.x+ " " +  currentWpt1.y+ " " +  currentWpt2.x+ " " +  currentWpt2.y+ " " +  interWpt1.x+ " " +  interWpt1.y+ " " +  intertWpt2.x+ " " +  intertWpt2.y + " " + "starting: " + starting + " end: " + end) ;
 		
 										return true ; 
 									}
@@ -1243,7 +1243,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 		System.out.println("position: " + x + " " + y + "System cycle: " + GetCycleNumber());
 		
 		if (robotId == 0)
-			if(x > gvh.gps.getMyPosition().x + 100 &&  y < gvh.gps.getMyPosition().y + 3000 && y > gvh.gps.getMyPosition().y - 3000) 
+			if(y > gvh.gps.getMyPosition().y + 100 &&  x < gvh.gps.getMyPosition().x + 3000 && x > gvh.gps.getMyPosition().x - 3000) 
 				if( acceptNewDetourPoint() ){
 					{
 						double ANCHOR_DISTANCE = 1000;
@@ -1285,36 +1285,7 @@ public class DeereFlockingWithDetours extends LogicThread implements MessageList
 	}
 
 	
-	
-		public void testPointInsert(int x, int y)
-		{
-			//TODO Copy this to the original function
-			if (robotId == 0)
-				if( acceptNewDetourPoint()){
-					if (true)
-					{
-						double ANCHOR_DISTANCE = 1000;
-						double SEPARATION = 100;
-						
-						ArrayList <WayPoint> oldPath = new ArrayList <WayPoint>();
-						oldPath.addAll(currentPath);
-						Point2D.Double detourPoint = new Point2D.Double(x, y);
-						
-						ArrayList <WayPoint> newPath = 	
-						ArcCreator.createNewPath(oldPath, detourPoint, ANCHOR_DISTANCE, SEPARATION) ;
-						
-						newPoint.x = x ; 
-						newPoint.y = y ; 
-						
-						if (fullCheck(newPath, currentPath) == true)
-							if (newPath != null)
-								this.receivedDesiredPath = newPath;				
-					}
 
-				}
-				else
-					System.out.println("not all acks are received!");
-	}
 	
 		
 	

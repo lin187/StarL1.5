@@ -87,11 +87,11 @@ public class FlockDrawer extends Drawer
 			
 			last = p;
 		}
-	
+
 		//draw the circle for the new waypoint
 	    g.fillOval(o.newPoint.x, o.newPoint.y, 100, 100);
 	    g.setColor(Color.darkGray);
-	    g.drawOval(o.newPoint.x, o.newPoint.y, 100, 100);
+	    //g.drawOval(o.newPoint.x, o.newPoint.y, 20, 20);
 
 	}
 
@@ -120,7 +120,7 @@ public class FlockDrawer extends Drawer
 			if (joy != null)
 			{
 				final int JOYSTICK_CIRCLE_RADIUS = 75;
-				final double JOYSTICK_POS_MULTIPLIER = 1000;
+				final double JOYSTICK_POS_MULTIPLIER = 1500;
 				
 				// poll the joystick
 				joy.poll();
@@ -128,12 +128,12 @@ public class FlockDrawer extends Drawer
 				ItemPosition robotPos = logicThread.gps.getMyPosition();
 				
 				double offsetX = JOYSTICK_POS_MULTIPLIER * joy.getX();
-				double offsetY = 0.75 * JOYSTICK_POS_MULTIPLIER + JOYSTICK_POS_MULTIPLIER * -joy.getY();
+				double offsetY = 3 * JOYSTICK_POS_MULTIPLIER + JOYSTICK_POS_MULTIPLIER * -joy.getY();
 				
 				double dx = 0;
 				double dy = 0;
 				
-				int degrees = robotPos.angle;
+				int degrees = 90; // robotPos.angle;
 				double radians = Math.toRadians((double)degrees);
 				
 				// add the y component
@@ -145,7 +145,7 @@ public class FlockDrawer extends Drawer
 				dx -= offsetX * Math.cos(alpha);
 				dy -= offsetX * Math.sin(alpha);
 								
-				double joyX = robotPos.x + dx;
+				double joyX = robotPos.x - dx;
 				double joyY = robotPos.y + dy;
 				int buttons = joy.getButtons();
 				
