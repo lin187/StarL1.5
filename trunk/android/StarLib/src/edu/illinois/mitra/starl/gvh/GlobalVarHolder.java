@@ -1,10 +1,8 @@
 package edu.illinois.mitra.starl.gvh;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
-import java.util.WeakHashMap;
 
 import edu.illinois.mitra.starl.interfaces.RobotEventListener;
 import edu.illinois.mitra.starl.interfaces.RobotEventListener.Event;
@@ -29,7 +27,7 @@ public abstract class GlobalVarHolder {
 	 * @param name The unique identifier of this agent
 	 * @param participants A HashMap linking participating agent identifiers to their IP addresses
 	 */
-	public GlobalVarHolder(String name, HashMap<String,String> participants) {
+	public GlobalVarHolder(String name, Map<String,String> participants) {
 		id = new Id(name, participants);
 	}
 	

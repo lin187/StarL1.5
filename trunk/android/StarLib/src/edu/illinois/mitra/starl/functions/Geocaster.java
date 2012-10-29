@@ -60,7 +60,7 @@ public class Geocaster implements MessageListener {
 	}
 
 	@Override
-	public void messageReceied(RobotMessage m) {
+	public void messageReceived(RobotMessage m) {
 		List<String> contents = m.getContentsList();
 		
 		String type = contents.get(0);

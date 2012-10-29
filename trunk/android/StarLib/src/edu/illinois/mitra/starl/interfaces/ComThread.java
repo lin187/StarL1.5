@@ -2,13 +2,13 @@ package edu.illinois.mitra.starl.interfaces;
 
 import java.util.ArrayList;
 
-import edu.illinois.mitra.starl.comms.UDPMessage;
+import edu.illinois.mitra.starl.comms.UdpMessage;
 
 public interface ComThread extends Cancellable {
 
-	abstract void setMsgList(ArrayList<UDPMessage> ReceivedMessageList);
+	abstract void setMsgList(ArrayList<UdpMessage> ReceivedMessageList);
 	
-	abstract void write(UDPMessage msg, String IP);
+	abstract void write(UdpMessage msg, String IP);
 
 	abstract void start();
 	

@@ -7,13 +7,17 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
 import java.util.Set;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JFrame;
 
@@ -57,7 +61,7 @@ public class Simulation {
 
 		// Start the simulation engine
 		LinkedList<LogicThread> logicThreads = new LinkedList<LogicThread>();
-		simEngine = new SimulationEngine(settings.MSG_MEAN_DELAY, settings.MSG_STDDEV_DELAY, settings.MSG_LOSSES_PER_HUNDRED, settings.MSG_RANDOM_SEED, settings.TIC_TIME_RATE, blockedRobots, participants, drawFrame.getPanel(), logicThreads);
+		simEngine = new SimulationEngine(settings.SIM_TIMEOUT, settings.MSG_MEAN_DELAY, settings.MSG_STDDEV_DELAY, settings.MSG_LOSSES_PER_HUNDRED, settings.MSG_RANDOM_SEED, settings.TIC_TIME_RATE, blockedRobots, participants, drawFrame.getPanel(), logicThreads);
 
 		// Create the sim gps
 		if(settings.IDEAL_MOTION) {
@@ -71,7 +75,7 @@ public class Simulation {
 			gps.setWaypoints(WptLoader.loadWaypoints(settings.WAYPOINT_FILE));
 
 		this.settings = settings;
-		simEngine.gps = gps;
+		simEngine.setGps(gps);
 		gps.start();
 
 		// Load initial positions
@@ -91,8 +95,9 @@ public class Simulation {
 
 			// If no initial position was supplied, randomly generate one
 			if(initialPosition == null) {
-				System.out.println("Waypoint file did not contain a waypoint named '" + botName + "', using random position.");
-				initialPosition = new ItemPosition(botName, rand.nextInt(settings.GRID_XSIZE), rand.nextInt(settings.GRID_YSIZE), rand.nextInt(360));
+				int retries = 0;
+				while(retries++ < 1000 && !acceptableStart(initialPosition))
+					initialPosition = new ItemPosition(botName, rand.nextInt(settings.GRID_XSIZE), rand.nextInt(settings.GRID_YSIZE), rand.nextInt(360));
 			}
 
 			SimApp sa = new SimApp(botName, participants, simEngine, initialPosition, settings.TRACE_OUT_DIR, app, drawFrame, settings.TRACE_CLOCK_DRIFT_MAX, settings.TRACE_CLOCK_SKEW_MAX);
@@ -119,13 +124,15 @@ public class Simulation {
 					rd.add(nextBot);
 				}
 				// Add waypoints
-				for(ItemPosition ip : gps.getWaypointPositions().getList()) {
-					RobotData waypoint = new RobotData(ip.name, ip.x, ip.y, ip.angle);
-					waypoint.radius = 5;
-					waypoint.c = new Color(255, 0, 0);
-					rd.add(waypoint);
+				if(settings.DRAW_WAYPOINTS) {
+					for(ItemPosition ip : gps.getWaypointPositions().getList()) {
+						RobotData waypoint = new RobotData((settings.DRAW_WAYPOINT_NAMES ? ip.name : ""), ip.x, ip.y, ip.angle);
+						waypoint.radius = 5;
+						waypoint.c = new Color(255, 0, 0);
+						rd.add(waypoint);
+					}
 				}
-				drawFrame.updateData(rd, simEngine.time);
+				drawFrame.updateData(rd, simEngine.getTime());
 			}
 		};
 		gps.addObserver(guiObserver);
@@ -136,10 +143,28 @@ public class Simulation {
 		// show viewer
 		drawFrame.setVisible(true);
 	}
-	
+
+	private static final double BOT_SPACING_FACTOR = 2.6;
+	private Map<String, ItemPosition> startingPositions = new HashMap<String, ItemPosition>();
+
+	private boolean acceptableStart(ItemPosition pos) {
+		if(pos == null)
+			return false;
+		startingPositions.put(pos.getName(), pos);
+		for(Entry<String, ItemPosition> entry : startingPositions.entrySet()) {
+			if(!entry.getKey().equals(pos.getName())) {
+				if(entry.getValue().distanceTo(pos) < (BOT_SPACING_FACTOR * settings.BOT_RADIUS))
+					return false;
+			}
+		}
+		return true;
+	}
+
 	/**
-	 * Add an Observer to the list of GPS observers. This Observer's update method will be passed a PositionList object as the argument.  
-	 * This must be called before the simulation is started! 
+	 * Add an Observer to the list of GPS observers. This Observer's update
+	 * method will be passed a PositionList object as the argument. This must be
+	 * called before the simulation is started!
+	 * 
 	 * @param o
 	 */
 	public void addPositionObserver(Observer o) {
@@ -162,15 +187,17 @@ public class Simulation {
 					nextBot.radius = settings.BOT_RADIUS;
 					rd.add(nextBot);
 				}
-				gl.updateData(rd, simEngine.time);
+				gl.updateData(rd, simEngine.getTime());
 			}
 		};
 		return globalLogger;
 	}
 
+	/**
+	 * Begins executing a simulation. This call will block until the simulation completes.
+	 */
 	public void start() {
 		executor = Executors.newFixedThreadPool(participants.size());
-		System.out.println("Starting with " + participants.size() + " robots");
 
 		// Save settings to JSON file
 		if(settings.TRACE_OUT_DIR != null)
@@ -179,7 +206,10 @@ public class Simulation {
 		// Invoke all simulated robots
 		List<Future<List<Object>>> results = null;
 		try {
-			results = executor.invokeAll(bots);
+			if(settings.TIMEOUT > 0)
+				results = executor.invokeAll(bots, settings.TIMEOUT, TimeUnit.SECONDS);
+			else
+				results = executor.invokeAll(bots);
 		} catch(InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -190,20 +220,29 @@ public class Simulation {
 				List<Object> res = f.get();
 				if(res != null && !res.isEmpty())
 					System.out.println(res);
+			} catch(CancellationException e) {
+				// If the executor timed out, the result is cancelled
+				System.err.println("Simulation timed out! Execution reached " + settings.TIMEOUT + " sec duration. Aborting.");
+				break;
 			} catch(Exception e) {
 				e.printStackTrace();
 			}
 		}
 
 		// Print communication statistics and shutdown
-		System.out.println("SIMULATION COMPLETE");
-		System.out.println("---Message Stats---");
-		simEngine.comms.printStatistics();
-		simEngine.simulationDone();
 		shutdown();
 	}
 
 	public void shutdown() {
+		simEngine.simulationDone();
 		executor.shutdownNow();
+	}
+	
+	public long getSimulationDuration() {
+		return simEngine.getDuration();
+	}
+	
+	public String getMessageStatistics() {
+		return 	simEngine.getComChannel().getStatistics();
 	}
 }

@@ -65,7 +65,7 @@ public class SmartUdpComThread extends Thread implements SmartComThread {
     				continue;
 
     			String s = new String(packet.getData(), 0, packet.getLength());  
-    			UDPMessage recd = new UDPMessage(s, gvh.time());
+    			UdpMessage recd = new UdpMessage(s, gvh.time());
 
     			gvh.log.d(TAG, "Received: " + s);
     			gvh.trace.traceEvent(TAG, "Received", recd, gvh.time());
@@ -83,7 +83,7 @@ public class SmartUdpComThread extends Thread implements SmartComThread {
     }
 
     @Override
-	public synchronized void write(UDPMessage msg, String IP) {
+	public synchronized void write(UdpMessage msg, String IP) {
     	if(mSocket != null) {
 	        try {
 	        	String data = msg.toString();

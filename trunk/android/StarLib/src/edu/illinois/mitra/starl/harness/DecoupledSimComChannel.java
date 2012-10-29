@@ -7,7 +7,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
-import java.util.TreeMap;
 
 import edu.illinois.mitra.starl.interfaces.SimComChannel;
 
@@ -33,7 +32,7 @@ public class DecoupledSimComChannel implements SimComChannel {
 	private Random rand;
 
 	// for message blocking
-	private Map<String, String> ipToNameMap = new TreeMap<String, String>();
+	private Map<String, String> ipToNameMap = new HashMap<String, String>();
 	private Set<String> blockedRobot;
 
 	// Drop rate is per 100 messages
@@ -46,13 +45,9 @@ public class DecoupledSimComChannel implements SimComChannel {
 		receivers = new HashMap<String, SimSmartComThread>();
 		rand = new Random(seed);
 
-		// TODO (Adam) Why are we just reversing the map?
-		for(Entry<String, String> participant : nameToIpMap.entrySet()) {
-			String name = participant.getKey();
-			String ip = participant.getValue();
-
-			ipToNameMap.put(ip, name);
-		}
+		// We require a map from IP -> Name, are given a map from Name -> IP
+		for(Entry<String, String> participant : nameToIpMap.entrySet())
+			ipToNameMap.put(participant.getValue(), participant.getKey());
 	}
 
 	public void registerMsgReceiver(SimSmartComThread hct, String IP) {
@@ -99,7 +94,6 @@ public class DecoupledSimComChannel implements SimComChannel {
 	}
 
 	private boolean shouldForceDrop(String fromIp, String toIp) {
-		
 		String from = ipToNameMap.get(fromIp);
 		String to = ipToNameMap.get(toIp);
 		return blockedRobot.contains(from) || blockedRobot.contains(to);
@@ -110,8 +104,7 @@ public class DecoupledSimComChannel implements SimComChannel {
 		Set<DeliveryEvent> toRemove = new HashSet<DeliveryEvent>();
 		for(DeliveryEvent de : msgs) {
 			de.delay -= advance;
-			// If this message's delay has expired, deliver it
-			// and flag it for removal
+			// If this message's delay has expired, deliver it and flag it for removal
 			if(de.delay == 0) {
 				de.deliver();
 				toRemove.add(de);
@@ -199,14 +192,16 @@ public class DecoupledSimComChannel implements SimComChannel {
 		}
 	}
 
-	public void printStatistics() {
+	public String getStatistics() {
+		StringBuilder sb = new StringBuilder();
 		if(stat_totalMessages > 0) {
-			System.out.println("Total messages: " + stat_totalMessages);
-			System.out.println("Broadcast messages: " + stat_bcastMessages);
-			System.out.println("Dropped messages: " + stat_lostMessages + " = " + 100 * (float) stat_lostMessages / stat_totalMessages + "%");
-			System.out.println("Average delay: " + (float) stat_overallDelay / stat_totalMessages + " ms");
+			sb.append("Total messages: ").append(stat_totalMessages).append('\n');
+			sb.append("Broadcast messages: ").append(stat_bcastMessages).append('\n');
+			sb.append("Dropped messages: ").append(stat_lostMessages).append(" = ").append(100 * (float) stat_lostMessages / stat_totalMessages + "%").append('\n');
+			sb.append("Average delay: ").append((float) stat_overallDelay / stat_totalMessages + " ms\n");
+			return sb.toString();
 		} else {
-			System.out.println("No messages were sent.");
+			return "No messages were sent.";
 		}
 	}
 }

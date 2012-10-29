@@ -53,7 +53,7 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 		synchronized(robots) {
 			robots.put(bot.name, new TrackedRobot(bot));
 		}
-		robot_positions.update(bot, se.time);
+		robot_positions.update(bot, se.getTime());
 	}
 	
 	@Override
@@ -138,10 +138,10 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 		public TrackedRobot(ItemPosition pos) {
 			this.cur = pos;
 			angle = cur.angle;
-			timeLastUpdate = se.time;
+			timeLastUpdate = se.getTime();
 		}
 		public void updatePos() {
-			double timeSinceUpdate = (se.time - timeLastUpdate)/1000.0;
+			double timeSinceUpdate = (se.getTime() - timeLastUpdate)/1000.0;
 			int dX = 0, dY = 0;
 			double dA = 0;
 			
@@ -156,13 +156,13 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 			angle = angle + dA;
 			cur.angle = Common.angleWrap((int)(Math.round(angle) + aNoise));
 			
-			timeLastUpdate = se.time;
+			timeLastUpdate = se.getTime();
 		}
 		public void setVel(int fwd, int rad) {
 			if(inMotion()) {
 				updatePos();
 			} else {
-				timeLastUpdate = se.time;
+				timeLastUpdate = se.getTime();
 			}
 			vFwd = fwd;
 			vRad = rad;

@@ -9,8 +9,8 @@ import edu.illinois.mitra.starl.interfaces.ExplicitlyDrawable;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
 
 /**
- * The core of the simulation. You really
- * don't need to mess with this code. Please don't change anything in here.
+ * The core of the simulation. You really don't need to mess with this code.
+ * Please don't change anything in here.
  * 
  * @author Adam Zimmerman
  * @version One million
@@ -24,24 +24,23 @@ public class SimulationEngine extends Thread {
 	private ArrayList<Long> sleeps = new ArrayList<Long>();
 	private ArrayList<Thread> regThreads = new ArrayList<Thread>();
 
-	public SimGpsProvider gps;
-	public DecoupledSimComChannel comms;
-	public long startTime;
-	public long time = 0;
+	private SimGpsProvider gps;
+	private DecoupledSimComChannel comms;
+	private long startTime;
+	private long time = 0;
+	private long timeout = 0;
 	private Object lock = new Object();
 	private boolean done = false;
 	private double ticRate = 0;
 
 	private double lastTicAdvance = -1;
 	private long lastTimeAdvance = -1;
-	
+
 	// for drawing the simulation
 	ExplicitlyDrawable drawer = null;
-	List <LogicThread> logicThreads = null;
+	List<LogicThread> logicThreads = null;
 
-	public SimulationEngine(int meanDelay, int delayStdDev, int dropRate, int seed, double ticRate, 
-			Set<String> blockedRobots, Map<String, String> nameToIpMap, ExplicitlyDrawable drawer,
-			List <LogicThread> logicThreads) {
+	public SimulationEngine(long timeout, int meanDelay, int delayStdDev, int dropRate, int seed, double ticRate, Set<String> blockedRobots, Map<String, String> nameToIpMap, ExplicitlyDrawable drawer, List<LogicThread> logicThreads) {
 		super("SimulationEngine");
 		comms = new DecoupledSimComChannel(meanDelay, delayStdDev, dropRate, seed, blockedRobots, nameToIpMap);
 		time = System.currentTimeMillis();
@@ -50,7 +49,7 @@ public class SimulationEngine extends Thread {
 		this.ticRate = ticRate;
 		this.drawer = drawer;
 		this.logicThreads = logicThreads;
-		
+		this.timeout = startTime + timeout;
 		this.start();
 	}
 
@@ -128,13 +127,20 @@ public class SimulationEngine extends Thread {
 		for(Long l : sleeps) {
 			advance = Math.min(l, advance);
 		}
-		
+
 		// force a redraw now of every logic thread
-		if (drawer != null)
+		if(drawer != null)
 			drawer.drawNow(logicThreads);
 
 		// Advance time
 		time += advance;
+
+		if(timeout != startTime && time > timeout) {
+			System.err.println("Simulation timed out! Aborting.");
+			simulationDone();
+			return;
+		}
+
 		comms.advanceTime(advance);
 
 		lastTicAdvance = advance;
@@ -188,5 +194,21 @@ public class SimulationEngine extends Thread {
 
 	public Long getTime() {
 		return time;
+	}
+
+	public Long getDuration() {
+		return (time - startTime);
+	}
+
+	public SimGpsProvider getGps() {
+		return gps;
+	}
+
+	public void setGps(SimGpsProvider gps) {
+		this.gps = gps;
+	}
+
+	public DecoupledSimComChannel getComChannel() {
+		return comms;
 	}
 }

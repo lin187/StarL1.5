@@ -69,16 +69,22 @@ public class LpAlgorithm {
 	private static final List<ItemPosition> EMPTY_LIST = new ArrayList<ItemPosition>(0);
 
 	public synchronized List<ItemPosition> assignSegment(String currentRobot, ItemPosition robotPosition) {
-		List<ImagePoint> points = assignSegment(currentRobot, new ImagePoint(robotPosition.x, robotPosition.y));				
+		List<ImagePoint> points = assignSegment(currentRobot, new ImagePoint(robotPosition.x, robotPosition.y));
 		if(points == null)
 			return EMPTY_LIST;
 
-		// Name each item position Y or N depending on what the light status
-		// should be as approaching that point
+		// Name waypoints based on their existence in the final image
 		List<ItemPosition> positions = new ArrayList<ItemPosition>(points.size());
-		for(int i = 0; i < points.size(); i++)
-			positions.add(new ItemPosition("x", (int) points.get(i).getX(), (int) points.get(i).getY(), points.get(i).getColor()));
-
+		for(int i = 0; i < points.size(); i++) {
+			ImagePoint current = points.get(i);
+			String name = Integer.toString(current.getSize());
+			int color = current.getColor();
+			if(i < points.size()-1 && !drawing.hasEdge(current, points.get(i + 1))) {
+				name = "0";
+				color = 0;
+			}
+			positions.add(new ItemPosition(name, (int) current.getX(), (int) current.getY(), color));
+		}
 		return positions;
 	}
 
@@ -87,7 +93,8 @@ public class LpAlgorithm {
 			return null;
 
 		// If the robot doesn't have an entry in the reach tube set, create one
-		if(!reachTubes.containsKey(currentRobot))
+		// If the robot is asking for a new assignment, clear its old reach tube
+//		if(!reachTubes.containsKey(currentRobot))
 			reachTubes.put(currentRobot, new ImageGraph());
 
 		setRobotPosition(currentRobot, robotPosition);

@@ -23,6 +23,6 @@ public interface SimComChannel {
 	 */
 	public abstract void sendMsg(String from, String msg, String IP);
 
-	public abstract void printStatistics();
+	public abstract String getStatistics();
 
 }

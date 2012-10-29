@@ -20,8 +20,8 @@ public class WptWriter {
 		try {
 			int idx = 0;
 			for (ImageEdge edge : edges) {
-				write.write("WAY," + Math.round(edge.getStart().getX()) + ","	+ Math.round(edge.getStart().getY()) + "," + edge.getStart().getColor() + "," + idx + "-A\n");
-				write.write("WAY," + Math.round(edge.getEnd().getX()) + ","	+ Math.round(edge.getEnd().getY()) + "," + edge.getEnd().getColor() + "," + idx + "-B\n");
+				write.write("WAY," + Math.round(edge.getStart().getX()) + ","	+ Math.round(edge.getStart().getY()) + "," + edge.getStart().getColor() + "," + idx + "-A_" + edge.getStart().getSize() + "\n");
+				write.write("WAY," + Math.round(edge.getEnd().getX()) + ","	+ Math.round(edge.getEnd().getY()) + "," + edge.getEnd().getColor() + "," + idx + "-B_" + edge.getEnd().getSize() + "\n");
 				idx++;
 			}
 			write.close();

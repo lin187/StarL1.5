@@ -2,6 +2,7 @@ package edu.illinois.mitra.lightpaintapp;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -21,6 +22,7 @@ import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import edu.illinois.mitra.lightpaint.activity.LightPaintActivity;
 import edu.illinois.mitra.starl.comms.MessageContents;
 import edu.illinois.mitra.starl.comms.RobotMessage;
@@ -40,11 +42,14 @@ public class RobotsActivity extends Activity implements MessageListener {
 	private GlobalVarHolder gvh = null;
 	public boolean launched = false;
 
-	// THESE NAMES AND ASSOCIATED IP ADDRESSES ARE CONSTANT FOR TESTING.
-	//									ALICE				BOB					CARLOS				DIANA
-	private static final String[] mac = { "00:0A:3A:2E:C9:CA", "00:0A:3A:2E:C8:21", "00:0A:3A:2E:CB:73", "00:0A:3A:2E:CB:43" };
-	private static final String[] participants = { "Alice", "Bob", "Carlos", "Diana" };
-	private static final String[] ips = { "192.168.1.101", "192.168.1.102", "192.168.1.103", "192.168.1.104" };
+	private static final String IDENTITY_FILE_URL = "https://dl.dropbox.com/s/dwfqdhbf5vdtz18/robots.rif?dl=1";
+	private static final String[][] ERROR_PARTICIPANTS = {{"ERROR"}, {"ERROR"}, {"ERROR"}};
+	
+	// Row 0 = names
+	// Row 1 = MACs
+	// Row 2 = IPs
+	private String[][] participants;
+
 
 	// SharedPreferences variables
 	private static final String PREF_SELECTED_ROBOT = "SELECTED_ROBOT";
@@ -65,24 +70,37 @@ public class RobotsActivity extends Activity implements MessageListener {
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		setContentView(R.layout.main);
 
+		// Load the participants
+		participants = IdentityLoader.loadIdentities(IDENTITY_FILE_URL);
+		if(participants == null)
+			participants = ERROR_PARTICIPANTS;
+		
 		// Initialize preferences holder
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		selectedRobot = prefs.getInt(PREF_SELECTED_ROBOT, 0);
 
-		lp = getWindow().getAttributes();
+		if(selectedRobot >= participants[0].length) {
+			Toast.makeText(this, "Identity error! Reselect robot identity", Toast.LENGTH_LONG).show();
+			selectedRobot = 0;
+		}
 		
 		// Set up the GUI
 		setupGUI();
 
 		// Create the main handler
-		mainHandler = new MainHandler(this, pbBluetooth, pbBattery, cbGPS, cbBluetooth, cbRunning, txtDebug);
+		mainHandler = new MainHandler(this);
 
 		// Create the global variable holder
-		HashMap<String, String> hm_participants = new HashMap<String, String>();
-		for(int i = 0; i < participants.length; i++) {
-			hm_participants.put(participants[i], ips[i]);
+		Map<String, String> mapParticipants = new HashMap<String, String>();
+		for(int i = 0; i < participants[0].length; i++) {
+			System.out.println("Putting " + participants[0][i] + "->" + participants[2][i]);
+			mapParticipants.put(participants[0][i], participants[2][i]);
 		}
-		gvh = new RealGlobalVarHolder(participants[selectedRobot], hm_participants, mainHandler, mac[selectedRobot]);
+		System.out.println("Creating a GVH for " + participants[0][selectedRobot] + ", " + participants[1][selectedRobot]);
+		gvh = new RealGlobalVarHolder(participants[0][selectedRobot], mapParticipants, mainHandler, participants[1][selectedRobot]);
+		
+		System.out.println(gvh.id.getParticipants());
+		
 		mainHandler.setGvh(gvh);
 
 		// Connect
@@ -161,15 +179,15 @@ public class RobotsActivity extends Activity implements MessageListener {
 		gvh.plat.moat.cancel();
 	}
 
-	private TextView txtRobotName;
-	private TextView txtDebug;
-	private ProgressBar pbBluetooth;
-	private CheckBox cbGPS;
-	private CheckBox cbBluetooth;
-	private CheckBox cbRunning;
-	private ProgressBar pbBattery;
+	public TextView txtRobotName;
+	public TextView txtDebug;
+	public ProgressBar pbBluetooth;
+	public CheckBox cbGPS;
+	public CheckBox cbBluetooth;
+	public CheckBox cbRunning;
+	public ProgressBar pbBattery;
 
-	private void setupGUI() {
+	public void setupGUI() {
 		lp = getWindow().getAttributes();
 		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
@@ -183,18 +201,19 @@ public class RobotsActivity extends Activity implements MessageListener {
 		pbBattery = (ProgressBar) findViewById(R.id.pbBattery);
 		pbBattery.setMax(100);
 
-		txtRobotName.setText(participants[selectedRobot]);
+		txtRobotName.setText(participants[0][selectedRobot]);
 		txtRobotName.setOnClickListener(new OnClickListener() {
 			public void onClick(View arg0) {
 				AlertDialog.Builder sel_robot_builder = new AlertDialog.Builder(RobotsActivity.this);
 				sel_robot_builder.setTitle("Who Am I?");
-				sel_robot_builder.setItems(participants, new DialogInterface.OnClickListener() {
+				sel_robot_builder.setItems(participants[0], new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int item) {
 						selectedRobot = item;
-						txtRobotName.setText(participants[selectedRobot]);
+						txtRobotName.setText(participants[0][selectedRobot]);
 						SharedPreferences.Editor spe = prefs.edit();
 						spe.putInt(PREF_SELECTED_ROBOT, selectedRobot);
 						spe.commit();
+						
 						// Restart the application
 						Intent restart = getIntent();
 						disconnect();
@@ -216,7 +235,8 @@ public class RobotsActivity extends Activity implements MessageListener {
 		return;
 	}
 
-	public void messageReceied(RobotMessage m) {
+	@Override
+	public void messageReceived(RobotMessage m) {
 		switch(m.getMID()) {
 		case Common.MSG_ACTIVITYLAUNCH:
 			gvh.plat.sendMainMsg(HandlerMessage.MESSAGE_LAUNCH, Integer.parseInt(m.getContents(0)), Integer.parseInt(m.getContents(1)));

@@ -1,7 +1,7 @@
 package edu.illinois.mitra.starl.harness;
 
 import edu.illinois.mitra.starl.comms.SmartCommsHandler;
-import edu.illinois.mitra.starl.comms.UDPMessage;
+import edu.illinois.mitra.starl.comms.UdpMessage;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.SimComChannel;
 import edu.illinois.mitra.starl.interfaces.SmartComThread;
@@ -28,12 +28,12 @@ public class SimSmartComThread implements SmartComThread {
 	}
 
 	@Override
-	public synchronized void write(UDPMessage msg, String toIP) {
+	public synchronized void write(UdpMessage msg, String toIP) {
 		channel.sendMsg(IP, msg.toString(), toIP);
 	}
 	
 	public void receive(String msg) {
-		sch.handleReceived(new UDPMessage(msg, gvh.time()));
+		sch.handleReceived(new UdpMessage(msg, gvh.time()));
 	}
 
 	@Override

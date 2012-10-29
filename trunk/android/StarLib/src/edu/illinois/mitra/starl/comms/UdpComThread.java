@@ -23,7 +23,7 @@ public class UdpComThread extends Thread implements ComThread {
 	private static String TAG = "ComThread";
 	private static String ERR = "Critical Error";
 	
-	private ArrayList<UDPMessage> ReceivedMsgList;
+	private ArrayList<UdpMessage> ReceivedMsgList;
 	
 	private DatagramSocket mSocket = null;
 	private InetAddress myLocalIP = null;
@@ -68,7 +68,7 @@ public class UdpComThread extends Thread implements ComThread {
     				continue;
 
     			String s = new String(packet.getData(), 0, packet.getLength());  
-    			UDPMessage recd = new UDPMessage(s, gvh.time());
+    			UdpMessage recd = new UdpMessage(s, gvh.time());
 
     			gvh.log.d(TAG, "Received: " + s);
     			gvh.trace.traceEvent(TAG, "Received", recd, gvh.time());
@@ -82,7 +82,7 @@ public class UdpComThread extends Thread implements ComThread {
     }
 
     @Override
-	public synchronized void write(UDPMessage msg, String IP) {
+	public synchronized void write(UdpMessage msg, String IP) {
     	if(mSocket != null) {
 	        try {
 	        	String data = msg.toString();
@@ -110,7 +110,7 @@ public class UdpComThread extends Thread implements ComThread {
     }
 
 	@Override
-	public void setMsgList(ArrayList<UDPMessage> ReceivedMessageList) {
+	public void setMsgList(ArrayList<UdpMessage> ReceivedMessageList) {
 		this.ReceivedMsgList = ReceivedMessageList;
 	}
 } 

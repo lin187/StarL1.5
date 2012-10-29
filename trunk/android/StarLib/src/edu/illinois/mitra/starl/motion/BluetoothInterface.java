@@ -10,7 +10,6 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.os.AsyncTask;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
-import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.HandlerMessage;
 
 /**
@@ -63,6 +62,9 @@ public class BluetoothInterface {
 		if(btAdapter.isDiscovering())
 			btAdapter.cancelDiscovery();
 
+		if(!BluetoothAdapter.checkBluetoothAddress(targetMacAddress))
+			gvh.log.e(TAG, "Not a valid Bluetooth address!");
+		
 		// Acquire the remote device
 		mDevice = btAdapter.getRemoteDevice(targetMacAddress);
 
@@ -105,9 +107,7 @@ public class BluetoothInterface {
 	}
 
 	public synchronized byte[] sendReceive(byte[] to_send, int expectedBytes) {
-		//clearBuffer();
 		send(to_send);
-		gvh.sleep(1);
 		return readBuffer(expectedBytes);
 	}
 

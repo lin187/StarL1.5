@@ -2,13 +2,13 @@ package edu.illinois.mitra.starl.harness;
 
 import java.util.ArrayList;
 
-import edu.illinois.mitra.starl.comms.UDPMessage;
+import edu.illinois.mitra.starl.comms.UdpMessage;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.ComThread;
 import edu.illinois.mitra.starl.interfaces.SimComChannel;
 
 public class SimComThread implements ComThread {
-	private ArrayList<UDPMessage> receivedList;
+	private ArrayList<UdpMessage> receivedList;
 	private SimComChannel channel;
 	private String name;
 	private String IP;
@@ -23,12 +23,12 @@ public class SimComThread implements ComThread {
 	}
 	
 	@Override
-	public void write(UDPMessage msg, String toIP) {
+	public void write(UdpMessage msg, String toIP) {
 		channel.sendMsg(IP, msg.toString(), toIP);
 	}
 	
 	public void receive(String msg) {
-		receivedList.add(new UDPMessage(msg, gvh.time()));
+		receivedList.add(new UdpMessage(msg, gvh.time()));
 	}
 
 	
@@ -43,7 +43,7 @@ public class SimComThread implements ComThread {
 	}
 
 	@Override
-	public void setMsgList(ArrayList<UDPMessage> ReceivedMessageList) {
+	public void setMsgList(ArrayList<UdpMessage> ReceivedMessageList) {
 		receivedList = ReceivedMessageList;
 	}
 }

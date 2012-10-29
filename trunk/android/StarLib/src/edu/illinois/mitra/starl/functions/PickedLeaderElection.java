@@ -133,7 +133,7 @@ public class PickedLeaderElection extends StarLCallable implements LeaderElectio
 		return returnResults();
 	}
 	
-	public void messageReceied(RobotMessage m) {
+	public void messageReceived(RobotMessage m) {
 		gvh.log.i(TAG, "Received a message from " + m.getFrom() + ": " + m.getContents(0));
 		switch(m.getMID()) {
 		case Common.MSG_RANDLEADERELECT:

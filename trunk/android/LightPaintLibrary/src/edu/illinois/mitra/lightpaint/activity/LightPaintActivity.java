@@ -18,13 +18,12 @@ import edu.illinois.mitra.starl.functions.RandomLeaderElection;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.LeaderElection;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
-import edu.illinois.mitra.starl.interfaces.MessageListener;
 import edu.illinois.mitra.starl.interfaces.RobotEventListener;
 import edu.illinois.mitra.starl.motion.MotionParameters;
 import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 
-public class LightPaintActivity extends LogicThread implements MessageListener, RobotEventListener {
+public class LightPaintActivity extends LogicThread implements RobotEventListener {
 	private static final String TAG = "LP";
 
 	// Algorithm constants
@@ -39,13 +38,18 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 	private static final int POSITION_UPDATE_ID = 51;
 	private static final int ASSIGNMENT_ID = 52;
 	private static final String BEGIN_BARRIER = "BEGIN";
+
 	// Handler message
 	public static final int HANDLER_SCREEN = 9724;
-	
-	private static final MotionParameters motionParameters = new MotionParameters();
+
+	private static final MotionParameters motionParameters;
 	static {
-		motionParameters.COLAVOID_MODE = MotionParameters.COLAVOID_MODE_TYPE.STOP_ON_COLLISION;
-		motionParameters.STOP_AT_DESTINATION = true;
+		MotionParameters.Builder builder = new MotionParameters.Builder();
+		builder.GOAL_RADIUS(50);
+		builder.ARCANGLE_MAX(15);
+		builder.COLAVOID_MODE(MotionParameters.COLAVOID_MODE_TYPE.STOP_ON_COLLISION);
+		builder.STOP_AT_DESTINATION(true);
+		motionParameters = builder.build();
 	}
 
 	private static enum Stage {
@@ -64,7 +68,7 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 
 		election = new RandomLeaderElection(gvh);
 		sync = new BarrierSynchronizer(gvh);
-		
+
 		// Set up motion parameters
 		gvh.plat.moat.setParameters(motionParameters);
 
@@ -74,10 +78,10 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 	private String leader;
 	private BarrierSynchronizer sync;
 	private LeaderElection election;
-	
+
 	// Public to be accessed by Drawer
-	public boolean iAmLeader = false;
-	public LpAlgorithm alg;
+	private boolean iAmLeader = false;
+	private LpAlgorithm alg;
 
 	private List<ItemPosition> assignment = Collections.synchronizedList(new LinkedList<ItemPosition>());
 
@@ -103,14 +107,16 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 			case ELECT_LEADER:
 				if((leader = election.getLeader()) != null) {
 					iAmLeader = leader.equals(gvh.id.getName());
+					gvh.log.d(TAG, leader + " is leader!");
 					if(iAmLeader) {
-						gvh.log.d(TAG, name + " is leader!");
+						gvh.log.d(TAG, "I'm the leader!");
 						// Create the algorithm, inform it of all robot positions
 						alg = new LpAlgorithm(WptParser.parseWaypoints(gvh), POINT_SNAP_RADIUS, MAX_DRAW_LENGTH, UNSAFE_RADIUS);
+						for(String robot : gvh.id.getParticipants()) {
+							ItemPosition ip = gvh.gps.getPosition(robot);
+							alg.setRobotPosition(robot, new ImagePoint(ip.getX(), ip.getY(), 0, 0));
+						}
 
-						for(String robot : gvh.id.getParticipants())
-							alg.setRobotPosition(robot, ImagePoint.fromItemPosition(gvh.gps.getPosition(robot)));
-								
 						responseService = Executors.newSingleThreadExecutor();
 						responseService.submit(new Assigner());
 						assignmentRequesters = new LinkedBlockingQueue<String>();
@@ -123,7 +129,7 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 				assignment.clear();
 				gvh.log.e(TAG, "Requesting an assignment");
 				if(iAmLeader) {
-					assignmentRequesters.add(name);					
+					assignmentRequesters.add(name);
 				} else {
 					RobotMessage req = new RobotMessage(leader, name, ASSIGNMENT_REQ_ID, "");
 					gvh.comms.addOutgoingMessage(req);
@@ -135,21 +141,25 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 				if((gvh.time() - reqSentTime) > MAX_REQUEST_WAIT_TIME) {
 					// Request timed out, request again
 					setStage(Stage.REQUEST_ASSIGNMENT);
-					gvh.log.e(TAG, "Assignment request had timed out: " + gvh.time() + ", " + reqSentTime + ", " + (gvh.time() - reqSentTime));
+					gvh.log.e(TAG, "Assignment request had timed out!");
 				}
 				break;
 			case DO_ASSIGNMENT:
 				gvh.plat.moat.goTo(currentDestination = assignment.remove(0));
-				// TODO Add screen colors
-				System.out.println(lastVisitedPoint.getAngle());
-				illuminatePoint = (lastVisitedPoint.getAngle() != 0);
+				screenColor = getColorFromPosition(lastVisitedPoint);
+				screenLineSize = getSizeFromPosition(lastVisitedPoint);
+				updateScreen();
 				gvh.log.d(TAG, "Assignment has " + assignment.size() + " points remaining.");
 				setStage(Stage.WAIT_TO_ARRIVE);
 				break;
 			case WAIT_TO_ARRIVE:
 				if(!gvh.plat.moat.inMotion) {
 					RobotMessage informProgress = new RobotMessage(leader, super.name, POSITION_UPDATE_ID, new MessageContents(lastVisitedPoint.toMessage(), currentDestination.toMessage()));
-					gvh.comms.addOutgoingMessage(informProgress);
+					if(iAmLeader) {
+						receive(informProgress);
+					} else {
+						gvh.comms.addOutgoingMessage(informProgress);
+					}
 					lastVisitedPoint = currentDestination;
 					if(assignment.isEmpty()) {
 						setStage(Stage.REQUEST_ASSIGNMENT);
@@ -164,8 +174,16 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 				return null;
 			}
 
-			gvh.sleep(100);
+			sleep(100);
 		}
+	}
+
+	private int getColorFromPosition(ItemPosition pos) {
+		return pos.getAngle();
+	}
+
+	private static int getSizeFromPosition(ItemPosition pos) {
+		return Integer.parseInt(pos.getName());
 	}
 
 	private static final MessageContents EMPTY_MSG_CONTENTS = new MessageContents("NONE");
@@ -174,7 +192,7 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 	private int doneInformedCount = 0;
 
 	@Override
-	public void messageReceied(RobotMessage msg) {
+	protected void receive(RobotMessage msg) {
 		switch(msg.getMID()) {
 		case ASSIGNMENT_ID:
 			if(msg.getContents().equals(EMPTY_MSG_CONTENTS)) {
@@ -190,7 +208,7 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 			for(String content : msg.getContentsList()) {
 				try {
 					assignment.add(ItemPosition.fromMessage(content));
-				} catch (IllegalArgumentException e) {
+				} catch(IllegalArgumentException e) {
 					System.err.println(msg);
 				}
 			}
@@ -224,31 +242,31 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 		}
 	}
 
-	
-
 	private BlockingQueue<String> assignmentRequesters;
 	private ExecutorService responseService;
-	
+
 	private class Assigner implements Runnable {
 		@Override
 		public void run() {
 			while(true) {
 				try {
+					gvh.log.d(TAG, "Waiting for a new assignment...");
 					assign(assignmentRequesters.take());
-				} catch (InterruptedException e) {
+				} catch(InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
 		}
 	}
-	
+
 	private void assign(String from) {
+		gvh.log.e(TAG, "Assigning to " + from);
 		long now = System.nanoTime();
 		List<ItemPosition> assigned = alg.assignSegment(from, gvh.gps.getPosition(from));
-		gvh.log.i(TAG, "Assignment took " + (System.nanoTime()-now)/(double)1e9 + " seconds for " + assignment.size() + " points.");
-		
+		gvh.log.i(TAG, "Assignment took " + (System.nanoTime() - now) / (double) 1e9 + " seconds for " + assignment.size() + " points.");
+
 		// If the requester was another robot, respond with a message
-		if(!from.equals(name)) {		
+		if(!from.equals(name)) {
 			RobotMessage response = new RobotMessage(from, super.name, ASSIGNMENT_ID, (MessageContents) null);
 			if(alg.isDone()) {
 				response.setContents(FINISHED_MSG_CONTENTS);
@@ -276,15 +294,27 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 			}
 		}
 	}
-	
-	
+
 	private void setStage(Stage newstage) {
 		gvh.plat.setDebugInfo(newstage.toString() + " - " + leader + " - " + assignment.size());
 		stage = newstage;
 	}
 
 	private boolean inMotion = false;
-	private boolean illuminatePoint = false;
+	private int screenColor = 0;
+	private int screenLineSize = 0;
+
+	public LpAlgorithm getAlgorithm() {
+		return alg;
+	}
+
+	public int getScreenColor() {
+		return screenColor;
+	}
+
+	public ItemPosition getMyPosition() {
+		return gvh.gps.getMyPosition();
+	}
 
 	@Override
 	public void robotEvent(Event eventType, int eventData) {
@@ -301,20 +331,19 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 		updateScreen();
 	}
 
-	private static final int ILLUMINATED_LEVEL = 100;
-	private static final int DARK_LEVEL = 1;
-	private boolean screenOn = false;
+	private int currentScreenColor = 0;
+
 	private void updateScreen() {
-		if(inMotion && illuminatePoint) {
-			if(!screenOn) {
-				screenOn = true;
-				gvh.plat.sendMainMsg(HANDLER_SCREEN, 1, ILLUMINATED_LEVEL);
+		if(inMotion) {
+			if(currentScreenColor != screenColor) {
+				currentScreenColor = screenColor;
+				gvh.plat.sendMainMsg(HANDLER_SCREEN, screenColor, screenLineSize);
 				if(iAmLeader)
-					gvh.log.d(TAG, "Screen on! ");
+					gvh.log.d(TAG, "Screen on!");
 			}
-		} else if(screenOn) {
-			screenOn = false;
-			gvh.plat.sendMainMsg(HANDLER_SCREEN, 0, DARK_LEVEL);
+		} else if(currentScreenColor != 0) {
+			currentScreenColor = 0;
+			gvh.plat.sendMainMsg(HANDLER_SCREEN, 0, screenLineSize);
 			if(iAmLeader)
 				gvh.log.d(TAG, "** SCREEN OFF **");
 		}
@@ -331,5 +360,6 @@ public class LightPaintActivity extends LogicThread implements MessageListener, 
 		gvh.comms.removeMsgListener(ASSIGNMENT_ID);
 		gvh.comms.removeMsgListener(POSITION_UPDATE_ID);
 		gvh.comms.removeMsgListener(ASSIGNMENT_REQ_ID);
-	}	
+	}
+
 }
