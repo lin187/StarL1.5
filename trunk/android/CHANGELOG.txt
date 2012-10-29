@@ -1,5 +1,29 @@
 ----- StarLib Changelog -----
 
+10/29/2012, Adam
+- Restored StarLib to Android SDK 10. NEVER CHANGE THIS EVER.
+
+10/25/2012, Adam
+- Optimized the UDPMessage class.
+- Added custom # retries to message transmission.
+- Added simulation time timeout to halt simulation after a certain length of simulated time has elapsed.
+
+10/24/2012, Adam
+- Added simulation timeout functionality. If the TIMEOUT value is positive the simulation will abort when the duration reaches TIMEOUT seconds.
+- Lowered MAX_FPS default value to 30
+- Added call to get simulation duration (length of simulated time)
+- Protected all public variables in the SimulationEngine class
+- Optimized a couple of pieces of DecoupledSimComChannel
+
+9/29/2012, Adam
+- Deleted StarLSim's package "simapps"
+- Added sleep() method to LogicThread class which delivers pending messages before sleeping. LogicThread now implements MessageListener by default, and subclasses of LogicThread may receive messages by registering themselves as message listeners and overriding the receive() method.
+- HOW DID NO ONE NOTICE THAT "messageReceied" WAS SPELLED WRONG???
+
+9/23/2012, Adam
+- Made SimSettings immutable to prevent any simulated code from ever changing simulation parameters. A new SimSettings must be built for each execution with different parameters.
+- Added variables to SimSettings to control drawing waypoints
+
 9/19/2012, Stan
 - Created a SettingsWriter class to contain the Gson code so that I can run the simulator without having to download the library
 
