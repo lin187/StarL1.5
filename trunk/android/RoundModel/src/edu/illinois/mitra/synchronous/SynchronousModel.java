@@ -1,6 +1,9 @@
 package edu.illinois.mitra.synchronous;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import edu.illinois.mitra.starl.comms.RobotMessage;
 import edu.illinois.mitra.starl.functions.BarrierSynchronizer;
@@ -12,7 +15,6 @@ public class SynchronousModel extends LogicThread {
 
 	public interface SynchronousApp {
 		public void runRound(int roundNumber);
-
 		public void receive(RobotMessage m);
 	}
 
@@ -34,13 +36,22 @@ public class SynchronousModel extends LogicThread {
 
 		roundSync = new BarrierSynchronizer(gvh);
 	}
-	
+
 	private Stage stage;
-	public enum Stage {SYNC, WAIT, RUN}; 
+
+	public enum Stage {
+		SYNC, WAIT, RUN, WAIT_FOR_RUN_END
+	};
+
+	private Set<RobotMessage> received = Collections.synchronizedSet(new HashSet<RobotMessage>());
 
 	@Override
+	protected void receive(RobotMessage m) {
+		received.add(m);
+	}
+	
+	@Override
 	public List<Object> callStarL() {
-		
 		while(true) {
 			switch(stage) {
 			case SYNC:
@@ -53,16 +64,22 @@ public class SynchronousModel extends LogicThread {
 					stage = Stage.RUN;
 				break;
 			case RUN:
+				for(RobotMessage rm : received)
+					app.receive(rm);
+				received.clear();
+				app.runRound(round);
+				stage = Stage.SYNC;
+				round ++;
 				break;
 			}
+
+			gvh.sleep(100);
 			
 			if(0 == 1)
-				break;
-		}	
-
-		// TODO Auto-generated method stub
-		return null;
+				return null;
+		}
 	}
+
 	// synchronize to round number, then execute callback. All messages received
 	// during round n will be delivered immediately before round n+1 begins.
 
