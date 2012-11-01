@@ -1,8 +1,9 @@
 package edu.illinois.mitra.starl.harness;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import edu.illinois.mitra.starl.interfaces.ExplicitlyDrawable;
@@ -19,10 +20,8 @@ public class SimulationEngine extends Thread {
 
 	private static final int THREAD_DEADLOCK_TIMEOUT = 5000;
 
-	// Matching lists of threads being tracked and their delays
-	private ArrayList<Long> lastUpdateTime = new ArrayList<Long>();
-	private ArrayList<Long> sleeps = new ArrayList<Long>();
-	private ArrayList<Thread> regThreads = new ArrayList<Thread>();
+	private Map<Thread, Long> threadSleeps = new HashMap<Thread, Long>();
+	private Map<Thread, Long> lastUpdateTime = new HashMap<Thread, Long>();
 
 	private SimGpsProvider gps;
 	private DecoupledSimComChannel comms;
@@ -55,15 +54,14 @@ public class SimulationEngine extends Thread {
 
 	public void threadSleep(long time, Thread thread) {
 		synchronized(lock) {
-			int idx = regThreads.indexOf(thread);
-			if(idx == -1) {
+			if(!threadSleeps.containsKey(thread)) {
 				throw new RuntimeException("Unregistered thread " + thread + " attempted to sleep for " + time);
 			}
-			sleeps.set(idx, time);
-			lastUpdateTime.set(idx, System.currentTimeMillis());
-			if(!this.isInterrupted()) {
+			threadSleeps.put(thread, time);
+			lastUpdateTime.put(thread, System.currentTimeMillis());
+
+			if(!this.isInterrupted())
 				this.interrupt();
-			}
 		}
 	}
 
@@ -76,8 +74,6 @@ public class SimulationEngine extends Thread {
 			}
 
 			synchronized(lock) {
-				if(sleeps.size() != regThreads.size())
-					throw new RuntimeException("DISJOINT!");
 				if(clearToAdvance())
 					advance();
 			}
@@ -103,17 +99,17 @@ public class SimulationEngine extends Thread {
 		}
 	}
 
-	private void deadlockCheck(int i) {
+	private void deadlockCheck(Entry<Thread, Long> entry) {
 		long now = System.currentTimeMillis();
-		if((sleeps.get(i) == null) && (now - lastUpdateTime.get(i)) > THREAD_DEADLOCK_TIMEOUT) {
+		Thread thread = entry.getKey();
+		if((entry.getValue() == null) && (now - lastUpdateTime.get(thread)) > THREAD_DEADLOCK_TIMEOUT) {
 
-			System.out.println("\n\nPossible deadlock encountered at " + now);
-			Thread t = regThreads.get(i);
+			System.err.println("\n\nPossible deadlock encountered at " + now);
 
-			StackTraceElement[] st = t.getStackTrace();
-			System.out.println(t.getId() + " - " + t.getName() + " - " + sleeps.get(i));
+			System.err.println(thread.getId() + " - " + thread.getName());
+			StackTraceElement[] st = thread.getStackTrace();
 			for(StackTraceElement ste : st) {
-				System.out.println(ste.toString());
+				System.err.println(ste.toString());
 			}
 		}
 	}
@@ -124,7 +120,7 @@ public class SimulationEngine extends Thread {
 
 		long advance = comms.minDelay();
 
-		for(Long l : sleeps) {
+		for(Long l : threadSleeps.values()) {
 			advance = Math.min(l, advance);
 		}
 
@@ -147,32 +143,30 @@ public class SimulationEngine extends Thread {
 		lastTimeAdvance = System.currentTimeMillis();
 
 		// Detect threads to be woken
-		for(int i = 0; i < regThreads.size(); i++) {
-			sleeps.set(i, (sleeps.get(i) - advance));
+		for(Entry<Thread, Long> e : threadSleeps.entrySet()) {
+			e.setValue(e.getValue() - advance);
 
-			if(sleeps.get(i) == 0) {
-				sleeps.set(i, null);
-				regThreads.get(i).interrupt();
+			if(e.getValue() == 0) {
+				e.setValue(null);
+				e.getKey().interrupt();
 			}
 		}
 	}
 
 	public void registerThread(Thread thread) {
 		synchronized(lock) {
-			lastUpdateTime.add(System.currentTimeMillis());
-			sleeps.add(null);
-			regThreads.add(thread);
+			lastUpdateTime.put(thread, System.currentTimeMillis());
+			threadSleeps.put(thread, null);
 		}
 	}
 
 	public void removeThread(Thread thread) {
 		synchronized(lock) {
-			int idx = regThreads.indexOf(thread);
-			if(idx == -1)
+			if(!threadSleeps.containsKey(thread))
 				throw new RuntimeException("Thread " + thread + " tried to unregister itself without being registered! What a jerk.");
-			regThreads.remove(idx);
-			sleeps.remove(idx);
-			lastUpdateTime.remove(idx);
+
+			threadSleeps.remove(thread);
+			lastUpdateTime.remove(thread);
 		}
 		if(!this.isInterrupted())
 			this.interrupt();
@@ -183,9 +177,9 @@ public class SimulationEngine extends Thread {
 	}
 
 	private boolean clearToAdvance() {
-		for(int i = 0; i < sleeps.size(); i++) {
-			if(sleeps.get(i) == null) {
-				deadlockCheck(i);
+		for(Entry<Thread, Long> entry : threadSleeps.entrySet()) {
+			if(entry.getValue() == null) {
+				deadlockCheck(entry);
 				return false;
 			}
 		}

@@ -56,9 +56,9 @@ public class SynchronousModel extends LogicThread {
 				break;
 			}
 			
-		}
-
-		
+			if(0 == 1)
+				break;
+		}	
 
 		// TODO Auto-generated method stub
 		return null;
