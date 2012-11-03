@@ -170,9 +170,16 @@ public class SvgParser extends XmlReader {
 		for(int i = 0; i < retval.size(); i++)
 			retval.set(i, retval.get(i).scale(scalefactor));
 
+		// Flip vertically
+		for(int i = 0; i < retval.size(); i++) {
+			ImageEdge current = retval.get(i);
+			ImageEdge replace = new ImageEdge(new ImagePoint(current.getStart().getX(), Math.abs(current.getStart().getY() - height * scalefactor), current.getStart().getColor(), current.getStart().getSize()), new ImagePoint(current.getEnd().getX(), Math.abs(current.getEnd().getY() - height * scalefactor), current.getEnd().getColor(), current.getEnd().getSize()));
+			retval.set(i, replace);
+		}
+
 		// Centering
-		double centerX = (scalefactor * width) / 2.0;
-		double centerY = (scalefactor * height) / 2.0;
+		double centerX = (width * scalefactor) / 2.0;
+		double centerY = (height * scalefactor) / 2.0;
 		offset = center.subtract(new ImagePoint(centerX, centerY));
 
 		maxY *= scalefactor;

@@ -73,9 +73,7 @@ public class BullyLeaderElection extends StarLCallable implements MessageListene
 	}
 	
 	private void registerMessages() {
-		gvh.comms.addMsgListener(Common.MSG_BULLYANSWER, this);
-		gvh.comms.addMsgListener(Common.MSG_BULLYELECTION, this);
-		gvh.comms.addMsgListener(Common.MSG_BULLYWINNER, this);
+		gvh.comms.addMsgListener(this, Common.MSG_BULLYANSWER, Common.MSG_BULLYELECTION, Common.MSG_BULLYWINNER);
 	}
 	private void unregisterMessages() {
 		gvh.comms.removeMsgListener(Common.MSG_BULLYANSWER);

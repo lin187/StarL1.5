@@ -31,8 +31,7 @@ public class SynchronousModel extends LogicThread {
 
 		this.app = app;
 
-		for(int i : messages)
-			gvh.comms.addMsgListener(i, this);
+		gvh.comms.addMsgListener(this, messages);
 
 		roundSync = new BarrierSynchronizer(gvh);
 	}

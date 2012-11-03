@@ -179,8 +179,7 @@ public class PickedLeaderElection extends StarLCallable implements LeaderElectio
 	}
 	
 	private void registerListeners() {
-		gvh.comms.addMsgListener(Common.MSG_RANDLEADERELECT, this);
-		gvh.comms.addMsgListener(Common.MSG_RANDLEADERELECT_ANNOUNCE, this);
+		gvh.comms.addMsgListener(this, Common.MSG_RANDLEADERELECT, Common.MSG_RANDLEADERELECT_ANNOUNCE);
 	}
 
 	private void unregisterListeners() {

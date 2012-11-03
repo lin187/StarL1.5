@@ -39,7 +39,7 @@ public class BarrierSynchronizer implements Synchronizer, MessageListener {
 		n_participants = gvh.id.getParticipants().size();
 		barriersNames = new HashMap<String,HashSet<String>>();
 		name = gvh.id.getName();
-		gvh.comms.addMsgListener(Common.MSG_BARRIERSYNC, this);
+		gvh.comms.addMsgListener(this, Common.MSG_BARRIERSYNC);
 		gvh.trace.traceEvent(TAG, "Created", gvh.time());
 		gvh.log.i(TAG, "Created BarrierSynchronizer, registered message listener with GVH");
 	}

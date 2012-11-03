@@ -53,12 +53,19 @@ public class LpAlgorithm {
 			ImagePoint end = edge.getEnd();
 
 			// If the drawing already has points within snap radius of start and
-			// end, change the endpoints to use those preexisting points
-			if(drawing.isColliding(start, pointSnapRadius))
-				start = drawing.getNearestPoint(start);
+			// end and these points are the same color as start/end, change the 
+			// endpoints to use those preexisting points
+			if(drawing.isColliding(start, pointSnapRadius)) {
+				ImagePoint potentialSnap = drawing.getNearestPoint(start);
+				if(potentialSnap.getColor() == start.getColor())
+					start = potentialSnap;
+			}
 
-			if(drawing.isColliding(end, pointSnapRadius))
-				end = drawing.getNearestPoint(end);
+			if(drawing.isColliding(end, pointSnapRadius)) {
+				ImagePoint potentialSnap = drawing.getNearestPoint(end);
+				if(potentialSnap.getColor() == end.getColor())
+					end = potentialSnap;
+			}
 
 			drawing.addEdge(start, end);
 		}

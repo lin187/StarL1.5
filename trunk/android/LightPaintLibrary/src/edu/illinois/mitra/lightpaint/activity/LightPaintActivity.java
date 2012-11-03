@@ -62,9 +62,7 @@ public class LightPaintActivity extends LogicThread implements RobotEventListene
 		super(gvh);
 
 		// Register as message listeners
-		gvh.comms.addMsgListener(ASSIGNMENT_ID, this);
-		gvh.comms.addMsgListener(POSITION_UPDATE_ID, this);
-		gvh.comms.addMsgListener(ASSIGNMENT_REQ_ID, this);
+		gvh.comms.addMsgListener(this, ASSIGNMENT_ID, POSITION_UPDATE_ID, ASSIGNMENT_REQ_ID);
 
 		election = new RandomLeaderElection(gvh);
 		sync = new BarrierSynchronizer(gvh);

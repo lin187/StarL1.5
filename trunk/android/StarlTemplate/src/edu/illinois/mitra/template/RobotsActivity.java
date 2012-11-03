@@ -141,8 +141,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 		gvh.gps.startGps();
 
 		// Register this as a listener
-		gvh.comms.addMsgListener(Common.MSG_ACTIVITYLAUNCH, this);
-		gvh.comms.addMsgListener(Common.MSG_ACTIVITYABORT, this);
+		gvh.comms.addMsgListener(this, Common.MSG_ACTIVITYLAUNCH,Common.MSG_ACTIVITYABORT);
 	}
 
 	public void disconnect() {

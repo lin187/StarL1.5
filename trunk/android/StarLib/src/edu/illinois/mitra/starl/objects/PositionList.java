@@ -3,6 +3,7 @@ package edu.illinois.mitra.starl.objects;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map.Entry;
 
 /**
@@ -11,7 +12,7 @@ import java.util.Map.Entry;
  * @author Adam Zimmerman
  * @version 1.0
  */
-public class PositionList {
+public class PositionList implements Iterable<ItemPosition> {
 	private static final String TAG = "positionList";
 	private static final String ERR = "Critical Error";
 	
@@ -96,5 +97,10 @@ public class PositionList {
 	 */
 	public ArrayList<ItemPosition> getList() {
 		return new ArrayList<ItemPosition>(positions.values());
+	}
+
+	@Override
+	public Iterator<ItemPosition> iterator() {
+		return positions.values().iterator();
 	}
 }

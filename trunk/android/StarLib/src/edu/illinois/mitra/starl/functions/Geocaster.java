@@ -21,7 +21,7 @@ public class Geocaster implements MessageListener {
 	
 	public Geocaster(GlobalVarHolder gvh) {
 		this.gvh = gvh;
-		gvh.comms.addMsgListener(Common.MSG_GEOCAST, this);
+		gvh.comms.addMsgListener(this, Common.MSG_GEOCAST);
 	}
 	
 	// Send a message with ID = MID and contents = msgcontents to all robots contained within the rectangle defined by x, y, width, and height

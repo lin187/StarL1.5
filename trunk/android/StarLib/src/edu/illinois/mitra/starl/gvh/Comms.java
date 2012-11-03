@@ -64,7 +64,15 @@ public class Comms {
 	}
 
 	// Message event code
-	public void addMsgListener(int mid, MessageListener l) {
+	public void addMsgListener(MessageListener l, int... mid) {
+		for(int m : mid)
+			addMsgListener(l,m);
+	}
+	
+	public void addMsgListener(MessageListener l, int mid) {
+		if(l == null)
+			throw new NullPointerException("Can not have a null message listener!");
+		
 		if(listeners.containsKey(mid)) {
 			throw new RuntimeException("Already have a listener for MID " + mid + ", " + listeners.get(mid).getClass().getSimpleName());
 		}

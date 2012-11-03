@@ -18,36 +18,50 @@ import edu.illinois.mitra.starlSim.draw.Drawer;
 public class LightPaintDrawer extends Drawer {
 
 	private static final int BULB_WIDTH = 25;
-	
+
+	private static boolean drawTubes = true;
+
+	public LightPaintDrawer() {
+	}
+
+	public LightPaintDrawer(boolean drawTubes) {
+		LightPaintDrawer.drawTubes = drawTubes;
+	}
+
 	@Override
 	public void draw(LogicThread lt, Graphics2D g) {
 		LightPaintActivity instance = (LightPaintActivity) lt;
-		
+
 		drawAlgorithm(g, instance.getAlgorithm());
-		
+
 		if(instance.getScreenColor() != 0) {
 			ItemPosition pos = instance.getMyPosition();
 			g.setColor(Color.BLACK);
-			g.drawOval(pos.getX()-BULB_WIDTH, pos.getY()-BULB_WIDTH, 2*BULB_WIDTH, 2*BULB_WIDTH);
+			g.drawOval(pos.getX() - BULB_WIDTH, pos.getY() - BULB_WIDTH, 2 * BULB_WIDTH, 2 * BULB_WIDTH);
 			g.setColor(new Color(instance.getScreenColor()));
-			g.fillOval(pos.getX()-BULB_WIDTH, pos.getY()-BULB_WIDTH, 2*BULB_WIDTH, 2*BULB_WIDTH);
+			g.fillOval(pos.getX() - BULB_WIDTH, pos.getY() - BULB_WIDTH, 2 * BULB_WIDTH, 2 * BULB_WIDTH);
 		}
 	}
 
 	private void drawAlgorithm(Graphics2D g, LpAlgorithm alg) {
 		if(alg == null)
 			return;
-		int unsafeDrawRadius = (int) alg.unsafeRadius/2;
+		int unsafeDrawRadius = (int) alg.unsafeRadius / 2;
 
 		drawImageGraph(alg.drawing, g, Color.LIGHT_GRAY, 12);
-		for(ImageGraph tube : alg.reachTubes.values())
-			drawImageGraph(tube, g, Color.red, 12, unsafeDrawRadius);
 
-		// Draw each robot position with a red unsafe boundary around it
-		g.setColor(Color.RED);
-		for(Entry<String, ImagePoint> robot : alg.unsafeRobots.entrySet()) {
-			g.drawOval((int) (robot.getValue().getX() - unsafeDrawRadius), (int) (robot.getValue().getY() - unsafeDrawRadius), 2 * unsafeDrawRadius, 2 * unsafeDrawRadius);
+		if(drawTubes) {
+			for(ImageGraph tube : alg.reachTubes.values())
+				drawImageGraph(tube, g, Color.red, 12, unsafeDrawRadius);
+
+			// Draw each robot position with a red unsafe boundary around it
+
+			g.setColor(Color.RED);
+			for(Entry<String, ImagePoint> robot : alg.unsafeRobots.entrySet()) {
+				g.drawOval((int) (robot.getValue().getX() - unsafeDrawRadius), (int) (robot.getValue().getY() - unsafeDrawRadius), 2 * unsafeDrawRadius, 2 * unsafeDrawRadius);
+			}
 		}
+
 		drawImageGraph(alg.painted, g, Color.GREEN, 12);
 	}
 

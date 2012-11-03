@@ -23,7 +23,7 @@ import edu.illinois.mitra.starl.objects.Common;
  */
 public class RandomLeaderElection implements LeaderElection, MessageListener {
 	private static final String TAG = "RandomLeaderElection";
-	
+
 	private static final int MAX_WAIT_TIME = 5000;
 	private static final String ERROR_RETURN = "ERROR";
 	private SortedSet<Ballot> ballots;
@@ -43,8 +43,7 @@ public class RandomLeaderElection implements LeaderElection, MessageListener {
 
 	public RandomLeaderElection(GlobalVarHolder gvh) {
 		this.gvh = gvh;
-		gvh.comms.addMsgListener(Common.MSG_RANDLEADERELECT, this);
-		gvh.comms.addMsgListener(Common.MSG_RANDLEADERELECT_ANNOUNCE, this);
+		gvh.comms.addMsgListener(this, Common.MSG_RANDLEADERELECT, Common.MSG_RANDLEADERELECT_ANNOUNCE);
 	}
 
 	@Override
@@ -70,14 +69,14 @@ public class RandomLeaderElection implements LeaderElection, MessageListener {
 			break;
 		case WAIT_FOR_ANNOUNCEMENT:
 			gvh.log.d(TAG, "Waiting for an announcement...");
-			
+
 			if(announcedLeader != null) {
 				gvh.log.d(TAG, "Announcement received!");
 				leader = announcedLeader;
 				stage = Stage.DONE;
 				break;
 			}
-			
+
 			// If we've timed out again, go to the error state
 			if(gvh.time() - startTime > MAX_WAIT_TIME) {
 				gvh.log.e(TAG, "Announcement timed out!");
@@ -112,7 +111,7 @@ public class RandomLeaderElection implements LeaderElection, MessageListener {
 	}
 
 	private volatile String announcedLeader = null;
-	
+
 	@Override
 	public void messageReceived(RobotMessage m) {
 		String from = m.getFrom();
@@ -131,7 +130,7 @@ public class RandomLeaderElection implements LeaderElection, MessageListener {
 			// TODO: Make sure a quorum announced the same leader, otherwise error
 			gvh.log.i(TAG, "Received announcement with leader " + m.getContents(0) + " from " + m.getFrom());
 			announcedLeader = m.getContents(0); //leader = m.getContents(0);
-//			stage = Stage.DONE;
+			//			stage = Stage.DONE;
 			break;
 		}
 	}
