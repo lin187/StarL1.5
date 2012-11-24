@@ -53,6 +53,8 @@ public abstract class StarLCallable implements Callable<List<Object>> {
 		gvh.threadCreated(Thread.currentThread());
 		List<Object> retval = callStarL();
 		gvh.threadDestroyed(Thread.currentThread());
+		if(retval != null)
+			retval.add(0, name);
 		return retval;
 	}
 	

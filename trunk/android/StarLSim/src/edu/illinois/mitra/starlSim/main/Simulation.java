@@ -41,6 +41,9 @@ public class Simulation {
 
 	private final SimSettings settings;
 
+	
+	private final DrawFrame drawFrame; 
+	
 	public Simulation(Class<? extends LogicThread> app, final SimSettings settings) {
 		if(settings.N_BOTS <= 0)
 			throw new IllegalArgumentException("Must have more than zero robots to simulate!");
@@ -56,9 +59,9 @@ public class Simulation {
 		}
 
 		// Initialize viewer
-		final DrawFrame drawFrame = new DrawFrame(participants.keySet(), blockedRobots, settings);
+		drawFrame = new DrawFrame(participants.keySet(), blockedRobots, settings);
 		drawFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		
 		// Start the simulation engine
 		LinkedList<LogicThread> logicThreads = new LinkedList<LogicThread>();
 		simEngine = new SimulationEngine(settings.SIM_TIMEOUT, settings.MSG_MEAN_DELAY, settings.MSG_STDDEV_DELAY, settings.MSG_LOSSES_PER_HUNDRED, settings.MSG_RANDOM_SEED, settings.TIC_TIME_RATE, blockedRobots, participants, drawFrame.getPanel(), logicThreads);
@@ -144,7 +147,7 @@ public class Simulation {
 		drawFrame.setVisible(true);
 	}
 
-	private static final double BOT_SPACING_FACTOR = 2.6;
+	private static final double BOT_SPACING_FACTOR = 2.8;
 	private Map<String, ItemPosition> startingPositions = new HashMap<String, ItemPosition>();
 
 	private boolean acceptableStart(ItemPosition pos) {
@@ -193,6 +196,8 @@ public class Simulation {
 		return globalLogger;
 	}
 
+	
+	private List<List<Object>> resultsList = new ArrayList<List<Object>>();
 	/**
 	 * Begins executing a simulation. This call will block until the simulation completes.
 	 */
@@ -219,7 +224,7 @@ public class Simulation {
 			try {
 				List<Object> res = f.get();
 				if(res != null && !res.isEmpty())
-					System.out.println(res);
+					resultsList.add(res);
 			} catch(CancellationException e) {
 				// If the executor timed out, the result is cancelled
 				System.err.println("Simulation timed out! Execution reached " + settings.TIMEOUT + " sec duration. Aborting.");
@@ -229,13 +234,20 @@ public class Simulation {
 			}
 		}
 
-		// Print communication statistics and shutdown
 		shutdown();
 	}
 
 	public void shutdown() {
 		simEngine.simulationDone();
 		executor.shutdownNow();
+	}
+	
+	public void closeWindow() {
+		drawFrame.dispose();
+	}
+	
+	public List<List<Object>> getResults() {
+		return resultsList;
 	}
 	
 	public long getSimulationDuration() {

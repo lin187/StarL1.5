@@ -1,8 +1,11 @@
 package edu.illinois.mitra.lightpaint.activity;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -76,6 +79,9 @@ public class LightPaintActivity extends LogicThread implements RobotEventListene
 	private String leader;
 	private BarrierSynchronizer sync;
 	private LeaderElection election;
+	
+	private int requestCount = 0;
+	private int assignmentsDelivered = 0;
 
 	// Public to be accessed by Drawer
 	private boolean iAmLeader = false;
@@ -127,6 +133,7 @@ public class LightPaintActivity extends LogicThread implements RobotEventListene
 				assignment.clear();
 				gvh.log.e(TAG, "Requesting an assignment");
 				if(iAmLeader) {
+					requestCount ++;
 					assignmentRequesters.add(name);
 				} else {
 					RobotMessage req = new RobotMessage(leader, name, ASSIGNMENT_REQ_ID, "");
@@ -169,6 +176,13 @@ public class LightPaintActivity extends LogicThread implements RobotEventListene
 
 				break;
 			case DONE:
+				if(iAmLeader) {
+					List<Object> retval = new ArrayList<Object>();
+					retval.add(requestCount);
+					retval.add(assignmentsDelivered);
+					retval.add(alg.deadlocked());
+					return retval;
+				}
 				return null;
 			}
 
@@ -222,6 +236,7 @@ public class LightPaintActivity extends LogicThread implements RobotEventListene
 				return;
 
 			gvh.log.i(TAG, msg.getFrom() + " requesting a new assignment...");
+			requestCount ++;
 			if(!assignmentRequesters.contains(msg.getFrom()))
 				assignmentRequesters.add(msg.getFrom());
 			break;
@@ -257,6 +272,9 @@ public class LightPaintActivity extends LogicThread implements RobotEventListene
 		}
 	}
 
+	// Detect deadlocks
+	private Map<String, Boolean> isAssignmentEmpty = new HashMap<String, Boolean>();
+
 	private void assign(String from) {
 		gvh.log.e(TAG, "Assigning to " + from);
 		long now = System.nanoTime();
@@ -265,23 +283,28 @@ public class LightPaintActivity extends LogicThread implements RobotEventListene
 
 		// If the requester was another robot, respond with a message
 		if(!from.equals(name)) {
+			isAssignmentEmpty.put(from, false);
 			RobotMessage response = new RobotMessage(from, super.name, ASSIGNMENT_ID, (MessageContents) null);
 			if(alg.isDone()) {
 				response.setContents(FINISHED_MSG_CONTENTS);
 				doneInformedCount++;
 			} else if(assigned != null && assigned.size() > 0) {
+				assignmentsDelivered ++;
 				String[] assignedPieces = new String[assigned.size()];
 				for(int i = 0; i < assigned.size(); i++)
 					assignedPieces[i] = assigned.get(i).toMessage();
 				response.setContents(new MessageContents(assignedPieces));
 			} else {
 				response.setContents(EMPTY_MSG_CONTENTS);
+				isAssignmentEmpty.put(from, true);
 			}
 			gvh.comms.addOutgoingMessage(response);
 		} else {
 			// If the requester was me, skip the message handling.
+			isAssignmentEmpty.put(name, false);
 			assignment.addAll(assigned);
 			if(!assignment.isEmpty()) {
+				assignmentsDelivered ++;
 				lastVisitedPoint = assignment.remove(0);
 				setStage(Stage.DO_ASSIGNMENT);
 			} else if(alg.isDone() && (doneInformedCount == (gvh.id.getParticipants().size() - 1))) {
@@ -289,8 +312,25 @@ public class LightPaintActivity extends LogicThread implements RobotEventListene
 			} else {
 				reqSentTime = gvh.time();
 				setStage(Stage.WAIT_FOR_ASSIGNMENT);
+				isAssignmentEmpty.put(name, true);
 			}
 		}
+
+		if(isDeadlocked()) {
+			System.err.println("DEADLOCK with " + alg.deadlocked() + " line segments remaining");
+		}
+	}
+
+	private boolean isDeadlocked() {
+		if(isAssignmentEmpty.size() != gvh.id.getParticipants().size()) {
+			return false;
+		}
+
+		for(Boolean b : isAssignmentEmpty.values()) {
+			if(!b)
+				return false;
+		}
+		return true;
 	}
 
 	private void setStage(Stage newstage) {

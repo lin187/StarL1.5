@@ -86,7 +86,7 @@ public class LpAlgorithm {
 			ImagePoint current = points.get(i);
 			String name = Integer.toString(current.getSize());
 			int color = current.getColor();
-			if(i < points.size()-1 && !drawing.hasEdge(current, points.get(i + 1))) {
+			if(i < points.size() - 1 && !drawing.hasEdge(current, points.get(i + 1))) {
 				name = "0";
 				color = 0;
 			}
@@ -101,8 +101,8 @@ public class LpAlgorithm {
 
 		// If the robot doesn't have an entry in the reach tube set, create one
 		// If the robot is asking for a new assignment, clear its old reach tube
-//		if(!reachTubes.containsKey(currentRobot))
-			reachTubes.put(currentRobot, new ImageGraph());
+		//		if(!reachTubes.containsKey(currentRobot))
+		reachTubes.put(currentRobot, new ImageGraph());
 
 		setRobotPosition(currentRobot, robotPosition);
 
@@ -173,7 +173,19 @@ public class LpAlgorithm {
 		return edgesToPoints(bestPath);
 	}
 
+	private boolean deadlocked = false;
+
+	public int deadlocked() {
+		if(unpainted.getGraph().edgeSet().size() > 0) {
+			deadlocked = true;
+			return unpainted.getGraph().edgeSet().size();
+		}
+		return 0;
+	}
+
 	public boolean isDone() {
+		if(deadlocked)
+			return true;
 		return unpainted.isEmpty();
 	}
 
