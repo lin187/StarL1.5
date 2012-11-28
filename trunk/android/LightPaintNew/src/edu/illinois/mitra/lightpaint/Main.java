@@ -30,16 +30,16 @@ public class Main {
 
 		CsvWriter writer = null;
 		try {
-			writer = new CsvWriter("test.csv", "N Robots", "Execution duration", "Requests made", "Assignments made", "Unpainted lines");
+			writer = new CsvWriter("test3.csv", "N Robots", "Execution duration", "Requests made", "Assignments made", "Unpainted lines", "Total lines");
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
 
-		for(int nbots : new int[] { 4, 5, 6, 8, 10 }) {
+		for(int nbots : new int[] { 4,5,6,8,10 }) {
 			SimSettings.Builder builder = new SimSettings.Builder().DRAWER(new LightPaintDrawer(true)).WAYPOINT_FILE(WPT_PATH + inputFilename + ".wpt");
 			builder.N_BOTS(nbots);
-			builder.TIC_TIME_RATE(8);
-			builder.MAX_FPS(10);
+			builder.TIC_TIME_RATE(5);
+			builder.MAX_FPS(5);
 			builder.INITIAL_POSITIONS_FILE(WPT_PATH + "startpoints_benchmark2.wpt");
 			builder.DRAW_WAYPOINT_NAMES(false).DRAW_WAYPOINTS(false);
 			builder.MSG_LOSSES_PER_HUNDRED(0).GRID_XSIZE(WORLDSIZE).GRID_YSIZE(WORLDSIZE).TRACE_OUT_DIR(null);
@@ -49,11 +49,15 @@ public class Main {
 				System.out.println("RUN " + i);
 				System.out.println("Starting with " + settings.N_BOTS + " robots.");
 				Simulation sim = new Simulation(LightPaintActivity.class, settings);
-				sim.start();
+				try {
+					sim.start();
+				} catch(Exception e) {
+					continue;
+				}
 				Object[] res = sim.getResults().get(0).toArray();
 				System.out.println("Elapsed simulation time: " + sim.getSimulationDuration() / 1000.0 + " sec");
 
-				writer.commit(nbots, sim.getSimulationDuration() / 1000.0, res[1], res[2], res[3]);
+				writer.commit(nbots, sim.getSimulationDuration() / 1000.0, res[1], res[2], res[3], image.size());
 				sim.closeWindow();
 			}
 		}

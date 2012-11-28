@@ -130,6 +130,10 @@ MouseListener, MouseMotionListener, ExplicitlyDrawable
 			{
 				Dimension size = this.getSize();
 				
+				if(size.getWidth() <= 0 || size.getHeight() <= 0) {
+					size.setSize(1, 1);
+				}
+				
 				if (drawBuffer == null || drawBuffer.getWidth(null) != size.width 
 						|| drawBuffer.getHeight(null) != size.height)
 				{
