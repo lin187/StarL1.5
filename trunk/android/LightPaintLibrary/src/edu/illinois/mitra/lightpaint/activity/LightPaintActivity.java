@@ -44,6 +44,7 @@ public class LightPaintActivity extends LogicThread implements RobotEventListene
 
 	// Handler message
 	public static final int HANDLER_SCREEN = 9724;
+	public static final int SCREEN_X = 9725;
 
 	private static final MotionParameters motionParameters;
 	static {
@@ -129,6 +130,7 @@ public class LightPaintActivity extends LogicThread implements RobotEventListene
 				}
 				break;
 			case REQUEST_ASSIGNMENT:
+				screenX(true);
 				// Send a request to the leader
 				assignment.clear();
 				gvh.log.e(TAG, "Requesting an assignment");
@@ -143,6 +145,7 @@ public class LightPaintActivity extends LogicThread implements RobotEventListene
 				setStage(Stage.WAIT_FOR_ASSIGNMENT);
 				break;
 			case WAIT_FOR_ASSIGNMENT:
+				screenX(true);
 				if((gvh.time() - reqSentTime) > MAX_REQUEST_WAIT_TIME) {
 					// Request timed out, request again
 					setStage(Stage.REQUEST_ASSIGNMENT);
@@ -150,6 +153,7 @@ public class LightPaintActivity extends LogicThread implements RobotEventListene
 				}
 				break;
 			case DO_ASSIGNMENT:
+				screenX(false);
 				gvh.plat.moat.goTo(currentDestination = assignment.remove(0));
 				screenColor = getColorFromPosition(lastVisitedPoint);
 				screenLineSize = getSizeFromPosition(lastVisitedPoint);
@@ -336,6 +340,7 @@ public class LightPaintActivity extends LogicThread implements RobotEventListene
 	private void setStage(Stage newstage) {
 		gvh.plat.setDebugInfo(newstage.toString() + " - " + leader + " - " + assignment.size());
 		stage = newstage;
+		gvh.log.d("LightPaint", "Stage: " + stage);
 	}
 
 	private boolean inMotion = false;
@@ -385,6 +390,11 @@ public class LightPaintActivity extends LogicThread implements RobotEventListene
 			if(iAmLeader)
 				gvh.log.d(TAG, "** SCREEN OFF **");
 		}
+	}
+	
+	private void screenX(boolean xOn) {
+		gvh.log.i("LightPaint", "Setting X to " + xOn);
+		gvh.plat.sendMainMsg(SCREEN_X, xOn);
 	}
 
 	@Override

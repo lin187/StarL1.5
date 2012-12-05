@@ -12,14 +12,14 @@ import edu.illinois.mitra.starlSim.main.SimSettings;
 import edu.illinois.mitra.starlSim.main.Simulation;
 
 public class Main {
-	private static final int WORLDSIZE = 3200;
-	private static final int WORLDCENTER = WORLDSIZE / 2;
+	private static final int WORLDSIZE = 2100;
+	private static final int WORLDCENTER = 1500;//WORLDSIZE / 2;
 
 	// TODO: Sometimes a segment is painted over twice, some line segments are absent. See box.svg for example. This *appears* to be a drawing glitch
 	// TODO: Line segments are sometimes drawn from the wrong direction?
 
 	private static final String WPT_PATH = "waypoints/";
-	private static final String inputFilename = "benchmark";
+	private static final String inputFilename = "knot";
 
 	public static void main(String[] args) {
 		SvgParser parser = new SvgParser(WORLDSIZE, WORLDSIZE, WORLDCENTER, WORLDCENTER);

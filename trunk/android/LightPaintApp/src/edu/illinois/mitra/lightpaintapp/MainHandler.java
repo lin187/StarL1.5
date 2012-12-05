@@ -71,11 +71,19 @@ public class MainHandler extends Handler {
 			}
 			System.out.println("Setting screen to " + color + " = " + linewidth);
 			app.lp.screenBrightness = (color != 0) ? 1f : 1 / 100f;
-			app.lp.screenBrightness = 1f;
+			//app.lp.screenBrightness = 1f;
 			app.getWindow().setAttributes(app.lp);
 			illuminate.setColor(color);
 			gvh.log.d("IC", "Set width to " + linewidth + " = " + (linewidth/MAX_LINEWIDTH));
 			illuminate.setWidth(linewidth / MAX_LINEWIDTH);
+			break;
+		case LightPaintActivity.SCREEN_X:
+			boolean xOn = (Boolean) msg.obj;
+			illuminate.setX(xOn);
+			if(xOn) {
+				app.lp.screenBrightness = 1f;
+				app.getWindow().setAttributes(app.lp);
+			}
 			break;
 		}
 	}
