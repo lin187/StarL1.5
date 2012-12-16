@@ -20,7 +20,6 @@ import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import edu.illinois.mitra.lightpaint.activity.LightPaintActivity;
 import edu.illinois.mitra.starl.comms.MessageContents;
 import edu.illinois.mitra.starl.comms.RobotMessage;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
@@ -102,7 +101,8 @@ public class RobotsActivity extends Activity implements MessageListener {
 	}
 
 	public void createAppInstance(GlobalVarHolder gvh) {
-		runThread = null;// new LightPaintActivity(gvh);
+		runThread = null;	// Instantiate your application here!
+							// Example: runThread = new LightPaintActivity(gvh);
 	}
 
 	public void launch(int numWaypoints, int runNum) {

@@ -78,7 +78,7 @@ public class DrawPanel extends ZoomablePanel
 				// Draw world bounding box
 				g.setColor(Color.gray);
 				g.setStroke(new BasicStroke(2));
-				g.drawRect(0, 0, width, height);
+				//g.drawRect(0, 0, width, height);
 				
 				// Determine scale
 				scaleFactor =  (int) toRealCoords(a).distance(toRealCoords(b));
