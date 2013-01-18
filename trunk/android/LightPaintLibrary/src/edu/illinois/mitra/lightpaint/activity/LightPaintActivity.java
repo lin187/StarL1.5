@@ -28,7 +28,7 @@ import edu.illinois.mitra.starl.objects.ItemPosition;
 
 public class LightPaintActivity extends LogicThread implements RobotEventListener {
 	private static final String TAG = "LP";
-
+	private static final boolean ENABLE_X = true;
 	// Algorithm constants
 	private static final double POINT_SNAP_RADIUS = 50;
 	private static final double MAX_DRAW_LENGTH = 1200;
@@ -393,8 +393,8 @@ public class LightPaintActivity extends LogicThread implements RobotEventListene
 	}
 	
 	private void screenX(boolean xOn) {
-		gvh.log.i("LightPaint", "Setting X to " + xOn);
-		gvh.plat.sendMainMsg(SCREEN_X, xOn);
+		gvh.log.i("LightPaint", "Setting X to " + (ENABLE_X && xOn));
+		gvh.plat.sendMainMsg(SCREEN_X, ENABLE_X && xOn);
 	}
 
 	@Override
