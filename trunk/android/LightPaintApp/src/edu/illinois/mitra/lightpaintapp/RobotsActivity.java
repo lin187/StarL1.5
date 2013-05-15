@@ -42,7 +42,10 @@ public class RobotsActivity extends Activity implements MessageListener {
 	private GlobalVarHolder gvh = null;
 	public boolean launched = false;
 
-	private static final String IDENTITY_FILE_URL = "https://dl.dropbox.com/s/dwfqdhbf5vdtz18/robots.rif?dl=1";
+	private static final String IDENTITY_FILE_URL = "http://dl.dropbox.com/u/3255051/robots.rif"; // TODO: add to config file
+	
+	//private static final String IDENTITY_FILE_URL = "https://dl.dropbox.com/s/dwfqdhbf5vdtz18/robots.rif?dl=1";
+	// http://dl.dropbox.com/u/3255051/robots.rif
 	private static final String[][] ERROR_PARTICIPANTS = {{"ERROR"}, {"ERROR"}, {"ERROR"}};
 	
 	// Row 0 = names

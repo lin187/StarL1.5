@@ -1,4 +1,5 @@
-TTP_FILENAME = 'C:\Users\StarL\Dropbox\research\optitrack\fardin.ttp';
+TTP_FILENAME = 'C:\Users\StarL\Dropbox\research\optitrack\ALL_ROBOTS_PROJECT_newTryWithParams.ttp';
+%TTP_FILENAME = 'C:\Users\StarL\Dropbox\research\optitrack\fardin.ttp';
 USE_SERVER = 1; %Enable/disable the network server
 USE_WPT = 1;    %Enable/disable loading waypoints and walls
 USE_HISTORY = 1;%Enable/disable history
