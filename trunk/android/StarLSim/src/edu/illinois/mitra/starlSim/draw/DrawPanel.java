@@ -67,13 +67,16 @@ public class DrawPanel extends ZoomablePanel
 		synchronized(this)
 		{
 			for (Drawer d : preDrawers)
-				d.draw(lt, g);			
+				d.draw(lt, g);	
+			
 			
 			for (int rIndex = 0; rIndex < data.size(); ++rIndex)
 			{
 				RobotData rd = data.get(rIndex);
 				
 				drawRobot(g,rd,true);
+				
+				
 				
 				// Draw world bounding box
 				g.setColor(Color.gray);

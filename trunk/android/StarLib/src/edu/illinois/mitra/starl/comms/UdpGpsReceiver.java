@@ -15,6 +15,7 @@ import edu.illinois.mitra.starl.interfaces.RobotEventListener.Event;
 import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.HandlerMessage;
 import edu.illinois.mitra.starl.objects.ItemPosition;
+import edu.illinois.mitra.starl.objects.ObstacleList;
 import edu.illinois.mitra.starl.objects.PositionList;
 
 /**
@@ -28,6 +29,7 @@ public class UdpGpsReceiver extends Thread implements GpsReceiver {
 	
 	public PositionList robotPositions;
 	public PositionList waypointPositions;
+	public ObstacleList obs;
 
 	private GlobalVarHolder gvh;
 
@@ -37,13 +39,14 @@ public class UdpGpsReceiver extends Thread implements GpsReceiver {
 	private String name = null;
 	private boolean received = false;
 
-	public UdpGpsReceiver(GlobalVarHolder gvh,String hostname, int port, PositionList robotPositions, PositionList waypointPositions) {
+	public UdpGpsReceiver(GlobalVarHolder gvh,String hostname, int port, PositionList robotPositions, PositionList waypointPositions, ObstacleList obs) {
 		super();
 		this.gvh = gvh;
 		
 		name = gvh.id.getName();
 		this.robotPositions = robotPositions;
 		this.waypointPositions = waypointPositions;
+		this.obs = obs;
 
 		try {
 			myLocalIP = getLocalAddress();
@@ -176,4 +179,10 @@ public class UdpGpsReceiver extends Thread implements GpsReceiver {
 	public PositionList getWaypoints() {
 		return waypointPositions;
 	}
+	
+	@Override
+	public ObstacleList getObspoints() {
+		return obs;
+	}
+	
 }

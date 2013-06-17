@@ -5,8 +5,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
 
-import edu.illinois.mitra.starl.objects.ItemPosition;
-import edu.illinois.mitra.starl.objects.PositionList;
+import edu.illinois.mitra.starl.objects.*;
 
 public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {	
 	private HashMap<String, SimGpsReceiver> receivers;
@@ -15,6 +14,8 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 	// Waypoint positions and robot positions that are shared among all robots
 	private PositionList robot_positions;
 	private PositionList waypoint_positions;
+	
+	private ObstacleList obspoint_positions;
 	
 	private long period = 100;
 	private int angleNoise = 0;
@@ -68,7 +69,17 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 	public void setWaypoints(PositionList loadedWaypoints) {
 		if(loadedWaypoints != null) waypoint_positions = loadedWaypoints;
 	}
+	
+	@Override
+	public void setObspoints(ObstacleList loadedObspoints) {
+		if(loadedObspoints != null) obspoint_positions = loadedObspoints;
+	}
 
+	@Override
+	public ObstacleList getObspointPositions() {
+		return obspoint_positions;
+	}
+	
 	@Override
 	public PositionList getWaypointPositions() {
 		return waypoint_positions;

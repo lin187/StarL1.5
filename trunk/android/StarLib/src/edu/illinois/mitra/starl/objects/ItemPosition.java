@@ -1,5 +1,7 @@
 package edu.illinois.mitra.starl.objects;
 
+import java.awt.geom.Line2D;
+import java.awt.geom.Line2D.Double;
 import java.util.HashMap;
 
 import edu.illinois.mitra.starl.exceptions.ItemFormattingException;
@@ -106,12 +108,61 @@ public class ItemPosition implements Comparable<ItemPosition>, Traceable {
 			return false;
 		}
 		
-		double isFacingCheck = (other.y - this.y)*Math.sin(Math.toRadians(this.angle)) + (other.x - this.x)*Math.cos(Math.toRadians(this.angle));
+/*		double isFacingCheck = (other.y - this.y)*Math.sin(Math.toRadians(this.angle)) + (other.x - this.x)*Math.cos(Math.toRadians(this.angle));
 		double lineDistance = Math.abs(((other.y - this.y) - (other.x - this.x)*Math.tan(Math.toRadians(this.angle))/Math.sqrt(1+Math.pow(Math.tan(Math.toRadians(angle)),2))));
 		if(lineDistance < (2*radius) && (isFacingCheck > 0)) {
 			return true;
 		}
-		return false;
+*/
+/**
+Code in comment was written by Adam and it is not working correctly.
+The following code is written by Yixiao Lin. It is working correctly.
+*/
+    	double angleT = Math.toDegrees(Math.atan2((other.y - this.y) , (other.x - this.x)));
+    	if(angleT  == 90){
+    		if(this.y < other.y)
+    			angleT = angleT + 90;
+    		double temp = this.angle % 360;
+    		if(temp > 0)
+    			return true;
+    		else
+    			return false;
+    	}
+		if(angleT < 0)
+		{
+			angleT += 360;
+		}
+		double angleT1, angleT2, angleself;
+		angleT1 = (angleT - 90) % 360;
+		if(angleT1 < 0)
+		{
+			angleT1 += 360;
+		}
+		angleT2 = (angleT + 90) % 360;
+		if(angleT2 < 0)
+		{
+			angleT2 += 360;
+		}
+		angleself = this.angle % 360;
+		if(angleself < 0)
+		{
+			angleself += 360;
+		}
+		if(angleT2 <= 180)
+		{
+			if((angleself < angleT1) && (angleself > angleT2))
+				return false;
+			else
+				return true;
+		}
+		else
+		{
+			if(angleself > angleT2 || angleself < angleT1)
+				return false;
+			else
+				return true;
+				
+		}
 	}
 
 	/** 
@@ -135,7 +186,7 @@ public class ItemPosition implements Comparable<ItemPosition>, Traceable {
 		if(retAngle > 180) {
 			retAngle = retAngle-360;
 		}
-		if(retAngle < -180) {
+		if(retAngle <= -180) {
 			retAngle = retAngle+360;
 		}
 		return  Math.round(retAngle);
@@ -219,4 +270,12 @@ public class ItemPosition implements Comparable<ItemPosition>, Traceable {
 	public String getName() {
 		return name;
 	}
+
+
+
+/*	public boolean isFacing(Line2D.Double segment, int rOBOT_RADIUS) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	*/
 }

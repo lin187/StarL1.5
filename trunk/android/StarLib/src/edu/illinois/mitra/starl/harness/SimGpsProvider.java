@@ -1,9 +1,7 @@
 package edu.illinois.mitra.starl.harness;
 
 import java.util.Observer;
-
-import edu.illinois.mitra.starl.objects.ItemPosition;
-import edu.illinois.mitra.starl.objects.PositionList;
+import edu.illinois.mitra.starl.objects.*;
 
 public interface SimGpsProvider {
 
@@ -23,9 +21,13 @@ public interface SimGpsProvider {
 	public abstract PositionList getRobotPositions();
 
 	public abstract void setWaypoints(PositionList loadedWaypoints);
+	
+	public abstract void setObspoints(ObstacleList loadedObspoints);
 
 	public abstract PositionList getWaypointPositions();
 
+	public abstract ObstacleList getObspointPositions();
+	
 	public abstract void start();
 	
 	public abstract void addObserver(Observer o);

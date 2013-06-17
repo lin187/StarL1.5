@@ -76,6 +76,12 @@ public class Simulation {
 		// Load waypoints
 		if(settings.WAYPOINT_FILE != null)
 			gps.setWaypoints(WptLoader.loadWaypoints(settings.WAYPOINT_FILE));
+		
+		// Load Obstacles
+		if(settings.OBSPOINT_FILE != null)
+			gps.setObspoints(ObstLoader.loadObspoints(settings.OBSPOINT_FILE));
+		
+		
 
 		this.settings = settings;
 		simEngine.setGps(gps);

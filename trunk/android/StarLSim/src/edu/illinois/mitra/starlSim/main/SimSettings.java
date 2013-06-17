@@ -30,7 +30,11 @@ public class SimSettings {
 	/**
 	 * Filename for a .wpt file with waypoints.
 	 */
-	public final String WAYPOINT_FILE;
+	public final String WAYPOINT_FILE;	/**
+
+	 * Filename for a .wpt file with Obstacles.
+	 */
+	public final String OBSPOINT_FILE;
 
 	/**
 	 * Filename for a .wpt file with initial positions for robots, or null to
@@ -142,6 +146,11 @@ public class SimSettings {
 	 * Enables/disables drawing waypoints in the visualizer
 	 */
 	public final boolean DRAW_WAYPOINTS;
+	
+	/**
+	 * Enables/disables drawing obspoints in the visualizer
+	 */
+	public final boolean DRAW_OBSPOINTS;
 
 	/**
 	 * Enables/disables drawing waypoint names next to each waypoint in the
@@ -160,6 +169,7 @@ public class SimSettings {
 		private long SIM_TIMEOUT = 0;
 		private long TIMEOUT = 0;
 		private String WAYPOINT_FILE;
+		private String OBSPOINT_FILE;
 		private String INITIAL_POSITIONS_FILE;
 		private boolean IDEAL_MOTION = false;
 		private double TIC_TIME_RATE = 5;
@@ -183,6 +193,7 @@ public class SimSettings {
 		private int MAX_FPS = 30;
 		private Drawer DRAWER = null;
 		private boolean DRAW_WAYPOINTS = true;
+		private boolean DRAW_OBSPOINTS = true;
 		private boolean DRAW_WAYPOINT_NAMES = true;
 
 		public Builder N_BOTS(int N_BOTS) {
@@ -192,6 +203,10 @@ public class SimSettings {
 
 		public Builder WAYPOINT_FILE(String WAYPOINT_FILE) {
 			this.WAYPOINT_FILE = WAYPOINT_FILE;
+			return this;
+		}
+		public Builder OBSPOINT_FILE(String OBSPOINT_FILE) {
+			this.OBSPOINT_FILE = OBSPOINT_FILE;
 			return this;
 		}
 
@@ -319,6 +334,11 @@ public class SimSettings {
 			this.DRAW_WAYPOINTS = DRAW_WAYPOINTS;
 			return this;
 		}
+		
+		public Builder DRAW_OBSPOINTS(boolean DRAW_OBSPOINTS) {
+			this.DRAW_OBSPOINTS = DRAW_OBSPOINTS;
+			return this;
+		}
 
 		public Builder DRAW_WAYPOINT_NAMES(boolean DRAW_WAYPOINT_NAMES) {
 			this.DRAW_WAYPOINT_NAMES = DRAW_WAYPOINT_NAMES;
@@ -333,6 +353,7 @@ public class SimSettings {
 	private SimSettings(Builder builder) {
 		this.N_BOTS = builder.N_BOTS;
 		this.WAYPOINT_FILE = builder.WAYPOINT_FILE;
+		this.OBSPOINT_FILE = builder.OBSPOINT_FILE;
 		this.INITIAL_POSITIONS_FILE = builder.INITIAL_POSITIONS_FILE;
 		this.IDEAL_MOTION = builder.IDEAL_MOTION;
 		this.TIC_TIME_RATE = builder.TIC_TIME_RATE;
@@ -358,6 +379,9 @@ public class SimSettings {
 		this.SIM_TIMEOUT = builder.SIM_TIMEOUT;
 		this.TIMEOUT = builder.TIMEOUT;
 		this.DRAW_WAYPOINTS = builder.DRAW_WAYPOINTS;
+		this.DRAW_OBSPOINTS = builder.DRAW_OBSPOINTS;
 		this.DRAW_WAYPOINT_NAMES = builder.DRAW_WAYPOINT_NAMES;
+		
+		
 	}
 }

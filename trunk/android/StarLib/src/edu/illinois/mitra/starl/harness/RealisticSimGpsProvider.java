@@ -9,6 +9,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.ItemPosition;
+import edu.illinois.mitra.starl.objects.ObstacleList;
 import edu.illinois.mitra.starl.objects.PositionList;
 
 public class RealisticSimGpsProvider extends Observable implements SimGpsProvider {	
@@ -18,6 +19,7 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 	// Waypoint positions and robot positions that are shared among all robots
 	private PositionList robot_positions;
 	private PositionList waypoint_positions;
+	private ObstacleList obspoint_positions;
 	
 	private long period = 100;
 	private double angleNoise = 0;
@@ -80,6 +82,17 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 	@Override
 	public void setWaypoints(PositionList loadedWaypoints) {
 		if(loadedWaypoints != null) waypoint_positions = loadedWaypoints;
+	}
+	
+	@Override
+	public void setObspoints(ObstacleList loadedObspoints) {
+		if(loadedObspoints != null) obspoint_positions = loadedObspoints;
+	}
+	
+
+	@Override
+	public ObstacleList getObspointPositions() {
+		return obspoint_positions;
 	}
 	
 	@Override

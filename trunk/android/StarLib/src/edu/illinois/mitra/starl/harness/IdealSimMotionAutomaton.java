@@ -35,7 +35,7 @@ public class IdealSimMotionAutomaton extends RobotMotion implements RobotEventLi
 		
 		inMotion = true;
 	}
-
+	
 	@Override
 	public void turnTo(ItemPosition dest) {
 		// turnTo isn't implemented for ideal motion		

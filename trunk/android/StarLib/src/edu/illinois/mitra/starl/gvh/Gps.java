@@ -2,6 +2,7 @@ package edu.illinois.mitra.starl.gvh;
 
 import edu.illinois.mitra.starl.interfaces.GpsReceiver;
 import edu.illinois.mitra.starl.objects.ItemPosition;
+import edu.illinois.mitra.starl.objects.ObstacleList;
 import edu.illinois.mitra.starl.objects.PositionList;
 
 /**
@@ -20,12 +21,14 @@ public class Gps {
 	private GpsReceiver mGpsReceiver;
 	protected PositionList robot_positions;
 	protected PositionList waypoint_positions;
+	protected ObstacleList obs_positions;
 	private String name;
 	
 	public Gps(GlobalVarHolder gvh, GpsReceiver mGpsReceiver) {
 		this.mGpsReceiver = mGpsReceiver;
 		this.robot_positions = mGpsReceiver.getRobots();
 		this.waypoint_positions = mGpsReceiver.getWaypoints();
+		this.obs_positions = mGpsReceiver.getObspoints();
 		this.gvh = gvh;
 		name = gvh.id.getName();
 	}
@@ -58,5 +61,9 @@ public class Gps {
 	
 	public ItemPosition getWaypointPosition(String waypoint_name) {
 		return waypoint_positions.getPosition(waypoint_name);
+	}
+
+	public ObstacleList getObspointPositions() {
+		return obs_positions;
 	}
 }

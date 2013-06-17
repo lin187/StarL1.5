@@ -20,7 +20,7 @@ public class Main {
 	// TODO: Line segments are sometimes drawn from the wrong direction?
 
 	private static final String WPT_PATH = "waypoints/";
-	private static final String inputFilename = "cube2";
+	private static final String inputFilename = "rainbow";
 
 	private static final int[] EXECUTION_SIZE = { 4 };
 	private static final int SAMPLES = 1;
@@ -75,7 +75,7 @@ public class Main {
 
 				writer.commit(nbots, sim.getSimulationDuration() / 1000.0,
 						res[1], res[2], res[3], image.size());
-				sim.closeWindow();
+				//sim.closeWindow();
 			}
 		}
 

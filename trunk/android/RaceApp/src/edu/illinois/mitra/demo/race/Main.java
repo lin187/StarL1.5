@@ -11,10 +11,15 @@ public class Main {
 		settings.N_BOTS(2);
 		settings.TIC_TIME_RATE(2.5);
 		settings.WAYPOINT_FILE("waypoints/four.wpt");
+
+		settings.OBSPOINT_FILE("waypoints/Obstacles.wpt");
 		
 		settings.DRAW_WAYPOINTS(false);
 		settings.DRAW_WAYPOINT_NAMES(false);
 		settings.DRAWER(new RaceDrawer());
+//		settings.GPS_POSITION_NOISE(-5);
+//		settings.GPS_ANGLE_NOISE(1);
+//		settings.BOT_RADIUS(400);
 		
 		Simulation sim = new Simulation(RaceApp.class, settings.build());
 		sim.start();

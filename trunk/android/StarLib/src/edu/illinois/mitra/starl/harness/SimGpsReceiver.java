@@ -5,6 +5,7 @@ import edu.illinois.mitra.starl.interfaces.GpsReceiver;
 import edu.illinois.mitra.starl.interfaces.RobotEventListener.Event;
 import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.ItemPosition;
+import edu.illinois.mitra.starl.objects.ObstacleList;
 import edu.illinois.mitra.starl.objects.PositionList;
 
 public class SimGpsReceiver implements GpsReceiver {
@@ -53,4 +54,10 @@ public class SimGpsReceiver implements GpsReceiver {
 	public PositionList getWaypoints() {
 		return provider.getWaypointPositions();
 	}
+	@Override
+	public ObstacleList getObspoints() {
+		return provider.getObspointPositions();
+	}
+	
+	
 }

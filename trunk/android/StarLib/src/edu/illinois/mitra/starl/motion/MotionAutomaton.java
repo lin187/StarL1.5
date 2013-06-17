@@ -1,13 +1,16 @@
 package edu.illinois.mitra.starl.motion;
 
+import java.awt.Point;
+import java.awt.geom.Line2D;
+import java.awt.geom.Line2D.Double;
 import java.util.Arrays;
+
 
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.RobotEventListener.Event;
 import edu.illinois.mitra.starl.motion.MotionParameters.COLAVOID_MODE_TYPE;
-import edu.illinois.mitra.starl.objects.Common;
-import edu.illinois.mitra.starl.objects.ItemPosition;
-import edu.illinois.mitra.starl.objects.PositionList;
+import edu.illinois.mitra.starl.objects.*;
+
 
 /**
  * Motion controller which extends the RobotMotion abstract class. Capable of
@@ -64,12 +67,17 @@ public class MotionAutomaton extends RobotMotion {
 
 	private static final MotionParameters DEFAULT_PARAMETERS = MotionParameters.defaultParameters();
 	private volatile MotionParameters param = DEFAULT_PARAMETERS;
-
+	//need to pass some more parameteres into this param
+//	MotionParameters.Builder settings = new MotionParameters.Builder();
+	
+	
+//	private volatile MotionParameters param = settings.build();
+	
+	
 	// Collision avoidance
 	private enum COLSTAGE {
 		TURN, STRAIGHT
 	}
-
 	private COLSTAGE colprev = null;
 	private COLSTAGE colstage = COLSTAGE.TURN;
 	private COLSTAGE colnext = null;
@@ -128,6 +136,8 @@ public class MotionAutomaton extends RobotMotion {
 				case USE_COLAVOID:
 					colliding = collision();
 					break;
+				case STOP_ON_COLLISION:
+					colliding = collision();
 				default:
 					colliding = false;
 					break;
@@ -395,18 +405,60 @@ public class MotionAutomaton extends RobotMotion {
 
 	// Detects an imminent collision with another robot
 	private boolean collision() {
+		boolean colrobot = false;
+		boolean colwall = false;
 		ItemPosition me = mypos;
 		PositionList others = gvh.gps.getPositions();
 		for(ItemPosition current : others.getList()) {
 			if(!current.name.equals(me.name)) {
-				if(me.isFacing(current, param.ROBOT_RADIUS) && me.distanceTo(current) < 2 * param.ROBOT_RADIUS) {
+				if(me.isFacing(current, param.ROBOT_RADIUS) && me.distanceTo(current) <= 2 * (param.ROBOT_RADIUS)) {
 					blocker = current;
+					colrobot = true;
 					return true;
 				}
 			}
 		}
-		blocker = null;
-		return false;
+		ObstacleList list = gvh.gps.getObspointPositions();
+		for(int i = 0; i < list.ObList.size(); i++)
+		{
+			Obstacles currobs = list.ObList.get(i);
+			Point nextpoint = currobs.obstacle.firstElement();
+			Point curpoint = currobs.obstacle.firstElement();
+			Line2D.Double segment;
+			ItemPosition wall = new ItemPosition("wall",0,0,0);
+			
+			for(int j = 0; j < currobs.obstacle.size() ; j++){
+				curpoint = currobs.obstacle.get(j);
+				if (j == currobs.obstacle.size() -1){
+					nextpoint = currobs.obstacle.firstElement();
+				}
+				else{
+					nextpoint = currobs.obstacle.get(j+1);
+				}
+				segment = new Line2D.Double(curpoint.x,curpoint.y,nextpoint.x,nextpoint.y);
+				Point closeP = currobs.getClosestPointOnSegment(curpoint.x, curpoint.y, nextpoint.x, nextpoint.y, me.x, me.y);
+				wall.setPos(closeP.x, closeP.y, 0);
+				if((segment.ptSegDist(me.x,me.y) < param.ROBOT_RADIUS)&&me.isFacing(wall,param.ROBOT_RADIUS)){
+					colwall = true;
+					blocker = wall;
+					return (colrobot || colwall);
+				}
+			}
+/*			curpoint = nextpoint;
+			nextpoint = currobs.obstacle.firstElement();
+			lastsegment = new Line2D.Double(curpoint.x,curpoint.y,nextpoint.x,nextpoint.y);
+			Point closeP = currobs.getClosestPointOnSegment(curpoint.x, curpoint.y, nextpoint.x, nextpoint.y, me.x, me.y);
+			wall.setPos(closeP.x, closeP.y, 0);
+	
+			if((lastsegment.ptSegDist(me.x,me.y) < param.ROBOT_RADIUS)&&me.isFacing(wall,param.ROBOT_RADIUS)){
+				colwall = true;				
+				blocker = wall;
+				return true;
+				}
+*/
+		}
+		return (colrobot ||colwall);
+
 	}
 
 	@Override
