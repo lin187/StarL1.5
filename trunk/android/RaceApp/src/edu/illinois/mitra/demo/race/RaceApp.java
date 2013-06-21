@@ -75,6 +75,7 @@ public class RaceApp extends LogicThread {
 					gvh.comms.addOutgoingMessage(informleader);
 
 					iamleader = le.getLeader().equals(name);
+					iamleader = true;
 					
 					if(iamleader)
 					{

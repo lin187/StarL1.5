@@ -27,6 +27,7 @@ import edu.illinois.mitra.starl.harness.SimGpsProvider;
 import edu.illinois.mitra.starl.harness.SimulationEngine;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.objects.ItemPosition;
+import edu.illinois.mitra.starl.objects.ObstacleList;
 import edu.illinois.mitra.starl.objects.PositionList;
 import edu.illinois.mitra.starlSim.draw.DrawFrame;
 import edu.illinois.mitra.starlSim.draw.RobotData;
@@ -42,7 +43,8 @@ public class Simulation {
 	private final SimSettings settings;
 
 	
-	private final DrawFrame drawFrame; 
+	private final DrawFrame drawFrame;
+	private ObstacleList list; 
 	
 	public Simulation(Class<? extends LogicThread> app, final SimSettings settings) {
 		if(settings.N_BOTS <= 0)
@@ -51,7 +53,7 @@ public class Simulation {
 		// Create set of robots whose wireless is blocked for passage between
 		// the GUI and the simulation communication object
 		Set<String> blockedRobots = new HashSet<String>();
-
+		
 		// Create participants and instantiate SimApps
 		for(int i = 0; i < settings.N_BOTS; i++) {
 			// Mapping between robot name and IP address
@@ -79,8 +81,9 @@ public class Simulation {
 		
 		// Load Obstacles
 		if(settings.OBSPOINT_FILE != null)
-			gps.setObspoints(ObstLoader.loadObspoints(settings.OBSPOINT_FILE));
-		
+					
+		gps.setObspoints(ObstLoader.loadObspoints(settings.OBSPOINT_FILE));
+		list = gps.getObspointPositions();
 		
 
 		this.settings = settings;
@@ -105,10 +108,23 @@ public class Simulation {
 			// If no initial position was supplied, randomly generate one
 			if(initialPosition == null) {
 				int retries = 0;
-				while(retries++ < 1000 && !acceptableStart(initialPosition))
+				boolean valid = false;
+				
+				while(retries++ < 10000 && (!acceptableStart(initialPosition) || !valid))
+				{
 					initialPosition = new ItemPosition(botName, rand.nextInt(settings.GRID_XSIZE), rand.nextInt(settings.GRID_YSIZE), rand.nextInt(360));
+					if(list != null){
+						valid = (list.validstarts(initialPosition, settings.BOT_RADIUS));
+					}	
+				}
+				if(retries > 10000)
+				{
+					System.out.print("too many tries for BOT"+botName+"\n");
+				}
 			}
-
+			
+				
+			
 			SimApp sa = new SimApp(botName, participants, simEngine, initialPosition, settings.TRACE_OUT_DIR, app, drawFrame, settings.TRACE_CLOCK_DRIFT_MAX, settings.TRACE_CLOCK_SKEW_MAX);
 
 			bots.add(sa);

@@ -1,8 +1,6 @@
 package edu.illinois.mitra.starl.motion;
 
 import java.awt.Point;
-import java.awt.geom.Line2D;
-import java.awt.geom.Line2D.Double;
 import java.util.Arrays;
 
 
@@ -97,6 +95,9 @@ public class MotionAutomaton extends RobotMotion {
 
 	public void goTo(ItemPosition dest) {
 		if((inMotion && !this.destination.equals(dest)) || !inMotion) {
+			
+			//add path planning soon
+			
 			this.destination = dest;
 			this.mode = OPMODE.GO_TO;
 			startMotion();
@@ -424,7 +425,6 @@ public class MotionAutomaton extends RobotMotion {
 			Obstacles currobs = list.ObList.get(i);
 			Point nextpoint = currobs.obstacle.firstElement();
 			Point curpoint = currobs.obstacle.firstElement();
-			Line2D.Double segment;
 			ItemPosition wall = new ItemPosition("wall",0,0,0);
 			
 			for(int j = 0; j < currobs.obstacle.size() ; j++){
@@ -435,27 +435,14 @@ public class MotionAutomaton extends RobotMotion {
 				else{
 					nextpoint = currobs.obstacle.get(j+1);
 				}
-				segment = new Line2D.Double(curpoint.x,curpoint.y,nextpoint.x,nextpoint.y);
 				Point closeP = currobs.getClosestPointOnSegment(curpoint.x, curpoint.y, nextpoint.x, nextpoint.y, me.x, me.y);
 				wall.setPos(closeP.x, closeP.y, 0);
-				if((segment.ptSegDist(me.x,me.y) < param.ROBOT_RADIUS)&&me.isFacing(wall,param.ROBOT_RADIUS)){
+				if((!currobs.validItemPos(me, param.ROBOT_RADIUS))&&me.isFacing(wall,param.ROBOT_RADIUS)){
 					colwall = true;
 					blocker = wall;
 					return (colrobot || colwall);
 				}
 			}
-/*			curpoint = nextpoint;
-			nextpoint = currobs.obstacle.firstElement();
-			lastsegment = new Line2D.Double(curpoint.x,curpoint.y,nextpoint.x,nextpoint.y);
-			Point closeP = currobs.getClosestPointOnSegment(curpoint.x, curpoint.y, nextpoint.x, nextpoint.y, me.x, me.y);
-			wall.setPos(closeP.x, closeP.y, 0);
-	
-			if((lastsegment.ptSegDist(me.x,me.y) < param.ROBOT_RADIUS)&&me.isFacing(wall,param.ROBOT_RADIUS)){
-				colwall = true;				
-				blocker = wall;
-				return true;
-				}
-*/
 		}
 		return (colrobot ||colwall);
 

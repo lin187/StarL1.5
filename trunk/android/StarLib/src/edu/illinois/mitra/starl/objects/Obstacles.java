@@ -2,6 +2,7 @@ package edu.illinois.mitra.starl.objects;
 
 import java.util.*;
 import java.awt.Point;
+import java.awt.Polygon;
 import java.awt.geom.Line2D;
 
 public class Obstacles {
@@ -41,6 +42,62 @@ public class Obstacles {
 		}
 		return check;
 	}
+	
+	public boolean validItemPos(ItemPosition destination, double radius){
+		//check if the itemPosotion destination is reachable by robots
+		//return true if robot can reach it
+		
+		
+			Point nextpoint = obstacle.firstElement();
+			Point curpoint = obstacle.firstElement();
+			Line2D.Double segment;
+			int[] x = new int[obstacle.size()];
+			int[] y = new int[obstacle.size()];
+			
+			for(int j = 0; j < obstacle.size() ; j++){
+				curpoint = obstacle.get(j);
+				if (j == obstacle.size() -1){
+					nextpoint = obstacle.firstElement();
+				}
+				else{
+					nextpoint = obstacle.get(j+1);
+				}
+				segment = new Line2D.Double(curpoint.x,curpoint.y,nextpoint.x,nextpoint.y);
+				x[j] = curpoint.x;
+				y[j] = curpoint.y;
+				if((segment.ptSegDist(destination.x,destination.y) < radius)){
+					return false;
+				}
+				
+			}
+			Polygon obspoly = new Polygon(x,y,obstacle.size());
+			if(obspoly.contains(destination.x, destination.y))
+				return false;
+			else
+				return true;
+	}
+	
+	public boolean validItemPos(ItemPosition destination){
+		//check if the itemPosotion destination is reachable by robots
+		//return true if robot can reach it
+		
+			Point curpoint = obstacle.firstElement();
+			int[] x = new int[obstacle.size()];
+			int[] y = new int[obstacle.size()];
+			
+			for(int j = 0; j < obstacle.size() ; j++){
+				curpoint = obstacle.get(j);
+				x[j] = curpoint.x;
+				y[j] = curpoint.y;
+				
+			}
+			Polygon obspoly = new Polygon(x,y,obstacle.size());
+			if(obspoly.contains(destination.x, destination.y))
+				return false;
+			else
+				return true;
+	}
+	
 	  public Point getClosestPointOnSegment(int sx1, int sy1, int sx2, int sy2, int px, int py)
 	  {
 	    double xDelta = sx2 - sx1;
