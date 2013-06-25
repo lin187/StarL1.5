@@ -3,6 +3,7 @@ package edu.illinois.mitra.starl.harness;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.RobotEventListener;
 import edu.illinois.mitra.starl.motion.MotionParameters;
+import edu.illinois.mitra.starl.motion.RRTNode;
 import edu.illinois.mitra.starl.motion.RobotMotion;
 import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.ItemPosition;
@@ -35,6 +36,19 @@ public class IdealSimMotionAutomaton extends RobotMotion implements RobotEventLi
 		
 		inMotion = true;
 	}
+/*	
+	@Override
+	public void goTo(RRTNode path) {
+		ItemPosition ip = new ItemPosition("path", path.position.x, path.position.y, 0);
+		this.dest = ip;
+		
+		gvh.trace.traceEvent(TAG, "Go To", ip, gvh.time());
+		
+		gpspro.setDestination(name, ip, defaultParam.LINSPEED_MAX);
+		
+		inMotion = true;
+	}
+*/
 	
 	@Override
 	public void turnTo(ItemPosition dest) {
@@ -68,4 +82,6 @@ public class IdealSimMotionAutomaton extends RobotMotion implements RobotEventLi
 	{
 		defaultParam = param;
 	}
+
+
 }

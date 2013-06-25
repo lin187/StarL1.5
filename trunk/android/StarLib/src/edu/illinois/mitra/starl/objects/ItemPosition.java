@@ -1,6 +1,5 @@
 package edu.illinois.mitra.starl.objects;
 
-import java.awt.geom.Line2D;
 import java.awt.geom.Line2D.Double;
 import java.util.HashMap;
 

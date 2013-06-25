@@ -28,7 +28,6 @@ public abstract class RobotMotion extends Thread implements Cancellable {
 	
 	
 	
-	
 	/**
 	 * Turn to face a destination using the default motion parameters
 	 * @param dest the destination to face
@@ -50,4 +49,6 @@ public abstract class RobotMotion extends Thread implements Cancellable {
 	 * @param param the parameters to use by default
 	 */
 	public abstract void setParameters(MotionParameters param);
+
+
 }

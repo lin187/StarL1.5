@@ -95,15 +95,27 @@ public class MotionAutomaton extends RobotMotion {
 
 	public void goTo(ItemPosition dest) {
 		if((inMotion && !this.destination.equals(dest)) || !inMotion) {
-			
-			//add path planning soon
-			
 			this.destination = dest;
 			this.mode = OPMODE.GO_TO;
 			startMotion();
 		}
 	}
-
+/*	
+	public void goTo(RRTNode pathNode){
+		if(pathNode != null){
+			Stack<ItemPosition> pathStack= new Stack<ItemPosition>();
+				while(pathNode.parent != null && pathNode != null){
+					ItemPosition ToGo= new ItemPosition("midpoint", pathNode.position.x, pathNode.position.y, 0);
+					pathStack.push(ToGo);
+					pathNode = pathNode.parent;
+				}
+				while(!pathStack.isEmpty()){
+					ItemPosition ToGo = pathStack.pop();
+					goTo(ToGo);
+				}
+		}
+	}
+*/
 	public void turnTo(ItemPosition dest) {
 		if((inMotion && !this.destination.equals(dest)) || !inMotion) {
 			this.destination = dest;

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Stack;
 
 
 import edu.illinois.mitra.starl.comms.RobotMessage;
@@ -11,8 +12,7 @@ import edu.illinois.mitra.starl.functions.RandomLeaderElection;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.LeaderElection;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
-import edu.illinois.mitra.starl.objects.ItemPosition;
-import edu.illinois.mitra.starl.objects.ObstacleList;
+import edu.illinois.mitra.starl.objects.*;
 import edu.illinois.mitra.starl.motion.*;
 
 public class RaceApp extends LogicThread {
@@ -20,6 +20,11 @@ public class RaceApp extends LogicThread {
 	public static final int ARRIVED_MSG = 22;
 
 	final Map<String, ItemPosition> destinations = new HashMap<String, ItemPosition>();
+	
+	Stack<ItemPosition> pathStack;
+	
+	RRTNode kdTree = new RRTNode();
+	
 	ObstacleList obsList = new ObstacleList();
 	ItemPosition currentDestination, currentDestination1;
 	
@@ -31,7 +36,7 @@ public class RaceApp extends LogicThread {
 	private boolean iamleader = false;
 	
 	private enum Stage {
-		PICK, GO, DONE, ELECT, HOLD
+		PICK, GO, DONE, ELECT, HOLD, MIDWAY
 	};
 
 	private Stage stage = Stage.ELECT;
@@ -75,14 +80,20 @@ public class RaceApp extends LogicThread {
 					gvh.comms.addOutgoingMessage(informleader);
 
 					iamleader = le.getLeader().equals(name);
-					iamleader = true;
+					//iamleader = true;
 					
 					if(iamleader)
 					{
 					currentDestination = getRandomElement(destinations);
-				
-					gvh.plat.moat.goTo(currentDestination);
-					stage = Stage.GO;
+					
+					RRTNode path = new RRTNode();
+					pathStack = path.findRoute(currentDestination, gvh.gps.getPosition(name) , 50000, gvh.gps.getObspointPositions(), 5000, 3000, 180);
+					kdTree = RRTNode.stopNode;
+//					ItemPosition goMidPoint = pathStack.pop();
+					//					gvh.plat.moat.goTo(path);
+//					currentDestination = goMidPoint;
+//					gvh.plat.moat.goTo(currentDestination);
+					stage = Stage.MIDWAY;
 					}
 					else
 					{
@@ -112,14 +123,36 @@ public class RaceApp extends LogicThread {
 					}
 				}
 				break;
+			
+				
+			case MIDWAY:
+				if(!gvh.plat.moat.inMotion) {
+					if(!pathStack.empty()){
+						ItemPosition goMidPoint = pathStack.pop();
+						gvh.plat.moat.goTo(goMidPoint);
+						stage = Stage.MIDWAY;
+					}
+					else{
+						if(!gvh.plat.moat.inMotion) {
+							if(currentDestination != null)
+								destinations.remove(currentDestination.getName());
+							RobotMessage inform = new RobotMessage("ALL", name, ARRIVED_MSG, currentDestination.getName());
+							gvh.comms.addOutgoingMessage(inform);
+							stage = Stage.PICK;
+						}
+					}
+				}
+				break;	
+				
 			case GO:
 				if(!gvh.plat.moat.inMotion) {
-					if(currentDestination != null)
-						destinations.remove(currentDestination.getName());
-					RobotMessage inform = new RobotMessage("ALL", name, ARRIVED_MSG, currentDestination.getName());
-					gvh.comms.addOutgoingMessage(inform);
-					stage = Stage.PICK;
-				}
+				if(currentDestination != null)
+					destinations.remove(currentDestination.getName());
+				RobotMessage inform = new RobotMessage("ALL", name, ARRIVED_MSG, currentDestination.getName());
+				gvh.comms.addOutgoingMessage(inform);
+				stage = Stage.PICK;
+			}
+					
 				break;
 			case HOLD:
 				if(gvh.gps.getMyPosition().distanceTo(gvh.gps.getPosition(le.getLeader())) < 1000 )

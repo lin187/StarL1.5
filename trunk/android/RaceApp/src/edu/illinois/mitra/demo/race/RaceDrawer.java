@@ -7,6 +7,7 @@ import java.awt.Point;
 import java.awt.Stroke;
 
 import edu.illinois.mitra.starl.interfaces.LogicThread;
+import edu.illinois.mitra.starl.motion.RRTNode;
 import edu.illinois.mitra.starl.objects.*;
 import edu.illinois.mitra.starlSim.draw.Drawer;
 
@@ -24,6 +25,16 @@ public class RaceDrawer extends Drawer {
 			g.fillRect(dest.getX() - 13, dest.getY() - 13, 26, 26);
 		}
 
+		//draw kdTree for debugging
+		g.setColor(Color.orange);
+		RRTNode curNode = app.kdTree;
+		while(curNode != null){
+			g.drawRect(curNode.position.x, curNode.position.y, 30, 30);
+			if(curNode.parent != null)
+			g.drawLine(curNode.position.x, curNode.position.y, curNode.parent.position.x, curNode.parent.position.y);
+			curNode = curNode.parent;
+		}
+		
 		g.setColor(Color.GREEN);
 		ObstacleList list = app.obsList;
 		for(int i = 0; i < list.ObList.size(); i++)

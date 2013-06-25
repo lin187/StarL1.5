@@ -27,8 +27,8 @@ public class Obstacles {
 		boolean check = false;
 		Line2D.Double path = new Line2D.Double(destination.x, destination.y, current.x, current.y);
 		Line2D.Double obSeg = new Line2D.Double();
-		for(int i=1; i<=obstacle.size(); i++){
-			for(int j=1; j<=obstacle.size(); j++){
+		for(int i=0; i<obstacle.size(); i++){
+			for(int j=0; j<obstacle.size(); j++){
 				if(i != j)
 				{	
 					if(obstacle.elementAt(i) != null){

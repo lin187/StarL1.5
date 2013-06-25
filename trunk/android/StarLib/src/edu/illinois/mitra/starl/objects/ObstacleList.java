@@ -58,7 +58,39 @@ public class ObstacleList {
 		return check;
 	}
 	
-	public boolean validPath(RRTNode destinationNode){
+	
+//return true if the path specified by two RRTNode has a line such that every point alone the line is reachable by robots	
+	public boolean validPath(RRTNode destinationNode, RRTNode currentNode,  int Radius){
+		if(destinationNode == null)
+			return false;
+		if(ObList == null)
+			return true;
+		
+		boolean check = true;
+		RRTNode FirstNode = currentNode;
+		RRTNode SecondNode = destinationNode;
+		if(destinationNode.position.x < currentNode.position.x){
+			FirstNode = destinationNode;
+			SecondNode = currentNode;
+			
+		}
+		
+		for(int p = 1; p< (FirstNode.position.x - SecondNode.position.x); p++){
+			ItemPosition destination = new ItemPosition("pathPoint", destinationNode.position.x + p, 
+					SecondNode.position.y + p*(SecondNode.position.y -FirstNode.position.y)/(SecondNode.position.x -FirstNode.position.x) , 0);
+			
+			for(int i=0; i< ObList.size(); i++){
+				if(ObList.elementAt(i) != null){
+				check = check && ObList.elementAt(i).validItemPos(destination, Radius);
+				}
+				else
+				break;
+			}
+		}
+		return check;
+	}
+
+	public boolean validPathPoint(RRTNode destinationNode, int Radius){
 		if(destinationNode == null)
 			return false;
 		if(ObList == null)
@@ -68,7 +100,7 @@ public class ObstacleList {
 		boolean check = true;
 		for(int i=0; i< ObList.size(); i++){
 			if(ObList.elementAt(i) != null){
-				check = check && ObList.elementAt(i).validItemPos(destination);
+				check = check && ObList.elementAt(i).validItemPos(destination, Radius);
 			}
 			else
 			break;
