@@ -5,6 +5,8 @@ import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.geom.Line2D;
 
+import edu.illinois.mitra.starl.motion.RRTNode;
+
 public class Obstacles {
 	public Vector<Point> obstacle;
 
@@ -96,6 +98,36 @@ public class Obstacles {
 				return false;
 			else
 				return true;
+	}
+	
+	public double findMinDist(RRTNode destNode, RRTNode currentNode){
+		Point nextpoint = obstacle.firstElement();
+		Point curpoint = obstacle.firstElement();
+		double minDist = 100000;
+		Line2D.Double current;
+		current = new Line2D.Double(destNode.position.x,destNode.position.y,currentNode.position.x,currentNode.position.y);
+		Line2D.Double segment;
+		
+		for(int j = 0; j < obstacle.size() ; j++){
+			curpoint = obstacle.get(j);
+			if (j == obstacle.size() -1){
+				nextpoint = obstacle.firstElement();
+			}
+			else{
+				nextpoint = obstacle.get(j+1);
+			}
+			segment = new Line2D.Double(curpoint.x,curpoint.y,nextpoint.x,nextpoint.y);
+			double dist1 = segment.ptSegDist(current.x1, current.y1);
+			double dist2 = segment.ptSegDist(current.x2, current.y2);
+			double dist3 = current.ptSegDist(segment.x1, segment.y1);
+			double dist4 = current.ptSegDist(segment.x2, segment.y2);
+			double temp1 = Math.min(dist1, dist2);
+			double temp2 = Math.min(dist3, dist4);
+			double minDistNow = Math.min(temp1, temp2);
+			minDist = Math.min(minDistNow, minDist);
+			
+		}
+		return minDist;
 	}
 	
 	  public Point getClosestPointOnSegment(int sx1, int sy1, int sx2, int sy2, int px, int py)

@@ -39,11 +39,11 @@ public class RRTNode {
 
 //methods to find the route
 	
-    public Stack<ItemPosition> findRoute(ItemPosition destination, ItemPosition start, int K, ObstacleList obsList, int xRange, int yRange, int Radius) {
+    public Stack<ItemPosition> findRoute(ItemPosition destination, int K, ObstacleList obsList, int xRange, int yRange, int Radius) {
 //initialize a kd tree;
     	KDTree<RRTNode> kd = new KDTree<RRTNode>(2);
-    	double [] root = {start.x,start.y};
-    	final RRTNode rootNode = new RRTNode(start.x,start.y);
+    	double [] root = {position.x,position.y};
+    	final RRTNode rootNode = new RRTNode(position.x,position.y);
     	final RRTNode destNode = new RRTNode(destination.x, destination.y);
 //    	pathList.clear();
     	
@@ -78,14 +78,15 @@ public class RRTNode {
     		boolean validRandom = false;
     		int xRandom = 0;
     		int yRandom = 0;
-    		RRTNode sampledNode = new RRTNode(xRandom, yRandom);
+    		ItemPosition sampledPos = new ItemPosition("rand",xRandom, yRandom, 0);
     		while(!validRandom){
     			xRandom = (int)(Math.random() * ((xRange) + 1));
         		yRandom = (int)(Math.random() * ((yRange) + 1));
-        		sampledNode.position.x = xRandom;
-        		sampledNode.position.y = yRandom;
-        		validRandom = !obsList.validPathPoint(sampledNode, Radius); 	
+        		sampledPos.x = xRandom;
+        		sampledPos.y = yRandom;
+        		validRandom = obsList.validstarts(sampledPos, Radius); 	
     		}
+    		RRTNode sampledNode = new RRTNode(sampledPos.x, sampledPos.y);
     		// with a valid random sampled point, we find it's nearest neighbor in the tree, set it as current Node
     		try{
     		currentNode = kd.nearest(sampledNode.getValue());
@@ -96,7 +97,7 @@ public class RRTNode {
     		sampledNode = toggle(currentNode, sampledNode, obsList);
     		//check if toggle failed
     		//if not failed, insert the new node to the tree
-    		if(sampledNode != currentNode){
+    		if(sampledNode != null){
     			sampledNode.parent = currentNode;
     			try{
     	    		kd.insert(sampledNode.getValue(), sampledNode);
@@ -131,14 +132,6 @@ public class RRTNode {
     
     	}
     }
-    
-    
-    /*
-    public LinkedList<ItemPosition> findPath(ItemPosition destination, ItemPosition start, int K, ObstacleList obsList, int xRange, int yRange){
-    	findRoute(destination, start, K, obsList, xRange, yRange);
-    	return path;
-    }
-    */
 
 	private RRTNode toggle(RRTNode currentNode, RRTNode sampledNode, ObstacleList obsList) {
 		// toggle function deals with constrains by the environment as well as robot systems. 
@@ -151,7 +144,7 @@ public class RRTNode {
 		int tries = 0;
 		// try 20 times, which will shorten it to 0.00317 times the original path length
 		// smaller tries might make integer casting loop forever
-		while((obsList.badPath(currentNode, toggleNode) && (tries < 20) && obsList.validPath(currentNode, toggleNode,160)))
+		while((!obsList.validPath(toggleNode, currentNode, 165)) && (tries < 20))
 		{
 			//move 1/4 toward current
 			toggleNode.position.x = (int) ((toggleNode.position.x + currentNode.position.x)/(1.5));
@@ -160,7 +153,7 @@ public class RRTNode {
 		}
 		//return currentNode if toggle failed
 		if(tries >= 19)
-			return currentNode;
+			return null;
 		else
 			return toggleNode;
 	}

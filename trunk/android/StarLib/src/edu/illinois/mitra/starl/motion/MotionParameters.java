@@ -138,7 +138,7 @@ public class MotionParameters {
 		private int SLOWFWD_RADIUS = 700;
 		private int SMALLTURN_ANGLE = 3;
 		private int SLOWTURN_ANGLE = 25;
-		private int ROBOT_RADIUS = 180;
+		private int ROBOT_RADIUS = 165;
 		private int STRAIGHT_ANGLE = 6;
 		private int ARC_EXIT_ANGLE = 30;
 		private int ARC_RADIUS = 700;

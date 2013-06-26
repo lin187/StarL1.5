@@ -86,8 +86,8 @@ public class RaceApp extends LogicThread {
 					{
 					currentDestination = getRandomElement(destinations);
 					
-					RRTNode path = new RRTNode();
-					pathStack = path.findRoute(currentDestination, gvh.gps.getPosition(name) , 50000, gvh.gps.getObspointPositions(), 5000, 3000, 180);
+					RRTNode path = new RRTNode(gvh.gps.getPosition(name).x, gvh.gps.getPosition(name).y);
+					pathStack = path.findRoute(currentDestination, 50000, gvh.gps.getObspointPositions(), 5000, 3000, 165);
 					kdTree = RRTNode.stopNode;
 //					ItemPosition goMidPoint = pathStack.pop();
 					//					gvh.plat.moat.goTo(path);
