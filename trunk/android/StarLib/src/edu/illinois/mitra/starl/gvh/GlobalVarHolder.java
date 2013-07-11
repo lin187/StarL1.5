@@ -90,4 +90,5 @@ public abstract class GlobalVarHolder {
 	 * @param thread the thread to unregister
 	 */
 	public abstract void threadDestroyed(Thread thread);
+
 }

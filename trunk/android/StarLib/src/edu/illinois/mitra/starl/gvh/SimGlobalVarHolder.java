@@ -59,7 +59,7 @@ public class SimGlobalVarHolder extends GlobalVarHolder {
 	public long time() {
 		return engine.getTime();
 	}
-
+	
 	@Override
 	public void threadCreated(Thread thread) {
 		engine.registerThread(thread);

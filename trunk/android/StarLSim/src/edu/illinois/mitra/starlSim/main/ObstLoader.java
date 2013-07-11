@@ -27,12 +27,26 @@ public class ObstLoader {
 				String[] parts = line.replace(" ", "").replace(";", ",").split(",");
 					Obstacles point = new Obstacles();
 					if(parts[0].equals("Obstacle")) {
-						for(int j = 1; j<((parts.length)-1); j+=2)
-						
-						point.add(Integer.parseInt(parts[j]),Integer.parseInt(parts[j+1]));
-						
+						int j;
+						for(j = 1; j<((parts.length)-2); j+=2)
+						{
+							point.add(Integer.parseInt(parts[j]),Integer.parseInt(parts[j+1]));
+						}
+						point.timeFrame = Integer.parseInt(parts[j]);
+						point.hidden = false;
+						Obspoints.ObList.add(point);
 					}
-					Obspoints.ObList.add(point);
+					if(parts[0].equals("Hidden")) {
+						int j;
+						for(j = 1; j<((parts.length)-2); j+=2)
+						{
+							point.add(Integer.parseInt(parts[j]),Integer.parseInt(parts[j+1]));
+						}
+						point.timeFrame = Integer.parseInt(parts[j]);
+						point.hidden = true;
+						Obspoints.ObList.add(point);
+					}
+					
 			}
 			in.close();
 		} catch (IOException e) {

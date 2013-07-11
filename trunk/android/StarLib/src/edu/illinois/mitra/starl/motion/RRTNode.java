@@ -38,6 +38,9 @@ public class RRTNode {
 	}
 
 //methods to find the route
+//if find a path, return a midway point stack
+//if can not find a path, return null
+//remember to handle the null stack when writing apps using RRT path planning
 	
     public Stack<ItemPosition> findRoute(ItemPosition destination, int K, ObstacleList obsList, int xRange, int yRange, int Radius) {
 //initialize a kd tree;

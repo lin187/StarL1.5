@@ -9,6 +9,11 @@ import edu.illinois.mitra.starl.motion.RRTNode;
 
 public class Obstacles {
 	public Vector<Point> obstacle;
+	public long timeFrame;
+	public boolean hidden;
+	//time that the obstacle will stay in the system, in milliseconds
+	//if -1, it is a static obstacle
+	//once zero, it will be removed from the obsList
 
 	public Obstacles(){
 		obstacle = new Vector<Point>(4, 3); 
@@ -17,6 +22,7 @@ public class Obstacles {
 	public Obstacles(Vector<Point> obstacle1) {
 		obstacle = obstacle1;
 	}
+	
 	public void add(int x, int y){
 		Point temp = new Point(x,y);
 		obstacle.add(temp) ;
@@ -48,7 +54,10 @@ public class Obstacles {
 	public boolean validItemPos(ItemPosition destination, double radius){
 		//check if the itemPosotion destination is reachable by robots
 		//return true if robot can reach it
-		
+		if(destination == null)
+			return false;
+		if(obstacle.size() == 0)
+			return true;
 		
 			Point nextpoint = obstacle.firstElement();
 			Point curpoint = obstacle.firstElement();

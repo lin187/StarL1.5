@@ -173,7 +173,7 @@ public class SimSettings {
 		private String INITIAL_POSITIONS_FILE;
 		private boolean IDEAL_MOTION = false;
 		private double TIC_TIME_RATE = 5;
-		private int GRID_XSIZE = 3000;
+		private int GRID_XSIZE = 5000;
 		private int GRID_YSIZE = 3000;
 		private long GPS_PERIOD = 75;
 		private double GPS_ANGLE_NOISE = 0;

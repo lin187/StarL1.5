@@ -158,6 +158,7 @@ public class Simulation {
 					}
 				}
 				drawFrame.updateData(rd, simEngine.getTime());
+				//add obstacle update later
 			}
 		};
 		gps.addObserver(guiObserver);

@@ -25,7 +25,7 @@ public class RaceDrawer extends Drawer {
 			g.fillRect(dest.getX() - 13, dest.getY() - 13, 26, 26);
 		}
 
-		//draw kdTree for debugging
+		//draw kdTree final path stack for debugging
 		g.setColor(Color.orange);
 		RRTNode curNode = app.kdTree;
 		while(curNode != null){
@@ -35,8 +35,8 @@ public class RaceDrawer extends Drawer {
 			curNode = curNode.parent;
 		}
 		
-		g.setColor(Color.GREEN);
-		ObstacleList list = app.obsList;
+		g.setColor(Color.BLACK);
+		ObstacleList list = app.obEnvironment;
 		for(int i = 0; i < list.ObList.size(); i++)
 		{
 			Obstacles currobs = list.ObList.get(i);

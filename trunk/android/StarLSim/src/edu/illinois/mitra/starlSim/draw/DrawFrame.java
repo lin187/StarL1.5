@@ -25,13 +25,14 @@ public class DrawFrame extends JFrame
 		 catch (Exception e) {}
 		
 		setTitle("StarL Simulator");
-		setSize(1000,700);
+		setSize(1366,768);
 		setLocation(50, 50);
 		
 		dp = new DrawPanel(robotNames, blockedWireless, settings);
 		dp.setWorld(settings.GRID_XSIZE, settings.GRID_YSIZE);
 		dp.setDefaultPosition(-750, -3100, 24);
 		getContentPane().add(dp);
+		
 	}
 	
 	public void updateData(ArrayList <RobotData> data, long time)

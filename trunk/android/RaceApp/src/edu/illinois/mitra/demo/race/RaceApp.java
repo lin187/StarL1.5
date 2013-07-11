@@ -24,19 +24,22 @@ public class RaceApp extends LogicThread {
 	Stack<ItemPosition> pathStack;
 	
 	RRTNode kdTree = new RRTNode();
+// used to find path through obstacles
+	int ObsSize; 
+// used to check if there are obstacle map changes
+	ObstacleList obsList;
+	//obsList is a local map each robot has, when path planning, use this map
+	ObstacleList obEnvironment;
+	//obEnvironment is the physical environment, used when calculating collisions
 	
-	ObstacleList obsList = new ObstacleList();
 	ItemPosition currentDestination, currentDestination1;
-	
-//	private String temp;
-//	ItemPosition currentDestination1 = new ItemPosition(temp, 1,1,1);
 	
 	private LeaderElection le;
 //	private String leader = null;
 	private boolean iamleader = false;
 	
 	private enum Stage {
-		PICK, GO, DONE, ELECT, HOLD, MIDWAY
+		PICK, GO, DONE, ELECT, HOLD, MIDWAY, WAIT
 	};
 
 	private Stage stage = Stage.ELECT;
@@ -54,7 +57,13 @@ public class RaceApp extends LogicThread {
 		
 		for(ItemPosition i : gvh.gps.getWaypointPositions())
 			destinations.put(i.getName(), i);
-		obsList = gvh.gps.getObspointPositions();
+		
+
+		//point the environment to internal data, so that we can update it 
+		obEnvironment = gvh.gps.getObspointPositions();
+		
+		//download from environment here so that all the robots have their own copy of visible ObstacleList
+		obsList = obEnvironment.downloadObs();
 		
 		gvh.comms.addMsgListener(this, ARRIVED_MSG);
 	}
@@ -62,6 +71,10 @@ public class RaceApp extends LogicThread {
 	@Override
 	public List<Object> callStarL() {
 		while(true) {
+			obEnvironment.updateObs();
+
+			obsList.updateObs();
+			
 			switch(stage) {
 			case ELECT:
 				le.elect();
@@ -80,14 +93,14 @@ public class RaceApp extends LogicThread {
 					gvh.comms.addOutgoingMessage(informleader);
 
 					iamleader = le.getLeader().equals(name);
-					//iamleader = true;
+					iamleader = true;
 					
 					if(iamleader)
 					{
 					currentDestination = getRandomElement(destinations);
-					
+					ObsSize = obsList.ObList.size();
 					RRTNode path = new RRTNode(gvh.gps.getPosition(name).x, gvh.gps.getPosition(name).y);
-					pathStack = path.findRoute(currentDestination, 50000, gvh.gps.getObspointPositions(), 5000, 3000, 165);
+					pathStack = path.findRoute(currentDestination, 5000, obsList, 5000, 3000, 165);
 					kdTree = RRTNode.stopNode;
 //					ItemPosition goMidPoint = pathStack.pop();
 					//					gvh.plat.moat.goTo(path);
@@ -127,7 +140,17 @@ public class RaceApp extends LogicThread {
 				
 			case MIDWAY:
 				if(!gvh.plat.moat.inMotion) {
+					if(pathStack == null){
+						stage = Stage.WAIT;
+						// if can not find a path, wait for obstacle map to change
+						break;
+					}
 					if(!pathStack.empty()){
+						if(ObsSize != obsList.ObList.size()){
+							pathStack.clear();
+							stage = Stage.PICK;
+							break;
+						}
 						ItemPosition goMidPoint = pathStack.pop();
 						gvh.plat.moat.goTo(goMidPoint);
 						stage = Stage.MIDWAY;
@@ -160,6 +183,27 @@ public class RaceApp extends LogicThread {
 				stage = Stage.PICK;
 			    }
 				else
+				{
+				gvh.plat.moat.motion_stop();	
+				}
+				break;
+			case WAIT:
+				//try to renew its' map when other robots update the map, and then try again
+				//wait for news from other robots
+				/*
+				if(ObsSize != gvh.gps.getObspointPositions().ObList.size())
+				{
+					//download the list again
+					obsList = new ObstacleList();
+					for(int i = 0; i< obEnvironment.ObList.size(); i++){
+						if(!obEnvironment.ObList.get(i).hidden)
+						obsList.ObList.add(obEnvironment.ObList.get(i));
+					}
+					ObsSize = obsList.ObList.size();
+				stage = Stage.PICK;
+			    }
+				else
+				*/
 				{
 				gvh.plat.moat.motion_stop();	
 				}

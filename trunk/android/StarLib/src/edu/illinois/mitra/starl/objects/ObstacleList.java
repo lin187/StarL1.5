@@ -6,13 +6,16 @@ import edu.illinois.mitra.starl.motion.RRTNode;
 
 public class ObstacleList {
 	public Vector<Obstacles> ObList;
+	private long lastUpdateTime;
 
 	public ObstacleList(Vector<Obstacles> Oblist) {
 			this.ObList = Oblist;
+			lastUpdateTime = System.currentTimeMillis();
 		}
 	
 	public ObstacleList(){
 		this.ObList = new Vector<Obstacles>(3,2);
+		lastUpdateTime = System.currentTimeMillis();
 	}
 	
 //check if the line alone destination and current has any intersection with any obstacles
@@ -76,7 +79,8 @@ public class ObstacleList {
 			boolean check = true;
 			for(int i=0; i< ObList.size(); i++){
 				if(ObList.elementAt(i) != null){
-					check = check && (ObList.elementAt(i).findMinDist(destinationNode, currentNode)> Radius);
+					double minDist = ObList.elementAt(i).findMinDist(destinationNode, currentNode);
+					check = check && (minDist> Radius); 
 					if(!check)
 						break;
 				}
@@ -85,29 +89,46 @@ public class ObstacleList {
 			}
 			return check;
 			
-			/*
-			boolean check = true;
-			RRTNode FirstNode = currentNode;
-			RRTNode SecondNode = destinationNode;
-			if(destinationNode.position.x < currentNode.position.x){
-				FirstNode = destinationNode;
-				SecondNode = currentNode;
-			
-			}
-			
-			for(int p = 1; p< (SecondNode.position.x - FirstNode.position.x); p++){
-				ItemPosition destination = new ItemPosition("pathPoint", destinationNode.position.x + p, 
-					SecondNode.position.y + p*(SecondNode.position.y -FirstNode.position.y)/(SecondNode.position.x -FirstNode.position.x) , 0);
-					check = check && validstarts(destination, Radius);
-					if(check == false)
-						break;
-			}
-			return check;
-			*/
-			
-//			ItemPosition dest = new ItemPosition("dest", destinationNode.position.x, destinationNode.position.y, 0);
-//			return(validstarts(dest, Radius));
 		}
+	}
+	
+//methods for hidden or time vise obstacles	
+	public void updateObs(){
+		long duration = System.currentTimeMillis() - lastUpdateTime;
+		synchronized (ObList){
+		for(int i=0; i< ObList.size(); i++){
+			if(ObList.elementAt(i) != null){
+				if(ObList.elementAt(i).timeFrame == 0){
+					ObList.remove(i);
+					updateObs();
+					break;
+				}
+				else{
+					if(ObList.elementAt(i).timeFrame > 0){
+						ObList.elementAt(i).timeFrame -= duration;
+						if(ObList.elementAt(i).timeFrame <0)
+							ObList.elementAt(i).timeFrame = 0;
+					}
+				}
+			}
+			else
+			break;
+		}
+		}
+	}
+
+	public ObstacleList downloadObs() {
+		//download method to provide robots with informations of unhidden obstacles
+		// sever as an selected deep copy
+		if(ObList == null)
+			return null;
+		
+		ObstacleList obsList = new ObstacleList();
+		for(int i = 0; i< ObList.size(); i++){
+			if(!ObList.get(i).hidden)
+			obsList.ObList.add(ObList.get(i));
+		}
+		return obsList;
 	}
 
 	
