@@ -7,6 +7,7 @@ import edu.illinois.mitra.starl.motion.RRTNode;
 import edu.illinois.mitra.starl.motion.RobotMotion;
 import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.ItemPosition;
+import edu.illinois.mitra.starl.objects.ObstacleList;
 
 public class IdealSimMotionAutomaton extends RobotMotion implements RobotEventListener {
 	private static final String TAG = "MotionAutomaton";
@@ -15,6 +16,7 @@ public class IdealSimMotionAutomaton extends RobotMotion implements RobotEventLi
 	private MotionParameters defaultParam = MotionParameters.defaultParameters();
 	
 	private GlobalVarHolder gvh;
+	private ObstacleList obsList;
 	
 	private ItemPosition dest;
 	
@@ -26,10 +28,11 @@ public class IdealSimMotionAutomaton extends RobotMotion implements RobotEventLi
 		gvh.trace.traceEvent(TAG, "Created", gvh.time());
 	}
 	@Override
-	public void goTo(ItemPosition dest) {
+	public void goTo(ItemPosition dest, ObstacleList obsList) {
+		// need to take a look into the collision here
 		ItemPosition ip = new ItemPosition(dest);
 		this.dest = ip;
-		
+		this.obsList = obsList;
 		gvh.trace.traceEvent(TAG, "Go To", ip, gvh.time());
 		
 		gpspro.setDestination(name, ip, defaultParam.LINSPEED_MAX);

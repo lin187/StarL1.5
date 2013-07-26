@@ -7,6 +7,14 @@ import edu.illinois.mitra.starlSim.draw.Drawer;
  * 
  */
 public class SimSettings {
+	
+	//grid size of the obstacle representations
+	public final int Detect_Precision;
+	
+	//mark a rectangle when hit an unknown obstacle, length of rectangle = De_Radadius * Detect_Precision
+	// may change to mark a circle later on
+	public final int De_Radius;
+	
 	/**
 	 * The number of robots to simulate.
 	 */
@@ -158,6 +166,7 @@ public class SimSettings {
 	 */
 	public final boolean DRAW_WAYPOINT_NAMES;
 
+
 	private static final SimSettings defaultInstance = new Builder().build();
 
 	public static SimSettings defaultSettings() {
@@ -165,6 +174,8 @@ public class SimSettings {
 	}
 
 	public static class Builder {
+		private int De_Radius = 1;
+		private int Detect_Precision = 1;
 		private int N_BOTS = 4;
 		private long SIM_TIMEOUT = 0;
 		private long TIMEOUT = 0;
@@ -196,6 +207,17 @@ public class SimSettings {
 		private boolean DRAW_OBSPOINTS = true;
 		private boolean DRAW_WAYPOINT_NAMES = true;
 
+
+		public Builder De_Radius(int length) {
+			this.De_Radius = length;
+			return this;
+		}
+		
+		public Builder Detect_Precision(int sqsize) {
+			this.Detect_Precision = sqsize;
+			return this;
+		}
+		
 		public Builder N_BOTS(int N_BOTS) {
 			this.N_BOTS = N_BOTS;
 			return this;
@@ -351,6 +373,8 @@ public class SimSettings {
 	}
 
 	private SimSettings(Builder builder) {
+		this.De_Radius = builder.De_Radius;
+		this.Detect_Precision = builder.Detect_Precision;
 		this.N_BOTS = builder.N_BOTS;
 		this.WAYPOINT_FILE = builder.WAYPOINT_FILE;
 		this.OBSPOINT_FILE = builder.OBSPOINT_FILE;

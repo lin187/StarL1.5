@@ -84,7 +84,12 @@ public class Simulation {
 					
 		gps.setObspoints(ObstLoader.loadObspoints(settings.OBSPOINT_FILE));
 		list = gps.getObspointPositions();
-		
+		list.detect_Precision = settings.Detect_Precision;
+		list.de_Radius = settings.De_Radius;
+		//should we grid the environment?
+		if(settings.Detect_Precision > 1){
+			list.Gridfy();
+		}
 
 		this.settings = settings;
 		simEngine.setGps(gps);
@@ -142,11 +147,36 @@ public class Simulation {
 			public void update(Observable o, Object arg) {
 				ArrayList<ItemPosition> pos = ((PositionList) arg).getList();
 				ArrayList<RobotData> rd = new ArrayList<RobotData>();
+				//define robot colors
+				int i = 0;
+				Color[] c = new Color[12] ;
+				c[0] = Color.BLACK;
+				c[1] = Color.BLUE;
+				c[2] = Color.GREEN;
+				c[3] = Color.MAGENTA;
+				c[4] = Color.ORANGE;
+				c[5] = Color.CYAN;
+				c[6] = Color.GRAY;
+				c[7] = Color.PINK;
+				c[8] = Color.RED;
+				c[9] = Color.LIGHT_GRAY;
+				c[10] = Color.YELLOW;
+				c[11] = Color.DARK_GRAY;
+				
 				// Add robots
-				for(ItemPosition ip : pos) {
-					RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.angle);
-					nextBot.radius = settings.BOT_RADIUS;
-					rd.add(nextBot);
+				for(ItemPosition ip : pos) {	
+					if(i<12){
+						RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.angle, c[i]);
+						nextBot.radius = settings.BOT_RADIUS;
+						rd.add(nextBot);
+						i++;
+					}
+					else{
+						RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.angle, c[0]);
+						nextBot.radius = settings.BOT_RADIUS;
+						rd.add(nextBot);
+					}
+						
 				}
 				// Add waypoints
 				if(settings.DRAW_WAYPOINTS) {

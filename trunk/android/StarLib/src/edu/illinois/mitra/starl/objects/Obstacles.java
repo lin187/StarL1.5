@@ -11,6 +11,7 @@ public class Obstacles {
 	public Vector<Point> obstacle;
 	public long timeFrame;
 	public boolean hidden;
+	public boolean grided;
 	//time that the obstacle will stay in the system, in milliseconds
 	//if -1, it is a static obstacle
 	//once zero, it will be removed from the obsList
@@ -21,6 +22,24 @@ public class Obstacles {
 
 	public Obstacles(Vector<Point> obstacle1) {
 		obstacle = obstacle1;
+	}
+	
+	public Obstacles(Obstacles original){
+		obstacle = new Vector<Point>(4, 3); 
+		for(int i = 0; i< original.obstacle.size(); i++){
+			add(original.obstacle.get(i).x, original.obstacle.get(i).y);
+		}
+		grided = original.grided;
+		timeFrame = original.timeFrame;
+		hidden = original.hidden;
+	}
+	
+	//method for adding unknown obstacles
+	public Obstacles(int x, int y){
+		obstacle = new Vector<Point>(4, 3);
+		add(x,y) ;
+		grided = false;
+		timeFrame = -1;
 	}
 	
 	public void add(int x, int y){
@@ -161,4 +180,80 @@ public class Obstacles {
 
 	    return closestPoint;
 	  }
+	  
+	  
+// gridify the map
+	public void ToGrid(int a){
+		if(grided){
+			return;
+		}
+		switch(obstacle.size()){
+			case 1 : 
+				Point leftBottom1 = new Point(obstacle.firstElement().x - ((obstacle.firstElement().x)% a), obstacle.firstElement().y - ((obstacle.firstElement().y)% a));
+				Point rightBottom1 = new Point((leftBottom1.x + a), leftBottom1.y);
+				Point rightTop1 = new Point((leftBottom1.x + a), (leftBottom1.y + a));
+				Point leftTop1 = new Point((leftBottom1.x), (leftBottom1.y + a));
+				obstacle.removeAllElements();
+				obstacle.add(leftBottom1);
+				obstacle.add(rightBottom1);
+				obstacle.add(rightTop1);
+				obstacle.add(leftTop1);
+			break;	
+			case 2 :
+				int min_x = Math.min(obstacle.firstElement().x, obstacle.get(1).x);
+				min_x = min_x - (min_x%a);
+				int max_x = Math.max(obstacle.firstElement().x, obstacle.get(1).x);
+				max_x = max_x - (max_x%a) +a;
+				int min_y = Math.min(obstacle.firstElement().y, obstacle.get(1).y);
+				min_y = min_y - (min_y%a);
+				int max_y = Math.max(obstacle.firstElement().y, obstacle.get(1).y);
+				max_y = max_y - (max_y%a) +a;
+				
+				Point leftBottom2 = new Point(min_x, min_y);
+				Point rightBottom2 = new Point(max_x, min_y);
+				Point rightTop2 = new Point(max_x, max_y);
+				Point leftTop2 = new Point(min_x, max_y);
+				obstacle.removeAllElements();
+				obstacle.add(leftBottom2);
+				obstacle.add(rightBottom2);
+				obstacle.add(rightTop2);
+				obstacle.add(leftTop2);
+			break; 
+			case 4 :
+				int min_x3 = Math.min(obstacle.firstElement().x, obstacle.get(1).x);
+				min_x3 = Math.min(min_x3, obstacle.get(2).x);
+				min_x3 = Math.min(min_x3, obstacle.get(3).x);
+				min_x3 = min_x3 - (min_x3%a);
+				
+				int max_x3 = Math.max(obstacle.firstElement().x, obstacle.get(1).x);
+				max_x3 = Math.max(max_x3, obstacle.get(2).x);
+				max_x3 = Math.max(max_x3, obstacle.get(3).x);
+				max_x3 = max_x3 - (max_x3%a) +a;
+				
+				int min_y3 = Math.min(obstacle.firstElement().y, obstacle.get(1).y);
+				min_y3 = Math.min(min_y3, obstacle.get(2).y);
+				min_y3 = Math.min(min_y3, obstacle.get(3).y);
+				min_y3 = min_y3 - (min_y3%a);
+				
+				int max_y3 = Math.max(obstacle.firstElement().y, obstacle.get(1).y);
+				max_y3 = Math.max(max_y3, obstacle.get(2).y);
+				max_y3 = Math.max(max_y3, obstacle.get(3).y);
+				max_y3 = max_y3 - (max_y3%a) +a;
+				
+				Point leftBottom3 = new Point(min_x3, min_y3);
+				Point rightBottom3 = new Point(max_x3, min_y3);
+				Point rightTop3 = new Point(max_x3, max_y3);
+				Point leftTop3 = new Point(min_x3, max_y3);
+				obstacle.removeAllElements();
+				obstacle.add(leftBottom3);
+				obstacle.add(rightBottom3);
+				obstacle.add(rightTop3);
+				obstacle.add(leftTop3);
+			default :
+				System.out.println("not an acceptable demension");
+			break;
+		}
+		grided = true;
+		
+	}
 }

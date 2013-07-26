@@ -1,6 +1,8 @@
 package edu.illinois.mitra.starl.motion;
 
 import java.awt.Point;
+import java.awt.geom.Line2D;
+import java.awt.geom.Line2D.Double;
 import java.util.Arrays;
 
 
@@ -47,6 +49,8 @@ public class MotionAutomaton extends RobotMotion {
 	protected ItemPosition destination;
 	private ItemPosition mypos;
 	private ItemPosition blocker;
+	private ObstacleList obsList;
+	
 
 	protected enum STAGE {
 		INIT, ARCING, STRAIGHT, TURN, SMALLTURN, GOAL
@@ -79,11 +83,20 @@ public class MotionAutomaton extends RobotMotion {
 	private COLSTAGE colprev = null;
 	private COLSTAGE colstage = COLSTAGE.TURN;
 	private COLSTAGE colnext = null;
+	
+	private enum COLSTAGE1 {
+		TURN, STRAIGHT
+	}
+	private COLSTAGE1 colprev1 = null;
+	private COLSTAGE1 colstage1 = COLSTAGE1.TURN;
+	private COLSTAGE1 colnext1 = null;
+	
 	private int col_straightime = 0;
 	private boolean halted = false;
 
 	private double linspeed;
 	private double turnspeed;
+	private int obsSize;
 
 	public MotionAutomaton(GlobalVarHolder gvh, BluetoothInterface bti) {
 		super(gvh.id.getName());
@@ -93,10 +106,11 @@ public class MotionAutomaton extends RobotMotion {
 		this.turnspeed = (param.TURNSPEED_MAX - param.TURNSPEED_MIN) / (param.SLOWTURN_ANGLE - param.SMALLTURN_ANGLE);
 	}
 
-	public void goTo(ItemPosition dest) {
+	public void goTo(ItemPosition dest, ObstacleList obsList) {
 		if((inMotion && !this.destination.equals(dest)) || !inMotion) {
 			this.destination = dest;
 			this.mode = OPMODE.GO_TO;
+			this.obsList = obsList;
 			startMotion();
 		}
 	}
@@ -137,6 +151,7 @@ public class MotionAutomaton extends RobotMotion {
 					break;
 				case STOP_ON_COLLISION:
 					colliding = collision();
+					break;
 				default:
 					colliding = false;
 					break;
@@ -148,6 +163,9 @@ public class MotionAutomaton extends RobotMotion {
 						gvh.log.e(TAG, "Stage is: " + stage.toString());
 					switch(stage) {
 					case INIT:
+						
+						obsSize = obsList.ObList.size();
+						
 						halted = false;
 						if(mode == OPMODE.GO_TO) {
 							if(distance <= param.GOAL_RADIUS) {
@@ -233,7 +251,7 @@ public class MotionAutomaton extends RobotMotion {
 						gvh.trace.traceEvent(TAG, "Stage transition", stage.toString(), gvh.time());
 					}
 					next = null;
-				} else if((colliding && (param.COLAVOID_MODE == COLAVOID_MODE_TYPE.USE_COLAVOID)) || stage == null) {
+				} else if(((colliding || stage == null) && (param.COLAVOID_MODE == COLAVOID_MODE_TYPE.USE_COLAVOID)) ) {
 					// Collision imminent! Stop the robot
 					if(stage != null) {
 						gvh.log.d(TAG, "Imminent collision detected!");
@@ -249,11 +267,13 @@ public class MotionAutomaton extends RobotMotion {
 						if(colstage != colprev) {
 							gvh.log.d(TAG, "Colliding: sending turn command");
 							turn(param.TURNSPEED_MAX, -1 * mypos.angleTo(blocker));
+							
 						}
 
 						if(!collision()) {
+							
 							colnext = COLSTAGE.STRAIGHT;
-							gvh.log.i(TAG, "FREE OF BLOCKER!");
+							
 						} else {
 							gvh.log.d(TAG, "colliding with " + blocker.name + " - " + mypos.isFacing(blocker, 180) + " - " + mypos.distanceTo(blocker));
 						}
@@ -290,17 +310,75 @@ public class MotionAutomaton extends RobotMotion {
 						gvh.log.i(TAG, "Advancing stage to " + colnext);
 					}
 					colnext = null;
-				} else if(colliding && (param.COLAVOID_MODE == COLAVOID_MODE_TYPE.STOP_ON_COLLISION)) {
-					// Stop the robot if collision avoidance is disabled and a
-					// collision is imminent
-					if(!halted) {
-						halted = true;
-						System.out.println(gvh.id.getName() + " HAS COLLIDED!");
-						gvh.log.d(TAG, "No collision avoidance! Halting.");
-						gvh.trace.traceEvent(TAG, "Halting motion", gvh.time());
+				} else if((colliding || stage == null)&& (param.COLAVOID_MODE == COLAVOID_MODE_TYPE.STOP_ON_COLLISION)) {
+					// Collision imminent! Stop the robot
+					if(stage != null) {
+						gvh.log.d(TAG, "Imminent collision detected!");
+						stage = null;
 						straight(0);
-						stage = STAGE.INIT;
+						colnext1 = null;
+						colprev1 = null;
+						colstage1 = COLSTAGE1.TURN;
 					}
+
+					switch(colstage1) {
+					case TURN:
+						if(colstage1 != colprev1) {
+							gvh.log.d(TAG, "Colliding: sending turn command");
+							turn(param.TURNSPEED_MAX, -1 * mypos.angleTo(blocker));
+							
+						}
+
+						if(!collision()) {
+							
+							colnext1 = COLSTAGE1.STRAIGHT;
+							
+						} else {
+							gvh.log.d(TAG, "colliding with " + blocker.name + " - " + mypos.isFacing(blocker, 180) + " - " + mypos.distanceTo(blocker));
+						}
+						break;
+					case STRAIGHT:
+						if(colstage1 != colprev1) {
+							gvh.log.d(TAG, "Colliding: sending straight command");
+							straight(param.LINSPEED_MAX);
+							col_straightime = 0;
+						} else {
+							col_straightime += param.AUTOMATON_PERIOD;
+							// If a collision is imminent (again), return to the
+							// turn stage
+							if(collision()) {
+								gvh.log.d(TAG, "Collision imminent! Cancelling straight stage");
+								straight(0);
+								colnext1 = COLSTAGE1.TURN;
+							}
+							// If we're collision free and have been for enough
+							// time, restart normal motion
+							if(!collision()){
+								if(col_straightime >= param.COLLISION_AVOID_STRAIGHTTIME) {
+									if(obsSize != obsList.ObList.size()){
+										colprev1 = null;
+										colnext1 = null;
+										colstage1 = null;
+										stage = STAGE.GOAL;
+									}
+									else{
+									gvh.log.d(TAG, "Free! Returning to normal execution");
+									colprev1 = null;
+									colnext1 = null;
+									colstage1 = null;
+									stage = STAGE.INIT;
+									}
+								}
+							}
+						}
+						break;
+					}
+					colprev1 = colstage1;
+					if(colnext1 != null) {
+						colstage1 = colnext1;
+						gvh.log.i(TAG, "Advancing stage to " + colnext);
+					}
+					colnext1 = null;
 				}
 			}
 			gvh.sleep(param.AUTOMATON_PERIOD);
@@ -402,7 +480,7 @@ public class MotionAutomaton extends RobotMotion {
 		return param.LINSPEED_MIN;
 	}
 
-	// Detects an imminent collision with another robot
+	// Detects an imminent collision with another robot or with any obstacles
 	private boolean collision() {
 		boolean colrobot = false;
 		boolean colwall = false;
@@ -411,7 +489,14 @@ public class MotionAutomaton extends RobotMotion {
 		for(ItemPosition current : others.getList()) {
 			if(!current.name.equals(me.name)) {
 				if(me.isFacing(current, param.ROBOT_RADIUS) && me.distanceTo(current) <= 2 * (param.ROBOT_RADIUS)) {
-					blocker = current;
+					double ColPoint_x, ColPoint_y, vecLength;
+					vecLength = Math.sqrt(Math.pow((me.x - current.x),2)+Math.pow((me.y - current.y),2));
+					ColPoint_x = param.ROBOT_RADIUS*((me.x - current.x)/vecLength);
+					ColPoint_y = param.ROBOT_RADIUS*((me.y - current.y)/vecLength);
+					
+					blocker = new ItemPosition("detected", (int) ColPoint_x, (int) ColPoint_y, 0);
+					
+					obsList.detected(blocker);
 					colrobot = true;
 					return true;
 				}
@@ -435,10 +520,12 @@ public class MotionAutomaton extends RobotMotion {
 				}
 				Point closeP = currobs.getClosestPointOnSegment(curpoint.x, curpoint.y, nextpoint.x, nextpoint.y, me.x, me.y);
 				wall.setPos(closeP.x, closeP.y, 0);
-				if((!currobs.validItemPos(me, param.ROBOT_RADIUS))&&me.isFacing(wall,param.ROBOT_RADIUS)){
+				double distance = Math.sqrt(Math.pow(closeP.x - me.x, 2) + Math.pow(closeP.y - me.y, 2)) ;
+				if(((distance < param.ROBOT_RADIUS) && me.isFacing(wall,param.ROBOT_RADIUS))){
 					colwall = true;
 					blocker = wall;
-					return (colrobot || colwall);
+					obsList.detected(blocker);
+					return true;
 				}
 			}
 		}

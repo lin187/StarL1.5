@@ -42,7 +42,7 @@ public class RaceApp extends LogicThread {
 		PICK, GO, DONE, ELECT, HOLD, MIDWAY, WAIT
 	};
 
-	private Stage stage = Stage.ELECT;
+	private Stage stage = Stage.PICK;
 
 	public RaceApp(GlobalVarHolder gvh) {
 		super(gvh);
@@ -64,6 +64,7 @@ public class RaceApp extends LogicThread {
 		
 		//download from environment here so that all the robots have their own copy of visible ObstacleList
 		obsList = obEnvironment.downloadObs();
+		obsList.Gridfy();
 		
 		gvh.comms.addMsgListener(this, ARRIVED_MSG);
 	}
@@ -89,10 +90,10 @@ public class RaceApp extends LogicThread {
 					stage = Stage.DONE;
 				} else 
 				{
-					RobotMessage informleader = new RobotMessage("ALL", name, 21, le.getLeader());
-					gvh.comms.addOutgoingMessage(informleader);
+		//			RobotMessage informleader = new RobotMessage("ALL", name, 21, le.getLeader());
+		//			gvh.comms.addOutgoingMessage(informleader);
 
-					iamleader = le.getLeader().equals(name);
+		//			iamleader = le.getLeader().equals(name);
 					iamleader = true;
 					
 					if(iamleader)
@@ -108,6 +109,7 @@ public class RaceApp extends LogicThread {
 //					gvh.plat.moat.goTo(currentDestination);
 					stage = Stage.MIDWAY;
 					}
+					/*
 					else
 					{
 					currentDestination = gvh.gps.getPosition(le.getLeader());	
@@ -131,9 +133,10 @@ public class RaceApp extends LogicThread {
 					}
 					currentDestination1.setPos(newx, newy, (currentDestination1.getAngle())); 
 	//				currentDestination1.setPos(currentDestination);
-					gvh.plat.moat.goTo(currentDestination1);
+					gvh.plat.moat.goTo(currentDestination1, obsList);
 					stage = Stage.HOLD;
 					}
+					*/
 				}
 				break;
 			
@@ -146,22 +149,28 @@ public class RaceApp extends LogicThread {
 						break;
 					}
 					if(!pathStack.empty()){
+						//if own map changes, go back to path planning
 						if(ObsSize != obsList.ObList.size()){
 							pathStack.clear();
 							stage = Stage.PICK;
 							break;
 						}
 						ItemPosition goMidPoint = pathStack.pop();
-						gvh.plat.moat.goTo(goMidPoint);
+						gvh.plat.moat.goTo(goMidPoint, obsList);
 						stage = Stage.MIDWAY;
 					}
 					else{
-						if(!gvh.plat.moat.inMotion) {
-							if(currentDestination != null)
+						if(ObsSize != obsList.ObList.size()){
+							pathStack.clear();
+							stage = Stage.PICK;
+						}
+						else{
+							if(currentDestination != null){
 								destinations.remove(currentDestination.getName());
 							RobotMessage inform = new RobotMessage("ALL", name, ARRIVED_MSG, currentDestination.getName());
 							gvh.comms.addOutgoingMessage(inform);
 							stage = Stage.PICK;
+							}
 						}
 					}
 				}

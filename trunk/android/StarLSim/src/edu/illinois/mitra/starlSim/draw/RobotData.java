@@ -22,8 +22,18 @@ public class RobotData
 		this.degrees = degrees;
 	}
 	
+	public RobotData(String name, int x, int y, double degrees, Color color) {
+		this(name, x, y, degrees);
+		this.c = color;
+	}
+	
 	public RobotData(String name, int x, int y, double degrees, long t) {
 		this(name, x, y, degrees);
 		this.time = t;
+	}
+	
+	public RobotData(String name, int x, int y, double degrees, long t, Color color) {
+		this(name, x, y, degrees, t);
+		this.c = color;
 	}
 }

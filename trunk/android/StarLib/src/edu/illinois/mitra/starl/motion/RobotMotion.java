@@ -2,6 +2,7 @@ package edu.illinois.mitra.starl.motion;
 
 import edu.illinois.mitra.starl.interfaces.Cancellable;
 import edu.illinois.mitra.starl.objects.ItemPosition;
+import edu.illinois.mitra.starl.objects.ObstacleList;
 
 /**
  * Abstract class describing methods which all robot motion controllers should implement
@@ -22,9 +23,7 @@ public abstract class RobotMotion extends Thread implements Cancellable {
 	 * Go to a destination using the default motion parameters
 	 * @param dest the robot's destination
 	 */
-	public abstract void goTo(ItemPosition dest);
-	
-//	public abstract void awayFrom(ItemPosition dest);
+	public abstract void goTo(ItemPosition dest, ObstacleList obsList);
 	
 	
 	

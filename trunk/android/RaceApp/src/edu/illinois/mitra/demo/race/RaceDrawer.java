@@ -40,6 +40,11 @@ public class RaceDrawer extends Drawer {
 		for(int i = 0; i < list.ObList.size(); i++)
 		{
 			Obstacles currobs = list.ObList.get(i);
+			if(currobs.hidden)
+				g.setColor(Color.LIGHT_GRAY);
+			else
+				g.setColor(Color.BLACK);
+			
 			Point nextpoint = currobs.obstacle.firstElement();
 			Point curpoint = currobs.obstacle.firstElement();
 			int[] xs = new int[currobs.obstacle.size()]; 
