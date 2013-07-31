@@ -10,6 +10,7 @@ import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.motion.RRTNode;
 import edu.illinois.mitra.starl.objects.*;
 import edu.illinois.mitra.starlSim.draw.Drawer;
+import edu.wlu.cs.levy.CG.*;
 
 public class RaceDrawer extends Drawer {
 
@@ -25,6 +26,27 @@ public class RaceDrawer extends Drawer {
 			g.fillRect(dest.getX() - 13, dest.getY() - 13, 26, 26);
 		}
 
+		/*
+		//traverse the tree to get the full picture of the tree
+		//maybe add child is the easiest way to draw the whole picture
+		g.setColor(Color.cyan);
+		KDTree<RRTNode> kd = app.kd;
+		double [] temp = {0,0};
+		RRTNode curNode0 = null;
+		try {
+			curNode0 = kd.nearest(temp);
+		} catch (KeySizeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		while(curNode0 != null){
+			g.drawRect(curNode0.position.x, curNode0.position.y, 30, 30);
+			if(curNode0.parent != null)
+			g.drawLine(curNode0.position.x, curNode0.position.y, curNode0.parent.position.x, curNode0.parent.position.y);
+			curNode0 = curNode0.parent;
+		}
+		*/
 		//draw kdTree final path stack for debugging
 		g.setColor(Color.orange);
 		RRTNode curNode = app.kdTree;
@@ -35,7 +57,7 @@ public class RaceDrawer extends Drawer {
 			curNode = curNode.parent;
 		}
 		
-		g.setColor(Color.BLACK);
+		g.setColor(Color.GRAY);
 		ObstacleList list = app.obEnvironment;
 		for(int i = 0; i < list.ObList.size(); i++)
 		{
@@ -43,7 +65,7 @@ public class RaceDrawer extends Drawer {
 			if(currobs.hidden)
 				g.setColor(Color.LIGHT_GRAY);
 			else
-				g.setColor(Color.BLACK);
+				g.setColor(Color.GRAY);
 			
 			Point nextpoint = currobs.obstacle.firstElement();
 			Point curpoint = currobs.obstacle.firstElement();

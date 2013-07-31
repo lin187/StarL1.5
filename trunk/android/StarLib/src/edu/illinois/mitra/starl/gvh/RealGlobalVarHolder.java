@@ -1,6 +1,7 @@
 package edu.illinois.mitra.starl.gvh;
 
 import java.util.Map;
+import java.util.Vector;
 
 import android.os.Handler;
 import edu.illinois.mitra.starl.comms.SmartUdpComThread;
@@ -30,7 +31,7 @@ public class RealGlobalVarHolder extends GlobalVarHolder {
 		super.trace = new Trace(name, "/sdcard/trace/", this);
 		super.plat = new RealAndroidPlatform(handler);
 		super.comms = new Comms(this, new SmartUdpComThread(this));
-		super.gps = new Gps(this, new UdpGpsReceiver(this,"192.168.1.100",4000,new PositionList(),new PositionList(), new ObstacleList()));
+		super.gps = new Gps(this, new UdpGpsReceiver(this,"192.168.1.100",4000,new PositionList(),new PositionList(), new ObstacleList(), new Vector<ObstacleList>(3,2) ));
 		plat.moat = new MotionAutomaton(this, new BluetoothInterface(this, robotMac.trim()));
 		plat.moat.start();
 	}

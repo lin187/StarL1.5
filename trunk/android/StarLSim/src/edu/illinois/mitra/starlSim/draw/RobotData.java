@@ -2,6 +2,8 @@ package edu.illinois.mitra.starlSim.draw;
 
 import java.awt.Color;
 
+import edu.illinois.mitra.starl.objects.ObstacleList;
+
 public class RobotData
 {
 	public String name;
@@ -13,6 +15,7 @@ public class RobotData
 	// optional
 	public int radius;
 	public Color c;
+	public ObstacleList world;
 	
 	public RobotData(String name, int x, int y, double degrees)
 	{
@@ -27,6 +30,11 @@ public class RobotData
 		this.c = color;
 	}
 	
+	public RobotData(String name, int x, int y, double degrees, Color color, ObstacleList world) {
+		this(name, x, y, degrees, color);
+		this.world = world;
+	}
+	
 	public RobotData(String name, int x, int y, double degrees, long t) {
 		this(name, x, y, degrees);
 		this.time = t;
@@ -35,5 +43,10 @@ public class RobotData
 	public RobotData(String name, int x, int y, double degrees, long t, Color color) {
 		this(name, x, y, degrees, t);
 		this.c = color;
+	}
+	
+	public RobotData(String name, int x, int y, double degrees, long t, Color color, ObstacleList world) {
+		this(name, x, y, degrees, t, color);
+		this.world = world;
 	}
 }

@@ -13,6 +13,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
 import java.util.Set;
+import java.util.Vector;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -90,7 +91,9 @@ public class Simulation {
 		if(settings.Detect_Precision > 1){
 			list.Gridfy();
 		}
+		gps.setViews(list, settings.N_BOTS);
 
+		
 		this.settings = settings;
 		simEngine.setGps(gps);
 		gps.start();
@@ -147,6 +150,7 @@ public class Simulation {
 			public void update(Observable o, Object arg) {
 				ArrayList<ItemPosition> pos = ((PositionList) arg).getList();
 				ArrayList<RobotData> rd = new ArrayList<RobotData>();
+				Vector<ObstacleList> views = gps.getViews();
 				//define robot colors
 				int i = 0;
 				Color[] c = new Color[12] ;
@@ -162,11 +166,12 @@ public class Simulation {
 				c[9] = Color.LIGHT_GRAY;
 				c[10] = Color.YELLOW;
 				c[11] = Color.DARK_GRAY;
+			
 				
-				// Add robots
+				// Add robots and views
 				for(ItemPosition ip : pos) {	
 					if(i<12){
-						RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.angle, c[i]);
+						RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.angle, c[i], views.elementAt(i));
 						nextBot.radius = settings.BOT_RADIUS;
 						rd.add(nextBot);
 						i++;
@@ -192,6 +197,8 @@ public class Simulation {
 			}
 		};
 		gps.addObserver(guiObserver);
+		
+		
 
 		if(settings.USE_GLOBAL_LOGGER)
 			gps.addObserver(createGlobalLogger(settings));

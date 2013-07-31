@@ -19,6 +19,8 @@ import java.util.Set;
 
 import edu.illinois.mitra.starl.interfaces.AcceptsPointInput;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
+import edu.illinois.mitra.starl.objects.ObstacleList;
+import edu.illinois.mitra.starl.objects.Obstacles;
 import edu.illinois.mitra.starlSim.main.SimSettings;
 
 
@@ -69,14 +71,16 @@ public class DrawPanel extends ZoomablePanel
 			for (Drawer d : preDrawers)
 				d.draw(lt, g);	
 			
-			
 			for (int rIndex = 0; rIndex < data.size(); ++rIndex)
 			{
 				RobotData rd = data.get(rIndex);
 				
 				drawRobot(g,rd,true);
 				
-				
+				if(wirelessBlocked[rIndex]){
+					
+					drawWorld(g, rd);
+				}
 				
 				// Draw world bounding box
 				g.setColor(Color.gray);
@@ -131,6 +135,36 @@ public class DrawPanel extends ZoomablePanel
 		}
 	}
 	
+	private void drawWorld(Graphics2D g, RobotData rd)
+	{
+		g.setColor(rd.c);
+	
+		ObstacleList list = rd.world;
+		for(int i = 0; i < list.ObList.size(); i++)
+		{
+			Obstacles currobs = list.ObList.get(i);
+			Point nextpoint = currobs.obstacle.firstElement();
+			Point curpoint = currobs.obstacle.firstElement();
+			int[] xs = new int[currobs.obstacle.size()]; 
+			int[] ys = new int[currobs.obstacle.size()]; ;
+			
+			for(int j = 0; j < currobs.obstacle.size() -1 ; j++){
+			curpoint = currobs.obstacle.get(j);
+			nextpoint = currobs.obstacle.get(j+1);
+			g.drawLine(curpoint.x, curpoint.y, nextpoint.x, nextpoint.y);
+			xs[j] = curpoint.x;
+			ys[j] = curpoint.y;
+			}
+			xs[currobs.obstacle.size()-1] = nextpoint.x;
+			ys[currobs.obstacle.size()-1] = nextpoint.y;
+			
+			g.drawLine(nextpoint.x, nextpoint.y, currobs.obstacle.firstElement().x, currobs.obstacle.firstElement().y);
+			g.fillPolygon(xs,ys,currobs.obstacle.size());
+		}
+
+//		repaint();
+	}
+	
 	private void drawWireless(Graphics2D g)
 	{
 		int SPACING = 10;
@@ -157,6 +191,7 @@ public class DrawPanel extends ZoomablePanel
 				g.drawLine(x + 4, curY + SIZE - 4, x + SIZE - 4, curY + 4);
 			}
 			
+			
 			g.drawString(s + "'s wireless",x + SIZE + SPACING, curY + SIZE - 3);
 			
 			curY += (SIZE+SPACING);
@@ -166,6 +201,7 @@ public class DrawPanel extends ZoomablePanel
 		
 	}
 
+	
 	@Override
 	protected void postDraw(Graphics2D g) {
 		g.setColor(Color.black);
@@ -184,8 +220,9 @@ public class DrawPanel extends ZoomablePanel
 		drawToggle(g);
 		
 		// show the interface to enable / disable wireless for each robot
-		if (showWireless)
+		if (showWireless){
 			drawWireless(g);
+		}
 	}
 	
 	public void notifyClickListeners()
@@ -303,8 +340,9 @@ public class DrawPanel extends ZoomablePanel
 			// write name to the right of the robot
 			g.drawString(rd.name, rd.x - 55, rd.y + radius + 50);
 		}
-	}
 
+	}
+	
 	public void updateData(ArrayList <RobotData> data, long time)
 	{
 		synchronized(this)

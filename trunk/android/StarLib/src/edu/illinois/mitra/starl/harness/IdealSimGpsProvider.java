@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
+import java.util.Vector;
 
 import edu.illinois.mitra.starl.objects.*;
 
@@ -16,6 +17,7 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 	private PositionList waypoint_positions;
 	
 	private ObstacleList obspoint_positions;
+	private Vector<ObstacleList> viewsOfWorld;
 	
 	private long period = 100;
 	private int angleNoise = 0;
@@ -76,6 +78,19 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 	}
 
 	@Override
+	public void setViews(ObstacleList environment, int nBots) {
+		if(environment != null){
+			viewsOfWorld = new Vector<ObstacleList>(3,2);
+			ObstacleList obsList = null;
+			for(int i = 0; i< nBots ; i++){
+				obsList = environment.downloadObs();
+				obsList.Gridfy();
+				viewsOfWorld.add(obsList);
+			}
+		}
+	}
+	
+	@Override
 	public ObstacleList getObspointPositions() {
 		return obspoint_positions;
 	}
@@ -85,6 +100,13 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 		return waypoint_positions;
 	}
 
+	@Override
+	public Vector<ObstacleList> getViews() {
+		return viewsOfWorld;
+	}
+
+	
+	
 	@Override
 	public void start() {
 		// Create a periodic runnable which repeats every "period" ms to report positions
@@ -254,4 +276,6 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 	public void addObserver(Observer o) {
 		super.addObserver(o);
 	}
+
+
 }

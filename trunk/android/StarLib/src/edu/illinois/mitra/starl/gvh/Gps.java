@@ -1,5 +1,7 @@
 package edu.illinois.mitra.starl.gvh;
 
+import java.util.Vector;
+
 import edu.illinois.mitra.starl.interfaces.GpsReceiver;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.ObstacleList;
@@ -21,7 +23,12 @@ public class Gps {
 	private GpsReceiver mGpsReceiver;
 	protected PositionList robot_positions;
 	protected PositionList waypoint_positions;
+	//this is the environment that is used for calculating collisions
 	protected ObstacleList obs_positions;
+	
+	//this is the individual robot view of the world, stored for drawing on the simulator
+	protected Vector<ObstacleList> viewOfWorlds;
+	
 	private String name;
 	
 	public Gps(GlobalVarHolder gvh, GpsReceiver mGpsReceiver) {
@@ -29,6 +36,7 @@ public class Gps {
 		this.robot_positions = mGpsReceiver.getRobots();
 		this.waypoint_positions = mGpsReceiver.getWaypoints();
 		this.obs_positions = mGpsReceiver.getObspoints();
+		this.viewOfWorlds = mGpsReceiver.getViews();
 		this.gvh = gvh;
 		name = gvh.id.getName();
 	}
@@ -66,4 +74,9 @@ public class Gps {
 	public ObstacleList getObspointPositions() {
 		return obs_positions;
 	}
+	
+	public Vector<ObstacleList> getViews(){
+		return viewOfWorlds;
+	}
+	
 }

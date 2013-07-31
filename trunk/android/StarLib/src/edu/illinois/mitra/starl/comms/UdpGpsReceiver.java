@@ -7,6 +7,7 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
+import java.util.Vector;
 
 import edu.illinois.mitra.starl.exceptions.ItemFormattingException;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
@@ -30,6 +31,8 @@ public class UdpGpsReceiver extends Thread implements GpsReceiver {
 	public PositionList robotPositions;
 	public PositionList waypointPositions;
 	public ObstacleList obs;
+	public Vector<ObstacleList> viewsOfWorld;
+	
 
 	private GlobalVarHolder gvh;
 
@@ -39,7 +42,7 @@ public class UdpGpsReceiver extends Thread implements GpsReceiver {
 	private String name = null;
 	private boolean received = false;
 
-	public UdpGpsReceiver(GlobalVarHolder gvh,String hostname, int port, PositionList robotPositions, PositionList waypointPositions, ObstacleList obs) {
+	public UdpGpsReceiver(GlobalVarHolder gvh,String hostname, int port, PositionList robotPositions, PositionList waypointPositions, ObstacleList obs, Vector<ObstacleList> viewsOfWorld) {
 		super();
 		this.gvh = gvh;
 		
@@ -47,6 +50,7 @@ public class UdpGpsReceiver extends Thread implements GpsReceiver {
 		this.robotPositions = robotPositions;
 		this.waypointPositions = waypointPositions;
 		this.obs = obs;
+		this.viewsOfWorld = viewsOfWorld;
 
 		try {
 			myLocalIP = getLocalAddress();
@@ -184,5 +188,12 @@ public class UdpGpsReceiver extends Thread implements GpsReceiver {
 	public ObstacleList getObspoints() {
 		return obs;
 	}
+
+	@Override
+	public Vector<ObstacleList> getViews() {
+		return viewsOfWorld;
+	}
+	
+	
 	
 }

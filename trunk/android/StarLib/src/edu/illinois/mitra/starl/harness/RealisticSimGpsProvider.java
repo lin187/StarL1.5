@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
+import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
 import edu.illinois.mitra.starl.objects.Common;
@@ -20,6 +21,7 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 	private PositionList robot_positions;
 	private PositionList waypoint_positions;
 	private ObstacleList obspoint_positions;
+	private Vector<ObstacleList> viewsOfWorld;
 	
 	private long period = 100;
 	private double angleNoise = 0;
@@ -89,6 +91,20 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 		if(loadedObspoints != null) obspoint_positions = loadedObspoints;
 	}
 	
+	
+	@Override
+	public void setViews(ObstacleList environment, int nBots) {
+		if(environment != null){
+			viewsOfWorld = new Vector<ObstacleList>(3,2);
+			ObstacleList obsList = null;
+			for(int i = 0; i< nBots ; i++){
+				obsList = environment.downloadObs();
+				obsList.Gridfy();
+				viewsOfWorld.add(obsList);
+			}
+		}
+	}
+	
 
 	@Override
 	public ObstacleList getObspointPositions() {
@@ -98,6 +114,11 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 	@Override
 	public PositionList getWaypointPositions() {
 		return waypoint_positions;
+	}
+	
+	@Override
+	public Vector<ObstacleList> getViews() {
+		return viewsOfWorld;
 	}
 	
 	@Override
@@ -201,4 +222,5 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 		}
 		return false;
 	}
+
 }

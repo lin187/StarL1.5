@@ -1,5 +1,7 @@
 package edu.illinois.mitra.starl.harness;
 
+import java.util.Vector;
+
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.GpsReceiver;
 import edu.illinois.mitra.starl.interfaces.RobotEventListener.Event;
@@ -58,6 +60,13 @@ public class SimGpsReceiver implements GpsReceiver {
 	public ObstacleList getObspoints() {
 		return provider.getObspointPositions();
 	}
+
+	@Override
+	public Vector<ObstacleList> getViews() {
+		return provider.getViews() ;
+	}
+	
+	
 	
 	
 }

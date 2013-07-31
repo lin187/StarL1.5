@@ -8,7 +8,7 @@ public class Main {
 	public static void main(String[] args) {
 		SimSettings.Builder settings = new SimSettings.Builder();
 		
-		settings.N_BOTS(3);
+		settings.N_BOTS(2);
 		settings.TIC_TIME_RATE(2.5);
 		settings.WAYPOINT_FILE("waypoints/four.wpt");
 
@@ -17,8 +17,8 @@ public class Main {
 		settings.DRAW_WAYPOINTS(false);
 		settings.DRAW_WAYPOINT_NAMES(false);
 		settings.DRAWER(new RaceDrawer());
-		settings.Detect_Precision(100);
-		settings.De_Radius(10);
+		settings.Detect_Precision(10);
+		settings.De_Radius(2);
 		settings.MSG_LOSSES_PER_HUNDRED(100);
 //		settings.GPS_POSITION_NOISE(-5);
 //		settings.GPS_ANGLE_NOISE(1);

@@ -14,6 +14,7 @@ import edu.illinois.mitra.starl.interfaces.LeaderElection;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.objects.*;
 import edu.illinois.mitra.starl.motion.*;
+import edu.wlu.cs.levy.CG.KDTree;
 
 public class RaceApp extends LogicThread {
 	private static final boolean RANDOM_DESTINATION = false;
@@ -23,8 +24,11 @@ public class RaceApp extends LogicThread {
 	
 	Stack<ItemPosition> pathStack;
 	
+	int robotIndex;
 	RRTNode kdTree = new RRTNode();
 // used to find path through obstacles
+	KDTree<RRTNode> kd = null;
+	
 	int ObsSize; 
 // used to check if there are obstacle map changes
 	ObstacleList obsList;
@@ -39,13 +43,19 @@ public class RaceApp extends LogicThread {
 	private boolean iamleader = false;
 	
 	private enum Stage {
-		PICK, GO, DONE, ELECT, HOLD, MIDWAY, WAIT
+		PICK, GO, DONE, ELECT, HOLD, MIDWAY
 	};
 
 	private Stage stage = Stage.PICK;
 
 	public RaceApp(GlobalVarHolder gvh) {
 		super(gvh);
+		for(int i = 0; i< gvh.gps.getPositions().getNumPositions(); i++){
+			if(gvh.gps.getPositions().getList().get(i).name == name){
+				robotIndex = i;
+				break;
+			}
+		}
 		
 		le = new RandomLeaderElection(gvh);
 		
@@ -63,8 +73,7 @@ public class RaceApp extends LogicThread {
 		obEnvironment = gvh.gps.getObspointPositions();
 		
 		//download from environment here so that all the robots have their own copy of visible ObstacleList
-		obsList = obEnvironment.downloadObs();
-		obsList.Gridfy();
+		obsList = gvh.gps.getViews().elementAt(robotIndex) ;
 		
 		gvh.comms.addMsgListener(this, ARRIVED_MSG);
 	}
@@ -102,6 +111,7 @@ public class RaceApp extends LogicThread {
 					ObsSize = obsList.ObList.size();
 					RRTNode path = new RRTNode(gvh.gps.getPosition(name).x, gvh.gps.getPosition(name).y);
 					pathStack = path.findRoute(currentDestination, 5000, obsList, 5000, 3000, 165);
+					kd = path.kd;
 					kdTree = RRTNode.stopNode;
 //					ItemPosition goMidPoint = pathStack.pop();
 					//					gvh.plat.moat.goTo(path);
@@ -144,7 +154,7 @@ public class RaceApp extends LogicThread {
 			case MIDWAY:
 				if(!gvh.plat.moat.inMotion) {
 					if(pathStack == null){
-						stage = Stage.WAIT;
+						stage = Stage.HOLD;
 						// if can not find a path, wait for obstacle map to change
 						break;
 					}
@@ -196,27 +206,7 @@ public class RaceApp extends LogicThread {
 				gvh.plat.moat.motion_stop();	
 				}
 				break;
-			case WAIT:
-				//try to renew its' map when other robots update the map, and then try again
-				//wait for news from other robots
-				/*
-				if(ObsSize != gvh.gps.getObspointPositions().ObList.size())
-				{
-					//download the list again
-					obsList = new ObstacleList();
-					for(int i = 0; i< obEnvironment.ObList.size(); i++){
-						if(!obEnvironment.ObList.get(i).hidden)
-						obsList.ObList.add(obEnvironment.ObList.get(i));
-					}
-					ObsSize = obsList.ObList.size();
-				stage = Stage.PICK;
-			    }
-				else
-				*/
-				{
-				gvh.plat.moat.motion_stop();	
-				}
-				break;
+
 			case DONE:
 				gvh.plat.moat.motion_stop();
 				return null;

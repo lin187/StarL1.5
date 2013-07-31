@@ -4,5 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/StarLSim"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/StarLib"/>
+	<classpathentry kind="lib" path="C:/Users/Lin/Desktop/researchStarL/StarL_current/trunk/android/StarLib/bin/kd.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

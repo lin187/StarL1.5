@@ -12,6 +12,7 @@ public class RRTNode {
 	public Point position = new Point();
 	public RRTNode parent;
 	public static RRTNode stopNode;
+	public KDTree<RRTNode> kd;
 //	public LinkedList<ItemPosition> pathList = new LinkedList<ItemPosition>();
 
 	public double [] getValue(){
@@ -44,7 +45,7 @@ public class RRTNode {
 	
     public Stack<ItemPosition> findRoute(ItemPosition destination, int K, ObstacleList obsList, int xRange, int yRange, int Radius) {
 //initialize a kd tree;
-    	KDTree<RRTNode> kd = new KDTree<RRTNode>(2);
+    	kd = new KDTree<RRTNode>(2);
     	double [] root = {position.x,position.y};
     	final RRTNode rootNode = new RRTNode(position.x,position.y);
     	final RRTNode destNode = new RRTNode(destination.x, destination.y);

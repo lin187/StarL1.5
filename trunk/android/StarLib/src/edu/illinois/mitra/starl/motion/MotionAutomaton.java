@@ -489,16 +489,17 @@ public class MotionAutomaton extends RobotMotion {
 		for(ItemPosition current : others.getList()) {
 			if(!current.name.equals(me.name)) {
 				if(me.isFacing(current, param.ROBOT_RADIUS) && me.distanceTo(current) <= 2 * (param.ROBOT_RADIUS)) {
-					double ColPoint_x, ColPoint_y, vecLength;
-					vecLength = Math.sqrt(Math.pow((me.x - current.x),2)+Math.pow((me.y - current.y),2));
-					ColPoint_x = param.ROBOT_RADIUS*((me.x - current.x)/vecLength);
-					ColPoint_y = param.ROBOT_RADIUS*((me.y - current.y)/vecLength);
+					if(me.velocity > 0){
+						double ColPoint_x, ColPoint_y;
+						ColPoint_x = param.ROBOT_RADIUS*(Math.cos(Math.toRadians(me.angle))) + me.x;
+						ColPoint_y = param.ROBOT_RADIUS*(Math.sin(Math.toRadians(me.angle))) + me.y;
 					
-					blocker = new ItemPosition("detected", (int) ColPoint_x, (int) ColPoint_y, 0);
+						blocker = new ItemPosition("detected", (int) ColPoint_x, (int) ColPoint_y, 0);
 					
-					obsList.detected(blocker);
+						obsList.detected(blocker);
+					}
 					colrobot = true;
-					return true;
+					return colrobot;
 				}
 			}
 		}
@@ -522,11 +523,23 @@ public class MotionAutomaton extends RobotMotion {
 				wall.setPos(closeP.x, closeP.y, 0);
 				double distance = Math.sqrt(Math.pow(closeP.x - me.x, 2) + Math.pow(closeP.y - me.y, 2)) ;
 				if(((distance < param.ROBOT_RADIUS) && me.isFacing(wall,param.ROBOT_RADIUS))){
+					
+					if(me.velocity > 0){
+						double ColPoint_x, ColPoint_y;
+						ColPoint_x = param.ROBOT_RADIUS*(Math.cos(Math.toRadians(me.angle))) + me.x;
+						ColPoint_y = param.ROBOT_RADIUS*(Math.sin(Math.toRadians(me.angle))) + me.y;
+					
+						blocker = new ItemPosition("detected", (int) ColPoint_x, (int) ColPoint_y, 0);
+					
+						obsList.detected(blocker);
+					}					
+//					blocker = wall;
+//					obsList.detected(blocker);
 					colwall = true;
-					blocker = wall;
-					obsList.detected(blocker);
-					return true;
+					return colwall;
 				}
+				
+				
 			}
 		}
 		return (colrobot ||colwall);
