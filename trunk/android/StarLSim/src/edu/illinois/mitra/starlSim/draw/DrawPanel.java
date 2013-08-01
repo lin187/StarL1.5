@@ -192,7 +192,7 @@ public class DrawPanel extends ZoomablePanel
 			}
 			
 			
-			g.drawString(s + "'s wireless",x + SIZE + SPACING, curY + SIZE - 3);
+			g.drawString(s + "'s view",x + SIZE + SPACING, curY + SIZE - 3);
 			
 			curY += (SIZE+SPACING);
 			

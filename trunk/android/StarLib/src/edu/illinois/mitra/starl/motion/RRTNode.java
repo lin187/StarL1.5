@@ -49,7 +49,6 @@ public class RRTNode {
     	double [] root = {position.x,position.y};
     	final RRTNode rootNode = new RRTNode(position.x,position.y);
     	final RRTNode destNode = new RRTNode(destination.x, destination.y);
-//    	pathList.clear();
     	
     	try{
     		kd.insert(root, rootNode);
@@ -64,7 +63,7 @@ public class RRTNode {
     //for(i< k)  keep finding	
     	for(int i = 0; i<K; i++){
     	//if can go from current to destination, meaning path found, add destinationNode to final, stop looping.
-    		if(!obsList.badPath(addedNode, destNode)){
+    		if(obsList.validPath(addedNode, destNode, 165)){
     			
     			destNode.parent = addedNode;
     			stopNode = destNode;

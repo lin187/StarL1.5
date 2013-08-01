@@ -33,8 +33,11 @@ public class ObstacleList {
 		return check;
 	}
 	
-//check if the line alone destination and current has any intersection with any obstacles
+	/**
+	* This method is used for checking if the line alone destination and current has any intersection with any obstacles
+	*/
 	public boolean badPath(RRTNode destinationNode, RRTNode currentNode){
+		
 		ItemPosition destination = new ItemPosition("NodeToIPDes", destinationNode.position.x, destinationNode.position.y, 0); 
 		ItemPosition current = new ItemPosition("NodeToIPCurrt", currentNode.position.x, currentNode.position.y, 0); 
 		boolean check = false;
@@ -48,7 +51,14 @@ public class ObstacleList {
 		return check;
 	}
 	
-//check if the point is reachable by robot
+	/**
+	 * 
+	 * @param destination
+	 * @param radius
+	 * @return boolean
+	 * check if the point is reachable by robot
+	 * 
+	 */
 	public boolean validstarts(ItemPosition destination, double radius){
 		if(destination == null)
 			return false;
@@ -66,10 +76,18 @@ public class ObstacleList {
 		return check;
 	}
 	
-	
-//return true if the path specified by two RRTNode has a line such that every point alone the line is reachable by robots
-//check two line segments smallest distance is bigger than radius
-//For line AB and CD, shortest distance is min of A to CD, B to CD, C to AB, D to AB
+	/**
+	 * 
+	 * @param destinationNode
+	 * @param currentNode
+	 * @param Radius
+	 * @return
+	 * 
+	 *return true if the path specified by two RRTNode has a line such that every point alone the line is reachable by robots.
+	 *It checks if two line segments smallest distance is bigger than radius
+	 *For example, line AB and CD, the shortest distance is minimum of A to CD, B to CD, C to AB, D to AB 
+	 */
+
 	public boolean validPath(RRTNode destinationNode, RRTNode currentNode,  int Radius){
 		if(destinationNode == null)
 			return false;

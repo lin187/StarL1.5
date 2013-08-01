@@ -87,10 +87,12 @@ public class RaceApp extends LogicThread {
 			
 			switch(stage) {
 			case ELECT:
+				/*
 				le.elect();
 				if(le.getLeader() != null) {
 					results[1] = le.getLeader();
 				}
+				*/
 				stage = Stage.PICK;
 
 				break;
@@ -107,18 +109,22 @@ public class RaceApp extends LogicThread {
 					
 					if(iamleader)
 					{
-					currentDestination = getRandomElement(destinations);
-					ObsSize = obsList.ObList.size();
-					RRTNode path = new RRTNode(gvh.gps.getPosition(name).x, gvh.gps.getPosition(name).y);
-					pathStack = path.findRoute(currentDestination, 5000, obsList, 5000, 3000, 165);
-					kd = path.kd;
-					kdTree = RRTNode.stopNode;
-//					ItemPosition goMidPoint = pathStack.pop();
-					//					gvh.plat.moat.goTo(path);
-//					currentDestination = goMidPoint;
-//					gvh.plat.moat.goTo(currentDestination);
-					stage = Stage.MIDWAY;
+						currentDestination = getRandomElement(destinations);
+						ObsSize = obsList.ObList.size();
+						RRTNode path = new RRTNode(gvh.gps.getPosition(name).x, gvh.gps.getPosition(name).y);
+						pathStack = path.findRoute(currentDestination, 5000, obsList, 5000, 3000, 165);
+						
+						kd = path.kd;
+						kdTree = RRTNode.stopNode;
+						//wait when can not find path
+						if(pathStack == null){
+						stage = Stage.HOLD;	
+						}					
+						else{
+							stage = Stage.MIDWAY;
+						}
 					}
+					
 					/*
 					else
 					{
@@ -197,11 +203,11 @@ public class RaceApp extends LogicThread {
 					
 				break;
 			case HOLD:
-				if(gvh.gps.getMyPosition().distanceTo(gvh.gps.getPosition(le.getLeader())) < 1000 )
-				{
-				stage = Stage.PICK;
-			    }
-				else
+	//			if(gvh.gps.getMyPosition().distanceTo(gvh.gps.getPosition(le.getLeader())) < 1000 )
+	//			{
+	//			stage = Stage.PICK;
+	//		    }
+	//			else
 				{
 				gvh.plat.moat.motion_stop();	
 				}

@@ -522,6 +522,8 @@ public class MotionAutomaton extends RobotMotion {
 				Point closeP = currobs.getClosestPointOnSegment(curpoint.x, curpoint.y, nextpoint.x, nextpoint.y, me.x, me.y);
 				wall.setPos(closeP.x, closeP.y, 0);
 				double distance = Math.sqrt(Math.pow(closeP.x - me.x, 2) + Math.pow(closeP.y - me.y, 2)) ;
+				
+				//need to modify some conditions of bump sensors, we have left and right bump sensor for now
 				if(((distance < param.ROBOT_RADIUS) && me.isFacing(wall,param.ROBOT_RADIUS))){
 					
 					if(me.velocity > 0){

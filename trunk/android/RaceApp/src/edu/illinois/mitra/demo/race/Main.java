@@ -18,7 +18,7 @@ public class Main {
 		settings.DRAW_WAYPOINT_NAMES(false);
 		settings.DRAWER(new RaceDrawer());
 		settings.Detect_Precision(10);
-		settings.De_Radius(2);
+		settings.De_Radius(4);
 		settings.MSG_LOSSES_PER_HUNDRED(100);
 //		settings.GPS_POSITION_NOISE(-5);
 //		settings.GPS_ANGLE_NOISE(1);

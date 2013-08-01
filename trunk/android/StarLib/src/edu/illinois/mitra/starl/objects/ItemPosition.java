@@ -1,6 +1,5 @@
 package edu.illinois.mitra.starl.objects;
 
-import java.awt.geom.Line2D.Double;
 import java.util.HashMap;
 
 import edu.illinois.mitra.starl.exceptions.ItemFormattingException;
@@ -8,7 +7,17 @@ import edu.illinois.mitra.starl.interfaces.Traceable;
 /**
  * This class represents a position and orientation in the XY plane. All robot and waypoint positions
  * are represented by ItemPositions.
- * 
+ * default type:
+ *	-1: waypoint, calculation temp or any other things that's not a robot
+ *	
+ *	0: get to goal robot
+ *	behavior: marks the unknown obstacle when collide, redo path planning (get around the obstacle)to reach the goal
+ *	1: explore the area robot
+ *	behavior: explore the shape of the unknown obstacle and sent out the shape to others
+ *	2: random moving obstacle robot 
+ *	behavior:acts as simple moving obstacle
+ *	3: anti goal robot
+ *	behavior:acts as AI opponent try to block robots getting to the goal
  * @author Adam Zimmerman
  * @version 1.0
  */
@@ -17,6 +26,12 @@ public class ItemPosition implements Comparable<ItemPosition>, Traceable {
 	private static final String ERR = "Critical Error";
 	
 	public String name;
+	public int radius;
+	public int type;
+	
+	//type defined here, for moving obstacles, this also defines the robot's behavior
+	
+	
 	public int x;
 	public int y;
 	public int angle;
@@ -32,6 +47,7 @@ public class ItemPosition implements Comparable<ItemPosition>, Traceable {
 	 * @param angle Direction the position is facing in degrees.
 	 */
 	public ItemPosition(String name, int x, int y, int angle) {
+		//constructor for calculation temp point
 		if(name.contains(",")) {
 			String[] namePieces = name.split(",");
 			this.name = namePieces[0];
@@ -41,6 +57,8 @@ public class ItemPosition implements Comparable<ItemPosition>, Traceable {
 		this.x = x;
 		this.y = y;
 		this.angle = angle;
+		this.type = -1;
+		this.radius = 1;
 	}
 	
 	
@@ -51,10 +69,7 @@ public class ItemPosition implements Comparable<ItemPosition>, Traceable {
 	 * @param other The ItemPosition to clone
 	 */
 	public ItemPosition(ItemPosition other) {
-		this.name = other.name;
-		this.x = other.x;
-		this.y = other.y;
-		this.angle = other.angle;
+		this(other.name, other.x, other.y, other.angle);
 	}
 	
 	
