@@ -84,7 +84,8 @@ public class RaceApp extends LogicThread {
 			obEnvironment.updateObs();
 
 			obsList.updateObs();
-			
+			if((gvh.gps.getMyPosition().type == 0) || (gvh.gps.getMyPosition().type == 1)){
+				
 			switch(stage) {
 			case ELECT:
 				/*
@@ -112,7 +113,7 @@ public class RaceApp extends LogicThread {
 						currentDestination = getRandomElement(destinations);
 						ObsSize = obsList.ObList.size();
 						RRTNode path = new RRTNode(gvh.gps.getPosition(name).x, gvh.gps.getPosition(name).y);
-						pathStack = path.findRoute(currentDestination, 5000, obsList, 5000, 3000, 165);
+						pathStack = path.findRoute(currentDestination, 5000, obsList, 5000, 3000, (gvh.gps.getPosition(name).radius)/2);
 						
 						kd = path.kd;
 						kdTree = RRTNode.stopNode;
@@ -216,6 +217,11 @@ public class RaceApp extends LogicThread {
 			case DONE:
 				gvh.plat.moat.motion_stop();
 				return null;
+			}
+			}
+			else{
+				currentDestination = getRandomElement(destinations);
+				gvh.plat.moat.goTo(currentDestination, obsList);
 			}
 			sleep(100);
 		}

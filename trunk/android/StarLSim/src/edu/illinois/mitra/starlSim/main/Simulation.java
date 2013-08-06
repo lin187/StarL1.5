@@ -131,7 +131,8 @@ public class Simulation {
 				}
 			}
 			
-				
+			initialPosition.type = 2;	
+			initialPosition.radius = settings.BOT_RADIUS;
 			
 			SimApp sa = new SimApp(botName, participants, simEngine, initialPosition, settings.TRACE_OUT_DIR, app, drawFrame, settings.TRACE_CLOCK_DRIFT_MAX, settings.TRACE_CLOCK_SKEW_MAX);
 

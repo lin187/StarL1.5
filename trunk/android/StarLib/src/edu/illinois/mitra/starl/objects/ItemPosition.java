@@ -46,6 +46,7 @@ public class ItemPosition implements Comparable<ItemPosition>, Traceable {
 	 * @param y Y position
 	 * @param angle Direction the position is facing in degrees.
 	 */
+	
 	public ItemPosition(String name, int x, int y, int angle) {
 		//constructor for calculation temp point
 		if(name.contains(",")) {
@@ -62,16 +63,31 @@ public class ItemPosition implements Comparable<ItemPosition>, Traceable {
 	}
 	
 	
+		public ItemPosition(String name, int x, int y, int angle, int radius) {
+		//constructor for calculation temp point
+		if(name.contains(",")) {
+			String[] namePieces = name.split(",");
+			this.name = namePieces[0];
+		} else {
+			this.name = name;
+		}
+		this.x = x;
+		this.y = y;
+		this.angle = angle;
+		this.type = -1;
+		this.radius = radius;
+	}
+	
 	
 	/**
 	 * Construct an ItemPosition by cloning another
 	 * 
 	 * @param other The ItemPosition to clone
 	 */
+	
 	public ItemPosition(ItemPosition other) {
 		this(other.name, other.x, other.y, other.angle);
 	}
-	
 	
 	/**
 	 * Construct an ItemPosition from a received GPS broadcast message

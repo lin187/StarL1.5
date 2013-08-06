@@ -128,6 +128,9 @@ public class MotionParameters {
 	 * travel forwards for after turning to avoid a robot
 	 */
 	public int COLLISION_AVOID_STRAIGHTTIME = 1250;
+	public int COLLISION_AVOID_BACKTIME = 300;
+	public int COLLISION_AVOID_TURNTIME = 5000;
+	
 
 	public static class Builder {
 		private int TURNSPEED_MAX = 110;
@@ -149,6 +152,10 @@ public class MotionParameters {
 		private int AUTOMATON_PERIOD = 60;
 		private COLAVOID_MODE_TYPE COLAVOID_MODE = COLAVOID_MODE_TYPE.STOP_ON_COLLISION;
 		private int COLLISION_AVOID_STRAIGHTTIME = 1250;
+		private int COLLISION_AVOID_BACKTIME = 300;
+		private int COLLISION_AVOID_TURNTIME = 500;
+		
+		
 
 		public Builder TURNSPEED_MAX(int TURNSPEED_MAX) {
 			this.TURNSPEED_MAX = TURNSPEED_MAX;
@@ -244,6 +251,16 @@ public class MotionParameters {
 			this.COLLISION_AVOID_STRAIGHTTIME = COLLISION_AVOID_STRAIGHTTIME;
 			return this;
 		}
+		
+		public Builder COLLISION_AVOID_BACKTIME(int COLLISION_AVOID_BACKTIME) {
+			this.COLLISION_AVOID_BACKTIME = COLLISION_AVOID_BACKTIME;
+			return this;
+		}
+		
+		public Builder COLLISION_AVOID_TURNTIME(int COLLISION_AVOID_TURNTIME) {
+			this.COLLISION_AVOID_TURNTIME = COLLISION_AVOID_TURNTIME;
+			return this;
+		}
 
 		public MotionParameters build() {
 			return new MotionParameters(this);
@@ -270,5 +287,8 @@ public class MotionParameters {
 		this.AUTOMATON_PERIOD = builder.AUTOMATON_PERIOD;
 		this.COLAVOID_MODE = builder.COLAVOID_MODE;
 		this.COLLISION_AVOID_STRAIGHTTIME = builder.COLLISION_AVOID_STRAIGHTTIME;
+		this.COLLISION_AVOID_BACKTIME = builder.COLLISION_AVOID_BACKTIME;
+		this.COLLISION_AVOID_TURNTIME = builder.COLLISION_AVOID_TURNTIME;
+		
 	}
 }

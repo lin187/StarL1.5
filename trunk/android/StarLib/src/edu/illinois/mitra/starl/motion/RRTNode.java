@@ -97,7 +97,7 @@ public class RRTNode {
     		catch (Exception e) {
     		    System.err.println(e);
     		}
-    		sampledNode = toggle(currentNode, sampledNode, obsList);
+    		sampledNode = toggle(currentNode, sampledNode, obsList, Radius);
     		//check if toggle failed
     		//if not failed, insert the new node to the tree
     		if(sampledNode != null){
@@ -136,7 +136,7 @@ public class RRTNode {
     	}
     }
 
-	private RRTNode toggle(RRTNode currentNode, RRTNode sampledNode, ObstacleList obsList) {
+	private RRTNode toggle(RRTNode currentNode, RRTNode sampledNode, ObstacleList obsList, int radius) {
 		// toggle function deals with constrains by the environment as well as robot systems. 
 		// It changes sampledNode to some point alone the line of sampledNode and currentNode so that no obstacles are in the middle
 		// In other words, it changes sampledNode to somewhere alone the line where robot can reach
@@ -147,7 +147,7 @@ public class RRTNode {
 		int tries = 0;
 		// try 20 times, which will shorten it to 0.00317 times the original path length
 		// smaller tries might make integer casting loop forever
-		while((!obsList.validPath(toggleNode, currentNode, 165)) && (tries < 20))
+		while((!obsList.validPath(toggleNode, currentNode, radius)) && (tries < 20))
 		{
 			//move 1/4 toward current
 			toggleNode.position.x = (int) ((toggleNode.position.x + currentNode.position.x)/(1.5));

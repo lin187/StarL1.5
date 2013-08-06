@@ -84,16 +84,42 @@ public class MotionAutomaton extends RobotMotion {
 	private COLSTAGE colstage = COLSTAGE.TURN;
 	private COLSTAGE colnext = null;
 	
+	private enum COLSTAGE0 {
+		BACK, STRAIGHT
+	}
+	private COLSTAGE0 colprev0 = null;
+	private COLSTAGE0 colstage0 = COLSTAGE0.STRAIGHT;
+	private COLSTAGE0 colnext0 = null;
+	
 	private enum COLSTAGE1 {
-		TURN, STRAIGHT
+		BACK, STRAIGHT, TURN, SMALLARC
 	}
 	private COLSTAGE1 colprev1 = null;
-	private COLSTAGE1 colstage1 = COLSTAGE1.TURN;
+	private COLSTAGE1 colstage1 = COLSTAGE1.STRAIGHT;
 	private COLSTAGE1 colnext1 = null;
+
+	
+	private enum COLSTAGE2 {
+		BACK, RANDOM, STRAIGHT
+	}
+	private COLSTAGE2 colprev2 = null;
+	private COLSTAGE2 colstage2 = COLSTAGE2.BACK;
+	private COLSTAGE2 colnext2 = null;
+	
+	private enum COLSTAGE3 {
+		BACK, STRAIGHT
+	}
+	private COLSTAGE3 colprev3 = null;
+	private COLSTAGE3 colstage3 = COLSTAGE3.STRAIGHT;
+	private COLSTAGE3 colnext3 = null;
 	
 	private int col_straightime = 0;
+	private int col_backtime = 0;
+	private int col_turntime = 0;
 	private boolean halted = false;
 
+	
+	private int RanAngle = 0;
 	private double linspeed;
 	private double turnspeed;
 	private int obsSize;
@@ -157,10 +183,18 @@ public class MotionAutomaton extends RobotMotion {
 					break;
 				}
 
+				if((mypos.type == 3)|| (mypos.type == 2)){
+					stage = null;
+					next = null;
+					halted = false;
+					colliding = true;
+				}
+					
 				if(!colliding && stage != null) {
 					halted = false;
 					if(stage != prev)
 						gvh.log.e(TAG, "Stage is: " + stage.toString());
+
 					switch(stage) {
 					case INIT:
 						
@@ -251,7 +285,9 @@ public class MotionAutomaton extends RobotMotion {
 						gvh.trace.traceEvent(TAG, "Stage transition", stage.toString(), gvh.time());
 					}
 					next = null;
-				} else if(((colliding || stage == null) && (param.COLAVOID_MODE == COLAVOID_MODE_TYPE.USE_COLAVOID)) ) {
+					} 
+	
+					if(((colliding || stage == null) && (param.COLAVOID_MODE == COLAVOID_MODE_TYPE.USE_COLAVOID)) ) {
 					// Collision imminent! Stop the robot
 					if(stage != null) {
 						gvh.log.d(TAG, "Imminent collision detected!");
@@ -261,7 +297,7 @@ public class MotionAutomaton extends RobotMotion {
 						colprev = null;
 						colstage = COLSTAGE.TURN;
 					}
-
+				
 					switch(colstage) {
 					case TURN:
 						if(colstage != colprev) {
@@ -310,75 +346,195 @@ public class MotionAutomaton extends RobotMotion {
 						gvh.log.i(TAG, "Advancing stage to " + colnext);
 					}
 					colnext = null;
-				} else if((colliding || stage == null)&& (param.COLAVOID_MODE == COLAVOID_MODE_TYPE.STOP_ON_COLLISION)) {
-					// Collision imminent! Stop the robot
-					if(stage != null) {
-						gvh.log.d(TAG, "Imminent collision detected!");
-						stage = null;
-						straight(0);
-						colnext1 = null;
-						colprev1 = null;
-						colstage1 = COLSTAGE1.TURN;
-					}
-
-					switch(colstage1) {
-					case TURN:
-						if(colstage1 != colprev1) {
-							gvh.log.d(TAG, "Colliding: sending turn command");
-							turn(param.TURNSPEED_MAX, -1 * mypos.angleTo(blocker));
+				}	
+			
+				else 
+					if(colliding || stage == null){
+						switch(mypos.type) {
+						case 0:
+							if(stage != null) {
+								gvh.log.d(TAG, "Imminent collision detected!");
+								stage = null;
+								straight(0);
+								colnext0 = null;
+								colprev0 = null;
+								colstage0 = COLSTAGE0.BACK;
+							}
 							
-						}
-
-						if(!collision()) {
-							
-							colnext1 = COLSTAGE1.STRAIGHT;
-							
-						} else {
-							gvh.log.d(TAG, "colliding with " + blocker.name + " - " + mypos.isFacing(blocker, 180) + " - " + mypos.distanceTo(blocker));
-						}
+							switch(colstage0) {
+							case BACK:
+								col_backtime += param.AUTOMATON_PERIOD;
+								if(collision() )
+									straight(-param.LINSPEED_MAX/2);
+								else {
+									if (col_backtime > param.COLLISION_AVOID_BACKTIME){
+										col_backtime = 0;
+										straight(0);
+										if(obsSize != obsList.ObList.size()){
+											colprev0 = null;
+											colnext0 = null;
+											colstage0 = null;
+											stage = STAGE.GOAL;
+										}
+										else{
+											gvh.log.d(TAG, "Free! Returning to normal execution");
+											colprev0 = null;
+											colnext0 = null;
+											colstage0 = null;
+											stage = STAGE.INIT;
+										}
+									}
+								}
+							break;
+							case STRAIGHT:
+								straight(param.LINSPEED_MAX);
+								if(collision()) {
+									gvh.log.d(TAG, "Collision imminent! Cancelling straight stage");
+									straight(0);
+									colnext0 = COLSTAGE0.BACK;
+								}
+							break;
+							}
+							colprev0 = colstage0;
+							if(colnext0 != null) {
+								colstage0 = colnext0;
+								gvh.log.i(TAG, "Advancing stage to " + colnext);
+							}
+							colnext0 = null;
 						break;
-					case STRAIGHT:
-						if(colstage1 != colprev1) {
-							gvh.log.d(TAG, "Colliding: sending straight command");
-							straight(param.LINSPEED_MAX);
-							col_straightime = 0;
-						} else {
-							col_straightime += param.AUTOMATON_PERIOD;
-							// If a collision is imminent (again), return to the
-							// turn stage
-							if(collision()) {
-								gvh.log.d(TAG, "Collision imminent! Cancelling straight stage");
+					case 1:
+						if(stage != null) {
+							gvh.log.d(TAG, "Imminent collision detected!");
+							stage = null;
+							straight(0);
+							colnext1 = null;
+							colprev1 = null;
+							colstage1 = COLSTAGE1.BACK;
+						}
+						
+						switch(colstage1) {
+						case BACK:
+							col_backtime += param.AUTOMATON_PERIOD;
+							if (col_backtime > param.COLLISION_AVOID_BACKTIME*3){
+								col_backtime = 0;
 								straight(0);
 								colnext1 = COLSTAGE1.TURN;
-							}
-							// If we're collision free and have been for enough
-							// time, restart normal motion
+								}
+							else
+								straight(-param.LINSPEED_MAX/2);
+						break;
+						case STRAIGHT:
+							col_straightime += param.AUTOMATON_PERIOD;
 							if(!collision()){
-								if(col_straightime >= param.COLLISION_AVOID_STRAIGHTTIME) {
-									if(obsSize != obsList.ObList.size()){
-										colprev1 = null;
-										colnext1 = null;
-										colstage1 = null;
-										stage = STAGE.GOAL;
-									}
-									else{
-									gvh.log.d(TAG, "Free! Returning to normal execution");
+								if(col_straightime < param.COLLISION_AVOID_STRAIGHTTIME){
+									straight(param.LINSPEED_MAX);
+								}
+								else{
+									col_straightime = 0;
+									straight(0);
 									colprev1 = null;
 									colnext1 = null;
 									colstage1 = null;
-									stage = STAGE.INIT;
-									}
+									stage = STAGE.GOAL;
+									//stop the robot and broadcast
 								}
 							}
-						}
+							else{
+								gvh.log.d(TAG, "Collision imminent! Cancelling straight stage");
+								straight(0);
+								col_straightime = 0;
+								colnext1 = COLSTAGE1.BACK;
+							}
 						break;
+						case TURN:
+							col_turntime += param.AUTOMATON_PERIOD;
+							if(col_turntime < param.COLLISION_AVOID_TURNTIME)
+								turn(param.TURNSPEED_MAX, 45);
+							//trun left when hit
+							else {
+								col_turntime = 0;
+								colnext1 = COLSTAGE1.SMALLARC;
+							}
+						break;	
+						case SMALLARC:
+							col_straightime += param.AUTOMATON_PERIOD;
+							if(!collision()){
+								if(col_straightime < param.COLLISION_AVOID_STRAIGHTTIME)
+									curve(param.LINSPEED_MAX , 320);
+								else {
+									
+									colnext1 = COLSTAGE1.STRAIGHT;
+								}
+							}
+							else{
+								col_straightime = 0;
+								straight(0);
+								colnext1 = COLSTAGE1.BACK;
+							}
+						break;
+						}
+						colprev1 = colstage1;
+						if(colnext1 != null) {
+							colstage1 = colnext1;
+							gvh.log.i(TAG, "Advancing stage to " + colnext);
+						}
+						colnext1 = null;
+						break;
+					case 2:
+						if(stage != null) {
+							gvh.log.d(TAG, "Imminent collision detected!");
+							stage = null;
+							straight(0);
+							colnext2 = null;
+							colprev2 = null;
+							colstage2 = COLSTAGE2.BACK;
+						}
+						switch(colstage2) {
+						case BACK:
+							col_backtime += param.AUTOMATON_PERIOD;
+								if (col_backtime > param.COLLISION_AVOID_BACKTIME){
+									col_backtime = 0;
+									colstage2 = COLSTAGE2.RANDOM;
+								}
+								else{
+									straight(-param.LINSPEED_MAX/2);
+								}
+						break;
+						case RANDOM:	
+							if(col_turntime == 0){
+								RanAngle = (int) (-90 + (Math.random()* 180 ));
+							}							
+							col_turntime += param.AUTOMATON_PERIOD;
+							if(col_turntime < param.COLLISION_AVOID_TURNTIME)
+								turn(param.TURNSPEED_MAX, RanAngle);
+							//trun left when hit
+							else {
+								col_turntime = 0;
+								colnext2 = COLSTAGE2.STRAIGHT;
+							}
+							
+						break;
+						case STRAIGHT:
+							if(collision()){
+								straight(0);
+								colnext2 = COLSTAGE2.BACK;
+							}
+							else{
+								straight(param.LINSPEED_MAX);
+							}
+						break;
+							
+						}
+						colprev2 = colstage2;
+						if(colnext2 != null) {
+							colstage2 = colnext2;
+							gvh.log.i(TAG, "Advancing stage to " + colnext);
+						}
+						colnext2 = null;
+					break;
+					case 3:
+					break;
 					}
-					colprev1 = colstage1;
-					if(colnext1 != null) {
-						colstage1 = colnext1;
-						gvh.log.i(TAG, "Advancing stage to " + colnext);
-					}
-					colnext1 = null;
 				}
 			}
 			gvh.sleep(param.AUTOMATON_PERIOD);
