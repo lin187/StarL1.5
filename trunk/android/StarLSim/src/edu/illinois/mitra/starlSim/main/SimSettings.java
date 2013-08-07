@@ -19,7 +19,22 @@ public class SimSettings {
 	 * The number of robots to simulate.
 	 */
 	public final int N_BOTS;
-
+	
+	/**
+	 * The number of get to the goal robots to simulate.
+	 */
+	public final int N_GBOTS;
+	
+	/**
+	 * The number of discovery robots to simulate.
+	 */
+	public final int N_DBOTS;
+	
+	/**
+	 * The number of random moving obstacles to simulate.
+	 */
+	public final int N_RBOTS;
+	
 	/**
 	 * Default 0.
 	 * The maximum number of seconds (real time) the simulation may be executing
@@ -177,6 +192,10 @@ public class SimSettings {
 		private int De_Radius = 1;
 		private int Detect_Precision = 1;
 		private int N_BOTS = 4;
+		private int N_GBOTS = 4;
+		private int N_DBOTS = 0;
+		private int N_RBOTS = 0;
+		
 		private long SIM_TIMEOUT = 0;
 		private long TIMEOUT = 0;
 		private String WAYPOINT_FILE;
@@ -220,6 +239,21 @@ public class SimSettings {
 		
 		public Builder N_BOTS(int N_BOTS) {
 			this.N_BOTS = N_BOTS;
+			return this;
+		}
+		
+		public Builder N_GBOTS(int N_GBOTS) {
+			this.N_GBOTS = N_GBOTS;
+			return this;
+		}
+		
+		public Builder N_DBOTS(int N_DBOTS) {
+			this.N_DBOTS = N_DBOTS;
+			return this;
+		}
+		
+		public Builder N_RBOTS(int N_RBOTS) {
+			this.N_RBOTS = N_RBOTS;
 			return this;
 		}
 
@@ -376,6 +410,9 @@ public class SimSettings {
 		this.De_Radius = builder.De_Radius;
 		this.Detect_Precision = builder.Detect_Precision;
 		this.N_BOTS = builder.N_BOTS;
+		this.N_GBOTS = builder.N_GBOTS;
+		this.N_DBOTS = builder.N_DBOTS;
+		this.N_RBOTS = builder.N_RBOTS;
 		this.WAYPOINT_FILE = builder.WAYPOINT_FILE;
 		this.OBSPOINT_FILE = builder.OBSPOINT_FILE;
 		this.INITIAL_POSITIONS_FILE = builder.INITIAL_POSITIONS_FILE;

@@ -114,7 +114,7 @@ public class Simulation {
 			ItemPosition initialPosition = initialPositions.getPosition(botName);
 
 			// If no initial position was supplied, randomly generate one
-			if(initialPosition == null) {
+			if(initialPosition == null) {	
 				int retries = 0;
 				boolean valid = false;
 				
@@ -130,8 +130,16 @@ public class Simulation {
 					System.out.print("too many tries for BOT"+botName+"\n");
 				}
 			}
+			if(i< settings.N_GBOTS){
+				initialPosition.type = 0;
+			}
+			if((i>=settings.N_GBOTS) && (i<(settings.N_GBOTS + settings.N_DBOTS))){
+				initialPosition.type = 1;	
+			}
+			if((i>=(settings.N_GBOTS + settings.N_DBOTS)) && (i<(settings.N_GBOTS + settings.N_DBOTS + settings.N_RBOTS))){
+				initialPosition.type = 2;
+			}
 			
-			initialPosition.type = 2;	
 			initialPosition.radius = settings.BOT_RADIUS;
 			
 			SimApp sa = new SimApp(botName, participants, simEngine, initialPosition, settings.TRACE_OUT_DIR, app, drawFrame, settings.TRACE_CLOCK_DRIFT_MAX, settings.TRACE_CLOCK_SKEW_MAX);
@@ -174,6 +182,7 @@ public class Simulation {
 					if(i<12){
 						RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.angle, c[i], views.elementAt(i));
 						nextBot.radius = settings.BOT_RADIUS;
+						nextBot.type = ip.type;
 						rd.add(nextBot);
 						i++;
 					}

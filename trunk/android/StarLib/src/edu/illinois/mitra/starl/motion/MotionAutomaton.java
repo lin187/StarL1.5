@@ -364,25 +364,22 @@ public class MotionAutomaton extends RobotMotion {
 							switch(colstage0) {
 							case BACK:
 								col_backtime += param.AUTOMATON_PERIOD;
-								if(collision() )
-									straight(-param.LINSPEED_MAX/2);
-								else {
-									if (col_backtime > param.COLLISION_AVOID_BACKTIME){
-										col_backtime = 0;
-										straight(0);
-										if(obsSize != obsList.ObList.size()){
-											colprev0 = null;
-											colnext0 = null;
-											colstage0 = null;
-											stage = STAGE.GOAL;
-										}
-										else{
-											gvh.log.d(TAG, "Free! Returning to normal execution");
-											colprev0 = null;
-											colnext0 = null;
-											colstage0 = null;
-											stage = STAGE.INIT;
-										}
+								straight(- param.LINSPEED_MAX/2);
+								if(col_backtime > param.COLLISION_AVOID_BACKTIME){
+									col_backtime = 0;
+									straight(0);
+									if(obsSize != obsList.ObList.size()){
+										colprev0 = null;
+										colnext0 = null;
+										colstage0 = null;
+										stage = STAGE.GOAL;
+									}
+									else{
+										gvh.log.d(TAG, "Free! Returning to normal execution");
+										colprev0 = null;
+										colnext0 = null;
+										colstage0 = null;
+										stage = STAGE.INIT;
 									}
 								}
 							break;

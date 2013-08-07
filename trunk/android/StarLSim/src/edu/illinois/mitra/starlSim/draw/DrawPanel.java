@@ -337,8 +337,18 @@ public class DrawPanel extends ZoomablePanel
 		
 		if (drawId)
 		{
+			String botType = "default";
+			if(rd.type == 0){
+				botType =  "goal";
+			}
+			if(rd.type ==1){
+				botType = "discovery";
+			}
+			if(rd.type ==2){
+				botType = "moving obstacle";
+			}
 			// write name to the right of the robot
-			g.drawString(rd.name, rd.x - 55, rd.y + radius + 50);
+			g.drawString(rd.name+" "+ botType , rd.x - 55, rd.y + radius + 50);
 		}
 
 	}

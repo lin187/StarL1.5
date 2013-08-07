@@ -16,6 +16,7 @@ public class RobotData
 	public int radius;
 	public Color c;
 	public ObstacleList world;
+	public int type;
 	
 	public RobotData(String name, int x, int y, double degrees)
 	{

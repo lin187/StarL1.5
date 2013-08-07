@@ -8,7 +8,10 @@ public class Main {
 	public static void main(String[] args) {
 		SimSettings.Builder settings = new SimSettings.Builder();
 		
-		settings.N_BOTS(2);
+		settings.N_BOTS(1);
+		settings.N_GBOTS(1);
+		settings.N_DBOTS(0);
+	//	settings.N_RBOTS(1);
 		settings.TIC_TIME_RATE(2.5);
 		settings.WAYPOINT_FILE("waypoints/four.wpt");
 
