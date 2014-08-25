@@ -311,7 +311,7 @@ public class MotionAutomaton extends RobotMotion {
 							colnext = COLSTAGE.STRAIGHT;
 							
 						} else {
-							gvh.log.d(TAG, "colliding with " + blocker.name + " - " + mypos.isFacing(blocker, 180) + " - " + mypos.distanceTo(blocker));
+							gvh.log.d(TAG, "colliding with " + blocker.name + " - " + mypos.isFacing(blocker) + " - " + mypos.distanceTo(blocker));
 						}
 						break;
 					case STRAIGHT:
@@ -633,19 +633,50 @@ public class MotionAutomaton extends RobotMotion {
 		return param.LINSPEED_MIN;
 	}
 
-	// Detects an imminent collision with another robot or with any obstacles
 	private boolean collision() {
+		if(mypos.leftbump || mypos.rightbump){
+			double ColPoint_x, ColPoint_y;
+			if(mypos.leftbump&&mypos.rightbump){
+				ColPoint_x = mypos.radius*(Math.cos(Math.toRadians(mypos.angle))) + mypos.x;
+				ColPoint_y = mypos.radius*(Math.sin(Math.toRadians(mypos.angle))) + mypos.y;
+				blocker = new ItemPosition("detected", (int) ColPoint_x, (int) ColPoint_y, 0);
+				
+				obsList.detected(blocker);
+			}
+			else if(mypos.leftbump){
+				ColPoint_x = mypos.radius*(Math.cos(Math.toRadians(mypos.angle+45))) + mypos.x;
+				ColPoint_y = mypos.radius*(Math.sin(Math.toRadians(mypos.angle+45))) + mypos.y;
+				blocker = new ItemPosition("detected", (int) ColPoint_x, (int) ColPoint_y, 0);
+				
+				obsList.detected(blocker);
+			}
+			else{
+				ColPoint_x = mypos.radius*(Math.cos(Math.toRadians(mypos.angle-45))) + mypos.x;
+				ColPoint_y = mypos.radius*(Math.sin(Math.toRadians(mypos.angle-45))) + mypos.y;
+				blocker = new ItemPosition("detected", (int) ColPoint_x, (int) ColPoint_y, 0);
+				
+				obsList.detected(blocker);
+			}
+			
+			return true;
+		}
+		else
+			return false;
+	}
+	
+	// Detects an imminent collision with another robot or with any obstacles
+	private boolean collisionold() {
 		boolean colrobot = false;
 		boolean colwall = false;
 		ItemPosition me = mypos;
 		PositionList others = gvh.gps.getPositions();
 		for(ItemPosition current : others.getList()) {
 			if(!current.name.equals(me.name)) {
-				if(me.isFacing(current, param.ROBOT_RADIUS) && me.distanceTo(current) <= 2 * (param.ROBOT_RADIUS)) {
+				if(me.isFacing(current) && me.distanceTo(current) <= 2 * (param.ROBOT_RADIUS)) {
 					if(me.velocity > 0){
 						double ColPoint_x, ColPoint_y;
-						ColPoint_x = param.ROBOT_RADIUS*(Math.cos(Math.toRadians(me.angle))) + me.x;
-						ColPoint_y = param.ROBOT_RADIUS*(Math.sin(Math.toRadians(me.angle))) + me.y;
+						ColPoint_x = me.radius*(Math.cos(Math.toRadians(me.angle))) + me.x;
+						ColPoint_y = me.radius*(Math.sin(Math.toRadians(me.angle))) + me.y;
 					
 						blocker = new ItemPosition("detected", (int) ColPoint_x, (int) ColPoint_y, 0);
 					
@@ -677,7 +708,7 @@ public class MotionAutomaton extends RobotMotion {
 				double distance = Math.sqrt(Math.pow(closeP.x - me.x, 2) + Math.pow(closeP.y - me.y, 2)) ;
 				
 				//need to modify some conditions of bump sensors, we have left and right bump sensor for now
-				if(((distance < param.ROBOT_RADIUS) && me.isFacing(wall,param.ROBOT_RADIUS))){
+				if(((distance < param.ROBOT_RADIUS) && me.isFacing(wall))){
 					
 					if(me.velocity > 0){
 						double ColPoint_x, ColPoint_y;

@@ -17,6 +17,8 @@ public class RobotData
 	public Color c;
 	public ObstacleList world;
 	public int type;
+	public boolean leftbump;
+	public boolean rightbump;
 	
 	public RobotData(String name, int x, int y, double degrees)
 	{
@@ -34,6 +36,14 @@ public class RobotData
 	public RobotData(String name, int x, int y, double degrees, Color color, ObstacleList world) {
 		this(name, x, y, degrees, color);
 		this.world = world;
+		
+	}
+	
+	public RobotData(String name, int x, int y, double degrees, Color color, ObstacleList world, boolean leftbump, boolean rightbump) {
+		this(name, x, y, degrees, color);
+		this.world = world;
+		this.leftbump = leftbump;
+		this.rightbump = rightbump;
 	}
 	
 	public RobotData(String name, int x, int y, double degrees, long t) {
@@ -49,5 +59,12 @@ public class RobotData
 	public RobotData(String name, int x, int y, double degrees, long t, Color color, ObstacleList world) {
 		this(name, x, y, degrees, t, color);
 		this.world = world;
+	}
+	
+	public RobotData(String name, int x, int y, double degrees, long t, Color color, ObstacleList world, boolean leftbump, boolean rightbump) {
+		this(name, x, y, degrees, t, color);
+		this.world = world;
+		this.leftbump = leftbump;
+		this.rightbump = rightbump;
 	}
 }

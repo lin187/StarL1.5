@@ -73,7 +73,7 @@ public class RRTNode {
         		catch (Exception e) {
         		    System.err.println(e);
         		}
-    			System.out.println("Path found!");
+    			//System.out.println("Path found!");
     			break;
     		}
     		//not find yet, keep exploring

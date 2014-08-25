@@ -12,7 +12,7 @@ public class Main {
 		settings.N_GBOTS(1);
 		settings.N_DBOTS(1);
 	//	settings.N_RBOTS(1);
-		settings.TIC_TIME_RATE(2.5);
+		settings.TIC_TIME_RATE(1);
 		settings.WAYPOINT_FILE("waypoints/four.wpt");
 
 		settings.OBSPOINT_FILE("waypoints/Obstacles.wpt");
@@ -26,7 +26,6 @@ public class Main {
 //		settings.GPS_POSITION_NOISE(-5);
 //		settings.GPS_ANGLE_NOISE(1);
 //		settings.BOT_RADIUS(400);
-		
 		Simulation sim = new Simulation(RaceApp.class, settings.build());
 		sim.start();
 	}

@@ -180,14 +180,14 @@ public class Simulation {
 				// Add robots and views
 				for(ItemPosition ip : pos) {	
 					if(i<12){
-						RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.angle, c[i], views.elementAt(i));
+						RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.angle, c[i], views.elementAt(i), ip.leftbump, ip.rightbump);
 						nextBot.radius = settings.BOT_RADIUS;
 						nextBot.type = ip.type;
 						rd.add(nextBot);
 						i++;
 					}
 					else{
-						RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.angle, c[0]);
+						RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.angle, c[0], views.elementAt(i), ip.leftbump, ip.rightbump);
 						nextBot.radius = settings.BOT_RADIUS;
 						rd.add(nextBot);
 					}

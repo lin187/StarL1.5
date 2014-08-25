@@ -28,6 +28,8 @@ public class ItemPosition implements Comparable<ItemPosition>, Traceable {
 	public String name;
 	public int radius;
 	public int type;
+	public boolean leftbump;
+	public boolean rightbump;
 	
 	//type defined here, for moving obstacles, this also defines the robot's behavior
 	
@@ -60,6 +62,8 @@ public class ItemPosition implements Comparable<ItemPosition>, Traceable {
 		this.angle = angle;
 		this.type = -1;
 		this.radius = 1;
+		this.leftbump = false;
+		this.rightbump = false;
 	}
 	
 	
@@ -76,6 +80,9 @@ public class ItemPosition implements Comparable<ItemPosition>, Traceable {
 		this.angle = angle;
 		this.type = -1;
 		this.radius = radius;
+		this.leftbump = false;
+		this.rightbump = false;
+		
 	}
 	
 	
@@ -133,7 +140,7 @@ public class ItemPosition implements Comparable<ItemPosition>, Traceable {
 	 * @param radius The radius (in distance units) of the other position
 	 * @return True if this position is facing a circle of radius with position other.
 	 */
-	public boolean isFacing(ItemPosition other, int radius) { 
+	public boolean isFacing(ItemPosition other) { 
 		if(other == null) {
 			return false;
 		}
@@ -145,7 +152,7 @@ public class ItemPosition implements Comparable<ItemPosition>, Traceable {
 		}
 */
 /**
-Code in comment was written by Adam and it is not working correctly.
+Code in comment was written by Adam and it was not working correctly.
 The following code is written by Yixiao Lin. It is working correctly.
 */
     	double angleT = Math.toDegrees(Math.atan2((other.y - this.y) , (other.x - this.x)));

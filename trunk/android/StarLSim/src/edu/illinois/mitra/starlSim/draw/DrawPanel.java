@@ -334,7 +334,22 @@ public class DrawPanel extends ZoomablePanel
 		Line2D.Double l = new Line2D.Double(from, to);
 		
 		g.draw(l);
+		if(rd.leftbump){
+			int x_1 = (int) (rd.radius*(Math.cos(Math.toRadians(rd.degrees+90))) + rd.x);
+			int y_1 = (int) (rd.radius*(Math.sin(Math.toRadians(rd.degrees+90))) + rd.y);
+			int x_2 = (int) (rd.radius*(Math.cos(Math.toRadians(rd.degrees))) + rd.x);
+			int y_2 = (int) (rd.radius*(Math.sin(Math.toRadians(rd.degrees))) + rd.y);
+			g.drawLine(x_1, y_1, x_2, y_2);
+		}
 		
+		if(rd.rightbump){
+			int x_1 = (int) (rd.radius*(Math.cos(Math.toRadians(rd.degrees))) + rd.x);
+			int y_1 = (int) (rd.radius*(Math.sin(Math.toRadians(rd.degrees))) + rd.y);
+			int x_2 = (int) (rd.radius*(Math.cos(Math.toRadians(rd.degrees-90))) + rd.x);
+			int y_2 = (int) (rd.radius*(Math.sin(Math.toRadians(rd.degrees-90))) + rd.y);
+			g.drawLine(x_1, y_1, x_2, y_2);
+		}
+			
 		if (drawId)
 		{
 			String botType = "default";

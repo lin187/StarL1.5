@@ -1,5 +1,6 @@
 package edu.illinois.mitra.starl.harness;
 
+import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
@@ -11,6 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.ObstacleList;
+import edu.illinois.mitra.starl.objects.Obstacles;
 import edu.illinois.mitra.starl.objects.PositionList;
 
 public class RealisticSimGpsProvider extends Observable implements SimGpsProvider {	
@@ -189,7 +191,7 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 			cur.y += dY;
 			angle = angle + dA;
 			cur.angle = Common.angleWrap((int)(Math.round(angle) + aNoise));
-			
+			checkCollision(cur);
 			timeLastUpdate = se.getTime();
 		}
 		public void setVel(int fwd, int rad) {
@@ -214,13 +216,60 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 		super.addObserver(o);
 	}
 	
-	// This isn't very functional at the moment
-	private boolean checkCollision(ItemPosition bot) {
-		for(ItemPosition ip : robot_positions.getList()) {
-			if(ip.equals(bot)) break;
-			if(bot.isFacing(ip, robotRadius) && bot.distanceTo(ip) <= robotRadius) return true;
+	public void checkCollision(ItemPosition bot) {
+		bot.leftbump= false;
+		bot.rightbump= false;
+		for(ItemPosition current : robot_positions.getList()) {
+			if(!current.name.equals(bot.name)) {
+				if(bot.isFacing(current) && bot.distanceTo(current) <= (bot.radius + current.radius)) {
+					if(bot.velocity > 0 || current.velocity > 0){
+						if(bot.angleTo(current)%90>(-20)){
+							bot.rightbump = true;
+						}
+						if(bot.angleTo(current)%90<20){
+							bot.leftbump = true;
+						}
+					}
+
+				}
+			}
 		}
-		return false;
+		ObstacleList list = obspoint_positions;
+		for(int i = 0; i < list.ObList.size(); i++)
+		{
+			Obstacles currobs = list.ObList.get(i);
+			Point nextpoint = currobs.obstacle.firstElement();
+			Point curpoint = currobs.obstacle.firstElement();
+			ItemPosition wall = new ItemPosition("wall",0,0,0);
+			
+			for(int j = 0; j < currobs.obstacle.size() ; j++){
+				curpoint = currobs.obstacle.get(j);
+				if (j == currobs.obstacle.size() -1){
+					nextpoint = currobs.obstacle.firstElement();
+				}
+				else{
+					nextpoint = currobs.obstacle.get(j+1);
+				}
+				Point closeP = currobs.getClosestPointOnSegment(curpoint.x, curpoint.y, nextpoint.x, nextpoint.y, bot.x, bot.y);
+				wall.setPos(closeP.x, closeP.y, 0);
+				double distance = Math.sqrt(Math.pow(closeP.x - bot.x, 2) + Math.pow(closeP.y - bot.y, 2)) ;
+				
+				//need to modify some conditions of bump sensors, we have left and right bump sensor for now
+				if(((distance < bot.radius) && bot.isFacing(wall))){
+					
+					if(bot.velocity > 0){
+						if(bot.angleTo(wall)%90>(-20)){
+							System.out.println(bot.angleTo(wall)%90);
+							bot.rightbump = true;
+						}
+						if(bot.angleTo(wall)%90<20){
+							bot.leftbump = true;
+						}
+					}
+				}
+			}
+		}
+
 	}
 
 }
