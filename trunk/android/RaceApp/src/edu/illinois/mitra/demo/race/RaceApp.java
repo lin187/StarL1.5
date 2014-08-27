@@ -7,6 +7,8 @@ import java.util.Random;
 import java.util.Stack;
 
 
+
+
 import edu.illinois.mitra.starl.comms.RobotMessage;
 import edu.illinois.mitra.starl.functions.RandomLeaderElection;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
@@ -19,7 +21,8 @@ import edu.wlu.cs.levy.CG.KDTree;
 public class RaceApp extends LogicThread {
 	private static final boolean RANDOM_DESTINATION = false;
 	public static final int ARRIVED_MSG = 22;
-
+	private static final MotionParameters DEFAULT_PARAMETERS = MotionParameters.defaultParameters();
+	private volatile MotionParameters param = DEFAULT_PARAMETERS;
 	final Map<String, ItemPosition> destinations = new HashMap<String, ItemPosition>();
 	
 	Stack<ItemPosition> pathStack;
@@ -36,7 +39,7 @@ public class RaceApp extends LogicThread {
 	ObstacleList obEnvironment;
 	//obEnvironment is the physical environment, used when calculating collisions
 	
-	ItemPosition currentDestination, currentDestination1;
+	ItemPosition currentDestination, preDestination;
 	
 	private LeaderElection le;
 //	private String leader = null;
@@ -102,6 +105,7 @@ public class RaceApp extends LogicThread {
 					stage = Stage.DONE;
 				} else 
 				{
+
 		//			RobotMessage informleader = new RobotMessage("ALL", name, 21, le.getLeader());
 		//			gvh.comms.addOutgoingMessage(informleader);
 
@@ -113,7 +117,7 @@ public class RaceApp extends LogicThread {
 						currentDestination = getRandomElement(destinations);
 						ObsSize = obsList.ObList.size();
 						RRTNode path = new RRTNode(gvh.gps.getPosition(name).x, gvh.gps.getPosition(name).y);
-						pathStack = path.findRoute(currentDestination, 5000, obsList, 5000, 3000, (gvh.gps.getPosition(name).radius)/2);
+						pathStack = path.findRoute(currentDestination, 5000, obsList, 5000, 3000, (gvh.gps.getPosition(name)), (int) (gvh.gps.getPosition(name).radius*0.8));
 						
 						kd = path.kd;
 						kdTree = RRTNode.stopNode;
@@ -122,6 +126,7 @@ public class RaceApp extends LogicThread {
 						stage = Stage.HOLD;	
 						}					
 						else{
+							preDestination = null;
 							stage = Stage.MIDWAY;
 						}
 					}
@@ -166,18 +171,24 @@ public class RaceApp extends LogicThread {
 						break;
 					}
 					if(!pathStack.empty()){
-						//if own map changes, go back to path planning
-						if(ObsSize != obsList.ObList.size()){
-							pathStack.clear();
-							stage = Stage.PICK;
-							break;
+						//if did not reach last midway point, go back to path planning
+						if(preDestination != null){
+							if((gvh.gps.getPosition(name).distanceTo(preDestination)>param.GOAL_RADIUS)){
+								pathStack.clear();
+								stage = Stage.PICK;
+								break;
+							}
+							preDestination = pathStack.peek();
+						}
+						else{
+							preDestination = pathStack.peek();
 						}
 						ItemPosition goMidPoint = pathStack.pop();
 						gvh.plat.moat.goTo(goMidPoint, obsList);
 						stage = Stage.MIDWAY;
 					}
 					else{
-						if(ObsSize != obsList.ObList.size()){
+						if((gvh.gps.getPosition(name).distanceTo(currentDestination)>param.GOAL_RADIUS)){
 							pathStack.clear();
 							stage = Stage.PICK;
 						}

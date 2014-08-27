@@ -42,9 +42,11 @@ public class RRTNode {
 //if find a path, return a midway point stack
 //if can not find a path, return null
 //remember to handle the null stack when writing apps using RRT path planning
+//the obstacle list will be modified to remove any obstacle that is inside a robot
 	
-    public Stack<ItemPosition> findRoute(ItemPosition destination, int K, ObstacleList obsList, int xRange, int yRange, int Radius) {
+    public Stack<ItemPosition> findRoute(ItemPosition destination, int K, ObstacleList obsList, int xRange, int yRange, ItemPosition RobotPos, int Radius) {
 //initialize a kd tree;
+    	obsList.remove(RobotPos, 0.9*RobotPos.radius);
     	kd = new KDTree<RRTNode>(2);
     	double [] root = {position.x,position.y};
     	final RRTNode rootNode = new RRTNode(position.x,position.y);

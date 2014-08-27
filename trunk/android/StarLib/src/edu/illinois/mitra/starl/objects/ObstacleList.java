@@ -181,4 +181,22 @@ public class ObstacleList {
 		}
 	}
 	
+	public void remove(ItemPosition robotPos, double radius){
+		if(robotPos == null)
+			return;
+		if(ObList == null)
+			return;
+		
+		for(int i=0; i< ObList.size(); i++){
+			if(ObList.elementAt(i) != null){
+				if(!ObList.elementAt(i).validItemPos(robotPos, radius)){
+					ObList.remove(i);
+				}
+			}
+			else
+			break;
+		}
+		return;
+	}
+	
 }

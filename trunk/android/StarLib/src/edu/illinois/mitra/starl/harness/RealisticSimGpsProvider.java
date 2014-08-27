@@ -259,7 +259,7 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 					
 					if(bot.velocity > 0){
 						if(bot.angleTo(wall)%90>(-20)){
-							System.out.println(bot.angleTo(wall)%90);
+						//	System.out.println(bot.angleTo(wall)%90);
 							bot.rightbump = true;
 						}
 						if(bot.angleTo(wall)%90<20){
