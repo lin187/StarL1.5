@@ -82,17 +82,26 @@ public class Simulation {
 		
 		// Load Obstacles
 		if(settings.OBSPOINT_FILE != null)
-					
-		gps.setObspoints(ObstLoader.loadObspoints(settings.OBSPOINT_FILE));
-		list = gps.getObspointPositions();
-		list.detect_Precision = settings.Detect_Precision;
-		list.de_Radius = settings.De_Radius;
-		//should we grid the environment?
-		if(settings.Detect_Precision > 1){
-			list.Gridfy();
+		{			
+			gps.setObspoints(ObstLoader.loadObspoints(settings.OBSPOINT_FILE));
+			list = gps.getObspointPositions();
+			list.detect_Precision = settings.Detect_Precision;
+			list.de_Radius = settings.De_Radius;
+			//should we grid the environment?
+			if(settings.Detect_Precision > 1){
+				list.Gridfy();
+			}
+			gps.setViews(list, settings.N_BOTS);
 		}
-		gps.setViews(list, settings.N_BOTS);
-
+		else{
+			//if we have no input files, we still have to initialize the obstacle list so that later on, if we detect collision between robots, we can add that obstacle
+			gps.setObspoints(new ObstacleList());
+			list = gps.getObspointPositions();
+			list.detect_Precision = settings.Detect_Precision;
+			list.de_Radius = settings.De_Radius;
+			gps.setViews(list, settings.N_BOTS);
+		}
+		
 		
 		this.settings = settings;
 		simEngine.setGps(gps);
