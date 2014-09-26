@@ -31,6 +31,10 @@ public final class WptLoader {
 					ItemPosition wpt = new ItemPosition(parts[4], Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), Integer.parseInt(parts[3]), Integer.parseInt(parts[5]));
 					waypoints.update(wpt, 0);
 				}
+				if(parts[0].equals("WAY") && parts.length == 5) {
+					ItemPosition wpt = new ItemPosition(parts[4], Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), Integer.parseInt(parts[3]));
+					waypoints.update(wpt, 0);
+				}
 			}
 			in.close();
 		} catch (IOException e) {

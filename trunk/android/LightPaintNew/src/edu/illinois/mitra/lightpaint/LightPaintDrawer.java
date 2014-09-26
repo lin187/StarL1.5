@@ -44,8 +44,9 @@ public class LightPaintDrawer extends Drawer {
 	}
 
 	private void drawAlgorithm(Graphics2D g, LpAlgorithm alg) {
-		if(alg == null)
+		if(alg == null){
 			return;
+		}
 		int unsafeDrawRadius = (int) alg.unsafeRadius / 2;
 
 		drawImageGraph(alg.drawing, g, Color.LIGHT_GRAY, 12);

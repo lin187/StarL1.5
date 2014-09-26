@@ -109,8 +109,9 @@ public class Simulation {
 
 		// Load initial positions
 		PositionList initialPositions;
-		if(settings.INITIAL_POSITIONS_FILE != null)
+		if(settings.INITIAL_POSITIONS_FILE != null){
 			initialPositions = WptLoader.loadWaypoints(settings.INITIAL_POSITIONS_FILE);
+		}
 		else
 			initialPositions = new PositionList();
 
@@ -121,9 +122,9 @@ public class Simulation {
 			String botName = settings.BOT_NAME + i;
 
 			ItemPosition initialPosition = initialPositions.getPosition(botName);
-
 			// If no initial position was supplied, randomly generate one
 			if(initialPosition == null) {	
+				System.out.println("null position in list");
 				int retries = 0;
 				boolean valid = false;
 				
@@ -282,7 +283,6 @@ public class Simulation {
 	 */
 	public void start() {
 		executor = Executors.newFixedThreadPool(participants.size());
-
 		// Save settings to JSON file
 		if(settings.TRACE_OUT_DIR != null)
 			SettingsWriter.writeSettings(settings);
