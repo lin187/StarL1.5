@@ -102,7 +102,7 @@ public class SimulationEngine extends Thread {
 	private void deadlockCheck(Entry<Thread, Long> entry) {
 		long now = System.currentTimeMillis();
 		Thread thread = entry.getKey();
-		if((entry.getValue() == null) && (now - lastUpdateTime.get(thread)) > THREAD_DEADLOCK_TIMEOUT) {
+		if((entry.getValue() == null) && (now - lastUpdateTime.get(thread)) > THREAD_DEADLOCK_TIMEOUT/ticRate) {
 
 			System.err.println("\n\nPossible deadlock encountered at " + now);
 

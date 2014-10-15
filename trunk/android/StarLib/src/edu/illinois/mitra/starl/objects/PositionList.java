@@ -5,24 +5,26 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
 /**
  * PositionList is a thin wrapper for a HashMap (String -> ItemPosition). Collections of ItemPositions
  * are stored in PositionLists.
- * @author Adam Zimmerman
- * @version 1.0
+ * they are sorted in the natural order of their keys
+ * @author Adam Zimmerman, Yixiao Lin
+ * @version 2.0
  */
 public class PositionList implements Iterable<ItemPosition> {
 	private static final String TAG = "positionList";
 	private static final String ERR = "Critical Error";
 	
-	private HashMap<String,ItemPosition> positions;
+	private TreeMap<String,ItemPosition> positions;
 	
 	/**
 	 * Create an empty PositionList
 	 */
 	public PositionList() {
-		positions = new HashMap<String,ItemPosition>();
+		positions = new TreeMap<String,ItemPosition>();
 	}
 	
 	/**
