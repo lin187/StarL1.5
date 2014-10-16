@@ -9,9 +9,6 @@ public class Main {
 		SimSettings.Builder settings = new SimSettings.Builder();
 		
 		settings.N_BOTS(5);
-		settings.N_GBOTS(5);
-	//	settings.N_DBOTS(1);
-	//	settings.N_RBOTS(1);
 		settings.TIC_TIME_RATE(1);
 		settings.WAYPOINT_FILE("waypoints/four.wpt");
 		settings.INITIAL_POSITIONS_FILE("waypoints/start.wpt");

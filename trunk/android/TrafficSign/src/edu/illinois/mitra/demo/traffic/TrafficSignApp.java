@@ -2,6 +2,7 @@ package edu.illinois.mitra.demo.traffic;
 
 import java.util.*;
 
+import edu.illinois.mitra.starl.comms.MessageContents;
 import edu.illinois.mitra.starl.comms.RobotMessage;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
@@ -10,12 +11,14 @@ import edu.illinois.mitra.starl.motion.*;
 import edu.illinois.mitra.starl.motion.MotionParameters.COLAVOID_MODE_TYPE;
 
 public class TrafficSignApp extends LogicThread {
-	public static final int ARRIVED_MSG = 22;
+	public static final int REQUEST_MSG = 22;
 	private static final MotionParameters DEFAULT_PARAMETERS = MotionParameters.defaultParameters();
+	private volatile MotionParameters param = DEFAULT_PARAMETERS;
 	Queue<ItemPosition> destinations = new LinkedList<ItemPosition>();
 	ObstacleList obEnvironment;
 	int robotIndex;
-	RRTNode kdTree = new RRTNode();
+	Hashtable<String, Boolean> ListOfCars = new Hashtable<String, Boolean>();
+	List<String> sections = new ArrayList<String>();
 	ItemPosition CS_A = new ItemPosition("CS_A", 2250, 2750, 0);
 	ItemPosition CS_B = new ItemPosition("CS_B", 2750, 2750, 0);
 	ItemPosition CS_C = new ItemPosition("CS_C", 2250, 2250, 0);
@@ -34,7 +37,7 @@ public class TrafficSignApp extends LogicThread {
 		MotionParameters.Builder settings = new MotionParameters.Builder();
 		settings.COLAVOID_MODE(COLAVOID_MODE_TYPE.STOP_ON_COLLISION);
 		settings.GOAL_RADIUS(15);
-		MotionParameters param = settings.build();
+		param = settings.build();
 		gvh.plat.moat.setParameters(param);
 		obEnvironment = gvh.gps.getObspointPositions();
 		//set the destination for each robot, which are differed by their angle
@@ -44,9 +47,10 @@ public class TrafficSignApp extends LogicThread {
 				destinations.add(i);
 			}
 		}
+		
 
 		
-		gvh.comms.addMsgListener(this, ARRIVED_MSG);
+		gvh.comms.addMsgListener(this, REQUEST_MSG);
 	}
 
 	@Override
@@ -60,24 +64,34 @@ public class TrafficSignApp extends LogicThread {
 						stage = Stage.DONE;
 					} else 
 					{
-						currentDestination = (ItemPosition)destinations.poll();
+						currentDestination = (ItemPosition)destinations.peek();
 						if(withinCS(currentDestination))
 							stage = Stage.ENTRY;
-						else
+						else{
+							gvh.plat.moat.goTo(currentDestination);	
 							stage = Stage.GO;
+						}
 					}
 					break;
 				case GO:
 					if(!gvh.plat.moat.inMotion) {
-						if(currentDestination != null){
-							destinations.remove(currentDestination.getName());
-							gvh.plat.moat.goTo(currentDestination);
-						}
+						if(currentDestination != null)
+							destinations.remove();
+						stage = Stage.PICK;
 					}
-						
 					break;
 				case ENTRY:
 					
+					getRegisterList();
+					getWanted();
+					String[] section_string = new String[sections.size()];
+					for(int i = 0; i< sections.size();i++){
+						section_string[i] = sections.get(i);
+					}
+					MessageContents sections_msg = new MessageContents(section_string);
+					RobotMessage request = new RobotMessage("ALL", name, REQUEST_MSG, sections_msg);
+					gvh.comms.addOutgoingMessage(request);
+					//send message, stay in ENTRY, when received all messages, go to CS
 					break;	
 					
 				case CS:
@@ -88,6 +102,7 @@ public class TrafficSignApp extends LogicThread {
 					
 				case DONE:
 					gvh.plat.moat.motion_stop();
+				
 					//if does not return null, program will never halt
 					//useful for debugging
 					//return null;
@@ -96,6 +111,79 @@ public class TrafficSignApp extends LogicThread {
 			}
 			sleep(100);
 		}
+	}
+	
+	@Override
+	protected void receive(RobotMessage m) {
+		String id = m.getFrom();
+		int id_num = Integer.parseInt(id.substring(3,name.length()));
+		MessageContents msg_content = m.getContents();
+		List<String> R_request = msg_content.getContents();
+		if(stage == Stage.ENTRY){
+			boolean intersect = false;
+			for(int i = 0; i<sections.size(); i++){
+				if(R_request.contains(sections.get(i))){
+					intersect = true;
+				}
+			}
+			if(intersect && (id_num>robotIndex))
+				QueueMSG(m);
+			else
+				replyToRequest(id);
+		}
+		if(stage == Stage.CS ||stage == Stage.EXIT ){
+			boolean intersect = false;
+			for(int i = 0; i<sections.size(); i++){
+				if(R_request.contains(sections.get(i))){
+					intersect = true;
+				}
+			}
+			if(intersect)
+				QueueMSG(m);
+			else
+				replyToRequest(id);
+		}
+	}
+	
+	
+	
+	private void replyToRequest(String id) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void QueueMSG(RobotMessage m) {
+		// queue the message
+		
+	}
+
+	/**
+	 * get the section wanted by finding following critical sections in the destinations
+	 * modify the variable sections and return
+	**/
+	private void getWanted() {
+		sections.clear();
+		sections.add(CSname(currentDestination));
+		Iterator<ItemPosition> iterator = destinations.iterator();
+		while(iterator.hasNext()){
+		  ItemPosition temp = (ItemPosition) iterator.next();
+		  if(withinCS(temp)){
+			  sections.add(CSname(temp));
+		  }
+		  else
+			  break;
+		}
+		return;
+	}
+	
+	private void getRegisterList() {
+		ListOfCars.clear();
+		ListOfCars.put("bot1", false);
+		ListOfCars.put("bot2", false);
+		ListOfCars.put("bot3", false);
+		ListOfCars.put("bot4", false);
+		ListOfCars.put("bot5", false);
+		return;
 	}
 
 	private boolean withinCS(ItemPosition current) {
@@ -109,11 +197,18 @@ public class TrafficSignApp extends LogicThread {
 			return true;
 		return false;
 	}
-
-	@Override
-	protected void receive(RobotMessage m) {
-		String posName = m.getContents(0);
-
-		
+	
+	private String CSname(ItemPosition current) {
+		if(current.x == CS_A.x && current.y == CS_A.y)
+			return "CS_A";
+		if(current.x == CS_B.x && current.y == CS_B.y)
+			return "CS_B";
+		if(current.x == CS_C.x && current.y == CS_C.y)
+			return "CS_C";
+		if(current.x == CS_D.x && current.y == CS_D.y)
+			return "CS_D";
+		return "error";
 	}
+
+
 }

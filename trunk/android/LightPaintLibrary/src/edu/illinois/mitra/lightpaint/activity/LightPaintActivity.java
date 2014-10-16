@@ -65,12 +65,6 @@ public class LightPaintActivity extends LogicThread implements RobotEventListene
 
 	public LightPaintActivity(GlobalVarHolder gvh) {
 		super(gvh);
-		for(int i = 0; i< gvh.gps.getPositions().getNumPositions(); i++){
-			if(gvh.gps.getPositions().getList().get(i).name == name){
-				robotIndex = i;
-				break;
-			}
-		}
 		// Register as message listeners
 		gvh.comms.addMsgListener(this, ASSIGNMENT_ID, POSITION_UPDATE_ID, ASSIGNMENT_REQ_ID);
 
@@ -160,7 +154,7 @@ public class LightPaintActivity extends LogicThread implements RobotEventListene
 				break;
 			case DO_ASSIGNMENT:
 				screenX(false);
-				gvh.plat.moat.goTo(currentDestination = assignment.remove(0),  gvh.gps.getViews().elementAt(robotIndex));
+				gvh.plat.moat.goTo(currentDestination = assignment.remove(0));
 				screenColor = getColorFromPosition(lastVisitedPoint);
 				screenLineSize = getSizeFromPosition(lastVisitedPoint);
 				updateScreen();
