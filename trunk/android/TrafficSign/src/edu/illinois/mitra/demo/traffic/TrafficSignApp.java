@@ -11,22 +11,27 @@ import edu.illinois.mitra.starl.motion.*;
 import edu.illinois.mitra.starl.motion.MotionParameters.COLAVOID_MODE_TYPE;
 
 public class TrafficSignApp extends LogicThread {
+	ItemPosition CS_A = new ItemPosition("CS_A", 2250, 2750, 0);
+	ItemPosition CS_B = new ItemPosition("CS_B", 2750, 2750, 0);
+	ItemPosition CS_C = new ItemPosition("CS_C", 2250, 2250, 0);
+	ItemPosition CS_D = new ItemPosition("CS_D", 2750, 2250, 0);
 	public static final int REQUEST_MSG = 22;
+	public static final int REPLY_MSG = 23;
+	public static final int REGISTER_MSG = 24;
+	public static final int UNREGISTER_MSG = 25;
 	private static final MotionParameters DEFAULT_PARAMETERS = MotionParameters.defaultParameters();
 	private volatile MotionParameters param = DEFAULT_PARAMETERS;
 	Queue<ItemPosition> destinations = new LinkedList<ItemPosition>();
 	ObstacleList obEnvironment;
 	int robotIndex;
-	Hashtable<String, Boolean> ListOfCars = new Hashtable<String, Boolean>();
+	List<String> ListOfCars = new ArrayList<String>();
 	List<String> sections = new ArrayList<String>();
-	ItemPosition CS_A = new ItemPosition("CS_A", 2250, 2750, 0);
-	ItemPosition CS_B = new ItemPosition("CS_B", 2750, 2750, 0);
-	ItemPosition CS_C = new ItemPosition("CS_C", 2250, 2250, 0);
-	ItemPosition CS_D = new ItemPosition("CS_D", 2750, 2250, 0);
+	List<RobotMessage> msgQueue = new ArrayList<RobotMessage>();
+	List<RobotMessage> toremoveQueue = new ArrayList<RobotMessage>();
 	ItemPosition currentDestination, preDestination;
 		
 	private enum Stage {
-		PICK, ENTRY, CS, GO, DONE, EXIT
+		PICK, REQUEST, ENTRY, CS, GO, DONE, EXIT
 	};
 
 	private Stage stage = Stage.PICK;
@@ -43,14 +48,17 @@ public class TrafficSignApp extends LogicThread {
 		//set the destination for each robot, which are differed by their angle
 		//angle does not serve much purpose here, therefore, we use it to identify the way points for each robot 
 		for(ItemPosition i : gvh.gps.getWaypointPositions()){
-			if(i.angle-1 == robotIndex){
-				destinations.add(i);
+			if(i.angle == robotIndex){
+				ItemPosition toAdd = new ItemPosition(i);
+				toAdd.angle = 0;
+				destinations.add(toAdd);
 			}
 		}
-		
-
-		
 		gvh.comms.addMsgListener(this, REQUEST_MSG);
+		gvh.comms.addMsgListener(this, REPLY_MSG);
+		gvh.comms.addMsgListener(this, REGISTER_MSG);
+		gvh.comms.addMsgListener(this, UNREGISTER_MSG);
+		
 	}
 
 	@Override
@@ -66,7 +74,7 @@ public class TrafficSignApp extends LogicThread {
 					{
 						currentDestination = (ItemPosition)destinations.peek();
 						if(withinCS(currentDestination))
-							stage = Stage.ENTRY;
+							stage = Stage.REQUEST;
 						else{
 							gvh.plat.moat.goTo(currentDestination);	
 							stage = Stage.GO;
@@ -75,13 +83,14 @@ public class TrafficSignApp extends LogicThread {
 					break;
 				case GO:
 					if(!gvh.plat.moat.inMotion) {
-						if(currentDestination != null)
+						if(currentDestination != null){
 							destinations.remove();
+						}
 						stage = Stage.PICK;
 					}
 					break;
-				case ENTRY:
 					
+				case REQUEST:
 					getRegisterList();
 					getWanted();
 					String[] section_string = new String[sections.size()];
@@ -91,13 +100,45 @@ public class TrafficSignApp extends LogicThread {
 					MessageContents sections_msg = new MessageContents(section_string);
 					RobotMessage request = new RobotMessage("ALL", name, REQUEST_MSG, sections_msg);
 					gvh.comms.addOutgoingMessage(request);
+					stage = Stage.ENTRY;
+					break;
+					
+				case ENTRY:
+					//just wait for others to reply
+					//just a wait stage
 					//send message, stay in ENTRY, when received all messages, go to CS
 					break;	
 					
 				case CS:
+					if(!gvh.plat.moat.inMotion) {
+						// it has reached the previous point
+						
+						if(currentDestination != null){
+							if(preDestination != null){
+								//release the last CS section
+								release(CSname(preDestination));
+							}
+							preDestination = new ItemPosition(currentDestination);
+							destinations.remove();
+						}
+						currentDestination = (ItemPosition)destinations.peek();
+						if(withinCS(currentDestination)){
+							stage = Stage.CS;
+							gvh.plat.moat.goTo(currentDestination);	
+						}
+						else{
+							gvh.plat.moat.goTo(currentDestination);	
+							stage = Stage.EXIT;
+						}
+					}
 					break;
 					
 				case EXIT:
+					if(!gvh.plat.moat.inMotion) {
+						releaseAll();
+						preDestination = null;
+						stage = Stage.PICK;	
+					}
 					break;
 					
 				case DONE:
@@ -113,48 +154,100 @@ public class TrafficSignApp extends LogicThread {
 		}
 	}
 	
+
+
 	@Override
 	protected void receive(RobotMessage m) {
-		String id = m.getFrom();
-		int id_num = Integer.parseInt(id.substring(3,name.length()));
-		MessageContents msg_content = m.getContents();
-		List<String> R_request = msg_content.getContents();
-		if(stage == Stage.ENTRY){
-			boolean intersect = false;
-			for(int i = 0; i<sections.size(); i++){
-				if(R_request.contains(sections.get(i))){
-					intersect = true;
+		if(m.getMID() == REQUEST_MSG){
+			if(m.getTo().equals(name) || m.getTo().equals("ALL")){
+				String id = m.getFrom();
+				int id_num = Integer.parseInt(id.substring(3,name.length()));
+				MessageContents msg_content = m.getContents();
+				List<String> R_request = msg_content.getContents();
+				if(stage == Stage.ENTRY || stage == Stage.REQUEST){
+					boolean intersect = false;
+					for(int i = 0; i<sections.size(); i++){
+						if(R_request.contains(sections.get(i))){
+							intersect = true;
+						}
+					}
+					if(intersect && (id_num>robotIndex))
+						QueueMSG(m);
+					else
+						replyToRequest(m);
 				}
-			}
-			if(intersect && (id_num>robotIndex))
-				QueueMSG(m);
-			else
-				replyToRequest(id);
-		}
-		if(stage == Stage.CS ||stage == Stage.EXIT ){
-			boolean intersect = false;
-			for(int i = 0; i<sections.size(); i++){
-				if(R_request.contains(sections.get(i))){
-					intersect = true;
+				if(stage == Stage.CS ||stage == Stage.EXIT ){
+					boolean intersect = false;
+					for(int i = 0; i<sections.size(); i++){
+						if(R_request.contains(sections.get(i))){
+							intersect = true;
+						}
+					}
+					if(intersect)
+						QueueMSG(m);
+					else
+						replyToRequest(m);
 				}
+				if(stage == Stage.GO ||stage == Stage.DONE || stage == Stage.PICK)
+					replyToRequest(m);
+				return;
 			}
-			if(intersect)
-				QueueMSG(m);
-			else
-				replyToRequest(id);
 		}
+		if(m.getMID() == REPLY_MSG){
+			if(m.getTo().equals(name) || m.getTo().equals("ALL")){
+				ListOfCars.remove(m.getFrom());
+			}
+			if(ListOfCars.isEmpty()){
+				System.out.println("got all reply");
+				gvh.plat.moat.goTo(currentDestination);	
+				stage = Stage.CS;
+				//everyone replies, go to CS
+			}
+			return;
+		}
+		
+		
 	}
 	
-	
-	
-	private void replyToRequest(String id) {
-		// TODO Auto-generated method stub
+	private void release(String CSname) {
+		System.out.println(name + " releasing "+CSname);
+		sections.remove(CSname);
+		if(!msgQueue.isEmpty()){
+			for (RobotMessage temp : msgQueue) {
+			    receive(temp);
+			    System.out.println("checking reply to "+temp);
+			}
+		}
+		while(!toremoveQueue.isEmpty()){
+			RobotMessage temp2 = toremoveQueue.remove(0);
+			msgQueue.remove(temp2);
+		}
 		
+	}
+	
+	private void releaseAll() {
+		System.out.println("realeasing");
+		while(!msgQueue.isEmpty()){
+			replyToRequest(msgQueue.remove(0));
+		}
+		return;
+	}
+	
+	private void replyToRequest(RobotMessage m2) {
+		if(msgQueue.contains(m2)){
+			toremoveQueue.add(m2);
+		}
+		String id = m2.getFrom();
+		MessageContents sections_msg = new MessageContents("OK");
+		RobotMessage request = new RobotMessage(id, name, REPLY_MSG, sections_msg);
+		gvh.comms.addOutgoingMessage(request);
 	}
 
 	private void QueueMSG(RobotMessage m) {
+		if(msgQueue.contains(m))
+			return;
 		// queue the message
-		
+		msgQueue.add(m);
 	}
 
 	/**
@@ -169,6 +262,7 @@ public class TrafficSignApp extends LogicThread {
 		  ItemPosition temp = (ItemPosition) iterator.next();
 		  if(withinCS(temp)){
 			  sections.add(CSname(temp));
+			  System.out.println(name +" wants "+CSname(temp));
 		  }
 		  else
 			  break;
@@ -178,11 +272,12 @@ public class TrafficSignApp extends LogicThread {
 	
 	private void getRegisterList() {
 		ListOfCars.clear();
-		ListOfCars.put("bot1", false);
-		ListOfCars.put("bot2", false);
-		ListOfCars.put("bot3", false);
-		ListOfCars.put("bot4", false);
-		ListOfCars.put("bot5", false);
+		ListOfCars.add("bot0");
+		ListOfCars.add("bot1");
+		ListOfCars.add("bot2");
+		ListOfCars.add("bot3");
+		ListOfCars.remove(name);
+		//ListOfCars.add("bot5");
 		return;
 	}
 
