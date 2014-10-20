@@ -23,6 +23,7 @@ public class TrafficSignApp extends LogicThread {
 	private volatile MotionParameters param = DEFAULT_PARAMETERS;
 	Queue<ItemPosition> destinations = new LinkedList<ItemPosition>();
 	ObstacleList obEnvironment;
+	int timeStamp;
 	int robotIndex;
 	List<String> ListOfCars = new ArrayList<String>();
 	List<String> sections = new ArrayList<String>();
@@ -41,7 +42,7 @@ public class TrafficSignApp extends LogicThread {
 		robotIndex = Integer.parseInt(name.substring(3,name.length()));
 		MotionParameters.Builder settings = new MotionParameters.Builder();
 		settings.COLAVOID_MODE(COLAVOID_MODE_TYPE.STOP_ON_COLLISION);
-		settings.GOAL_RADIUS(15);
+		//settings.GOAL_RADIUS(15);
 		param = settings.build();
 		gvh.plat.moat.setParameters(param);
 		obEnvironment = gvh.gps.getObspointPositions();
@@ -93,10 +94,12 @@ public class TrafficSignApp extends LogicThread {
 				case REQUEST:
 					getRegisterList();
 					getWanted();
-					String[] section_string = new String[sections.size()];
+					String[] section_string = new String[sections.size()+1];
 					for(int i = 0; i< sections.size();i++){
 						section_string[i] = sections.get(i);
 					}
+					section_string[sections.size()] = ((String) ("" + timeStamp));
+					//attach the timeStamp at the end of the message
 					MessageContents sections_msg = new MessageContents(section_string);
 					RobotMessage request = new RobotMessage("ALL", name, REQUEST_MSG, sections_msg);
 					gvh.comms.addOutgoingMessage(request);
@@ -163,7 +166,9 @@ public class TrafficSignApp extends LogicThread {
 				String id = m.getFrom();
 				int id_num = Integer.parseInt(id.substring(3,name.length()));
 				MessageContents msg_content = m.getContents();
-				List<String> R_request = msg_content.getContents();
+				List<String> R_request = new ArrayList<String>(msg_content.getContents());
+				int tStamp = Integer.parseInt(R_request.remove(R_request.size()-1));
+				//get the sections and the timeStamp
 				if(stage == Stage.ENTRY || stage == Stage.REQUEST){
 					boolean intersect = false;
 					for(int i = 0; i<sections.size(); i++){
@@ -171,7 +176,8 @@ public class TrafficSignApp extends LogicThread {
 							intersect = true;
 						}
 					}
-					if(intersect && (id_num>robotIndex))
+					if(intersect && ((tStamp>timeStamp) || ((tStamp == timeStamp) && id_num>robotIndex)))
+						//if(intersect and (m.timeStamp,m.id)>(timeStamp,id))
 						QueueMSG(m);
 					else
 						replyToRequest(m);
@@ -196,9 +202,9 @@ public class TrafficSignApp extends LogicThread {
 		if(m.getMID() == REPLY_MSG){
 			if(m.getTo().equals(name) || m.getTo().equals("ALL")){
 				ListOfCars.remove(m.getFrom());
+//				System.out.println(name + " get reply from " + m.getFrom());
 			}
 			if(ListOfCars.isEmpty()){
-				System.out.println("got all reply");
 				gvh.plat.moat.goTo(currentDestination);	
 				stage = Stage.CS;
 				//everyone replies, go to CS
@@ -210,12 +216,10 @@ public class TrafficSignApp extends LogicThread {
 	}
 	
 	private void release(String CSname) {
-		System.out.println(name + " releasing "+CSname);
 		sections.remove(CSname);
 		if(!msgQueue.isEmpty()){
 			for (RobotMessage temp : msgQueue) {
 			    receive(temp);
-			    System.out.println("checking reply to "+temp);
 			}
 		}
 		while(!toremoveQueue.isEmpty()){
@@ -226,7 +230,7 @@ public class TrafficSignApp extends LogicThread {
 	}
 	
 	private void releaseAll() {
-		System.out.println("realeasing");
+//		System.out.println("realeasing");
 		while(!msgQueue.isEmpty()){
 			replyToRequest(msgQueue.remove(0));
 		}
@@ -234,8 +238,10 @@ public class TrafficSignApp extends LogicThread {
 	}
 	
 	private void replyToRequest(RobotMessage m2) {
+//		System.out.println("replying to "+m2);
 		if(msgQueue.contains(m2)){
 			toremoveQueue.add(m2);
+	//		System.out.println("adding reply to "+m2);
 		}
 		String id = m2.getFrom();
 		MessageContents sections_msg = new MessageContents("OK");
@@ -256,13 +262,12 @@ public class TrafficSignApp extends LogicThread {
 	**/
 	private void getWanted() {
 		sections.clear();
-		sections.add(CSname(currentDestination));
 		Iterator<ItemPosition> iterator = destinations.iterator();
 		while(iterator.hasNext()){
 		  ItemPosition temp = (ItemPosition) iterator.next();
 		  if(withinCS(temp)){
 			  sections.add(CSname(temp));
-			  System.out.println(name +" wants "+CSname(temp));
+	//		  System.out.println(name +" wants "+CSname(temp));
 		  }
 		  else
 			  break;
@@ -272,10 +277,11 @@ public class TrafficSignApp extends LogicThread {
 	
 	private void getRegisterList() {
 		ListOfCars.clear();
-		ListOfCars.add("bot0");
-		ListOfCars.add("bot1");
-		ListOfCars.add("bot2");
 		ListOfCars.add("bot3");
+		ListOfCars.add("bot2");
+		ListOfCars.add("bot1");
+		ListOfCars.add("bot0");
+		timeStamp = ListOfCars.indexOf(name);
 		ListOfCars.remove(name);
 		//ListOfCars.add("bot5");
 		return;
