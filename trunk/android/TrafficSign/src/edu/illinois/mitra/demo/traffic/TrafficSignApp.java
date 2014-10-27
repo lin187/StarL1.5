@@ -80,6 +80,10 @@ public class TrafficSignApp extends LogicThread {
 					{
 						currentDestination = (ItemPosition)destinations.peek();
 						if(withinCS(currentDestination)){
+							msgQueue.clear();
+							toremoveQueue.clear();
+							R_msgQueue.clear();
+							R_msgQueue2.clear();
 							timeNow = System.currentTimeMillis();
 							requestRegisterList();
 							stage = Stage.REGISTER;
@@ -125,6 +129,7 @@ public class TrafficSignApp extends LogicThread {
 					RobotMessage request = new RobotMessage("ALL", name, REQUEST_MSG, sections_msg);
 					gvh.comms.addOutgoingMessage(request);
 					ListOfCars.remove(name);
+					checkQueue();
 					stage = Stage.ENTRY;
 					break;
 					
@@ -196,7 +201,7 @@ public class TrafficSignApp extends LogicThread {
 				List<String> R_request = new ArrayList<String>(msg_content.getContents());
 				int tStamp = Integer.parseInt(R_request.remove(R_request.size()-1));
 				//get the sections and the timeStamp
-				if(stage == Stage.ENTRY || stage == Stage.REQUEST){
+				if(stage == Stage.ENTRY || stage == Stage.REQUEST ){
 					boolean intersect = false;
 					for(int i = 0; i<sections.size(); i++){
 						if(R_request.contains(sections.get(i))){
@@ -221,8 +226,13 @@ public class TrafficSignApp extends LogicThread {
 					else
 						replyToRequest(m);
 				}
-				if(stage == Stage.GO ||stage == Stage.DONE || stage == Stage.PICK)
+				if(stage == Stage.GO ||stage == Stage.DONE || stage == Stage.PICK){
 					replyToRequest(m);
+				}
+				if(stage == Stage.REGISTER){
+					System.out.println(name + " Got request msg during register");
+					QueueMSG(m);
+				}
 				return;
 				
 			}
@@ -235,14 +245,19 @@ public class TrafficSignApp extends LogicThread {
 				if(stage == Stage.REGISTER){
 					MessageContents register_R_msg = new MessageContents(-1);
 					RobotMessage register_R = new RobotMessage(m.getFrom(), name, REGISTER_R_MSG, register_R_msg);
-					System.out.println(name + " adding register reply to "+ m.getFrom() + " with Stamp -1");
+					//System.out.println(name + " adding register reply to "+ m.getFrom() + " with Stamp -1");
 					gvh.comms.addOutgoingMessage(register_R);
+					
+					if(!R_msgQueue2.containsKey(m.getFrom())){
+						R_msgQueue2.put(m.getFrom(), m.getFrom());
+					}
+					
 				}
 				else{
 					if(stage != Stage.GO && stage != Stage.PICK){
 						MessageContents register_R_msg = new MessageContents(timeStamp);
 						RobotMessage register_R = new RobotMessage(m.getFrom(), name, REGISTER_R_MSG, register_R_msg);
-						System.out.println(name + " adding register reply to "+ m.getFrom() + " with Stamp " + timeStamp);
+						//System.out.println(name + " adding register reply to "+ m.getFrom() + " with Stamp " + timeStamp);
 						gvh.comms.addOutgoingMessage(register_R);
 					}
 				}
@@ -254,10 +269,12 @@ public class TrafficSignApp extends LogicThread {
 				else{
 					if(!R_msgQueue2.containsKey(m.getFrom())){
 						R_msgQueue2.put(m.getFrom(), m.getFrom());
+						/*
 						MessageContents register_R_msg = new MessageContents(-1);
 						RobotMessage register_R = new RobotMessage(m.getFrom(), name, REGISTER_R_MSG, register_R_msg);
 						System.out.println(name + " adding register reply to "+ m.getFrom() + " with Stamp -1");
 						gvh.comms.addOutgoingMessage(register_R);
+						*/
 					}
 				}
 			}
@@ -277,7 +294,12 @@ public class TrafficSignApp extends LogicThread {
 	}
 	
 	private void release(String CSname) {
-		sections.remove(CSname);
+		sections.remove(0);
+		//System.out.println(name + " releasing "+ CSname);
+		checkQueue();
+	}
+	
+	private void checkQueue() {
 		if(!msgQueue.isEmpty()){
 			for (RobotMessage temp : msgQueue) {
 			    receive(temp);
@@ -287,9 +309,8 @@ public class TrafficSignApp extends LogicThread {
 			RobotMessage temp2 = toremoveQueue.remove(0);
 			msgQueue.remove(temp2);
 		}
-		
 	}
-	
+
 	private void releaseAll() {
 //		System.out.println("releasing");
 		/*
@@ -304,7 +325,7 @@ public class TrafficSignApp extends LogicThread {
 	}
 	
 	private void replyToRequest(RobotMessage m2) {
-//		System.out.println("replying to "+m2);
+//		System.out.println(name + " replying to "+m2.getFrom());
 		if(msgQueue.contains(m2)){
 			toremoveQueue.add(m2);
 	//		System.out.println("adding reply to "+m2);
@@ -316,8 +337,10 @@ public class TrafficSignApp extends LogicThread {
 	}
 
 	private void QueueMSG(RobotMessage m) {
-		if(msgQueue.contains(m))
+		if(msgQueue.contains(m)){
+	//		System.out.println(name + " queueing "+m);
 			return;
+		}
 		// queue the message
 		msgQueue.add(m);
 	}
@@ -378,8 +401,8 @@ public class TrafficSignApp extends LogicThread {
 				ListOfCars.clear();
 			}
 			*/
-		System.out.println(name +" message queue is "+R_msgQueue);
-		System.out.println(name + " register queue is "+R_msgQueue2);
+//		System.out.println(name +" message queue is "+R_msgQueue);
+//		System.out.println(name + " register queue is "+R_msgQueue2);
 		int offset = 0;
 		if(!R_msgQueue.isEmpty())
 			offset = R_msgQueue.lastKey();
