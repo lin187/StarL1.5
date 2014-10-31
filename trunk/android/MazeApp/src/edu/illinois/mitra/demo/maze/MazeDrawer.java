@@ -1,46 +1,59 @@
-package edu.illinois.mitra.demo.traffic;
+package edu.illinois.mitra.demo.maze;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Stroke;
-import java.util.Iterator;
 
 import edu.illinois.mitra.starl.interfaces.LogicThread;
+import edu.illinois.mitra.starl.motion.RRTNode;
 import edu.illinois.mitra.starl.objects.*;
 import edu.illinois.mitra.starlSim.draw.Drawer;
-public class TrafficSignDrawer extends Drawer {
+
+public class MazeDrawer extends Drawer {
 
 	private Stroke stroke = new BasicStroke(8);
 	private Color selectColor = new Color(0,0,255,100);
 	
 	@Override
 	public void draw(LogicThread lt, Graphics2D g) {
-		TrafficSignApp app = (TrafficSignApp) lt;
-		Color[] c = new Color[12] ;
-		c[0] = Color.BLACK;
-		c[1] = Color.BLUE;
-		c[2] = Color.GREEN;
-		c[3] = Color.MAGENTA;
-		c[4] = Color.ORANGE;
-		c[5] = Color.CYAN;
-		c[6] = Color.GRAY;
-		c[7] = Color.PINK;
-		c[8] = Color.RED;
-		c[9] = Color.LIGHT_GRAY;
-		c[10] = Color.YELLOW;
-		c[11] = Color.DARK_GRAY;
-		if(app.robotIndex<12){
-			g.setColor(c[app.robotIndex]);
-		}
-		else{
-			g.setColor(c[0]);
-		}
-		Iterator<ItemPosition> iterator = app.destinations.iterator();
-		while(iterator.hasNext()){
-			ItemPosition dest = (ItemPosition) iterator.next();
+		MazeApp app = (MazeApp) lt;
+
+		g.setColor(Color.RED);
+		for(ItemPosition dest : app.destinations.values()) {
 			g.fillRect(dest.getX() - 13, dest.getY() - 13, 26, 26);
+		}
+
+		/*
+		//traverse the tree to get the full picture of the tree
+		//maybe add child is the easiest way to draw the whole picture
+		g.setColor(Color.cyan);
+		KDTree<RRTNode> kd = app.kd;
+		double [] temp = {0,0};
+		RRTNode curNode0 = null;
+		try {
+			curNode0 = kd.nearest(temp);
+		} catch (KeySizeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		while(curNode0 != null){
+			g.drawRect(curNode0.position.x, curNode0.position.y, 30, 30);
+			if(curNode0.parent != null)
+			g.drawLine(curNode0.position.x, curNode0.position.y, curNode0.parent.position.x, curNode0.parent.position.y);
+			curNode0 = curNode0.parent;
+		}
+		*/
+		//draw kdTree final path stack for debugging
+		g.setColor(Color.orange);
+		RRTNode curNode = app.kdTree;
+		while(curNode != null){
+			g.drawRect(curNode.position.x, curNode.position.y, 30, 30);
+			if(curNode.parent != null)
+			g.drawLine(curNode.position.x, curNode.position.y, curNode.parent.position.x, curNode.parent.position.y);
+			curNode = curNode.parent;
 		}
 		
 		g.setColor(Color.GRAY);

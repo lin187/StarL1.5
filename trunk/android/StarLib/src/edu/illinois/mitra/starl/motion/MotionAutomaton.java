@@ -1,14 +1,10 @@
 package edu.illinois.mitra.starl.motion;
 
-import java.awt.Point;
-import java.awt.geom.Line2D;
-import java.awt.geom.Line2D.Double;
 import java.util.Arrays;
 
 
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.RobotEventListener.Event;
-import edu.illinois.mitra.starl.motion.MotionParameters.COLAVOID_MODE_TYPE;
 import edu.illinois.mitra.starl.objects.*;
 
 

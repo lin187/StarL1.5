@@ -249,8 +249,9 @@ public class Obstacles {
 				obstacle.add(rightBottom3);
 				obstacle.add(rightTop3);
 				obstacle.add(leftTop3);
+				break;
 			default :
-				System.out.println("not an acceptable demension");
+				System.out.println("not an acceptable demension of "+obstacle.size() + " to be grided");
 			break;
 		}
 		grided = true;

@@ -10,7 +10,7 @@ public class Main {
 		
 		settings.N_BOTS(5);
 		settings.TIC_TIME_RATE(1);
-		settings.WAYPOINT_FILE("waypoints/four.wpt");
+		settings.WAYPOINT_FILE("waypoints/dest.wpt");
 		settings.INITIAL_POSITIONS_FILE("waypoints/start.wpt");
 		settings.OBSPOINT_FILE("waypoints/Obstacles.wpt");
 		
