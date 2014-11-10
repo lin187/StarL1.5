@@ -222,7 +222,7 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 		for(ItemPosition current : robot_positions.getList()) {
 			if(!current.name.equals(bot.name)) {
 				if(bot.isFacing(current) && bot.distanceTo(current) <= (bot.radius + current.radius)) {
-					if(bot.velocity > 0 || current.velocity > 0){
+					if(bot.velocity >= 0 || current.velocity >= 0){
 						if(bot.angleTo(current)%90>(-20)){
 							bot.rightbump = true;
 						}
