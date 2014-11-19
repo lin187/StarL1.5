@@ -124,7 +124,7 @@ public class Simulation {
 			ItemPosition initialPosition = initialPositions.getPosition(botName);
 			// If no initial position was supplied, randomly generate one
 			if(initialPosition == null) {	
-				System.out.println("null position in list");
+			//	System.out.println("null position in list");
 				int retries = 0;
 				boolean valid = false;
 				

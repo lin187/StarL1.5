@@ -50,7 +50,7 @@ public class Main {
 					WPT_PATH + inputFilename + ".wpt");
 			builder.N_BOTS(nbots);
 			builder.N_GBOTS(nbots);
-			builder.TIC_TIME_RATE(3);
+			builder.TIC_TIME_RATE(5);
 			builder.MAX_FPS(35);
 			builder.INITIAL_POSITIONS_FILE(WPT_PATH
 					+ "startpoints_benchmark2.wpt");

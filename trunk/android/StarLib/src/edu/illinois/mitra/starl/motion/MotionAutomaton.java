@@ -3,6 +3,8 @@ package edu.illinois.mitra.starl.motion;
 import java.util.Arrays;
 
 
+import java.util.*;
+
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.RobotEventListener.Event;
 import edu.illinois.mitra.starl.objects.*;
@@ -131,7 +133,9 @@ public class MotionAutomaton extends RobotMotion {
 	}
 	
 	public void goTo(ItemPosition dest) {
-		ObstacleList obsList = gvh.gps.getObspointPositions();
+		Scanner in = new Scanner(gvh.gps.getMyPosition().name).useDelimiter("[^0-9]+");
+		int index = in.nextInt();
+		ObstacleList obsList = gvh.gps.getViews().elementAt(index);
 		goTo(dest, obsList);
 	}
 

@@ -84,7 +84,7 @@ public class TrafficSignApp extends LogicThread {
 							toremoveQueue.clear();
 							R_msgQueue.clear();
 							R_msgQueue2.clear();
-							timeNow = System.currentTimeMillis();
+							timeNow = 	gvh.time();
 							requestRegisterList();
 							stage = Stage.REGISTER;
 						}
@@ -104,7 +104,7 @@ public class TrafficSignApp extends LogicThread {
 					break;
 					
 				case REGISTER:
-					if(timeNow+2000<System.currentTimeMillis())
+					if(timeNow+2000<gvh.time())
 						stage = Stage.WAIT;
 					break;
 				case WAIT:
@@ -201,7 +201,7 @@ public class TrafficSignApp extends LogicThread {
 				List<String> R_request = new ArrayList<String>(msg_content.getContents());
 				int tStamp = Integer.parseInt(R_request.remove(R_request.size()-1));
 				//get the sections and the timeStamp
-				if(stage == Stage.ENTRY || stage == Stage.REQUEST ){
+				if(stage == Stage.ENTRY){
 					boolean intersect = false;
 					for(int i = 0; i<sections.size(); i++){
 						if(R_request.contains(sections.get(i))){
@@ -229,8 +229,8 @@ public class TrafficSignApp extends LogicThread {
 				if(stage == Stage.GO ||stage == Stage.DONE || stage == Stage.PICK){
 					replyToRequest(m);
 				}
-				if(stage == Stage.REGISTER){
-					System.out.println(name + " Got request msg during register");
+				if(stage == Stage.REGISTER || stage == Stage.REQUEST ){
+					//still working on the register list, should deal with message after register
 					QueueMSG(m);
 				}
 				return;
@@ -325,7 +325,8 @@ public class TrafficSignApp extends LogicThread {
 	}
 	
 	private void replyToRequest(RobotMessage m2) {
-//		System.out.println(name + " replying to "+m2.getFrom());
+		
+		//System.out.println(name + " replying to "+m2.getFrom() + " at Stage " + stage);
 		if(msgQueue.contains(m2)){
 			toremoveQueue.add(m2);
 	//		System.out.println("adding reply to "+m2);
