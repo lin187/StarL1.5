@@ -1,11 +1,8 @@
 
 package edu.illinois.mitra.starl.objects;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.TreeMap;
 
 /**
  * PositionList is a thin wrapper for a HashMap (String -> ItemPosition). Collections of ItemPositions

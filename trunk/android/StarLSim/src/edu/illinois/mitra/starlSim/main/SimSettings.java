@@ -55,6 +55,10 @@ public class SimSettings {
 	 */
 	public final String WAYPOINT_FILE;	/**
 
+	 * Filename for a .wpt file with SensePoints.
+	 */
+	public final String SENSEPOINT_FILE;	/**
+
 	 * Filename for a .wpt file with Obstacles.
 	 */
 	public final String OBSPOINT_FILE;
@@ -199,6 +203,7 @@ public class SimSettings {
 		private long SIM_TIMEOUT = 0;
 		private long TIMEOUT = 0;
 		private String WAYPOINT_FILE;
+		private String SENSEPOINT_FILE;
 		private String OBSPOINT_FILE;
 		private String INITIAL_POSITIONS_FILE;
 		private boolean IDEAL_MOTION = false;
@@ -259,6 +264,10 @@ public class SimSettings {
 
 		public Builder WAYPOINT_FILE(String WAYPOINT_FILE) {
 			this.WAYPOINT_FILE = WAYPOINT_FILE;
+			return this;
+		}
+		public Builder SENSEPOINT_FILE(String SENSEPOINT_FILE) {
+			this.SENSEPOINT_FILE = SENSEPOINT_FILE;
 			return this;
 		}
 		public Builder OBSPOINT_FILE(String OBSPOINT_FILE) {
@@ -413,6 +422,7 @@ public class SimSettings {
 		this.N_GBOTS = builder.N_GBOTS;
 		this.N_DBOTS = builder.N_DBOTS;
 		this.N_RBOTS = builder.N_RBOTS;
+		this.SENSEPOINT_FILE = builder.SENSEPOINT_FILE;
 		this.WAYPOINT_FILE = builder.WAYPOINT_FILE;
 		this.OBSPOINT_FILE = builder.OBSPOINT_FILE;
 		this.INITIAL_POSITIONS_FILE = builder.INITIAL_POSITIONS_FILE;

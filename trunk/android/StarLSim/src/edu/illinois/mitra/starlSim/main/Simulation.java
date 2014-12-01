@@ -80,6 +80,10 @@ public class Simulation {
 		if(settings.WAYPOINT_FILE != null)
 			gps.setWaypoints(WptLoader.loadWaypoints(settings.WAYPOINT_FILE));
 		
+		// Load sensepoints
+		if(settings.SENSEPOINT_FILE != null)
+			gps.setSensepoints(SptLoader.loadSensepoints(settings.SENSEPOINT_FILE));
+		
 		// Load Obstacles
 		if(settings.OBSPOINT_FILE != null)
 		{			

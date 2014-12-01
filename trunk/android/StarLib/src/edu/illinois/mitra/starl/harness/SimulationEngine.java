@@ -18,7 +18,7 @@ import edu.illinois.mitra.starl.interfaces.LogicThread;
  */
 public class SimulationEngine extends Thread {
 
-	private static final int THREAD_DEADLOCK_TIMEOUT = 5000;
+	private static final int THREAD_DEADLOCK_TIMEOUT = 10000;
 
 	private Map<Thread, Long> threadSleeps = new HashMap<Thread, Long>();
 	private Map<Thread, Long> lastUpdateTime = new HashMap<Thread, Long>();

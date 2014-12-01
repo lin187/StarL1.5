@@ -30,6 +30,7 @@ public class ItemPosition implements Comparable<ItemPosition>, Traceable {
 	public int type;
 	public boolean leftbump;
 	public boolean rightbump;
+	public boolean circleSensor;
 	
 	//type defined here, for moving obstacles, this also defines the robot's behavior
 	
@@ -64,6 +65,7 @@ public class ItemPosition implements Comparable<ItemPosition>, Traceable {
 		this.radius = 1;
 		this.leftbump = false;
 		this.rightbump = false;
+		this.circleSensor = false;
 	}
 	
 	
@@ -82,13 +84,13 @@ public class ItemPosition implements Comparable<ItemPosition>, Traceable {
 		this.radius = radius;
 		this.leftbump = false;
 		this.rightbump = false;
-		
+		this.circleSensor = false;
 	}
 	
 	
 	/**
 	 * Construct an ItemPosition by cloning another
-	 * 
+	 * Do not use this method to clone robots, it will only clone name, position and heading
 	 * @param other The ItemPosition to clone
 	 */
 	

@@ -35,9 +35,11 @@ public class DistributedSearchApp extends LogicThread {
 	Stack<ItemPosition> pathStack;	
 	RRTNode kdTree = new RRTNode();
 	
+	LinkedList<ItemPosition> searchPath;
+	
 	ObstacleList obEnvironment;
 	int robotIndex;
-	ItemPosition currentDestination, preDestination;
+	ItemPosition currentDestination, preDestination, searchTemp ;
 		
 	private enum Stage {
 		ELECT, ASSIGN, PICK, GO, HOLD, SEARCH, DONE
@@ -72,6 +74,13 @@ public class DistributedSearchApp extends LogicThread {
 	public List<Object> callStarL() {
 		int itr = 0;
 		while(true) {
+			if(gvh.gps.getMyPosition().circleSensor && stage != Stage.DONE){
+				MessageContents content = new MessageContents("Got it!");
+				RobotMessage got_it_msg = new RobotMessage("ALL", name, FOUND_MSG, content);
+				gvh.comms.addOutgoingMessage(got_it_msg);
+				stage= Stage.DONE;
+				System.out.println(name + " Got it!");
+			}
 			if((gvh.gps.getMyPosition().type == 0) || (gvh.gps.getMyPosition().type == 1)){
 				
 				switch(stage) {
@@ -124,11 +133,12 @@ public class DistributedSearchApp extends LogicThread {
 				case PICK:
 					if(gvh.time()>Start_time){
 						if(destinations.isEmpty()) {
+							RobotMessage done_task_msg = new RobotMessage("ALL", name, DONE_MSG, "done");
+							gvh.comms.addOutgoingMessage(done_task_msg);
 							stage = Stage.DONE;
 						} else 
 						{
 							currentDestination = (ItemPosition)destinations.peek();
-							
 							RRTNode path = new RRTNode(gvh.gps.getPosition(name).x, gvh.gps.getPosition(name).y);
 							pathStack = path.findRoute(currentDestination, 5000, obEnvironment, 12330, 8500, (gvh.gps.getPosition(name)), (int) (gvh.gps.getPosition(name).radius));
 							kdTree = RRTNode.stopNode;
@@ -169,16 +179,40 @@ public class DistributedSearchApp extends LogicThread {
 								stage = Stage.PICK;
 							}
 							else{
-								if(currentDestination != null){
-									destinations.remove(currentDestination.getName());
 								//reached the point, go on searching
-									stage = Stage.SEARCH;
-								}
+								searchPath = robotCoverageAlg(currentDestination);
+								searchTemp = currentDestination;
+								stage = Stage.SEARCH;
 							}
 						}
 					}
 					break;
 				case SEARCH:
+					
+					if(!gvh.plat.moat.inMotion) {
+						if(searchTemp.distanceTo(gvh.gps.getMyPosition())>100){
+							MessageContents content = new MessageContents(currentDestination.name);
+							RobotMessage task_fail_msg = new RobotMessage("ALL", name, FAILED_MSG, content);
+							gvh.comms.addOutgoingMessage(task_fail_msg);
+							stage= Stage.DONE;
+							break;
+						}
+						if(searchPath.isEmpty()){
+							if(currentDestination != null){
+								destinations.remove();
+								//finished searching this room, go to the next one
+								stage = Stage.PICK;
+								//System.out.println("reached here");
+							}
+							else{
+								gvh.log.e("Error from state machine", "should not reach here if in SEARCH stage");
+							}
+						}
+						else{
+							gvh.plat.moat.goTo(searchPath.peek());
+							searchTemp = searchPath.poll();
+						}
+					}
 					break;
 				case DONE:
 					gvh.plat.moat.motion_stop();
@@ -227,8 +261,150 @@ public class DistributedSearchApp extends LogicThread {
 					MessageContents msg_content = m.getContents();
 					Start_time = Integer.parseInt(msg_content.getContents().get(0))*robotIndex + gvh.time();
 					stage = Stage.PICK;
-				}
+			}
+			if(m.getMID() == FOUND_MSG){
+				//	System.out.println("bot "+name + " got point " + m.getContents(0));
+					stage = Stage.DONE;
+			}
 		}
+	}
+	
+	private LinkedList<ItemPosition> robotCoverageAlg(ItemPosition door){
+		//This is the algorithm for finding a path that will cover the room. We will not focus on this algorithm, therefore we pre-enter the points
+		LinkedList<ItemPosition> toReturn = new LinkedList<ItemPosition>();
+		switch(door.name){
+			case "A":
+				toReturn.add(new ItemPosition("temp",2800,3000,0));
+				toReturn.add(new ItemPosition("temp",3400,3000,0));
+				toReturn.add(new ItemPosition("temp",3400,320,0));
+				toReturn.add(new ItemPosition("temp",3000,320,0));
+				toReturn.add(new ItemPosition("temp",3000,3000,0));
+				toReturn.add(new ItemPosition("temp",3000,320,0));
+				toReturn.add(new ItemPosition("temp",2600,320,0));
+				toReturn.add(new ItemPosition("temp",2600,3000,0));
+				toReturn.add(new ItemPosition("temp",2200,3000,0));
+				toReturn.add(new ItemPosition("temp",2200,320,0));
+				toReturn.add(new ItemPosition("temp",1800,320,0));
+				toReturn.add(new ItemPosition("temp",1800,4000,0));
+				toReturn.add(new ItemPosition("temp",1400,4000,0));
+				toReturn.add(new ItemPosition("temp",1400,320,0));
+				toReturn.add(new ItemPosition("temp",1000,320,0));
+				toReturn.add(new ItemPosition("temp",1000,4000,0));
+				toReturn.add(new ItemPosition("temp",400,4000,0));
+				toReturn.add(new ItemPosition("temp",400,320,0));
+				break;
+			case "B":
+				toReturn.add(new ItemPosition("temp",3000,6200,0));
+				toReturn.add(new ItemPosition("temp",2600,6200,0));
+				toReturn.add(new ItemPosition("temp",2600,4500,0));
+				toReturn.add(new ItemPosition("temp",2200,4500,0));
+				toReturn.add(new ItemPosition("temp",2200,6200,0));
+				toReturn.add(new ItemPosition("temp",1800,6200,0));
+				toReturn.add(new ItemPosition("temp",1800,4500,0));
+				toReturn.add(new ItemPosition("temp",1400,4500,0));
+				toReturn.add(new ItemPosition("temp",1400,6200,0));
+				toReturn.add(new ItemPosition("temp",1000,6200,0));
+				toReturn.add(new ItemPosition("temp",1000,4500,0));
+				toReturn.add(new ItemPosition("temp",600,4500,0));
+				toReturn.add(new ItemPosition("temp",600,6200,0));
+				toReturn.add(new ItemPosition("temp",350,6200,0));
+				toReturn.add(new ItemPosition("temp",350,4500,0));
+				break;
+			case "C":
+				toReturn.add(new ItemPosition("temp",5200,2800,0));
+				toReturn.add(new ItemPosition("temp",7600,3000,0));
+				toReturn.add(new ItemPosition("temp",7600,320,0));
+				toReturn.add(new ItemPosition("temp",7200,320,0));
+				toReturn.add(new ItemPosition("temp",7200,3000,0));
+				toReturn.add(new ItemPosition("temp",6800,3000,0));
+				toReturn.add(new ItemPosition("temp",6800,320,0));
+				toReturn.add(new ItemPosition("temp",6400,320,0));			
+				toReturn.add(new ItemPosition("temp",6400,3000,0));
+				toReturn.add(new ItemPosition("temp",6000,3000,0));
+				toReturn.add(new ItemPosition("temp",6000,320,0));
+				toReturn.add(new ItemPosition("temp",5600,320,0));
+				toReturn.add(new ItemPosition("temp",5600,3000,0));
+				toReturn.add(new ItemPosition("temp",5200,3000,0));
+				toReturn.add(new ItemPosition("temp",5200,320,0));
+				toReturn.add(new ItemPosition("temp",4800,320,0));
+				toReturn.add(new ItemPosition("temp",4800,3000,0));
+				toReturn.add(new ItemPosition("temp",4400,3000,0));
+				toReturn.add(new ItemPosition("temp",4400,320,0));
+				toReturn.add(new ItemPosition("temp",4000,320,0));
+				toReturn.add(new ItemPosition("temp",4000,3000,0));
+				break;
+			case "D":
+				toReturn.add(new ItemPosition("temp",6400,4800,0));
+				toReturn.add(new ItemPosition("temp",3600,4500,0));
+				toReturn.add(new ItemPosition("temp",3600,4900,0));
+				toReturn.add(new ItemPosition("temp",6400,4900,0));
+				toReturn.add(new ItemPosition("temp",6400,5300,0));
+				toReturn.add(new ItemPosition("temp",3600,5300,0));
+				toReturn.add(new ItemPosition("temp",3600,5700,0));
+				toReturn.add(new ItemPosition("temp",6400,5700,0));			
+				toReturn.add(new ItemPosition("temp",6400,6100,0));
+				toReturn.add(new ItemPosition("temp",3600,6100,0));
+				toReturn.add(new ItemPosition("temp",3600,6500,0));
+				toReturn.add(new ItemPosition("temp",6400,6500,0));
+				toReturn.add(new ItemPosition("temp",6400,6900,0));
+				toReturn.add(new ItemPosition("temp",3600,6900,0));
+				toReturn.add(new ItemPosition("temp",3600,7300,0));
+				toReturn.add(new ItemPosition("temp",6400,7300,0));
+				toReturn.add(new ItemPosition("temp",6400,7700,0));
+				toReturn.add(new ItemPosition("temp",3600,7700,0));
+				toReturn.add(new ItemPosition("temp",3600,8100,0));
+				toReturn.add(new ItemPosition("temp",6400,8100,0));
+				toReturn.add(new ItemPosition("temp",8300,8100,0));
+				toReturn.add(new ItemPosition("temp",8300,7000,0));
+				toReturn.add(new ItemPosition("temp",7900,7000,0));
+				toReturn.add(new ItemPosition("temp",7900,8100,0));
+				toReturn.add(new ItemPosition("temp",7500,8100,0));
+				toReturn.add(new ItemPosition("temp",7500,7000,0));
+				toReturn.add(new ItemPosition("temp",7100,7000,0));
+				toReturn.add(new ItemPosition("temp",7100,8100,0));
+				break;
+			case "E":
+				toReturn.add(new ItemPosition("temp",7100,6300,0));
+				toReturn.add(new ItemPosition("temp",7500,6300,0));
+				toReturn.add(new ItemPosition("temp",7500,4600,0));
+				toReturn.add(new ItemPosition("temp",7900,4600,0));
+				toReturn.add(new ItemPosition("temp",7900,6300,0));
+				toReturn.add(new ItemPosition("temp",8300,6300,0));
+				toReturn.add(new ItemPosition("temp",8300,4600,0));
+				break;
+			case "F":
+				toReturn.add(new ItemPosition("temp",11800,3000,0));
+				toReturn.add(new ItemPosition("temp",11800,1000,0));
+				toReturn.add(new ItemPosition("temp",11400,1000,0));
+				toReturn.add(new ItemPosition("temp",11400,3000,0));
+				toReturn.add(new ItemPosition("temp",11000,3000,0));
+				toReturn.add(new ItemPosition("temp",11000,1000,0));
+				toReturn.add(new ItemPosition("temp",10600,1000,0));
+				toReturn.add(new ItemPosition("temp",10600,2100,0));
+				toReturn.add(new ItemPosition("temp",9900,2100,0));
+				toReturn.add(new ItemPosition("temp",9900,1000,0));
+				toReturn.add(new ItemPosition("temp",9500,1000,0));
+				toReturn.add(new ItemPosition("temp",9500,2100,0));
+				break;
+			case "G":
+				toReturn.add(new ItemPosition("temp",9200,8000,0));
+				toReturn.add(new ItemPosition("temp",9600,8000,0));
+				toReturn.add(new ItemPosition("temp",9600,3600,0));
+				toReturn.add(new ItemPosition("temp",10000,3600,0));
+				toReturn.add(new ItemPosition("temp",10000,8000,0));
+				toReturn.add(new ItemPosition("temp",10400,8000,0));
+				toReturn.add(new ItemPosition("temp",10400,3600,0));
+				toReturn.add(new ItemPosition("temp",10800,3600,0));
+				toReturn.add(new ItemPosition("temp",10800,8000,0));
+				toReturn.add(new ItemPosition("temp",11200,8000,0));
+				toReturn.add(new ItemPosition("temp",11200,3600,0));
+				toReturn.add(new ItemPosition("temp",11600,3600,0));
+				toReturn.add(new ItemPosition("temp",11600,8000,0));
+				toReturn.add(new ItemPosition("temp",12000,8000,0));
+				toReturn.add(new ItemPosition("temp",12000,3600,0));
+				break;
+		}
+		return toReturn;
 	}
 	
 

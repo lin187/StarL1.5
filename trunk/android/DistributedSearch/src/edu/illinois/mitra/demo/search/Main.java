@@ -12,6 +12,7 @@ public class Main {
 		settings.N_GBOTS(5);
 		settings.TIC_TIME_RATE(5);
 		settings.WAYPOINT_FILE("waypoints/dest.wpt");
+		settings.SENSEPOINT_FILE("waypoints/senseObjects.wpt");
 		settings.INITIAL_POSITIONS_FILE("waypoints/start.wpt");
 		settings.OBSPOINT_FILE("waypoints/Obstacles.wpt");
 		

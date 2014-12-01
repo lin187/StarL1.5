@@ -15,6 +15,7 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 	// Waypoint positions and robot positions that are shared among all robots
 	private PositionList robot_positions;
 	private PositionList waypoint_positions;
+	private PositionList sensepoint_positions;
 	
 	private ObstacleList obspoint_positions;
 	private Vector<ObstacleList> viewsOfWorld;
@@ -70,6 +71,11 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 	@Override
 	public void setWaypoints(PositionList loadedWaypoints) {
 		if(loadedWaypoints != null) waypoint_positions = loadedWaypoints;
+	}
+	
+	@Override
+	public void setSensepoints(PositionList loadedSensepoints) {
+		if(loadedSensepoints != null) sensepoint_positions = loadedSensepoints;
 	}
 	
 	@Override

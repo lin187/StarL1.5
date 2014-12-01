@@ -22,6 +22,7 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 	// Waypoint positions and robot positions that are shared among all robots
 	private PositionList robot_positions;
 	private PositionList waypoint_positions;
+	private PositionList sensepoint_positions;
 	private ObstacleList obspoint_positions;
 	private Vector<ObstacleList> viewsOfWorld;
 	
@@ -47,6 +48,7 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 		
 		robot_positions = new PositionList();
 		waypoint_positions = new PositionList();
+		sensepoint_positions = new PositionList();
 	}
 	
 	@Override
@@ -86,6 +88,11 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 	@Override
 	public void setWaypoints(PositionList loadedWaypoints) {
 		if(loadedWaypoints != null) waypoint_positions = loadedWaypoints;
+	}
+	
+	@Override
+	public void setSensepoints(PositionList loadedSensepoints) {
+		if(loadedSensepoints != null) sensepoint_positions = loadedSensepoints;
 	}
 	
 	@Override
@@ -192,6 +199,7 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 			angle = angle + dA;
 			cur.angle = Common.angleWrap((int)(Math.round(angle) + aNoise));
 			checkCollision(cur);
+			updateSensors(cur);
 			timeLastUpdate = se.getTime();
 		}
 		public void setVel(int fwd, int rad) {
@@ -270,6 +278,17 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 			}
 		}
 
+	}
+	
+	public void updateSensors(ItemPosition bot){
+		for(ItemPosition other : sensepoint_positions.getList()) {
+			if(bot.distanceTo(other)<600){
+				if(!obspoint_positions.badPath(bot, other)){
+					bot.circleSensor = true;
+					return;
+				}
+			}
+		}
 	}
 
 }

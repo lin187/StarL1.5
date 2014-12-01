@@ -24,6 +24,8 @@ public interface SimGpsProvider {
 
 	public abstract void setWaypoints(PositionList loadedWaypoints);
 	
+	public abstract void setSensepoints(PositionList loadedSensepoints);
+	
 	public abstract void setObspoints(ObstacleList loadedObspoints);
 
 	public abstract void setViews(ObstacleList environment, int nBots);

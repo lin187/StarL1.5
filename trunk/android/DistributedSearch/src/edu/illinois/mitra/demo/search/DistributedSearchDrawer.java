@@ -77,6 +77,9 @@ public class DistributedSearchDrawer extends Drawer {
 		g.setStroke(stroke);
 		if(app.currentDestination != null)
 			g.drawOval(app.currentDestination.getX() - 20, app.currentDestination.getY() - 20, 40, 40);
+		
+		
+			g.drawOval(11000,6000, 100, 100);
 	}
 
 }
