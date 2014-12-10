@@ -26,7 +26,8 @@ public class DistributedSearchApp extends LogicThread {
 	private volatile MotionParameters param = DEFAULT_PARAMETERS;
 	Queue<ItemPosition> destinations = new LinkedList<ItemPosition>();
 	Queue<ItemPosition> Alldest;
-	
+	public PositionList SensePt;
+	//SensePt is just for display purpose
 	private LeaderElection le;
 	private boolean iamleader=false;
 	private long Start_time;
@@ -57,8 +58,6 @@ public class DistributedSearchApp extends LogicThread {
 		param = settings.build();
 		gvh.plat.moat.setParameters(param);
 		obEnvironment = gvh.gps.getObspointPositions();
-		//set the destination for each robot, which are differed by their angle
-		//angle does not serve much purpose here, therefore, we use it to identify the way points for each robot 
 
 		le = new RandomLeaderElection(gvh);
 		gvh.comms.addMsgListener(this, TASK_MSG);

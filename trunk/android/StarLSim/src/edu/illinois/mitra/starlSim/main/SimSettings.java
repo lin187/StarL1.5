@@ -144,6 +144,10 @@ public class SimSettings {
 	 */
 	public final String TRACE_OUT_DIR;
 	/**
+	 * enable 3D visualizer
+	 */
+	public final boolean THREE_D;
+	/**
 	 * Enable/disable the global logger.
 	 */
 	public final boolean USE_GLOBAL_LOGGER;
@@ -222,6 +226,7 @@ public class SimSettings {
 		private String BOT_NAME = "bot";
 		private int BOT_RADIUS = 165;
 		private String TRACE_OUT_DIR;
+		private boolean THREE_D = false;
 		private boolean USE_GLOBAL_LOGGER = false;
 		private boolean DRAW_TRACE = false;
 		private int DRAW_TRACE_LENGTH = 128;
@@ -370,6 +375,11 @@ public class SimSettings {
 			return this;
 		}
 
+		public Builder THREE_D(boolean THREE_D) {
+			this.THREE_D = THREE_D;
+			return this;
+		}
+		
 		public Builder USE_GLOBAL_LOGGER(boolean USE_GLOBAL_LOGGER) {
 			this.USE_GLOBAL_LOGGER = USE_GLOBAL_LOGGER;
 			return this;
@@ -442,6 +452,7 @@ public class SimSettings {
 		this.BOT_NAME = builder.BOT_NAME;
 		this.BOT_RADIUS = builder.BOT_RADIUS;
 		this.TRACE_OUT_DIR = builder.TRACE_OUT_DIR;
+		this.THREE_D = builder.THREE_D;
 		this.USE_GLOBAL_LOGGER = builder.USE_GLOBAL_LOGGER;
 		this.DRAW_TRACE = builder.DRAW_TRACE;
 		this.DRAW_TRACE_LENGTH = builder.DRAW_TRACE_LENGTH;

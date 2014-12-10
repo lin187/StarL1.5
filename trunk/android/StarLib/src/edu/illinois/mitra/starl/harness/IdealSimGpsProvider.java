@@ -40,6 +40,7 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 		
 		robot_positions = new PositionList();
 		waypoint_positions = new PositionList();
+		sensepoint_positions = new PositionList();
 	}
 	
 	@Override

@@ -6,6 +6,12 @@ import edu.illinois.mitra.starlSim.main.Simulation;
 public class Main {
 
 	public static void main(String[] args) {
+		/*This application is to simulate a group of robots searching for something in the room.
+		* The object will be sensed if it is close to any robot and no obstacle is between robot and object
+		* We will do leader election, assign tasks, perform tasks, Inform others when finished
+		* The mutual exclusion on the overlapping path is not our focus in this app.
+		* The room coverage algorithm is not our focus in this app.
+		*/
 		SimSettings.Builder settings = new SimSettings.Builder();
 		
 		settings.N_BOTS(5);

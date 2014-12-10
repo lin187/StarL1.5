@@ -6,7 +6,12 @@ import java.awt.Polygon;
 import java.awt.geom.Line2D;
 
 import edu.illinois.mitra.starl.motion.RRTNode;
-
+/**
+ * The obstacle is defined here
+ * Each obstacle is a polygon, the list of points should construct a closed shape
+ * @author Yixiao Lin
+ * @version 1.0
+ */
 public class Obstacles {
 	public Vector<Point> obstacle;
 	public long timeFrame;
@@ -47,10 +52,14 @@ public class Obstacles {
 		obstacle.add(temp) ;
 	}
 	
+	/**
+	 * check if line from current to destination has intersection with any part of the object
+	 * return true if cross
+	 * @param destination
+	 * @param current
+	 * @return
+	 */
 	public boolean checkCross(ItemPosition destination, ItemPosition current){
-		//check if line from current to destination has intersection with any part of the object
-		//return true if cross
-		
 		boolean check = false;
 		Line2D.Double path = new Line2D.Double(destination.x, destination.y, current.x, current.y);
 		Line2D.Double obSeg = new Line2D.Double();
@@ -70,9 +79,16 @@ public class Obstacles {
 		return check;
 	}
 	
+	/**
+	 * check if the itemPosotion destination is reachable by robots
+	 * return true if robot can reach it
+	 * @param destination
+	 * @param radius
+	 * @return
+	 */
+	
 	public boolean validItemPos(ItemPosition destination, double radius){
-		//check if the itemPosotion destination is reachable by robots
-		//return true if robot can reach it
+		
 		if(destination == null)
 			return false;
 		if(obstacle.size() == 0)
@@ -107,9 +123,14 @@ public class Obstacles {
 				return true;
 	}
 	
+	/**
+	 * check if the itemPosotion destination is reachable by robots
+	 * return true if robot can reach it
+	 * @param destination
+	 * @return
+	 */
+	
 	public boolean validItemPos(ItemPosition destination){
-		//check if the itemPosotion destination is reachable by robots
-		//return true if robot can reach it
 		
 			Point curpoint = obstacle.firstElement();
 			int[] x = new int[obstacle.size()];
@@ -181,8 +202,11 @@ public class Obstacles {
 	    return closestPoint;
 	  }
 	  
-	  
-// gridify the map
+	  /**
+	   * gridify the map, make the obstacle map grid like. For any Grid that contains obstacle, that grid is considered an obstacle
+	   * @param a
+	   */
+
 	public void ToGrid(int a){
 		if(grided){
 			return;

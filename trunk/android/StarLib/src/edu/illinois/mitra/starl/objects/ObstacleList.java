@@ -4,6 +4,13 @@ import java.util.*;
 
 import edu.illinois.mitra.starl.motion.RRTNode;
 
+/**
+ * The obstacle list is defined here
+ * It contains methods that are useful for path planning
+ * @author Yixiao Lin
+ * @version 1.0
+ */
+
 public class ObstacleList {
 	public Vector<Obstacles> ObList;
 	public int detect_Precision;
@@ -165,7 +172,10 @@ public class ObstacleList {
 		}
 	}
 	
-	//add the detected obstacle to the current map
+	/**add the detected obstacle to the current map
+	 * Please avoid using this method on the gvh obstacle map, it will cause all other robot to detect this obstacle as well
+	 * @param blocker
+	 */
 	public void detected(ItemPosition blocker){
 		boolean uncontained = true;
 		for(int i=0; i< ObList.size(); i++){

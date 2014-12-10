@@ -15,6 +15,14 @@ import edu.illinois.mitra.starl.objects.ObstacleList;
 import edu.illinois.mitra.starl.objects.Obstacles;
 import edu.illinois.mitra.starl.objects.PositionList;
 
+/**
+ * This defines methods for initializing motion environment related objects  
+ * It also updates robots' movement, collision, other sensor info
+ *
+ * @author Yixiao Lin & Adam Zimmerman
+ * @version 2.0
+ */
+
 public class RealisticSimGpsProvider extends Observable implements SimGpsProvider {	
 	private Map<String, SimGpsReceiver> receivers;
 	private Map<String, TrackedRobot> robots;

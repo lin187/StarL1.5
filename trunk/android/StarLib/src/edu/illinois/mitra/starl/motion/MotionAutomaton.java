@@ -19,7 +19,7 @@ import edu.illinois.mitra.starl.objects.*;
  * Behavior of different kind of robots are defined here
  * 
  * @author Adam Zimmerman, Yixiao Lin
- * @version 2.0
+ * @version 1.1
  */
 public class MotionAutomaton extends RobotMotion {
 	protected static final String TAG = "MotionAutomaton";

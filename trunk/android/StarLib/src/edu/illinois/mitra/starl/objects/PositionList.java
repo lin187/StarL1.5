@@ -9,7 +9,7 @@ import java.util.Map.Entry;
  * are stored in PositionLists.
  * they are sorted in the natural order of their keys
  * @author Adam Zimmerman, Yixiao Lin
- * @version 2.0
+ * @version 1.1
  */
 public class PositionList implements Iterable<ItemPosition> {
 	private static final String TAG = "positionList";

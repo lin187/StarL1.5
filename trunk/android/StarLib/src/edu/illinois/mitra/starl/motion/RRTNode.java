@@ -7,6 +7,12 @@ import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.ObstacleList;
 import edu.wlu.cs.levy.CG.KDTree;
 
+/**
+ * This implements RRT path finding algorithm using kd tree
+ * 
+ * @author Yixiao Lin
+ * @version 1.0
+ */
 
 public class RRTNode {
 	public Point position = new Point();

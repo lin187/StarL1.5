@@ -4,6 +4,10 @@ import edu.illinois.mitra.starlSim.main.SimSettings;
 import edu.illinois.mitra.starlSim.main.Simulation;
 
 public class Main {
+/*
+ * This application make use of RRT path planning to navigate through a maze
+ * No corrdination is implemented in this application
+ */
 
 	public static void main(String[] args) {
 		SimSettings.Builder settings = new SimSettings.Builder();
@@ -16,7 +20,7 @@ public class Main {
 		settings.WAYPOINT_FILE("waypoints/dest.wpt");
 
 		settings.OBSPOINT_FILE("waypoints/Obstacles.wpt");
-		
+		settings.THREE_D(true);
 		settings.DRAW_WAYPOINTS(false);
 		settings.DRAW_WAYPOINT_NAMES(false);
 		settings.DRAWER(new MazeDrawer());
