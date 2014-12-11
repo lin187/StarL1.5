@@ -4,7 +4,7 @@ StarL1.5
 StarL1.5 with 5 demo applications
 
 How to set up StarL
-1. Download and install the latest version of the Java JDK at 
+1. Download and install the JDK1.7 at 
 http://www.oracle.com/technetwork/java/javase/downloads/index.html
 
 This step is recommended to set up the java environment correctly.
@@ -12,6 +12,7 @@ It is also recommended to download and install the latest version of JRE from th
 
 2. Download and install the latest ADT. 
 http://developer.android.com/sdk/installing/bundle.html
+(we are currently mirgrating to Android Studio, please use ADT for now)
 
 This is required to run or to make changes to starL.
 
