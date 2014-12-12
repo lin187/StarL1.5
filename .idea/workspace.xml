@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ddff15ff-12df-428f-a591-4f73f613043f" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/trunk/android/LightPaintApp/gen/edu/illinois/mitra/lightpaintapp/BuildConfig.java" afterPath="$PROJECT_DIR$/trunk/android/LightPaintApp/gen/edu/illinois/mitra/lightpaintapp/BuildConfig.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/trunk/android/LightPaintLibrary/gen/edu/illinois/lightpaintlib/BuildConfig.java" afterPath="$PROJECT_DIR$/trunk/android/LightPaintLibrary/gen/edu/illinois/lightpaintlib/BuildConfig.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/trunk/android/StarLib/gen/edu/illinois/mitra/starl/BuildConfig.java" afterPath="$PROJECT_DIR$/trunk/android/StarLib/gen/edu/illinois/mitra/starl/BuildConfig.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/trunk/android/StarlTemplate/gen/edu/illinois/mitra/template/BuildConfig.java" afterPath="$PROJECT_DIR$/trunk/android/StarlTemplate/gen/edu/illinois/mitra/template/BuildConfig.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/trunk/android/DistributedSearch/DistributedSearch.iml" afterPath="$PROJECT_DIR$/trunk/android/DistributedSearch/DistributedSearch.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/trunk/android/LightPaintNew/LightPaintNew.iml" afterPath="$PROJECT_DIR$/trunk/android/LightPaintNew/LightPaintNew.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/trunk/android/MazeApp/MazeApp.iml" afterPath="$PROJECT_DIR$/trunk/android/MazeApp/MazeApp.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/trunk/android/RaceApp/RaceApp.iml" afterPath="$PROJECT_DIR$/trunk/android/RaceApp/RaceApp.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/trunk/android/TrafficSign/TrafficSign.iml" afterPath="$PROJECT_DIR$/trunk/android/TrafficSign/TrafficSign.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="test2.iws" />
@@ -73,6 +73,34 @@
               <option name="myItemId" value="test2" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TrafficSign" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.NonAndroidModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test2" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TrafficSign" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.NonAndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.NonAndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="traffic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="test2" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
@@ -87,7 +115,7 @@
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="recentsLimit" value="5" />
     <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/trunk/android/LightPaintLibrary/libs/jgrapht-jdk1.6.jar!/" />
   </component>
@@ -353,11 +381,12 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>LightPaintNew</last-edited>
+          <last-edited>DistributedSearch</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>
