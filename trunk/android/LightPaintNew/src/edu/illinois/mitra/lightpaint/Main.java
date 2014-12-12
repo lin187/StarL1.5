@@ -1,6 +1,6 @@
 package edu.illinois.mitra.lightpaint;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.Set;
 
 import edu.illinois.mitra.lightpaint.activity.LightPaintActivity;
@@ -19,7 +19,7 @@ public class Main {
 	// absent. See box.svg for example. This *appears* to be a drawing glitch
 	// TODO: Line segments are sometimes drawn from the wrong direction?
 
-	private static final String WPT_PATH = "waypoints/";
+	private static final String WPT_PATH = "";
 	private static final String inputFilename = "rainbow";
 
 	private static final int[] EXECUTION_SIZE = { 4 };
@@ -29,9 +29,16 @@ public class Main {
 	public static void main(String[] args) {
 		SvgParser parser = new SvgParser(WORLDSIZE, WORLDSIZE, WORLDCENTER,
 				WORLDCENTER);
-
-		Set<ImageEdge> image = parser.parseImage("input_images/"
-				+ inputFilename + ".svg");
+        Set<ImageEdge> image = null;
+        File f = new File("input_images/"
+                + inputFilename + ".svg");
+        if(f.exists() && !f.isDirectory()) {
+            image = parser.parseImage("input_images/"
+                    + inputFilename + ".svg");
+        }else{
+            //Android Studio introduce some problem when loading files, this is a workaround, if error exists, please try set it to correct path
+            image = parser.parseImage(System.getProperty("user.dir")+"\\trunk\\android\\LightPaintNew\\input_images\\"+ inputFilename + ".svg");
+        }
 		System.out.println(image.size() + " lines in image");
 		WptWriter.writeWpt(WPT_PATH + inputFilename + ".wpt", image);
 

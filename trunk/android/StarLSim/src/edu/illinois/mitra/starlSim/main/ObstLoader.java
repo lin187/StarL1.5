@@ -1,8 +1,5 @@
 package edu.illinois.mitra.starlSim.main;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 //comment
 import edu.illinois.mitra.starl.objects.*;
 
@@ -14,12 +11,19 @@ public class ObstLoader {
 	public static ObstacleList loadObspoints(String file) {
 		ObstacleList Obspoints = new ObstacleList();
 		BufferedReader in = null;
-		try {
-			in = new BufferedReader(new FileReader(file));
-		} catch (FileNotFoundException e) {
-			System.err.println("File " + file + " not found! No Obspoints loaded.");
-			return new ObstacleList();
-		}
+        InputStream inputStream =
+                WptLoader.class.getClassLoader().getResourceAsStream(file);
+        if(inputStream != null){
+            in = new BufferedReader(new InputStreamReader(inputStream));
+        }else{
+
+            try {
+                in = new BufferedReader(new FileReader("waypoints/" + file));
+            } catch (FileNotFoundException e) {
+                System.err.println("File " + file + " not found! No waypoints loaded.");
+                return new ObstacleList();
+            }
+        }
 		
 		String line;
 		try {

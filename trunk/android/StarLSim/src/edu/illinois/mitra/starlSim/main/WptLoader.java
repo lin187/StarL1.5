@@ -1,13 +1,10 @@
 package edu.illinois.mitra.starlSim.main;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 //comment
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.PositionList;
 
+import java.io.*;
 public final class WptLoader {
 	
 	private WptLoader() {
@@ -16,13 +13,19 @@ public final class WptLoader {
 	public static PositionList loadWaypoints(String file) {
 		PositionList waypoints = new PositionList();
 		BufferedReader in = null;
-		try {
-			in = new BufferedReader(new FileReader(file));
-		} catch (FileNotFoundException e) {
-			System.err.println("File " + file + " not found! No waypoints loaded.");
-			return new PositionList();
-		}
-		
+        InputStream inputStream =
+                WptLoader.class.getClassLoader().getResourceAsStream(file);
+        if(inputStream != null){
+            in = new BufferedReader(new InputStreamReader(inputStream));
+        }else{
+
+            try {
+                in = new BufferedReader(new FileReader("waypoints/" + file));
+            } catch (FileNotFoundException e) {
+                System.err.println("File " + file + " not found! No waypoints loaded.");
+                return new PositionList();
+            }
+        }
 		String line;
 		try {
 			while((line = in.readLine()) != null) {

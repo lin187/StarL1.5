@@ -17,9 +17,9 @@ public class Main {
 		settings.N_DBOTS(1);
 	//	settings.N_RBOTS(1);
 		settings.TIC_TIME_RATE(3);
-		settings.WAYPOINT_FILE("waypoints/dest.wpt");
+		settings.WAYPOINT_FILE("dest.wpt");
 
-		settings.OBSPOINT_FILE("waypoints/Obstacles.wpt");
+		settings.OBSPOINT_FILE("Obstacles.wpt");
 		settings.THREE_D(true);
 		settings.DRAW_WAYPOINTS(false);
 		settings.DRAW_WAYPOINT_NAMES(false);

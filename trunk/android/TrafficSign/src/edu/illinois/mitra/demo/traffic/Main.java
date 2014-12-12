@@ -10,9 +10,9 @@ public class Main {
 		
 		settings.N_BOTS(5);
 		settings.TIC_TIME_RATE(2);
-		settings.WAYPOINT_FILE("waypoints/dest.wpt");
-		settings.INITIAL_POSITIONS_FILE("waypoints/start.wpt");
-		settings.OBSPOINT_FILE("waypoints/Obstacles.wpt");
+		settings.WAYPOINT_FILE("dest.wpt");
+		settings.INITIAL_POSITIONS_FILE("start.wpt");
+		settings.OBSPOINT_FILE("Obstacles.wpt");
 		
 		settings.DRAW_WAYPOINTS(false);
 		settings.DRAW_WAYPOINT_NAMES(false);
