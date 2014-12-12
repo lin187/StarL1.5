@@ -10,6 +10,15 @@
     <orderEntry type="module" module-name="LightPaintLibrary" />
     <orderEntry type="module" module-name="StarLSim" />
     <orderEntry type="module" module-name="StarLib" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../LightPaintLibrary/libs/jgrapht-jdk1.6.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
 
