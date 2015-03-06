@@ -80,6 +80,7 @@ public class TrafficSignApp extends LogicThread {
 					{
 						currentDestination = (ItemPosition)destinations.peek();
 						if(withinCS(currentDestination)){
+                            getWanted();
 							msgQueue.clear();
 							toremoveQueue.clear();
 							R_msgQueue.clear();
@@ -118,7 +119,7 @@ public class TrafficSignApp extends LogicThread {
 						stage = Stage.REQUEST;
 					break;
 				case REQUEST:
-					getWanted();
+                    checkQueue();
 					String[] section_string = new String[sections.size()+1];
 					for(int i = 0; i< sections.size();i++){
 						section_string[i] = sections.get(i);
@@ -129,7 +130,6 @@ public class TrafficSignApp extends LogicThread {
 					RobotMessage request = new RobotMessage("ALL", name, REQUEST_MSG, sections_msg);
 					gvh.comms.addOutgoingMessage(request);
 					ListOfCars.remove(name);
-					checkQueue();
 					stage = Stage.ENTRY;
 					break;
 					
@@ -201,7 +201,7 @@ public class TrafficSignApp extends LogicThread {
 				List<String> R_request = new ArrayList<String>(msg_content.getContents());
 				int tStamp = Integer.parseInt(R_request.remove(R_request.size()-1));
 				//get the sections and the timeStamp
-				if(stage == Stage.ENTRY){
+				if(stage == Stage.ENTRY||stage == Stage.REQUEST){
 					boolean intersect = false;
 					for(int i = 0; i<sections.size(); i++){
 						if(R_request.contains(sections.get(i))){
@@ -229,7 +229,7 @@ public class TrafficSignApp extends LogicThread {
 				if(stage == Stage.GO ||stage == Stage.DONE || stage == Stage.PICK){
 					replyToRequest(m);
 				}
-				if(stage == Stage.REGISTER || stage == Stage.REQUEST ){
+				if(stage == Stage.REGISTER || stage == Stage.WAIT ){
 					//still working on the register list, should deal with message after register
 					QueueMSG(m);
 				}
@@ -237,9 +237,14 @@ public class TrafficSignApp extends LogicThread {
 				
 			}
 			if(m.getMID() == REPLY_MSG){
-				ListOfCars.remove(m.getFrom());
-	//				System.out.println(name + " get reply from " + m.getFrom());
-				return;
+                if(ListOfCars.contains(m.getFrom())){
+                    ListOfCars.remove(m.getFrom());
+                }
+                else{
+                    QueueMSG(m);
+                }
+
+                return;
 			}
 			if(m.getMID() == REGISTER_MSG){
 				if(stage == Stage.REGISTER){
