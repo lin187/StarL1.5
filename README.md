@@ -1,5 +1,7 @@
 StarL1.5
 ========
+This is the master branch for development, for stable release, please select branch "1.5"
+
 StarL (Stabilizing Robotics Programming Language) is a programming library for developing distributed robotic algorithms.
 
 See our research wiki:
