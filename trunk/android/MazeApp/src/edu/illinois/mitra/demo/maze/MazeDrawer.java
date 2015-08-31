@@ -19,7 +19,7 @@ public class MazeDrawer extends Drawer {
 	@Override
 	public void draw(LogicThread lt, Graphics2D g) {
 		MazeApp app = (MazeApp) lt;
-
+		g.setStroke(new BasicStroke(10));
 		g.setColor(Color.RED);
 		for(ItemPosition dest : app.destinations.values()) {
 			g.fillRect(dest.getX() - 13, dest.getY() - 13, 26, 26);

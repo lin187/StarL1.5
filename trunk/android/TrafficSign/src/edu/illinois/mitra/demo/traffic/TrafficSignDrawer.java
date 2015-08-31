@@ -38,11 +38,21 @@ public class TrafficSignDrawer extends Drawer {
 			g.setColor(c[0]);
 		}
 		Iterator<ItemPosition> iterator = app.destinations.iterator();
-		while(iterator.hasNext()){
-			ItemPosition dest = (ItemPosition) iterator.next();
-			g.fillRect(dest.getX() - 13, dest.getY() - 13, 26, 26);
-		}
-		
+	    Stroke dashed = new BasicStroke(8, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
+	    g.setStroke(dashed);
+	    ItemPosition prevd = null;
+	    if(app.myPos != null && app.currentDestination != null)
+	    	g.drawLine(app.myPos.x +10*(app.robotIndex), app.myPos.y+10*(app.robotIndex), app.currentDestination.x+10*(app.robotIndex), app.currentDestination.y+10*(app.robotIndex));
+	    while(iterator.hasNext()){
+	    	ItemPosition dest = (ItemPosition) iterator.next();
+	    	g.fillRect(dest.getX() +10*(app.robotIndex)- 13, dest.getY()+10*(app.robotIndex) - 13, 26, 26);
+	    	
+	    	if(prevd != null)
+	    		g.drawLine(dest.x +10*(app.robotIndex), dest.y+10*(app.robotIndex), prevd.x+10*(app.robotIndex), prevd.y+10*(app.robotIndex));
+	    	prevd = dest;	    	
+	    }
+	    
+	    g.setStroke(new BasicStroke(10));
 		g.setColor(Color.GRAY);
 		ObstacleList list = app.obEnvironment;
 		for(int i = 0; i < list.ObList.size(); i++)

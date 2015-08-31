@@ -32,7 +32,7 @@ public class TrafficSignApp extends LogicThread {
 	List<RobotMessage> toremoveQueue = new ArrayList<RobotMessage>();
 	TreeMap<Integer, String> R_msgQueue = new TreeMap<Integer, String>();
 	TreeMap<String, String> R_msgQueue2 = new TreeMap<String, String>();
-	ItemPosition currentDestination, preDestination;
+	ItemPosition currentDestination, preDestination, myPos;
 	private long timeNow;
 		
 	private enum Stage {
@@ -70,6 +70,7 @@ public class TrafficSignApp extends LogicThread {
 	@Override
 	public List<Object> callStarL() {
 		while(true) {
+			myPos = gvh.gps.getMyPosition();
 			if((gvh.gps.getMyPosition().type == 0) || (gvh.gps.getMyPosition().type == 1)){
 				
 				switch(stage) {

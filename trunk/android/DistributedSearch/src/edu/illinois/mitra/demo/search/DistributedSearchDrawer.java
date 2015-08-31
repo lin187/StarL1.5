@@ -43,16 +43,16 @@ public class DistributedSearchDrawer extends Drawer {
 			ItemPosition dest = (ItemPosition) iterator.next();
 			g.fillRect(dest.getX() - 13, dest.getY() - 13, 26, 26);
 		}
-		
+		g.setStroke(new BasicStroke(10));
 		g.setColor(Color.GRAY);
 		ObstacleList list = app.obEnvironment;
 		for(int i = 0; i < list.ObList.size(); i++)
 		{
 			Obstacles currobs = list.ObList.get(i);
 			if(currobs.hidden)
-				g.setColor(Color.LIGHT_GRAY);
-			else
 				g.setColor(Color.GRAY);
+			else
+				g.setColor(Color.DARK_GRAY);
 			
 			Point nextpoint = currobs.obstacle.firstElement();
 			Point curpoint = currobs.obstacle.firstElement();
@@ -77,7 +77,7 @@ public class DistributedSearchDrawer extends Drawer {
 		g.setStroke(stroke);
 		if(app.currentDestination != null)
 			g.drawOval(app.currentDestination.getX() - 20, app.currentDestination.getY() - 20, 40, 40);
-			g.drawOval(11000,6000, 100, 100);
+			g.fillOval(11000, 6000, 100, 100);
 	}
 
 }

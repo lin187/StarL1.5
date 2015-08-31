@@ -65,6 +65,7 @@ public class DrawPanel extends ZoomablePanel
 	{
 		Point a = new Point(0, 0);
 		Point b = new Point(0, 100);
+		g.setStroke(new BasicStroke(10));
 		
 		synchronized(this)
 		{
@@ -84,7 +85,7 @@ public class DrawPanel extends ZoomablePanel
 				
 				// Draw world bounding box
 				g.setColor(Color.gray);
-				g.setStroke(new BasicStroke(2));
+				g.setStroke(new BasicStroke(10));
 				//g.drawRect(0, 0, width, height);
 				
 				// Determine scale
@@ -118,7 +119,7 @@ public class DrawPanel extends ZoomablePanel
 			if (settings.DRAW_TRACE) 
 			{
 				g.setColor(TRACE_COLOR);
-				
+				g.setStroke(new BasicStroke(7));
 				for (LinkedList <Point> trace : robotTraces)
 				{
 					Point last = null;
@@ -137,6 +138,7 @@ public class DrawPanel extends ZoomablePanel
 	
 	private void drawWorld(Graphics2D g, RobotData rd)
 	{
+		g.setStroke(new BasicStroke(10));
 		g.setColor(rd.c);
 	
 		ObstacleList list = rd.world;
@@ -311,7 +313,7 @@ public class DrawPanel extends ZoomablePanel
 	
 	private void drawRobot(Graphics2D g, RobotData rd, boolean drawId)
 	{
-		g.setStroke(new BasicStroke(2));
+		g.setStroke(new BasicStroke(10));
 		
 		if (rd.c != null)
 			g.setColor(rd.c);

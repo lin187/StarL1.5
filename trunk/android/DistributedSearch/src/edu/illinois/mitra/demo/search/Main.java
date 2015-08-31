@@ -22,6 +22,8 @@ public class Main {
 		settings.INITIAL_POSITIONS_FILE("start.wpt");
 		settings.OBSPOINT_FILE("Obstacles.wpt");
 		
+		settings.DRAW_TRACE(true);
+		settings.DRAW_TRACE_LENGTH(5000);
 		settings.DRAW_WAYPOINTS(false);
 		settings.DRAW_WAYPOINT_NAMES(false);
 		settings.DRAWER(new DistributedSearchDrawer());
