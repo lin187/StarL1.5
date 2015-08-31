@@ -52,6 +52,15 @@ public class Obstacles {
 		obstacle.add(temp) ;
 	}
 	
+    /**
+     * return a clone so the obstacles cannot be modified
+     * TODO: check that this deep copies all the points too
+     * @return
+     */
+    public Vector<java.awt.Point> getObstacleVector() {
+        return (Vector<Point>)this.obstacle.clone();
+    }
+	
 	/**
 	 * check if line from current to destination has intersection with any part of the object
 	 * return true if cross
@@ -129,7 +138,6 @@ public class Obstacles {
 	 * @param destination
 	 * @return
 	 */
-	
 	public boolean validItemPos(ItemPosition destination){
 		
 			Point curpoint = obstacle.firstElement();
@@ -174,12 +182,11 @@ public class Obstacles {
 			double temp2 = Math.min(dist3, dist4);
 			double minDistNow = Math.min(temp1, temp2);
 			minDist = Math.min(minDistNow, minDist);
-			
 		}
 		return minDist;
 	}
 	
-	  public Point getClosestPointOnSegment(int sx1, int sy1, int sx2, int sy2, int px, int py)
+	public Point getClosestPointOnSegment(int sx1, int sy1, int sx2, int sy2, int px, int py)
 	  {
 	    double xDelta = sx2 - sx1;
 	    double yDelta = sy2 - sy1;
@@ -202,11 +209,10 @@ public class Obstacles {
 	    return closestPoint;
 	  }
 	  
-	  /**
-	   * gridify the map, make the obstacle map grid like. For any Grid that contains obstacle, that grid is considered an obstacle
-	   * @param a
-	   */
-
+	/**
+	 * gridify the map, make the obstacle map grid like. For any Grid that contains obstacle, that grid is considered an obstacle
+	 * @param a
+	 */
 	public void ToGrid(int a){
 		if(grided){
 			return;
