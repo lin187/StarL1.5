@@ -30,6 +30,7 @@ public final class Common {
 	public static final int MSG_ACTIVITYLAUNCH			= 11;
 	public static final int MSG_ACTIVITYABORT			= 12;
 	public static final int MSG_GEOCAST					= 13;
+	public static final int MSG_DSM_INFORM              = 17;
 	
 	// GUI Message handler
 //	public static final int MESSAGE_TOAST = 0;
