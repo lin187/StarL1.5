@@ -14,16 +14,18 @@ import edu.illinois.mitra.starl.objects.*;
 public class DSMMultipleAttr implements DSM, MessageListener{
 
 	private static final String TAG = "DSM_Multiple_Attr";
-	private static final String ERR = "Critical Error";
+	//private static final String ERR = "Critical Error";
 	private Map<String, DSMVariable> dsm_map;
 	private GlobalVarHolder gvh;
 	private String agent_name;
 	
-	DSMMultipleAttr(GlobalVarHolder gvh){
+	public DSMMultipleAttr(GlobalVarHolder gvh){
 		this.gvh = gvh;
 		dsm_map = new HashMap<String, DSMVariable>();
 		agent_name = gvh.id.getName();
 		// TODO: attach to gvh
+		// gvh.dsm = this;
+		gvh.comms.addMsgListener(this, Common.MSG_DSM_INFORM);
 	}
 
 	@Override
@@ -35,34 +37,36 @@ public class DSMMultipleAttr implements DSM, MessageListener{
 
 	@Override
 	public void messageReceived(RobotMessage m) {
-		// var_name owner timeStamp num_of_attr attr1_name attr1_type1 attr1_value attr2_name attr2_type attr2_value
-	    //get the dsm content
-	    //split back to value,type, and timestamp
-	    MessageContents temp = m.getContents();
-	    String var_name = temp.get(0);
-	    String owner = temp.get(1);
-	    long newtimestamp = Long.parseLong(temp.get(2));
-	    int num_of_attr = Integer.parseInt(temp.get(3));
-	    //if the key exists
-	    if(!dsm_map.containsKey(var_name)) {
-	    	dsm_map.put(var_name, new DSMVariable(var_name,owner));
-	    }
-	    DSMVariable cur = dsm_map.get(var_name);
-	    for(int i = 0;i<num_of_attr; i++){
-	    	String cur_name = temp.get(4+3*i);
-	    	String cur_type = temp.get(5+3*i);
-	    	String cur_value =temp.get(6+3*i);
-	    	//if the specific attr exists in the key
-	    	if (cur.values.containsKey(cur_name)){
-	    		//get the current attr
-	    		AttrValue cur_attr = cur.values.get(cur_name);
-	    		//use the update method
-	    		cur_attr.updateValue(cur_type,cur_value,newtimestamp);
-	    	}
-	    	else	{//else create new attr with specific value
-	    		cur.values.put(cur_name, new AttrValue(cur_type, cur_value, newtimestamp));
-	    	}
-	    }	
+		System.out.println(m);
+		if(m.getMID() == Common.MSG_DSM_INFORM && m.getTo().equals(agent_name) || m.getTo().equals("ALL")){
+			// var_name owner timeStamp num_of_attr attr1_name attr1_type1 attr1_value attr2_name attr2_type attr2_value
+		    //get the dsm content
+		    //split back to value,type, and timestamp
+		    MessageContents temp = m.getContents();
+		    String var_name = temp.get(0);
+		    String owner = temp.get(1);
+		    long newtimestamp = Long.parseLong(temp.get(2));
+		    int num_of_attr = Integer.parseInt(temp.get(3));
+		    //if the key exists
+		    if(!dsm_map.containsKey(var_name)) {
+		    	dsm_map.put(var_name, new DSMVariable(var_name, owner));
+		    }
+		    DSMVariable cur = dsm_map.get(var_name);
+		    for(int i = 0;i<num_of_attr; i++){
+		    	String cur_name = temp.get(4+2*i);
+		    	String cur_value =temp.get(5+2*i);
+		    	//if the specific attr exists in the key
+		    	if (cur.values.containsKey(cur_name)){
+		    		//get the current attr
+		    		AttrValue cur_attr = cur.values.get(cur_name);
+		    		//use the update method
+		    		cur_attr.updateValue(cur_value,newtimestamp);
+		    	}
+		    	else	{//else create new attr with specific value
+		    		cur.values.put(cur_name, new AttrValue(cur_value, newtimestamp));
+		    	}
+		    }	
+		}
 	}
 	
 
@@ -91,7 +95,7 @@ public class DSMMultipleAttr implements DSM, MessageListener{
 	}
 
 	@Override
-	public DSMVariable get(String name, String owner){
+	public DSMVariable get_V(String name, String owner){
 		if(owner == "*"){
 			if(dsm_map.containsKey(name)){
 				return dsm_map.get(name);
@@ -108,12 +112,28 @@ public class DSMMultipleAttr implements DSM, MessageListener{
 	}
 	
 	@Override
-	public Object get(String name, String owner, String attr){
+	public String get(String name, String owner){
+		if(owner == "*"){
+			if(dsm_map.containsKey(name)){
+				return dsm_map.get(name).values.get("default").s_value;
+			}
+		}
+		else{
+			if(dsm_map.containsKey(name+owner)){
+				return dsm_map.get(name+owner).values.get("default").s_value;
+			}
+		}
+		gvh.log.d(TAG, "Variable not found: "+ name + ", owner:" + owner);
+		return null;
+	}
+	
+	@Override
+	public String get(String name, String owner, String attr){
 		if(owner == "*"){
 			if(dsm_map.containsKey(name)){
 				DSMVariable cur = dsm_map.get(name);
 				if(cur.values.containsKey(attr)){
-					return cur.values.get(attr);
+					return cur.values.get(attr).s_value;
 				}
 			}
 		}
@@ -121,10 +141,9 @@ public class DSMMultipleAttr implements DSM, MessageListener{
 			if(dsm_map.containsKey(name+owner)){
 				DSMVariable cur = dsm_map.get(name+owner);
 				if(cur.values.containsKey(attr)){
-					return cur.values.get(attr);
+					return cur.values.get(attr).s_value;
 				}
 			}
-		// TODO Auto-generated method stub
 		}
 		return null;
 	}
@@ -141,24 +160,36 @@ public class DSMMultipleAttr implements DSM, MessageListener{
 			}
 			else{
 				curVar = new DSMVariable(input.name, input.owner);
+				dsm_map.put(input.name, curVar);
 			}
 			updateVar(curVar, input);
 			informOthers(input);
 			return true;
-		}	
-		
+		}
 	}
 
 	@Override
 	public boolean put(String name, String owner, String attr, int value) {
-		// TODO Auto-generated method stub
-		return false;
+		long curTS = getConsistantTS(owner);
+		DSMVariable input = new DSMVariable(name, owner, attr, String.valueOf(value), curTS);
+		return put(input);
 	}
 
 	@Override
 	public boolean put(String name, String owner, int value) {
-		// TODO Auto-generated method stub
-		return false;
+		// put default attribute and value into variable
+		DSMVariable input = new DSMVariable(name, owner, String.valueOf(value), getConsistantTS(owner));
+		return put(input);
+	}
+
+	@Override
+	public boolean put(String name, String owner, String... attr_and_value) {
+		if(attr_and_value.length %2 != 0){
+			return false;
+		}
+		long curTS = getConsistantTS(owner);
+		DSMVariable input = new DSMVariable(name, owner, curTS, attr_and_value);
+		return put(input);
 	}
 	
 	@Override
@@ -174,20 +205,30 @@ public class DSMMultipleAttr implements DSM, MessageListener{
 		return r_code;
 	}
 	
-	public long getConsistantTS(){
-		// TODO : add clock sync to this time stamp
-		return gvh.time();
+	public long getConsistantTS(String owner){
+		if(owner.equals(agent_name)){
+			return gvh.time();
+			// TODO: add local clock and clock de_sync simulation 
+		}
+		else{
+			// TODO : add clock sync to this time stamp
+			return gvh.time();
+		}
 	}
 	
 	public void updateVar(DSMVariable oldVar, DSMVariable newVar){
+		if(oldVar == null || newVar == null){
+			System.out.println("Could not update null DSM Variable");
+			return;
+		}
 		for(String curKey : newVar.values.keySet()){
 			if(oldVar.values.containsKey(curKey)){
 				AttrValue temp = newVar.values.get(curKey);
-				oldVar.values.get(curKey).updateValue(temp.type, temp.s_value, temp.s_timeS);
+				oldVar.values.get(curKey).updateValue(temp.s_value, temp.s_timeS);
 			}
 			else{
 				AttrValue temp = newVar.values.get(curKey);
-				oldVar.values.put(curKey, new AttrValue(temp.type, temp.s_value, temp.s_timeS));
+				oldVar.values.put(curKey, new AttrValue(temp.s_value, temp.s_timeS));
 			}
 		}
 		return;
@@ -199,4 +240,6 @@ public class DSMMultipleAttr implements DSM, MessageListener{
 		RobotMessage inform = new RobotMessage("ALL", agent_name, Common.MSG_DSM_INFORM, temp);
 		gvh.comms.addOutgoingMessage(inform);
 	}
+
+
 }
