@@ -1,0 +1,88 @@
+package edu.illinois.mitra.demo.numadd;
+
+import java.util.List;
+
+import edu.illinois.mitra.starl.comms.RobotMessage;
+import edu.illinois.mitra.starl.functions.DSMMultipleAttr;
+import edu.illinois.mitra.starl.functions.SingleHopMutualExclusion;
+import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
+import edu.illinois.mitra.starl.interfaces.DSM;
+import edu.illinois.mitra.starl.interfaces.LogicThread;
+import edu.illinois.mitra.starl.interfaces.MutualExclusion;
+import edu.illinois.mitra.starl.objects.ItemPosition;
+
+public class AddNum extends LogicThread {
+	private MutualExclusion mutex;
+	private DSM dsm;
+	int robotIndex;
+	private boolean added = false;
+	private boolean wait = false;
+	public int finalSum = 0;
+	private int numBots = 0;
+	public int numAdded = 0; 
+	public int currentTotal = 0;
+	public ItemPosition position;
+	private boolean isFinal = false;
+	public AddNum(GlobalVarHolder gvh){
+		super(gvh);
+		robotIndex = Integer.parseInt(name.substring(3,name.length()));
+		mutex = new SingleHopMutualExclusion(1, gvh, "bot0");
+		dsm = new DSMMultipleAttr(gvh);
+	}
+		@Override
+		public List<Object> callStarL() {
+			position = gvh.gps.getMyPosition();
+			while(true){
+				sleep(100);
+				//stage adding
+				if(!added){
+					if(!wait){
+						// get total number of robots
+						numBots = gvh.gps.getPositions().getNumPositions();
+						// call mutex and then wait
+						mutex.requestEntry(0);
+						wait = true;
+					}
+					if(mutex.clearToEnter(0)){
+						System.out.println("This is robot" + name);
+						added = true;
+						if(dsm.get("numAdded","*") == null){
+							dsm.put("numAdded","*", 0);
+							System.out.println("Bot" + name + " creating new MW");
+						}
+						numAdded = (Integer.parseInt(dsm.get("numAdded","*")));
+						dsm.put("numAdded", "*", numAdded + 1);
+						if(dsm.get("currentTotal","*") == null){
+							dsm.put("currentTotal","*", 0);
+						}
+						//new Integer("123");
+						currentTotal = Integer.parseInt(dsm.get("currentTotal", "*"));
+					//	currentTotal = (Integer) dsm.get("currentTotal", "*");
+						dsm.put("currentTotal", "*", currentTotal + robotIndex);	
+						mutex.exit(0);
+					}
+					continue;
+				}
+				//stage allAdded
+				if(!isFinal && Integer.parseInt(dsm.get("numAdded", "*")) == numBots){
+					finalSum = Integer.parseInt(dsm.get("currentTotal", "*"));
+					isFinal = true;
+					System.out.print("Final Sum is: " + finalSum);
+					continue;
+				}
+				//stage exit
+				if(isFinal){
+					//stop 
+					//return null;
+					
+					// don't do anything, we can exit if we want	
+					continue;
+				}
+			
+			}
+		}
+	
+	@Override
+	protected void receive(RobotMessage m) {
+	}
+}

@@ -37,7 +37,6 @@ public class DSMMultipleAttr implements DSM, MessageListener{
 
 	@Override
 	public void messageReceived(RobotMessage m) {
-		System.out.println(m);
 		if(m.getMID() == Common.MSG_DSM_INFORM && m.getTo().equals(agent_name) || m.getTo().equals("ALL")){
 			// var_name owner timeStamp num_of_attr attr1_name attr1_type1 attr1_value attr2_name attr2_type attr2_value
 		    //get the dsm content
