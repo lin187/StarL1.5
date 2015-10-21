@@ -32,6 +32,8 @@ public class AddNum extends LogicThread {
 		@Override
 		public List<Object> callStarL() {
 			position = gvh.gps.getMyPosition();
+			dsm.createMW("numAdded", 0);
+			dsm.createMW("currentTotal", 0);
 			while(true){
 				sleep(100);
 				//stage adding
@@ -46,18 +48,9 @@ public class AddNum extends LogicThread {
 					if(mutex.clearToEnter(0)){
 						System.out.println("This is robot" + name);
 						added = true;
-						if(dsm.get("numAdded","*") == null){
-							dsm.put("numAdded","*", 0);
-							System.out.println("Bot" + name + " creating new MW");
-						}
 						numAdded = (Integer.parseInt(dsm.get("numAdded","*")));
 						dsm.put("numAdded", "*", numAdded + 1);
-						if(dsm.get("currentTotal","*") == null){
-							dsm.put("currentTotal","*", 0);
-						}
-						//new Integer("123");
 						currentTotal = Integer.parseInt(dsm.get("currentTotal", "*"));
-					//	currentTotal = (Integer) dsm.get("currentTotal", "*");
 						dsm.put("currentTotal", "*", currentTotal + robotIndex);	
 						mutex.exit(0);
 					}
@@ -72,9 +65,6 @@ public class AddNum extends LogicThread {
 				}
 				//stage exit
 				if(isFinal){
-					//stop 
-					//return null;
-					
 					// don't do anything, we can exit if we want	
 					continue;
 				}

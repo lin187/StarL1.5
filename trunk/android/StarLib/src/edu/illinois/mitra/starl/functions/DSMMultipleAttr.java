@@ -240,5 +240,23 @@ public class DSMMultipleAttr implements DSM, MessageListener{
 		gvh.comms.addOutgoingMessage(inform);
 	}
 
+	@Override
+	public boolean createMW(String name, String... attr_and_value) {
+		if(attr_and_value.length %2 != 0){
+			return false;
+		}
+		long curTS = -1;
+		// use a negative time stamp, if the MW variable already exists, no need to write the value again
+		DSMVariable input = new DSMVariable(name, "*", curTS, attr_and_value);
+		return put(input);
+	}
 
+	@Override
+	public boolean createMW(String name, int value) {
+		if(get(name, "*") != null){
+			return false;
+		}
+		DSMVariable input = new DSMVariable(name, "*", String.valueOf(value), -1);
+		return put(input);
+	}
 }

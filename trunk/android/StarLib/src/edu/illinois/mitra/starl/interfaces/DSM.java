@@ -16,4 +16,6 @@ public interface DSM extends Cancellable{
 	public abstract boolean put(String name, String owner, int value);
 	public abstract boolean put(String name, String owner, String attr, int value);
 	public abstract boolean put(String name, String owner, String ... attr_and_value);
+	public abstract boolean createMW(String name, int value);	
+	public abstract boolean createMW(String name, String ... attr_and_value);
 }
