@@ -47,7 +47,7 @@ public class MotionAutomaton extends RobotMotion {
 
 	// Motion tracking
 	protected ItemPosition destination;
-	private ItemPosition mypos;
+	private Model_iRobot mypos;
 	private ItemPosition blocker;
 	private ObstacleList obsList;
 	

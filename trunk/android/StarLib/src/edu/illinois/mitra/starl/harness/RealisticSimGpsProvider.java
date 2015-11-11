@@ -1,6 +1,5 @@
 package edu.illinois.mitra.starl.harness;
 
-import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
@@ -11,8 +10,10 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.ItemPosition;
+import edu.illinois.mitra.starl.objects.Model_iRobot;
 import edu.illinois.mitra.starl.objects.ObstacleList;
 import edu.illinois.mitra.starl.objects.Obstacles;
+import edu.illinois.mitra.starl.objects.Point3d;
 import edu.illinois.mitra.starl.objects.PositionList;
 
 /**
@@ -28,9 +29,9 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 	private Map<String, TrackedRobot> robots;
 
 	// Waypoint positions and robot positions that are shared among all robots
-	private PositionList robot_positions;
-	private PositionList waypoint_positions;
-	private PositionList sensepoint_positions;
+	private PositionList<Model_iRobot> robot_positions;
+	private PositionList<ItemPosition> waypoint_positions;
+	private PositionList<ItemPosition> sensepoint_positions;
 	private ObstacleList obspoint_positions;
 	private Vector<ObstacleList> viewsOfWorld;
 	
@@ -54,9 +55,9 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 		receivers = new HashMap<String, SimGpsReceiver>();
 		robots = new ConcurrentHashMap<String, TrackedRobot>();
 		
-		robot_positions = new PositionList();
-		waypoint_positions = new PositionList();
-		sensepoint_positions = new PositionList();
+		robot_positions = new PositionList<Model_iRobot>();
+		waypoint_positions = new PositionList<ItemPosition>();
+		sensepoint_positions = new PositionList<ItemPosition>();
 	}
 	
 	@Override
@@ -65,11 +66,11 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 	}
 	
 	@Override
-	public synchronized void addRobot(ItemPosition bot) {
+	public synchronized void addRobot(Model_iRobot bot) {
 		synchronized(robots) {
 			robots.put(bot.name, new TrackedRobot(bot));
 		}
-		robot_positions.update(bot, se.getTime());
+		robot_positions.update(bot);
 	}
 	
 	@Override
@@ -89,17 +90,17 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 	}
 	
 	@Override
-	public PositionList getRobotPositions() {
+	public PositionList<Model_iRobot> getRobotPositions() {
 		return robot_positions;
 	}
 
 	@Override
-	public void setWaypoints(PositionList loadedWaypoints) {
+	public void setWaypoints(PositionList<ItemPosition> loadedWaypoints) {
 		if(loadedWaypoints != null) waypoint_positions = loadedWaypoints;
 	}
 	
 	@Override
-	public void setSensepoints(PositionList loadedSensepoints) {
+	public void setSensepoints(PositionList<ItemPosition> loadedSensepoints) {
 		if(loadedSensepoints != null) sensepoint_positions = loadedSensepoints;
 	}
 	
@@ -129,7 +130,7 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 	}
 	
 	@Override
-	public PositionList getWaypointPositions() {
+	public PositionList<ItemPosition> getWaypointPositions() {
 		return waypoint_positions;
 	}
 	
@@ -177,7 +178,7 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 	}
 
 	private class TrackedRobot {
-		private ItemPosition cur = null;
+		private Model_iRobot cur = null;
 		private long timeLastUpdate = 0;		
 		private double vFwd = 0;
 		private double vRad = 0;
@@ -186,7 +187,7 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 		private double yNoise = (rand.nextDouble()*2*posNoise) - posNoise;
 		private double angle = 0;
 		
-		public TrackedRobot(ItemPosition pos) {
+		public TrackedRobot(Model_iRobot pos) {
 			this.cur = pos;
 			angle = cur.angle;
 			timeLastUpdate = se.getTime();
@@ -232,10 +233,10 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 		super.addObserver(o);
 	}
 	
-	public void checkCollision(ItemPosition bot) {
+	public void checkCollision(Model_iRobot bot) {
 		bot.leftbump= false;
 		bot.rightbump= false;
-		for(ItemPosition current : robot_positions.getList()) {
+		for(Model_iRobot current : robot_positions.getList()) {
 			if(!current.name.equals(bot.name)) {
 				if(bot.isFacing(current) && bot.distanceTo(current) <= (bot.radius + current.radius)) {
 					if(bot.velocity >= 0 || current.velocity >= 0){
@@ -254,8 +255,8 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 		for(int i = 0; i < list.ObList.size(); i++)
 		{
 			Obstacles currobs = list.ObList.get(i);
-			Point nextpoint = currobs.obstacle.firstElement();
-			Point curpoint = currobs.obstacle.firstElement();
+			Point3d nextpoint = currobs.obstacle.firstElement();
+			Point3d curpoint = currobs.obstacle.firstElement();
 			ItemPosition wall = new ItemPosition("wall",0,0,0);
 			
 			for(int j = 0; j < currobs.obstacle.size() ; j++){
@@ -266,7 +267,7 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 				else{
 					nextpoint = currobs.obstacle.get(j+1);
 				}
-				Point closeP = currobs.getClosestPointOnSegment(curpoint.x, curpoint.y, nextpoint.x, nextpoint.y, bot.x, bot.y);
+				Point3d closeP = currobs.getClosestPointOnSegment(curpoint.x, curpoint.y, nextpoint.x, nextpoint.y, bot.x, bot.y);
 				wall.setPos(closeP.x, closeP.y, 0);
 				double distance = Math.sqrt(Math.pow(closeP.x - bot.x, 2) + Math.pow(closeP.y - bot.y, 2)) ;
 				
@@ -288,7 +289,7 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 
 	}
 	
-	public void updateSensors(ItemPosition bot){
+	public void updateSensors(Model_iRobot bot){
 		for(ItemPosition other : sensepoint_positions.getList()) {
 			if(bot.distanceTo(other)<600){
 				if(!obspoint_positions.badPath(bot, other)){

@@ -53,9 +53,9 @@ public class TrafficSignApp extends LogicThread {
 		//set the destination for each robot, which are differed by their angle
 		//angle does not serve much purpose here, therefore, we use it to identify the way points for each robot 
 		for(ItemPosition i : gvh.gps.getWaypointPositions()){
-			if(i.angle == robotIndex){
+			if(i.index == robotIndex){
 				ItemPosition toAdd = new ItemPosition(i);
-				toAdd.angle = 0;
+				toAdd.index = 0;
 				destinations.add(toAdd);
 			}
 		}

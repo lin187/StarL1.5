@@ -63,7 +63,7 @@ public class RRTNode {
 	
     public Stack<ItemPosition> findRoute(ItemPosition destination, int K, ObstacleList obsList, int xRange, int yRange, ItemPosition RobotPos, int Radius) {
     	//initialize a kd tree;
-    	obsList.remove(RobotPos, 0.9*RobotPos.radius);
+    	obsList.remove(RobotPos, 0.9*Radius);
     	kd = new KDTree<RRTNode>(2);
     	double [] root = {position.x,position.y};
     	final RRTNode rootNode = new RRTNode(position.x,position.y);

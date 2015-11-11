@@ -9,6 +9,7 @@ import edu.illinois.mitra.starl.harness.SimGpsReceiver;
 import edu.illinois.mitra.starl.harness.SimSmartComThread;
 import edu.illinois.mitra.starl.harness.SimulationEngine;
 import edu.illinois.mitra.starl.objects.ItemPosition;
+import edu.illinois.mitra.starl.objects.Model_iRobot;
 
 /**
  * Extension of the GlobalVarHolder class for use in simulations of StarL applications 
@@ -27,7 +28,7 @@ public class SimGlobalVarHolder extends GlobalVarHolder {
 	 * @param initpos this agent's initial position
 	 * @param traceDir the directory to write trace files to
 	 */
-	public SimGlobalVarHolder(String name, HashMap<String,String> participants, SimulationEngine engine, ItemPosition initpos, String traceDir, int trace_driftMax, double trace_skewBound) {
+	public SimGlobalVarHolder(String name, HashMap<String,String> participants, SimulationEngine engine, Model_iRobot initpos, String traceDir, int trace_driftMax, double trace_skewBound) {
 		super(name, participants);
 		this.engine = engine;
 		super.comms = new Comms(this, new SimSmartComThread(this, engine.getComChannel()));

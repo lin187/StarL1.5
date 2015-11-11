@@ -107,13 +107,13 @@ public class DistributedSearchApp extends LogicThread {
 							for(int j = 0; j < mul; j++){
 								ItemPosition toAdd = new ItemPosition(gvh.gps.getWaypointPositions().getList().get(i+j));
 								//keep angle same as who it was assigned to
-								toAdd.angle = index;
+								toAdd.index = index;
 								Alldest.add(toAdd);
 								assign(toAdd, index);
 							}
 							if(remain>0){
 								ItemPosition toAdd = new ItemPosition(gvh.gps.getWaypointPositions().getList().get(i+mul));
-								toAdd.angle = index;
+								toAdd.index = index;
 								Alldest.add(toAdd);
 								remain--;
 								i++;

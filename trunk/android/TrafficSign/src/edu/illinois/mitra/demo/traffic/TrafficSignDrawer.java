@@ -63,8 +63,8 @@ public class TrafficSignDrawer extends Drawer {
 			else
 				g.setColor(Color.GRAY);
 			
-			Point nextpoint = currobs.obstacle.firstElement();
-			Point curpoint = currobs.obstacle.firstElement();
+			Point3d nextpoint = currobs.obstacle.firstElement();
+			Point3d curpoint = currobs.obstacle.firstElement();
 			int[] xs = new int[currobs.obstacle.size()]; 
 			int[] ys = new int[currobs.obstacle.size()]; ;
 			

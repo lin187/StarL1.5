@@ -10,7 +10,7 @@ public interface SimGpsProvider {
 	public abstract void registerReceiver(String name,
 			SimGpsReceiver simGpsReceiver);
 
-	public abstract void addRobot(ItemPosition bot);
+	public abstract void addRobot(Model_iRobot bot);
 
 	// Implemented only by ideal gps provider
 	public abstract void setDestination(String name, ItemPosition dest, int vel);
@@ -20,17 +20,17 @@ public interface SimGpsProvider {
 
 	public abstract void halt(String name);
 
-	public abstract PositionList getRobotPositions();
+	public abstract PositionList<Model_iRobot> getRobotPositions();
 
-	public abstract void setWaypoints(PositionList loadedWaypoints);
+	public abstract void setWaypoints(PositionList<ItemPosition> loadedWaypoints);
 	
-	public abstract void setSensepoints(PositionList loadedSensepoints);
+	public abstract void setSensepoints(PositionList<ItemPosition> loadedSensepoints);
 	
 	public abstract void setObspoints(ObstacleList loadedObspoints);
 
 	public abstract void setViews(ObstacleList environment, int nBots);
 
-	public abstract PositionList getWaypointPositions();
+	public abstract PositionList<ItemPosition> getWaypointPositions();
 
 	public abstract ObstacleList getObspointPositions();
 	

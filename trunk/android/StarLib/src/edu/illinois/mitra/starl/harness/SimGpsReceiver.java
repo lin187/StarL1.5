@@ -7,6 +7,7 @@ import edu.illinois.mitra.starl.interfaces.GpsReceiver;
 import edu.illinois.mitra.starl.interfaces.RobotEventListener.Event;
 import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.ItemPosition;
+import edu.illinois.mitra.starl.objects.Model_iRobot;
 import edu.illinois.mitra.starl.objects.ObstacleList;
 import edu.illinois.mitra.starl.objects.PositionList;
 
@@ -19,7 +20,7 @@ public class SimGpsReceiver implements GpsReceiver {
 	
 	private SimGpsProvider provider;
 	
-	public SimGpsReceiver(GlobalVarHolder gvh, SimGpsProvider provider, ItemPosition initpos) {
+	public SimGpsReceiver(GlobalVarHolder gvh, SimGpsProvider provider, Model_iRobot initpos) {
 		this.gvh = gvh;
 		this.provider = provider;
 		provider.registerReceiver(gvh.id.getName(), this);
@@ -48,12 +49,12 @@ public class SimGpsReceiver implements GpsReceiver {
 	}
 
 	@Override
-	public PositionList getRobots() {
+	public PositionList<Model_iRobot> getRobots() {
 		return provider.getRobotPositions();
 	}
 
 	@Override
-	public PositionList getWaypoints() {
+	public PositionList<ItemPosition> getWaypoints() {
 		return provider.getWaypointPositions();
 	}
 	@Override

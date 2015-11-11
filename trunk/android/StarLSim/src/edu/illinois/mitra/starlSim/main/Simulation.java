@@ -28,6 +28,7 @@ import edu.illinois.mitra.starl.harness.SimGpsProvider;
 import edu.illinois.mitra.starl.harness.SimulationEngine;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.objects.ItemPosition;
+import edu.illinois.mitra.starl.objects.Model_iRobot;
 import edu.illinois.mitra.starl.objects.ObstacleList;
 import edu.illinois.mitra.starl.objects.PositionList;
 import edu.illinois.mitra.starlSim.draw.DrawFrame;
@@ -112,12 +113,17 @@ public class Simulation {
 		gps.start();
 
 		// Load initial positions
-		PositionList initialPositions;
+		PositionList<ItemPosition> t_initialPositions;
 		if(settings.INITIAL_POSITIONS_FILE != null){
-			initialPositions = WptLoader.loadWaypoints(settings.INITIAL_POSITIONS_FILE);
+			t_initialPositions = WptLoader.loadWaypoints(settings.INITIAL_POSITIONS_FILE);
 		}
 		else
-			initialPositions = new PositionList();
+			t_initialPositions = new PositionList<ItemPosition>();
+		
+		PositionList<Model_iRobot> initialPositions = new PositionList<Model_iRobot>();
+		for(ItemPosition t_pos : t_initialPositions){
+			initialPositions.update(new Model_iRobot(t_pos));
+		}
 
 		Random rand = new Random();
 
@@ -125,7 +131,7 @@ public class Simulation {
 		for(int i = 0; i < settings.N_BOTS; i++) {
 			String botName = settings.BOT_NAME + i;
 
-			ItemPosition initialPosition = initialPositions.getPosition(botName);
+			Model_iRobot initialPosition = initialPositions.getPosition(botName);
 			// If no initial position was supplied, randomly generate one
 			if(initialPosition == null) {	
 			//	System.out.println("null position in list");
@@ -134,7 +140,7 @@ public class Simulation {
 				
 				while(retries++ < 10000 && (!acceptableStart(initialPosition) || !valid))
 				{
-					initialPosition = new ItemPosition(botName, rand.nextInt(settings.GRID_XSIZE), rand.nextInt(settings.GRID_YSIZE), rand.nextInt(360));
+					initialPosition = new Model_iRobot(botName, rand.nextInt(settings.GRID_XSIZE), rand.nextInt(settings.GRID_YSIZE), rand.nextInt(360));
 					if(list != null){
 						valid = (list.validstarts(initialPosition, settings.BOT_RADIUS));
 					}	
@@ -171,7 +177,7 @@ public class Simulation {
 		Observer guiObserver = new Observer() {
 			@Override
 			public void update(Observable o, Object arg) {
-				ArrayList<ItemPosition> pos = ((PositionList) arg).getList();
+				ArrayList<Model_iRobot> pos = ((PositionList<Model_iRobot>) arg).getList();
 				ArrayList<RobotData> rd = new ArrayList<RobotData>();
 				Vector<ObstacleList> views = gps.getViews();
 				//define robot colors
@@ -192,7 +198,7 @@ public class Simulation {
 			
 				
 				// Add robots and views
-				for(ItemPosition ip : pos) {	
+				for(Model_iRobot ip : pos) {	
 					if(i<12){
 						RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.angle, c[i], views.elementAt(i), ip.leftbump, ip.rightbump);
 						nextBot.radius = settings.BOT_RADIUS;
@@ -210,7 +216,7 @@ public class Simulation {
 				// Add waypoints
 				if(settings.DRAW_WAYPOINTS) {
 					for(ItemPosition ip : gps.getWaypointPositions().getList()) {
-						RobotData waypoint = new RobotData((settings.DRAW_WAYPOINT_NAMES ? ip.name : ""), ip.x, ip.y, ip.angle);
+						RobotData waypoint = new RobotData((settings.DRAW_WAYPOINT_NAMES ? ip.name : ""), ip.x, ip.y, ip.index);
 						waypoint.radius = 5;
 						waypoint.c = new Color(255, 0, 0);
 						rd.add(waypoint);
@@ -266,10 +272,10 @@ public class Simulation {
 		Observer globalLogger = new Observer() {
 			@Override
 			public void update(Observable o, Object arg) {
-				ArrayList<ItemPosition> pos = ((PositionList) arg).getList();
+				ArrayList<Model_iRobot> pos = ((PositionList<Model_iRobot>) arg).getList();
 				ArrayList<RobotData> rd = new ArrayList<RobotData>();
 				// Add robots
-				for(ItemPosition ip : pos) {
+				for(Model_iRobot ip : pos) {
 					RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.angle, ip.receivedTime);
 					nextBot.radius = settings.BOT_RADIUS;
 					rd.add(nextBot);

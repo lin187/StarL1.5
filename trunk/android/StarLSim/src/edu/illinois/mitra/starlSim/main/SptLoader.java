@@ -11,8 +11,8 @@ public final class SptLoader {
 	private SptLoader() {
 	}
 	
-	public static PositionList loadSensepoints(String file) {
-		PositionList sensepoints = new PositionList();
+	public static PositionList<ItemPosition> loadSensepoints(String file) {
+		PositionList<ItemPosition> sensepoints = new PositionList<ItemPosition>();
 		BufferedReader in = null;
         InputStream inputStream =
                 WptLoader.class.getClassLoader().getResourceAsStream(file);
@@ -24,7 +24,7 @@ public final class SptLoader {
                 in = new BufferedReader(new FileReader("waypoints/" + file));
             } catch (FileNotFoundException e) {
                 System.err.println("File " + file + " not found! No sensepoints loaded.");
-                return new PositionList();
+                return new PositionList<ItemPosition>();
             }
         }
 		
@@ -34,7 +34,7 @@ public final class SptLoader {
 				String[] parts = line.replace(" ", "").split(",");
 				if(parts[0].equals("SENSE") && parts.length == 5) {
 					ItemPosition sencePt = new ItemPosition(parts[4], Integer.parseInt(parts[1]), Integer.parseInt(parts[2]), Integer.parseInt(parts[3]));
-					sensepoints.update(sencePt, 0);
+					sensepoints.update(sencePt);
 				}
 			}
 			in.close();

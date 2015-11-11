@@ -13,9 +13,9 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 	private HashMap<String, TrackedRobot> robots;
 
 	// Waypoint positions and robot positions that are shared among all robots
-	private PositionList robot_positions;
-	private PositionList waypoint_positions;
-	private PositionList sensepoint_positions;
+	private PositionList<Model_iRobot> robot_positions;
+	private PositionList<ItemPosition> waypoint_positions;
+	private PositionList<ItemPosition> sensepoint_positions;
 	
 	private ObstacleList obspoint_positions;
 	private Vector<ObstacleList> viewsOfWorld;
@@ -38,9 +38,9 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 		receivers = new HashMap<String, SimGpsReceiver>();
 		robots = new HashMap<String, TrackedRobot>();
 		
-		robot_positions = new PositionList();
-		waypoint_positions = new PositionList();
-		sensepoint_positions = new PositionList();
+		robot_positions = new PositionList<Model_iRobot>();
+		waypoint_positions = new PositionList<ItemPosition>();
+		sensepoint_positions = new PositionList<ItemPosition>();
 	}
 	
 	@Override
@@ -49,9 +49,9 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 	}
 	
 	@Override
-	public synchronized void addRobot(ItemPosition bot) {
+	public synchronized void addRobot(Model_iRobot bot) {
 		robots.put(bot.name, new TrackedRobot(bot));
-		robot_positions.update(bot, se.getTime());
+		robot_positions.update(bot);
 	}
 
 	@Override
@@ -65,17 +65,17 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 	}
 	
 	@Override
-	public PositionList getRobotPositions() {
+	public PositionList<Model_iRobot> getRobotPositions() {
 		return robot_positions;
 	}
 
 	@Override
-	public void setWaypoints(PositionList loadedWaypoints) {
+	public void setWaypoints(PositionList<ItemPosition> loadedWaypoints) {
 		if(loadedWaypoints != null) waypoint_positions = loadedWaypoints;
 	}
 	
 	@Override
-	public void setSensepoints(PositionList loadedSensepoints) {
+	public void setSensepoints(PositionList<ItemPosition> loadedSensepoints) {
 		if(loadedSensepoints != null) sensepoint_positions = loadedSensepoints;
 	}
 	
@@ -103,7 +103,7 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 	}
 	
 	@Override
-	public PositionList getWaypointPositions() {
+	public PositionList<ItemPosition> getWaypointPositions() {
 		return waypoint_positions;
 	}
 
@@ -154,7 +154,7 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 	private class TrackedRobot {
 		private int velocity = 200; // TODO was 0
 		private ItemPosition start = null;
-		private ItemPosition pos = null;
+		private Model_iRobot pos = null;
 		private ItemPosition dest = null;
 		private boolean newdest = false;
 		private boolean reportpos = false;
@@ -168,7 +168,7 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 		private int xNoise = 0;
 		private int yNoise = 0;
 				
-		public TrackedRobot(ItemPosition pos) {
+		public TrackedRobot(Model_iRobot pos) {
 			this.pos = pos;
 			timeLastUpdate = se.getTime();
 		}
