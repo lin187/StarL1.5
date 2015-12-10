@@ -1,4 +1,4 @@
-package edu.illinois.mitra.demo.numadd;
+package edu.illinois.mitra.demo.addnum;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.interfaces.MutualExclusion;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 
-public class AddNum extends LogicThread {
+public class AddNumApp extends LogicThread {
 	private MutualExclusion mutex;
 	private DSM dsm;
 	int robotIndex;
@@ -23,7 +23,7 @@ public class AddNum extends LogicThread {
 	public int currentTotal = 0;
 	public ItemPosition position;
 	private boolean isFinal = false;
-	public AddNum(GlobalVarHolder gvh){
+	public AddNumApp(GlobalVarHolder gvh){
 		super(gvh);
 		robotIndex = Integer.parseInt(name.substring(3,name.length()));
 		mutex = new SingleHopMutualExclusion(1, gvh, "bot0");
