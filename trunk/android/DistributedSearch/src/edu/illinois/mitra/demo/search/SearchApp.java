@@ -12,7 +12,7 @@ import edu.illinois.mitra.starl.objects.*;
 import edu.illinois.mitra.starl.motion.*;
 import edu.illinois.mitra.starl.motion.MotionParameters.COLAVOID_MODE_TYPE;
 
-public class DistributedSearchApp extends LogicThread {
+public class SearchApp extends LogicThread {
 	ItemPosition CS_A = new ItemPosition("CS_A", 2250, 2750, 0);
 	ItemPosition CS_B = new ItemPosition("CS_B", 2750, 2750, 0);
 	ItemPosition CS_C = new ItemPosition("CS_C", 2250, 2250, 0);
@@ -48,7 +48,7 @@ public class DistributedSearchApp extends LogicThread {
 
 	private Stage stage = Stage.ELECT;
 
-	public DistributedSearchApp(GlobalVarHolder gvh) {
+	public SearchApp(GlobalVarHolder gvh) {
 		super(gvh);
 		
 		robotIndex = Integer.parseInt(name.substring(3,name.length()));

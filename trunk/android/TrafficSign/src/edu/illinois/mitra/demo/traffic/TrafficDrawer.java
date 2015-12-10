@@ -1,4 +1,4 @@
-package edu.illinois.mitra.demo.search;
+package edu.illinois.mitra.demo.traffic;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -8,17 +8,16 @@ import java.awt.Stroke;
 import java.util.Iterator;
 
 import edu.illinois.mitra.starl.interfaces.LogicThread;
-import edu.illinois.mitra.starl.motion.RRTNode;
 import edu.illinois.mitra.starl.objects.*;
 import edu.illinois.mitra.starlSim.draw.Drawer;
-public class DistributedSearchDrawer extends Drawer {
+public class TrafficDrawer extends Drawer {
 
 	private Stroke stroke = new BasicStroke(8);
 	private Color selectColor = new Color(0,0,255,100);
 	
 	@Override
 	public void draw(LogicThread lt, Graphics2D g) {
-		DistributedSearchApp app = (DistributedSearchApp) lt;
+		TrafficApp app = (TrafficApp) lt;
 		Color[] c = new Color[12] ;
 		c[0] = Color.BLACK;
 		c[1] = Color.BLUE;
@@ -39,20 +38,30 @@ public class DistributedSearchDrawer extends Drawer {
 			g.setColor(c[0]);
 		}
 		Iterator<ItemPosition> iterator = app.destinations.iterator();
-		while(iterator.hasNext()){
-			ItemPosition dest = (ItemPosition) iterator.next();
-			g.fillRect(dest.getX() - 13, dest.getY() - 13, 26, 26);
-		}
-		g.setStroke(new BasicStroke(10));
+	    Stroke dashed = new BasicStroke(8, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
+	    g.setStroke(dashed);
+	    ItemPosition prevd = null;
+	    if(app.myPos != null && app.currentDestination != null)
+	    	g.drawLine(app.myPos.x +10*(app.robotIndex), app.myPos.y+10*(app.robotIndex), app.currentDestination.x+10*(app.robotIndex), app.currentDestination.y+10*(app.robotIndex));
+	    while(iterator.hasNext()){
+	    	ItemPosition dest = (ItemPosition) iterator.next();
+	    	g.fillRect(dest.getX() +10*(app.robotIndex)- 13, dest.getY()+10*(app.robotIndex) - 13, 26, 26);
+	    	
+	    	if(prevd != null)
+	    		g.drawLine(dest.x +10*(app.robotIndex), dest.y+10*(app.robotIndex), prevd.x+10*(app.robotIndex), prevd.y+10*(app.robotIndex));
+	    	prevd = dest;	    	
+	    }
+	    
+	    g.setStroke(new BasicStroke(10));
 		g.setColor(Color.GRAY);
 		ObstacleList list = app.obEnvironment;
 		for(int i = 0; i < list.ObList.size(); i++)
 		{
 			Obstacles currobs = list.ObList.get(i);
 			if(currobs.hidden)
-				g.setColor(Color.GRAY);
+				g.setColor(Color.LIGHT_GRAY);
 			else
-				g.setColor(Color.DARK_GRAY);
+				g.setColor(Color.GRAY);
 			
 			Point nextpoint = currobs.obstacle.firstElement();
 			Point curpoint = currobs.obstacle.firstElement();
@@ -77,7 +86,6 @@ public class DistributedSearchDrawer extends Drawer {
 		g.setStroke(stroke);
 		if(app.currentDestination != null)
 			g.drawOval(app.currentDestination.getX() - 20, app.currentDestination.getY() - 20, 40, 40);
-			g.fillOval(11000, 6000, 100, 100);
 	}
 
 }

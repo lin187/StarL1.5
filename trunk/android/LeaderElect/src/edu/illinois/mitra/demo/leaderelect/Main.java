@@ -15,7 +15,7 @@ public class Main {
 		settings.DRAW_WAYPOINT_NAMES(false);
 		settings.DRAWER(new LeaderElectDrawer());
 		
-		Simulation sim = new Simulation(LeaderElect.class, settings.build());
+		Simulation sim = new Simulation(LeaderElectApp.class, settings.build());
 		sim.start();
 	}
 

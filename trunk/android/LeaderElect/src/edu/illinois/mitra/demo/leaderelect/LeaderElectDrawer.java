@@ -16,7 +16,7 @@ public class LeaderElectDrawer extends Drawer {
 	
 	@Override
 	public void draw(LogicThread lt, Graphics2D g) {
-		LeaderElect app = (LeaderElect) lt;
+		LeaderElectApp app = (LeaderElectApp) lt;
 
 		g.setColor(Color.RED);/*
 		for(ItemPosition dest : app.destinations.values()) {
