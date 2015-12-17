@@ -31,6 +31,8 @@ public interface SimGpsProvider {
 	public abstract void setViews(ObstacleList environment, int nBots);
 
 	public abstract PositionList<ItemPosition> getWaypointPositions();
+	
+	public abstract PositionList<ItemPosition> getSensePositions();
 
 	public abstract ObstacleList getObspointPositions();
 	

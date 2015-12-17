@@ -66,6 +66,11 @@ public class SimGpsReceiver implements GpsReceiver {
 	public Vector<ObstacleList> getViews() {
 		return provider.getViews() ;
 	}
+
+	@Override
+	public PositionList<ItemPosition> getSensepoints() {
+		return provider.getSensePositions();
+	}
 	
 	
 	

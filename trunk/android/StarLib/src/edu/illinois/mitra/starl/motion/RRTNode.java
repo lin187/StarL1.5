@@ -149,7 +149,7 @@ public class RRTNode {
       	RRTNode curNode = destNode;  	
 		Stack<ItemPosition> pathStack= new Stack<ItemPosition>();
 		while(curNode != null){
-			ItemPosition ToGo= new ItemPosition("midpoint", curNode.position.x, curNode.position.y, 0);
+			ItemPosition ToGo= new ItemPosition("midpoint", curNode.position.x, curNode.position.y);
 			pathStack.push(ToGo);
 			curNode = curNode.parent;
 		}

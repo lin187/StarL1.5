@@ -26,7 +26,7 @@ public class DistributedSearchApp extends LogicThread {
 	private volatile MotionParameters param = DEFAULT_PARAMETERS;
 	Queue<ItemPosition> destinations = new LinkedList<ItemPosition>();
 	Queue<ItemPosition> Alldest;
-	public PositionList SensePt;
+	public PositionList<ItemPosition> SensePt;
 	//SensePt is just for display purpose
 	private LeaderElection le;
 	private boolean iamleader=false;
@@ -106,7 +106,7 @@ public class DistributedSearchApp extends LogicThread {
 						for(int i=0; i < size; i+=mul){
 							for(int j = 0; j < mul; j++){
 								ItemPosition toAdd = new ItemPosition(gvh.gps.getWaypointPositions().getList().get(i+j));
-								//keep angle same as who it was assigned to
+								//keep index same as who it was assigned to
 								toAdd.index = index;
 								Alldest.add(toAdd);
 								assign(toAdd, index);
@@ -170,7 +170,9 @@ public class DistributedSearchApp extends LogicThread {
 								preDestination = pathStack.peek();
 							}
 							ItemPosition goMidPoint = pathStack.pop();
-							gvh.plat.moat.goTo(goMidPoint);
+							System.out.println(goMidPoint);
+							gvh.plat.moat.goTo(new ItemPosition("", 80, 30));
+							//gvh.plat.moat.goTo(goMidPoint);
 						}
 						else{
 							if((gvh.gps.getPosition(name).distanceTo(currentDestination)>param.GOAL_RADIUS)){

@@ -11,6 +11,7 @@ public interface GpsReceiver extends Cancellable {
 	
 	public abstract PositionList<Model_iRobot> getRobots();
 	public abstract PositionList<ItemPosition> getWaypoints();
+	public abstract PositionList<ItemPosition> getSensepoints();
 	public abstract ObstacleList getObspoints();
 	public abstract Vector<ObstacleList> getViews();
 	

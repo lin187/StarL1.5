@@ -73,7 +73,7 @@ public class ItemPosition extends Point3d implements Comparable<ItemPosition>{
 	
 	@Override 
 	public String toString() {
-		return name + ": " + x + ", " + y + ", " + z + "\u00B0";
+		return name + ": " + x + ", " + y + ", " + z + ". index" + index + "\u00B0";
 	}
 	
 	// Hashing and equals checks are done only against the position's name. Position names are unique!
@@ -131,6 +131,10 @@ public class ItemPosition extends Point3d implements Comparable<ItemPosition>{
 	}
 	
 	private void setname(String name){
+		if(name == null){
+			this.name = "";
+			return;
+		}
 		if(name.contains(",")) {
 			String[] namePieces = name.split(",");
 			this.name = namePieces[0];

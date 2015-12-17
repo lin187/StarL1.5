@@ -233,7 +233,7 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 					if (pos==null )
 						throw new RuntimeException("pos is null");
 					
-					pos.setPos(dest.x+xNoise, dest.y+yNoise, pos.angle+aNoise);
+					pos.setPos(dest.x+xNoise, dest.y+yNoise, (int)pos.angle+aNoise);
 					
 					dest = null;
 					reportpos = true;
@@ -282,6 +282,12 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 	@Override
 	public void addObserver(Observer o) {
 		super.addObserver(o);
+	}
+
+	@Override
+	public PositionList<ItemPosition> getSensePositions() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

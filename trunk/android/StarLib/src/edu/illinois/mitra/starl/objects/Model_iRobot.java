@@ -1,10 +1,13 @@
 package edu.illinois.mitra.starl.objects;
 
+import java.util.Random;
+
 import edu.illinois.mitra.starl.exceptions.ItemFormattingException;
+import edu.illinois.mitra.starl.interfaces.TrackedRobot;
 
-public class Model_iRobot extends ItemPosition {
+public class Model_iRobot extends ItemPosition implements TrackedRobot{
 
-	public int angle;
+	public double angle;
 	public int radius;
 	public int type;
 	public double velocity;
@@ -12,7 +15,13 @@ public class Model_iRobot extends ItemPosition {
 	public boolean leftbump;
 	public boolean rightbump;
 	public boolean circleSensor;
-	
+		
+	public double vFwd = 0;
+	public double vRad = 0;
+	public Random rand;
+	public int x_p;
+	public int y_p;
+	public double angle_p;
 	
 	public Model_iRobot(String received) throws ItemFormattingException{
 		super(received);
@@ -23,13 +32,13 @@ public class Model_iRobot extends ItemPosition {
 		initial_helper();
 	}
 	
-	public Model_iRobot(String name, int x, int y, int angle) {
+	public Model_iRobot(String name, int x, int y, double angle) {
 		super(name, x, y);
 		initial_helper();
 		this.angle = angle;
 	}
 	
-	public Model_iRobot(String name, int x, int y, int angle, int radius) {
+	public Model_iRobot(String name, int x, int y, double angle, int radius) {
 		super(name, x, y);
 		initial_helper();
 		this.angle = angle;
@@ -102,19 +111,19 @@ public class Model_iRobot extends ItemPosition {
 	 * @param other The ItemPosition to measure against
 	 * @return Number of degrees this position must rotate to face position other
 	 */
-	public <T extends ItemPosition> int angleTo(T other) {
+	public <T extends Point3d> int angleTo(T other) {
 		if(other == null) {
 			return 0;
 		}
 		
 		int delta_x = other.x - this.x;
 		int delta_y = other.y - this.y;
-		int angle = this.angle;
+		double angle = this.angle;
 		int otherAngle = (int) Math.toDegrees(Math.atan2(delta_y,delta_x));
 		if(angle > 180) {
 			angle -= 360;
 		}
-		int retAngle = Common.min_magitude((otherAngle - angle),(angle - otherAngle));
+		int retAngle = Common.min_magitude((int)(otherAngle - angle),(int)(angle - otherAngle));
 		
 		if(retAngle > 180) {
 			retAngle = retAngle-360;
@@ -147,6 +156,70 @@ public class Model_iRobot extends ItemPosition {
 		circleSensor = false;
 		radius = 1;
 		type = -1;
+	}
+
+	@Override
+	public Point3d predict(double[] noises, double timeSinceUpdate) {
+		if(noises.length != 3){
+			System.out.println("Incorrect number of noises parameters passed in, please pass in x noise, y, noise and angle noise");
+			return new Point3d(x,y);
+		}
+		double xNoise = (rand.nextDouble()*2*noises[0]) - noises[0];
+		double yNoise = (rand.nextDouble()*2*noises[1]) - noises[1];
+		double aNoise = (rand.nextDouble()*2*noises[2]) - noises[2];
+		
+		int dX = 0, dY = 0;
+		double dA = 0;
+		// Arcing motion
+		dA = aNoise + (vRad*timeSinceUpdate);
+		dX = (int) (xNoise + Math.cos(Math.toRadians(angle))*(vFwd*timeSinceUpdate));
+		dY = (int) (yNoise + Math.sin(Math.toRadians(angle))*(vFwd*timeSinceUpdate));
+		x_p = x+dX;
+		y_p = y+dY;
+		angle_p = angle+dA;
+		return new Point3d(x_p,y_p);
+	}
+
+	@Override
+	public void collision(Point3d collision_point) {
+		if(angleTo(collision_point)%90>(-20)){
+			rightbump = true;
+		}
+		if(angleTo(collision_point)%90<20){
+			leftbump = true;
+		}
+		//TODO update local map
+	}
+
+	@Override
+	public void updatePos(boolean followPredict, double timeSinceUpdate) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean inMotion() {
+		return (vFwd != 0 || vRad != 0);
+	}
+
+	@Override
+	public void updateSensor(ObstacleList obspoint_positions, PositionList<ItemPosition> sensepoint_positions) {
+		
+		for(ItemPosition other : sensepoint_positions.getList()) {
+			if(distanceTo(other)<600){
+				if(!obspoint_positions.badPath(this, other)){
+					circleSensor = true;
+					return;
+				}
+			}
+		}
+		return;
+	}
+
+	@Override
+	public void initialize() {
+		rand = new Random();
+
 	}
 	
 }

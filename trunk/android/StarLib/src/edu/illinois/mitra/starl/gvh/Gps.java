@@ -25,6 +25,7 @@ public class Gps {
 	private GpsReceiver mGpsReceiver;
 	protected PositionList<Model_iRobot> robot_positions;
 	protected PositionList<ItemPosition> waypoint_positions;
+	protected PositionList<ItemPosition> sensepoint_positions;
 	//this is the environment that is used for calculating collisions
 	protected ObstacleList obs_positions;
 	
@@ -37,6 +38,7 @@ public class Gps {
 		this.mGpsReceiver = mGpsReceiver;
 		this.robot_positions = mGpsReceiver.getRobots();
 		this.waypoint_positions = mGpsReceiver.getWaypoints();
+		this.sensepoint_positions = mGpsReceiver.getSensepoints();
 		this.obs_positions = mGpsReceiver.getObspoints();
 		this.viewOfWorlds = mGpsReceiver.getViews();
 		this.gvh = gvh;
@@ -75,6 +77,10 @@ public class Gps {
 
 	public ObstacleList getObspointPositions() {
 		return obs_positions;
+	}
+	
+	public PositionList<ItemPosition> getSensePositions() {
+		return sensepoint_positions;
 	}
 	
 	public Vector<ObstacleList> getViews(){

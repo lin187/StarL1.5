@@ -42,7 +42,11 @@ public class Obstacles {
 	
 	//method for adding unknown obstacles
 	public Obstacles(int x, int y){
-		new Obstacles(x, y, 0);
+		obstacle = new Vector<Point3d>(4, 3);
+		add(x, y, 0) ;
+		grided = false;
+		timeFrame = -1;
+		height = -1;
 	}
 	
 	public Obstacles(int x, int y, int z){
@@ -227,6 +231,7 @@ public class Obstacles {
 		if(grided){
 			return;
 		}
+		//System.out.println(obstacle);
 		switch(obstacle.size()){
 			case 1 : 
 				Point3d leftBottom1 = new Point3d(obstacle.firstElement().x - ((obstacle.firstElement().x)% a), obstacle.firstElement().y - ((obstacle.firstElement().y)% a));
