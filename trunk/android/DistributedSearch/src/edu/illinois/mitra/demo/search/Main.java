@@ -14,9 +14,9 @@ public class Main {
 		*/
 		SimSettings.Builder settings = new SimSettings.Builder();
 		
-		settings.N_BOTS(5);
-		settings.N_GBOTS(5);
-		settings.TIC_TIME_RATE(5);
+		settings.N_BOTS(2);
+		settings.N_GBOTS(2);
+		settings.TIC_TIME_RATE(1);
 		settings.WAYPOINT_FILE("dest.wpt");
 		settings.SENSEPOINT_FILE("senseObjects.wpt");
 		settings.INITIAL_POSITIONS_FILE("start.wpt");

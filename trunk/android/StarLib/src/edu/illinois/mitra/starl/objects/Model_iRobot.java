@@ -56,7 +56,7 @@ public class Model_iRobot extends ItemPosition implements TrackedRobot{
 	 * 
 	 * @return true if one robot is facing another robot/point
 	 */
-	public <T extends ItemPosition> boolean isFacing(T other) { 
+	public boolean isFacing(Point3d other) { 
 		if(other == null) {
 			return false;
 		}
@@ -182,19 +182,35 @@ public class Model_iRobot extends ItemPosition implements TrackedRobot{
 
 	@Override
 	public void collision(Point3d collision_point) {
-		if(angleTo(collision_point)%90>(-20)){
-			rightbump = true;
+		// No collision point, set both sensor to false
+		if(collision_point == null){
+			rightbump = false;
+			leftbump = false;
+			return;
 		}
-		if(angleTo(collision_point)%90<20){
-			leftbump = true;
+		if(isFacing(collision_point)){
+			if(angleTo(collision_point)%90>(-20)){
+				rightbump = true;
+			}
+			if(angleTo(collision_point)%90<20){
+				leftbump = true;
+			}
 		}
+		else{
+			rightbump = false;
+			leftbump = false;
+		}
+		
 		//TODO update local map
 	}
 
 	@Override
-	public void updatePos(boolean followPredict, double timeSinceUpdate) {
-		// TODO Auto-generated method stub
-		
+	public void updatePos(boolean followPredict) {
+		if(followPredict){
+			angle = angle_p;
+			x = x_p;
+			y = y_p;
+		}
 	}
 
 	@Override

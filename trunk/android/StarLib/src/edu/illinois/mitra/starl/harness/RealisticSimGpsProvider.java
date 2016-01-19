@@ -4,12 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Random;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
 import edu.illinois.mitra.starl.interfaces.TrackedRobot;
-import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.Model_iRobot;
 import edu.illinois.mitra.starl.objects.ObstacleList;
@@ -182,6 +180,7 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 	}
 
 	private class TrackedModel<T extends ItemPosition & TrackedRobot>{
+		//private boolean stopMoving = false;
 		private T cur = null;
 		private long timeLastUpdate = 0;
 		
@@ -195,7 +194,7 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 			
 			Point3d p_point = cur.predict(noises, timeSinceUpdate);
 			boolean collided = checkCollision(p_point);
-			cur.updatePos(!collided, timeSinceUpdate);
+			cur.updatePos(!collided);
 			
 			cur.updateSensor(obspoint_positions, sensepoint_positions);
 
@@ -203,16 +202,19 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 		}
 		
 		public boolean checkCollision(Point3d bot) {
+			//double min_distance = Double.MAX_VALUE;
 			boolean toReturn = false;
 			for(Model_iRobot current : robot_positions.getList()) {
 				if(!current.name.equals(cur.name)) {
 					if(cur instanceof Model_iRobot){
 						if(bot.distanceTo(current) <= (((Model_iRobot) cur).radius + current.radius)) {
 							//update sensors for both robots
-							current.collision(bot);
-							cur.collision(bot);
+							current.collision(cur);
+							cur.collision(current);
 							toReturn = true;
 						}
+						//min_distance = Math.min(bot.distanceTo(current) - current.radius, min_distance);
+
 					}
 				}
 			}
@@ -238,14 +240,27 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 					
 					//need to modify some conditions of bump sensors, we have left and right bump sensor for now
 					if(cur instanceof Model_iRobot){
-						if((distance < ((Model_iRobot) cur).radius) ){
+						if((distance < (((Model_iRobot) cur).radius))){
 							//update the bump sensor 
 							cur.collision(wall);
 							toReturn = true;
 						}
+						/*
+						min_distance = Math.min(distance, min_distance);
+
+						if(min_distance < 0.95* (((Model_iRobot) cur).radius)){
+							stopMoving = true;
+							System.out.println("stopped moving");
+						}
+						else{
+							stopMoving = false;
+						}
+						*/
 					}
-					
 				}
+			}
+			if(!toReturn){
+				cur.collision(null);
 			}
 			return toReturn;
 		}
