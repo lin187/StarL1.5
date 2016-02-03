@@ -1,6 +1,7 @@
 package edu.illinois.mitra.starl.functions;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import edu.illinois.mitra.starl.comms.MessageContents;
@@ -65,6 +66,14 @@ public class SingleHopMutualExclusion implements MutualExclusion, MessageListene
 		gvh.comms.addMsgListener(this, Common.MSG_MUTEX_TOKEN_OWNER_BCAST, Common.MSG_MUTEX_TOKEN, Common.MSG_MUTEX_TOKEN_REQUEST);
 	}
 
+	/**
+	 *  just a place holder, do nothing
+	 *  TODO: let the group be the group interested in using the Mutex algorithm
+	 */
+	public void setGroup(List<String> party){
+		
+	}
+	
 	public synchronized void requestEntry(int id) {
 		gvh.trace.traceEvent(TAG, "Requesting entry to section", id);
 		gvh.log.d(TAG, "Requesting entry to section " + id);

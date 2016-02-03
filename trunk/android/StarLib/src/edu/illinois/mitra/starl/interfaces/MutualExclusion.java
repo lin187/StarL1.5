@@ -1,8 +1,11 @@
 package edu.illinois.mitra.starl.interfaces;
 
+import java.util.List;
 import java.util.Set;
 
 public interface MutualExclusion extends Cancellable {
+	
+	public abstract void setGroup(List<String> party);
 	
 	public abstract void requestEntry(int id);
 

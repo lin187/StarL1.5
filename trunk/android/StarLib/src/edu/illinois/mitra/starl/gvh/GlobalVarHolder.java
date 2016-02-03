@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import edu.illinois.mitra.starl.interfaces.DSM;
 import edu.illinois.mitra.starl.interfaces.RobotEventListener;
 import edu.illinois.mitra.starl.interfaces.RobotEventListener.Event;
 
@@ -33,6 +34,7 @@ public abstract class GlobalVarHolder {
 	
 	// Events
 	private Set<RobotEventListener> eventListeners = new HashSet<RobotEventListener>();
+
 	
 	/**
 	 * Register a RobotEventListener to receive all future system events
