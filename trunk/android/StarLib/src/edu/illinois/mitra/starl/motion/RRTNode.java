@@ -18,7 +18,7 @@ import edu.wlu.cs.levy.CG.KeySizeException;
 public class RRTNode {
 	public Point position = new Point();
 	public RRTNode parent;
-	public static RRTNode stopNode;
+	public RRTNode stopNode;
 	public KDTree<RRTNode> kd;
 //	public LinkedList<ItemPosition> pathList = new LinkedList<ItemPosition>();
 
@@ -63,7 +63,7 @@ public class RRTNode {
 	
     public Stack<ItemPosition> findRoute(ItemPosition destination, int K, ObstacleList obsList, int xRange, int yRange, ItemPosition RobotPos, int Radius) {
     	//initialize a kd tree;
-    	obsList.remove(RobotPos, 0.9*RobotPos.radius);
+    	obsList.remove(RobotPos, 0.9*Radius);
     	kd = new KDTree<RRTNode>(2);
     	double [] root = {position.x,position.y};
     	final RRTNode rootNode = new RRTNode(position.x,position.y);
@@ -149,7 +149,7 @@ public class RRTNode {
       	RRTNode curNode = destNode;  	
 		Stack<ItemPosition> pathStack= new Stack<ItemPosition>();
 		while(curNode != null){
-			ItemPosition ToGo= new ItemPosition("midpoint", curNode.position.x, curNode.position.y, 0);
+			ItemPosition ToGo= new ItemPosition("midpoint", curNode.position.x, curNode.position.y);
 			pathStack.push(ToGo);
 			curNode = curNode.parent;
 		}

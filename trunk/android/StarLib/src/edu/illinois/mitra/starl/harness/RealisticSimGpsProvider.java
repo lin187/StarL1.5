@@ -1,18 +1,18 @@
 package edu.illinois.mitra.starl.harness;
 
-import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.Random;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
-import edu.illinois.mitra.starl.objects.Common;
+import edu.illinois.mitra.starl.interfaces.TrackedRobot;
 import edu.illinois.mitra.starl.objects.ItemPosition;
+import edu.illinois.mitra.starl.objects.Model_iRobot;
 import edu.illinois.mitra.starl.objects.ObstacleList;
 import edu.illinois.mitra.starl.objects.Obstacles;
+import edu.illinois.mitra.starl.objects.Point3d;
 import edu.illinois.mitra.starl.objects.PositionList;
 
 /**
@@ -25,38 +25,34 @@ import edu.illinois.mitra.starl.objects.PositionList;
 
 public class RealisticSimGpsProvider extends Observable implements SimGpsProvider {	
 	private Map<String, SimGpsReceiver> receivers;
-	private Map<String, TrackedRobot> robots;
+	private Map<String, TrackedModel<Model_iRobot>> robots;
 
 	// Waypoint positions and robot positions that are shared among all robots
-	private PositionList robot_positions;
-	private PositionList waypoint_positions;
-	private PositionList sensepoint_positions;
+	private PositionList<Model_iRobot> robot_positions;
+	private PositionList<ItemPosition> waypoint_positions;
+	private PositionList<ItemPosition> sensepoint_positions;
 	private ObstacleList obspoint_positions;
 	private Vector<ObstacleList> viewsOfWorld;
 	
 	private long period = 100;
-	private double angleNoise = 0;
-	private double posNoise = 0;
-	private int robotRadius = 0;
+	private double[] noises;
 
-	private Random rand;
-	
 	private SimulationEngine se;
 		
 	public RealisticSimGpsProvider(SimulationEngine se, long period, double angleNoise, double posNoise, int robotRadius) {
 		this.se = se;
 		this.period = period;
-		this.angleNoise = angleNoise;
-		this.posNoise = posNoise;
-		this.rand = new Random();
-		this.robotRadius = robotRadius;
+		noises = new double[3];
+		noises[0] = posNoise;
+		noises[1] = posNoise;
+		noises[2] = angleNoise;
 		
 		receivers = new HashMap<String, SimGpsReceiver>();
-		robots = new ConcurrentHashMap<String, TrackedRobot>();
+		robots = new ConcurrentHashMap<String, TrackedModel<Model_iRobot>>();
 		
-		robot_positions = new PositionList();
-		waypoint_positions = new PositionList();
-		sensepoint_positions = new PositionList();
+		waypoint_positions = new PositionList<ItemPosition>();
+		sensepoint_positions = new PositionList<ItemPosition>();
+		robot_positions = new PositionList<Model_iRobot>();
 	}
 	
 	@Override
@@ -65,11 +61,11 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 	}
 	
 	@Override
-	public synchronized void addRobot(ItemPosition bot) {
+	public synchronized void addRobot(Model_iRobot bot) {
 		synchronized(robots) {
-			robots.put(bot.name, new TrackedRobot(bot));
+			robots.put(bot.name, new TrackedModel<Model_iRobot>(bot));
 		}
-		robot_positions.update(bot, se.getTime());
+		robot_positions.update(bot);
 	}
 	
 	@Override
@@ -80,26 +76,27 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 
 	@Override
 	public void setVelocity(String name, int fwd, int rad) {
-		robots.get(name).setVel(fwd, rad);
+		((Model_iRobot) robots.get(name).cur).vFwd = fwd;
+		((Model_iRobot) robots.get(name).cur).vRad = rad;
 	}
 	
 	@Override
 	public synchronized void halt(String name) {
-		robots.get(name).setVel(0, 0);
+		setVelocity(name, 0, 0);
 	}
 	
 	@Override
-	public PositionList getRobotPositions() {
+	public PositionList<Model_iRobot> getRobotPositions() {
 		return robot_positions;
 	}
 
 	@Override
-	public void setWaypoints(PositionList loadedWaypoints) {
+	public void setWaypoints(PositionList<ItemPosition> loadedWaypoints) {
 		if(loadedWaypoints != null) waypoint_positions = loadedWaypoints;
 	}
 	
 	@Override
-	public void setSensepoints(PositionList loadedSensepoints) {
+	public void setSensepoints(PositionList<ItemPosition> loadedSensepoints) {
 		if(loadedSensepoints != null) sensepoint_positions = loadedSensepoints;
 	}
 	
@@ -129,8 +126,13 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 	}
 	
 	@Override
-	public PositionList getWaypointPositions() {
+	public PositionList<ItemPosition> getWaypointPositions() {
 		return waypoint_positions;
+	}
+	
+	@Override
+	public PositionList<ItemPosition> getSensePositions() {
+		return sensepoint_positions;
 	}
 	
 	@Override
@@ -149,11 +151,11 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 				
 				while(true) {
 					synchronized(robots) {
-						for(TrackedRobot r : robots.values()) {
-							if(r.inMotion()) {
+						for(TrackedModel<Model_iRobot> r : robots.values()) {
+							//if(r.cur.inMotion()) {
 								r.updatePos();
-								receivers.get(r.getName()).receivePosition(r.inMotion());	
-							}
+								receivers.get(r.getName()).receivePosition((r.cur.inMotion()));	
+							//}
 						}	
 					}
 					setChanged();
@@ -170,61 +172,114 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 		posupdate.start();
 	}	
 	
+	
 	@Override
 	public void notifyObservers(Object data) {
 		// Catch NullPointerExceptions by ignorning null data
 		if(data != null) super.notifyObservers(data);
 	}
 
-	private class TrackedRobot {
-		private ItemPosition cur = null;
-		private long timeLastUpdate = 0;		
-		private double vFwd = 0;
-		private double vRad = 0;
-		private double aNoise = (rand.nextDouble()*2*angleNoise) - angleNoise;
-		private double xNoise = (rand.nextDouble()*2*posNoise) - posNoise;
-		private double yNoise = (rand.nextDouble()*2*posNoise) - posNoise;
-		private double angle = 0;
+	private class TrackedModel<T extends ItemPosition & TrackedRobot>{
+		//private boolean stopMoving = false;
+		private T cur = null;
+		private long timeLastUpdate = 0;
 		
-		public TrackedRobot(ItemPosition pos) {
+		public TrackedModel(T pos) {
 			this.cur = pos;
-			angle = cur.angle;
 			timeLastUpdate = se.getTime();
+			pos.initialize();
 		}
 		public void updatePos() {
 			double timeSinceUpdate = (se.getTime() - timeLastUpdate)/1000.0;
-			int dX = 0, dY = 0;
-			double dA = 0;
 			
-			// Arcing motion
-			dA = aNoise + (vRad*timeSinceUpdate);
-			dX = (int) (xNoise + Math.cos(Math.toRadians(cur.angle))*(vFwd*timeSinceUpdate));
-			dY = (int) (yNoise + Math.sin(Math.toRadians(cur.angle))*(vFwd*timeSinceUpdate));
+			Point3d p_point = cur.predict(noises, timeSinceUpdate);
+			boolean collided = checkCollision(p_point);
+			cur.updatePos(!collided);
 			
-			cur.velocity = (int) (Math.sqrt(Math.pow(dX,2) + Math.pow(dY,2))/timeSinceUpdate);
-			cur.x += dX;
-			cur.y += dY;
-			angle = angle + dA;
-			cur.angle = Common.angleWrap((int)(Math.round(angle) + aNoise));
-			checkCollision(cur);
-			updateSensors(cur);
+			cur.updateSensor(obspoint_positions, sensepoint_positions);
+
 			timeLastUpdate = se.getTime();
 		}
+		
+		public boolean checkCollision(Point3d bot) {
+			//double min_distance = Double.MAX_VALUE;
+			boolean toReturn = false;
+			for(Model_iRobot current : robot_positions.getList()) {
+				if(!current.name.equals(cur.name)) {
+					if(cur instanceof Model_iRobot){
+						if(bot.distanceTo(current) <= (((Model_iRobot) cur).radius + current.radius)) {
+							//update sensors for both robots
+							current.collision(cur);
+							cur.collision(current);
+							toReturn = true;
+						}
+						//min_distance = Math.min(bot.distanceTo(current) - current.radius, min_distance);
+
+					}
+				}
+			}
+			ObstacleList list = obspoint_positions;
+			for(int i = 0; i < list.ObList.size(); i++)
+			{
+				Obstacles currobs = list.ObList.get(i);
+				Point3d nextpoint = currobs.obstacle.firstElement();
+				Point3d curpoint = currobs.obstacle.firstElement();
+				ItemPosition wall = new ItemPosition("wall",0,0,0);
+				
+				for(int j = 0; j < currobs.obstacle.size() ; j++){
+					curpoint = currobs.obstacle.get(j);
+					if (j == currobs.obstacle.size() -1){
+						nextpoint = currobs.obstacle.firstElement();
+					}
+					else{
+						nextpoint = currobs.obstacle.get(j+1);
+					}
+					Point3d closeP = currobs.getClosestPointOnSegment(curpoint.x, curpoint.y, nextpoint.x, nextpoint.y, bot.x, bot.y);
+					wall.setPos(closeP.x, closeP.y, 0);
+					double distance = Math.sqrt(Math.pow(closeP.x - bot.x, 2) + Math.pow(closeP.y - bot.y, 2)) ;
+					
+					//need to modify some conditions of bump sensors, we have left and right bump sensor for now
+					if(cur instanceof Model_iRobot){
+						if((distance < (((Model_iRobot) cur).radius))){
+							//update the bump sensor 
+							cur.collision(wall);
+							toReturn = true;
+						}
+						/*
+						min_distance = Math.min(distance, min_distance);
+
+						if(min_distance < 0.95* (((Model_iRobot) cur).radius)){
+							stopMoving = true;
+							System.out.println("stopped moving");
+						}
+						else{
+							stopMoving = false;
+						}
+						*/
+					}
+				}
+			}
+			if(!toReturn){
+				cur.collision(null);
+			}
+			return toReturn;
+		}
+		/*
+		@Deprecated
 		public void setVel(int fwd, int rad) {
 			if(inMotion()) {
 				updatePos();
 			} else {
 				timeLastUpdate = se.getTime();
 			}
-			vFwd = fwd;
-			vRad = rad;
+			cur.vFwd = fwd;
+			cur.vRad = rad;
 		}
-		public boolean inMotion() {
-			return (vFwd != 0 || vRad != 0);
-		}
+		 */
 		public String getName() {
 			return cur.name;
 		}
+		
 	}
 	
 	@Override
@@ -232,71 +287,4 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 		super.addObserver(o);
 	}
 	
-	public void checkCollision(ItemPosition bot) {
-		bot.leftbump= false;
-		bot.rightbump= false;
-		for(ItemPosition current : robot_positions.getList()) {
-			if(!current.name.equals(bot.name)) {
-				if(bot.isFacing(current) && bot.distanceTo(current) <= (bot.radius + current.radius)) {
-					if(bot.velocity >= 0 || current.velocity >= 0){
-						if(bot.angleTo(current)%90>(-20)){
-							bot.rightbump = true;
-						}
-						if(bot.angleTo(current)%90<20){
-							bot.leftbump = true;
-						}
-					}
-
-				}
-			}
-		}
-		ObstacleList list = obspoint_positions;
-		for(int i = 0; i < list.ObList.size(); i++)
-		{
-			Obstacles currobs = list.ObList.get(i);
-			Point nextpoint = currobs.obstacle.firstElement();
-			Point curpoint = currobs.obstacle.firstElement();
-			ItemPosition wall = new ItemPosition("wall",0,0,0);
-			
-			for(int j = 0; j < currobs.obstacle.size() ; j++){
-				curpoint = currobs.obstacle.get(j);
-				if (j == currobs.obstacle.size() -1){
-					nextpoint = currobs.obstacle.firstElement();
-				}
-				else{
-					nextpoint = currobs.obstacle.get(j+1);
-				}
-				Point closeP = currobs.getClosestPointOnSegment(curpoint.x, curpoint.y, nextpoint.x, nextpoint.y, bot.x, bot.y);
-				wall.setPos(closeP.x, closeP.y, 0);
-				double distance = Math.sqrt(Math.pow(closeP.x - bot.x, 2) + Math.pow(closeP.y - bot.y, 2)) ;
-				
-				//need to modify some conditions of bump sensors, we have left and right bump sensor for now
-				if(((distance < bot.radius) && bot.isFacing(wall))){
-					
-					if(bot.velocity > 0){
-						if(bot.angleTo(wall)%90>(-20)){
-						//	System.out.println(bot.angleTo(wall)%90);
-							bot.rightbump = true;
-						}
-						if(bot.angleTo(wall)%90<20){
-							bot.leftbump = true;
-						}
-					}
-				}
-			}
-		}
-
-	}
-	
-	public void updateSensors(ItemPosition bot){
-		for(ItemPosition other : sensepoint_positions.getList()) {
-			if(bot.distanceTo(other)<600){
-				if(!obspoint_positions.badPath(bot, other)){
-					bot.circleSensor = true;
-					return;
-				}
-			}
-		}
-	}
-
 }

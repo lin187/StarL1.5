@@ -11,46 +11,33 @@ import java.util.Map.Entry;
  * @author Adam Zimmerman, Yixiao Lin
  * @version 1.1
  */
-public class PositionList implements Iterable<ItemPosition> {
-	private static final String TAG = "positionList";
-	private static final String ERR = "Critical Error";
+public class PositionList<T extends ItemPosition> implements Iterable<T> {
+//	private static final String TAG = "positionList";
+//	private static final String ERR = "Critical Error";
 	
-	private TreeMap<String,ItemPosition> positions;
+	private TreeMap<String,T> positions;
 	
 	/**
 	 * Create an empty PositionList
 	 */
 	public PositionList() {
-		positions = new TreeMap<String,ItemPosition>();
+		positions = new TreeMap<String,T>();
 	}
 	
-	/**
-	 * @param received The ItemPosition to add to the list. If a position with the same name is present, it
-	 * will be overwritten. 
-	 */
-	public void update(ItemPosition received, long time) {
-		if(positions.containsKey(received.name)) {
-			try {
-				int velocity = (int) (received.distanceTo(positions.get(received.name))/(time - positions.get(received.name).receivedTime));
-				received.velocity =velocity;
-			} catch (ArithmeticException e) {
-				
-			}
-		}
+	public void update(T received, long time) {
 		received.receivedTime = time;
 		positions.put(received.name, received);
 	}
 	
-	public void update(ItemPosition received) {
+	public void update(T received) {
 		update(received, 0);
 	}
-	
 	
 	/**
 	 * @param name The name to match
 	 * @return An ItemPosition with a matching name, null if one doesn't exist.
 	 */
-	public ItemPosition getPosition(String name) {
+	public T getPosition(String name) {
 		if(positions.containsKey(name)) {
 			return positions.get(name);
 		}
@@ -61,8 +48,8 @@ public class PositionList implements Iterable<ItemPosition> {
 	 * @param exp The regex string to match against
 	 * @return The first ItemPosition in the PositionList whose name matches the regular expression
 	 */
-	public ItemPosition getPositionRegex(String exp) {
-		for(Entry<String, ItemPosition> entry : positions.entrySet()) {
+	public T getPositionRegex(String exp) {
+		for(Entry<String, T> entry : positions.entrySet()) {
 			if(entry.getKey().matches(exp)) {
 				return entry.getValue();
 			}
@@ -77,7 +64,7 @@ public class PositionList implements Iterable<ItemPosition> {
 	@Override
 	public String toString() {
 		String toRet = "";
-		for(ItemPosition i : positions.values()) {
+		for(T i : positions.values()) {
 			toRet = toRet + i.toString() + "\n";
 		}
 		return toRet;
@@ -94,12 +81,12 @@ public class PositionList implements Iterable<ItemPosition> {
 	/**
 	 * @return An ArrayList representation of all contained ItemPositions
 	 */
-	public ArrayList<ItemPosition> getList() {
-		return new ArrayList<ItemPosition>(positions.values());
+	public ArrayList<T> getList() {
+		return new ArrayList<T>(positions.values());
 	}
 
 	@Override
-	public Iterator<ItemPosition> iterator() {
+	public Iterator<T> iterator() {
 		return positions.values().iterator();
 	}
 }

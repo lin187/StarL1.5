@@ -4,7 +4,9 @@ import java.util.Vector;
 
 import edu.illinois.mitra.starl.interfaces.GpsReceiver;
 import edu.illinois.mitra.starl.objects.ItemPosition;
+import edu.illinois.mitra.starl.objects.Model_iRobot;
 import edu.illinois.mitra.starl.objects.ObstacleList;
+import edu.illinois.mitra.starl.objects.Point3d;
 import edu.illinois.mitra.starl.objects.PositionList;
 
 /**
@@ -21,8 +23,9 @@ public class Gps {
 	
 	private GlobalVarHolder gvh;
 	private GpsReceiver mGpsReceiver;
-	protected PositionList robot_positions;
-	protected PositionList waypoint_positions;
+	protected PositionList<Model_iRobot> robot_positions;
+	protected PositionList<ItemPosition> waypoint_positions;
+	protected PositionList<ItemPosition> sensepoint_positions;
 	//this is the environment that is used for calculating collisions
 	protected ObstacleList obs_positions;
 	
@@ -35,6 +38,7 @@ public class Gps {
 		this.mGpsReceiver = mGpsReceiver;
 		this.robot_positions = mGpsReceiver.getRobots();
 		this.waypoint_positions = mGpsReceiver.getWaypoints();
+		this.sensepoint_positions = mGpsReceiver.getSensepoints();
 		this.obs_positions = mGpsReceiver.getObspoints();
 		this.viewOfWorlds = mGpsReceiver.getViews();
 		this.gvh = gvh;
@@ -51,19 +55,19 @@ public class Gps {
 		mGpsReceiver.cancel();
 	}
 
-	public PositionList getPositions() {
+	public PositionList<Model_iRobot> getPositions() {
 		return robot_positions;
 	}
 	
-	public ItemPosition getPosition(String robot_name) {
+	public Model_iRobot getPosition(String robot_name) {
 		return robot_positions.getPosition(robot_name);
 	}
 	
-	public ItemPosition getMyPosition() {
+	public Model_iRobot getMyPosition() {
 		return robot_positions.getPosition(name);
 	}
 
-	public PositionList getWaypointPositions() {
+	public PositionList<ItemPosition> getWaypointPositions() {
 		return waypoint_positions;
 	}
 	
@@ -73,6 +77,10 @@ public class Gps {
 
 	public ObstacleList getObspointPositions() {
 		return obs_positions;
+	}
+	
+	public PositionList<ItemPosition> getSensePositions() {
+		return sensepoint_positions;
 	}
 	
 	public Vector<ObstacleList> getViews(){

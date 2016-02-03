@@ -17,11 +17,11 @@ public class WptParser {
 		PositionList wpt = gvh.gps.getWaypointPositions();
 		ItemPosition pos;
 		while((pos = wpt.getPositionRegex(idx + "-A_[0-9]+")) != null) {
-			ImagePoint a = new ImagePoint(pos.getX(), pos.getY(), pos.getAngle(), getSizeFromName(pos.getName()));
+			ImagePoint a = new ImagePoint(pos.getX(), pos.getY(), pos.getIndex(), getSizeFromName(pos.getName()));
 			pos = wpt.getPositionRegex(idx +"-B_[0-9]+");
 			if(pos == null)
 				return retval;
-			ImagePoint b = new ImagePoint(pos.getX(), pos.getY(), pos.getAngle(), getSizeFromName(pos.getName()));
+			ImagePoint b = new ImagePoint(pos.getX(), pos.getY(), pos.getIndex(), getSizeFromName(pos.getName()));
 			retval.add(new ImageEdge(a,b));
 			idx ++;
 		}

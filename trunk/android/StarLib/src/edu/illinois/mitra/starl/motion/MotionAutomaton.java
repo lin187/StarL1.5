@@ -47,7 +47,7 @@ public class MotionAutomaton extends RobotMotion {
 
 	// Motion tracking
 	protected ItemPosition destination;
-	private ItemPosition mypos;
+	private Model_iRobot mypos;
 	private ItemPosition blocker;
 	private ObstacleList obsList;
 	
@@ -125,7 +125,8 @@ public class MotionAutomaton extends RobotMotion {
 
 	public void goTo(ItemPosition dest, ObstacleList obsList) {
 		if((inMotion && !this.destination.equals(dest)) || !inMotion) {
-			this.destination = dest;
+			this.destination = new ItemPosition(dest.name,dest.x,dest.y,0);
+			//this.destination = dest;
 			this.mode = OPMODE.GO_TO;
 			this.obsList = obsList;
 			startMotion();
@@ -136,6 +137,7 @@ public class MotionAutomaton extends RobotMotion {
 		Scanner in = new Scanner(gvh.gps.getMyPosition().name).useDelimiter("[^0-9]+");
 		int index = in.nextInt();
 		ObstacleList obsList = gvh.gps.getViews().elementAt(index);
+		// work in progress here
 		goTo(dest, obsList);
 	}
 
@@ -584,7 +586,7 @@ public class MotionAutomaton extends RobotMotion {
 		int y0 = mypos.y;
 		int x1 = destination.x;
 		int y1 = destination.y;
-		int theta = mypos.angle;
+		int theta = (int)mypos.angle;
 		double alpha = -180 + Math.toDegrees(Math.atan2((y1 - y0), (x1 - x0)));
 		double rad = -(Math.sqrt(Math.pow(x1 - x0, 2) + Math.pow(y1 - y0, 2)) / (2 * Math.sin(Math.toRadians(alpha - theta))));
 		return (int) rad;
