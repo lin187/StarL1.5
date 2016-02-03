@@ -26,12 +26,12 @@ public class Main {
 		settings.DRAW_TRACE_LENGTH(5000);
 		settings.DRAW_WAYPOINTS(false);
 		settings.DRAW_WAYPOINT_NAMES(false);
-		settings.DRAWER(new DistributedSearchDrawer());
+		settings.DRAWER(new SearchDrawer());
 //		settings.MSG_LOSSES_PER_HUNDRED(20);
 //		settings.GPS_POSITION_NOISE(-5);
 //		settings.GPS_ANGLE_NOISE(1);
 //		settings.BOT_RADIUS(400);
-		Simulation sim = new Simulation(DistributedSearchApp.class, settings.build());
+		Simulation sim = new Simulation(SearchApp.class, settings.build());
 		sim.start();
 	}
 

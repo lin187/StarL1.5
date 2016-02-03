@@ -10,14 +10,14 @@ import java.util.Iterator;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.objects.*;
 import edu.illinois.mitra.starlSim.draw.Drawer;
-public class TrafficSignDrawer extends Drawer {
+public class TrafficDrawer extends Drawer {
 
 	private Stroke stroke = new BasicStroke(8);
 	private Color selectColor = new Color(0,0,255,100);
 	
 	@Override
 	public void draw(LogicThread lt, Graphics2D g) {
-		TrafficSignApp app = (TrafficSignApp) lt;
+		TrafficApp app = (TrafficApp) lt;
 		Color[] c = new Color[12] ;
 		c[0] = Color.BLACK;
 		c[1] = Color.BLUE;

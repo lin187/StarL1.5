@@ -1,4 +1,4 @@
-package edu.illinois.mitra.demo.numadd;
+package edu.illinois.mitra.demo.addnum;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -16,7 +16,7 @@ public class AddNumDrawer extends Drawer {
 	
 	@Override
 	public void draw(LogicThread lt, Graphics2D g) {
-		AddNum app = (AddNum) lt;
+		AddNumApp app = (AddNumApp) lt;
 
 		g.setColor(Color.RED);
 		g.setColor(selectColor);

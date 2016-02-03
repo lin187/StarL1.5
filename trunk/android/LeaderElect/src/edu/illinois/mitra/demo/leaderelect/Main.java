@@ -8,14 +8,14 @@ public class Main {
 	public static void main(String[] args) {
 		SimSettings.Builder settings = new SimSettings.Builder();
 		settings.N_BOTS(5);
-		settings.TIC_TIME_RATE(1);
+		settings.TIC_TIME_RATE(2);
         settings.WAYPOINT_FILE("four.wpt");
 		//settings.WAYPOINT_FILE(System.getProperty("user.dir")+"\\trunk\\android\\RaceApp\\waypoints\\four1.wpt");
 		settings.DRAW_WAYPOINTS(false);
 		settings.DRAW_WAYPOINT_NAMES(false);
 		settings.DRAWER(new LeaderElectDrawer());
 		
-		Simulation sim = new Simulation(LeaderElect.class, settings.build());
+		Simulation sim = new Simulation(LeaderElectApp.class, settings.build());
 		sim.start();
 	}
 

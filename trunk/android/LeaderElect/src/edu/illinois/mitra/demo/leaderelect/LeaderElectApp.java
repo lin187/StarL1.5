@@ -17,7 +17,7 @@ import edu.illinois.mitra.starl.motion.MotionParameters;
 import edu.illinois.mitra.starl.motion.MotionParameters.COLAVOID_MODE_TYPE;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 
-public class LeaderElect extends LogicThread {
+public class LeaderElectApp extends LogicThread {
 	private MutualExclusion mutex;
 	private DSM dsm;
 	int robotIndex;
@@ -31,7 +31,7 @@ public class LeaderElect extends LogicThread {
 	private boolean elected = false;
 	private boolean voted = false;
 	private boolean added = false;
-public LeaderElect(GlobalVarHolder gvh){
+public LeaderElectApp(GlobalVarHolder gvh){
 		super(gvh);
 		robotIndex = Integer.parseInt(name.substring(3,name.length()));
 		mutex = new GroupSetMutex(gvh, 0);

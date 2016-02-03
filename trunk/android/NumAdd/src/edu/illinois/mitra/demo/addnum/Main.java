@@ -1,4 +1,4 @@
-package edu.illinois.mitra.demo.numadd;
+package edu.illinois.mitra.demo.addnum;
 
 import edu.illinois.mitra.starlSim.main.SimSettings;
 import edu.illinois.mitra.starlSim.main.Simulation;
@@ -15,7 +15,7 @@ public class Main {
 		settings.DRAW_WAYPOINT_NAMES(false);
 		settings.DRAWER(new AddNumDrawer());
 		//settings.MSG_MEAN_DELAY(100);
-		Simulation sim = new Simulation(AddNum.class, settings.build());
+		Simulation sim = new Simulation(AddNumApp.class, settings.build());
 		sim.start();
 	}
 
