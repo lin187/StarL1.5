@@ -114,7 +114,7 @@ public class ItemPosition extends Point3d implements Comparable<ItemPosition>{
 	}
 	
 	public String toMessage() {
-		return x + "," + y + "," + z + "," + name;
+		return x + "," + y + "," + z + "," + name +","+index;
 	}
 	
 
