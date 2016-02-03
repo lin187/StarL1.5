@@ -7,6 +7,7 @@ import java.util.Random;
 
 import edu.illinois.mitra.starl.comms.RobotMessage;
 import edu.illinois.mitra.starl.functions.DSMMultipleAttr;
+import edu.illinois.mitra.starl.functions.GroupSetMutex;
 import edu.illinois.mitra.starl.functions.SingleHopMutualExclusion;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.DSM;
@@ -33,7 +34,8 @@ public class LeaderElect extends LogicThread {
 public LeaderElect(GlobalVarHolder gvh){
 		super(gvh);
 		robotIndex = Integer.parseInt(name.substring(3,name.length()));
-		mutex = new SingleHopMutualExclusion(1, gvh, "bot0");
+		mutex = new GroupSetMutex(gvh, 0);
+		//mutex = new SingleHopMutualExclusion(1, gvh, "bot0");
 		dsm = new DSMMultipleAttr(gvh);
 }
 		@Override

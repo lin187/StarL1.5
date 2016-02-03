@@ -1,6 +1,7 @@
 package edu.illinois.mitra.starl.functions;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -9,6 +10,7 @@ import edu.illinois.mitra.starl.comms.*;
 import edu.illinois.mitra.starl.gvh.*;
 import edu.illinois.mitra.starl.interfaces.*;
 import edu.illinois.mitra.starl.objects.Common;
+import edu.illinois.mitra.starl.objects.ItemPosition;
 /*
 import edu.illinois.mitra.starl.comms.RobotMessage;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
@@ -37,6 +39,16 @@ public class GroupSetMutex implements MutualExclusion, MessageListener {
 		name = gvh.id.getName();
 		gvh.trace.traceEvent(TAG, "Created", gvh.time());
 		gvh.comms.addMsgListener(this, Common.MSG_GSMUTEX_REQUEST, Common.MSG_GSMUTEX_REPLY);
+		party= new ArrayList<String>();
+		for(ItemPosition cur: gvh.gps.getPositions().getList()){
+			party.add(0, cur.name);
+		}
+		if(party.contains(name)){
+			timeStamp = party.indexOf(name);
+		}
+		else{
+			sections = null;
+		}
 	}
 	
 	@Override
