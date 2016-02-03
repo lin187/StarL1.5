@@ -125,7 +125,8 @@ public class MotionAutomaton extends RobotMotion {
 
 	public void goTo(ItemPosition dest, ObstacleList obsList) {
 		if((inMotion && !this.destination.equals(dest)) || !inMotion) {
-			this.destination = dest;
+			this.destination = new ItemPosition(dest.name,dest.x,dest.y,0);
+			//this.destination = dest;
 			this.mode = OPMODE.GO_TO;
 			this.obsList = obsList;
 			startMotion();

@@ -140,7 +140,7 @@ public class DistributedSearchApp extends LogicThread {
 							currentDestination = (ItemPosition)destinations.peek();
 							RRTNode path = new RRTNode(gvh.gps.getPosition(name).x, gvh.gps.getPosition(name).y);
 							pathStack = path.findRoute(currentDestination, 5000, obEnvironment, 12330, 8500, (gvh.gps.getPosition(name)), (int) (gvh.gps.getPosition(name).radius));
-							kdTree = RRTNode.stopNode;
+							kdTree = path.stopNode;
 							//wait when can not find path
 							if(pathStack == null){
 								stage = Stage.HOLD;	
@@ -170,9 +170,11 @@ public class DistributedSearchApp extends LogicThread {
 								preDestination = pathStack.peek();
 							}
 							ItemPosition goMidPoint = pathStack.pop();
-							System.out.println(goMidPoint);
-							gvh.plat.moat.goTo(new ItemPosition("", 80, 30));
-							//gvh.plat.moat.goTo(goMidPoint);
+							if(robotIndex == 1){
+								System.out.println("going to: "+goMidPoint);
+							}
+							//gvh.plat.moat.goTo(new ItemPosition("", 80, 30));
+							gvh.plat.moat.goTo(goMidPoint);
 						}
 						else{
 							if((gvh.gps.getPosition(name).distanceTo(currentDestination)>param.GOAL_RADIUS)){
@@ -188,8 +190,7 @@ public class DistributedSearchApp extends LogicThread {
 						}
 					}
 					break;
-				case SEARCH:
-					
+				case SEARCH:	
 					if(!gvh.plat.moat.inMotion) {
 						if(searchTemp.distanceTo(gvh.gps.getMyPosition())>100){
 							MessageContents content = new MessageContents(currentDestination.name);
@@ -244,7 +245,6 @@ public class DistributedSearchApp extends LogicThread {
 		MessageContents content = new MessageContents(temp);
 		RobotMessage assign_msg = new RobotMessage(botS, name, ASSIGN_MSG, content);
 		gvh.comms.addOutgoingMessage(assign_msg);
-		System.out.println("Assign "+ content+ " to "+botS);
 	}
 
 	@Override
@@ -273,6 +273,7 @@ public class DistributedSearchApp extends LogicThread {
 	private LinkedList<ItemPosition> robotCoverageAlg(ItemPosition door){
 		//This is the algorithm for finding a path that will cover the room. We will not focus on this algorithm, therefore we pre-enter the points
 		LinkedList<ItemPosition> toReturn = new LinkedList<ItemPosition>();
+		System.out.println(door.name);;
 		switch(door.name){
 			case "A":
 				toReturn.add(new ItemPosition("temp",2800,3000,0));

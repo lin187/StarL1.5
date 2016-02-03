@@ -48,7 +48,7 @@ public class Model_iRobot extends ItemPosition implements TrackedRobot{
 	public Model_iRobot(ItemPosition t_pos) {
 		super(t_pos.name, t_pos.x, t_pos.y, t_pos.z);
 		initial_helper();
-		this.angle = 0;
+		this.angle = t_pos.index;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -59,6 +59,9 @@ public class Model_iRobot extends ItemPosition implements TrackedRobot{
 	public boolean isFacing(Point3d other) { 
 		if(other == null) {
 			return false;
+		}
+		if(other.x == this.x && other.y == this.y){
+			return true;
 		}
     	double angleT = Math.toDegrees(Math.atan2((other.y - this.y) , (other.x - this.x)));
     	if(angleT  == 90){
@@ -124,12 +127,15 @@ public class Model_iRobot extends ItemPosition implements TrackedRobot{
 			angle -= 360;
 		}
 		int retAngle = Common.min_magitude((int)(otherAngle - angle),(int)(angle - otherAngle));
-		
+		retAngle = retAngle%360;
 		if(retAngle > 180) {
 			retAngle = retAngle-360;
 		}
 		if(retAngle <= -180) {
 			retAngle = retAngle+360;
+		}
+		if(retAngle > 180 || retAngle< -180){
+			System.out.println(retAngle);
 		}
 		return  Math.round(retAngle);
 	}

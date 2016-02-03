@@ -50,7 +50,7 @@ public class ItemPosition extends Point3d implements Comparable<ItemPosition>{
 	
 	public ItemPosition(ItemPosition other) {
 		super(other);
-		setname(name);
+		setname(other.name);
 	}
 	
 	/**
@@ -73,7 +73,7 @@ public class ItemPosition extends Point3d implements Comparable<ItemPosition>{
 	
 	@Override 
 	public String toString() {
-		return name + ": " + x + ", " + y + ", " + z + ". index" + index + "\u00B0";
+		return name + ": " + x + ", " + y + ", " + z + ". index " + index;
 	}
 	
 	// Hashing and equals checks are done only against the position's name. Position names are unique!
@@ -118,7 +118,7 @@ public class ItemPosition extends Point3d implements Comparable<ItemPosition>{
 	}
 	
 
-	public ItemPosition fromMessage(String msg) {
+	public static ItemPosition fromMessage(String msg) {
 		String[] parts = msg.split(",");
 		if(parts.length != 5)
 			throw new IllegalArgumentException("Can not parse ItemPosition from " + msg + ".");
@@ -145,6 +145,10 @@ public class ItemPosition extends Point3d implements Comparable<ItemPosition>{
 	
 	public String getName(){
 		return name;
+	}
+	
+	public int getIndex(){
+		return index;
 	}
 	
 }

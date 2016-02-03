@@ -152,10 +152,10 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 				while(true) {
 					synchronized(robots) {
 						for(TrackedModel<Model_iRobot> r : robots.values()) {
-							if(r.cur.inMotion()) {
+							//if(r.cur.inMotion()) {
 								r.updatePos();
 								receivers.get(r.getName()).receivePosition((r.cur.inMotion()));	
-							}
+							//}
 						}	
 					}
 					setChanged();

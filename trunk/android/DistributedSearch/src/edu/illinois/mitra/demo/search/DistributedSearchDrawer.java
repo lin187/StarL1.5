@@ -7,7 +7,7 @@ import java.awt.Stroke;
 import java.util.Iterator;
 
 import edu.illinois.mitra.starl.interfaces.LogicThread;
-import edu.illinois.mitra.starl.motion.RRTNode;
+//import edu.illinois.mitra.starl.motion.RRTNode;
 import edu.illinois.mitra.starl.objects.*;
 import edu.illinois.mitra.starlSim.draw.Drawer;
 public class DistributedSearchDrawer extends Drawer {
@@ -37,6 +37,16 @@ public class DistributedSearchDrawer extends Drawer {
 		else{
 			g.setColor(c[0]);
 		}
+		/*
+		RRTNode curNode = app.kdTree;
+		while(curNode != null){
+			g.drawRect(curNode.position.x, curNode.position.y, 30, 30);
+			if(curNode.parent != null)
+			g.drawLine(curNode.position.x, curNode.position.y, curNode.parent.position.x, curNode.parent.position.y);
+			curNode = curNode.parent;
+		}
+		 */
+		
 		Iterator<ItemPosition> iterator = app.destinations.iterator();
 		while(iterator.hasNext()){
 			ItemPosition dest = (ItemPosition) iterator.next();

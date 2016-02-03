@@ -18,7 +18,7 @@ import edu.wlu.cs.levy.CG.KeySizeException;
 public class RRTNode {
 	public Point position = new Point();
 	public RRTNode parent;
-	public static RRTNode stopNode;
+	public RRTNode stopNode;
 	public KDTree<RRTNode> kd;
 //	public LinkedList<ItemPosition> pathList = new LinkedList<ItemPosition>();
 
