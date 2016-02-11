@@ -194,7 +194,9 @@ public class UdpGpsReceiver extends Thread implements GpsReceiver {
 	public Vector<ObstacleList> getViews() {
 		return viewsOfWorld;
 	}
-	
-	
+
+    public PositionList<ItemPosition> getSensepoints() {
+        return null; // TODO: need to update once Yixiao fixes
+    }
 	
 }
