@@ -66,7 +66,7 @@ public class LightPaintDrawer extends Drawer {
 		drawImageGraph(alg.painted, g, Color.GREEN, 12);
 	}
 
-	private static final Stroke LINE_STROKE = new BasicStroke(6);
+	private static final Stroke LINE_STROKE = new BasicStroke(10);
 
 	private void drawImageGraph(ImageGraph graph, Graphics2D g, Color color, int pointSize) {
 		g.setColor(color);

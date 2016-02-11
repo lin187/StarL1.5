@@ -21,6 +21,7 @@ import edu.illinois.mitra.starl.interfaces.AcceptsPointInput;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.objects.ObstacleList;
 import edu.illinois.mitra.starl.objects.Obstacles;
+import edu.illinois.mitra.starl.objects.Point3d;
 import edu.illinois.mitra.starlSim.main.SimSettings;
 
 
@@ -65,6 +66,7 @@ public class DrawPanel extends ZoomablePanel
 	{
 		Point a = new Point(0, 0);
 		Point b = new Point(0, 100);
+		g.setStroke(new BasicStroke(10));
 		
 		synchronized(this)
 		{
@@ -84,7 +86,7 @@ public class DrawPanel extends ZoomablePanel
 				
 				// Draw world bounding box
 				g.setColor(Color.gray);
-				g.setStroke(new BasicStroke(2));
+				g.setStroke(new BasicStroke(10));
 				//g.drawRect(0, 0, width, height);
 				
 				// Determine scale
@@ -118,7 +120,7 @@ public class DrawPanel extends ZoomablePanel
 			if (settings.DRAW_TRACE) 
 			{
 				g.setColor(TRACE_COLOR);
-				
+				g.setStroke(new BasicStroke(7));
 				for (LinkedList <Point> trace : robotTraces)
 				{
 					Point last = null;
@@ -137,14 +139,15 @@ public class DrawPanel extends ZoomablePanel
 	
 	private void drawWorld(Graphics2D g, RobotData rd)
 	{
+		g.setStroke(new BasicStroke(10));
 		g.setColor(rd.c);
 	
 		ObstacleList list = rd.world;
 		for(int i = 0; i < list.ObList.size(); i++)
 		{
 			Obstacles currobs = list.ObList.get(i);
-			Point nextpoint = currobs.obstacle.firstElement();
-			Point curpoint = currobs.obstacle.firstElement();
+			Point3d nextpoint = currobs.obstacle.firstElement();
+			Point3d curpoint = currobs.obstacle.firstElement();
 			int[] xs = new int[currobs.obstacle.size()]; 
 			int[] ys = new int[currobs.obstacle.size()]; ;
 			
@@ -311,7 +314,7 @@ public class DrawPanel extends ZoomablePanel
 	
 	private void drawRobot(Graphics2D g, RobotData rd, boolean drawId)
 	{
-		g.setStroke(new BasicStroke(2));
+		g.setStroke(new BasicStroke(10));
 		
 		if (rd.c != null)
 			g.setColor(rd.c);

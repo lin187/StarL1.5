@@ -6,6 +6,7 @@ import java.util.Vector;
 import android.os.Handler;
 import edu.illinois.mitra.starl.comms.SmartUdpComThread;
 import edu.illinois.mitra.starl.comms.UdpGpsReceiver;
+import edu.illinois.mitra.starl.interfaces.DSM;
 import edu.illinois.mitra.starl.motion.BluetoothInterface;
 import edu.illinois.mitra.starl.motion.MotionAutomaton;
 import edu.illinois.mitra.starl.objects.ObstacleList;

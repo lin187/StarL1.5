@@ -16,6 +16,7 @@ import edu.illinois.mitra.starl.interfaces.RobotEventListener.Event;
 import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.HandlerMessage;
 import edu.illinois.mitra.starl.objects.ItemPosition;
+import edu.illinois.mitra.starl.objects.Model_iRobot;
 import edu.illinois.mitra.starl.objects.ObstacleList;
 import edu.illinois.mitra.starl.objects.PositionList;
 
@@ -28,8 +29,8 @@ public class UdpGpsReceiver extends Thread implements GpsReceiver {
 	private static final String TAG = "GPSReceiver";
 	private static final String ERR = "Critical Error";
 	
-	public PositionList robotPositions;
-	public PositionList waypointPositions;
+	public PositionList<Model_iRobot> robotPositions;
+	public PositionList<ItemPosition> waypointPositions;
 	public ObstacleList obs;
 	public Vector<ObstacleList> viewsOfWorld;
 	
@@ -42,7 +43,7 @@ public class UdpGpsReceiver extends Thread implements GpsReceiver {
 	private String name = null;
 	private boolean received = false;
 
-	public UdpGpsReceiver(GlobalVarHolder gvh,String hostname, int port, PositionList robotPositions, PositionList waypointPositions, ObstacleList obs, Vector<ObstacleList> viewsOfWorld) {
+	public UdpGpsReceiver(GlobalVarHolder gvh,String hostname, int port, PositionList<Model_iRobot> robotPositions, PositionList<ItemPosition> waypointPositions, ObstacleList obs, Vector<ObstacleList> viewsOfWorld) {
 		super();
 		this.gvh = gvh;
 		
@@ -107,7 +108,7 @@ public class UdpGpsReceiver extends Thread implements GpsReceiver {
 		    				break;
 		    			case '#':
 		    				try {
-		    					ItemPosition newpos = new ItemPosition(parts[i]);
+		    					Model_iRobot newpos = new Model_iRobot(parts[i]);
 		    					robotPositions.update(newpos, gvh.time());
 		    					gvh.sendRobotEvent(Event.GPS);
 		    					if(newpos.name.equals(name)) {

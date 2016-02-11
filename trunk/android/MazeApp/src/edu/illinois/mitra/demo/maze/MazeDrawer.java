@@ -19,7 +19,7 @@ public class MazeDrawer extends Drawer {
 	@Override
 	public void draw(LogicThread lt, Graphics2D g) {
 		MazeApp app = (MazeApp) lt;
-
+		g.setStroke(new BasicStroke(10));
 		g.setColor(Color.RED);
 		for(ItemPosition dest : app.destinations.values()) {
 			g.fillRect(dest.getX() - 13, dest.getY() - 13, 26, 26);
@@ -66,8 +66,8 @@ public class MazeDrawer extends Drawer {
 			else
 				g.setColor(Color.GRAY);
 			
-			Point nextpoint = currobs.obstacle.firstElement();
-			Point curpoint = currobs.obstacle.firstElement();
+			Point3d nextpoint = currobs.obstacle.firstElement();
+			Point3d curpoint = currobs.obstacle.firstElement();
 			int[] xs = new int[currobs.obstacle.size()]; 
 			int[] ys = new int[currobs.obstacle.size()]; ;
 			

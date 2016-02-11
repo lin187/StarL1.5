@@ -117,7 +117,8 @@ public class MazeApp extends LogicThread {
 							RRTNode path = new RRTNode(gvh.gps.getPosition(name).x, gvh.gps.getPosition(name).y);
 							pathStack = path.findRoute(currentDestination, 5000, obsList, 5000, 3000, (gvh.gps.getPosition(name)), (int) (gvh.gps.getPosition(name).radius*0.8));
 
-							kdTree = RRTNode.stopNode;
+							kdTree =  path.stopNode;
+									//RRTNode.stopNode;
 							//wait when can not find path
 							if(pathStack == null){
 							stage = Stage.HOLD;	

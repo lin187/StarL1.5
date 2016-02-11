@@ -195,7 +195,7 @@ public class LightPaintActivity extends LogicThread implements RobotEventListene
 	}
 
 	private int getColorFromPosition(ItemPosition pos) {
-		return pos.getAngle();
+		return pos.getIndex();
 	}
 
 	private static int getSizeFromPosition(ItemPosition pos) {

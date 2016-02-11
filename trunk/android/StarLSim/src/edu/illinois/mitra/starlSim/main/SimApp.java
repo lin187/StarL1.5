@@ -10,6 +10,7 @@ import edu.illinois.mitra.starl.gvh.SimGlobalVarHolder;
 import edu.illinois.mitra.starl.harness.SimulationEngine;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.objects.ItemPosition;
+import edu.illinois.mitra.starl.objects.Model_iRobot;
 import edu.illinois.mitra.starlSim.draw.DrawFrame;
 
 public class SimApp implements Callable<List<Object>> {
@@ -18,7 +19,7 @@ public class SimApp implements Callable<List<Object>> {
 
 	public LogicThread logic;
 
-	public SimApp(String name, HashMap<String, String> participants, SimulationEngine engine, ItemPosition initpos, String traceDir, Class<? extends LogicThread> app, DrawFrame drawFrame, int driftMax, double skewBound) {
+	public SimApp(String name, HashMap<String, String> participants, SimulationEngine engine, Model_iRobot initpos, String traceDir, Class<? extends LogicThread> app, DrawFrame drawFrame, int driftMax, double skewBound) {
 		this.name = name;
 		gvh = new SimGlobalVarHolder(name, participants, engine, initpos, traceDir, driftMax, skewBound);
 		gvh.comms.startComms();
