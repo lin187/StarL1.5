@@ -1,17 +1,25 @@
+
 close all;
 format longg;
 warning('off','images:imfindcircles:warnForSmallRadius')
 load('run_number.mat')
-num_frames = 10000;
+num_frames = 10000; % number of frames kinect will capture
+% allocate space for saving images
 global imgColorAll
 imgColorAll = zeros(420,560,3,num_frames,'uint8');
 global mm_per_pixel;
 mm_per_pixel = 5.628;
-%Set Up Kinect for tracking
+
+% size of boudning box to be used in localization (x times larger than
+% circle diameter)
+BBoxFactor = 1.2; 
 fig2 = figure(2);
 found = false;
-BBoxFactor = 1.2;
-stop([vid vid2]);
+robot_count = 1;
+
+%Set Up Kinect for tracking
+%stop([vid vid2]); % comment this out the first time code is run
+%clear vid vid2; % comment this one out too
 vid = videoinput('kinect',1); %color 
 vid2 = videoinput('kinect',2); %depth
 
@@ -60,10 +68,10 @@ send_launch = 0;
 % Get all trackable robots, set up a structure to hold them
 %[robot_count robot_names] = track_getTrackables();
 % Set this manually for now when using Kinect tracking
-robot_count = 1;
+
 robot_names = cell(1,robot_count);
-robot_names{1} = 'Red0';
-robot_names{2} = 'Green1';
+% robot_names{1} = 'Red0';
+% robot_names{2} = 'Green1';
 bots = struct('X',{0},'Y',{0},'yaw',{0},'visible',{0},'name',robot_names,...
     'history',{ones(MOTION_HISTORY_SIZE,2)*-1},'histangle',{ones(MOTION_HISTORY_SIZE,1)*-1},...
     'hist_index',{1},'drawhistory',{ones(HISTORY_SIZE,2)*-1},'draw_hist_index',{1});
@@ -92,6 +100,8 @@ while 1
     trigger([vid vid2])
     % Get the acquired frames and metadata.
     [imgColor, ts_color, metaData_Color] = getdata(vid);
+    % flip the image so the orientation is consistent with the other plot
+    %imgColor = flipud(imgColor);
     [imgDepth, ts_depth, metaData_Depth] = getdata(vid2);
     
     % If the figure was closed, exit
@@ -144,6 +154,7 @@ while 1
         end
         
     end
+    % plot the localized bots
     plotCreate2(imgColor, botArray, robot_count, frameCount, fig2);      
     
     % Update the plot on every 4th frame
