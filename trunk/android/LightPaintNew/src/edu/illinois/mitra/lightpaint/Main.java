@@ -68,7 +68,7 @@ public class Main {
 			SimSettings settings = builder.build();
 			for (int i = 1; i <= SAMPLES; i++) {
 				System.out.println("RUN " + i);
-				System.out.println("Starting with " + settings.N_BOTS
+				System.out.println("Starting with " + settings.N_IROBOTS
 						+ " robots.");
 				Simulation sim = new Simulation(LightPaintActivity.class,
 						settings);

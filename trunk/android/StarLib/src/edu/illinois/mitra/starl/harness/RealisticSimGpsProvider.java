@@ -8,8 +8,9 @@ import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
 import edu.illinois.mitra.starl.interfaces.TrackedRobot;
+import edu.illinois.mitra.starl.models.Model_iRobot;
+import edu.illinois.mitra.starl.models.Model_quadcopter;
 import edu.illinois.mitra.starl.objects.ItemPosition;
-import edu.illinois.mitra.starl.objects.Model_iRobot;
 import edu.illinois.mitra.starl.objects.ObstacleList;
 import edu.illinois.mitra.starl.objects.Obstacles;
 import edu.illinois.mitra.starl.objects.Point3d;
@@ -25,10 +26,13 @@ import edu.illinois.mitra.starl.objects.PositionList;
 
 public class RealisticSimGpsProvider extends Observable implements SimGpsProvider {	
 	private Map<String, SimGpsReceiver> receivers;
-	private Map<String, TrackedModel<Model_iRobot>> robots;
+	private Map<String, TrackedModel<Model_iRobot>> iRobots;
+	private Map<String, TrackedModel<Model_quadcopter>> quadcopters;
+	
 
-	// Waypoint positions and robot positions that are shared among all robots
-	private PositionList<Model_iRobot> robot_positions;
+	// Waypoint positions and robot positions that are shared among all robots	
+	private PositionList<Model_iRobot> iRobot_positions;
+	private PositionList<Model_quadcopter> quadcopter_positions;
 	private PositionList<ItemPosition> waypoint_positions;
 	private PositionList<ItemPosition> sensepoint_positions;
 	private ObstacleList obspoint_positions;
@@ -39,20 +43,24 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 
 	private SimulationEngine se;
 		
-	public RealisticSimGpsProvider(SimulationEngine se, long period, double angleNoise, double posNoise, int robotRadius) {
+	public RealisticSimGpsProvider(SimulationEngine se, long period, double angleNoise, double posNoise) {
 		this.se = se;
 		this.period = period;
+		// get noise from sim settings or motion parameter
 		noises = new double[3];
 		noises[0] = posNoise;
 		noises[1] = posNoise;
 		noises[2] = angleNoise;
 		
 		receivers = new HashMap<String, SimGpsReceiver>();
-		robots = new ConcurrentHashMap<String, TrackedModel<Model_iRobot>>();
+		iRobots = new ConcurrentHashMap<String, TrackedModel<Model_iRobot>>();
+		quadcopters = new ConcurrentHashMap<String, TrackedModel<Model_quadcopter>>();
 		
 		waypoint_positions = new PositionList<ItemPosition>();
 		sensepoint_positions = new PositionList<ItemPosition>();
-		robot_positions = new PositionList<Model_iRobot>();
+		iRobot_positions = new PositionList<Model_iRobot>();
+		quadcopter_positions = new PositionList<Model_quadcopter>();
+		
 	}
 	
 	@Override
@@ -61,11 +69,23 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 	}
 	
 	@Override
-	public synchronized void addRobot(Model_iRobot bot) {
-		synchronized(robots) {
-			robots.put(bot.name, new TrackedModel<Model_iRobot>(bot));
+	public synchronized void addRobot(TrackedRobot bot) {
+		if(bot instanceof Model_iRobot){
+			synchronized(iRobots) {
+				iRobots.put(((Model_iRobot)bot).name, new TrackedModel<Model_iRobot>((Model_iRobot) bot));
+			}
+			iRobot_positions.update((Model_iRobot) bot);
 		}
-		robot_positions.update(bot);
+		else if(bot instanceof Model_quadcopter){
+			synchronized(quadcopters) {
+				quadcopters.put(((Model_quadcopter)bot).name, new TrackedModel<Model_quadcopter>((Model_quadcopter) bot));
+			}
+			quadcopter_positions.update((Model_quadcopter) bot);
+		}
+		else{
+			throw new RuntimeException("after adding a new model, one need to add model handling in simulation under RealisticSimGpsProvider");
+		}
+		
 	}
 	
 	@Override
@@ -76,18 +96,46 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 
 	@Override
 	public void setVelocity(String name, int fwd, int rad) {
-		((Model_iRobot) robots.get(name).cur).vFwd = fwd;
-		((Model_iRobot) robots.get(name).cur).vRad = rad;
+		((Model_iRobot) iRobots.get(name).cur).vFwd = fwd;
+		((Model_iRobot) iRobots.get(name).cur).vRad = rad;
+	}
+	
+	@Override
+	public void setControlInput(String name, double yaw, double pitch, double roll, double thrust) {
+		/** TODO: replace with PID model here
+		*/
+		((Model_quadcopter) quadcopters.get(name).cur).yaw = yaw;
+		((Model_quadcopter) quadcopters.get(name).cur).pitch = pitch;
+		((Model_quadcopter) quadcopters.get(name).cur).roll = roll;	
+		((Model_quadcopter) quadcopters.get(name).cur).thrust = thrust;	
 	}
 	
 	@Override
 	public synchronized void halt(String name) {
 		setVelocity(name, 0, 0);
+		setControlInput(name, 0, 0, 0, 0);
 	}
 	
 	@Override
-	public PositionList<Model_iRobot> getRobotPositions() {
-		return robot_positions;
+	public PositionList<Model_iRobot> getiRobotPositions() {
+		return iRobot_positions;
+	}
+	
+	@Override
+	public PositionList<Model_quadcopter> getQuadcopterPositions() {
+		return quadcopter_positions;
+	}
+	
+	@Override
+	public PositionList<ItemPosition> getAllPositions(){
+		PositionList<ItemPosition> allpos = new PositionList<ItemPosition>();
+		for(Model_iRobot iRobotPos : iRobot_positions){
+			allpos.update(iRobotPos);
+		}
+		for(Model_quadcopter quadcopterPos : quadcopter_positions){
+			allpos.update(quadcopterPos);
+		}
+		return allpos;
 	}
 
 	@Override
@@ -150,16 +198,25 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 				se.registerThread(this);
 				
 				while(true) {
-					synchronized(robots) {
-						for(TrackedModel<Model_iRobot> r : robots.values()) {
+					synchronized(iRobots) {
+						for(TrackedModel<Model_iRobot> r : iRobots.values()) {
 							//if(r.cur.inMotion()) {
-								r.updatePos();
-								receivers.get(r.getName()).receivePosition((r.cur.inMotion()));	
+							r.updatePos();
+							receivers.get(r.getName()).receivePosition((r.cur.inMotion()));	
+							//}
+						}	
+					}
+					synchronized(quadcopters) {
+						for(TrackedModel<Model_quadcopter> r : quadcopters.values()) {
+							//if(r.cur.inMotion()) {
+							r.updatePos();
+							receivers.get(r.getName()).receivePosition((r.cur.inMotion()));	
 							//}
 						}	
 					}
 					setChanged();
-					notifyObservers(robot_positions);
+					notifyObservers(iRobot_positions);
+					notifyObservers(quadcopter_positions);
 					
 					try {
 						se.threadSleep(period, this);
@@ -203,21 +260,43 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 		
 		public boolean checkCollision(Point3d bot) {
 			//double min_distance = Double.MAX_VALUE;
+			int myRadius = 0;
+			if(cur instanceof Model_iRobot){
+				myRadius = ((Model_iRobot) cur).radius;
+			}
+			else if(cur instanceof Model_quadcopter){
+				myRadius = ((Model_quadcopter) cur).radius;
+			}
+			else{
+				throw new RuntimeException("after adding a new model, one need to add collision handling under RealisticSimGpsProvider");
+			}
+			
 			boolean toReturn = false;
-			for(Model_iRobot current : robot_positions.getList()) {
+			
+			for(Model_iRobot current : iRobot_positions.getList()) {
 				if(!current.name.equals(cur.name)) {
-					if(cur instanceof Model_iRobot){
-						if(bot.distanceTo(current) <= (((Model_iRobot) cur).radius + current.radius)) {
-							//update sensors for both robots
-							current.collision(cur);
-							cur.collision(current);
-							toReturn = true;
-						}
-						//min_distance = Math.min(bot.distanceTo(current) - current.radius, min_distance);
-
+					if(bot.distanceTo(current) <= myRadius + current.radius){
+						//update sensors for both robots
+						current.collision(cur);
+						cur.collision(current);
+						toReturn = true;
 					}
+					//min_distance = Math.min(bot.distanceTo(current) - current.radius, min_distance);
 				}
 			}
+			
+			for(Model_quadcopter current : quadcopter_positions.getList()) {
+				if(!current.name.equals(cur.name)) {
+					if(bot.distanceTo(current) <= myRadius + current.radius){
+						//update sensors for both robots
+						current.collision(cur);
+						cur.collision(current);
+						toReturn = true;
+					}
+					//min_distance = Math.min(bot.distanceTo(current) - current.radius, min_distance);
+				}
+			}
+			
 			ObstacleList list = obspoint_positions;
 			for(int i = 0; i < list.ObList.size(); i++)
 			{
@@ -239,23 +318,10 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 					double distance = Math.sqrt(Math.pow(closeP.x - bot.x, 2) + Math.pow(closeP.y - bot.y, 2)) ;
 					
 					//need to modify some conditions of bump sensors, we have left and right bump sensor for now
-					if(cur instanceof Model_iRobot){
-						if((distance < (((Model_iRobot) cur).radius))){
-							//update the bump sensor 
-							cur.collision(wall);
-							toReturn = true;
-						}
-						/*
-						min_distance = Math.min(distance, min_distance);
-
-						if(min_distance < 0.95* (((Model_iRobot) cur).radius)){
-							stopMoving = true;
-							System.out.println("stopped moving");
-						}
-						else{
-							stopMoving = false;
-						}
-						*/
+					if(distance < myRadius){
+						//update the bump sensor 
+						cur.collision(wall);
+						toReturn = true;
 					}
 				}
 			}
@@ -264,18 +330,7 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 			}
 			return toReturn;
 		}
-		/*
-		@Deprecated
-		public void setVel(int fwd, int rad) {
-			if(inMotion()) {
-				updatePos();
-			} else {
-				timeLastUpdate = se.getTime();
-			}
-			cur.vFwd = fwd;
-			cur.vRad = rad;
-		}
-		 */
+		
 		public String getName() {
 			return cur.name;
 		}

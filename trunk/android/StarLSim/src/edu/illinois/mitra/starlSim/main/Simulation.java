@@ -27,8 +27,9 @@ import edu.illinois.mitra.starl.harness.RealisticSimGpsProvider;
 import edu.illinois.mitra.starl.harness.SimGpsProvider;
 import edu.illinois.mitra.starl.harness.SimulationEngine;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
+import edu.illinois.mitra.starl.models.Model_iRobot;
+import edu.illinois.mitra.starl.models.Model_quadcopter;
 import edu.illinois.mitra.starl.objects.ItemPosition;
-import edu.illinois.mitra.starl.objects.Model_iRobot;
 import edu.illinois.mitra.starl.objects.ObstacleList;
 import edu.illinois.mitra.starl.objects.PositionList;
 import edu.illinois.mitra.starlSim.draw.DrawFrame;
@@ -49,7 +50,7 @@ public class Simulation {
 	private ObstacleList list; 
 	
 	public Simulation(Class<? extends LogicThread> app, final SimSettings settings) {
-		if(settings.N_BOTS <= 0)
+		if(settings.N_IROBOTS + settings.N_QUADCOPTERS <= 0)
 			throw new IllegalArgumentException("Must have more than zero robots to simulate!");
 
 		// Create set of robots whose wireless is blocked for passage between
@@ -57,10 +58,15 @@ public class Simulation {
 		Set<String> blockedRobots = new HashSet<String>();
 		
 		// Create participants and instantiate SimApps
-		for(int i = 0; i < settings.N_BOTS; i++) {
-			// Mapping between robot name and IP address
-			participants.put(settings.BOT_NAME + i, "192.168.0." + i);
+		for(int i = 0; i < settings.N_IROBOTS; i++) {
+			// Mapping between iRobot name and IP address
+			participants.put(settings.IROBOT_NAME + i, "192.168.0." + i);
 		}
+		for(int j = settings.N_IROBOTS; j < settings.N_QUADCOPTERS + settings.N_IROBOTS; j++) {
+			// Mapping between quadcopter name and IP address
+			participants.put(settings.QUADCOPTER_NAME + j, "192.168.0." + j);
+		}
+		
 
 		// Initialize viewer
 		drawFrame = new DrawFrame(participants.keySet(), blockedRobots, settings);
@@ -74,7 +80,7 @@ public class Simulation {
 		if(settings.IDEAL_MOTION) {
 			gps = new IdealSimGpsProvider(simEngine, settings.GPS_PERIOD, settings.GPS_ANGLE_NOISE, settings.GPS_POSITION_NOISE);
 		} else {
-			gps = new RealisticSimGpsProvider(simEngine, settings.GPS_PERIOD, settings.GPS_ANGLE_NOISE, settings.GPS_POSITION_NOISE, settings.BOT_RADIUS);
+			gps = new RealisticSimGpsProvider(simEngine, settings.GPS_PERIOD, settings.GPS_ANGLE_NOISE, settings.GPS_POSITION_NOISE);
 		}
 
 		// Load waypoints
@@ -96,7 +102,7 @@ public class Simulation {
 			if(settings.Detect_Precision > 1){
 				list.Gridfy();
 			}
-			gps.setViews(list, settings.N_BOTS);
+			gps.setViews(list, settings.N_IROBOTS);
 		}
 		else{
 			//if we have no input files, we still have to initialize the obstacle list so that later on, if we detect collision between robots, we can add that obstacle
@@ -104,7 +110,7 @@ public class Simulation {
 			list = gps.getObspointPositions();
 			list.detect_Precision = settings.Detect_Precision;
 			list.de_Radius = settings.De_Radius;
-			gps.setViews(list, settings.N_BOTS);
+			gps.setViews(list, settings.N_IROBOTS);
 		}
 		
 		
@@ -118,56 +124,94 @@ public class Simulation {
 			t_initialPositions = WptLoader.loadWaypoints(settings.INITIAL_POSITIONS_FILE);
 		}
 		else
-			t_initialPositions = new PositionList<ItemPosition>();
-		
+			t_initialPositions = new PositionList<ItemPosition>();		
+		Random rand = new Random();
+		/*
 		PositionList<Model_iRobot> initialPositions = new PositionList<Model_iRobot>();
 		for(ItemPosition t_pos : t_initialPositions){
 			initialPositions.update(new Model_iRobot(t_pos));
 		}
-
-		Random rand = new Random();
-
-		// Create each robot
-		for(int i = 0; i < settings.N_BOTS; i++) {
-			String botName = settings.BOT_NAME + i;
-
-			Model_iRobot initialPosition = initialPositions.getPosition(botName);
+		*/
+		// Create each iRobot
+		for(int i = 0; i < settings.N_IROBOTS; i++) {
+			Model_iRobot initialPosition = null;
+			String botName = settings.IROBOT_NAME + i;
+			ItemPosition initialPos = t_initialPositions.getPosition(botName);
+			if(initialPos != null){
+				initialPosition = new Model_iRobot(initialPos);
+			}
 			// If no initial position was supplied, randomly generate one
 			if(initialPosition == null) {	
-			//	System.out.println("null position in list");
+				//	System.out.println("null position in list");
 				int retries = 0;
 				boolean valid = false;
-				
 				while(retries++ < 10000 && (!acceptableStart(initialPosition) || !valid))
 				{
 					initialPosition = new Model_iRobot(botName, rand.nextInt(settings.GRID_XSIZE), rand.nextInt(settings.GRID_YSIZE), rand.nextInt(360));
 					if(list != null){
-						valid = (list.validstarts(initialPosition, settings.BOT_RADIUS));
+						valid = (list.validstarts(initialPosition, initialPosition.radius));
 					}	
 				}
 				if(retries > 10000)
 				{
-					System.out.print("too many tries for BOT"+botName+"\n");
+					System.out.println("too many tries for BOT"+botName+"please increase settings.GRID_XSIZE/GRID_YSIZE or remove some obstacles");
 				}
 			}
-			if(i< settings.N_GBOTS){
+			if(i< settings.N_DBOTS){
+				initialPosition.type = 1;
+			}
+			if((i>=settings.N_DBOTS) && (i<(settings.N_DBOTS + settings.N_RBOTS))){
+				initialPosition.type = 2;	
+			}
+			else{
 				initialPosition.type = 0;
+				//default robot type is 0
 			}
-			if((i>=settings.N_GBOTS) && (i<(settings.N_GBOTS + settings.N_DBOTS))){
-				initialPosition.type = 1;	
-			}
-			if((i>=(settings.N_GBOTS + settings.N_DBOTS)) && (i<(settings.N_GBOTS + settings.N_DBOTS + settings.N_RBOTS))){
-				initialPosition.type = 2;
-			}
-			
+
 			initialPosition.radius = settings.BOT_RADIUS;
-			
+
 			SimApp sa = new SimApp(botName, participants, simEngine, initialPosition, settings.TRACE_OUT_DIR, app, drawFrame, settings.TRACE_CLOCK_DRIFT_MAX, settings.TRACE_CLOCK_SKEW_MAX);
 
 			bots.add(sa);
 
 			logicThreads.add(sa.logic);
 		}
+		for(int i = 0; i < settings.N_QUADCOPTERS; i++) {
+			Model_quadcopter initialPosition = null;
+			String botName = settings.QUADCOPTER_NAME + i;
+			ItemPosition initialPos = t_initialPositions.getPosition(botName);
+			if(initialPos != null){
+				initialPosition = new Model_quadcopter(initialPos);
+			}
+			// If no initial position was supplied, randomly generate one
+			if(initialPosition == null) {	
+				//	System.out.println("null position in list");
+				int retries = 0;
+				boolean valid = false;
+				while(retries++ < 10000 && (!acceptableStart(initialPosition) || !valid))
+				{
+					initialPosition = new Model_quadcopter(botName, rand.nextInt(settings.GRID_XSIZE), rand.nextInt(settings.GRID_YSIZE), rand.nextInt(settings.GRID_ZSIZE), rand.nextInt(360));
+					if(list != null){
+						valid = (list.validstarts(initialPosition, initialPosition.radius));
+					}	
+				}
+				if(retries > 10000)
+				{
+					System.out.println("too many tries for BOT"+botName+"please increase settings.GRID_XSIZE/GRID_YSIZE/GRID_ZSIZE or remove some obstacles");
+				}
+			}
+			initialPosition.radius = settings.BOT_RADIUS;
+
+			SimApp sa = new SimApp(botName, participants, simEngine, initialPosition, settings.TRACE_OUT_DIR, app, drawFrame, settings.TRACE_CLOCK_DRIFT_MAX, settings.TRACE_CLOCK_SKEW_MAX);
+
+			bots.add(sa);
+
+			logicThreads.add(sa.logic);
+		}
+		
+						
+								
+		
 
 		// initialize debug drawer class if it was set in the settings
 		if(settings.DRAWER != null)

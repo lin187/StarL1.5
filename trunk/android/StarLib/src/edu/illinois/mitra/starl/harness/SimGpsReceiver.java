@@ -5,9 +5,9 @@ import java.util.Vector;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.GpsReceiver;
 import edu.illinois.mitra.starl.interfaces.RobotEventListener.Event;
+import edu.illinois.mitra.starl.interfaces.TrackedRobot;
 import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.ItemPosition;
-import edu.illinois.mitra.starl.objects.Model_iRobot;
 import edu.illinois.mitra.starl.objects.ObstacleList;
 import edu.illinois.mitra.starl.objects.PositionList;
 
@@ -20,12 +20,12 @@ public class SimGpsReceiver implements GpsReceiver {
 	
 	private SimGpsProvider provider;
 	
-	public SimGpsReceiver(GlobalVarHolder gvh, SimGpsProvider provider, Model_iRobot initpos) {
+	public SimGpsReceiver(GlobalVarHolder gvh, SimGpsProvider provider, TrackedRobot initpos) {
 		this.gvh = gvh;
 		this.provider = provider;
 		provider.registerReceiver(gvh.id.getName(), this);
 		provider.addRobot(initpos);
-	}
+	}	
 	
 	@Override
 	public void start() {
@@ -49,8 +49,8 @@ public class SimGpsReceiver implements GpsReceiver {
 	}
 
 	@Override
-	public PositionList<Model_iRobot> getRobots() {
-		return provider.getRobotPositions();
+	public PositionList<ItemPosition> get_robots() {
+		return provider.getAllPositions();
 	}
 
 	@Override

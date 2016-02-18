@@ -1,5 +1,6 @@
 package edu.illinois.mitra.starl.gvh;
 
+import edu.illinois.mitra.starl.interfaces.TrackedRobot;
 import edu.illinois.mitra.starl.motion.RobotMotion;
 
 /**
@@ -12,6 +13,8 @@ import edu.illinois.mitra.starl.motion.RobotMotion;
 public class AndroidPlatform {
 	
 	public RobotMotion moat;
+	
+	public TrackedRobot model;
 		
     public void setDebugInfo(String debugInfo) {
 	}
@@ -23,5 +26,9 @@ public class AndroidPlatform {
 	}
 	
 	public void sendMainMsg(int type, int arg1, int arg2) {		
+	}
+
+	public TrackedRobot getModel() {
+		return model;
 	}
 }

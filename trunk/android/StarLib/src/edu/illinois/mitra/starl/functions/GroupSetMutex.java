@@ -40,7 +40,7 @@ public class GroupSetMutex implements MutualExclusion, MessageListener {
 		gvh.trace.traceEvent(TAG, "Created", gvh.time());
 		gvh.comms.addMsgListener(this, Common.MSG_GSMUTEX_REQUEST, Common.MSG_GSMUTEX_REPLY);
 		party= new ArrayList<String>();
-		for(ItemPosition cur: gvh.gps.getPositions().getList()){
+		for(ItemPosition cur: gvh.gps.get_robot_Positions().getList()){
 			party.add(0, cur.name);
 		}
 		if(party.contains(name)){

@@ -98,7 +98,7 @@ public class SearchApp extends LogicThread {
 				case ASSIGN:
 					if(iamleader){
 						int size = gvh.gps.getWaypointPositions().getNumPositions();
-						int fleet = gvh.gps.getPositions().getNumPositions();
+						int fleet = gvh.gps.get_iRobot_Positions().getNumPositions();
 						int mul = (Integer)size/fleet;
 						int remain = size%fleet;
 						int index = 0;

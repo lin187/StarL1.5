@@ -70,7 +70,7 @@ public class Point3d implements Traceable {
 	
 	@Override 
 	public String toString() {
-		return "Point3d" + ": " + x + ", " + y + ", " + z + "\u00B0";
+		return "Point3d" + ": " + x + ", " + y + ", " + z;
 	}
 
 	public void setPos(int x, int y, int z) {

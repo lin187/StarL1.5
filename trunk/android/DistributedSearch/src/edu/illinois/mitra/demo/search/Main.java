@@ -14,7 +14,7 @@ public class Main {
 		*/
 		SimSettings.Builder settings = new SimSettings.Builder();
 		
-		settings.N_BOTS(2);
+		settings.N_IROBOTS(2);
 		settings.N_GBOTS(2);
 		settings.TIC_TIME_RATE(1);
 		settings.WAYPOINT_FILE("dest.wpt");

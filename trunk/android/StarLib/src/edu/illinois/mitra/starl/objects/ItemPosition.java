@@ -25,6 +25,10 @@ public class ItemPosition extends Point3d implements Comparable<ItemPosition>{
 	 * @param x X position
 	 * @param y Y position
 	 */
+	public ItemPosition(){
+		super();
+		setname("");
+	}
 	
 	public ItemPosition(String name, int x, int y) {
 		super(x, y);
@@ -61,12 +65,14 @@ public class ItemPosition extends Point3d implements Comparable<ItemPosition>{
 	 */
 	public ItemPosition(String received) throws ItemFormattingException {
 		String[] parts = received.replace(",", "").split("\\|");
-		if(parts.length == 5) {
+		if(parts.length == 7) {
 			this.name = parts[1];
 			this.x = Integer.parseInt(parts[2]);
 			this.y = Integer.parseInt(parts[3]);
+			this.z = Integer.parseInt(parts[4]);
+			this.index = Integer.parseInt(parts[5]);
 		} else {
-			throw new ItemFormattingException("Should be length 5, is length " + parts.length);
+			throw new ItemFormattingException("Should be length 7, is length " + parts.length);
 		}
 	}
 	

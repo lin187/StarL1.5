@@ -8,12 +8,11 @@ import edu.illinois.mitra.starl.objects.*;
 public interface GpsReceiver extends Cancellable {
 
 	public abstract void start();
-	
-	public abstract PositionList<Model_iRobot> getRobots();
+
+	public abstract PositionList<ItemPosition> get_robots();
 	public abstract PositionList<ItemPosition> getWaypoints();
 	public abstract PositionList<ItemPosition> getSensepoints();
 	public abstract ObstacleList getObspoints();
 	public abstract Vector<ObstacleList> getViews();
-	
 
 }

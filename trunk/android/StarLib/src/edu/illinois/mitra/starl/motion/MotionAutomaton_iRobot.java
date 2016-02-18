@@ -1,27 +1,36 @@
 package edu.illinois.mitra.starl.motion;
 
-import java.util.Arrays;
-
-
 import java.util.*;
 
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.RobotEventListener.Event;
+import edu.illinois.mitra.starl.models.Model_iRobot;
 import edu.illinois.mitra.starl.objects.*;
 
-
 /**
+ * This motion controller is for iRobot models only
+ * 
  * Motion controller which extends the RobotMotion abstract class. Capable of
  * going to destination waypoints and turning to face waypoints using custom
  * motion parameters. Includes optional collision avoidance which is controlled
  * by the motion parameters setting.
  * 
  * Behavior of different kind of robots are defined here
+ *  
+ * default type:
+ *	0: get to goal robot
+ *	behavior: marks the unknown obstacle when collide, redo path planning (get around the obstacle)to reach the goal
+ *	1: explore the area robot
+ *	behavior: explore the shape of the unknown obstacle and sent out the shape to others
+ *	2: random moving obstacle robot 
+ *	behavior:acts as simple moving obstacle
+ *	3: anti goal robot
+ *	behavior:acts as AI opponent try to block robots getting to the goal
  * 
  * @author Adam Zimmerman, Yixiao Lin
  * @version 1.1
  */
-public class MotionAutomaton extends RobotMotion {
+public class MotionAutomaton_iRobot extends RobotMotion {
 	protected static final String TAG = "MotionAutomaton";
 	protected static final String ERR = "Critical Error";
 
@@ -115,7 +124,7 @@ public class MotionAutomaton extends RobotMotion {
 	private double turnspeed;
 
 
-	public MotionAutomaton(GlobalVarHolder gvh, BluetoothInterface bti) {
+	public MotionAutomaton_iRobot(GlobalVarHolder gvh, BluetoothInterface bti) {
 		super(gvh.id.getName());
 		this.gvh = gvh;
 		this.bti = bti;
@@ -134,7 +143,7 @@ public class MotionAutomaton extends RobotMotion {
 	}
 	
 	public void goTo(ItemPosition dest) {
-		Scanner in = new Scanner(gvh.gps.getMyPosition().name).useDelimiter("[^0-9]+");
+		Scanner in = new Scanner(((Model_iRobot)gvh.gps.getMyPosition()).name).useDelimiter("[^0-9]+");
 		int index = in.nextInt();
 		ObstacleList obsList = gvh.gps.getViews().elementAt(index);
 		// work in progress here
@@ -163,7 +172,7 @@ public class MotionAutomaton extends RobotMotion {
 		while(true) {
 //			gvh.gps.getObspointPositions().updateObs();
 			if(running) {
-				mypos = gvh.gps.getMyPosition();
+				mypos = (Model_iRobot)gvh.plat.getModel();
 				int distance = mypos.distanceTo(destination);
 				int angle = mypos.angleTo(destination);
 				int absangle = Math.abs(angle);

@@ -45,7 +45,7 @@ public LeaderElectApp(GlobalVarHolder gvh){
 				sleep(100);
 				if(!voted && ((dsm.get("candidate","*") == null)|| (robotIndex > Integer.parseInt(dsm.get("candidate","*"))))){
 					if(!wait1){
-						numBots = gvh.gps.getPositions().getNumPositions();
+						numBots = gvh.gps.get_iRobot_Positions().getNumPositions();
 						mutex.requestEntry(0);
 						wait1 = true;
 					}
@@ -63,7 +63,7 @@ public LeaderElectApp(GlobalVarHolder gvh){
 
 				if(!added){
 					if(!wait2){
-						numBots = gvh.gps.getPositions().getNumPositions();
+						numBots = gvh.gps.get_iRobot_Positions().getNumPositions();
 						mutex.requestEntry(0);
 						wait2 = true;
 					}

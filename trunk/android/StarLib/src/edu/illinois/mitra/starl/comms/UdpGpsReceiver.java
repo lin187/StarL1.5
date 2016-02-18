@@ -13,10 +13,11 @@ import edu.illinois.mitra.starl.exceptions.ItemFormattingException;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.GpsReceiver;
 import edu.illinois.mitra.starl.interfaces.RobotEventListener.Event;
+import edu.illinois.mitra.starl.models.Model_iRobot;
+import edu.illinois.mitra.starl.models.Model_quadcopter;
 import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.HandlerMessage;
 import edu.illinois.mitra.starl.objects.ItemPosition;
-import edu.illinois.mitra.starl.objects.Model_iRobot;
 import edu.illinois.mitra.starl.objects.ObstacleList;
 import edu.illinois.mitra.starl.objects.PositionList;
 
@@ -176,7 +177,7 @@ public class UdpGpsReceiver extends Thread implements GpsReceiver {
     }
 
 	@Override
-	public PositionList getRobots() {
+	public PositionList get_iRobots() {
 		return robotPositions;		
 	}
 
@@ -193,6 +194,18 @@ public class UdpGpsReceiver extends Thread implements GpsReceiver {
 	@Override
 	public Vector<ObstacleList> getViews() {
 		return viewsOfWorld;
+	}
+
+	@Override
+	public PositionList<Model_quadcopter> get_quadcopters() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public PositionList<ItemPosition> getSensepoints() {
+		// TODO work in progress
+		return null;
 	}
 	
 	
