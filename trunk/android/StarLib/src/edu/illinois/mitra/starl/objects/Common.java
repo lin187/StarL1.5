@@ -15,6 +15,15 @@ import java.util.Enumeration;
 public final class Common {
 	private static final String TAG = "Common";
 	private static final String ERR = "Critical Error";
+
+	// Specify the number of robots and number of groups
+
+	public static final Integer numOFbots = 5;
+	public static final Integer numOFgroups= 2;
+
+	// Following array represents the neighbours for each bot and rf distance between them. Index represents the bot num. As following:
+	// bots_neighbour [bot_number][0= beforeBot_name], bots_neighbour [bot_number][1= afterBot_name], bots_neighbour [bot_number][2= rf]
+	public static String[][] bots_neighbour = new String[numOFbots][3];
 	
 	// Message IDs
 	public static final int MSG_BARRIERSYNC 			= 1;
