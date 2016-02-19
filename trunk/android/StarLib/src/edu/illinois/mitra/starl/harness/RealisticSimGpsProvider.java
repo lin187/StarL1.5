@@ -46,7 +46,7 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 	public RealisticSimGpsProvider(SimulationEngine se, long period, double angleNoise, double posNoise) {
 		this.se = se;
 		this.period = period;
-		// get noise from sim settings or motion parameter
+		//TODO: get noise from sim settings or motion parameter, need to get a generalized version of noise
 		noises = new double[3];
 		noises[0] = posNoise;
 		noises[1] = posNoise;
@@ -101,13 +101,13 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 	}
 	
 	@Override
-	public void setControlInput(String name, double yaw, double pitch, double roll, double thrust) {
+	public void setControlInput(String name, double v_yaw, double pitch, double roll, double gaz) {
 		/** TODO: replace with PID model here
 		*/
-		((Model_quadcopter) quadcopters.get(name).cur).yaw = yaw;
+		((Model_quadcopter) quadcopters.get(name).cur).v_yaw = v_yaw;
 		((Model_quadcopter) quadcopters.get(name).cur).pitch = pitch;
 		((Model_quadcopter) quadcopters.get(name).cur).roll = roll;	
-		((Model_quadcopter) quadcopters.get(name).cur).thrust = thrust;	
+		((Model_quadcopter) quadcopters.get(name).cur).gaz = gaz;	
 	}
 	
 	@Override

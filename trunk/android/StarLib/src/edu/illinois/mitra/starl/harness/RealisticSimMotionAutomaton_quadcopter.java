@@ -17,8 +17,8 @@ public class RealisticSimMotionAutomaton_quadcopter extends MotionAutomaton_quad
 	}
 
 	@Override
-	public void setControlInput(double yaw, double pitch, double roll, double thrust){
-		gpsp.setControlInput(name, yaw, pitch, roll, thrust);
+	public void setControlInput(double v_yaw, double pitch, double roll, double gaz){
+		gpsp.setControlInput(name, v_yaw, pitch, roll, gaz);
 	}
 
 	/**
@@ -27,7 +27,7 @@ public class RealisticSimMotionAutomaton_quadcopter extends MotionAutomaton_quad
 	@Override
 	protected void takeOff(){
 		gvh.log.i(TAG, "Drone taking off");
-		setControlInput(my_model.yaw, 0, 0, 15);
+		setControlInput(my_model.yaw, 0, 0, 1);
 	}
 	
 	/**
@@ -45,7 +45,7 @@ public class RealisticSimMotionAutomaton_quadcopter extends MotionAutomaton_quad
 	@Override
 	protected void hover(){
 		gvh.log.i(TAG, "Drone hovering");
-		setControlInput(my_model.yaw, 0, 0, 10);
+		setControlInput(my_model.yaw, 0, 0, 0);
 	}
 
 	@Override

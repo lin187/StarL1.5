@@ -39,6 +39,7 @@ public class SimGlobalVarHolder extends GlobalVarHolder {
 		if(traceDir != null)
 			trace.traceStart();
 		super.plat = new AndroidPlatform();
+		plat.model = initpos;
 		if(initpos instanceof Model_iRobot){
 			if(engine.getGps() instanceof IdealSimGpsProvider) {
 				plat.moat = new IdealSimMotionAutomaton(this, (IdealSimGpsProvider)engine.getGps());
@@ -54,7 +55,6 @@ public class SimGlobalVarHolder extends GlobalVarHolder {
 		else {
 			throw new RuntimeException("After adding a model, please add the motion controler for that model in SimGlobalVarHolder.java");
 		}
-		plat.model = initpos;
 	}
 
 	@Override

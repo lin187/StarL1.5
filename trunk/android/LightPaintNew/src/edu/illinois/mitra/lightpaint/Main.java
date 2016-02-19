@@ -55,7 +55,7 @@ public class Main {
 			SimSettings.Builder builder = new SimSettings.Builder().DRAWER(
 					new LightPaintDrawer(DRAW_REACHTUBES)).WAYPOINT_FILE(
 					WPT_PATH + inputFilename + ".wpt");
-			builder.N_BOTS(nbots);
+			builder.N_IROBOTS(nbots);
 			builder.N_GBOTS(nbots);
 			builder.TIC_TIME_RATE(5);
 			builder.MAX_FPS(35);

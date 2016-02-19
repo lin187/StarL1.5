@@ -38,7 +38,7 @@ public class RaceApp extends LogicThread {
 	}
 
 	@Override
-	public List<Object> callStarL() {
+	public List<Object> callStarL() {		
 		while(true) {
 			switch(stage) {
 			case PICK:

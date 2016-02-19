@@ -42,7 +42,7 @@ public class AddNumApp extends LogicThread {
 				if(!added){
 					if(!wait){	
 						// get total number of robots
-						numBots = gvh.gps.get_iRobot_Positions().getNumPositions();
+						numBots = gvh.gps.get_robot_Positions().getNumPositions();
 						// call mutex and then wait
 						mutex.requestEntry(0);
 						wait = true;

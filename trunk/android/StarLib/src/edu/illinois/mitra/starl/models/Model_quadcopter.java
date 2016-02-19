@@ -19,9 +19,11 @@ public class Model_quadcopter extends ItemPosition implements TrackedRobot{
 	public double yaw;
 	public double pitch;
 	public double roll;
-	public double thrust;
+	//vertical speed
+	public double gaz;
 	public int radius;
-	public int mass;
+	// mass in kilograms
+	public double mass;
 	public int height;
 	
 	public double v_x;
@@ -29,12 +31,13 @@ public class Model_quadcopter extends ItemPosition implements TrackedRobot{
 	public double v_z;
 	
 	public double v_yaw;
-	public double v_pitch;
-	public double v_roll;
+	// angular speed
+//	public double v_pitch;
+//	public double v_roll;
 	
-	private double a_yaw;
-	private double a_pitch;
-	private double a_roll;
+//	private double a_yaw;
+//	private double a_pitch;
+//	private double a_roll;
 		
 	public Random rand;
 	
@@ -47,8 +50,8 @@ public class Model_quadcopter extends ItemPosition implements TrackedRobot{
 	private double roll_p;
 	
 	private double v_yaw_p;
-	private double v_pitch_p;
-	private double v_roll_p;
+//	private double v_pitch_p;
+//	private double v_roll_p;
 	
 	private double v_x_p;
 	private double v_y_p;
@@ -110,7 +113,7 @@ public class Model_quadcopter extends ItemPosition implements TrackedRobot{
 
 	@Override 
 	public String toString() {
-		return name + ": " + x + ", " + y + ", " + z + ", yaw, pitch, roll: " + yaw + ", " + pitch + ", " + roll;
+		return name + ": " + x + ", " + y + ", " + z + ", yaw, pitch, roll, gaz: " + yaw + ", " + pitch + ", " + roll + " ," + gaz;
 	}
 	
 	/** 
@@ -224,44 +227,45 @@ public class Model_quadcopter extends ItemPosition implements TrackedRobot{
 		pitch = 0;
 		roll = 0;
 		radius = 340;
-		mass = 500; // default mass is 500 grams
+		mass = 0.5; // default mass is 500 grams
 		v_x = 0;
 		v_y = 0;
 		v_z = 0;
-		a_yaw = 0;
-		a_pitch = 0;
-		a_roll = 0;
+//		a_yaw = 0;
+//		a_pitch = 0;
+//		a_roll = 0;
 	}
 
 	@Override
 	public Point3d predict(double[] noises, double timeSinceUpdate) {
-		if(noises.length != 6){
-			System.out.println("Incorrect number of noises parameters passed in, please pass in x noise, y, noise and angle noise");
-			return new Point3d(x,y);
+		if(noises.length != 3){
+			System.out.println("Incorrect number of noises parameters passed in, please pass in x, y, z, yaw, pitch, roll noises");
+			return new Point3d(x,y,z);
 		}
 		double xNoise = (rand.nextDouble()*2*noises[0]) - noises[0];
 		double yNoise = (rand.nextDouble()*2*noises[1]) - noises[1];
 		double zNoise = (rand.nextDouble()*2*noises[2]) - noises[2];
 
-		double yawNoise = (rand.nextDouble()*2*noises[3]) - noises[3];
-		double pitchNoise = (rand.nextDouble()*2*noises[4]) - noises[4];
-		double rollNoise = (rand.nextDouble()*2*noises[5]) - noises[5];
+	//	double yawNoise = (rand.nextDouble()*2*noises[3]) - noises[3];
+		//double pitchNoise = (rand.nextDouble()*2*noises[4]) - noises[4];
+		//double rollNoise = (rand.nextDouble()*2*noises[5]) - noises[5];
 		
-		//TODO: calculate v based on yaw, pitch, roll, thrust
-		
-		
-		
-		int dX = (int) (xNoise + v_x*timeSinceUpdate);
-		int dY= (int) (yNoise +  v_y*timeSinceUpdate);
-		int dZ= (int) (zNoise +  v_z*timeSinceUpdate);
+		//TODO: correct the model
+
+		// speed is in meter/second
+		// mass in kilograms
+		int dX = (int) (xNoise + 1000*v_x*timeSinceUpdate);
+		int dY= (int) (yNoise +  1000*v_y*timeSinceUpdate);
+		int dZ= (int) (zNoise +  1000*v_z*timeSinceUpdate);
 		
 		x_p = x+dX;
 		y_p = y+dY;
 		z_p = z+dZ;
 		
-		double dv_x = - thrust / mass * (Math.sin(roll) * Math.sin(yaw) + Math.cos(roll) * Math.sin(pitch) * Math.cos(yaw));
-		double dv_y = thrust / mass * (Math.sin(roll) * Math.cos(yaw) - Math.cos(roll) * Math.sin(pitch) * Math.sin(yaw));
-		double dv_z = 10 - thrust / mass * Math.cos(roll) * Math.cos(pitch);
+		double dv_x = - (gaz) / (mass * (Math.sin(roll) * Math.sin(yaw) + Math.cos(roll) * Math.sin(pitch) * Math.cos(yaw)));
+		double dv_y = (gaz) / (mass * (Math.sin(roll) * Math.cos(yaw) - Math.cos(roll) * Math.sin(pitch) * Math.sin(yaw)));
+		double dv_z = (gaz) / (mass * Math.cos(roll) * Math.cos(pitch));
+		System.out.println(dv_z);
 		
 		v_x_p = v_x + dv_x * timeSinceUpdate;
 		v_y_p = v_y + dv_y * timeSinceUpdate;
@@ -276,6 +280,9 @@ public class Model_quadcopter extends ItemPosition implements TrackedRobot{
 		if(collision_point == null){
 			return;
 		}
+		else{
+			gaz = 0;
+		}
 	}
 
 	@Override
@@ -288,20 +295,22 @@ public class Model_quadcopter extends ItemPosition implements TrackedRobot{
 			yaw = yaw_p;
 			pitch = pitch_p;
 			roll = roll_p;
-			
 			v_yaw = v_yaw_p;
-			v_pitch = v_pitch_p;
-			v_roll = v_roll_p;
+	//		v_pitch = v_pitch_p;
+	//		v_roll = v_roll_p;
 			
 			v_x = v_x_p;
 			v_y = v_y_p;
 			v_z = v_z_p;	
 		}
+		else{
+			gaz = 0;
+		}
 	}
 
 	@Override
 	public boolean inMotion() {
-		return (v_x != 0 || v_y != 0 || v_z != 0 || v_yaw != 0 || v_pitch != 0 || v_roll != 0);
+		return (v_x != 0 || v_y != 0 || v_z != 0 || v_yaw != 0);
 	}
 
 	@Override

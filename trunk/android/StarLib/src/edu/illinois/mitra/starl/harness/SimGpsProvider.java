@@ -18,7 +18,7 @@ public interface SimGpsProvider {
 	// Implemented only by ideal gps provider
 	public abstract void setDestination(String name, ItemPosition dest, int vel);
 	
-	public abstract void setControlInput(String name, double yaw, double pitch, double roll, double thrust);
+	public abstract void setControlInput(String name, double v_yaw, double pitch, double roll, double gaz);
 
 	// Implemented only be realistic gps provider
 	public abstract void setVelocity(String name, int fwd, int rad);

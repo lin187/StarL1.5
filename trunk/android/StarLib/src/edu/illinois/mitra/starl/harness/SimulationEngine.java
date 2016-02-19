@@ -127,7 +127,6 @@ public class SimulationEngine extends Thread {
 		// force a redraw now of every logic thread
 		if(drawer != null)
 			drawer.drawNow(logicThreads);
-
 		// Advance time
 		time += advance;
 
