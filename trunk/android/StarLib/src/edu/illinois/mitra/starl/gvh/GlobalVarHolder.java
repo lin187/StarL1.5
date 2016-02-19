@@ -23,6 +23,9 @@ public abstract class GlobalVarHolder {
 	public Logging log;
 	public Trace trace;
 	public AndroidPlatform plat;
+
+	// To assign each bot in specific group
+	public RobotGroup BotGroup;
 	
 	/**
 	 * @param name The unique identifier of this agent
