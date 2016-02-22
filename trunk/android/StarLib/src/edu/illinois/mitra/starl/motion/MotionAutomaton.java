@@ -136,7 +136,8 @@ public class MotionAutomaton extends RobotMotion {
 	public void goTo(ItemPosition dest) {
 		Scanner in = new Scanner(gvh.gps.getMyPosition().name).useDelimiter("[^0-9]+");
 		int index = in.nextInt();
-		ObstacleList obsList = gvh.gps.getViews().elementAt(index);
+		//ObstacleList obsList = gvh.gps.getViews().elementAt(index);
+        obsList = new ObstacleList();
 		// work in progress here
 		goTo(dest, obsList);
 	}
@@ -563,6 +564,9 @@ public class MotionAutomaton extends RobotMotion {
 	
 	public void cancel() {
 		running = false;
+        // 7 is the reset opcode for the create
+        byte[] reset = new byte[]{(byte) 7};
+        bti.send(reset);
 		bti.disconnect();
 	}
 

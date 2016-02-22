@@ -63,7 +63,14 @@ public class RobotsActivity extends Activity implements MessageListener {
 		setContentView(R.layout.main);
 
 		// Load the participants
-		participants = IdentityLoader.loadIdentities(IDENTITY_FILE_URL);
+		//participants = IdentityLoader.loadIdentities(IDENTITY_FILE_URL);
+        participants = new String[3][2];
+        participants[0][0] = "Red0";
+        participants[1][0] = "5C:F3:70:75:BB:0E";
+        participants[2][0] = "192.168.1.110";
+        participants[0][1] = "Green1";
+        participants[1][1] = "5C:F3:70:75:BB:2F";
+        participants[2][1] = "192.168.1.111";
 		
 		// Initialize preferences holder
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -101,7 +108,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 	}
 
 	public void createAppInstance(GlobalVarHolder gvh) {
-		runThread = null;	// Instantiate your application here!
+		runThread = new RaceApp(gvh);	// Instantiate your application here!
 							// Example: runThread = new LightPaintActivity(gvh);
 	}
 
