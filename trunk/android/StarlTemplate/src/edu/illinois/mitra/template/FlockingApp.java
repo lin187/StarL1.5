@@ -275,7 +275,7 @@ public class FlockingApp extends LogicThread {
                             // Let the leader in the center
                             if (gvh.id.getName().equals(le.getLeader())){
 
-                                dest = new ItemPosition(n, 0, 0, 0);
+                                dest = new ItemPosition(n, 1812, 1359, 0);
 
                                 moat.goTo(dest);
                             }else{
