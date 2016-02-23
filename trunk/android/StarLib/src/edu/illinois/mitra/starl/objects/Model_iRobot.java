@@ -24,7 +24,14 @@ public class Model_iRobot extends ItemPosition implements TrackedRobot{
 	public double angle_p;
 	
 	public Model_iRobot(String received) throws ItemFormattingException{
-		super(received);
+        super(received);
+        String[] parts = received.replace(",", "").split("\\|");
+        if(parts.length == 6) {
+            this.angle = Double.parseDouble(parts[4]);
+        }
+        else {
+            throw new ItemFormattingException("Should be length 5, is length " + parts.length);
+        }
 	}
 	
 	public Model_iRobot(String name, int x, int y) {

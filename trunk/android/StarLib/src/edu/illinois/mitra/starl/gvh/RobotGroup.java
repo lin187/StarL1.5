@@ -25,7 +25,7 @@ public class RobotGroup {
 
     public RobotGroup(String id, Integer numOFgroup){
 
-        Integer i = Integer.valueOf(id.substring(3));
+        Integer i = Integer.valueOf(id.substring(3)); // might should make this work with names other than bot0, bot1,... botn
         groupNum = i % numOFgroup;
         setAfterBefore= true;
         rank = 0;

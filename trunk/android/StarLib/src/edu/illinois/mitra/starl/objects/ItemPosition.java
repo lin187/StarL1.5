@@ -61,7 +61,8 @@ public class ItemPosition extends Point3d implements Comparable<ItemPosition>{
 	 */
 	public ItemPosition(String received) throws ItemFormattingException {
 		String[] parts = received.replace(",", "").split("\\|");
-		if(parts.length == 5) {
+        // changed from == to >= so Model_iRobot position, which has length 6, can be accepted
+		if(parts.length >= 5) {
 			this.name = parts[1];
 			this.x = Integer.parseInt(parts[2]);
 			this.y = Integer.parseInt(parts[3]);
