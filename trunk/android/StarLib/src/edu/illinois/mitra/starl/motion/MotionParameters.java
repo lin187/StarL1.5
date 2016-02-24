@@ -133,7 +133,7 @@ public class MotionParameters {
 	
 
 	public static class Builder {
-		private int TURNSPEED_MAX = 50; // changed from 110
+		private int TURNSPEED_MAX = 30; // changed from 110
 		private int TURNSPEED_MIN = 25;
 		private int LINSPEED_MAX = 250;
 		private int LINSPEED_MIN = 175;

@@ -287,7 +287,7 @@ public class FlockingApp extends LogicThread {
 
                                 // All other bots move to their place according to their order in the group
 
-                                int oldX = gvh.BotGroup.rank*1000;
+                                int oldX = gvh.BotGroup.rank*500;
                                 int oldY = 0;
 
                                 double newXX = oldX*Math.cos(Math.toRadians(gvh.BotGroup.theta))-oldY*Math.sin(Math.toRadians(gvh.BotGroup.theta));
@@ -402,8 +402,8 @@ public class FlockingApp extends LogicThread {
                             if (is_Flocking()) {
                                 gvh.BotGroup.theta = gvh.BotGroup.theta + 20;
 
-                                newX= newX+100;
-                                newY= newY+150;
+                                //newX= newX+100;
+                                //newY= newY+150;
                                 //gvh.BotGroup.rf *= 1.25;
 
                                /* System.out.println("Robot number is "+ robotNum);

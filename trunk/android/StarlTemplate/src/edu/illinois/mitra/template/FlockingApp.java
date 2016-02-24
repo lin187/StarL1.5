@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import edu.illinois.mitra.starl.comms.MessageContents;
+import edu.illinois.mitra.starl.comms.RobotMessage;
 import edu.illinois.mitra.starl.functions.BarrierSynchronizer;
 import edu.illinois.mitra.starl.functions.RandomLeaderElection;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
@@ -35,9 +37,12 @@ import edu.illinois.mitra.starl.objects.PositionList;
 public class FlockingApp extends LogicThread {
     private enum STAGE { START, SYNC, ELECT, MOVE, DONE }
     private STAGE stage = STAGE.START;
-
+    public static final int NEIGHBOR_INFO = 30;
+    public static final int LEADER_COMMAND=40;
 
     private RobotMotion moat;
+
+    private boolean isFlocked = false;
 
 
     private int n_waypoints;
@@ -62,6 +67,10 @@ public class FlockingApp extends LogicThread {
         super(gvh);
 
         initializeVee = true;
+
+        for (int i =0; i< Common.numOFbots; i++)
+            for (int j=0; j<3; j++)
+                Common.bots_neighbour[i][j]="none";
 
 
         //gvh.trace.traceStart();
@@ -98,6 +107,8 @@ public class FlockingApp extends LogicThread {
         Integer count = 0;
         Integer leaderNum = 1;
         boolean test = true;
+
+
 
 
         while(true) {
@@ -275,7 +286,7 @@ public class FlockingApp extends LogicThread {
                             // Let the leader in the center
                             if (gvh.id.getName().equals(le.getLeader())){
 
-                                dest = new ItemPosition(n, 1812, 1359, 0);
+                                dest = new ItemPosition(n, 0, 0, 0);
 
                                 moat.goTo(dest);
                             }else{
@@ -393,8 +404,9 @@ public class FlockingApp extends LogicThread {
 
                             //*********************** Leader doesn't need any change
                             // if (!gvh.id.getName().equals(le.getLeader())) {
-
-                            if (is_Flocking()) {
+                            //boolean isFlock = is_Flocking();
+                            if (isFlocked) {
+                                isFlocked=false;
                                 gvh.BotGroup.theta = gvh.BotGroup.theta + 20;
 
                                 newX= newX+100;
@@ -428,6 +440,21 @@ public class FlockingApp extends LogicThread {
                             dest = new ItemPosition(n, newX, newY, gvh.BotGroup.theta.intValue());
 
                             moat.goTo(dest);
+
+                            // Send your new locations to the leader
+                            if (robotNum!=leaderNum){
+                                String[] temp = new String[6];
+                                temp[0] = robotNum.toString();
+                                temp[1] = Integer.toString(gvh.gps.getMyPosition().getX());
+                                temp[2] = Integer.toString(gvh.gps.getMyPosition().getY());
+                                temp[3] = gvh.BotGroup.BeforeBot;
+                                temp[4] = gvh.BotGroup.AfterBot;
+                                Integer referenceDis = gvh.BotGroup.rf;
+                                temp[5] = referenceDis.toString();
+                                MessageContents content = new MessageContents(temp);
+                                RobotMessage assign_msg = new RobotMessage("bot"+leaderNum, name, NEIGHBOR_INFO, content);
+                                gvh.comms.addOutgoingMessage(assign_msg);
+                            }
                         }
 
 
@@ -455,18 +482,45 @@ public class FlockingApp extends LogicThread {
         }
     }
 
-    /*
+
 	@Override
 	protected void receive(RobotMessage m) {
-		String posName = m.getContents(0);
-		if(destinations.containsKey(posName))
-			destinations.remove(posName);
+	//	String posName = m.getContents(0);
+        if (gvh.id.getName()==le.getLeader()) {
 
-		if(currentDestination.getName().equals(posName)) {
-			gvh.plat.moat.cancel();
-			stage = Stage.PICK;
+            if (m.getMID() == NEIGHBOR_INFO) {
+                //	System.out.println("bot "+name + " got point " + m.getContents(0));
+                MessageContents msg_content = m.getContents();
+                List<String> botsInfo = new ArrayList<String>(msg_content.getContents());
+                //ItemPosition point = new ItemPosition(assignedP.get(0), Integer.parseInt(assignedP.get(1)), Integer.parseInt(assignedP.get(2)), 0);
+                int botNumber =Integer.parseInt(botsInfo.get(0));
+
+                Common.bots_neighbour[botNumber][0]=botsInfo.get(3) ;
+                Common.bots_neighbour[botNumber][1]=botsInfo.get(4);
+                Common.bots_neighbour[botNumber][2]=botsInfo.get(5);
+
+                boolean Flocked= false;
+                Flocked = is_Flocking();
+
+                if (Flocked) {
+                    String[] temp = new String[1];
+                    temp[0] = "true";
+                    MessageContents content = new MessageContents(temp);
+                    RobotMessage assign_msg = new RobotMessage("All", name, LEADER_COMMAND, content);
+                    gvh.comms.addOutgoingMessage(assign_msg);
+
+                }
+
+                //destinations.add(point);
+            }
+        }else{
+        if(m.getMID() == LEADER_COMMAND){
+            //	System.out.println("bot "+name + " got point " + m.getContents(0));
+            isFlocked = true;
+        }
+			//stage = Stage.PICK;
 		}
-	}*/
+	}
 
     private static final Random rand = new Random();
 
@@ -491,7 +545,7 @@ public class FlockingApp extends LogicThread {
 
         boolean once = true;
         for  (int i=0; i<Common.numOFbots; i++) {
-            if (!Common.bots_neighbour[i][2].equals("none")) {
+            if (!Common.bots_neighbour[i][2].equals("none") ||Common.bots_neighbour[i][2]!=null ) {
                 groupDis = Integer.parseInt(Common.bots_neighbour[i][2]);
 
                 if (once ) {
@@ -517,7 +571,7 @@ public class FlockingApp extends LogicThread {
 
                 // Distance between the bot and his before (left) neighbour
                 double botDistance = Math.sqrt((Bot.getX()-BeforeBot.getX())*(Bot.getX()-BeforeBot.getX())+(Bot.getY()-BeforeBot.getY())*(Bot.getY()-BeforeBot.getY()));
-                if (botDistance < (groupDis-groupDis*0.3)  || botDistance > (groupDis+groupDis*0.3) ) {
+                if (botDistance < (groupDis-groupDis*0.9)  || botDistance > (groupDis+groupDis*0.9) ) {
 
                     System.out.println("It is false because before bot is out of the range, their distance between each other is "+ String.valueOf(botDistance));
                     return false;
@@ -527,7 +581,7 @@ public class FlockingApp extends LogicThread {
                 if (!Common.bots_neighbour[i][1].equals("none")) {
                     double botDistanceAfter = Math.sqrt((Bot.getX()-AfterBot.getX())*(Bot.getX()-AfterBot.getX())+(Bot.getY()-AfterBot.getY())*(Bot.getY()-AfterBot.getY()));
 
-                    if (botDistanceAfter < (groupDis-groupDis*0.3) || botDistanceAfter > (groupDis+groupDis*0.3)) {
+                    if (botDistanceAfter < (groupDis-groupDis*0.9) || botDistanceAfter > (groupDis+groupDis*0.9)) {
                         System.out.println("It is false because after bot is out of the range, their distance between each other is "+ String.valueOf(botDistance));
                         return false;
                     }

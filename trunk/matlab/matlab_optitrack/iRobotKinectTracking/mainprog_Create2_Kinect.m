@@ -125,8 +125,9 @@ while 1
             found = true;
              for j = 1:robot_count
                     botArray(j).center = centers(j,:);
-                    bots(j).X = botArray(j).center(1,1)*mm_per_pixel;
-                    bots(j).Y = botArray(j).center(1,2)*mm_per_pixel;
+                    center_mm = getMMCoordiRobot(centers(j,:));
+                    bots(j).X = center_mm(1,1);
+                    bots(j).Y = center_mm(1,2);
                     botArray(j).radius = radii(j);
                     botArray(j).BBox(1,:) = BBoxes(j,:);
                     botArray(j).color = colors(j);
@@ -145,8 +146,9 @@ while 1
             % find the drone center, etc.
             [center, radius, BBox, yaw] = trackCreate2(imgColor, botArray(j), BBoxFactor);
             botArray(j).center = center;
-            bots(j).X = botArray(j).center(1,1)*mm_per_pixel;
-            bots(j).Y = botArray(j).center(1,2)*mm_per_pixel;
+            center_mm = getMMCoordiRobot(center);
+            bots(j).X = center_mm(1,1);
+            bots(j).Y = center_mm(1,2);
             botArray(j).radius = radius;
             botArray(j).BBox = BBox;
             botArray(j).yaw = yaw;

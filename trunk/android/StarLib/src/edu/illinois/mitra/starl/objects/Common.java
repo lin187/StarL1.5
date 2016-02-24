@@ -18,8 +18,8 @@ public final class Common {
 
 	// Specify the number of robots and number of groups
 
-	public static final Integer numOFbots = 5;
-	public static final Integer numOFgroups= 2;
+	public static final Integer numOFbots = 2;
+	public static final Integer numOFgroups= 1;
 
 	// Following array represents the neighbours for each bot and rf distance between them. Index represents the bot num. As following:
 	// bots_neighbour [bot_number][0= beforeBot_name], bots_neighbour [bot_number][1= afterBot_name], bots_neighbour [bot_number][2= rf]
