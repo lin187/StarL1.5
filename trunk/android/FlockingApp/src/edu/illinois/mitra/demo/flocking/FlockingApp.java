@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import edu.illinois.mitra.starl.comms.MessageContents;
+import edu.illinois.mitra.starl.comms.RobotMessage;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 
 import edu.illinois.mitra.starl.gvh.RobotGroup;
@@ -43,8 +45,9 @@ public class FlockingApp extends LogicThread {
 
 
     private RobotMotion moat;
-
-
+    // Following array represents the neighbours for each bot and rf distance between them. Index represents the bot num. As following:
+    // bots_neighbour [bot_number][0= beforeBot_name], bots_neighbour [bot_number][1= afterBot_name], bots_neighbour [bot_number][2= rf]
+    private static String[][] botsNeighbor;
     private int n_waypoints;
 
     private static final boolean RANDOM_DESTINATION = false;
@@ -62,12 +65,15 @@ public class FlockingApp extends LogicThread {
     private LeaderElection le;
     private Synchronizer sn;
     boolean initializeVee;
+    private static final int SEND_NONES = 21;
+    private static final int SEND_NOT_NONES = 22;
 
     public FlockingApp(GlobalVarHolder gvh) {
         super(gvh);
-
+        gvh.comms.addMsgListener(this, SEND_NONES);
+        gvh.comms.addMsgListener(this, SEND_NOT_NONES);
         initializeVee = true;
-
+        botsNeighbor = new String[gvh.id.getParticipants().size()][3];
 
         //gvh.trace.traceStart();
 
@@ -244,21 +250,35 @@ public class FlockingApp extends LogicThread {
                                 if (gvh.BotGroup.AfterBot == null)
                                     gvh.BotGroup.isLast = true;
 
-                                Common.bots_neighbour[robotNum][0] = gvh.BotGroup.BeforeBot;
-                                if (!gvh.BotGroup.isLast) Common.bots_neighbour[robotNum][1] = gvh.BotGroup.AfterBot;
-                                else Common.bots_neighbour[robotNum][1] = "none";
-                                Common.bots_neighbour[robotNum][2] = String.valueOf(gvh.BotGroup.rf);
+                                botsNeighbor[robotNum][0] = gvh.BotGroup.BeforeBot;
+                                if (!gvh.BotGroup.isLast) botsNeighbor[robotNum][1] = gvh.BotGroup.AfterBot;
+                                else botsNeighbor[robotNum][1] = "none";
+                                botsNeighbor[robotNum][2] = String.valueOf(gvh.BotGroup.rf);
                                 gvh.BotGroup.setAfterBefore = false;
+                                // send message to all with Common vals and bot number
+                                String[] temp = new String[4];
+                                temp[0] = botsNeighbor[robotNum][0];
+                                temp[1] = botsNeighbor[robotNum][1];
+                                temp[2] = botsNeighbor[robotNum][2];
+                                temp[3] = Integer.toString(robotNum);
+                                MessageContents content = new MessageContents(temp);
+                                RobotMessage assign_msg = new RobotMessage("ALL", name, SEND_NOT_NONES, content);
+                                gvh.comms.addOutgoingMessage(assign_msg);
                             }
                         } else {
-                            Common.bots_neighbour[robotNum][0] = "none";
-                            Common.bots_neighbour[robotNum][1] = "none";
-                            Common.bots_neighbour[robotNum][2] = "none";
+                            botsNeighbor[robotNum][0] = "none";
+                            botsNeighbor[robotNum][1] = "none";
+                            botsNeighbor[robotNum][2] = "none";
+                            // send message to all with instruction to set to none
+                            String contents = Integer.toString(robotNum);
+                            MessageContents content = new MessageContents(contents);
+                            RobotMessage m = new RobotMessage("ALL", name, SEND_NONES, content);
+                            gvh.comms.addOutgoingMessage(m);
                         }
 
                         /* For Testing purpose
                         for (int i=0; i<Common.numOFbots; i++){
-                            System.out.println("bot"+i+" and his before bot is "+Common.bots_neighbour[i][0]+" and his after bot is "+Common.bots_neighbour[i][1]+" and group distance is "+Common.bots_neighbour[i][2]);
+                            System.out.println("bot"+i+" and his before bot is "+botsNeighbor[i][0]+" and his after bot is "+botsNeighbor[i][1]+" and group distance is "+botsNeighbor[i][2]);
                         } */
 
                     }
@@ -407,8 +427,8 @@ public class FlockingApp extends LogicThread {
                                 //gvh.BotGroup.rf *= 1.25;
 
                                /* System.out.println("Robot number is "+ robotNum);
-                                if (!Common.bots_neighbour[robotNum][2].equals("none")) {
-                                    Common.bots_neighbour[robotNum][2] = String.valueOf(gvh.BotGroup.rf);
+                                if (!botsNeighbor[robotNum][2].equals("none")) {
+                                    botsNeighbor[robotNum][2] = String.valueOf(gvh.BotGroup.rf);
                                 }*/
 
 
@@ -455,23 +475,30 @@ public class FlockingApp extends LogicThread {
                     return Arrays.asList(results);
                 }
             }
-            gvh.sleep(100);
+            sleep(100);
 
         }
     }
 
-    /*
+
 	@Override
 	protected void receive(RobotMessage m) {
-		String posName = m.getContents(0);
-		if(destinations.containsKey(posName))
-			destinations.remove(posName);
+        if(m.getMID() == SEND_NONES){
 
-		if(currentDestination.getName().equals(posName)) {
-			gvh.plat.moat.cancel();
-			stage = Stage.PICK;
-		}
-	}*/
+            int index = Integer.parseInt(m.getContents(0));
+            botsNeighbor[index][0] = "none";
+            botsNeighbor[index][1] = "none";
+            botsNeighbor[index][2] = "none";
+        }
+
+        if(m.getMID() == SEND_NOT_NONES) {
+            int index = Integer.parseInt(m.getContents(3));
+            botsNeighbor[index][0] = m.getContents(0);
+            botsNeighbor[index][1] = m.getContents(1);
+            botsNeighbor[index][2] = m.getContents(2);
+        }
+
+	}
 
     private static final Random rand = new Random();
 
@@ -496,8 +523,8 @@ public class FlockingApp extends LogicThread {
 
         boolean once = true;
         for  (int i=0; i<Common.numOFbots; i++) {
-            if (!Common.bots_neighbour[i][2].equals("none")) {
-                groupDis = Integer.parseInt(Common.bots_neighbour[i][2]);
+            if (!botsNeighbor[i][2].equals("none")) {
+                groupDis = Integer.parseInt(botsNeighbor[i][2]);
 
                 if (once ) {
                     System.out.println("Reference distance between each group is " +groupDis);
@@ -511,10 +538,10 @@ public class FlockingApp extends LogicThread {
                 for (ItemPosition rp : allBots) {
                     if (rp.getName().equals("bot"+i))
                         Bot = rp;
-                    if (rp.getName().equals(Common.bots_neighbour[i][0]))
+                    if (rp.getName().equals(botsNeighbor[i][0]))
                         BeforeBot = rp;
-                    if (!Common.bots_neighbour[i][1].equals("none")) {
-                        if (rp.getName().equals(Common.bots_neighbour[i][1]))
+                    if (!botsNeighbor[i][1].equals("none")) {
+                        if (rp.getName().equals(botsNeighbor[i][1]))
                             AfterBot = rp;
                     }
 
@@ -522,17 +549,17 @@ public class FlockingApp extends LogicThread {
 
                 // Distance between the bot and his before (left) neighbour
                 double botDistance = Math.sqrt((Bot.getX()-BeforeBot.getX())*(Bot.getX()-BeforeBot.getX())+(Bot.getY()-BeforeBot.getY())*(Bot.getY()-BeforeBot.getY()));
-                if (botDistance < (groupDis-groupDis*0.3)  || botDistance > (groupDis+groupDis*0.3) ) {
+                if (botDistance < (groupDis-groupDis*0.5)  || botDistance > (groupDis+groupDis*0.5) ) {
 
                     System.out.println("It is false because before bot is out of the range, their distance between each other is "+ String.valueOf(botDistance));
                     return false;
                 }
 
                 // Distance between the bot and his after (right) neighbour
-                if (!Common.bots_neighbour[i][1].equals("none")) {
+                if (!botsNeighbor[i][1].equals("none")) {
                     double botDistanceAfter = Math.sqrt((Bot.getX()-AfterBot.getX())*(Bot.getX()-AfterBot.getX())+(Bot.getY()-AfterBot.getY())*(Bot.getY()-AfterBot.getY()));
 
-                    if (botDistanceAfter < (groupDis-groupDis*0.3) || botDistanceAfter > (groupDis+groupDis*0.3)) {
+                    if (botDistanceAfter < (groupDis-groupDis*0.5) || botDistanceAfter > (groupDis+groupDis*0.5)) {
                         System.out.println("It is false because after bot is out of the range, their distance between each other is "+ String.valueOf(botDistance));
                         return false;
                     }
