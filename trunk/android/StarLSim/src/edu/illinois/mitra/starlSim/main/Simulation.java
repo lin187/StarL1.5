@@ -222,59 +222,51 @@ public class Simulation {
 		Observer guiObserver = new Observer() {
 			@Override
 			public void update(Observable o, Object arg) {
-				ArrayList<Model_iRobot> pos = ((PositionList<Model_iRobot>) arg).getList();
-				ArrayList<Model_quadcopter> pos2 = ((PositionList<Model_quadcopter>) arg).getList();			
-				ArrayList<RobotData> rd = new ArrayList<RobotData>();	
+				Color[] c = new Color[12] ;
+				c[0] = Color.BLACK;
+				c[1] = Color.BLUE;
+				c[2] = Color.GREEN;
+				c[3] = Color.MAGENTA;
+				c[4] = Color.ORANGE;
+				c[5] = Color.CYAN;
+				c[6] = Color.GRAY;
+				c[7] = Color.PINK;
+				c[8] = Color.RED;
+				c[9] = Color.LIGHT_GRAY;
+				c[10] = Color.YELLOW;
+				c[11] = Color.DARK_GRAY;
 
-
-				if(((PositionList) arg).getList().size() >0 && ((PositionList) arg).getList().get(0) instanceof Model_quadcopter){
-					pos2 = ((PositionList<Model_quadcopter>) arg).getList();
-					// Add robots
-					for(Model_quadcopter ip : pos2) {
-						RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.z, ip.yaw, ip.pitch, ip.roll, ip.receivedTime);
-						nextBot.radius = settings.BOT_RADIUS;
-						rd.add(nextBot);
-					}
-				}
-
-				if(((PositionList) arg).getList().size() >0 && ((PositionList) arg).getList().get(0) instanceof Model_iRobot){
-					pos = ((PositionList<Model_iRobot>) arg).getList();
-					
-					Vector<ObstacleList> views = gps.getViews();
-					//define robot colors
-					int i = 0;
-					Color[] c = new Color[12] ;
-					c[0] = Color.BLACK;
-					c[1] = Color.BLUE;
-					c[2] = Color.GREEN;
-					c[3] = Color.MAGENTA;
-					c[4] = Color.ORANGE;
-					c[5] = Color.CYAN;
-					c[6] = Color.GRAY;
-					c[7] = Color.PINK;
-					c[8] = Color.RED;
-					c[9] = Color.LIGHT_GRAY;
-					c[10] = Color.YELLOW;
-					c[11] = Color.DARK_GRAY;
-
-
-					// Add robots and views
-					for(Model_iRobot ip : pos) {	
-						if(i<12){
-							RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.angle, c[i], views.elementAt(i), ip.leftbump, ip.rightbump);
-							nextBot.radius = settings.BOT_RADIUS;
-							nextBot.type = ip.type;
-							rd.add(nextBot);
-							i++;
+				Vector<ObstacleList> views = gps.getViews();
+//				ArrayList<Model_iRobot> pos;
+//				ArrayList<Model_quadcopter> pos2;
+				ArrayList<RobotData> rd = new ArrayList<RobotData>();
+				ArrayList targetList = ((PositionList) arg).getList();
+				if(targetList.size() >0){
+					for(int i = 0; i < targetList.size(); i++){
+						if(targetList.get(i) instanceof Model_iRobot){
+							
+							Model_iRobot ip = (Model_iRobot) targetList.get(i);
+							if(i<12){
+								RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.angle, c[i], views.elementAt(i), ip.leftbump, ip.rightbump);
+								nextBot.radius = settings.BOT_RADIUS;
+								nextBot.type = ip.type;
+								rd.add(nextBot);
+							}
+							else{
+								RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.angle, c[0], views.elementAt(i), ip.leftbump, ip.rightbump);
+								nextBot.radius = settings.BOT_RADIUS;
+								rd.add(nextBot);
+							}
 						}
-						else{
-							RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.angle, c[0], views.elementAt(i), ip.leftbump, ip.rightbump);
+						else if(targetList.get(i) instanceof Model_quadcopter){
+							Model_quadcopter ip = (Model_quadcopter) targetList.get(i);
+							RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.z, ip.yaw, ip.pitch, ip.roll, ip.receivedTime);
 							nextBot.radius = settings.BOT_RADIUS;
 							rd.add(nextBot);
 						}
-
 					}
 				}
+				
 				// Add waypoints
 				if(settings.DRAW_WAYPOINTS) {
 					for(ItemPosition ip : gps.getWaypointPositions().getList()) {

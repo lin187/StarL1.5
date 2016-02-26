@@ -41,21 +41,26 @@ public class Model_quadcopter extends ItemPosition implements TrackedRobot{
 		
 	public Random rand;
 	
-	private int x_p;
-	private int y_p;
-	private int z_p;
+	private int x_p = 0;
+	private int y_p = 0;
+	private int z_p = 0;
 	
-	private double yaw_p;
-	private double pitch_p;
-	private double roll_p;
+	private double yaw_p = 0.0;
+	private double pitch_p = 0.0;
+	private double roll_p = 0.0;
 	
-	private double v_yaw_p;
+	private double v_yaw_p = 0.0;
 //	private double v_pitch_p;
 //	private double v_roll_p;
 	
-	private double v_x_p;
-	private double v_y_p;
-	private double v_z_p;
+	private double v_x_p = 0.0;
+	private double v_y_p = 0.0;
+	private double v_z_p = 0.0;
+	
+	// platform specific control parameters: see page 78 of http://www.msh-tools.com/ardrone/ARDrone_Developer_Guide.pdf 
+	public double max_gaz = 1000; // millimeter/s 200 to 2000 
+	public double max_pitch_roll = 30;  // in degrees  
+	public double max_yaw_speed = 200;  // degrees/s
 	
 	/**
 	 * Construct an Model_quadcopter from a received GPS broadcast message
@@ -113,7 +118,7 @@ public class Model_quadcopter extends ItemPosition implements TrackedRobot{
 
 	@Override 
 	public String toString() {
-		return name + ": " + x + ", " + y + ", " + z + ", yaw, pitch, roll, gaz: " + yaw + ", " + pitch + ", " + roll + " ," + gaz;
+		return name + ": " + x + ", " + y + ", " + z + "; yaw, pitch, roll, gaz: " + yaw + ", " + pitch + ", " + roll + " ," + gaz;
 	}
 	
 	/** 
@@ -223,14 +228,16 @@ public class Model_quadcopter extends ItemPosition implements TrackedRobot{
 	
 	private void initial_helper(){
 		height = 50;
-		yaw = 0;
-		pitch = 0;
-		roll = 0;
+		yaw = 0.0;
+		pitch = 0.0;
+		roll = 0.0;
 		radius = 340;
 		mass = 0.5; // default mass is 500 grams
-		v_x = 0;
-		v_y = 0;
-		v_z = 0;
+		v_x = 0.0;
+		v_y = 0.0;
+		v_z = 0.0;
+		v_yaw = 0.0;
+		gaz = 0.0;
 //		a_yaw = 0;
 //		a_pitch = 0;
 //		a_roll = 0;
@@ -243,8 +250,10 @@ public class Model_quadcopter extends ItemPosition implements TrackedRobot{
 			return new Point3d(x,y,z);
 		}
 		double xNoise = (rand.nextDouble()*2*noises[0]) - noises[0];
-		double yNoise = (rand.nextDouble()*2*noises[1]) - noises[1];
-		double zNoise = (rand.nextDouble()*2*noises[2]) - noises[2];
+		double yNoise = (rand.nextDouble()*2*noises[0]) - noises[0];
+		double zNoise = (rand.nextDouble()*2*noises[0]) - noises[0];
+		double yawNoise = (rand.nextDouble()*2*noises[1]) - noises[1];
+
 
 	//	double yawNoise = (rand.nextDouble()*2*noises[3]) - noises[3];
 		//double pitchNoise = (rand.nextDouble()*2*noises[4]) - noises[4];
@@ -252,25 +261,31 @@ public class Model_quadcopter extends ItemPosition implements TrackedRobot{
 		
 		//TODO: correct the model
 
-		// speed is in meter/second
+		// speed is in millimeter/second
 		// mass in kilograms
-		int dX = (int) (xNoise + 1000*v_x*timeSinceUpdate);
-		int dY= (int) (yNoise +  1000*v_y*timeSinceUpdate);
-		int dZ= (int) (zNoise +  1000*v_z*timeSinceUpdate);
+		// each pixel is 1 millimeter
+		// timeSinceUpdate is in second
+		int dX = (int) (xNoise + v_x*timeSinceUpdate);
+		int dY= (int) (yNoise +  v_y*timeSinceUpdate);
+		int dZ= (int) (zNoise +  gaz*timeSinceUpdate);
 		
 		x_p = x+dX;
 		y_p = y+dY;
 		z_p = z+dZ;
 		
-		double dv_x = - (gaz) / (mass * (Math.sin(roll) * Math.sin(yaw) + Math.cos(roll) * Math.sin(pitch) * Math.cos(yaw)));
-		double dv_y = (gaz) / (mass * (Math.sin(roll) * Math.cos(yaw) - Math.cos(roll) * Math.sin(pitch) * Math.sin(yaw)));
-		double dv_z = (gaz) / (mass * Math.cos(roll) * Math.cos(pitch));
-		System.out.println(dv_z);
+//		double thrust = (gaz) * (mass * Math.cos(Math.toRadians(roll)) * Math.cos(Math.toRadians(pitch)));
+		double thrust = 100;
+		double dv_x = - ((thrust)  * (Math.sin(Math.toRadians(roll)) * Math.sin(Math.toRadians(yaw)) + Math.cos(Math.toRadians(roll)) * Math.sin(Math.toRadians(pitch)) * Math.cos(Math.toRadians(yaw))))/ (mass) ;
+		double dv_y = ((thrust)  * (Math.sin(Math.toRadians(roll)) * Math.cos(Math.toRadians(yaw)) - Math.cos(Math.toRadians(roll)) * Math.sin(Math.toRadians(pitch)) * Math.sin(Math.toRadians(yaw))))/ (mass) ;
+			
 		
 		v_x_p = v_x + dv_x * timeSinceUpdate;
 		v_y_p = v_y + dv_y * timeSinceUpdate;
-		v_z_p = v_z + dv_z * timeSinceUpdate;
-			
+		v_z_p = gaz;
+		
+		double dYaw = (v_yaw*timeSinceUpdate);
+		yaw_p = (yaw + dYaw) %360;	
+
 		return new Point3d(x_p, y_p, z_p);
 	}
 
@@ -281,7 +296,7 @@ public class Model_quadcopter extends ItemPosition implements TrackedRobot{
 			return;
 		}
 		else{
-			gaz = 0;
+			gaz = -10;
 		}
 	}
 
@@ -293,8 +308,8 @@ public class Model_quadcopter extends ItemPosition implements TrackedRobot{
 			z = z_p;
 			
 			yaw = yaw_p;
-			pitch = pitch_p;
-			roll = roll_p;
+	//		pitch = pitch_p;
+	//		roll = roll_p;
 			v_yaw = v_yaw_p;
 	//		v_pitch = v_pitch_p;
 	//		v_roll = v_roll_p;
@@ -304,7 +319,12 @@ public class Model_quadcopter extends ItemPosition implements TrackedRobot{
 			v_z = v_z_p;	
 		}
 		else{
-			gaz = 0;
+			z = z_p;
+			v_z = v_z_p;	
+		}
+		if(z < 0){
+			z = 0;
+			v_z = 0;
 		}
 	}
 

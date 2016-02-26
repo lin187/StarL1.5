@@ -33,6 +33,8 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 	// Waypoint positions and robot positions that are shared among all robots	
 	private PositionList<Model_iRobot> iRobot_positions;
 	private PositionList<Model_quadcopter> quadcopter_positions;
+	private PositionList<ItemPosition> allpos;
+
 	private PositionList<ItemPosition> waypoint_positions;
 	private PositionList<ItemPosition> sensepoint_positions;
 	private ObstacleList obspoint_positions;
@@ -59,6 +61,7 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 		waypoint_positions = new PositionList<ItemPosition>();
 		sensepoint_positions = new PositionList<ItemPosition>();
 		iRobot_positions = new PositionList<Model_iRobot>();
+		allpos = new PositionList<ItemPosition>();
 		quadcopter_positions = new PositionList<Model_quadcopter>();
 		
 	}
@@ -70,11 +73,13 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 	
 	@Override
 	public synchronized void addRobot(TrackedRobot bot) {
+		allpos.update((ItemPosition)bot);
 		if(bot instanceof Model_iRobot){
 			synchronized(iRobots) {
 				iRobots.put(((Model_iRobot)bot).name, new TrackedModel<Model_iRobot>((Model_iRobot) bot));
 			}
 			iRobot_positions.update((Model_iRobot) bot);
+			
 		}
 		else if(bot instanceof Model_quadcopter){
 			synchronized(quadcopters) {
@@ -128,13 +133,6 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 	
 	@Override
 	public PositionList<ItemPosition> getAllPositions(){
-		PositionList<ItemPosition> allpos = new PositionList<ItemPosition>();
-		for(Model_iRobot iRobotPos : iRobot_positions){
-			allpos.update(iRobotPos);
-		}
-		for(Model_quadcopter quadcopterPos : quadcopter_positions){
-			allpos.update(quadcopterPos);
-		}
 		return allpos;
 	}
 
@@ -215,8 +213,8 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 						}	
 					}
 					setChanged();
-					notifyObservers(iRobot_positions);
-					notifyObservers(quadcopter_positions);
+					notifyObservers(allpos);
+				//	notifyObservers(quadcopter_positions);
 					
 					try {
 						se.threadSleep(period, this);

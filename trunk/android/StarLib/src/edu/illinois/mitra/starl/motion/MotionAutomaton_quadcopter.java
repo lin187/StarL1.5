@@ -86,16 +86,14 @@ public class MotionAutomaton_quadcopter extends RobotMotion {
 		super.run();
 		gvh.threadCreated(this);
 		// some control parameters
-		double z_error = 10.0;
-		double kpx,kpy,kpz, kdx,kdy,kdz,kiz;
-		kpx = kpy = kpz = 1.0;
-		kdx = kdy = kdz = 0.2;
-		kiz = 0.1;
+		double kpx,kpy,kpz, kdx,kdy,kdz;
+		kpx = kpy = kpz = 2.0;
+		kdx = kdy = kdz = 0.7;
 		while(true) {
 			//			gvh.gps.getObspointPositions().updateObs();
 			if(running) {
 				mypos = (Model_quadcopter)gvh.plat.getModel();
-				System.out.println(mypos.toString());
+//				System.out.println(mypos.toString());
 				int distance = mypos.distanceTo(destination);				
 				colliding = false;
 
@@ -126,46 +124,43 @@ public class MotionAutomaton_quadcopter extends RobotMotion {
 							next = STAGE.GOAL;
 						}
 						else{
-							double Ax_d, Ay_d, Az_d;
-							double Ryaw, Rroll, Rpitch, Rthrust;
-							z_error += destination.z - mypos.z;
-							Ax_d = kpx * (destination.x - mypos.x) - kdx * mypos.v_x;
-							Ay_d = kpy * (destination.y - mypos.y) - kdy * mypos.v_y;
-							Az_d = kpz * (destination.z - mypos.z) - kdz * mypos.v_z + kiz * z_error;
+							double Ax_d, Ay_d = 0.0;
+							double Ryaw, Rroll, Rpitch, Rvs, Ryawsp = 0.0;
+							//		System.out.println(destination.x - mypos.x + " , " + mypos.v_x);
+							Ax_d = (kpx * (destination.x - mypos.x) - kdx * mypos.v_x) ;
+							Ay_d = (kpy * (destination.y - mypos.y) - kdy * mypos.v_y) ;
+							Ryaw = Math.atan2(destination.y - mypos.y, destination.x - mypos.x);
+							//Ryaw = Math.atan2((destination.y - mypos.x), (destination.x - mypos.y));
+							Ryawsp = kpz * ((Ryaw - Math.toRadians(mypos.yaw)));
+							Rroll = Math.asin((Ay_d * Math.cos(Math.toRadians(mypos.yaw)) - Ax_d * Math.sin(Math.toRadians(mypos.yaw))) %1);
+							Rpitch = Math.asin( (-Ay_d * Math.sin(Math.toRadians(mypos.yaw)) - Ax_d * Math.cos(Math.toRadians(mypos.yaw))) / (Math.cos(Rroll)) %1);
+							Rvs = (kpz * (destination.z - mypos.z) - kdz * mypos.v_z);
+						//	System.out.println(Ryaw + " , " + Ryawsp + " , " +  Rroll  + " , " +  Rpitch + " , " + Rvs);
 
-							Ryaw = Math.atan2((destination.y - mypos.x), (destination.x - mypos.y));
-							Rroll = (Ay_d * Math.cos(mypos.yaw) - Ax_d * Math.sin(mypos.yaw));
-							Rpitch = -(Ay_d * Math.sin(mypos.yaw) - Ax_d * Math.cos(mypos.yaw));
-							Rthrust = Az_d / Math.cos(mypos.pitch) / Math.cos(mypos.roll);
-
-							setControlInput(Ryaw, Rpitch, Rroll, Rthrust);
+							setControlInputRescale(Math.toDegrees(Ryawsp),Math.toDegrees(Rpitch)%360,Math.toDegrees(Rroll)%360,Rvs);
+							//setControlInput(Ryawsp/param.max_yaw_speed, Rpitch%param.max_pitch_roll, Rroll%param.max_pitch_roll, Rvs/param.max_gaz);
 							//next = STAGE.INIT;
 						}
 						break;
 					case HOVER:
-						setControlInput(mypos.yaw,0,0, 0);
+						setControlInput(0,0,0, 0);
 						// do nothing
 						break;
 					case TAKEOFF:
 						switch(mypos.z/(safeHeight/2)){
 						case 0:// 0 - 1/2 safeHeight
-							setControlInput(mypos.yaw,0,0,1);
+							setControlInput(0,0,0,1);
 							break;
 						case 1: // 1/2- 1 safeHeight
-							setControlInput(mypos.yaw,0,0, 0.5);
+							setControlInput(0,0,0, 0.5);
 							break;
 						default: // above safeHeight:
-							if(mypos.v_z > 0){
-								setControlInput(mypos.yaw, 0,0, -0.2);
+							hover();
+							if(prev != null){
+								next = prev;
 							}
 							else{
-								hover();
-								if(prev != null){
-									next = prev;
-								}
-								else{
-									next = STAGE.HOVER;
-								}
+								next = STAGE.HOVER;
 							}
 							break;
 						}
@@ -173,14 +168,14 @@ public class MotionAutomaton_quadcopter extends RobotMotion {
 					case LAND:
 						switch(mypos.z/(safeHeight/2)){
 						case 0:// 0 - 1/2 safeHeight
-							setControlInput(mypos.yaw,0,0,0);
+							setControlInput(0,0,0,0);
 							next = STAGE.STOP;
 							break;
 						case 1: // 1/2- 1 safeHeight
-							setControlInput(mypos.yaw,0,0, 1);
+							setControlInput(0,0,0, -0.05);
 							break;
 						default:   // above safeHeight
-							setControlInput(mypos.yaw,0,0,-1);
+							setControlInput(0,0,0,-0.5);
 							break;
 						}
 						break;
@@ -199,7 +194,7 @@ public class MotionAutomaton_quadcopter extends RobotMotion {
 					if(next != null) {
 						prev = stage;
 						stage = next;
-						System.out.println("Stage transition to " + stage.toString() + "previous stage is "+ prev);
+//						System.out.println("Stage transition to " + stage.toString() + ", the previous stage is "+ prev);
 
 						gvh.log.i(TAG, "Stage transition to " + stage.toString());
 						gvh.trace.traceEvent(TAG, "Stage transition", stage.toString(), gvh.time());
@@ -247,7 +242,32 @@ public class MotionAutomaton_quadcopter extends RobotMotion {
 		gvh.sendRobotEvent(Event.MOTION, motiontype);
 	}
 
+	private void setControlInputRescale(double yaw_v, double pitch, double roll, double gaz){
+		setControlInput(rescale(yaw_v, mypos.max_yaw_speed), rescale(pitch, mypos.max_pitch_roll), rescale(roll, mypos.max_pitch_roll), rescale(gaz, mypos.max_gaz));
+	}
+
+	private double rescale(double value, double max_value){
+		if(Math.abs(value) > max_value){
+			return (Math.signum(value));
+		}
+		else{
+			return value/max_value;
+		}
+	}
+
 	protected void setControlInput(double yaw_v, double pitch, double roll, double gaz){
+		if(yaw_v > 1 || yaw_v < -1){
+			throw new IllegalArgumentException("yaw speed must be between -1 to 1");
+		}
+		if(pitch > 1 || pitch < -1){
+			throw new IllegalArgumentException("pitch must be between -1 to 1");
+		}
+		if(roll > 1 || roll < -1){
+			throw new IllegalArgumentException("roll speed must be between -1 to 1");
+		}
+		if(gaz > 1 || gaz < -1){
+			throw new IllegalArgumentException("gaz, vertical speed must be between -1 to 1");
+		}
 		//Bluetooth command to control the drone
 		gvh.log.i(TAG, "control input as, yaw, pitch, roll, thrust " + yaw_v + ", " + pitch + ", " +roll + ", " +gaz);
 		/*

@@ -186,6 +186,7 @@ MouseListener, MouseMotionListener, ExplicitlyDrawable
 			g2d.setStroke(med);
 			
 			draw(g2d, lt);
+			
 		
 //			if (g2d.getFont() != f)
 //				throw new RuntimeException("Font was changed in draw method. You should use Font.deriveFont instead and then restore it before your method returns.");

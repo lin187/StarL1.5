@@ -17,8 +17,20 @@ public class RealisticSimMotionAutomaton_quadcopter extends MotionAutomaton_quad
 	}
 
 	@Override
-	public void setControlInput(double v_yaw, double pitch, double roll, double gaz){
-		gpsp.setControlInput(name, v_yaw, pitch, roll, gaz);
+	public void setControlInput(double yaw_v, double pitch, double roll, double gaz){
+		if(yaw_v > 1 || yaw_v < -1){
+			throw new IllegalArgumentException("yaw speed must be between -1 to 1");
+		}
+		if(pitch > 1 || pitch < -1){
+			throw new IllegalArgumentException("pitch must be between -1 to 1");
+		}
+		if(roll > 1 || roll < -1){
+			throw new IllegalArgumentException("roll speed must be between -1 to 1");
+		}
+		if(gaz > 1 || gaz < -1){
+			throw new IllegalArgumentException("gaz, vertical speed must be between -1 to 1");
+		}
+		gpsp.setControlInput(name, yaw_v*my_model.max_yaw_speed, pitch*my_model.max_pitch_roll, roll*my_model.max_pitch_roll, gaz*my_model.max_gaz);
 	}
 
 	/**
@@ -27,7 +39,7 @@ public class RealisticSimMotionAutomaton_quadcopter extends MotionAutomaton_quad
 	@Override
 	protected void takeOff(){
 		gvh.log.i(TAG, "Drone taking off");
-		setControlInput(my_model.yaw, 0, 0, 1);
+		setControlInput(0, 0, 0, 1);
 	}
 	
 	/**
@@ -45,7 +57,7 @@ public class RealisticSimMotionAutomaton_quadcopter extends MotionAutomaton_quad
 	@Override
 	protected void hover(){
 		gvh.log.i(TAG, "Drone hovering");
-		setControlInput(my_model.yaw, 0, 0, 0);
+		setControlInput(0, 0, 0, 0);
 	}
 
 	@Override

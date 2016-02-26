@@ -67,6 +67,16 @@ public class RobotData
 		this.time = t;
 	}
 	
+	public RobotData(String name, int x, int y, int z, double yaw, double pitch, double roll) {
+		this.name = name;
+		this.x = x;
+		this.y = y;
+		this.z = z;
+		this.yaw = yaw;
+		this.pitch = pitch;
+		this.roll = roll;
+	}
+	
 	public RobotData(String name, int x, int y, double degrees, long t, Color color) {
 		this(name, x, y, degrees, t);
 		this.c = color;

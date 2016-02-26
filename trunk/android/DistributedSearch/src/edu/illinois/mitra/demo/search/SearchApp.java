@@ -80,7 +80,7 @@ public class SearchApp extends LogicThread {
 				RobotMessage got_it_msg = new RobotMessage("ALL", name, FOUND_MSG, content);
 				gvh.comms.addOutgoingMessage(got_it_msg);
 				stage= Stage.DONE;
-				System.out.println(name + " Got it!");
+			//	System.out.println(name + " Got it!");
 			}
 			switch(stage) {
 			case ELECT:
@@ -98,7 +98,10 @@ public class SearchApp extends LogicThread {
 			case ASSIGN:
 				if(iamleader){
 					int size = gvh.gps.getWaypointPositions().getNumPositions();
+					//int fleet = gvh.gps.get_robot_Positions().getList().size();
 					int fleet = gvh.gps.get_robot_Positions().getNumPositions();
+					System.out.println(fleet);
+					//System.out.println(gvh.gps.get_robot_Positions().getNumPositions());
 					int mul = (Integer)size/fleet;
 					int remain = size%fleet;
 					int index = 0;
@@ -170,9 +173,6 @@ public class SearchApp extends LogicThread {
 							preDestination = pathStack.peek();
 						}
 						ItemPosition goMidPoint = pathStack.pop();
-						if(robotIndex == 1){
-							System.out.println("going to: "+goMidPoint);
-						}
 						//gvh.plat.moat.goTo(new ItemPosition("", 80, 30));
 						gvh.plat.moat.goTo(goMidPoint);
 					}
@@ -232,6 +232,7 @@ public class SearchApp extends LogicThread {
 
 
 	private void assign(ItemPosition toAdd, int index) {
+		System.out.println("Assign room"+ toAdd.toString() + " to robot " + index);
 		//send the assign message to indexed bot
 		String botS = "iRobot"+index;
 		if(botS.equals(name)){
