@@ -18,10 +18,15 @@ public final class Common {
 
 	// Specify the number of robots and number of groups
 
-	public static final Integer numOFbots = 5;
-	public static final Integer numOFgroups= 2;
+	public static final Integer numOFbots = 2;
+	public static final Integer numOFgroups= 1;
 
+    // Bot types
+    public static final int IROBOT = 50;
+    public static final int MINIDRONE = 51;
 
+    // set bot type here
+    public static final int botType = IROBOT;
 
 	
 	// Message IDs
@@ -68,6 +73,8 @@ public final class Common {
 	public static final int EVENT_GPS = 1;
 	public static final int EVENT_GPS_SELF = 2;
 	public static final int EVENT_WAYPOINT_RECEIVED = 3;
+
+
 	
 	private Common() {
 	}

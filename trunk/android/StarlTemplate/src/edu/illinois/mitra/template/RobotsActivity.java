@@ -65,11 +65,23 @@ public class RobotsActivity extends Activity implements MessageListener {
 		// Load the participants
 		//participants = IdentityLoader.loadIdentities(IDENTITY_FILE_URL);
         participants = new String[3][2];
+        // bot names
         participants[0][0] = "bot0";
-        participants[1][0] = "5C:F3:70:75:BB:0E";
-        participants[2][0] = "192.168.1.110";
         participants[0][1] = "bot1";
-        participants[1][1] = "5C:F3:70:75:BB:2F";
+
+        // bot bluetooth addresses
+        if(Common.botType == Common.MINIDRONE) {
+            participants[1][0] = "Mars_122139";
+            participants[1][1] = "green1";
+        }
+
+        if(Common.botType == Common.IROBOT) {
+            participants[1][0] = "5C:F3:70:75:BB:0E";
+            participants[1][1] = "5C:F3:70:75:BB:2F";
+        }
+
+        // phone/tablet ip addresses
+        participants[2][0] = "192.168.1.110";
         participants[2][1] = "192.168.1.111";
 		
 		// Initialize preferences holder
@@ -98,7 +110,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 		for(int i = 0; i < participants[0].length; i++) {
 			hm_participants.put(participants[0][i], participants[2][i]);
 		}
-		gvh = new RealGlobalVarHolder(participants[0][selectedRobot], hm_participants, mainHandler, participants[1][selectedRobot]);
+		gvh = new RealGlobalVarHolder(participants[0][selectedRobot], hm_participants, mainHandler, participants[1][selectedRobot], this);
 		mainHandler.setGvh(gvh);
 
 		// Connect
@@ -169,6 +181,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 
 	private TextView txtRobotName;
 	private TextView txtDebug;
+    private TextView txtDestination;
 	private ProgressBar pbBluetooth;
 	private CheckBox cbGPS;
 	private CheckBox cbBluetooth;
@@ -211,6 +224,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 				sel_robot.show();
 			}
 		});
+
 	}
 
 	@Override

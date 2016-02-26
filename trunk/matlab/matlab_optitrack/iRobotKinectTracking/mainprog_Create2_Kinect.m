@@ -6,14 +6,14 @@ load('run_number.mat')
 num_frames = 10000; % number of frames kinect will capture
 % allocate space for saving images
 global imgColorAll
-imgColorAll = zeros(420,560,3,num_frames,'uint8');
+imgColorAll = zeros(480,640,3,num_frames,'uint8');
 global mm_per_pixel;
 mm_per_pixel = 5.628;
 
 % size of boudning box to be used in localization (x times larger than
 % circle diameter)
 BBoxFactor = 1.2; 
-fig2 = figure(2);
+%fig2 = figure(2);
 found = false;
 robot_count = 2;
 
@@ -101,6 +101,7 @@ while 1
     trigger([vid vid2])
     % Get the acquired frames and metadata.
     [imgColor, ts_color, metaData_Color] = getdata(vid);
+    imgColorAll(:,:,:,frameCount) = imgColor;
     % flip the image so the orientation is consistent with the other plot
     %imgColor = flipud(imgColor);
     [imgDepth, ts_depth, metaData_Depth] = getdata(vid2);
@@ -126,12 +127,15 @@ while 1
              for j = 1:robot_count
                     botArray(j).center = centers(j,:);
                     center_mm = getMMCoordiRobot(centers(j,:));
+                    botArray(j).centers = [botArray(j).centers; center_mm];
                     bots(j).X = center_mm(1,1);
                     bots(j).Y = center_mm(1,2);
                     botArray(j).radius = radii(j);
+                    botArray(j).radii = [botArray(j).radii; radii(j)];
                     botArray(j).BBox(1,:) = BBoxes(j,:);
                     botArray(j).color = colors(j);
                     botArray(j).yaw = yaws(j);
+                    botArray(j).yaws = [botArray(j).yaws; yaws(j)];
                     bots(j).yaw = botArray(j).yaw;
                     bots(j).visible = 1;
                     if botArray(j).color == 'r'
@@ -147,11 +151,14 @@ while 1
             [center, radius, BBox, yaw] = trackCreate2(imgColor, botArray(j), BBoxFactor);
             botArray(j).center = center;
             center_mm = getMMCoordiRobot(center);
+            botArray(j).centers = [botArray(j).centers; center_mm];
             bots(j).X = center_mm(1,1);
             bots(j).Y = center_mm(1,2);
             botArray(j).radius = radius;
+            botArray(j).radii = [botArray(j).radii; radius];
             botArray(j).BBox = BBox;
             botArray(j).yaw = yaw;
+            botArray(j).yaws = [botArray(j).yaws; yaw];
             bots(j).yaw = botArray(j).yaw;
             bots(j).visible = 1;
         end
@@ -159,7 +166,7 @@ while 1
     end
     % plot the localized bots
     if launched
-        plotCreate2(imgColor, botArray, robot_count, frameCount, fig2);
+       % plotCreate2(imgColor, botArray, robot_count, frameCount, fig2);
     end
     
     % Update the plot on every 4th frame

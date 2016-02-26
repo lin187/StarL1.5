@@ -15,10 +15,10 @@ mm_per_pixel = 5.663295322;
 BBoxFactor = 1.5; 
 fig2 = figure(2);
 found = false;
-robot_count = 1;
+robot_count = 2;
 
 %Set Up Kinect for tracking
-%stop([vid vid2]); % comment this out the first time code is run
+stop([vid vid2]); % comment this out the first time code is run
 %clear vid vid2; % comment this one out too
 vid = videoinput('kinect',1); %color 
 vid2 = videoinput('kinect',2); %depth
@@ -70,8 +70,8 @@ send_launch = 0;
 % Set this manually for now when using Kinect tracking
 
 robot_names = cell(1,robot_count);
-robot_names{1} = 'Red0';
-%robot_names{2} = 'Green1';
+robot_names{1} = 'bot0';
+robot_names{2} = 'bot1';
 bots = struct('X',{0},'Y',{0},'yaw',{0},'visible',{0},'name',robot_names,...
     'history',{ones(MOTION_HISTORY_SIZE,2)*-1},'histangle',{ones(MOTION_HISTORY_SIZE,1)*-1},...
     'hist_index',{1},'drawhistory',{ones(HISTORY_SIZE,2)*-1},'draw_hist_index',{1});
@@ -128,16 +128,16 @@ while 1
                     centerMM = getMMCoord(botArray(j).center, radii(j));
                     bots(j).X = centerMM(1,1);
                     bots(j).Y = centerMM(1,2);
-                    botArray(j).depth = depths(j);
+                    botArray(j).depth = depths;
                     botArray(j).radius = radii(j);
                     botArray(j).BBox(1,:) = BBoxes(j,:);
                     botArray(j).color = colors(j);
                     bots(j).yaw = 0;
                     bots(j).visible = 1;
                     if botArray(j).color == 'r'
-                        bots(j).name = 'Red0';
+                        bots(j).name = 'bot0';
                     elseif botArray(j).color == 'g';
-                        bots(j).name = 'Green1';
+                        bots(j).name = 'bot1';
                     end
              end
         end
@@ -165,7 +165,7 @@ while 1
 %     figure(2);
 %     imagesc(imgDepth)
     if launched
-        plotDrone(imgColor, botArray, robot_count, frameCount, fig2, waypoints);
+     %   plotDrone(imgColor, botArray, robot_count, frameCount, fig2, waypoints);
     end
     
     % Update the plot on every 4th frame

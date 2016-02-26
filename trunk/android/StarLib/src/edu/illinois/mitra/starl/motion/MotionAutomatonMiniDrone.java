@@ -1,5 +1,7 @@
 package edu.illinois.mitra.starl.motion;
 
+import android.util.Log;
+
 import java.util.Arrays;
 
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
@@ -12,7 +14,7 @@ import edu.illinois.mitra.starl.objects.ObstacleList;
 /**
  * Created by VerivitalLab on 2/19/2016.
  */
-public class MotionAutomationMiniDrone extends RobotMotion {
+public class MotionAutomatonMiniDrone extends RobotMotion {
     protected static final String TAG = "MotionAutomaton";
     protected static final String ERR = "Critical Error";
     final int safeHeight = 150;
@@ -64,12 +66,13 @@ public class MotionAutomationMiniDrone extends RobotMotion {
 
     //	private volatile MotionParameters param = settings.build();
 
-    public MotionAutomationMiniDrone(GlobalVarHolder gvh, MiniDroneBTI bti) {
+    public MotionAutomatonMiniDrone(GlobalVarHolder gvh, MiniDroneBTI bti) {
         super(gvh.id.getName());
         this.gvh = gvh;
         this.bti = bti;
 
     }
+
 
     public void goTo(ItemPosition dest, ObstacleList obsList) {
         goTo(dest);
@@ -78,6 +81,7 @@ public class MotionAutomationMiniDrone extends RobotMotion {
     public void goTo(ItemPosition dest) {
         if((inMotion && !this.destination.equals(dest)) || !inMotion) {
             this.destination = new ItemPosition(dest.name,dest.x,dest.y,0);
+            Log.d(TAG, "Going to X: " + Integer.toString(dest.x) + ", Y: " + Integer.toString(dest.y));
             //this.destination = dest;
             this.mode = OPMODE.GO_TO;
             startMotion();
@@ -104,7 +108,7 @@ public class MotionAutomationMiniDrone extends RobotMotion {
             //			gvh.gps.getObspointPositions().updateObs();
             if(running) {
                 mypos = gvh.gps.getMyPosition();
-                System.out.println(mypos.toString());
+   //             if(mypos == null) { continue;}
                 int distance = mypos.distanceTo(destination);
                 colliding = false;
 
@@ -192,7 +196,7 @@ public class MotionAutomationMiniDrone extends RobotMotion {
     public void cancel() {
         running = false;
         bti.sendLanding();
-        bti.disconnect();
+
     }
 
     @Override

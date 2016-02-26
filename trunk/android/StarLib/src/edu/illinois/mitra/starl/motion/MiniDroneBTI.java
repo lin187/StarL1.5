@@ -89,7 +89,7 @@ public class MiniDroneBTI implements ARDiscoveryServicesDevicesListUpdatedReceiv
         //task.execute();
     }
 
-    public void disconnect() {
+    public void stopScan() {
         unregisterReceivers();
         closeServices();
     }
@@ -259,6 +259,7 @@ public class MiniDroneBTI implements ARDiscoveryServicesDevicesListUpdatedReceiv
                             deviceController.setListener(this);
                             // start the device controller
                             gvh.plat.sendMainMsg(HandlerMessage.MESSAGE_BLUETOOTH, HandlerMessage.BLUETOOTH_CONNECTING);
+                            stopScan();
                             startDeviceController();
                         }
                     }

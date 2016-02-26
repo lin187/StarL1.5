@@ -1,7 +1,7 @@
 function out = getMMCoord(coordinates, radius)
 
-xCenterMM = 1812.254503;
-yCenterMM = 1359.190877;
+xCenterMM = 0;
+yCenterMM = 0;
 xCenterPx = 320;
 yCenterPx = 240;
 
