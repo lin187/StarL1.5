@@ -158,6 +158,10 @@ public class MiniDroneBTI implements ARDiscoveryServicesDevicesListUpdatedReceiv
         deviceController.setFlag((byte)0);
     }
 
+    public void setMaxTilt(float maxTilt) {
+        deviceController.sendMaxTilt(maxTilt);
+    }
+
 
     // The following methods come from the Parrot SDK and allow connection to the drone
     private void initServices()

@@ -1,13 +1,10 @@
-package edu.illinois.mitra.template;
+package edu.illinois.mitra.demo.follow;
 
 /**
  * Created by VerivitalLab on 2/26/2016.
  * This app was created to test the drones. The bots will each go to an assigned waypoint.
  * Once both bots have arrived at their respective waypoints, they will then go to the next waypoints.
  */
-
-import android.content.ClipData;
-import android.util.Log;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,10 +17,8 @@ import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.motion.MotionParameters;
 import edu.illinois.mitra.starl.motion.MotionParameters.COLAVOID_MODE_TYPE;
 import edu.illinois.mitra.starl.objects.ItemPosition;
-import edu.illinois.mitra.starl.objects.PositionList;
 
 public class FollowApp extends LogicThread {
-    private static final String TAG = "Follow App";
     public static final int ARRIVED_MSG = 22;
     private int destIndex;
     private int messageCount = 0;
@@ -72,7 +67,6 @@ public class FollowApp extends LogicThread {
                         stage = Stage.DONE;
                     } else {
                         currentDestination = getDestination(destinations, destIndex);
-                        Log.d(TAG, currentDestination.toString());
                         destIndex++;
                         if(destIndex >= numWaypoints) {
                             destIndex = 0;
@@ -115,11 +109,12 @@ public class FollowApp extends LogicThread {
         }
     }
 
+    public ItemPosition getCurrentDestination() {
+        return currentDestination;
+    }
 
     @SuppressWarnings("unchecked")
     private <X, T> T getDestination(Map<X, T> map, int index) {
-        String key = Integer.toString(index) + "-A";
-        //return (T) map.values().toArray()[index];
-        return map.get(key);
+        return (T) map.values().toArray()[index];
     }
 }

@@ -3,7 +3,7 @@ classdef MiniDrone
         center % x,y center of drone (could extend to height as well)
         radius
         depth
-        depths
+        depths = []
         BBox % BBox for drone
         centers = [];
         radii = [];

@@ -55,6 +55,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 	// Row 1 = MACs
 	// Row 2 = IPs
 	private String[][] participants;
+    private int numRobots = 1;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -64,26 +65,42 @@ public class RobotsActivity extends Activity implements MessageListener {
 
 		// Load the participants
 		//participants = IdentityLoader.loadIdentities(IDENTITY_FILE_URL);
-        participants = new String[3][2];
+        participants = new String[3][numRobots];
         // bot names
         participants[0][0] = "bot0";
-        participants[0][1] = "bot1";
+        if(numRobots >1) {
+            participants[0][1] = "bot1";
+        }
+        if(numRobots > 2) {
+            participants[0][2] = "bot2";
+        }
 
         // bot bluetooth addresses
         if(Common.botType == Common.MINIDRONE) {
             participants[1][0] = "Mars_122139";
-            participants[1][1] = "green1";
+            if(numRobots > 1) {
+                participants[1][1] = "green1";
+            }
+            if(numRobots > 2) {
+                participants[1][2] = "Mars_122317";
+            }
         }
 
         if(Common.botType == Common.IROBOT) {
             participants[1][0] = "5C:F3:70:75:BB:0E";
-            participants[1][1] = "5C:F3:70:75:BB:2F";
+            if(numRobots > 1) {
+                participants[1][1] = "5C:F3:70:75:BB:2F";
+            }
         }
 
         // phone/tablet ip addresses
         participants[2][0] = "192.168.1.110";
-        participants[2][1] = "192.168.1.111";
-		
+        if(numRobots > 1) {
+            participants[2][1] = "192.168.1.111";
+        }
+        if(numRobots > 2) {
+            participants[2][2] = "192.168.1.112";
+        }
 		// Initialize preferences holder
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		selectedRobot = prefs.getInt(PREF_SELECTED_ROBOT, 0);
@@ -120,7 +137,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 	}
 
 	public void createAppInstance(GlobalVarHolder gvh) {
-		runThread = new FlockingApp(gvh);	// Instantiate your application here!
+		runThread = new FollowApp(gvh);	// Instantiate your application here!
 							// Example: runThread = new LightPaintActivity(gvh);
 	}
 
@@ -188,6 +205,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 	private CheckBox cbRunning;
 	private ProgressBar pbBattery;
 
+
 	private void setupGUI() {
 		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
@@ -199,6 +217,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 		pbBluetooth = (ProgressBar) findViewById(R.id.pb_bluetooth);
 		pbBattery = (ProgressBar) findViewById(R.id.pbBattery);
 		pbBattery.setMax(100);
+
 
 		txtRobotName.setText(participants[0][selectedRobot]);
 		txtRobotName.setOnClickListener(new OnClickListener() {

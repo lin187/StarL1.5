@@ -3,8 +3,8 @@ global imgColorAll
 global mm_per_pixel
 sfigure(fig);
 clf;
-xCenterMM = 1812.254503;
-yCenterMM = 1359.190877;
+xCenterMM = 0;
+yCenterMM = 0;
 mm_per_pixel_now = mmPerPixel(droneArray(1).radius);
 image([xCenterMM - mm_per_pixel_now*320, xCenterMM + mm_per_pixel_now*320],...
     [yCenterMM - mm_per_pixel_now*240, yCenterMM + mm_per_pixel_now*240], img)

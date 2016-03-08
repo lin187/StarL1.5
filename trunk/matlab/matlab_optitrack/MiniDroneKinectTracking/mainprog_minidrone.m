@@ -6,20 +6,22 @@ load('run_number.mat')
 num_frames = 10000; % number of frames kinect will capture
 % allocate space for saving images
 global imgColorAll
-imgColorAll = zeros(420,560,3,num_frames,'uint8');
+imgColorAll = zeros(480,640,3,num_frames,'uint8');
 global mm_per_pixel;
 mm_per_pixel = 5.663295322;
+times = [];
 
 % size of boudning box to be used in localization (x times larger than
 % circle diameter)
 BBoxFactor = 1.5; 
 fig2 = figure(2);
 found = false;
-robot_count = 2;
+robot_count = 1;
+camDistToFloor = 3058; % in mm
 
 %Set Up Kinect for tracking
 stop([vid vid2]); % comment this out the first time code is run
-%clear vid vid2; % comment this one out too
+clear vid vid2; % comment this one out too
 vid = videoinput('kinect',1); %color 
 vid2 = videoinput('kinect',2); %depth
 
@@ -71,8 +73,9 @@ send_launch = 0;
 
 robot_names = cell(1,robot_count);
 robot_names{1} = 'bot0';
-robot_names{2} = 'bot1';
-bots = struct('X',{0},'Y',{0},'yaw',{0},'visible',{0},'name',robot_names,...
+%robot_names{2} = 'bot1';
+%robot_names{3} = 'bot2';
+bots = struct('X',{0},'Y',{0},'Z',{0},'yaw',{0},'visible',{0},'name',robot_names,...
     'history',{ones(MOTION_HISTORY_SIZE,2)*-1},'histangle',{ones(MOTION_HISTORY_SIZE,1)*-1},...
     'hist_index',{1},'drawhistory',{ones(HISTORY_SIZE,2)*-1},'draw_hist_index',{1});
 
@@ -95,12 +98,14 @@ frameCount = 0;
 launched = false;
 tic;
 while 1
+    tic;
     frameCount = frameCount + 1;
    
     % Trigger both objects.
     trigger([vid vid2])
     % Get the acquired frames and metadata.
     [imgColor, ts_color, metaData_Color] = getdata(vid);
+    imgColorAll(:,:,:,frameCount) = imgColor;
     % flip the image so the orientation is consistent with the other plot
     %imgColor = flipud(imgColor);
     [imgDepth, ts_depth, metaData_Depth] = getdata(vid2);
@@ -128,8 +133,11 @@ while 1
                     centerMM = getMMCoord(botArray(j).center, radii(j));
                     bots(j).X = centerMM(1,1);
                     bots(j).Y = centerMM(1,2);
+                    botArray(j).centers = [botArray(j).centers; centers(j,:)];
                     botArray(j).depth = depths;
+                    botArray(j).depths = [botArray(j).depths, depths]; % need to fix this depth thing
                     botArray(j).radius = radii(j);
+                    botArray(j).radii = [botArray(j).radii; radii(j)];
                     botArray(j).BBox(1,:) = BBoxes(j,:);
                     botArray(j).color = colors(j);
                     bots(j).yaw = 0;
@@ -138,6 +146,8 @@ while 1
                         bots(j).name = 'bot0';
                     elseif botArray(j).color == 'g';
                         bots(j).name = 'bot1';
+                    elseif botArray(j).color == 'b'
+                        bots(j).name = 'bot2';
                     end
              end
         end
@@ -149,11 +159,13 @@ while 1
             centerMM = getMMCoord(botArray(j).center, radius);
             bots(j).X = centerMM(1,1);
             bots(j).Y = centerMM(1,2);
+            botArray(j).centers = [botArray(j).centers; center];
             botArray(j).radius = radius;
-            botArray(j).radii = [botArray(j).radii, radius];
+            botArray(j).radii = [botArray(j).radii; radius];
             botArray(j).BBox = BBox;
             botArray(j).depth = depth;
-            botArray(j).depths = [botArray(j).depths; radius];
+            bots(j).Z = camDistToFloor - depth;
+            botArray(j).depths = [botArray(j).depths; depth];
             bots(j).yaw = 0;
             bots(j).visible = 1;
           
@@ -161,6 +173,7 @@ while 1
         end
         
     end
+    times = [times; toc];
     % plot the localized bots
 %     figure(2);
 %     imagesc(imgDepth)

@@ -20,7 +20,7 @@ public class RaceApp extends LogicThread {
 	ItemPosition currentDestination;
 
 	private enum Stage {
-		INIT, PICK, GO, DONE
+		INIT, PICK, GO, DONE, HOVER
 	};
 
 	private Stage stage = Stage.INIT;
@@ -47,7 +47,7 @@ public class RaceApp extends LogicThread {
                 stage = Stage.PICK;
 			case PICK:
 				if(destinations.isEmpty()) {
-					stage = Stage.DONE;
+					stage = Stage.HOVER;
 				} else {
 					currentDestination = getRandomElement(destinations);
 					gvh.plat.moat.goTo(currentDestination);
@@ -63,6 +63,8 @@ public class RaceApp extends LogicThread {
 					stage = Stage.PICK;
 				}
 				break;
+            case HOVER:
+                break;
 			case DONE:
 				return null;
 			}
@@ -72,14 +74,14 @@ public class RaceApp extends LogicThread {
 
 	@Override
 	protected void receive(RobotMessage m) {
-		String posName = m.getContents(0);
+		/*String posName = m.getContents(0);
 		if(destinations.containsKey(posName))
 			destinations.remove(posName);
 
 		if(currentDestination.getName().equals(posName)) {
 			gvh.plat.moat.motion_stop();
 			stage = Stage.PICK;
-		}
+		}*/
 	}
 
 	private static final Random rand = new Random();

@@ -26,7 +26,7 @@ public final class Common {
     public static final int MINIDRONE = 51;
 
     // set bot type here
-    public static final int botType = IROBOT;
+    public static final int botType = MINIDRONE;
 
 	
 	// Message IDs

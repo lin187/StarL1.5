@@ -28,15 +28,22 @@ public class MotionAutomatonMiniDrone extends RobotMotion {
     private ItemPosition mypos;
 
     //PID controller parameters
-    double saturationLimit = 15;
+    double saturationLimit = 100;
     double windUpLimit = 185;
     int filterLength = 8;
-    double Kpx = 0.2;
+    /*double Kpx = 0.2;
     double Kpy = 0.2;
     double Kix = 0.04;
     double Kiy = 0.04;
     double Kdx = 0.4;
-    double Kdy = 0.45;
+    double Kdy = 0.45;*/
+    // the ones below work pretty well
+    double Kpx = 0.0714669809792096;
+    double Kpy = 0.0714669809792096;
+    double Kix = 0.0110786899216426;
+    double Kiy = 0.0110786899216426;
+    double Kdx = 0.113205037832174;
+    double Kdy = 0.113205037832174;
 
     PIDController PID_x = new PIDController(Kpx, Kix, Kdx, saturationLimit, windUpLimit, filterLength);
     PIDController PID_y = new PIDController(Kpy, Kiy, Kdy, saturationLimit, windUpLimit, filterLength);
@@ -71,6 +78,7 @@ public class MotionAutomatonMiniDrone extends RobotMotion {
         this.gvh = gvh;
         this.bti = bti;
 
+
     }
 
 
@@ -98,12 +106,6 @@ public class MotionAutomatonMiniDrone extends RobotMotion {
     public void run() {
         super.run();
         gvh.threadCreated(this);
-        // some control parameters
-        double z_error = 10.0;
-        double kpx,kpy,kpz, kdx,kdy,kdz,kiz;
-        kpx = kpy = kpz = 1.0;
-        kdx = kdy = kdz = 0.2;
-        kiz = 0.1;
         while(true) {
             //			gvh.gps.getObspointPositions().updateObs();
             if(running) {
@@ -119,6 +121,9 @@ public class MotionAutomatonMiniDrone extends RobotMotion {
                     switch(stage) {
                         case INIT:
                             if(mode == OPMODE.GO_TO) {
+                                PID_x.reset();
+                                PID_y.reset();
+                                bti.setMaxTilt(5); // TODO: add max tilt to motion paramters class
                                 if(landed){
                                     // just a safe distance from ground
                                     //takeOff();
@@ -136,8 +141,6 @@ public class MotionAutomatonMiniDrone extends RobotMotion {
                             break;
                         case MOVE:
                             if(distance <= param.GOAL_RADIUS) {
-                                PID_x.reset();
-                                PID_y.reset();
                                 next = STAGE.GOAL;
                             }
                             else{
@@ -145,11 +148,21 @@ public class MotionAutomatonMiniDrone extends RobotMotion {
                                 double yCommand = PID_y.getCommand(mypos.y, destination.y);
                                 bti.setRoll((byte) xCommand);
                                 bti.setPitch((byte) yCommand);
+                                Log.d(TAG, "Sent roll: " + xCommand + " Sent pitch: " + yCommand);
                                 //next = STAGE.INIT;
                             }
                             break;
                         case HOVER:
-                            bti.hover();
+                            if(distance <= param.GOAL_RADIUS) {
+                                bti.hover();
+                            }
+                            else{
+                                double xCommand = PID_x.getCommand(mypos.x, destination.x);
+                                double yCommand = PID_y.getCommand(mypos.y, destination.y);
+                                bti.setRoll((byte) xCommand);
+                                bti.setPitch((byte) yCommand);
+                                Log.d(TAG, "Sent roll: " + xCommand + " Sent pitch: " + yCommand);
+                            }
                             // do nothing
                             break;
                         case TAKEOFF:
@@ -164,10 +177,9 @@ public class MotionAutomatonMiniDrone extends RobotMotion {
                         case GOAL:
                             gvh.log.i(TAG, "At goal!");
                             if(param.STOP_AT_DESTINATION){
-                                hover();
                                 next = STAGE.HOVER;
                             }
-                            running = false;
+                           // running = false;
                             inMotion = false;
                             break;
                         case STOP:

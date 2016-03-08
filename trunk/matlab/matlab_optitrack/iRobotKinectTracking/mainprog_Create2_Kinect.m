@@ -9,6 +9,7 @@ global imgColorAll
 imgColorAll = zeros(480,640,3,num_frames,'uint8');
 global mm_per_pixel;
 mm_per_pixel = 5.628;
+times = [];
 
 % size of boudning box to be used in localization (x times larger than
 % circle diameter)
@@ -19,7 +20,7 @@ robot_count = 2;
 
 %Set Up Kinect for tracking
 stop([vid vid2]); % comment this out the first time code is run
-%clear vid vid2; % comment this one out too
+clear vid vid2; % comment this one out too
 vid = videoinput('kinect',1); %color 
 vid2 = videoinput('kinect',2); %depth
 
@@ -95,8 +96,8 @@ frameCount = 0;
 launched = false;
 tic;
 while 1
+    tic;
     frameCount = frameCount + 1;
-   
     % Trigger both objects.
     trigger([vid vid2])
     % Get the acquired frames and metadata.
@@ -127,7 +128,7 @@ while 1
              for j = 1:robot_count
                     botArray(j).center = centers(j,:);
                     center_mm = getMMCoordiRobot(centers(j,:));
-                    botArray(j).centers = [botArray(j).centers; center_mm];
+                    botArray(j).centers = [botArray(j).centers; centers(j,:)];
                     bots(j).X = center_mm(1,1);
                     bots(j).Y = center_mm(1,2);
                     botArray(j).radius = radii(j);
@@ -151,7 +152,7 @@ while 1
             [center, radius, BBox, yaw] = trackCreate2(imgColor, botArray(j), BBoxFactor);
             botArray(j).center = center;
             center_mm = getMMCoordiRobot(center);
-            botArray(j).centers = [botArray(j).centers; center_mm];
+            botArray(j).centers = [botArray(j).centers; center];
             bots(j).X = center_mm(1,1);
             bots(j).Y = center_mm(1,2);
             botArray(j).radius = radius;
@@ -161,9 +162,9 @@ while 1
             botArray(j).yaws = [botArray(j).yaws; yaw];
             bots(j).yaw = botArray(j).yaw;
             bots(j).visible = 1;
-        end
-        
+        end      
     end
+    times = [times; toc];
     % plot the localized bots
     if launched
        % plotCreate2(imgColor, botArray, robot_count, frameCount, fig2);
