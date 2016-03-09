@@ -42,7 +42,7 @@ public class RobotGroup {
         }
         // rf = 500* (groupNum+1);
 
-        rf = 500;
+        rf = 750;
 
 
         System.out.println("This robot is "+id+ " and it is assigned to group number "+ getGroupNum().toString()+" and ts theta is "+ theta.toString());

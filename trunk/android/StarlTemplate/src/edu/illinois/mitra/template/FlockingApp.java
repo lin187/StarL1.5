@@ -50,6 +50,8 @@ public class FlockingApp extends LogicThread {
     private static final boolean MOVE_IN_SQUARE = false; // this was an attempt to make bots go to waypoints arranged in square, doesn't currently work
     private static final boolean TURN_AROUND = false; // this was an attempt to make bots move diagonally in one direction, turn around and go the other direction. it also doesn't currently work
     private boolean movingUp = true;
+    private static final boolean ROTATE = true;
+    private static final boolean TRANSLATE = false;
 
     private int[] squarePointsX = {300, -600, 0, 600};
     private int[] squarePointsY = {300, 0, -600, 0};
@@ -425,37 +427,38 @@ public class FlockingApp extends LogicThread {
                             // if (!gvh.id.getName().equals(le.getLeader())) {
 
                             if (is_Flocking()) {
-                               gvh.BotGroup.theta = gvh.BotGroup.theta + 45;
-                                if(MOVE_IN_SQUARE) {
-                                    newX = newX + squarePointsX[squarePointsIndex];
-                                    newY = newY + squarePointsY[squarePointsIndex];
-                                    squarePointsIndex++;
-                                    if(squarePointsIndex >= 4) {
-                                        squarePointsIndex = 0;
-                                    }
-                                }
-                                else if(TURN_AROUND) {
-                                    if(movingUp) {
-                                        newX = newX + 200;
-                                        newY = newY + 200;
-                                        if(newX >= 600 && gvh.id.getName().equals(le.getLeader())) {
-                                            movingUp = false;
-                                            RobotMessage m = new RobotMessage("ALL", name, CHANGE_DIRECTIONS, "CHANGE_DIRECTIONS");
-                                            gvh.comms.addOutgoingMessage(m);
-                                        }
-                                    }
-                                    else {
-                                        newX = newX - 200;
-                                        newY = newY - 200;
-                                        if(newX <= -600) {
-                                            movingUp = true;
-                                        }
-                                    }
-                                }
-                                else {
-                                    newX = newX + 100;
-                                    newY = newY + 100;
-                                }
+                               if(ROTATE) {
+                                   gvh.BotGroup.theta = gvh.BotGroup.theta + 45;
+                               }
+                               if(TRANSLATE) {
+                                   if (MOVE_IN_SQUARE) {
+                                       newX = newX + squarePointsX[squarePointsIndex];
+                                       newY = newY + squarePointsY[squarePointsIndex];
+                                       squarePointsIndex++;
+                                       if (squarePointsIndex >= 4) {
+                                           squarePointsIndex = 0;
+                                       }
+                                   } else if (TURN_AROUND) {
+                                       if (movingUp) {
+                                           newX = newX + 200;
+                                           newY = newY + 200;
+                                           if (newX >= 600 && gvh.id.getName().equals(le.getLeader())) {
+                                               movingUp = false;
+                                               RobotMessage m = new RobotMessage("ALL", name, CHANGE_DIRECTIONS, "CHANGE_DIRECTIONS");
+                                               gvh.comms.addOutgoingMessage(m);
+                                           }
+                                       } else {
+                                           newX = newX - 200;
+                                           newY = newY - 200;
+                                           if (newX <= -600) {
+                                               movingUp = true;
+                                           }
+                                       }
+                                   } else {
+                                       newX = newX + 100;
+                                       newY = newY + 100;
+                                   }
+                               }
                                 //gvh.BotGroup.rf *= 1.25;
 
                                /* System.out.println("Robot number is "+ robotNum);

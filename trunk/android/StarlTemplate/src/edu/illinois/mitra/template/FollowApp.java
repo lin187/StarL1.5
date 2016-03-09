@@ -118,8 +118,8 @@ public class FollowApp extends LogicThread {
 
     @SuppressWarnings("unchecked")
     private <X, T> T getDestination(Map<X, T> map, int index) {
+        // Keys must be 0-A format for this to work
         String key = Integer.toString(index) + "-A";
-        //return (T) map.values().toArray()[index];
         return map.get(key);
     }
 }

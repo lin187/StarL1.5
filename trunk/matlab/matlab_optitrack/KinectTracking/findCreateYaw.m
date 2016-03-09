@@ -1,9 +1,25 @@
-function angle = findCreateYaw(frame, yaw)
-% input the bounding box cropped image, returns yaw
+function angle = findCreateYaw(imgColor, BBox, yaw, center, radius)
+% input the image, returns yaw
 % if yaw cannot be found, it returns the yaw value input
 rmin_yaw = 5;
 rmax_yaw = 10;
-[centersYaw, radiiYaw, metricsYaw] = imfindcircles(frame, [rmin_yaw,rmax_yaw], ...
+
+% take only pixels in bounding box
+frame = getPixelsInBB(imgColor, BBox);
+
+% black out pixels that aren't contained in bot's circle
+% this is so yaw estimation won't pick up other bot's circles when too
+% close
+% would be better to do this without a loop if possible
+for i = 1:size(frame, 1)
+    for j = 1:size(frame,2);
+        if (i - center(1,1))^2 + (j - center(1,2))^2 > radius^2
+            frame(j,i,:) = 0;
+        end
+    end
+end
+
+[centersYaw, radiiYaw, ~] = imfindcircles(frame, [rmin_yaw,rmax_yaw], ...
     'ObjectPolarity', 'bright', 'Sensitivity', 0.94);
     if size(centersYaw,1) < 2
         'yaw not found'

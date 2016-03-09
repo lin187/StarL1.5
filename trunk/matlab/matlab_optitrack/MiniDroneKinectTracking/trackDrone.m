@@ -11,10 +11,10 @@ frame = frame(BBox(2):min([BBox(2) + BBox(4),480]), ...
 
 % get depth and rmin, rmax
 depth = findDepth(depthFrame);
-if depth == 2800
-    depth = drone.depth;
-end
-[rmin, rmax] = findRadRangeFileFolder(depth);
+% if depth == 2800
+%     depth = drone.depth;
+% end
+[rmin, rmax] = findRadiusRange(depth);
 
 % find circles
 [centers, radii, metrics] = imfindcircles(frame, [rmin,rmax], ...

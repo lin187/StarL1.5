@@ -4,6 +4,7 @@ package edu.illinois.mitra.demo.follow;
  * Created by VerivitalLab on 2/26/2016.
  * This app was created to test the drones. The bots will each go to an assigned waypoint.
  * Once both bots have arrived at their respective waypoints, they will then go to the next waypoints.
+ * The number of waypoints must be >= the number of robots, or two or more bots will try to go to the same waypoint at the same time.
  */
 
 import java.util.HashMap;

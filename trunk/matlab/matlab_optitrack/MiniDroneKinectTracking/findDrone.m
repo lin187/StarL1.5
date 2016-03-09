@@ -7,7 +7,7 @@ color = ['r', 'g', 'b'];
 % find depth
 depth = findDepth(imgDepth);
 % find circles
-[rmin, rmax] = findRadRangeFileFolder(depth);
+[rmin, rmax] = findRadiusRange(depth);
 [center, radii, metrics] = imfindcircles(imgColor, [rmin,rmax], ...
     'ObjectPolarity', 'dark', 'Sensitivity', 0.92);
 

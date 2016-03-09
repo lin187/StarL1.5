@@ -55,7 +55,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 	// Row 1 = MACs
 	// Row 2 = IPs
 	private String[][] participants;
-    private int numRobots = 1;
+    private int numRobots = 2;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -68,7 +68,7 @@ public class RobotsActivity extends Activity implements MessageListener {
         participants = new String[3][numRobots];
         // bot names
         participants[0][0] = "bot0";
-        if(numRobots >1) {
+        if(numRobots > 1) {
             participants[0][1] = "bot1";
         }
         if(numRobots > 2) {
@@ -137,7 +137,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 	}
 
 	public void createAppInstance(GlobalVarHolder gvh) {
-		runThread = new FollowApp(gvh);	// Instantiate your application here!
+		runThread = new FlockingApp(gvh);	// Instantiate your application here!
 							// Example: runThread = new LightPaintActivity(gvh);
 	}
 
