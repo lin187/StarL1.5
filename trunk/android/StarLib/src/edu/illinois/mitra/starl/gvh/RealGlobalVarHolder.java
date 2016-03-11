@@ -29,7 +29,7 @@ public class RealGlobalVarHolder extends GlobalVarHolder {
 	 * @param handler the main application handler capable of receiving GUI update messages
 	 * @param robotMac the MAC address of this agent's iRobot Create chassis
 	 */
-	public RealGlobalVarHolder(String name, Map<String,String> participants, Handler handler, String robotMac, Context context) {
+	public RealGlobalVarHolder(String name, Map<String,String> participants, Handler handler, String robotMac, Context context, int type) {
 		super(name, participants);
 
 		super.log = new AndroidLogging();
@@ -37,10 +37,10 @@ public class RealGlobalVarHolder extends GlobalVarHolder {
 		super.plat = new RealAndroidPlatform(handler);
 		super.comms = new Comms(this, new SmartUdpComThread(this));
 		super.gps = new Gps(this, new UdpGpsReceiver(this,"192.168.1.100",4000,new PositionList(),new PositionList(), new ObstacleList(), new Vector<ObstacleList>(3,2) ));
-        if(Common.botType == Common.IROBOT) {
+        if(type == Common.IROBOT) {
             plat.moat = new MotionAutomaton(this, new BluetoothInterface(this, robotMac.trim()));
         }
-        else if(Common.botType == Common.MINIDRONE) {
+        else if(type == Common.MINIDRONE) {
             plat.moat = new MotionAutomatonMiniDrone(this, new MiniDroneBTI(this, context, robotMac));
         }
 		plat.moat.start();

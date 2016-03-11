@@ -7,6 +7,7 @@ import java.util.Arrays;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.RobotEventListener.Event;
 import edu.illinois.mitra.starl.objects.ItemPosition;
+import edu.illinois.mitra.starl.objects.Model_iRobot;
 import edu.illinois.mitra.starl.objects.ObstacleList;
 
 //import edu.illinois.mitra.starl.models.Model_quadcopter;
@@ -25,7 +26,7 @@ public class MotionAutomatonMiniDrone extends RobotMotion {
 
     // Motion tracking
     protected ItemPosition destination;
-    private ItemPosition mypos;
+    private Model_iRobot mypos;
 
     //PID controller parameters
     double saturationLimit = 100;
@@ -149,11 +150,22 @@ public class MotionAutomatonMiniDrone extends RobotMotion {
                                 bti.setRoll((byte) xCommand);
                                 bti.setPitch((byte) yCommand);
                                 Log.d(TAG, "Sent roll: " + xCommand + " Sent pitch: " + yCommand);
+                                // send a small yaw command if not within 87-93 degrees
+                                if(mypos.angle > 93) {
+                                    bti.setYaw((byte) 5);
+                                }
+                                else if(mypos.angle < 87) {
+                                    bti.setYaw((byte) -5);
+                                }
+                                else {
+                                    bti.setYaw((byte) 0);
+                                }
+
                                 //next = STAGE.INIT;
                             }
                             break;
                         case HOVER:
-                            if(distance <= param.GOAL_RADIUS) {
+                            /*if(distance <= param.GOAL_RADIUS) {
                                 bti.hover();
                             }
                             else{
@@ -162,7 +174,12 @@ public class MotionAutomatonMiniDrone extends RobotMotion {
                                 bti.setRoll((byte) xCommand);
                                 bti.setPitch((byte) yCommand);
                                 Log.d(TAG, "Sent roll: " + xCommand + " Sent pitch: " + yCommand);
-                            }
+                            }*/
+                            double xCommand = PID_x.getCommand(mypos.x, destination.x);
+                            double yCommand = PID_y.getCommand(mypos.y, destination.y);
+                            bti.setRoll((byte) xCommand);
+                            bti.setPitch((byte) yCommand);
+                            Log.d(TAG, "Sent roll: " + xCommand + " Sent pitch: " + yCommand);
                             // do nothing
                             break;
                         case TAKEOFF:

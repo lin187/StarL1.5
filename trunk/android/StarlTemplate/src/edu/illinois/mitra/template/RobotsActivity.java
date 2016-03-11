@@ -55,7 +55,10 @@ public class RobotsActivity extends Activity implements MessageListener {
 	// Row 1 = MACs
 	// Row 2 = IPs
 	private String[][] participants;
-    private int numRobots = 2;
+    private int numRobots;
+    private BotInfoSelector[] botInfo;
+    private int i;
+
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -65,9 +68,21 @@ public class RobotsActivity extends Activity implements MessageListener {
 
 		// Load the participants
 		//participants = IdentityLoader.loadIdentities(IDENTITY_FILE_URL);
+        numRobots = 3;
+        botInfo = new BotInfoSelector[numRobots];
+        botInfo[0] = new BotInfoSelector("red", Common.IROBOT);
+        botInfo[1] = new BotInfoSelector("green", Common.MINIDRONE);
+        botInfo[2] = new BotInfoSelector("blue", Common.MINIDRONE);
+
         participants = new String[3][numRobots];
+        for(i =0; i < numRobots; i++) {
+            participants[0][i] = botInfo[i].name;
+            participants[1][i] = botInfo[i].bluetooth;
+            participants[2][i] = botInfo[i].ip;
+        }
+
         // bot names
-        participants[0][0] = "bot0";
+       /* participants[0][0] = "bot0";
         if(numRobots > 1) {
             participants[0][1] = "bot1";
         }
@@ -100,7 +115,7 @@ public class RobotsActivity extends Activity implements MessageListener {
         }
         if(numRobots > 2) {
             participants[2][2] = "192.168.1.112";
-        }
+        }*/
 		// Initialize preferences holder
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		selectedRobot = prefs.getInt(PREF_SELECTED_ROBOT, 0);
@@ -127,7 +142,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 		for(int i = 0; i < participants[0].length; i++) {
 			hm_participants.put(participants[0][i], participants[2][i]);
 		}
-		gvh = new RealGlobalVarHolder(participants[0][selectedRobot], hm_participants, mainHandler, participants[1][selectedRobot], this);
+		gvh = new RealGlobalVarHolder(participants[0][selectedRobot], hm_participants, mainHandler, participants[1][selectedRobot], this, botInfo[selectedRobot].type);
 		mainHandler.setGvh(gvh);
 
 		// Connect
@@ -137,7 +152,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 	}
 
 	public void createAppInstance(GlobalVarHolder gvh) {
-		runThread = new FlockingApp(gvh);	// Instantiate your application here!
+		runThread = new FollowApp(gvh);	// Instantiate your application here!
 							// Example: runThread = new LightPaintActivity(gvh);
 	}
 
