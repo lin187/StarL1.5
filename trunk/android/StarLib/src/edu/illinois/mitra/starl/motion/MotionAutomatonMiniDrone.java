@@ -29,7 +29,7 @@ public class MotionAutomatonMiniDrone extends RobotMotion {
     private Model_iRobot mypos;
 
     //PID controller parameters
-    double saturationLimit = 100;
+    double saturationLimit = 50;
     double windUpLimit = 185;
     int filterLength = 8;
     /*double Kpx = 0.2;

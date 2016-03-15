@@ -11,13 +11,26 @@ frame = getPixelsInBB(imgColor, BBox);
 % this is so yaw estimation won't pick up other bot's circles when too
 % close
 % would be better to do this without a loop if possible
-for i = 1:size(frame, 1)
-    for j = 1:size(frame,2);
-        if (i - center(1,1))^2 + (j - center(1,2))^2 > radius^2
-            frame(j,i,:) = 0;
-        end
-    end
-end
+% for i = 1:size(frame, 1)
+%     for j = 1:size(frame,2);
+%         if (i - center(1,1))^2 + (j - center(1,2))^2 > radius^2
+%             frame(j,i,:) = 0;
+%         end
+%     end
+% end
+
+% make matrices with with x and y coordinates as values
+x = (1:size(frame,2));
+X = repmat(x,size(frame,2),1);
+y = (1:size(frame,1))';
+Y = repmat(y,1,size(frame,1));
+
+% make a matrix with with 1's inside circle, 0's outside
+imgfilt = (X - center(1,1)).^2 + (Y - center(1,2)).^2 <= radius^2;
+% make the matrix NxNx3
+imgfilt = repmat(imgfilt,1,1,3);
+% multiple frame by the matrix to black out pixels
+frame = frame .* uint8(imgfilt);
 
 [centersYaw, radiiYaw, ~] = imfindcircles(frame, [rmin_yaw,rmax_yaw], ...
     'ObjectPolarity', 'bright', 'Sensitivity', 0.94);

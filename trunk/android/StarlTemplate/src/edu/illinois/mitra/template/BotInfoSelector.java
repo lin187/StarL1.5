@@ -40,7 +40,7 @@ public class BotInfoSelector {
             name = "bot2";
             ip = "192.168.1.112";
             if(type == Common.IROBOT) {
-                bluetooth = ""; // there is no blue irobot yet
+                bluetooth = "5C:F3:70:76:CE:B4";
             }
             else if(type == Common.MINIDRONE) {
                 bluetooth = "Mars_122317";

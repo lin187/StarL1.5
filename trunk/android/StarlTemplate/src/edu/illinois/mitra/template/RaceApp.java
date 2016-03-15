@@ -74,14 +74,17 @@ public class RaceApp extends LogicThread {
 
 	@Override
 	protected void receive(RobotMessage m) {
-		/*String posName = m.getContents(0);
+        if(m.getMID() == ARRIVED_MSG && !m.getFrom().equals(name)) {
+            gvh.log.d("Race", "Adding to message count from " + m.getFrom());
+        }
+		String posName = m.getContents(0);
 		if(destinations.containsKey(posName))
 			destinations.remove(posName);
 
 		if(currentDestination.getName().equals(posName)) {
 			gvh.plat.moat.motion_stop();
 			stage = Stage.PICK;
-		}*/
+		}
 	}
 
 	private static final Random rand = new Random();

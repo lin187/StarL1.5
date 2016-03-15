@@ -24,8 +24,8 @@ global CREATE2
 
 % If using Kinect, modify these as necessary
 if opt_system == KINECT
-    numCreates = 1;
-    numDrones = 2;
+    numCreates = 3;
+    numDrones = 0;
     BBoxFactor = 1.5;
     
     % Other things needed for Kinect tracking
@@ -43,6 +43,7 @@ if opt_system == KINECT
     end
     MINIDRONE = 100;
     CREATE2 = 101;
+    times = [];
 end
 
 % Start the tracker interface if it isn't running
@@ -150,6 +151,7 @@ end
 frameCount = 0;
 tic;
 while 1
+    tic;
     frameCount = frameCount + 1;
     
     % get a frame
@@ -213,7 +215,12 @@ while 1
             bots(i).Y = centerMM(1,2);
             bots(i).Z = botArray(i).depth - camDistToFloor;
             bots(i).yaw = botArray(i).yaw;
-            bots(i).visible = 1; 
+            bots(i).visible = 1;
+            times = [times; toc];
+%             figure(2);
+%             image(imgColor)
+%             hold on
+%             viscircles(botArray(i).center, botArray(i).radius);
             
             %may want to add the history stuff from above here
         end

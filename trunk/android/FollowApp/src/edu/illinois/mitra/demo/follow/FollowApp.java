@@ -4,8 +4,8 @@ package edu.illinois.mitra.demo.follow;
  * Created by VerivitalLab on 2/26/2016.
  * This app was created to test the drones. The bots will each go to an assigned waypoint.
  * Once both bots have arrived at their respective waypoints, they will then go to the next waypoints.
- * The number of waypoints must be >= the number of robots, or two or more bots will try to go to the same waypoint at the same time.
  */
+
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,8 +18,11 @@ import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.motion.MotionParameters;
 import edu.illinois.mitra.starl.motion.MotionParameters.COLAVOID_MODE_TYPE;
 import edu.illinois.mitra.starl.objects.ItemPosition;
+import edu.illinois.mitra.starl.objects.PositionList;
+import sun.rmi.runtime.Log;
 
 public class FollowApp extends LogicThread {
+    private static final String TAG = "Follow App";
     public static final int ARRIVED_MSG = 22;
     private int destIndex;
     private int messageCount = 0;
@@ -68,6 +71,7 @@ public class FollowApp extends LogicThread {
                         stage = Stage.DONE;
                     } else {
                         currentDestination = getDestination(destinations, destIndex);
+                        //Log.d(TAG, currentDestination.toString());
                         destIndex++;
                         if(destIndex >= numWaypoints) {
                             destIndex = 0;
@@ -89,7 +93,7 @@ public class FollowApp extends LogicThread {
                     }
                     break;
                 case WAIT:
-                    if((messageCount == numBots - 1) && arrived) {
+                    if((messageCount >= numBots - 1) && arrived) {
                         messageCount = 0;
                         stage = Stage.PICK;
                     }
@@ -103,19 +107,21 @@ public class FollowApp extends LogicThread {
 
     @Override
     protected void receive(RobotMessage m) {
-        messageCount++;
-        if((messageCount == numBots - 1) && arrived) {
+        if(m.getMID() == ARRIVED_MSG && !m.getFrom().equals(name)) {
+            gvh.log.d(TAG, "Adding to message count from " + m.getFrom());
+            messageCount++;
+        }
+       /* if((messageCount == numBots) && arrived) {
             messageCount = 0;
             stage = Stage.PICK;
-        }
+        }*/
     }
 
-    public ItemPosition getCurrentDestination() {
-        return currentDestination;
-    }
 
     @SuppressWarnings("unchecked")
     private <X, T> T getDestination(Map<X, T> map, int index) {
-        return (T) map.values().toArray()[index];
+        // Keys must be 0-A format for this to work
+        String key = Integer.toString(index) + "-A";
+        return map.get(key);
     }
 }

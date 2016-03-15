@@ -51,10 +51,13 @@ botArray(index).radii = [botArray(index).radii, radii(indexCircle,:)];
 % add depth found if minidrone, add dist to floor if create, find yaws
 if botArray(index).type == MINIDRONE
     botArray(index).depth = depth;
-    botArray(index).yaw = findMiniDroneYaw(imgColor,  botArray(index).BBox, botArray(index).yaw, centers(indexCircle,:), radii(indexCircle,:));
+    botArray(index).yaw = findMiniDroneYaw(imgColor,  botArray(index).BBox,...
+        botArray(index).yaw, botArray(index).center, radii(indexCircle,:), MINIDRONE);
+    %botArray(index).yaw = 0;
 elseif botArray(index).type == CREATE2
     botArray(index).depth = camDistToFloor;
-    botArray(index).yaw = findCreateYaw(imgColor, botArray(index).BBox, botArray(index).yaw, centers(indexCircle,:), radii(indexCircle,:));
+    botArray(index).yaw = findMiniDroneYaw(imgColor, botArray(index).BBox, ...
+        botArray(index).yaw, botArray(index).center, radii(indexCircle,:), CREATE2);
 end
 
 % find bbox

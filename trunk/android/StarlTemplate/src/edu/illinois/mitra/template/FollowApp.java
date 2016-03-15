@@ -6,13 +6,14 @@ package edu.illinois.mitra.template;
  * Once both bots have arrived at their respective waypoints, they will then go to the next waypoints.
  */
 
-import android.content.ClipData;
-import android.util.Log;
+
+
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+
 
 import edu.illinois.mitra.starl.comms.RobotMessage;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
@@ -31,6 +32,8 @@ public class FollowApp extends LogicThread {
     private int numWaypoints;
     private boolean arrived = false;
     private boolean goForever = true;
+    private int msgNum = 0;
+    private HashSet<RobotMessage> receivedMsgs = new HashSet<RobotMessage>();
 
     final Map<String, ItemPosition> destinations = new HashMap<String, ItemPosition>();
     ItemPosition currentDestination;
@@ -72,7 +75,7 @@ public class FollowApp extends LogicThread {
                         stage = Stage.DONE;
                     } else {
                         currentDestination = getDestination(destinations, destIndex);
-                        Log.d(TAG, currentDestination.toString());
+                        //Log.d(TAG, currentDestination.toString());
                         destIndex++;
                         if(destIndex >= numWaypoints) {
                             destIndex = 0;
@@ -87,14 +90,16 @@ public class FollowApp extends LogicThread {
                             if (currentDestination != null)
                                 destinations.remove(currentDestination.getName());
                         }
-                        RobotMessage inform = new RobotMessage("ALL", name, ARRIVED_MSG, currentDestination.getName());
+                        RobotMessage inform = new RobotMessage("ALL", name, ARRIVED_MSG, Integer.toString(msgNum));
+                        msgNum++;
+                        gvh.log.d(TAG, "At Goal, sent message");
                         gvh.comms.addOutgoingMessage(inform);
                         arrived = true;
                         stage = Stage.WAIT;
                     }
                     break;
                 case WAIT:
-                    if((messageCount == numBots - 1) && arrived) {
+                    if((messageCount >= numBots - 1) && arrived) {
                         messageCount = 0;
                         stage = Stage.PICK;
                     }
@@ -108,11 +113,22 @@ public class FollowApp extends LogicThread {
 
     @Override
     protected void receive(RobotMessage m) {
-        messageCount++;
-        if((messageCount == numBots - 1) && arrived) {
+        boolean alreadyReceived = false;
+        for(RobotMessage msg : receivedMsgs) {
+            if(msg.getFrom().equals(m.getFrom()) && msg.getContents().equals(m.getContents())) {
+                alreadyReceived = true;
+                break;
+            }
+        }
+        if(m.getMID() == ARRIVED_MSG && !m.getFrom().equals(name) && !alreadyReceived) {
+            gvh.log.d(TAG, "Adding to message count from " + m.getFrom());
+            receivedMsgs.add(m);
+            messageCount++;
+        }
+       /* if((messageCount == numBots) && arrived) {
             messageCount = 0;
             stage = Stage.PICK;
-        }
+        }*/
     }
 
 
