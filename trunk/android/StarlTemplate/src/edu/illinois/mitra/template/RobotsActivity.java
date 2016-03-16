@@ -29,6 +29,7 @@ import edu.illinois.mitra.starl.interfaces.MessageListener;
 import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.HandlerMessage;
 
+
 public class RobotsActivity extends Activity implements MessageListener {
 	private static final String TAG = "RobotsActivity";
 	private static final String ERR = "Critical Error";
@@ -70,9 +71,9 @@ public class RobotsActivity extends Activity implements MessageListener {
 		//participants = IdentityLoader.loadIdentities(IDENTITY_FILE_URL);
         numRobots = 3;
         botInfo = new BotInfoSelector[numRobots];
-        botInfo[0] = new BotInfoSelector("red", Common.IROBOT);
-        botInfo[1] = new BotInfoSelector("green", Common.IROBOT);
-        botInfo[2] = new BotInfoSelector("blue", Common.IROBOT);
+        botInfo[0] = new BotInfoSelector("red", Common.MINIDRONE);
+        botInfo[1] = new BotInfoSelector("green", Common.MINIDRONE);
+        botInfo[2] = new BotInfoSelector("blue", Common.MINIDRONE);
 
         participants = new String[3][numRobots];
         for(i =0; i < numRobots; i++) {

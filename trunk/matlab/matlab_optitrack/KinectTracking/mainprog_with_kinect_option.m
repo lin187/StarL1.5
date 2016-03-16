@@ -24,8 +24,8 @@ global CREATE2
 
 % If using Kinect, modify these as necessary
 if opt_system == KINECT
-    numCreates = 3;
-    numDrones = 0;
+    numCreates = 0;
+    numDrones = 3;
     BBoxFactor = 1.5;
     
     % Other things needed for Kinect tracking
@@ -216,7 +216,7 @@ while 1
             bots(i).Z = botArray(i).depth - camDistToFloor;
             bots(i).yaw = botArray(i).yaw;
             bots(i).visible = 1;
-            times = [times; toc];
+            
 %             figure(2);
 %             image(imgColor)
 %             hold on
@@ -231,7 +231,7 @@ while 1
         plot_bots(fig, LINE_LEN, X_MAX, Y_MAX, bots, waypoints, walls,...
             disp_waypoints, disp_waypoint_names)
     end
-    
+    times = [times; toc];
     % Interpret an exit key press
     if get(fig,'currentkey') == 'x'
         disp('Exiting...');

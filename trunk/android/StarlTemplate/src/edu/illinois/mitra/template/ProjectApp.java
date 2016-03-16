@@ -1,8 +1,4 @@
-package edu.illinois.mitra.demo.projectapp;
-
-import java.awt.Point;
-import java.awt.Polygon;
-import java.awt.geom.Line2D;
+package edu.illinois.mitra.template;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,15 +6,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Stack;
-import java.util.Vector;
+
 import edu.illinois.mitra.starl.comms.RobotMessage;
 import edu.illinois.mitra.starl.functions.RandomLeaderElection;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.LeaderElection;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
-import edu.illinois.mitra.starl.objects.*;
-import edu.illinois.mitra.starl.motion.*;
+import edu.illinois.mitra.starl.motion.MotionParameters;
 import edu.illinois.mitra.starl.motion.MotionParameters.COLAVOID_MODE_TYPE;
+import edu.illinois.mitra.starl.motion.RRTNode;
+import edu.illinois.mitra.starl.objects.ItemPosition;
+import edu.illinois.mitra.starl.objects.ObstacleList;
+import edu.illinois.mitra.starl.objects.Obstacles;
+import edu.illinois.mitra.starl.objects.Point3d;
 
 public class ProjectApp extends LogicThread {
     private static final boolean RANDOM_DESTINATION = false;
@@ -102,7 +102,7 @@ public class ProjectApp extends LogicThread {
         obEnvironment = gvh.gps.getObspointPositions();
 
         //download from environment here so that all the robots have their own copy of visible ObstacleList
-        obsList = gvh.gps.getViews().elementAt(robotIndex) ;
+       // obsList = gvh.gps.getViews().elementAt(robotIndex) ;
 
         gvh.comms.addMsgListener(this, ARRIVED_MSG);
         String intValue = name.replaceAll("[^0-9]", "");
@@ -352,7 +352,6 @@ public class ProjectApp extends LogicThread {
                                 }
                                 ItemPosition goMidPoint = pathStack.pop();
                                 gvh.plat.moat.goTo(goMidPoint, obsList);
-                               // gvh.plat.moat.goTo(goMidPoint);
                                 stage = Stage.MIDWAY;
                             }
                             else{
@@ -425,7 +424,6 @@ public class ProjectApp extends LogicThread {
             else{
                 currentDestination = getRandomElement(destinations.get(currentSet));
                 gvh.plat.moat.goTo(currentDestination, obsList);
-                //gvh.plat.moat.goTo(currentDestination);
             }
             sleep(100);
         }
