@@ -27,7 +27,8 @@ public class ProjectApp extends LogicThread {
     private volatile MotionParameters param = DEFAULT_PARAMETERS;
     // this is an ArrayList of HashMap. Each HashMap element in the array will contain one set of waypoints
     final ArrayList<HashMap<String, ItemPosition>> destinations = new ArrayList<>();
-    private int numSetsWaypoints = 4;
+    private int numSetsWaypoints = 3;
+    private int idNum;
     int robotIndex;
     int currentSet;
     boolean goingToRandom;
@@ -60,9 +61,10 @@ public class ProjectApp extends LogicThread {
         super(gvh);
 
         obsRobots = new ObstacleList();
-
+        gvh.gps.getPositions();
+        int numPos = gvh.gps.getPositions().getNumPositions();
         for(int i = 0; i< gvh.gps.getPositions().getNumPositions(); i++){
-            if(gvh.gps.getPositions().getList().get(i).name == name){
+            if(gvh.gps.getPositions().getList().get(i).name.equals(name)){
                 robotIndex = i;
                 break;
             }
@@ -103,6 +105,9 @@ public class ProjectApp extends LogicThread {
         obsList = gvh.gps.getViews().elementAt(robotIndex) ;
 
         gvh.comms.addMsgListener(this, ARRIVED_MSG);
+        String intValue = name.replaceAll("[^0-9]", "");
+        idNum = Integer.parseInt(intValue);
+        robotIndex = idNum;
     }
 
     @Override
@@ -116,7 +121,7 @@ public class ProjectApp extends LogicThread {
         int environmentYSize;
 
         for (Obstacles o : obEnvironment.ObList) {
-            for (java.awt.Point obstaclePoints : o.getObstacleVector()) {
+            for (Point3d obstaclePoints : o.getObstacleVector()) {
                 environmentMinX = (int)Math.min(obstaclePoints.getX(), environmentMinX);
                 environmentMaxX = (int)Math.max(obstaclePoints.getX(), environmentMaxX);
                 environmentMinY = (int)Math.min(obstaclePoints.getY(), environmentMinY);
@@ -186,7 +191,7 @@ public class ProjectApp extends LogicThread {
 
                 switch(stage) {
                     case ELECT:
-					    if(gvh.id.getIdNumber() == 0) {
+					    if(idNum== 0) {
                             stage = Stage.PICK;
                         }
                         else
@@ -238,7 +243,6 @@ public class ProjectApp extends LogicThread {
 
                                 // how to add all the current robot positions to plan around these?
                                 allObstacles.addObstacles(obEnvironment.ObList);
-
                                 for(int i = 0; i< gvh.gps.getPositions().getNumPositions(); i++){
 
 
@@ -365,7 +369,7 @@ public class ProjectApp extends LogicThread {
                                           RobotMessage inform = new RobotMessage("ALL", name, ARRIVED_MSG, currentDestination.getName());
                                           gvh.comms.addOutgoingMessage(inform);
                                           // if this is the highest numbered bot and there are more points, go to pick
-                                          if (gvh.id.getIdNumber() == gvh.id.getParticipants().size() - 1 && !destinations.get(currentSet).isEmpty()) {
+                                          if (idNum == gvh.id.getParticipants().size() - 1 && !destinations.get(currentSet).isEmpty()) {
                                               stage = Stage.PICK;
                                           } else {
                                               stage = Stage.PICKRANDOM;
@@ -441,7 +445,7 @@ public class ProjectApp extends LogicThread {
        String fromID = m.getFrom().replaceAll("[^0-9]", "");
        int fromInt = Integer.parseInt(fromID);
        // if i'm next robot, or the last robot and there are more points, go to pick
-       if(gvh.id.getIdNumber() == fromInt + 1) {
+       if(idNum == fromInt + 1) {
 
 
            stage = Stage.PICK;

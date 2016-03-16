@@ -12,15 +12,15 @@ public class Main {
     public static void main(String[] args) {
         SimSettings.Builder settings = new SimSettings.Builder();
 
-        settings.N_BOTS(4);
-        settings.N_GBOTS(4);
+        settings.N_BOTS(3);
+        settings.N_GBOTS(3);
         //settings.N_DBOTS(1);
 
         //	settings.N_RBOTS(1);
         settings.TIC_TIME_RATE(5);
-        settings.WAYPOINT_FILE("dest.wpt");
-        settings.INITIAL_POSITIONS_FILE("start.wpt");
-        settings.OBSPOINT_FILE("Obstacles.wpt");
+        settings.WAYPOINT_FILE("dest2.wpt");
+        settings.INITIAL_POSITIONS_FILE("start2.wpt");
+        settings.OBSPOINT_FILE("Obstacles2.wpt");
         settings.THREE_D(false);
         settings.DRAW_WAYPOINTS(false);
         settings.DRAW_WAYPOINT_NAMES(false);

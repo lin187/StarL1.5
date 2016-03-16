@@ -18,7 +18,7 @@ public class ProjectDrawer extends Drawer {
 
     private Stroke stroke = new BasicStroke(8);
     private Color selectColor = new Color(0,0,255,100);
-    private int numSetsWaypoints = 4;
+    private int numSetsWaypoints = 3;
 
     @Override
     public void draw(LogicThread lt, Graphics2D g) {
@@ -89,8 +89,8 @@ public class ProjectDrawer extends Drawer {
             else
                 g.setColor(Color.GRAY);
 
-            Point nextpoint = currobs.obstacle.firstElement();
-            Point curpoint = currobs.obstacle.firstElement();
+            Point3d nextpoint = currobs.obstacle.firstElement();
+            Point3d curpoint = currobs.obstacle.firstElement();
             int[] xs = new int[currobs.obstacle.size()];
             int[] ys = new int[currobs.obstacle.size()]; ;
 

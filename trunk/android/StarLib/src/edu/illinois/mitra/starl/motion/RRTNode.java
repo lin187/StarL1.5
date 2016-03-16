@@ -18,7 +18,7 @@ import edu.wlu.cs.levy.CG.KeySizeException;
 public class RRTNode {
 	public Point position = new Point();
 	public RRTNode parent;
-	public RRTNode stopNode;
+	public static RRTNode stopNode;
 	public KDTree<RRTNode> kd;
 //	public LinkedList<ItemPosition> pathList = new LinkedList<ItemPosition>();
 
@@ -101,8 +101,10 @@ public class RRTNode {
     		int yRandom = 0;
     		ItemPosition sampledPos = new ItemPosition("rand",xRandom, yRandom, 0);
     		while(!validRandom){
-    			xRandom = (int)(Math.random() * ((xRange) + 1));
-        		yRandom = (int)(Math.random() * ((yRange) + 1));
+                // Changed this to work with coordinate system with negative value.
+                // Need to make it an option somehow
+    			xRandom = (int)(Math.random() * ((xRange) + 1)) - xRange/2;
+        		yRandom = (int)(Math.random() * ((yRange) + 1)) - yRange/2;
         		sampledPos.x = xRandom;
         		sampledPos.y = yRandom;
         		validRandom = obsList.validstarts(sampledPos, Radius);
