@@ -14,6 +14,8 @@ public class Main {
 		settings.DRAW_WAYPOINTS(false);
 		settings.DRAW_WAYPOINT_NAMES(false);
 		settings.DRAWER(new RaceDrawer());
+
+        settings.DRAW_ROBOT_STROKE_SIZE(25);
 		
 		Simulation sim = new Simulation(RaceApp.class, settings.build());
 		sim.start();

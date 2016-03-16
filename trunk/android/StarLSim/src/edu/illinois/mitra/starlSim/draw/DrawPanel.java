@@ -314,13 +314,13 @@ public class DrawPanel extends ZoomablePanel
 	
 	private void drawRobot(Graphics2D g, RobotData rd, boolean drawId)
 	{
-		g.setStroke(new BasicStroke(10));
-		
+		g.setStroke(new BasicStroke(this.settings.DRAW_ROBOT_STROKE_SIZE));
+
 		if (rd.c != null)
 			g.setColor(rd.c);
 		else
 			g.setColor(Color.black);
-		
+
 		int radius = 50; // TODO: is this accurate / why doesn't it use the constants from SimSettings (perhaps with a scaling factor?) ; try to avoid duplicating constants
 		
 		if (rd.radius != 0)
