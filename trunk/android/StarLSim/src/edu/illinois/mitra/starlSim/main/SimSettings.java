@@ -169,7 +169,11 @@ public class SimSettings {
 	public final boolean USE_GLOBAL_LOGGER;
 
 	/**
-	 * Enable/disable trace drawing
+	 * Enables/disables drawing for a simulation
+	 */
+	public final boolean DRAW;
+	/**
+	 * Enables/disables trace drawing
 	 */
 	public final boolean DRAW_TRACE;
 	/**
@@ -204,6 +208,11 @@ public class SimSettings {
 	 * visualizer. Unaffected by the value of DRAW_WAYPOINTS
 	 */
 	public final boolean DRAW_WAYPOINT_NAMES;
+	
+	/**
+	 * Enables/disables draw robot type next to a robot
+	 */
+	public final boolean DRAW_ROBOT_TYPE;
 
 
 	private static final SimSettings defaultInstance = new Builder().build();
@@ -247,6 +256,7 @@ public class SimSettings {
 		private String TRACE_OUT_DIR;
 		private boolean THREE_D = false;
 		private boolean USE_GLOBAL_LOGGER = false;
+		private boolean DRAW = true;
 		private boolean DRAW_TRACE = false;
 		private int DRAW_TRACE_LENGTH = 128;
 		private int MAX_FPS = 30;
@@ -254,6 +264,7 @@ public class SimSettings {
 		private boolean DRAW_WAYPOINTS = true;
 		private boolean DRAW_OBSPOINTS = true;
 		private boolean DRAW_WAYPOINT_NAMES = true;
+		private boolean DRAW_ROBOT_TYPE = false;
 
 
 		public Builder De_Radius(int length) {
@@ -418,6 +429,11 @@ public class SimSettings {
 			return this;
 		}
 
+		public Builder DRAW(boolean DRAW){
+			this.DRAW = DRAW;
+			return this;
+		}
+		
 		public Builder DRAW_TRACE(boolean DRAW_TRACE) {
 			this.DRAW_TRACE = DRAW_TRACE;
 			return this;
@@ -450,6 +466,11 @@ public class SimSettings {
 
 		public Builder DRAW_WAYPOINT_NAMES(boolean DRAW_WAYPOINT_NAMES) {
 			this.DRAW_WAYPOINT_NAMES = DRAW_WAYPOINT_NAMES;
+			return this;
+		}
+		
+		public Builder DRAW__ROBOT_TYPE(boolean DRAW_ROBOT_TYPE){
+			this.DRAW_ROBOT_TYPE = DRAW_ROBOT_TYPE;
 			return this;
 		}
 
@@ -490,6 +511,7 @@ public class SimSettings {
 		this.TRACE_OUT_DIR = builder.TRACE_OUT_DIR;
 		this.THREE_D = builder.THREE_D;
 		this.USE_GLOBAL_LOGGER = builder.USE_GLOBAL_LOGGER;
+		this.DRAW = builder.DRAW;
 		this.DRAW_TRACE = builder.DRAW_TRACE;
 		this.DRAW_TRACE_LENGTH = builder.DRAW_TRACE_LENGTH;
 		this.MAX_FPS = builder.MAX_FPS;
@@ -499,7 +521,7 @@ public class SimSettings {
 		this.DRAW_WAYPOINTS = builder.DRAW_WAYPOINTS;
 		this.DRAW_OBSPOINTS = builder.DRAW_OBSPOINTS;
 		this.DRAW_WAYPOINT_NAMES = builder.DRAW_WAYPOINT_NAMES;
-		
+		this.DRAW_ROBOT_TYPE = builder.DRAW_ROBOT_TYPE;
 		
 	}
 }

@@ -33,7 +33,7 @@ public class LeaderElectApp extends LogicThread {
 	private boolean added = false;
 public LeaderElectApp(GlobalVarHolder gvh){
 		super(gvh);
-		robotIndex = Integer.parseInt(name.substring(3,name.length()));
+		robotIndex = Integer.parseInt(name.replaceAll("[^0-9]", ""));
 		mutex = new GroupSetMutex(gvh, 0);
 		//mutex = new SingleHopMutualExclusion(1, gvh, "bot0");
 		dsm = new DSMMultipleAttr(gvh);

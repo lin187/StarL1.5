@@ -101,6 +101,9 @@ public class ItemPosition extends Point3d implements Comparable<ItemPosition>{
 		if (getClass() != obj.getClass())
 			return false;
 		ItemPosition other = (ItemPosition) obj;
+		if(other.x != this.x || other.y != this.y ||other.z != this.z ){
+			return false;
+		}
 		if (name == null) {
 			if (other.name != null)
 				return false;

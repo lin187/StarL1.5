@@ -109,10 +109,10 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 	public void setControlInput(String name, double v_yaw, double pitch, double roll, double gaz) {
 		/** TODO: replace with PID model here
 		*/
-		((Model_quadcopter) quadcopters.get(name).cur).v_yaw = v_yaw;
-		((Model_quadcopter) quadcopters.get(name).cur).pitch = pitch;
-		((Model_quadcopter) quadcopters.get(name).cur).roll = roll;	
-		((Model_quadcopter) quadcopters.get(name).cur).gaz = gaz;	
+		((Model_quadcopter) quadcopters.get(name).cur).v_yawR = v_yaw;
+		((Model_quadcopter) quadcopters.get(name).cur).pitchR = pitch;
+		((Model_quadcopter) quadcopters.get(name).cur).rollR = roll;	
+		((Model_quadcopter) quadcopters.get(name).cur).gazR = gaz;	
 	}
 	
 	@Override

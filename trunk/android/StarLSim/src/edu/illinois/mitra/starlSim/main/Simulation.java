@@ -66,15 +66,21 @@ public class Simulation {
 			// Mapping between quadcopter name and IP address
 			participants.put(settings.QUADCOPTER_NAME + j, "192.168.0." + (j+settings.N_IROBOTS));
 		}
-
-
-		// Initialize viewer
-		drawFrame = new DrawFrame(participants.keySet(), blockedRobots, settings);
-		drawFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		
 		// Start the simulation engine
 		LinkedList<LogicThread> logicThreads = new LinkedList<LogicThread>();
-		simEngine = new SimulationEngine(settings.SIM_TIMEOUT, settings.MSG_MEAN_DELAY, settings.MSG_STDDEV_DELAY, settings.MSG_LOSSES_PER_HUNDRED, settings.MSG_RANDOM_SEED, settings.TIC_TIME_RATE, blockedRobots, participants, drawFrame.getPanel(), logicThreads);
+		if(settings.DRAW){
+			// Initialize viewer
+			drawFrame = new DrawFrame(participants.keySet(), blockedRobots, settings);
+			drawFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			simEngine = new SimulationEngine(settings.SIM_TIMEOUT, settings.MSG_MEAN_DELAY, settings.MSG_STDDEV_DELAY, settings.MSG_LOSSES_PER_HUNDRED, settings.MSG_RANDOM_SEED, settings.TIC_TIME_RATE, blockedRobots, participants, drawFrame.getPanel(), logicThreads);
+		}
+		else{
+			drawFrame = null;
+			simEngine = new SimulationEngine(settings.SIM_TIMEOUT, settings.MSG_MEAN_DELAY, settings.MSG_STDDEV_DELAY, settings.MSG_LOSSES_PER_HUNDRED, settings.MSG_RANDOM_SEED, settings.TIC_TIME_RATE, blockedRobots, participants, null, logicThreads);
+
+		}
+
 
 		// Create the sim gps
 		// TODO: need to redefine the noises for models in general
@@ -161,7 +167,7 @@ public class Simulation {
 			if(i< settings.N_DBOTS){
 				initialPosition.type = 1;
 			}
-			if((i>=settings.N_DBOTS) && (i<(settings.N_DBOTS + settings.N_RBOTS))){
+			else if((i>=settings.N_DBOTS) && (i<(settings.N_DBOTS + settings.N_RBOTS))){
 				initialPosition.type = 2;	
 			}
 			else{
@@ -170,11 +176,8 @@ public class Simulation {
 			}
 
 			initialPosition.radius = settings.BOT_RADIUS;
-
 			SimApp sa = new SimApp(botName, participants, simEngine, initialPosition, settings.TRACE_OUT_DIR, app, drawFrame, settings.TRACE_CLOCK_DRIFT_MAX, settings.TRACE_CLOCK_SKEW_MAX);
-
 			bots.add(sa);
-
 			logicThreads.add(sa.logic);
 		}
 		for(int i = 0; i < settings.N_QUADCOPTERS; i++) {
@@ -210,85 +213,78 @@ public class Simulation {
 			logicThreads.add(sa.logic);
 		}
 
-
-
-
-
-		// initialize debug drawer class if it was set in the settings
-		if(settings.DRAWER != null)
-			drawFrame.addPredrawer(settings.DRAWER);
-
-		// GUI observer updates the viewer when new positions are calculated
-		Observer guiObserver = new Observer() {
-			@Override
-			public void update(Observable o, Object arg) {
-				Color[] c = new Color[12] ;
-				c[0] = Color.BLACK;
-				c[1] = Color.BLUE;
-				c[2] = Color.GREEN;
-				c[3] = Color.MAGENTA;
-				c[4] = Color.ORANGE;
-				c[5] = Color.CYAN;
-				c[6] = Color.GRAY;
-				c[7] = Color.PINK;
-				c[8] = Color.RED;
-				c[9] = Color.LIGHT_GRAY;
-				c[10] = Color.YELLOW;
-				c[11] = Color.DARK_GRAY;
-
-				Vector<ObstacleList> views = gps.getViews();
-//				ArrayList<Model_iRobot> pos;
-//				ArrayList<Model_quadcopter> pos2;
-				ArrayList<RobotData> rd = new ArrayList<RobotData>();
-				ArrayList targetList = ((PositionList) arg).getList();
-				if(targetList.size() >0){
-					for(int i = 0; i < targetList.size(); i++){
-						if(targetList.get(i) instanceof Model_iRobot){
-							
-							Model_iRobot ip = (Model_iRobot) targetList.get(i);
-							if(i<12){
-								RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.angle, c[i], views.elementAt(i), ip.leftbump, ip.rightbump);
-								nextBot.radius = settings.BOT_RADIUS;
-								nextBot.type = ip.type;
-								rd.add(nextBot);
-							}
-							else{
-								RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.angle, c[0], views.elementAt(i), ip.leftbump, ip.rightbump);
-								nextBot.radius = settings.BOT_RADIUS;
-								rd.add(nextBot);
-							}
-						}
-						else if(targetList.get(i) instanceof Model_quadcopter){
-							Model_quadcopter ip = (Model_quadcopter) targetList.get(i);
-							RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.z, ip.yaw, ip.pitch, ip.roll, ip.receivedTime);
-							nextBot.radius = settings.BOT_RADIUS;
-							rd.add(nextBot);
-						}
-					}
-				}
-				
-				// Add waypoints
-				if(settings.DRAW_WAYPOINTS) {
-					for(ItemPosition ip : gps.getWaypointPositions().getList()) {
-						RobotData waypoint = new RobotData((settings.DRAW_WAYPOINT_NAMES ? ip.name : ""), ip.x, ip.y, ip.index);
-						waypoint.radius = 5;
-						waypoint.c = new Color(255, 0, 0);
-						rd.add(waypoint);
-					}
-				}
-				drawFrame.updateData(rd, simEngine.getTime());
-				//add obstacle update later
-			}
-		};
-		gps.addObserver(guiObserver);
-
-
-
 		if(settings.USE_GLOBAL_LOGGER)
 			gps.addObserver(createGlobalLogger(settings));
 
-		// show viewer
-		drawFrame.setVisible(true);
+		if(settings.DRAW){
+			// initialize debug drawer class if it was set in the settings
+			if(settings.DRAWER != null)
+				drawFrame.addPredrawer(settings.DRAWER);
+			// GUI observer updates the viewer when new positions are calculated
+			Observer guiObserver = new Observer() {
+				@Override
+				public void update(Observable o, Object arg) {
+					Color[] c = new Color[12] ;
+					c[0] = Color.BLACK;
+					c[1] = Color.BLUE;
+					c[2] = Color.GREEN;
+					c[3] = Color.MAGENTA;
+					c[4] = Color.ORANGE;
+					c[5] = Color.CYAN;
+					c[6] = Color.GRAY;
+					c[7] = Color.PINK;
+					c[8] = Color.RED;
+					c[9] = Color.LIGHT_GRAY;
+					c[10] = Color.YELLOW;
+					c[11] = Color.DARK_GRAY;
+
+					Vector<ObstacleList> views = gps.getViews();
+					//				ArrayList<Model_iRobot> pos;
+					//				ArrayList<Model_quadcopter> pos2;
+					ArrayList<RobotData> rd = new ArrayList<RobotData>();
+					ArrayList targetList = ((PositionList) arg).getList();
+					if(targetList.size() >0){
+						for(int i = 0; i < targetList.size(); i++){
+							if(targetList.get(i) instanceof Model_iRobot){
+
+								Model_iRobot ip = (Model_iRobot) targetList.get(i);
+								if(i<12){
+									RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.angle, c[i], views.elementAt(i), ip.leftbump, ip.rightbump);
+									nextBot.radius = settings.BOT_RADIUS;
+									nextBot.type = ip.type;
+									rd.add(nextBot);
+								}
+								else{
+									RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.angle, c[0], views.elementAt(i), ip.leftbump, ip.rightbump);
+									nextBot.radius = settings.BOT_RADIUS;
+									rd.add(nextBot);
+								}
+							}
+							else if(targetList.get(i) instanceof Model_quadcopter){
+								Model_quadcopter ip = (Model_quadcopter) targetList.get(i);
+								RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.z, ip.yaw, ip.pitch, ip.roll, ip.receivedTime);
+								nextBot.radius = settings.BOT_RADIUS;
+								rd.add(nextBot);
+							}
+						}
+					}
+					// Add waypoints
+					if(settings.DRAW_WAYPOINTS) {
+						for(ItemPosition ip : gps.getWaypointPositions().getList()) {
+							RobotData waypoint = new RobotData((settings.DRAW_WAYPOINT_NAMES ? ip.name : ""), ip.x, ip.y, ip.index);
+							waypoint.radius = 5;
+							waypoint.c = new Color(255, 0, 0);
+							rd.add(waypoint);
+						}
+					}
+					drawFrame.updateData(rd, simEngine.getTime());
+					//add obstacle update later
+				}
+			};
+			gps.addObserver(guiObserver);
+			// show viewer
+			drawFrame.setVisible(true);
+		}
 	}
 
 	private static final double BOT_SPACING_FACTOR = 2.8;

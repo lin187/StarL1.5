@@ -11,6 +11,7 @@ import edu.illinois.mitra.starl.harness.SimSmartComThread;
 import edu.illinois.mitra.starl.harness.SimulationEngine;
 import edu.illinois.mitra.starl.interfaces.TrackedRobot;
 import edu.illinois.mitra.starl.models.*;
+import edu.illinois.mitra.starl.motion.ReachAvoid;
 
 /**
  * Extension of the GlobalVarHolder class for use in simulations of StarL applications 
@@ -40,6 +41,7 @@ public class SimGlobalVarHolder extends GlobalVarHolder {
 			trace.traceStart();
 		super.plat = new AndroidPlatform();
 		plat.model = initpos;
+		plat.reachAvoid = new ReachAvoid(this);
 		if(initpos instanceof Model_iRobot){
 			if(engine.getGps() instanceof IdealSimGpsProvider) {
 				plat.moat = new IdealSimMotionAutomaton(this, (IdealSimGpsProvider)engine.getGps());

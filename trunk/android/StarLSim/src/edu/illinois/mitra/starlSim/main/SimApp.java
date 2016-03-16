@@ -28,8 +28,9 @@ public class SimApp implements Callable<List<Object>> {
 		try {
 			// Generically instantiate an instance of the requested LogicThread
 			logic = (LogicThread) app.getConstructor(GlobalVarHolder.class).newInstance(gvh);
-
-			drawFrame.addPointInputAccepter(logic);
+			if(drawFrame != null){
+				drawFrame.addPointInputAccepter(logic);
+			}
 		} catch(InstantiationException e) {
 			e.printStackTrace();
 		} catch(IllegalAccessException e) {

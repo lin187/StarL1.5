@@ -52,8 +52,12 @@ public class SearchApp extends LogicThread {
 
 	public SearchApp(GlobalVarHolder gvh) {
 		super(gvh);
-
-		robotIndex = Integer.parseInt(name.substring(6,name.length()));
+		for(int i = 0; i< gvh.gps.get_robot_Positions().getNumPositions(); i++){
+			if(gvh.gps.get_robot_Positions().getList().get(i).name.equals(name)){
+				robotIndex = i;
+				break;
+			}
+		}
 		MotionParameters.Builder settings = new MotionParameters.Builder();
 		settings.COLAVOID_MODE(COLAVOID_MODE_TYPE.USE_COLBACK);
 		//settings.GOAL_RADIUS(15);
@@ -138,56 +142,30 @@ public class SearchApp extends LogicThread {
 						RobotMessage done_task_msg = new RobotMessage("ALL", name, DONE_MSG, "done");
 						gvh.comms.addOutgoingMessage(done_task_msg);
 						stage = Stage.DONE;
-					} else 
-					{
+					}else{
 						currentDestination = (ItemPosition)destinations.peek();
-						RRTNode path = new RRTNode(gvh.gps.getPosition(name).x, gvh.gps.getPosition(name).y);
-						pathStack = path.findRoute(currentDestination, 5000, obEnvironment, 12330, 8500, (gvh.gps.getPosition(name)), (int) (((Model_iRobot)(gvh.plat.getModel())).radius));
-						kdTree = path.stopNode;
-						//wait when can not find path
-						if(pathStack == null){
-							stage = Stage.HOLD;	
-						}					
-						else{
-							preDestination = null;
-							stage = Stage.GO;
-						}
+						gvh.plat.reachAvoid.doReachAvoid(gvh.gps.getMyPosition(), currentDestination, obEnvironment);
+						stage = Stage.HOLD;	
 					}
 					break;
 				}
 			case HOLD:
+				// wait here until doReachAvoid is doing it's job
+				pathStack = gvh.plat.reachAvoid.pathStack; 
+				kdTree = gvh.plat.reachAvoid.kdTree;
+				if(pathStack != null){
+					preDestination = null;
+					stage = Stage.GO;
+				}					
 				break;
 			case GO:
-				if(!gvh.plat.moat.inMotion) {
-					if(!pathStack.empty()){
-						//if did not reach last midway point, go back to path planning
-						if(preDestination != null){
-							if((gvh.gps.getPosition(name).distanceTo(preDestination)>param.GOAL_RADIUS)){
-								pathStack.clear();
-								stage = Stage.PICK;
-								break;
-							}
-							preDestination = pathStack.peek();
-						}
-						else{
-							preDestination = pathStack.peek();
-						}
-						ItemPosition goMidPoint = pathStack.pop();
-						//gvh.plat.moat.goTo(new ItemPosition("", 80, 30));
-						gvh.plat.moat.goTo(goMidPoint);
-					}
-					else{
-						if((gvh.gps.getPosition(name).distanceTo(currentDestination)>param.GOAL_RADIUS)){
-							pathStack.clear();
-							stage = Stage.PICK;
-						}
-						else{
-							//reached the point, go on searching
-							searchPath = robotCoverageAlg(currentDestination);
-							searchTemp = currentDestination;
-							stage = Stage.SEARCH;
-						}
-					}
+				if( gvh.plat.reachAvoid.doneFlag){
+					searchPath = robotCoverageAlg(currentDestination);
+					searchTemp = currentDestination;
+					stage = Stage.SEARCH;
+				}
+				else if(gvh.plat.reachAvoid.activeFlag == false){
+					stage = Stage.PICK;
 				}
 				break;
 			case SEARCH:	

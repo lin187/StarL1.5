@@ -1,6 +1,7 @@
 package edu.illinois.mitra.starl.gvh;
 
 import edu.illinois.mitra.starl.interfaces.TrackedRobot;
+import edu.illinois.mitra.starl.motion.ReachAvoid;
 import edu.illinois.mitra.starl.motion.RobotMotion;
 
 /**
@@ -11,6 +12,8 @@ import edu.illinois.mitra.starl.motion.RobotMotion;
  *
  */
 public class AndroidPlatform {
+	
+	public ReachAvoid reachAvoid;
 	
 	public RobotMotion moat;
 	

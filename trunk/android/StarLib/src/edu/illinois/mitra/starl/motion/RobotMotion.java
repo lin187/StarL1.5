@@ -13,12 +13,14 @@ public abstract class RobotMotion extends Thread implements Cancellable {
 	
 	public boolean inMotion = false;
 	
+	public boolean done = false;
+		
 	public RobotMotion() {}
 	
 	public RobotMotion(String name) {
 		super("RobotMotion-"+name);
 	}
-	
+		
 	/**
 	 * Go to a destination using the default motion parameters
 	 * @param dest the robot's destination

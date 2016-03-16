@@ -78,7 +78,7 @@ public class DrawPanel extends ZoomablePanel
 				RobotData rd = data.get(rIndex);
 				
 				
-				drawRobot(g,rd,true);
+				drawRobot(g,rd,settings.DRAW_ROBOT_TYPE);
 				
 				if(wirelessBlocked[rIndex]){
 					
@@ -111,7 +111,7 @@ public class DrawPanel extends ZoomablePanel
 					{					
 						trace.add(new Point(rd.x, rd.y));
 						
-						if (trace.size() > settings.DRAW_TRACE_LENGTH)
+						if (settings.DRAW_TRACE_LENGTH> 0 && trace.size() > settings.DRAW_TRACE_LENGTH)
 							trace.removeFirst();
 					}
 				}

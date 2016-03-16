@@ -7,8 +7,10 @@ import android.os.Handler;
 import edu.illinois.mitra.starl.comms.SmartUdpComThread;
 import edu.illinois.mitra.starl.comms.UdpGpsReceiver;
 import edu.illinois.mitra.starl.interfaces.DSM;
+import edu.illinois.mitra.starl.interfaces.TrackedRobot;
 import edu.illinois.mitra.starl.motion.BluetoothInterface;
 import edu.illinois.mitra.starl.motion.MotionAutomaton_iRobot;
+import edu.illinois.mitra.starl.motion.ReachAvoid;
 import edu.illinois.mitra.starl.objects.ObstacleList;
 import edu.illinois.mitra.starl.objects.PositionList;
 
@@ -25,7 +27,7 @@ public class RealGlobalVarHolder extends GlobalVarHolder {
 	 * @param handler the main application handler capable of receiving GUI update messages
 	 * @param robotMac the MAC address of this agent's iRobot Create chassis
 	 */
-	public RealGlobalVarHolder(String name, Map<String,String> participants, Handler handler, String robotMac) {
+	public RealGlobalVarHolder(String name, Map<String,String> participants, TrackedRobot initpos, Handler handler, String robotMac) {
 		super(name, participants);
 
 		super.log = new AndroidLogging();
@@ -33,6 +35,8 @@ public class RealGlobalVarHolder extends GlobalVarHolder {
 		super.plat = new RealAndroidPlatform(handler);
 		super.comms = new Comms(this, new SmartUdpComThread(this));
 		super.gps = new Gps(this, new UdpGpsReceiver(this,"192.168.1.100",4000,new PositionList(),new PositionList(), new ObstacleList(), new Vector<ObstacleList>(3,2) ));
+		plat.model = initpos;
+		plat.reachAvoid = new ReachAvoid(this);
 		plat.moat = new MotionAutomaton_iRobot(this, new BluetoothInterface(this, robotMac.trim()));
 		plat.moat.start();
 	}

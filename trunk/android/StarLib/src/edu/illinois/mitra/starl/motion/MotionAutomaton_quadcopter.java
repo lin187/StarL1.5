@@ -21,7 +21,7 @@ import edu.illinois.mitra.starl.objects.*;
 public class MotionAutomaton_quadcopter extends RobotMotion {
 	protected static final String TAG = "MotionAutomaton";
 	protected static final String ERR = "Critical Error";
-	final int safeHeight = 150;
+	final int safeHeight = 500;
 
 	protected GlobalVarHolder gvh;
 	protected BluetoothInterface bti;
@@ -68,6 +68,7 @@ public class MotionAutomaton_quadcopter extends RobotMotion {
 
 	public void goTo(ItemPosition dest) {
 		if((inMotion && !this.destination.equals(dest)) || !inMotion) {
+			done = false;
 			this.destination = new ItemPosition(dest.name,dest.x,dest.y,dest.z);
 			//this.destination = dest;
 			this.mode = OPMODE.GO_TO;
@@ -87,20 +88,21 @@ public class MotionAutomaton_quadcopter extends RobotMotion {
 		gvh.threadCreated(this);
 		// some control parameters
 		double kpx,kpy,kpz, kdx,kdy,kdz;
-		kpx = kpy = kpz = 2.0;
-		kdx = kdy = kdz = 0.7;
+		kpx = kpy = kpz = 0.00033;
+		kdx = kdy = kdz = 0.0006;
 		while(true) {
 			//			gvh.gps.getObspointPositions().updateObs();
 			if(running) {
 				mypos = (Model_quadcopter)gvh.plat.getModel();
 //				System.out.println(mypos.toString());
-				int distance = mypos.distanceTo(destination);				
-				colliding = false;
+				int distance = (int) Math.sqrt(Math.pow((mypos.x - destination.x),2) + Math.pow((mypos.y - destination.y), 2)); 
+				//int distance = mypos.distanceTo(destination);		
+				if(mypos.gaz < -50){
+			//		System.out.println("going down");
+				}
+				colliding = (stage != STAGE.LAND && mypos.gaz < -50);
 
 				if(!colliding && stage != null) {
-					if(stage != prev)
-						gvh.log.e(TAG, "Stage is: " + stage.toString());
-
 					switch(stage) {
 					case INIT:
 						if(mode == OPMODE.GO_TO) {
@@ -120,6 +122,12 @@ public class MotionAutomaton_quadcopter extends RobotMotion {
 						}	
 						break;
 					case MOVE:
+						if(mypos.z < safeHeight){
+							// just a safe distance from ground
+							takeOff();
+							next = STAGE.TAKEOFF;
+							break;
+						}
 						if(distance <= param.GOAL_RADIUS) {
 							next = STAGE.GOAL;
 						}
@@ -180,7 +188,9 @@ public class MotionAutomaton_quadcopter extends RobotMotion {
 						}
 						break;
 					case GOAL:
+						done = true;
 						gvh.log.i(TAG, "At goal!");
+						gvh.log.i("DoneFlag", "write");
 						if(param.STOP_AT_DESTINATION){
 							hover();
 							next = STAGE.HOVER;
@@ -189,6 +199,9 @@ public class MotionAutomaton_quadcopter extends RobotMotion {
 						inMotion = false;
 						break;
 					case STOP:
+						gvh.log.i("FailFlag", "write");
+						System.out.println("STOP");
+						motion_stop();
 						//do nothing
 					}
 					if(next != null) {
@@ -203,8 +216,11 @@ public class MotionAutomaton_quadcopter extends RobotMotion {
 				} 
 
 				if((colliding || stage == null) ) {
-					land();
-					stage = STAGE.LAND;
+					gvh.log.i("FailFlag", "write");
+					done = false;
+					motion_stop();
+				//	land();
+				//	stage = STAGE.LAND;
 				}
 			}
 			gvh.sleep(param.AUTOMATON_PERIOD);
@@ -218,8 +234,8 @@ public class MotionAutomaton_quadcopter extends RobotMotion {
 
 	@Override
 	public void motion_stop() {
-		land();
-		stage = STAGE.LAND;
+		//land();
+		//stage = STAGE.LAND;
 		this.destination = null;
 		running = false;
 		inMotion = false;

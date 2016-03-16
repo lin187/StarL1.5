@@ -71,8 +71,4 @@ public class SimGpsReceiver implements GpsReceiver {
 	public PositionList<ItemPosition> getSensepoints() {
 		return provider.getSensePositions();
 	}
-	
-	
-	
-	
 }

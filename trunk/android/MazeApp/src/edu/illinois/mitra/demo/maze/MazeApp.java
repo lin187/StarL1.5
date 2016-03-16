@@ -7,9 +7,7 @@ import java.util.Random;
 import java.util.Stack;
 
 import edu.illinois.mitra.starl.comms.RobotMessage;
-import edu.illinois.mitra.starl.functions.RandomLeaderElection;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
-import edu.illinois.mitra.starl.interfaces.LeaderElection;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.objects.*;
 import edu.illinois.mitra.starl.motion.*;
@@ -25,21 +23,16 @@ public class MazeApp extends LogicThread {
 
 	// used to find path through obstacles
 	Stack<ItemPosition> pathStack;	
-	RRTNode kdTree = new RRTNode();
-
+	RRTNode kdTree;
 	ObstacleList obsList;
 	//obsList is a local map each robot has, when path planning, use this map
 	ObstacleList obEnvironment;
 	//obEnvironment is the physical environment, used when calculating collisions
-
 	ItemPosition currentDestination, preDestination;
 
-	private LeaderElection le;
-	//	private String leader = null;
-	private boolean iamleader = false;
 
 	private enum Stage {
-		PICK, GO, DONE, ELECT, HOLD, MIDWAY
+		PICK, GO, DONE, HOLD
 	};
 
 	private Stage stage = Stage.PICK;
@@ -53,9 +46,6 @@ public class MazeApp extends LogicThread {
 			}
 		}
 
-		le = new RandomLeaderElection(gvh);
-
-
 		MotionParameters.Builder settings = new MotionParameters.Builder();
 		//		settings.ROBOT_RADIUS(400);
 		settings.COLAVOID_MODE(COLAVOID_MODE_TYPE.USE_COLBACK);
@@ -64,7 +54,6 @@ public class MazeApp extends LogicThread {
 
 		for(ItemPosition i : gvh.gps.getWaypointPositions())
 			destinations.put(i.getName(), i);
-
 
 		//point the environment to internal data, so that we can update it 
 		obEnvironment = gvh.gps.getObspointPositions();
@@ -78,146 +67,52 @@ public class MazeApp extends LogicThread {
 	@Override
 	public List<Object> callStarL() {
 		while(true) {
-			obEnvironment.updateObs();
-
+			obEnvironment.updateObs();			
 			obsList.updateObs();
-			switch(stage) {
-			case ELECT:
-				/*
-					le.elect();
-					if(le.getLeader() != null) {
-						results[1] = le.getLeader();
-					}
-				 */
-				stage = Stage.PICK;
+			kdTree = gvh.plat.reachAvoid.kdTree;
 
-				break;
+			switch(stage) {
 			case PICK:
+//				System.out.println("PICK");
 				if(destinations.isEmpty()) {
 					stage = Stage.DONE;
 				} else 
 				{
-
-					//			RobotMessage informleader = new RobotMessage("ALL", name, 21, le.getLeader());
-					//			gvh.comms.addOutgoingMessage(informleader);
-
-					//			iamleader = le.getLeader().equals(name);
-					iamleader = true;
-
-					if(iamleader)
-					{
-						currentDestination = getRandomElement(destinations);
-
-						RRTNode path = new RRTNode(gvh.gps.getPosition(name).x, gvh.gps.getPosition(name).y);
-						pathStack = path.findRoute(currentDestination, 5000, obsList, 5000, 3000, (gvh.gps.getPosition(name)), 280);
-
-						kdTree =  path.stopNode;
-						//RRTNode.stopNode;
-						//wait when can not find path
-						if(pathStack == null){
-							stage = Stage.HOLD;	
-						}					
-						else{
-							preDestination = null;
-							stage = Stage.MIDWAY;
-						}
-					}
-
-					/*
-						else
-						{
-						currentDestination = gvh.gps.getPosition(le.getLeader());	
-						currentDestination1 = new ItemPosition(currentDestination); 
-						int newx, newy;
-						if(gvh.gps.getPosition(name).getX() < currentDestination1.getX())
-						{
-							newx = gvh.gps.getPosition(name).getX() - currentDestination1.getX()/8;
-						}
-						else
-						{
-							newx = gvh.gps.getPosition(name).getX() + currentDestination1.getX()/8;
-						}
-						if(gvh.gps.getPosition(name).getY() < currentDestination1.getY())
-						{
-							newy = gvh.gps.getPosition(name).getY() - currentDestination1.getY()/8;
-						}
-						else
-						{
-							newy = gvh.gps.getPosition(name).getY() + currentDestination1.getY()/8;
-						}
-						currentDestination1.setPos(newx, newy, (currentDestination1.getAngle())); 
-		//				currentDestination1.setPos(currentDestination);
-						gvh.plat.moat.goTo(currentDestination1, obsList);
-						stage = Stage.HOLD;
-						}
-					 */
-				}
-				break;
-
-
-			case MIDWAY:
-				if(!gvh.plat.moat.inMotion) {
-					if(pathStack == null){
-						stage = Stage.HOLD;
-						// if can not find a path, wait for obstacle map to change
-						break;
-					}
-					if(!pathStack.empty()){
-						//if did not reach last midway point, go back to path planning
-						if(preDestination != null){
-							if((gvh.gps.getPosition(name).distanceTo(preDestination)>param.GOAL_RADIUS)){
-								pathStack.clear();
-								stage = Stage.PICK;
-								break;
-							}
-							preDestination = pathStack.peek();
-						}
-						else{
-							preDestination = pathStack.peek();
-						}
-						ItemPosition goMidPoint = pathStack.pop();
-						gvh.plat.moat.goTo(goMidPoint, obsList);
-						stage = Stage.MIDWAY;
-					}
-					else{
-						if((gvh.gps.getPosition(name).distanceTo(currentDestination)>param.GOAL_RADIUS)){
-							pathStack.clear();
-							stage = Stage.PICK;
-						}
-						else{
-							if(currentDestination != null){
-								destinations.remove(currentDestination.getName());
-								RobotMessage inform = new RobotMessage("ALL", name, ARRIVED_MSG, currentDestination.getName());
-								gvh.comms.addOutgoingMessage(inform);
-								stage = Stage.PICK;
-							}
-						}
-					}
+					currentDestination = getRandomElement(destinations);
+					gvh.plat.reachAvoid.doReachAvoid(gvh.gps.getMyPosition(), currentDestination, obsList);
+					stage = Stage.HOLD;		
 				}
 				break;	
-
 			case GO:
-				if(!gvh.plat.moat.inMotion) {
+//				System.out.println("GO");
+				if(gvh.plat.reachAvoid.doneFlag) {
+					preDestination = currentDestination;
 					if(currentDestination != null)
 						destinations.remove(currentDestination.getName());
 					RobotMessage inform = new RobotMessage("ALL", name, ARRIVED_MSG, currentDestination.getName());
 					gvh.comms.addOutgoingMessage(inform);
 					stage = Stage.PICK;
 				}
-
+				else if(gvh.plat.reachAvoid.failFlag) {
+					stage = Stage.PICK;
+					// call reach avoid again to plan path again
+				}
 				break;
 			case HOLD:
-				//			if(gvh.gps.getMyPosition().distanceTo(gvh.gps.getPosition(le.getLeader())) < 1000 )
-				//			{
-				//			stage = Stage.PICK;
-				//		    }
-				//			else
-			{
-				gvh.plat.moat.motion_stop();	
-			}
+//				System.out.println("HOLD");
+				pathStack = gvh.plat.reachAvoid.pathStack;
+				if(pathStack != null){
+					preDestination = null;
+					kdTree = gvh.plat.reachAvoid.kdTree;
+					stage = Stage.GO;
+				}
+				if(gvh.plat.reachAvoid.failFlag){
+					System.out.println("Plan Failed");
+					gvh.plat.moat.motion_stop();
+				}
 			break;
-
 			case DONE:
+				System.out.println("DONE");
 				gvh.plat.moat.motion_stop();
 				return null;
 			}

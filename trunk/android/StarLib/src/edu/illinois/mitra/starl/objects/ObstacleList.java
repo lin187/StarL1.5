@@ -34,6 +34,17 @@ public class ObstacleList {
 		lastUpdateTime = System.currentTimeMillis();
 	}
 
+	
+	public ObstacleList clone(){
+		ObstacleList toReturn = new ObstacleList(ObList);
+		toReturn.de_Radius = this.de_Radius;
+		toReturn.detect_Precision = this.detect_Precision;
+		toReturn.lastUpdateTime = this.lastUpdateTime;
+		return toReturn;
+		
+	}
+	
+	
     /**
      * check if the line alone destination and current has any intersection with any obstacles
      */
