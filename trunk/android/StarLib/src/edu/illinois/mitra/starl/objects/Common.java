@@ -31,9 +31,10 @@ public final class Common {
 	public static final int MSG_ACTIVITYABORT			= 12;
 	public static final int MSG_GEOCAST					= 13;
 	public static final int MSG_BOARDCAST               = 14;
-	public static final int MSG_GSMUTEX_REQUEST         = 15;
-	public static final int MSG_GSMUTEX_REPLY           = 16;
-	public static final int MSG_DSM_INFORM              = 17;
+	public static final int MSG_DSM_INFORM              = 15;
+	//reserver 1000*2 mutex id for the group set mutex algorithm
+	public static final int MSG_GSMUTEX_REQUEST         = 1000;
+	public static final int MSG_GSMUTEX_REPLY           = 2000;
 	// GUI Message handler
 //	public static final int MESSAGE_TOAST = 0;
 //	public static final int MESSAGE_LOCATION = 1;
