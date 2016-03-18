@@ -25,14 +25,13 @@ public class DSMMultipleAttr implements DSM, MessageListener{
 		agent_name = gvh.id.getName();
 		// TODO: attach to gvh
 		// gvh.dsm = this;
-		gvh.comms.addMsgListener(this, Common.MSG_DSM_INFORM);
+		start();
 	}
 
 	@Override
 	public void cancel() {
 		gvh.trace.traceEvent(TAG, "Cancelled", gvh.time());
 		gvh.comms.removeMsgListener(Common.MSG_DSM_INFORM);
-		// TODO Auto-generated method stub
 	}
 
 	@Override
@@ -71,8 +70,8 @@ public class DSMMultipleAttr implements DSM, MessageListener{
 
 	@Override
 	public void start() {
-		// TODO Auto-generated method stub
-		
+		gvh.trace.traceEvent(TAG, "Started", gvh.time());
+		gvh.comms.addMsgListener(this, Common.MSG_DSM_INFORM);
 	}
 
 	@Override
@@ -89,7 +88,6 @@ public class DSMMultipleAttr implements DSM, MessageListener{
 
 	@Override
 	public List<DSMVariable> getAll(String name, String owner) {
-		// TODO Auto-generated method stub
 		return ((List<DSMVariable>) dsm_map.values());
 	}
 
@@ -104,7 +102,6 @@ public class DSMMultipleAttr implements DSM, MessageListener{
 			if(dsm_map.containsKey(name+owner)){
 				return dsm_map.get(name+owner);
 			}
-		// TODO Auto-generated method stub
 		}
 		gvh.log.d(TAG, "Variable not found: "+ name + ", owner:" + owner);
 		return null;
@@ -170,7 +167,13 @@ public class DSMMultipleAttr implements DSM, MessageListener{
 	@Override
 	public boolean put(String name, String owner, String attr, int value) {
 		long curTS = getConsistantTS(owner);
-		DSMVariable input = new DSMVariable(name, owner, attr, String.valueOf(value), curTS);
+		DSMVariable input;
+		if(owner == "*"){
+			input = new DSMVariable(name, owner, attr, String.valueOf(value), curTS);
+		}
+		else{
+			input = new DSMVariable(name+owner, owner, attr, String.valueOf(value), curTS);
+		}
 		return put(input);
 	}
 

@@ -16,24 +16,30 @@ public class SimSettings {
 	public final int De_Radius;
 	
 	/**
-	 * The number of robots to simulate.
+	 * The number of iRobots to simulate.
 	 */
-	public final int N_BOTS;
+	public final int N_IROBOTS;
 	
 	/**
-	 * The number of get to the goal robots to simulate.
+	 * The number of get to the goal rRobots to simulate.
 	 */
 	public final int N_GBOTS;
 	
 	/**
-	 * The number of discovery robots to simulate.
+	 * The number of discovery iRobots to simulate.
 	 */
 	public final int N_DBOTS;
 	
 	/**
-	 * The number of random moving obstacles to simulate.
+	 * The number of random moving iRobots to simulate.
 	 */
 	public final int N_RBOTS;
+	
+	/**
+	 * The number of quadcopters to simulate.
+	 */
+	public final int N_QUADCOPTERS;
+
 	
 	/**
 	 * Default 0.
@@ -89,7 +95,11 @@ public class SimSettings {
 	 * Simulated world height.
 	 */
 	public final int GRID_YSIZE;
-
+	/**
+	 * Simulated world depth.
+	 */
+	public final int GRID_ZSIZE;
+	
 	/**
 	 * Milliseconds. The time between simulated GPS position broadcasts.
 	 */
@@ -131,9 +141,15 @@ public class SimSettings {
 	public final int MSG_RANDOM_SEED;
 
 	/**
-	 * Robot name prefix
+	 * iRobot name prefix
 	 */
-	public final String BOT_NAME;
+	public final String IROBOT_NAME;
+	
+	/**
+	 * quadcopter name prefix
+	 */
+	public final String QUADCOPTER_NAME;
+	
 	/**
 	 * Millimeters. The radius of simulated robots.
 	 */
@@ -153,7 +169,11 @@ public class SimSettings {
 	public final boolean USE_GLOBAL_LOGGER;
 
 	/**
-	 * Enable/disable trace drawing
+	 * Enables/disables drawing for a simulation
+	 */
+	public final boolean DRAW;
+	/**
+	 * Enables/disables trace drawing
 	 */
 	public final boolean DRAW_TRACE;
 	/**
@@ -188,6 +208,11 @@ public class SimSettings {
 	 * visualizer. Unaffected by the value of DRAW_WAYPOINTS
 	 */
 	public final boolean DRAW_WAYPOINT_NAMES;
+	
+	/**
+	 * Enables/disables draw robot type next to a robot
+	 */
+	public final boolean DRAW_ROBOT_TYPE;
 
 
 	private static final SimSettings defaultInstance = new Builder().build();
@@ -199,10 +224,11 @@ public class SimSettings {
 	public static class Builder {
 		private int De_Radius = 1;
 		private int Detect_Precision = 1;
-		private int N_BOTS = 4;
+		private int N_IROBOTS = 4;
 		private int N_GBOTS = 4;
 		private int N_DBOTS = 0;
 		private int N_RBOTS = 0;
+		private int N_QUADCOPTERS = 0;
 		
 		private long SIM_TIMEOUT = 0;
 		private long TIMEOUT = 0;
@@ -214,6 +240,7 @@ public class SimSettings {
 		private double TIC_TIME_RATE = 5;
 		private int GRID_XSIZE = 5000;
 		private int GRID_YSIZE = 3000;
+		private int GRID_ZSIZE = 10000;
 		private long GPS_PERIOD = 75;
 		private double GPS_ANGLE_NOISE = 0;
 		private double GPS_POSITION_NOISE = 0;
@@ -223,11 +250,13 @@ public class SimSettings {
 		private int MSG_STDDEV_DELAY = 5;
 		private int MSG_LOSSES_PER_HUNDRED = 0;
 		private int MSG_RANDOM_SEED = 0;
-		private String BOT_NAME = "bot";
+		private String IROBOT_NAME = "iRobot";
+		private String QUADCOPTER_NAME = "quadcopter";
 		private int BOT_RADIUS = 165;
 		private String TRACE_OUT_DIR;
 		private boolean THREE_D = false;
 		private boolean USE_GLOBAL_LOGGER = false;
+		private boolean DRAW = true;
 		private boolean DRAW_TRACE = false;
 		private int DRAW_TRACE_LENGTH = 128;
 		private int MAX_FPS = 30;
@@ -235,6 +264,7 @@ public class SimSettings {
 		private boolean DRAW_WAYPOINTS = true;
 		private boolean DRAW_OBSPOINTS = true;
 		private boolean DRAW_WAYPOINT_NAMES = true;
+		private boolean DRAW_ROBOT_TYPE = false;
 
 
 		public Builder De_Radius(int length) {
@@ -247,8 +277,8 @@ public class SimSettings {
 			return this;
 		}
 		
-		public Builder N_BOTS(int N_BOTS) {
-			this.N_BOTS = N_BOTS;
+		public Builder N_IROBOTS(int N_IROBOTS) {
+			this.N_IROBOTS = N_IROBOTS;
 			return this;
 		}
 		
@@ -266,7 +296,12 @@ public class SimSettings {
 			this.N_RBOTS = N_RBOTS;
 			return this;
 		}
-
+		
+		public Builder N_QUADCOPTERS(int N_QUADCOPTERS) {
+			this.N_QUADCOPTERS = N_QUADCOPTERS;
+			return this;
+		}
+		
 		public Builder WAYPOINT_FILE(String WAYPOINT_FILE) {
 			this.WAYPOINT_FILE = WAYPOINT_FILE;
 			return this;
@@ -312,6 +347,11 @@ public class SimSettings {
 
 		public Builder GRID_YSIZE(int GRID_YSIZE) {
 			this.GRID_YSIZE = GRID_YSIZE;
+			return this;
+		}
+		
+		public Builder GRID_ZSIZE(int GRID_ZSIZE) {
+			this.GRID_ZSIZE = GRID_ZSIZE;
 			return this;
 		}
 
@@ -360,11 +400,15 @@ public class SimSettings {
 			return this;
 		}
 
-		public Builder BOT_NAME(String BOT_NAME) {
-			this.BOT_NAME = BOT_NAME;
+		public Builder IROBOT_NAME(String IROBOT_NAME) {
+			this.IROBOT_NAME = IROBOT_NAME;
 			return this;
 		}
 
+		public Builder QUADCOPTER_NAME(String QUADCOPTER_NAME) {
+			this.QUADCOPTER_NAME = QUADCOPTER_NAME;
+			return this;
+		}
 		public Builder BOT_RADIUS(int BOT_RADIUS) {
 			this.BOT_RADIUS = BOT_RADIUS;
 			return this;
@@ -385,6 +429,11 @@ public class SimSettings {
 			return this;
 		}
 
+		public Builder DRAW(boolean DRAW){
+			this.DRAW = DRAW;
+			return this;
+		}
+		
 		public Builder DRAW_TRACE(boolean DRAW_TRACE) {
 			this.DRAW_TRACE = DRAW_TRACE;
 			return this;
@@ -419,6 +468,11 @@ public class SimSettings {
 			this.DRAW_WAYPOINT_NAMES = DRAW_WAYPOINT_NAMES;
 			return this;
 		}
+		
+		public Builder DRAW__ROBOT_TYPE(boolean DRAW_ROBOT_TYPE){
+			this.DRAW_ROBOT_TYPE = DRAW_ROBOT_TYPE;
+			return this;
+		}
 
 		public SimSettings build() {
 			return new SimSettings(this);
@@ -428,10 +482,11 @@ public class SimSettings {
 	private SimSettings(Builder builder) {
 		this.De_Radius = builder.De_Radius;
 		this.Detect_Precision = builder.Detect_Precision;
-		this.N_BOTS = builder.N_BOTS;
+		this.N_IROBOTS = builder.N_IROBOTS;
 		this.N_GBOTS = builder.N_GBOTS;
 		this.N_DBOTS = builder.N_DBOTS;
 		this.N_RBOTS = builder.N_RBOTS;
+		this.N_QUADCOPTERS = builder.N_QUADCOPTERS;
 		this.SENSEPOINT_FILE = builder.SENSEPOINT_FILE;
 		this.WAYPOINT_FILE = builder.WAYPOINT_FILE;
 		this.OBSPOINT_FILE = builder.OBSPOINT_FILE;
@@ -440,6 +495,7 @@ public class SimSettings {
 		this.TIC_TIME_RATE = builder.TIC_TIME_RATE;
 		this.GRID_XSIZE = builder.GRID_XSIZE;
 		this.GRID_YSIZE = builder.GRID_YSIZE;
+		this.GRID_ZSIZE = builder.GRID_ZSIZE;
 		this.GPS_PERIOD = builder.GPS_PERIOD;
 		this.GPS_ANGLE_NOISE = builder.GPS_ANGLE_NOISE;
 		this.GPS_POSITION_NOISE = builder.GPS_POSITION_NOISE;
@@ -449,11 +505,13 @@ public class SimSettings {
 		this.MSG_STDDEV_DELAY = builder.MSG_STDDEV_DELAY;
 		this.MSG_LOSSES_PER_HUNDRED = builder.MSG_LOSSES_PER_HUNDRED;
 		this.MSG_RANDOM_SEED = builder.MSG_RANDOM_SEED;
-		this.BOT_NAME = builder.BOT_NAME;
+		this.IROBOT_NAME = builder.IROBOT_NAME;
+		this.QUADCOPTER_NAME = builder.QUADCOPTER_NAME;
 		this.BOT_RADIUS = builder.BOT_RADIUS;
 		this.TRACE_OUT_DIR = builder.TRACE_OUT_DIR;
 		this.THREE_D = builder.THREE_D;
 		this.USE_GLOBAL_LOGGER = builder.USE_GLOBAL_LOGGER;
+		this.DRAW = builder.DRAW;
 		this.DRAW_TRACE = builder.DRAW_TRACE;
 		this.DRAW_TRACE_LENGTH = builder.DRAW_TRACE_LENGTH;
 		this.MAX_FPS = builder.MAX_FPS;
@@ -463,7 +521,7 @@ public class SimSettings {
 		this.DRAW_WAYPOINTS = builder.DRAW_WAYPOINTS;
 		this.DRAW_OBSPOINTS = builder.DRAW_OBSPOINTS;
 		this.DRAW_WAYPOINT_NAMES = builder.DRAW_WAYPOINT_NAMES;
-		
+		this.DRAW_ROBOT_TYPE = builder.DRAW_ROBOT_TYPE;
 		
 	}
 }

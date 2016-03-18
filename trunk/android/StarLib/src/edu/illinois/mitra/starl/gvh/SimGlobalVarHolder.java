@@ -4,17 +4,19 @@ import java.util.HashMap;
 
 import edu.illinois.mitra.starl.harness.IdealSimGpsProvider;
 import edu.illinois.mitra.starl.harness.IdealSimMotionAutomaton;
-import edu.illinois.mitra.starl.harness.RealisticSimMotionAutomaton;
+import edu.illinois.mitra.starl.harness.RealisticSimMotionAutomaton_iRobot;
+import edu.illinois.mitra.starl.harness.RealisticSimMotionAutomaton_quadcopter;
 import edu.illinois.mitra.starl.harness.SimGpsReceiver;
 import edu.illinois.mitra.starl.harness.SimSmartComThread;
 import edu.illinois.mitra.starl.harness.SimulationEngine;
-import edu.illinois.mitra.starl.objects.ItemPosition;
-import edu.illinois.mitra.starl.objects.Model_iRobot;
+import edu.illinois.mitra.starl.interfaces.TrackedRobot;
+import edu.illinois.mitra.starl.models.*;
+import edu.illinois.mitra.starl.motion.ReachAvoid;
 
 /**
  * Extension of the GlobalVarHolder class for use in simulations of StarL applications 
- * @author Adam Zimmerman
- * @version 1.0
+ * @author Adam Zimmerman, Yixiao Lin
+ * @version 2.0
  *
  */
 public class SimGlobalVarHolder extends GlobalVarHolder {
@@ -28,7 +30,7 @@ public class SimGlobalVarHolder extends GlobalVarHolder {
 	 * @param initpos this agent's initial position
 	 * @param traceDir the directory to write trace files to
 	 */
-	public SimGlobalVarHolder(String name, HashMap<String,String> participants, SimulationEngine engine, Model_iRobot initpos, String traceDir, int trace_driftMax, double trace_skewBound) {
+	public SimGlobalVarHolder(String name, HashMap<String,String> participants, SimulationEngine engine, TrackedRobot initpos, String traceDir, int trace_driftMax, double trace_skewBound) {
 		super(name, participants);
 		this.engine = engine;
 		super.comms = new Comms(this, new SimSmartComThread(this, engine.getComChannel()));
@@ -38,11 +40,22 @@ public class SimGlobalVarHolder extends GlobalVarHolder {
 		if(traceDir != null)
 			trace.traceStart();
 		super.plat = new AndroidPlatform();
-		if(engine.getGps() instanceof IdealSimGpsProvider) {
-			plat.moat = new IdealSimMotionAutomaton(this, (IdealSimGpsProvider)engine.getGps());
-		} else {
-			plat.moat = new RealisticSimMotionAutomaton(this, engine.getGps());
+		plat.model = initpos;
+		plat.reachAvoid = new ReachAvoid(this);
+		if(initpos instanceof Model_iRobot){
+			if(engine.getGps() instanceof IdealSimGpsProvider) {
+				plat.moat = new IdealSimMotionAutomaton(this, (IdealSimGpsProvider)engine.getGps());
+			} else {
+				plat.moat = new RealisticSimMotionAutomaton_iRobot(this, engine.getGps());
+				plat.moat.start();
+			}
+		}
+		else if(initpos instanceof Model_quadcopter){
+			plat.moat = new RealisticSimMotionAutomaton_quadcopter(this, engine.getGps());
 			plat.moat.start();
+		}
+		else {
+			throw new RuntimeException("After adding a model, please add the motion controler for that model in SimGlobalVarHolder.java");
 		}
 	}
 

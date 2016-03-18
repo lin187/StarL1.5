@@ -29,8 +29,7 @@ public class LeaderElectDrawer extends Drawer {
 			int x = app.position.getX() ;
 			int y= app.position.getY();
 			//g.drawOval(app.position.getX() - 20, app.position.getY() - 20, 40, 40);
-			g.drawString("Candidate: "+app.candidate, x, y);
-			g.drawString("numVotes: "+app.numVotes , x, y+50);
+			g.drawString("elected: "+app.elected , x, y+50);
 			g.drawString("LeaderID: "+app.LeaderId , x, y+100);
 		}
 	}

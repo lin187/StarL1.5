@@ -174,7 +174,7 @@ public class Obstacles {
 	public double findMinDist(RRTNode destNode, RRTNode currentNode){
 		Point3d nextpoint = obstacle.firstElement();
 		Point3d curpoint = obstacle.firstElement();
-		double minDist = 100000;
+		double minDist = Double.MAX_VALUE;
 		Line2D.Double current;
 		current = new Line2D.Double(destNode.position.x,destNode.position.y,currentNode.position.x,currentNode.position.y);
 		Line2D.Double segment;

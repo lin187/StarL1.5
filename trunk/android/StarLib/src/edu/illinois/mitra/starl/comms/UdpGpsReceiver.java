@@ -13,10 +13,11 @@ import edu.illinois.mitra.starl.exceptions.ItemFormattingException;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.GpsReceiver;
 import edu.illinois.mitra.starl.interfaces.RobotEventListener.Event;
+import edu.illinois.mitra.starl.models.Model_iRobot;
+import edu.illinois.mitra.starl.models.Model_quadcopter;
 import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.HandlerMessage;
 import edu.illinois.mitra.starl.objects.ItemPosition;
-import edu.illinois.mitra.starl.objects.Model_iRobot;
 import edu.illinois.mitra.starl.objects.ObstacleList;
 import edu.illinois.mitra.starl.objects.PositionList;
 
@@ -29,7 +30,7 @@ public class UdpGpsReceiver extends Thread implements GpsReceiver {
 	private static final String TAG = "GPSReceiver";
 	private static final String ERR = "Critical Error";
 	
-	public PositionList<Model_iRobot> robotPositions;
+	public PositionList robotPositions;
 	public PositionList<ItemPosition> waypointPositions;
 	public ObstacleList obs;
 	public Vector<ObstacleList> viewsOfWorld;
@@ -43,7 +44,7 @@ public class UdpGpsReceiver extends Thread implements GpsReceiver {
 	private String name = null;
 	private boolean received = false;
 
-	public UdpGpsReceiver(GlobalVarHolder gvh,String hostname, int port, PositionList<Model_iRobot> robotPositions, PositionList<ItemPosition> waypointPositions, ObstacleList obs, Vector<ObstacleList> viewsOfWorld) {
+	public UdpGpsReceiver(GlobalVarHolder gvh,String hostname, int port, PositionList robotPositions, PositionList<ItemPosition> waypointPositions, ObstacleList obs, Vector<ObstacleList> viewsOfWorld) {
 		super();
 		this.gvh = gvh;
 		
@@ -119,6 +120,19 @@ public class UdpGpsReceiver extends Thread implements GpsReceiver {
 		    					gvh.log.e(TAG, "Invalid item formatting: " + e.getError());
 		    				}
 		    				break;
+		    			case '$':
+		    				try {
+		    					Model_quadcopter newpos = new Model_quadcopter(parts[i]);
+		    					robotPositions.update(newpos, gvh.time());
+		    					gvh.sendRobotEvent(Event.GPS);
+		    					if(newpos.name.equals(name)) {
+		    						gvh.trace.traceEvent(TAG, "Received Position", newpos, gvh.time());
+		    						gvh.sendRobotEvent(Event.GPS_SELF);
+		    					}
+		    				} catch(ItemFormattingException e){
+		    					gvh.log.e(TAG, "Invalid item formatting: " + e.getError());
+		    				}
+		    				break;
 		    			case 'G':
 		    				gvh.trace.traceEvent(TAG, "Received launch command", gvh.time());
 		    				int[] args = Common.partsToInts(parts[i].substring(3).split(" "));
@@ -176,12 +190,7 @@ public class UdpGpsReceiver extends Thread implements GpsReceiver {
     }
 
 	@Override
-	public PositionList getRobots() {
-		return robotPositions;		
-	}
-
-	@Override
-	public PositionList getWaypoints() {
+	public PositionList<ItemPosition> getWaypoints() {
 		return waypointPositions;
 	}
 	
@@ -193,6 +202,17 @@ public class UdpGpsReceiver extends Thread implements GpsReceiver {
 	@Override
 	public Vector<ObstacleList> getViews() {
 		return viewsOfWorld;
+	}
+
+	@Override
+	public PositionList<ItemPosition> getSensepoints() {
+		// TODO work in progress, sensepoints data should really come in as the robot's sensor data, this should be more general to accommodate any sensor data
+		return null;
+	}
+
+	@Override
+	public PositionList<ItemPosition> get_robots() {
+		return robotPositions;
 	}
 	
 	

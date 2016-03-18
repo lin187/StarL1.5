@@ -1,12 +1,33 @@
-package edu.illinois.mitra.starl.objects;
+package edu.illinois.mitra.starl.models;
 
 import java.util.Random;
 
 import edu.illinois.mitra.starl.exceptions.ItemFormattingException;
 import edu.illinois.mitra.starl.interfaces.TrackedRobot;
+import edu.illinois.mitra.starl.objects.Common;
+import edu.illinois.mitra.starl.objects.ItemPosition;
+import edu.illinois.mitra.starl.objects.ObstacleList;
+import edu.illinois.mitra.starl.objects.Point3d;
+import edu.illinois.mitra.starl.objects.PositionList;
 
+/**
+ * This class represents a simple model of the iRobot Create, including angle, radius, type, velocity, leftbump, rightbump, circleSensor, vFwd, vRad
+ * and some prediction on x and y based on vFwd and vRad
+ * 
+ * default type:
+ *	0: get to goal robot
+ *	behavior: marks the unknown obstacle when collide, redo path planning (get around the obstacle)to reach the goal
+ *	1: explore the area robot
+ *	behavior: explore the shape of the unknown obstacle and sent out the shape to others
+ *	2: random moving obstacle robot 
+ *	behavior:acts as simple moving obstacle
+ *	3: anti goal robot
+ *	behavior:acts as AI opponent try to block robots getting to the goal
+ * @author Yixiao Lin
+ * @version 1.0
+ */
 public class Model_iRobot extends ItemPosition implements TrackedRobot{
-
+	// for default values, see initial_helper()
 	public double angle;
 	public int radius;
 	public int type;
@@ -16,15 +37,33 @@ public class Model_iRobot extends ItemPosition implements TrackedRobot{
 	public boolean rightbump;
 	public boolean circleSensor;
 		
-	public double vFwd = 0;
-	public double vRad = 0;
+	public double vFwd;
+	public double vRad;
 	public Random rand;
 	public int x_p;
 	public int y_p;
 	public double angle_p;
 	
+	/**
+	 * Construct an Model_iRobot from a received GPS broadcast message
+	 * 
+	 * @param received GPS broadcast received 
+	 * @throws ItemFormattingException
+	 */
+
 	public Model_iRobot(String received) throws ItemFormattingException{
-		super(received);
+		initial_helper();
+		String[] parts = received.replace(",", "").split("\\|");
+		if(parts.length == 7) {
+			this.name = parts[1];
+			this.x = Integer.parseInt(parts[2]);
+			this.y = Integer.parseInt(parts[3]);
+			this.z = Integer.parseInt(parts[4]);
+			this.angle = Integer.parseInt(parts[5]);
+		} else {
+			throw new ItemFormattingException("Should be length 7, is length " + parts.length);
+		}
+
 	}
 	
 	public Model_iRobot(String name, int x, int y) {
@@ -50,6 +89,11 @@ public class Model_iRobot extends ItemPosition implements TrackedRobot{
 		initial_helper();
 		this.angle = t_pos.index;
 		// TODO Auto-generated constructor stub
+	}
+	
+	@Override 
+	public String toString() {
+		return name + ": " + x + ", " + y + ", " + z + ", angle " + angle;
 	}
 
 	/** 
@@ -156,12 +200,14 @@ public class Model_iRobot extends ItemPosition implements TrackedRobot{
 	
 	private void initial_helper(){
 		angle = 0;
+		radius = 325;
+		type = 0;
 		velocity = 0;
 		leftbump = false;
 		rightbump = false;
 		circleSensor = false;
-		radius = 1;
-		type = -1;
+		vFwd = 0;
+		vRad = 0;
 	}
 
 	@Override
@@ -240,8 +286,6 @@ public class Model_iRobot extends ItemPosition implements TrackedRobot{
 
 	@Override
 	public void initialize() {
-		rand = new Random();
-
+		rand = new Random(); //initialize random variable for TrackedRobot
 	}
-	
 }

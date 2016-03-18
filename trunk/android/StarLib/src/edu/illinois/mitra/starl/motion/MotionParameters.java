@@ -6,7 +6,7 @@ package edu.illinois.mitra.starl.motion;
  * 
  * @author Adam Zimmerman
  * @see RobotMotion
- * @see MotionAutomaton
+ * @see MotionAutomaton_iRobot
  */
 public class MotionParameters {
 
