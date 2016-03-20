@@ -8,9 +8,10 @@ package edu.illinois.mitra.demo.follow;
 
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+
 
 import edu.illinois.mitra.starl.comms.RobotMessage;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
@@ -18,8 +19,7 @@ import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.motion.MotionParameters;
 import edu.illinois.mitra.starl.motion.MotionParameters.COLAVOID_MODE_TYPE;
 import edu.illinois.mitra.starl.objects.ItemPosition;
-import edu.illinois.mitra.starl.objects.PositionList;
-import sun.rmi.runtime.Log;
+
 
 public class FollowApp extends LogicThread {
     private static final String TAG = "Follow App";
@@ -30,6 +30,8 @@ public class FollowApp extends LogicThread {
     private int numWaypoints;
     private boolean arrived = false;
     private boolean goForever = true;
+    private int msgNum = 0;
+    private HashSet<RobotMessage> receivedMsgs = new HashSet<RobotMessage>();
 
     final Map<String, ItemPosition> destinations = new HashMap<String, ItemPosition>();
     ItemPosition currentDestination;
@@ -86,7 +88,9 @@ public class FollowApp extends LogicThread {
                             if (currentDestination != null)
                                 destinations.remove(currentDestination.getName());
                         }
-                        RobotMessage inform = new RobotMessage("ALL", name, ARRIVED_MSG, currentDestination.getName());
+                        RobotMessage inform = new RobotMessage("ALL", name, ARRIVED_MSG, Integer.toString(msgNum));
+                        msgNum++;
+                        gvh.log.d(TAG, "At Goal, sent message");
                         gvh.comms.addOutgoingMessage(inform);
                         arrived = true;
                         stage = Stage.WAIT;
@@ -107,8 +111,16 @@ public class FollowApp extends LogicThread {
 
     @Override
     protected void receive(RobotMessage m) {
-        if(m.getMID() == ARRIVED_MSG && !m.getFrom().equals(name)) {
+        boolean alreadyReceived = false;
+        for(RobotMessage msg : receivedMsgs) {
+            if(msg.getFrom().equals(m.getFrom()) && msg.getContents().equals(m.getContents())) {
+                alreadyReceived = true;
+                break;
+            }
+        }
+        if(m.getMID() == ARRIVED_MSG && !m.getFrom().equals(name) && !alreadyReceived) {
             gvh.log.d(TAG, "Adding to message count from " + m.getFrom());
+            receivedMsgs.add(m);
             messageCount++;
         }
        /* if((messageCount == numBots) && arrived) {

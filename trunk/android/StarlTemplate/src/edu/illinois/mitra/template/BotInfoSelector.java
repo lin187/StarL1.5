@@ -47,5 +47,16 @@ public class BotInfoSelector {
             }
         }
 
+        if(color.equals("white")) {
+            name = "bot3";
+            ip = "192.168.1.113";
+            if(type == Common.IROBOT) {
+                bluetooth = "5C:F3:70:76:C9:D4";
+            }
+            else if(type == Common.MINIDRONE) {
+                //bluetooth = ""; There isn't a white drone set-up yet
+            }
+        }
+
     }
 }

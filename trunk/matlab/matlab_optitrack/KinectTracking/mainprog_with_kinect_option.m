@@ -9,7 +9,7 @@ OPTITRACK = 1;
 KINECT = 2;
 opt_system = KINECT;
 
-% Some global variables need for Kinect
+% Some global variables needed for Kinect
 % Matlab didn't like them being in the Kinect if statement below
 % They aren't needed when using Optitrack
 global numCreates;
@@ -25,7 +25,7 @@ global CREATE2
 % If using Kinect, modify these as necessary
 if opt_system == KINECT
     numCreates = 0;
-    numDrones = 3;
+    numDrones = 1;
     BBoxFactor = 1.5;
     
     % Other things needed for Kinect tracking
@@ -225,13 +225,13 @@ while 1
             %may want to add the history stuff from above here
         end
     end
-   
+    times = [times; toc];
     % Update the plot on every 4th frame
     if rem(frameCount,4) == 0
         plot_bots(fig, LINE_LEN, X_MAX, Y_MAX, bots, waypoints, walls,...
             disp_waypoints, disp_waypoint_names)
     end
-    times = [times; toc];
+    
     % Interpret an exit key press
     if get(fig,'currentkey') == 'x'
         disp('Exiting...');

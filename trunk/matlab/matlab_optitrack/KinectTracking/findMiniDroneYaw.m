@@ -6,16 +6,6 @@ global CREATE2
 % take only pixels in bounding box
 frame = getPixelsInBB(imgColor, BBox);
 
-
-% would be better to do this without a loop if possible
-% for i = 1:size(frame, 1)
-%     for j = 1:size(frame,2);
-%         if (i - center(1,1))^2 + (j - center(1,2))^2 > radius^2
-%             frame(j,i,:) = 0;
-%         end
-%     end
-% end
-
 % black out pixels that aren't contained in bot's circle
 % this is so yaw estimation won't pick up other bot's circles when too
 % close
@@ -61,7 +51,7 @@ mag_props = regionprops(mag_img_labeled, 'Area', 'Centroid');
 yel_props = regionprops(yel_img_labeled, 'Area', 'Centroid');
 
 % if regionprops were found, find yaw
-if ~isempty(mag_props) > 0 && ~isempty(yel_props)
+if ~isempty(mag_props) && ~isempty(yel_props)
     % find centroid from region with largest area
     for i = 1:length(mag_props)
         areas(i) = mag_props(i).Area;

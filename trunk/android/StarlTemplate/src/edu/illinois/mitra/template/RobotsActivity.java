@@ -20,6 +20,8 @@ import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import edu.illinois.mitra.demo.follow.FollowApp;
 import edu.illinois.mitra.starl.comms.MessageContents;
 import edu.illinois.mitra.starl.comms.RobotMessage;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
@@ -69,11 +71,12 @@ public class RobotsActivity extends Activity implements MessageListener {
 
 		// Load the participants
 		//participants = IdentityLoader.loadIdentities(IDENTITY_FILE_URL);
-        numRobots = 3;
+        numRobots = 4;
         botInfo = new BotInfoSelector[numRobots];
-        botInfo[0] = new BotInfoSelector("red", Common.MINIDRONE);
-        botInfo[1] = new BotInfoSelector("green", Common.MINIDRONE);
-        botInfo[2] = new BotInfoSelector("blue", Common.MINIDRONE);
+        botInfo[0] = new BotInfoSelector("red", Common.IROBOT);
+        botInfo[1] = new BotInfoSelector("green", Common.IROBOT);
+        botInfo[2] = new BotInfoSelector("blue", Common.IROBOT);
+        botInfo[3] = new BotInfoSelector("white", Common.IROBOT);
 
         participants = new String[3][numRobots];
         for(i =0; i < numRobots; i++) {

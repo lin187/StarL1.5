@@ -9,6 +9,7 @@ classdef Robot
         depth;
         depths = [];
         BBox
+        BBoxes = [];
         color
         type
     end

@@ -203,6 +203,7 @@ public class MotionAutomatonMiniDrone extends RobotMotion {
                         case TAKEOFF:
                             bti.sendTakeoff();
                             // sleep to allow time for takeoff
+                            //gvh.sleep(1000);
                             landed = false;
                             next = STAGE.MOVE;
                             break;

@@ -1,6 +1,7 @@
 global imgColorPlotted
 imgColorPlotted = zeros(420,560,3,num_frames,'uint8');
 showCoordinates = 1;
+showBBox = 1;
 videoOnly = 0; % 0 - show detected circles 1 - just get video, no plotting
 offset = frameCount - length(botArray(1).centers);
 goal_radius = 50;
@@ -20,5 +21,5 @@ goal_centers = 0;
 goal_radii = 0;
 
 for i = offset + 1:frameCount - offset
-    plotCreate2(imgColorAll(:,:,:,i), i - offset, goal_centers, goal_radii, showCoordinates, videoOnly);
+    plotCreate2(imgColorAll(:,:,:,i), i - offset, goal_centers, goal_radii, showCoordinates, videoOnly, showBBox);
 end
