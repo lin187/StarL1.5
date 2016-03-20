@@ -161,6 +161,11 @@ public class SimSettings {
 	 */
 	public final int DRAW_TRACE_LENGTH;
 
+    /**
+     * The stroke size to use for robots (larger number = thicker lines, useful for using on slides)
+     */
+    public final int DRAW_ROBOT_STROKE_SIZE;
+
 	/**
 	 * The maximum frames per second to draw at. If drawing takes too long,
 	 * lower this.
@@ -230,6 +235,7 @@ public class SimSettings {
 		private boolean USE_GLOBAL_LOGGER = false;
 		private boolean DRAW_TRACE = false;
 		private int DRAW_TRACE_LENGTH = 128;
+        private int DRAW_ROBOT_STROKE_SIZE = 10;
 		private int MAX_FPS = 30;
 		private Drawer DRAWER = null;
 		private boolean DRAW_WAYPOINTS = true;
@@ -395,6 +401,11 @@ public class SimSettings {
 			return this;
 		}
 
+        public Builder DRAW_ROBOT_STROKE_SIZE(int DRAW_ROBOT_STROKE_SIZE) {
+            this.DRAW_ROBOT_STROKE_SIZE = DRAW_ROBOT_STROKE_SIZE;
+            return this;
+        }
+
 		public Builder MAX_FPS(int MAX_FPS) {
 			this.MAX_FPS = MAX_FPS;
 			return this;
@@ -456,6 +467,7 @@ public class SimSettings {
 		this.USE_GLOBAL_LOGGER = builder.USE_GLOBAL_LOGGER;
 		this.DRAW_TRACE = builder.DRAW_TRACE;
 		this.DRAW_TRACE_LENGTH = builder.DRAW_TRACE_LENGTH;
+        this.DRAW_ROBOT_STROKE_SIZE = builder.DRAW_ROBOT_STROKE_SIZE;
 		this.MAX_FPS = builder.MAX_FPS;
 		this.DRAWER = builder.DRAWER;
 		this.SIM_TIMEOUT = builder.SIM_TIMEOUT;
