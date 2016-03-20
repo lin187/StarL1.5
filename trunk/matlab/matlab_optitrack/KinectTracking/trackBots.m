@@ -62,6 +62,7 @@ end
 
 % find bbox
 botArray(index).BBox = getBBox(botArray(index).center, botArray(index).radius);
+botArray(index).BBoxes = [botArray(index).BBoxes; botArray(index).BBox];
 
 % add accumulated values
 botArray(index).yaws = [botArray(index).yaws, botArray(index).yaw];
