@@ -235,7 +235,7 @@ public class SimSettings {
 		private boolean USE_GLOBAL_LOGGER = false;
 		private boolean DRAW_TRACE = false;
 		private int DRAW_TRACE_LENGTH = 128;
-        private int DRAW_ROBOT_STROKE_SIZE = 10;
+        private int DRAW_ROBOT_STROKE_SIZE = 20;
 		private int MAX_FPS = 30;
 		private Drawer DRAWER = null;
 		private boolean DRAW_WAYPOINTS = true;

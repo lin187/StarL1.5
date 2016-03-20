@@ -27,7 +27,7 @@ public class ProjectApp extends LogicThread {
     private volatile MotionParameters param = DEFAULT_PARAMETERS;
     // this is an ArrayList of HashMap. Each HashMap element in the array will contain one set of waypoints
     final ArrayList<HashMap<String, ItemPosition>> destinations = new ArrayList<>();
-    private int numSetsWaypoints = 3;
+    private int numSetsWaypoints = 4;
     private int idNum;
     int robotIndex;
     int currentSet;

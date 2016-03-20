@@ -18,7 +18,8 @@ public class ProjectDrawer extends Drawer {
 
     private Stroke stroke = new BasicStroke(8);
     private Color selectColor = new Color(0,0,255,100);
-    private int numSetsWaypoints = 3;
+    private int numSetsWaypoints = 4;
+    private int wayPointSize = 50;
 
     @Override
     public void draw(LogicThread lt, Graphics2D g) {
@@ -44,7 +45,7 @@ public class ProjectDrawer extends Drawer {
                     break;
             }
             for (ItemPosition dest : app.destinations.get(i).values()) {
-                g.fillRect(dest.getX() - 13, dest.getY() - 13, 26, 26);
+                g.fillRect(dest.getX() - wayPointSize/2, dest.getY() - wayPointSize/2, wayPointSize, wayPointSize);
             }
         }
 

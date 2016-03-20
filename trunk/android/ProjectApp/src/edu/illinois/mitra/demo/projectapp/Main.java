@@ -18,9 +18,9 @@ public class Main {
 
         //	settings.N_RBOTS(1);
         settings.TIC_TIME_RATE(5);
-        settings.WAYPOINT_FILE("dest2.wpt");
-        settings.INITIAL_POSITIONS_FILE("start2.wpt");
-        settings.OBSPOINT_FILE("Obstacles2.wpt");
+        settings.WAYPOINT_FILE("dest_square.wpt");
+        settings.INITIAL_POSITIONS_FILE("start_square.wpt");
+        settings.OBSPOINT_FILE("Obstacles_square.wpt");
         settings.THREE_D(false);
         settings.DRAW_WAYPOINTS(false);
         settings.DRAW_WAYPOINT_NAMES(false);
