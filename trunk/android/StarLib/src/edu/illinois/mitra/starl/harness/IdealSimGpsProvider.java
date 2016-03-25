@@ -6,7 +6,9 @@ import java.util.Observer;
 import java.util.Random;
 import java.util.Vector;
 
+import edu.illinois.mitra.starl.interfaces.TrackedRobot;
 import edu.illinois.mitra.starl.models.Model_iRobot;
+import edu.illinois.mitra.starl.models.Model_quadcopter;
 import edu.illinois.mitra.starl.objects.*;
 
 public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {	
@@ -17,6 +19,9 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 	private PositionList<Model_iRobot> robot_positions;
 	private PositionList<ItemPosition> waypoint_positions;
 	private PositionList<ItemPosition> sensepoint_positions;
+
+    // TD_NATHAN: see what's changed in RealisticSimGpsProvider and emulate similarly?
+    //private PositionList<ItemPosition> allpos;
 	
 	private ObstacleList obspoint_positions;
 	private Vector<ObstacleList> viewsOfWorld;
@@ -48,12 +53,7 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 	public synchronized void registerReceiver(String name, SimGpsReceiver simGpsReceiver) {
 		receivers.put(name, simGpsReceiver);
 	}
-	
-	@Override
-	public synchronized void addRobot(Model_iRobot bot) {
-		robots.put(bot.name, new TrackedRobot(bot));
-		robot_positions.update(bot);
-	}
+
 
 	@Override
 	public synchronized void setDestination(String name, ItemPosition dest, int velocity) {
@@ -84,6 +84,18 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 	public void setObspoints(ObstacleList loadedObspoints) {
 		if(loadedObspoints != null) obspoint_positions = loadedObspoints;
 	}
+
+    @Override
+    public PositionList<Model_quadcopter> getQuadcopterPositions() {
+        // TD_NATHAN: resolve as necessary
+        return null;
+    }
+
+    @Override
+    public PositionList<ItemPosition> getAllPositions() {
+        // TD_NATHAN: resolve if necessary
+        return null;
+    }
 
 	@Override
 	public void setViews(ObstacleList environment, int nBots) {
@@ -291,5 +303,46 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 		return null;
 	}
 
+    @Override
+    public void setControlInput(String name, double v_yaw, double pitch, double roll, double gaz) {
+        // TD_NATHAN: fix
+        // TODO: replace with PID model here
+        //((Model_quadcopter) quadcopters.get(name).cur).v_yawR = v_yaw;
+        //((Model_quadcopter) quadcopters.get(name).cur).pitchR = pitch;
+        //((Model_quadcopter) quadcopters.get(name).cur).rollR = roll;
+        //((Model_quadcopter) quadcopters.get(name).cur).gazR = gaz;
+    }
 
+    /*
+    // TD_NATHAN: old version
+    @Override
+    public synchronized void addRobot(Model_iRobot bot) {
+        robots.put(bot.name, new TrackedRobot(bot));
+        robot_positions.update(bot);
+    }
+    */
+
+    @Override
+    public synchronized void addRobot(edu.illinois.mitra.starl.interfaces.TrackedRobot bot) {
+        // TD_NATHAN: fix
+        /*
+        allpos.update((ItemPosition)bot);
+        if(bot instanceof Model_iRobot){
+            synchronized(iRobots) {
+                iRobots.put(((Model_iRobot)bot).name, new TrackedModel<Model_iRobot>((Model_iRobot) bot));
+            }
+            iRobot_positions.update((Model_iRobot) bot);
+
+        }
+        else if(bot instanceof Model_quadcopter){
+            synchronized(quadcopters) {
+                quadcopters.put(((Model_quadcopter)bot).name, new TrackedModel<Model_quadcopter>((Model_quadcopter) bot));
+            }
+            quadcopter_positions.update((Model_quadcopter) bot);
+        }
+        else{
+            throw new RuntimeException("after adding a new model, one need to add model handling in simulation under RealisticSimGpsProvider");
+        }
+*/
+    }
 }

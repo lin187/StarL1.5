@@ -18,19 +18,16 @@ import edu.illinois.mitra.starl.objects.*;
  * going to destination waypoints and turning to face waypoints using custom
  * motion parameters. Includes optional collision avoidance which is controlled
  * by the motion parameters setting.
- * 
- * Behavior of different kind of robots are defined here
- * 
- * @author Adam Zimmerman, Yixiao Lin
- * @version 1.1
- */
+ *
  *	behavior: marks the unknown obstacle when collide, redo path planning (get around the obstacle)to reach the goal
  *	1: explore the area robot
  *	behavior: explore the shape of the unknown obstacle and sent out the shape to others
- *	2: random moving obstacle robot 
+ *	2: random moving obstacle robot
  *	behavior:acts as simple moving obstacle
  *	3: anti goal robot
  *	behavior:acts as AI opponent try to block robots getting to the goal
+ * 
+ * Behavior of different kind of robots are defined here
  * 
  * @author Adam Zimmerman, Yixiao Lin
  * @version 1.1

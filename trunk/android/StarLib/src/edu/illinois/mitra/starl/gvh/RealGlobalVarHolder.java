@@ -13,7 +13,7 @@ import edu.illinois.mitra.starl.motion.BluetoothInterface;
 import edu.illinois.mitra.starl.motion.MotionAutomaton_iRobot;
 import edu.illinois.mitra.starl.motion.ReachAvoid;
 import edu.illinois.mitra.starl.motion.MiniDroneBTI;
-import edu.illinois.mitra.starl.motion.MotionAutomaton;
+import edu.illinois.mitra.starl.motion.RobotMotion;
 import edu.illinois.mitra.starl.motion.MotionAutomatonMiniDrone;
 import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.ObstacleList;

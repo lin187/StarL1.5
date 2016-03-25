@@ -100,7 +100,11 @@ public class RobotsActivity extends Activity implements MessageListener {
 			mapParticipants.put(participants[0][i], participants[2][i]);
 		}
 		System.out.println("Creating a GVH for " + participants[0][selectedRobot] + ", " + participants[1][selectedRobot]);
-		gvh = new RealGlobalVarHolder(participants[0][selectedRobot], mapParticipants, mainHandler, participants[1][selectedRobot], this);
+		//gvh = new RealGlobalVarHolder(participants[0][selectedRobot], mapParticipants, mainHandler, participants[1][selectedRobot], this);
+        gvh = new RealGlobalVarHolder(participants[0][selectedRobot], mapParticipants, null, mainHandler, participants[1][selectedRobot]);
+
+//        public RealGlobalVarHolder(String name, Map<String,String> participants, TrackedRobot initpos, Handler handler, String robotMac) {
+//	public RealGlobalVarHolder(String name, Map<String,String> participants, Handler handler, String robotMac, Context context, int type) {
 		
 		System.out.println(gvh.id.getParticipants());
 		

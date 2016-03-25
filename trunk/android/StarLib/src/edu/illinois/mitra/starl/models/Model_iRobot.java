@@ -71,8 +71,6 @@ public class Model_iRobot extends ItemPosition implements TrackedRobot{
         }
 	}
 	
-	}
-	
 	public Model_iRobot(String name, int x, int y) {
 		super(name, x, y);
 		initial_helper();
@@ -102,10 +100,10 @@ public class Model_iRobot extends ItemPosition implements TrackedRobot{
 	public String toString() {
 		return name + ": " + x + ", " + y + ", " + z + ", angle " + angle;
 	}
+
 	/** 
 	 * 
 	 * @return true if one robot is facing another robot/point
-	 */
 	 */
 	public boolean isFacing(Point3d other) { 
 		if(other == null) {

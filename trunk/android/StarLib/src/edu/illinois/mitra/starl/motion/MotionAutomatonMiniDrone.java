@@ -6,8 +6,8 @@ import java.util.Arrays;
 
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.RobotEventListener.Event;
+import edu.illinois.mitra.starl.models.Model_quadcopter;
 import edu.illinois.mitra.starl.objects.ItemPosition;
-import edu.illinois.mitra.starl.objects.Model_iRobot;
 import edu.illinois.mitra.starl.objects.ObstacleList;
 
 //import edu.illinois.mitra.starl.models.Model_quadcopter;
@@ -26,7 +26,7 @@ public class MotionAutomatonMiniDrone extends RobotMotion {
 
     // Motion tracking
     protected ItemPosition destination;
-    private Model_iRobot mypos;
+    private Model_quadcopter mypos; // TD_NATHAN: probably need to create a minidrone one of these objects, as I think this is for AR drone...?
 
     //PID controller parameters
     double saturationLimit = 50;
@@ -110,7 +110,7 @@ public class MotionAutomatonMiniDrone extends RobotMotion {
         while(true) {
             //			gvh.gps.getObspointPositions().updateObs();
             if(running) {
-                mypos = gvh.gps.getMyPosition();
+                mypos = (Model_quadcopter)gvh.plat.getModel(); // TD_NATHAN: check
    //             if(mypos == null) { continue;}
                 int distance = mypos.distanceTo(destination);
                 colliding = false;
@@ -151,10 +151,11 @@ public class MotionAutomatonMiniDrone extends RobotMotion {
                                 bti.setPitch((byte) yCommand);
                                 Log.d(TAG, "Sent roll: " + xCommand + " Sent pitch: " + yCommand);
                                 // send a small yaw command if not within 87-93 degrees
-                                if(mypos.angle > 93) {
+                                // TD_NATHAN: check and resolve: was mypos.angle
+                                if(mypos.yaw > 93) {
                                     bti.setYaw((byte) 5);
                                 }
-                                else if(mypos.angle < 87) {
+                                else if(mypos.yaw < 87) {
                                     bti.setYaw((byte) -5);
                                 }
                                 else {
@@ -167,10 +168,10 @@ public class MotionAutomatonMiniDrone extends RobotMotion {
                         case HOVER:
                             if(distance <= param.GOAL_RADIUS) {
                                 bti.hover();
-                                if(mypos.angle > 93) {
+                                if(mypos.yaw > 93) {
                                     bti.setYaw((byte) 5);
                                 }
-                                else if(mypos.angle < 87) {
+                                else if(mypos.yaw < 87) {
                                     bti.setYaw((byte) -5);
                                 }
                                 else {
@@ -183,10 +184,10 @@ public class MotionAutomatonMiniDrone extends RobotMotion {
                                 bti.setRoll((byte) xCommand);
                                 bti.setPitch((byte) yCommand);
                                 Log.d(TAG, "Sent roll: " + xCommand + " Sent pitch: " + yCommand);
-                                if(mypos.angle > 93) {
+                                if(mypos.yaw > 93) {
                                     bti.setYaw((byte) 5);
                                 }
-                                else if(mypos.angle < 87) {
+                                else if(mypos.yaw < 87) {
                                     bti.setYaw((byte) -5);
                                 }
                                 else {
