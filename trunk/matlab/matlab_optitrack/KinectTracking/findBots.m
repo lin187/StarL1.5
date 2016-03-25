@@ -8,7 +8,7 @@ global CREATE2
 % find any drones
 if numDrones > 0
     % find depth
-    depth = findDepth(imgDepth);
+    depth = 2900;
     % find circles
     [rmin, rmax] = findRadiusRange(depth);
     [centers, radii, metrics] = imfindcircles(imgColor, [rmin,rmax], ...
@@ -66,5 +66,19 @@ if numCreates > 0
 end
 
 found = true;
+
+% this checks to make sure only bot is white
+% the first frame is sometimes very bright, so findBots needs to called
+% again on a better frame
+num_whites = 0;
+for i = 1:numCreates + numDrones
+    if botArray(i).color == 'w'
+        num_whites = num_whites + 1;
+    end
+end
+
+if num_whites > 1
+    found = false;
+end
 
     

@@ -51,7 +51,9 @@ public class FlockingApp extends LogicThread {
     private static final boolean TURN_AROUND = false; // this was an attempt to make bots move diagonally in one direction, turn around and go the other direction. it also doesn't currently work
     private boolean movingUp = true;
     private static final boolean ROTATE = true;
-    private static final boolean TRANSLATE = false;
+    private int rotationAngle = 60;
+    private static final boolean TRANSLATE = true;
+    private int translationDistance = 75;
 
     private int[] squarePointsX = {300, -600, 0, 600};
     private int[] squarePointsY = {300, 0, -600, 0};
@@ -428,7 +430,7 @@ public class FlockingApp extends LogicThread {
 
                             if (is_Flocking()) {
                                if(ROTATE) {
-                                   gvh.BotGroup.theta = gvh.BotGroup.theta + 45;
+                                   gvh.BotGroup.theta = gvh.BotGroup.theta + rotationAngle;
                                }
                                if(TRANSLATE) {
                                    if (MOVE_IN_SQUARE) {
@@ -455,8 +457,8 @@ public class FlockingApp extends LogicThread {
                                            }
                                        }
                                    } else {
-                                       newX = newX + 100;
-                                       newY = newY + 100;
+                                       newX = newX + translationDistance;
+                                       newY = newY + translationDistance;
                                    }
                                }
                                 //gvh.BotGroup.rf *= 1.25;

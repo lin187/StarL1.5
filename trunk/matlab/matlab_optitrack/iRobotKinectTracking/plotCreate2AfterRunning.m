@@ -1,7 +1,7 @@
 global imgColorPlotted
 imgColorPlotted = zeros(420,560,3,num_frames,'uint8');
 showCoordinates = 1;
-showBBox = 1;
+showBBox = 0;
 videoOnly = 0; % 0 - show detected circles 1 - just get video, no plotting
 offset = frameCount - length(botArray(1).centers);
 goal_radius = 50;

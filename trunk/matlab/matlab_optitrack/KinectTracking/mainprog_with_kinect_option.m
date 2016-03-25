@@ -24,7 +24,7 @@ global CREATE2
 
 % If using Kinect, modify these as necessary
 if opt_system == KINECT
-    numCreates = 0;
+    numCreates =0;
     numDrones = 1;
     BBoxFactor = 1.5;
     
@@ -128,10 +128,12 @@ if opt_system == KINECT
                 % name the robots according to color
                 if botArray(j).color == 'r'
                     bots(j).name = 'bot0';
-                elseif botArray(j).color == 'g';
+                elseif botArray(j).color == 'g'
                     bots(j).name = 'bot1';
                 elseif botArray(j).color == 'b'
                     bots(j).name = 'bot2';
+                elseif botArray(j).color == 'w'
+                    bots(j).name = 'bot3';
                 end
             end
         end

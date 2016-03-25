@@ -30,15 +30,15 @@ green = frame(:,:,2);
 blue = frame(:,:,3);
 
 % threshold for magenta
-mag_red = red > 120 & red < 190;
+mag_red = red > 120 & red < 200;
 mag_green = green < 70;
 mag_blue = blue > 60 & blue < 130;
 mag_img = mag_red .* mag_green .* mag_blue;
 
 % threshold for yellow
-yel_red = red > 140 & red < 220;
-yel_green = green > 140 & green < 205;
-yel_blue = blue < 95;
+yel_red = red > 140 & red < 240;
+yel_green = green > 140 & green < 230;
+yel_blue = blue < 110;
 yel_img = yel_red .* yel_green .* yel_blue;
 
 % label areas

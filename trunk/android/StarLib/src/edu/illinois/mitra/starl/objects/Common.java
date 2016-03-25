@@ -18,8 +18,8 @@ public final class Common {
 
 	// Specify the number of robots and number of groups
 
-	public static final Integer numOFbots = 2;
-	public static final Integer numOFgroups= 1;
+	public static final Integer numOFbots = 5;
+	public static final Integer numOFgroups= 2;
 
     // Bot types
     public static final int IROBOT = 50;

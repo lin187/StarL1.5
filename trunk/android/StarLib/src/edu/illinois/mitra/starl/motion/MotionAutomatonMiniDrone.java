@@ -167,6 +167,15 @@ public class MotionAutomatonMiniDrone extends RobotMotion {
                         case HOVER:
                             if(distance <= param.GOAL_RADIUS) {
                                 bti.hover();
+                                if(mypos.angle > 93) {
+                                    bti.setYaw((byte) 5);
+                                }
+                                else if(mypos.angle < 87) {
+                                    bti.setYaw((byte) -5);
+                                }
+                                else {
+                                    bti.setYaw((byte) 0);
+                                }
                             }
                             else{
                                 double xCommand = PID_x.getCommand(mypos.x, destination.x);

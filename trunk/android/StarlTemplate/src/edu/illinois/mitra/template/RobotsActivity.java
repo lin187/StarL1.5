@@ -71,12 +71,12 @@ public class RobotsActivity extends Activity implements MessageListener {
 
 		// Load the participants
 		//participants = IdentityLoader.loadIdentities(IDENTITY_FILE_URL);
-        numRobots = 4;
+        numRobots = 2;
         botInfo = new BotInfoSelector[numRobots];
-        botInfo[0] = new BotInfoSelector("red", Common.IROBOT);
-        botInfo[1] = new BotInfoSelector("green", Common.IROBOT);
-        botInfo[2] = new BotInfoSelector("blue", Common.IROBOT);
-        botInfo[3] = new BotInfoSelector("white", Common.IROBOT);
+        botInfo[0] = new BotInfoSelector("red", Common.MINIDRONE);
+        botInfo[1] = new BotInfoSelector("green", Common.MINIDRONE);
+        //botInfo[2] = new BotInfoSelector("blue", Common.IROBOT);
+       // botInfo[3] = new BotInfoSelector("white", Common.IROBOT);
 
         participants = new String[3][numRobots];
         for(i =0; i < numRobots; i++) {
@@ -85,41 +85,7 @@ public class RobotsActivity extends Activity implements MessageListener {
             participants[2][i] = botInfo[i].ip;
         }
 
-        // bot names
-       /* participants[0][0] = "bot0";
-        if(numRobots > 1) {
-            participants[0][1] = "bot1";
-        }
-        if(numRobots > 2) {
-            participants[0][2] = "bot2";
-        }
 
-        // bot bluetooth addresses
-        if(Common.botType == Common.MINIDRONE) {
-            participants[1][0] = "Mars_122139";
-            if(numRobots > 1) {
-                participants[1][1] = "green1";
-            }
-            if(numRobots > 2) {
-                participants[1][2] = "Mars_122317";
-            }
-        }
-
-        if(Common.botType == Common.IROBOT) {
-            participants[1][0] = "5C:F3:70:75:BB:0E";
-            if(numRobots > 1) {
-                participants[1][1] = "5C:F3:70:75:BB:2F";
-            }
-        }
-
-        // phone/tablet ip addresses
-        participants[2][0] = "192.168.1.110";
-        if(numRobots > 1) {
-            participants[2][1] = "192.168.1.111";
-        }
-        if(numRobots > 2) {
-            participants[2][2] = "192.168.1.112";
-        }*/
 		// Initialize preferences holder
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		selectedRobot = prefs.getInt(PREF_SELECTED_ROBOT, 0);

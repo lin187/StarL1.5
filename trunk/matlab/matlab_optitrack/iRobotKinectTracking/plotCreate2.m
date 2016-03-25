@@ -39,7 +39,20 @@ if ~videoOnly
                 rectangle('Position', BBox, 'EdgeColor','y', 'LineWidth', 3);
             end
             if goal_centers ~= 0
-                viscircles(goal_centers, goal_radii);
+                if botArray(i).type == MINIDRONE
+%                     m = mmPerPixel(botArray(i).radii(index));
+%                     minimum = 1000000;
+%                     for j = 1:length(goal_centers)
+%                         dist = norm2(center_mm_text - goal_centers(i,:));
+%                         if dist < minimum
+%                             minimum = dist;
+%                             ind = j;
+%                         end
+%                     end
+%                     viscircles(goal_centers(ind,:) * (m/mm_per_pixel), goal_radii(ind) * (m/mm_per_pixel));
+                else
+                    viscircles(goal_centers, goal_radii);
+                end
             end
         end
     end
