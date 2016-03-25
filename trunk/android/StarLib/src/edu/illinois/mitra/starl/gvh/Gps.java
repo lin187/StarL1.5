@@ -3,10 +3,11 @@ package edu.illinois.mitra.starl.gvh;
 import java.util.Vector;
 
 import edu.illinois.mitra.starl.interfaces.GpsReceiver;
+import edu.illinois.mitra.starl.interfaces.TrackedRobot;
+import edu.illinois.mitra.starl.models.Model_iRobot;
+import edu.illinois.mitra.starl.models.Model_quadcopter;
 import edu.illinois.mitra.starl.objects.ItemPosition;
-import edu.illinois.mitra.starl.objects.Model_iRobot;
 import edu.illinois.mitra.starl.objects.ObstacleList;
-import edu.illinois.mitra.starl.objects.Point3d;
 import edu.illinois.mitra.starl.objects.PositionList;
 
 /**
@@ -23,7 +24,7 @@ public class Gps {
 	
 	private GlobalVarHolder gvh;
 	private GpsReceiver mGpsReceiver;
-	protected PositionList<Model_iRobot> robot_positions;
+	protected PositionList<ItemPosition> robot_positions;
 	protected PositionList<ItemPosition> waypoint_positions;
 	protected PositionList<ItemPosition> sensepoint_positions;
 	//this is the environment that is used for calculating collisions
@@ -36,7 +37,7 @@ public class Gps {
 	
 	public Gps(GlobalVarHolder gvh, GpsReceiver mGpsReceiver) {
 		this.mGpsReceiver = mGpsReceiver;
-		this.robot_positions = mGpsReceiver.getRobots();
+		this.robot_positions = mGpsReceiver.get_robots();
 		this.waypoint_positions = mGpsReceiver.getWaypoints();
 		this.sensepoint_positions = mGpsReceiver.getSensepoints();
 		this.obs_positions = mGpsReceiver.getObspoints();
@@ -55,16 +56,16 @@ public class Gps {
 		mGpsReceiver.cancel();
 	}
 
-	public PositionList<Model_iRobot> getPositions() {
+	public PositionList<ItemPosition> get_robot_Positions() {
 		return robot_positions;
 	}
-	
-	public Model_iRobot getPosition(String robot_name) {
-		return robot_positions.getPosition(robot_name);
+		
+	public ItemPosition getPosition(String robot_name) {
+		return robot_positions.getPosition(robot_name);	
 	}
 	
-	public Model_iRobot getMyPosition() {
-		return robot_positions.getPosition(name);
+	public ItemPosition getMyPosition() {
+		return getPosition(name);
 	}
 
 	public PositionList<ItemPosition> getWaypointPositions() {

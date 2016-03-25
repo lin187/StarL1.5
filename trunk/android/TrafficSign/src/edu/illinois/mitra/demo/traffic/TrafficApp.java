@@ -43,7 +43,7 @@ public class TrafficApp extends LogicThread {
 
 	public TrafficApp(GlobalVarHolder gvh) {
 		super(gvh);
-		robotIndex = Integer.parseInt(name.substring(3,name.length()));
+		robotIndex = Integer.parseInt(name.replaceAll("[^0-9]", ""));
 		MotionParameters.Builder settings = new MotionParameters.Builder();
 		settings.COLAVOID_MODE(COLAVOID_MODE_TYPE.STOP_ON_COLLISION);
 		//settings.GOAL_RADIUS(15);
@@ -71,8 +71,6 @@ public class TrafficApp extends LogicThread {
 	public List<Object> callStarL() {
 		while(true) {
 			myPos = gvh.gps.getMyPosition();
-			if((gvh.gps.getMyPosition().type == 0) || (gvh.gps.getMyPosition().type == 1)){
-				
 				switch(stage) {
 				case PICK:
 					if(destinations.isEmpty()) {
@@ -90,13 +88,14 @@ public class TrafficApp extends LogicThread {
 							stage = Stage.REGISTER;
 						}
 						else{
-							gvh.plat.moat.goTo(currentDestination);	
+						gvh.plat.reachAvoid.doReachAvoid(myPos, currentDestination, obEnvironment);
+//						gvh.plat.moat.goTo(currentDestination);	
 							stage = Stage.GO;
 						}
 					}
 					break;
 				case GO:
-					if(!gvh.plat.moat.inMotion) {
+				if(gvh.plat.reachAvoid.doneFlag) {
 						if(currentDestination != null){
 							destinations.remove();
 						}
@@ -139,14 +138,15 @@ public class TrafficApp extends LogicThread {
 					//just a wait stage
 					//send message, stay in ENTRY, when received all messages, go to CS
 					if(ListOfCars.isEmpty()){
-						gvh.plat.moat.goTo(currentDestination);	
+					gvh.plat.reachAvoid.doReachAvoid(myPos, currentDestination, obEnvironment);
+//					gvh.plat.moat.goTo(currentDestination);	
 						stage = Stage.CS;
 						//everyone replies, go to CS
 					}
 					break;	
 					
 				case CS:
-					if(!gvh.plat.moat.inMotion) {
+				if(gvh.plat.reachAvoid.doneFlag) {
 						// it has reached the previous point
 						
 						if(currentDestination != null){
@@ -160,17 +160,19 @@ public class TrafficApp extends LogicThread {
 						currentDestination = (ItemPosition)destinations.peek();
 						if(withinCS(currentDestination)){
 							stage = Stage.CS;
-							gvh.plat.moat.goTo(currentDestination);	
+						gvh.plat.reachAvoid.doReachAvoid(myPos, currentDestination, obEnvironment);
+						//gvh.plat.moat.goTo(currentDestination);	
 						}
 						else{
-							gvh.plat.moat.goTo(currentDestination);	
+						gvh.plat.reachAvoid.doReachAvoid(myPos, currentDestination, obEnvironment);
+//						gvh.plat.moat.goTo(currentDestination);	
 							stage = Stage.EXIT;
 						}
 					}
 					break;
 					
 				case EXIT:
-					if(!gvh.plat.moat.inMotion) {
+				if(gvh.plat.reachAvoid.doneFlag) {
 						releaseAll();
 						preDestination = null;
 						stage = Stage.PICK;	
@@ -178,14 +180,15 @@ public class TrafficApp extends LogicThread {
 					break;
 					
 				case DONE:
-					gvh.plat.moat.motion_stop();
+				gvh.plat.reachAvoid.cancel();
 				
 					//if does not return null, program will never halt
 					//useful for debugging
 					//return null;
+				//return null;
 					break;
 				}
-			}
+
 			sleep(100);
 		}
 	}
@@ -197,7 +200,7 @@ public class TrafficApp extends LogicThread {
 		if(m.getTo().equals(name) || m.getTo().equals("ALL")){
 			if(m.getMID() == REQUEST_MSG){
 				String id = m.getFrom();
-				int id_num = Integer.parseInt(id.substring(3,name.length()));
+				int id_num = Integer.parseInt(id.replaceAll("[^0-9]", ""));
 				MessageContents msg_content = m.getContents();
 				List<String> R_request = new ArrayList<String>(msg_content.getContents());
 				int tStamp = Integer.parseInt(R_request.remove(R_request.size()-1));
@@ -238,7 +241,7 @@ public class TrafficApp extends LogicThread {
 				
 			}
 			if(m.getMID() == REPLY_MSG){
-				ListOfCars.remove(m.getFrom());
+					ListOfCars.remove(m.getFrom());
 	//				System.out.println(name + " get reply from " + m.getFrom());
 				return;
 			}

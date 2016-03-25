@@ -6,6 +6,7 @@ import java.util.Observer;
 import java.util.Random;
 import java.util.Vector;
 
+import edu.illinois.mitra.starl.models.Model_iRobot;
 import edu.illinois.mitra.starl.objects.*;
 
 public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {	
@@ -65,7 +66,7 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 	}
 	
 	@Override
-	public PositionList<Model_iRobot> getRobotPositions() {
+	public PositionList<Model_iRobot> getiRobotPositions() {
 		return robot_positions;
 	}
 

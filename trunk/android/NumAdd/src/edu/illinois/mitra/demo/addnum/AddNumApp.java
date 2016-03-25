@@ -26,7 +26,7 @@ public class AddNumApp extends LogicThread {
 	private boolean isFinal = false;
 	public AddNumApp(GlobalVarHolder gvh){
 		super(gvh);
-		robotIndex = Integer.parseInt(name.substring(3,name.length()));
+		robotIndex = Integer.parseInt(name.replaceAll("[^0-9]", ""));
 		mutex = new GroupSetMutex(gvh, 0);
 		//mutex = new SingleHopMutualExclusion(1, gvh, "bot0");
 		dsm = new DSMMultipleAttr(gvh);
@@ -42,7 +42,7 @@ public class AddNumApp extends LogicThread {
 				if(!added){
 					if(!wait){	
 						// get total number of robots
-						numBots = gvh.gps.getPositions().getNumPositions();
+						numBots = gvh.gps.get_robot_Positions().getNumPositions();
 						// call mutex and then wait
 						mutex.requestEntry(0);
 						wait = true;

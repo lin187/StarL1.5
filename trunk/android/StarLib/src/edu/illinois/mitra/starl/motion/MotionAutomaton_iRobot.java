@@ -9,6 +9,7 @@ import java.util.*;
 
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.RobotEventListener.Event;
+import edu.illinois.mitra.starl.models.Model_iRobot;
 import edu.illinois.mitra.starl.objects.*;
 
 
@@ -23,7 +24,18 @@ import edu.illinois.mitra.starl.objects.*;
  * @author Adam Zimmerman, Yixiao Lin
  * @version 1.1
  */
-public class MotionAutomaton extends RobotMotion {
+ *	behavior: marks the unknown obstacle when collide, redo path planning (get around the obstacle)to reach the goal
+ *	1: explore the area robot
+ *	behavior: explore the shape of the unknown obstacle and sent out the shape to others
+ *	2: random moving obstacle robot 
+ *	behavior:acts as simple moving obstacle
+ *	3: anti goal robot
+ *	behavior:acts as AI opponent try to block robots getting to the goal
+ * 
+ * @author Adam Zimmerman, Yixiao Lin
+ * @version 1.1
+ */
+public class MotionAutomaton_iRobot extends RobotMotion {
 	protected static final String TAG = "MotionAutomaton";
 	protected static final String ERR = "Critical Error";
 
@@ -55,7 +67,7 @@ public class MotionAutomaton extends RobotMotion {
 	
 
 	protected enum STAGE {
-		INIT, ARCING, STRAIGHT, TURN, SMALLTURN, GOAL
+		INIT, ARCING, STRAIGHT, TURN, SMALLTURN, GOAL, UNABLE
 	}
 
 	private STAGE next = null;
@@ -117,7 +129,7 @@ public class MotionAutomaton extends RobotMotion {
 	private double turnspeed;
 
 
-	public MotionAutomaton(GlobalVarHolder gvh, BluetoothInterface bti) {
+	public MotionAutomaton_iRobot(GlobalVarHolder gvh, BluetoothInterface bti) {
 		super(gvh.id.getName());
 		this.gvh = gvh;
 		this.bti = bti;
@@ -137,7 +149,7 @@ public class MotionAutomaton extends RobotMotion {
 	}
 	
 	public void goTo(ItemPosition dest) {
-		Scanner in = new Scanner(gvh.gps.getMyPosition().name).useDelimiter("[^0-9]+");
+		Scanner in = new Scanner(((Model_iRobot)gvh.gps.getMyPosition()).name).useDelimiter("[^0-9]+");
 		int index = in.nextInt();
 		//ObstacleList obsList = gvh.gps.getViews().elementAt(index);
         obsList = new ObstacleList();
@@ -167,11 +179,10 @@ public class MotionAutomaton extends RobotMotion {
 		while(true) {
 //			gvh.gps.getObspointPositions().updateObs();
 			if(running) {
-				mypos = gvh.gps.getMyPosition();
+				mypos = (Model_iRobot)gvh.plat.getModel();
 				int distance = mypos.distanceTo(destination);
 				int angle = mypos.angleTo(destination);
 				int absangle = Math.abs(angle);
-
 				switch(param.COLAVOID_MODE) {
 				case BUMPERCARS:
 					colliding = false;
@@ -199,13 +210,14 @@ public class MotionAutomaton extends RobotMotion {
 				if(!colliding && stage != null) {
 					if(stage != prev)
 						gvh.log.e(TAG, "Stage is: " + stage.toString());
-
+					if(distance <= param.GOAL_RADIUS) {
+						next = STAGE.GOAL;
+					}
 					switch(stage) {
 					case INIT:
+						done = false;
 						if(mode == OPMODE.GO_TO) {
-							if(distance <= param.GOAL_RADIUS) {
-								next = STAGE.GOAL;
-							} else if(param.ENABLE_ARCING && distance <= param.ARC_RADIUS && absangle <= param.ARCANGLE_MAX) {
+							if(param.ENABLE_ARCING && distance <= param.ARC_RADIUS && absangle <= param.ARCANGLE_MAX) {
 								next = STAGE.ARCING;
 							} else {
 								next = STAGE.TURN;
@@ -225,8 +237,6 @@ public class MotionAutomaton extends RobotMotion {
 								next = STAGE.TURN;
 							if(absangle < param.STRAIGHT_ANGLE)
 								next = STAGE.STRAIGHT;
-							if(distance <= param.GOAL_RADIUS)
-								next = STAGE.GOAL;
 						}
 						break;
 					case STRAIGHT:
@@ -239,8 +249,6 @@ public class MotionAutomaton extends RobotMotion {
 								next = STAGE.SMALLTURN;
 							if(absangle > param.ARCANGLE_MAX)
 								next = STAGE.TURN;
-							if(distance <= param.GOAL_RADIUS)
-								next = STAGE.GOAL;
 						}
 						break;
 					case TURN:
@@ -266,14 +274,21 @@ public class MotionAutomaton extends RobotMotion {
 								next = STAGE.STRAIGHT;
 							if(absangle > param.ARCANGLE_MAX)
 								next = STAGE.TURN;
-							if(distance <= param.GOAL_RADIUS)
-								next = STAGE.GOAL;
 						}
 						break;
 					case GOAL:
-						gvh.log.i(TAG, "At goal!");
+						done = true;
+						gvh.log.i(TAG, "At goal, done flag set!");
 						if(param.STOP_AT_DESTINATION)
 							straight(0);
+						running = false;
+						inMotion = false;
+						break;
+					case UNABLE:
+						System.out.println("motionautomation inactive");
+						gvh.log.i(TAG, "motion could not reach dest");
+						straight(0);
+						done = false;
 						running = false;
 						inMotion = false;
 						break;
@@ -300,7 +315,7 @@ public class MotionAutomaton extends RobotMotion {
 						if(stage != null) {
 							gvh.log.d(TAG, "Imminent collision detected!");
 							straight(0);
-							stage = STAGE.GOAL;
+							stage = STAGE.UNABLE;
 						}
 						break;
 					default:	
@@ -411,7 +426,7 @@ public class MotionAutomaton extends RobotMotion {
 				colprev0 = null;
 				colnext0 = null;
 				colstage0 = null;
-				stage = STAGE.GOAL;
+				stage = STAGE.UNABLE;
 			}
 		break;
 		case STRAIGHT:
@@ -465,8 +480,7 @@ public class MotionAutomaton extends RobotMotion {
 					colprev1 = null;
 					colnext1 = null;
 					colstage1 = null;
-					stage = STAGE.GOAL;
-					//stop the robot and broadcast
+					stage = STAGE.UNABLE;
 				}
 			}
 			else{

@@ -61,9 +61,16 @@ public class RRTNode {
 	 * @return
 	 */
 	
-    public Stack<ItemPosition> findRoute(ItemPosition destination, int K, ObstacleList obsList, int xRange, int yRange, ItemPosition RobotPos, int Radius) {
     	//initialize a kd tree;
-    	obsList.remove(RobotPos, 0.9*Radius);
+
+	public Stack<ItemPosition> findRoute(ItemPosition destination, int K, ObstacleList obsList, int xLower, int xUpper, int yLower, int yUpper, ItemPosition RobotPos, int radius) {
+		//TODO: add Steer here
+		//initialize a kd tree;
+		//obsList.remove(RobotPos, 0.9*Radius);
+		if(xLower > xUpper || yLower> yUpper){
+			System.err.println("Lower bound must be smaller or equal to than upper bound");
+			return null;
+		}
     	kd = new KDTree<RRTNode>(2);
     	double [] root = {position.x,position.y};
     	final RRTNode rootNode = new RRTNode(position.x,position.y);
@@ -81,8 +88,7 @@ public class RRTNode {
     //for(i< k)  keep finding	
     	for(int i = 0; i<K; i++){
     	//if can go from current to destination, meaning path found, add destinationNode to final, stop looping.
-    		if(obsList.validPath(addedNode, destNode, 165)){
-    			
+			if(obsList.validPath(addedNode, destNode, radius)){
     			destNode.parent = addedNode;
     			stopNode = destNode;
     			try{	
@@ -101,13 +107,23 @@ public class RRTNode {
     		int yRandom = 0;
     		ItemPosition sampledPos = new ItemPosition("rand",xRandom, yRandom, 0);
     		while(!validRandom){
+				xRandom = (int) Math.round((Math.random() * ((xUpper - xLower))));
+				yRandom = (int) Math.round((Math.random() * ((yUpper - yLower))));
+				sampledPos.x = xRandom + xLower;
+				sampledPos.y = yRandom + yLower;
+				validRandom = ((sampledPos.x >= xLower && sampledPos.x <= xUpper) && (sampledPos.y >= yLower && sampledPos.y <= yUpper));
+				validRandom = validRandom && obsList.validstarts(sampledPos, radius);
+				if(validRandom){
+
+//TD_NATHAN: resolve
                 // Changed this to work with coordinate system with negative value.
                 // Need to make it an option somehow
-    			xRandom = (int)(Math.random() * ((xRange) + 1)) - xRange/2;
-        		yRandom = (int)(Math.random() * ((yRange) + 1)) - yRange/2;
-        		sampledPos.x = xRandom;
-        		sampledPos.y = yRandom;
-        		validRandom = obsList.validstarts(sampledPos, Radius);
+    			//xRandom = (int)(Math.random() * ((xRange) + 1)) - xRange/2;
+        		//yRandom = (int)(Math.random() * ((yRange) + 1)) - yRange/2;
+        		//sampledPos.x = xRandom;
+        		//sampledPos.y = yRandom;
+        		//validRandom = obsList.validstarts(sampledPos, Radius);
+
         		// added a check to see if sampledPos is already in tree
         		boolean notInTree = true;
         		RRTNode possibleNode = new RRTNode(sampledPos.x, sampledPos.y);
@@ -120,6 +136,7 @@ public class RRTNode {
         		}
         		validRandom = (validRandom && notInTree);
     		}
+			}
     		RRTNode sampledNode = new RRTNode(sampledPos.x, sampledPos.y);
     		// with a valid random sampled point, we find it's nearest neighbor in the tree, set it as current Node
     		try{
@@ -128,7 +145,7 @@ public class RRTNode {
     		catch (Exception e) {
     		    System.err.println(e);
     		}
-    		sampledNode = toggle(currentNode, sampledNode, obsList, Radius);
+			sampledNode = toggle(currentNode, sampledNode, obsList, radius);
     		//check if toggle failed
     		//if not failed, insert the new node to the tree
     		if(sampledNode != null){
@@ -157,7 +174,7 @@ public class RRTNode {
 		}
     	
     	if(destNode.parent == null){
-    		System.out.println("Path Not found!");
+			System.out.println("Path Not found! Tree size: " + kd.size());
     		return(null);
     	}
     	else{

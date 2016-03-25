@@ -77,7 +77,8 @@ public class DrawPanel extends ZoomablePanel
 			{
 				RobotData rd = data.get(rIndex);
 				
-				drawRobot(g,rd,true);
+				
+				drawRobot(g,rd,settings.DRAW_ROBOT_TYPE);
 				
 				if(wirelessBlocked[rIndex]){
 					
@@ -110,7 +111,7 @@ public class DrawPanel extends ZoomablePanel
 					{					
 						trace.add(new Point(rd.x, rd.y));
 						
-						if (trace.size() > settings.DRAW_TRACE_LENGTH)
+						if (settings.DRAW_TRACE_LENGTH> 0 && trace.size() > settings.DRAW_TRACE_LENGTH)
 							trace.removeFirst();
 					}
 				}
@@ -312,23 +313,17 @@ public class DrawPanel extends ZoomablePanel
 		}
 	}
 	
-	private void drawRobot(Graphics2D g, RobotData rd, boolean drawId)
-	{
+	private void drawRobot(Graphics2D g, RobotData rd, boolean drawId){
 		g.setStroke(new BasicStroke(this.settings.DRAW_ROBOT_STROKE_SIZE));
 
 		if (rd.c != null)
 			g.setColor(rd.c);
 		else
 			g.setColor(Color.black);
-
-		int radius = 50; // TODO: is this accurate / why doesn't it use the constants from SimSettings (perhaps with a scaling factor?) ; try to avoid duplicating constants
-		
+		int radius = settings.BOT_RADIUS;
 		if (rd.radius != 0)
 			radius = rd.radius;
 		
-		g.drawOval(rd.x - radius, rd.y - radius, radius*2, radius*2);
-		
-		// draw angle
 		double radians = 2 * Math.PI * rd.degrees / 360.0;
 		
 		Point2D.Double from = new Point2D.Double(rd.x, rd.y);
@@ -337,6 +332,20 @@ public class DrawPanel extends ZoomablePanel
 		Line2D.Double l = new Line2D.Double(from, to);
 		
 		g.draw(l);
+		if(rd.name.contains(settings.QUADCOPTER_NAME)){
+			int outerRadius = (int)Math.round((Math.sqrt(2)-1)*rd.radius);
+			int offset = (int) Math.round(Math.sqrt(2)* outerRadius);
+			g.drawRect(rd.x-offset/2, rd.y-offset/2, offset, offset);
+			//g.drawOval(rd.x - radius, rd.y - radius, radius*2, radius*2);
+			g.drawOval(rd.x - outerRadius - outerRadius, rd.y - outerRadius - outerRadius, outerRadius*2, outerRadius*2);
+			g.drawOval(rd.x - outerRadius + outerRadius, rd.y - outerRadius - outerRadius, outerRadius*2, outerRadius*2);
+			g.drawOval(rd.x - outerRadius - outerRadius, rd.y - outerRadius + outerRadius, outerRadius*2, outerRadius*2);
+			g.drawOval(rd.x - outerRadius + outerRadius, rd.y - outerRadius + outerRadius, outerRadius*2, outerRadius*2);
+			g.drawString("z: " + rd.z + ", pitch: " + Math.round(rd.pitch*100)/100 + ", roll: " + Math.round(rd.roll*100)/100, rd.x - 55, rd.y + rd.radius + 100);
+
+		}
+		else if(rd.name.contains(settings.IROBOT_NAME)){
+			g.drawOval(rd.x - radius, rd.y - radius, radius*2, radius*2);
 		if(rd.leftbump){
 			int x_1 = (int) (rd.radius*(Math.cos(Math.toRadians(rd.degrees+90))) + rd.x);
 			int y_1 = (int) (rd.radius*(Math.sin(Math.toRadians(rd.degrees+90))) + rd.y);
@@ -351,6 +360,7 @@ public class DrawPanel extends ZoomablePanel
 			int x_2 = (int) (rd.radius*(Math.cos(Math.toRadians(rd.degrees-90))) + rd.x);
 			int y_2 = (int) (rd.radius*(Math.sin(Math.toRadians(rd.degrees-90))) + rd.y);
 			g.drawLine(x_1, y_1, x_2, y_2);
+		}
 		}
 			
 		if (drawId)
