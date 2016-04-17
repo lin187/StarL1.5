@@ -14,9 +14,9 @@ public class Main {
 		*/
 		SimSettings.Builder settings = new SimSettings.Builder();
 		
-		settings.N_BOTS(2);
-		settings.N_GBOTS(2);
-		settings.TIC_TIME_RATE(1);
+		settings.N_IROBOTS(5);
+		// does not work with quadcopters yet
+		settings.TIC_TIME_RATE(3);
 		settings.WAYPOINT_FILE("dest.wpt");
 		settings.SENSEPOINT_FILE("senseObjects.wpt");
 		settings.INITIAL_POSITIONS_FILE("start.wpt");

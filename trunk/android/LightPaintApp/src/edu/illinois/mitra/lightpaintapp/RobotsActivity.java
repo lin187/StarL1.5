@@ -100,7 +100,9 @@ public class RobotsActivity extends Activity implements MessageListener {
 			mapParticipants.put(participants[0][i], participants[2][i]);
 		}
 		System.out.println("Creating a GVH for " + participants[0][selectedRobot] + ", " + participants[1][selectedRobot]);
-		gvh = new RealGlobalVarHolder(participants[0][selectedRobot], mapParticipants, mainHandler, participants[1][selectedRobot], this);
+		//gvh = new RealGlobalVarHolder(participants[0][selectedRobot], mapParticipants, mainHandler, participants[1][selectedRobot], this);
+        // TD_NATHAN: you need to figure out what this initpos thing is, as the null in the next is probably going to crash it
+        gvh = new RealGlobalVarHolder(participants[0][selectedRobot], mapParticipants, null, mainHandler, participants[1][selectedRobot]);
 		
 		System.out.println(gvh.id.getParticipants());
 		

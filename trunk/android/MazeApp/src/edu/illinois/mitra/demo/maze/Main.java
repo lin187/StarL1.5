@@ -11,12 +11,11 @@ public class Main {
 
 	public static void main(String[] args) {
 		SimSettings.Builder settings = new SimSettings.Builder();
-		
-		settings.N_BOTS(2);
+		settings.N_IROBOTS(2);
 		settings.N_GBOTS(1);
 		settings.N_DBOTS(1);
-	//	settings.N_RBOTS(1);
-		settings.TIC_TIME_RATE(3);
+		settings.N_RBOTS(0);
+		settings.TIC_TIME_RATE(1);
 		settings.WAYPOINT_FILE("dest.wpt");
 
 		settings.OBSPOINT_FILE("Obstacles.wpt");

@@ -37,10 +37,14 @@ public class GroupSetMutex implements MutualExclusion, MessageListener {
 		this.gvh = gvh;
 		this.mutex_id = mutex_id;
 		name = gvh.id.getName();
-		gvh.trace.traceEvent(TAG, "Created", gvh.time());
-		gvh.comms.addMsgListener(this, Common.MSG_GSMUTEX_REQUEST, Common.MSG_GSMUTEX_REPLY);
+		gvh.trace.traceEvent(TAG, mutex_id + " created", gvh.time());
+		try{
+			gvh.comms.addMsgListener(this, Common.MSG_GSMUTEX_REQUEST+mutex_id, Common.MSG_GSMUTEX_REPLY+mutex_id);
+		} catch (RuntimeException e) {
+			System.out.println("Already have a listener for MID " +  Common.MSG_GSMUTEX_REQUEST+mutex_id + " and "+Common.MSG_GSMUTEX_REPLY+mutex_id);
+		}
 		party= new ArrayList<String>();
-		for(ItemPosition cur: gvh.gps.getPositions().getList()){
+		for(ItemPosition cur: gvh.gps.get_robot_Positions().getList()){
 			party.add(0, cur.name);
 		}
 		if(party.contains(name)){
@@ -54,8 +58,8 @@ public class GroupSetMutex implements MutualExclusion, MessageListener {
 	@Override
 	public void cancel() {
 		gvh.trace.traceEvent(TAG,  "Cancelled", gvh.time());
-		gvh.comms.removeMsgListener(Common.MSG_GSMUTEX_REQUEST);
-		gvh.comms.removeMsgListener(Common.MSG_GSMUTEX_REPLY);
+		gvh.comms.removeMsgListener(Common.MSG_GSMUTEX_REQUEST+mutex_id);
+		gvh.comms.removeMsgListener(Common.MSG_GSMUTEX_REPLY+mutex_id);
 	}
 
 	@Override
@@ -97,7 +101,7 @@ public class GroupSetMutex implements MutualExclusion, MessageListener {
 		section_string[section_string.length-1] = String.valueOf(timeStamp);
 		//attach the timeStamp at the end of the message
 		MessageContents sections_msg = new MessageContents(section_string);
-		RobotMessage request = new RobotMessage("ALL", name, Common.MSG_GSMUTEX_REQUEST, sections_msg);
+		RobotMessage request = new RobotMessage("ALL", name, Common.MSG_GSMUTEX_REQUEST+mutex_id, sections_msg);
 		gvh.comms.addOutgoingMessage(request);
 		party.remove(name);
 		gvh.trace.traceEvent(TAG,  "Request Sent", gvh.time());
@@ -167,8 +171,9 @@ public class GroupSetMutex implements MutualExclusion, MessageListener {
 
 	@Override
 	public void messageReceived(RobotMessage m) {
+//		System.out.println(m.toString()+ " mutex_id : "+ mutex_id);
 		if(m.getTo().equals(name) || m.getTo().equals("ALL")){
-			if(m.getMID() == Common.MSG_GSMUTEX_REQUEST){
+			if(m.getMID() == Common.MSG_GSMUTEX_REQUEST+mutex_id){
 				String id = m.getFrom();
 				MessageContents msg_content = m.getContents();
 				List<String> R_request = new ArrayList<String>(msg_content.getContents());
@@ -205,7 +210,7 @@ public class GroupSetMutex implements MutualExclusion, MessageListener {
 				return;
 				
 			}
-			if(m.getMID() == Common.MSG_GSMUTEX_REPLY && Integer.parseInt(m.getContents(0)) == mutex_id){
+			if(m.getMID() == Common.MSG_GSMUTEX_REPLY+mutex_id && Integer.parseInt(m.getContents(0)) == mutex_id){
                 if(party.contains(m.getFrom())){
                     party.remove(m.getFrom());
                 }
@@ -237,7 +242,7 @@ public class GroupSetMutex implements MutualExclusion, MessageListener {
 		}
 		String id = m2.getFrom();
 		MessageContents mutex_id_msg = new MessageContents(String.valueOf(mutex_id));
-		RobotMessage request = new RobotMessage(id, name, Common.MSG_GSMUTEX_REPLY, mutex_id_msg);
+		RobotMessage request = new RobotMessage(id, name, Common.MSG_GSMUTEX_REPLY+mutex_id, mutex_id_msg);
 		gvh.comms.addOutgoingMessage(request);
 	}
 

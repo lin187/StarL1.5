@@ -6,10 +6,15 @@ import edu.illinois.mitra.starl.objects.ObstacleList;
 
 public class RobotData
 {
+	// TODO: make this class more general for any models
 	public String name;
 	public int x;
 	public int y;
+	public int z = 0;
 	public double degrees;
+	public double yaw;
+	public double pitch;
+	public double roll;
 	public long time;
 
 	// optional
@@ -49,6 +54,27 @@ public class RobotData
 	public RobotData(String name, int x, int y, double degrees, long t) {
 		this(name, x, y, degrees);
 		this.time = t;
+	}
+	
+	public RobotData(String name, int x, int y, int z, double yaw, double pitch, double roll, long t) {
+		this.name = name;
+		this.x = x;
+		this.y = y;
+		this.z = z;
+		this.yaw = yaw;
+		this.pitch = pitch;
+		this.roll = roll;
+		this.time = t;
+	}
+	
+	public RobotData(String name, int x, int y, int z, double yaw, double pitch, double roll) {
+		this.name = name;
+		this.x = x;
+		this.y = y;
+		this.z = z;
+		this.yaw = yaw;
+		this.pitch = pitch;
+		this.roll = roll;
 	}
 	
 	public RobotData(String name, int x, int y, double degrees, long t, Color color) {

@@ -55,7 +55,7 @@ public class Main {
 			SimSettings.Builder builder = new SimSettings.Builder().DRAWER(
 					new LightPaintDrawer(DRAW_REACHTUBES)).WAYPOINT_FILE(
 					WPT_PATH + inputFilename + ".wpt");
-			builder.N_BOTS(nbots);
+			builder.N_IROBOTS(nbots);
 			builder.N_GBOTS(nbots);
 			builder.TIC_TIME_RATE(5);
 			builder.MAX_FPS(35);
@@ -68,7 +68,7 @@ public class Main {
 			SimSettings settings = builder.build();
 			for (int i = 1; i <= SAMPLES; i++) {
 				System.out.println("RUN " + i);
-				System.out.println("Starting with " + settings.N_BOTS
+				System.out.println("Starting with " + settings.N_IROBOTS
 						+ " robots.");
 				Simulation sim = new Simulation(LightPaintActivity.class,
 						settings);
