@@ -2,28 +2,35 @@ function  angle  = findMiniDroneYaw( imgColor, BBox, yaw, center, radius, type)
 % finds the yaw of the minidrone using yellow and cyan markers
 global MINIDRONE
 global CREATE2
+global ARDRONE
 
+% if type is ardrone, use a tight bouding box since blacking out pixels
+% doesn't work with drone made up of four circles
+if type == ARDRONE
+    BBox = getBBoxTight(center, radius, type);
+end
 % take only pixels in bounding box
 frame = getPixelsInBB(imgColor, BBox);
 
-% black out pixels that aren't contained in bot's circle
-% this is so yaw estimation won't pick up other bot's circles when too
-% close
-
-% make matrices with with x and y coordinates as values
-x = (1:640);
-X = repmat(x,480,1);
-X = getPixelsInBB(X, BBox);
-y = (1:480)';
-Y = repmat(y,1,640);
-Y = getPixelsInBB(Y, BBox);
-
-% make a matrix with with 1's inside circle, 0's outside
-imgfilt = (X - center(1,1)).^2 + (Y - center(1,2)).^2 <= radius^2;
-% make the matrix NxNx3
-imgfilt = repmat(imgfilt,1,1,3);
-% multiple frame by the matrix to black out pixels
-frame = frame .* uint8(imgfilt);
+if type == MINIDRONE || type == CREATE2 
+    % black out pixels that aren't contained in bot's circle
+    % this is so yaw estimation won't pick up other bot's circles when too
+    % close
+ 
+    % make matrices with with x and y coordinates as values
+    x = (1:640);
+    X = repmat(x,480,1);
+    X = getPixelsInBB(X, BBox);
+    y = (1:480)';
+    Y = repmat(y,1,640);
+    Y = getPixelsInBB(Y, BBox);
+    % make a matrix with with 1's inside circle, 0's outside
+    imgfilt = (X - center(1,1)).^2 + (Y - center(1,2)).^2 <= radius^2;
+    % make the matrix NxNx3
+    imgfilt = repmat(imgfilt,1,1,3);
+    % multiple frame by the matrix to black out pixels
+    frame = frame .* uint8(imgfilt);
+end
 
 red = frame(:,:,1);
 green = frame(:,:,2);
@@ -68,14 +75,13 @@ if ~isempty(mag_props) && ~isempty(yel_props)
     
     A = yel_center - mag_center;
     
-    if type == MINIDRONE
+    if type == MINIDRONE || ARDRONE
         B = [1,0];
     elseif type == CREATE2
         B = [0,1];
     end
     
-    angle = rad2deg(angleBtwVectors(A,B));
-    
+    angle = rad2deg(angleBtwVectors(A,B));    
 %     figure(2);
 %     imshow(frame)
 %     hold on

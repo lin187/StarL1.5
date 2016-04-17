@@ -12,20 +12,23 @@ opt_system = KINECT;
 % Some global variables needed for Kinect
 % Matlab didn't like them being in the Kinect if statement below
 % They aren't needed when using Optitrack
-global numCreates;
-global numDrones;
-global imgColorAll;
-global mm_per_pixel;
-global camDistToFloor;
+global numCreates
+global numDrones
+global numARDrones
+global imgColorAll
+global mm_per_pixel
+global camDistToFloor
 global botArray
 global BBoxFactor
 global MINIDRONE
 global CREATE2
+global ARDRONE
 
 % If using Kinect, modify these as necessary
 if opt_system == KINECT
     numCreates =0;
-    numDrones = 1;
+    numDrones = 0;
+    numARDrones = 1;
     BBoxFactor = 1.5;
     
     % Other things needed for Kinect tracking
@@ -34,7 +37,7 @@ if opt_system == KINECT
     imgColorAll = zeros(480,640,3,num_frames,'uint8'); % stores all captured imgs
     mm_per_pixel = 5.663295322; % mm in one pixel at ground level
     found = false;
-    robot_count = numDrones + numCreates;
+    robot_count = numDrones + numCreates + numARDrones;
     camDistToFloor = 3058; % in mm, as measured with Kinect
     robot_names = cell(1,robot_count);
     botArray = Robot.empty(robot_count,0);
@@ -43,6 +46,7 @@ if opt_system == KINECT
     end
     MINIDRONE = 100;
     CREATE2 = 101;
+    ARDRONE = 102;
     times = [];
 end
 
@@ -53,7 +57,7 @@ if opt_system == OPTITRACK
         clc;
     end
     
-% Restart Kinect tracking  
+% Start or restart Kinect tracking  
 elseif opt_system == KINECT
     if exist('vid', 'var') && exist('vid2', 'var')
         stop([vid vid2]);

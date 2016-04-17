@@ -2,6 +2,7 @@ function trackBots(imgColor, imgDepth, index)
 global botArray
 global MINIDRONE
 global CREATE2
+global ARDRONE
 global camDistToFloor
 
 % get pixels in bouding box of bot
@@ -25,6 +26,27 @@ elseif botArray(index).type == CREATE2
     % find circles
     [centers, radii, metrics] = imfindcircles(frame, [rmin,rmax], ...
         'ObjectPolarity', 'dark', 'Sensitivity', 0.96);
+elseif botArray(index).type == ARDRONE
+    depth = findDepth(depthFrame);
+    [rmin, rmax] = findRadiusRange(depth);
+    % find circles
+    [centers, radii, metrics] = imfindcircles(frame, [rmin,rmax], ...
+        'ObjectPolarity', 'dark', 'Sensitivity', 0.92);
+    % not enough circles found, clear centers so function will return below
+    if length(centers) < 4
+        centers = [];
+    else
+        centers = centers(1:4,:);
+        % find mean of 4 circles to get center 
+        ARCenters = [centers(1,:);centers(2,:); ...
+            centers(3,:); centers(4,:)];
+        % find an average radius value
+        ARRadii = [radii(1), radii(2), radii(3), ...
+            radii(4)];
+        centers = mean(ARCenters);
+        radii = mean(ARRadii);  
+        metrics = 1;
+    end
 end
 
 % if not found, add current value to accum values and return
@@ -48,21 +70,21 @@ botArray(index).centers = [botArray(index).centers; botArray(index).center];
 botArray(index).radius = radii(indexCircle,:);
 botArray(index).radii = [botArray(index).radii, radii(indexCircle,:)];
 
+% find bbox
+botArray(index).BBox = getBBox(botArray(index).center, botArray(index).radius, botArray(index).type);
+botArray(index).BBoxes = [botArray(index).BBoxes; botArray(index).BBox];
+
 % add depth found if minidrone, add dist to floor if create, find yaws
-if botArray(index).type == MINIDRONE
+if botArray(index).type == MINIDRONE || botArray(index).type == ARDRONE
     botArray(index).depth = depth;
     botArray(index).yaw = findMiniDroneYaw(imgColor,  botArray(index).BBox,...
-        botArray(index).yaw, botArray(index).center, radii(indexCircle,:), MINIDRONE);
+        botArray(index).yaw, botArray(index).center, botArray(index).radius, botArray(index).type);
     %botArray(index).yaw = 0;
 elseif botArray(index).type == CREATE2
     botArray(index).depth = camDistToFloor;
     botArray(index).yaw = findMiniDroneYaw(imgColor, botArray(index).BBox, ...
-        botArray(index).yaw, botArray(index).center, radii(indexCircle,:), CREATE2);
+        botArray(index).yaw, botArray(index).center, botArray(index).radius, CREATE2);
 end
-
-% find bbox
-botArray(index).BBox = getBBox(botArray(index).center, botArray(index).radius);
-botArray(index).BBoxes = [botArray(index).BBoxes; botArray(index).BBox];
 
 % add accumulated values
 botArray(index).yaws = [botArray(index).yaws, botArray(index).yaw];

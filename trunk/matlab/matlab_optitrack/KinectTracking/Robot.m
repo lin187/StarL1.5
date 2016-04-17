@@ -10,6 +10,7 @@ classdef Robot
         depths = [];
         BBox
         BBoxes = [];
+        BBoxTight % BBox with BBox factor of 1
         color
         type
     end
