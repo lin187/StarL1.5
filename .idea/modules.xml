@@ -3,10 +3,13 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/trunk/android/DistributedSearch/DistributedSearch.iml" filepath="$PROJECT_DIR$/trunk/android/DistributedSearch/DistributedSearch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/trunk/android/FlockingApp/FlockingApp.iml" filepath="$PROJECT_DIR$/trunk/android/FlockingApp/FlockingApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/trunk/android/FollowApp/FollowApp.iml" filepath="$PROJECT_DIR$/trunk/android/FollowApp/FollowApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/trunk/android/LightPaintApp/LightPaintApp.iml" filepath="$PROJECT_DIR$/trunk/android/LightPaintApp/LightPaintApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/trunk/android/LightPaintLibrary/LightPaintLibrary.iml" filepath="$PROJECT_DIR$/trunk/android/LightPaintLibrary/LightPaintLibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/trunk/android/LightPaintNew/LightPaintNew.iml" filepath="$PROJECT_DIR$/trunk/android/LightPaintNew/LightPaintNew.iml" />
       <module fileurl="file://$PROJECT_DIR$/trunk/android/MazeApp/MazeApp.iml" filepath="$PROJECT_DIR$/trunk/android/MazeApp/MazeApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/trunk/android/ProjectApp/ProjectApp.iml" filepath="$PROJECT_DIR$/trunk/android/ProjectApp/ProjectApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/trunk/android/RaceApp/RaceApp.iml" filepath="$PROJECT_DIR$/trunk/android/RaceApp/RaceApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/trunk/android/StarLSim/StarLSim.iml" filepath="$PROJECT_DIR$/trunk/android/StarLSim/StarLSim.iml" />
       <module fileurl="file://$PROJECT_DIR$/trunk/android/StarLib/StarLib.iml" filepath="$PROJECT_DIR$/trunk/android/StarLib/StarLib.iml" />
