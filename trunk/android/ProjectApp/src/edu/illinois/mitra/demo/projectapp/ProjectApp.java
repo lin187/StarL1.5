@@ -34,6 +34,9 @@ public class ProjectApp extends LogicThread {
     boolean goingToRandom;
     Random random = new Random();
 
+    // This is a temporary fix, probably should get this some other way
+    int botRadius = 165;
+
 
     // used to find path through obstacles
     Stack<ItemPosition> pathStack;
@@ -61,16 +64,16 @@ public class ProjectApp extends LogicThread {
         super(gvh);
 
         obsRobots = new ObstacleList();
-        gvh.gps.getPositions();
-        int numPos = gvh.gps.getPositions().getNumPositions();
-        for(int i = 0; i< gvh.gps.getPositions().getNumPositions(); i++){
-            if(gvh.gps.getPositions().getList().get(i).name.equals(name)){
+        gvh.gps.get_robot_Positions();
+        int numPos = gvh.gps.get_robot_Positions().getNumPositions();
+        for(int i = 0; i< gvh.gps.get_robot_Positions().getNumPositions(); i++){
+            if(gvh.gps.get_robot_Positions().getList().get(i).name.equals(name)){
                 robotIndex = i;
                 break;
             }
 
-            int iX = gvh.gps.getPositions().getList().get(i).getX();
-            int iY = gvh.gps.getPositions().getList().get(i).getY();
+            int iX = gvh.gps.get_robot_Positions().getList().get(i).getX();
+            int iY = gvh.gps.get_robot_Positions().getList().get(i).getY();
             Obstacles tmpO = new Obstacles();
             tmpO.add(iX, iY);
             obsRobots.ObList.add(tmpO);
@@ -136,25 +139,25 @@ public class ProjectApp extends LogicThread {
 
             /*
             //  try to plan around other robots: this doesn't work, please fix it, we need to give an example of this as it's apparently nontrivial
-            for(int i = 0; i< gvh.gps.getPositions().getNumPositions(); i++){
+            for(int i = 0; i< gvh.gps.get_robot_Positions().getNumPositions(); i++){
 
 
-            //int myX = gvh.gps.getPositions().getList().get(robotIndex).getX();
-            //int myY = gvh.gps.getPositions().getList().get(robotIndex).getX();
+            //int myX = gvh.gps.get_robot_Positions().getList().get(robotIndex).getX();
+            //int myY = gvh.gps.get_robot_Positions().getList().get(robotIndex).getX();
 
-            //int otherX = gvh.gps.getPositions().getList().get(i).getX();
-            //int otherY = gvh.gps.getPositions().getList().get(i).getX();
+            //int otherX = gvh.gps.get_robot_Positions().getList().get(i).getX();
+            //int otherY = gvh.gps.get_robot_Positions().getList().get(i).getX();
 
-                int otherX = gvh.gps.getPositions().getList().get(i).getX();
-                int otherY = gvh.gps.getPositions().getList().get(i).getY();
+                int otherX = gvh.gps.get_robot_Positions().getList().get(i).getX();
+                int otherY = gvh.gps.get_robot_Positions().getList().get(i).getY();
 
-                int radius = (gvh.gps.getPositions().getList().get(i).radius);
+                int radius = (gvh.gps.get_robot_Positions().getList().get(i).radius);
 
                 //if (Point.distance(myX, myY, otherX, otherY)
 
 
                 if (i != robotIndex) {
-                    //obsList.detected(gvh.gps.getPositions().getList().get(i));
+                    //obsList.detected(gvh.gps.get_robot_Positions().getList().get(i));
                     Obstacles oTmp = new Obstacles(otherX, otherY);
 
 
@@ -187,7 +190,7 @@ public class ProjectApp extends LogicThread {
 
             }
 
-            if((gvh.gps.getMyPosition().type == 0) || (gvh.gps.getMyPosition().type == 1)){
+//            if((gvh.gps.getMyPosition().type == 0) || (gvh.gps.getMyPosition().type == 1)){
 
                 switch(stage) {
                     case ELECT:
@@ -243,25 +246,25 @@ public class ProjectApp extends LogicThread {
 
                                 // how to add all the current robot positions to plan around these?
                                 allObstacles.addObstacles(obEnvironment.ObList);
-                                for(int i = 0; i< gvh.gps.getPositions().getNumPositions(); i++){
+                                for(int i = 0; i< gvh.gps.get_robot_Positions().getNumPositions(); i++){
 
 
-                                    //int myX = gvh.gps.getPositions().getList().get(robotIndex).getX();
-                                    //int myY = gvh.gps.getPositions().getList().get(robotIndex).getX();
+                                    //int myX = gvh.gps.get_robot_Positions().getList().get(robotIndex).getX();
+                                    //int myY = gvh.gps.get_robot_Positions().getList().get(robotIndex).getX();
 
-                                    //int otherX = gvh.gps.getPositions().getList().get(i).getX();
-                                    //int otherY = gvh.gps.getPositions().getList().get(i).getX();
+                                    //int otherX = gvh.gps.get_robot_Positions().getList().get(i).getX();
+                                    //int otherY = gvh.gps.get_robot_Positions().getList().get(i).getX();
 
-                                    int otherX = gvh.gps.getPositions().getList().get(i).getX();
-                                    int otherY = gvh.gps.getPositions().getList().get(i).getY();
+                                    int otherX = gvh.gps.get_robot_Positions().getList().get(i).getX();
+                                    int otherY = gvh.gps.get_robot_Positions().getList().get(i).getY();
 
-                                    int radius = (gvh.gps.getPositions().getList().get(i).radius);
+                                    int radius = botRadius;
 
                                     //if (Point.distance(myX, myY, otherX, otherY)
 
                                     // only add other robots
                                     if (i != robotIndex) {
-                                        //obsList.detected(gvh.gps.getPositions().getList().get(i));
+                                        //obsList.detected(gvh.gps.get_robot_Positions().getList().get(i));
                                         Obstacles oTmp = new Obstacles(otherX, otherY);
 
 
@@ -281,7 +284,7 @@ public class ProjectApp extends LogicThread {
                                 // TODO: want to use smallest size in RRT search as possible (otherwise, the found path may be very large)
                                 // one strategy: start small, try to find, if it fails, double x, and y sizes?
                                 // TODO: perform re-planning when en route to the target? e.g., in the Stage.MIDWAY state?
-                                pathStack = path.findRoute(currentDestination, 50, allObstacles, environmentXSize, environmentYSize, (gvh.gps.getPosition(name)), (int) (gvh.gps.getPosition(name).radius*1.0));
+                                pathStack = path.findRoute(currentDestination, 50, allObstacles, 0, environmentXSize, 0, environmentYSize, (gvh.gps.getPosition(name)), (int) botRadius);
 
                                 kdTree = RRTNode.stopNode;
 
@@ -421,12 +424,12 @@ public class ProjectApp extends LogicThread {
                         gvh.plat.moat.motion_stop();
                         return null;
                 }
-            }
-            else{
+           // }
+            /*else{
                 currentDestination = getRandomElement(destinations.get(currentSet));
                 gvh.plat.moat.goTo(currentDestination, obsList);
                 //gvh.plat.moat.goTo(currentDestination);
-            }
+            }*/
             sleep(100);
         }
     }

@@ -42,6 +42,7 @@ public class SimGlobalVarHolder extends GlobalVarHolder {
 		super.plat = new AndroidPlatform();
 		plat.model = initpos;
 		plat.reachAvoid = new ReachAvoid(this);
+        // Yixiao says IdealSimGpsProvider shouldn't be used. Should probably remove the if else here.
 		if(initpos instanceof Model_iRobot){
 			if(engine.getGps() instanceof IdealSimGpsProvider) {
 				plat.moat = new IdealSimMotionAutomaton(this, (IdealSimGpsProvider)engine.getGps());

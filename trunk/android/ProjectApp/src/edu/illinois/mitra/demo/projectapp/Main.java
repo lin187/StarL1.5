@@ -12,7 +12,7 @@ public class Main {
     public static void main(String[] args) {
         SimSettings.Builder settings = new SimSettings.Builder();
 
-        settings.N_BOTS(3);
+        settings.N_IROBOTS(3);
         settings.N_GBOTS(3);
         //settings.N_DBOTS(1);
 

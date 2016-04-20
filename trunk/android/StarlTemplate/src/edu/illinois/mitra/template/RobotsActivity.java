@@ -63,6 +63,7 @@ public class RobotsActivity extends Activity implements MessageListener {
     private int i;
 
 
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -112,7 +113,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 		for(int i = 0; i < participants[0].length; i++) {
 			hm_participants.put(participants[0][i], participants[2][i]);
 		}
-		gvh = new RealGlobalVarHolder(participants[0][selectedRobot], hm_participants, mainHandler, participants[1][selectedRobot], this, botInfo[selectedRobot].type);
+		gvh = new RealGlobalVarHolder(participants[0][selectedRobot], hm_participants, botInfo[selectedRobot].type, mainHandler, participants[1][selectedRobot], this);
 		mainHandler.setGvh(gvh);
 
 		// Connect
