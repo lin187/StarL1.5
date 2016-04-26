@@ -28,7 +28,7 @@ public class Main {
 
         settings.DRAW_TRACE(true);
         settings.TRACE_OUT_DIR("test");
-        settings.USE_GLOBAL_LOGGER(false);
+        settings.USE_GLOBAL_LOGGER(true);
 
 
         settings.DRAW_ROBOT_STROKE_SIZE(25);

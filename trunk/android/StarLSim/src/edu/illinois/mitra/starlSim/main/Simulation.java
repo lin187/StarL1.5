@@ -27,6 +27,7 @@ import edu.illinois.mitra.starl.harness.RealisticSimGpsProvider;
 import edu.illinois.mitra.starl.harness.SimGpsProvider;
 import edu.illinois.mitra.starl.harness.SimulationEngine;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
+import edu.illinois.mitra.starl.interfaces.TrackedRobot;
 import edu.illinois.mitra.starl.models.Model_iRobot;
 import edu.illinois.mitra.starl.models.Model_quadcopter;
 import edu.illinois.mitra.starl.objects.ItemPosition;
@@ -325,8 +326,26 @@ public class Simulation {
 		Observer globalLogger = new Observer() {
 			@Override
 			public void update(Observable o, Object arg) {
-				ArrayList<RobotData> rd = new ArrayList<RobotData>();		
-				if(((PositionList) arg).getList().get(0) instanceof Model_iRobot){
+				ArrayList<RobotData> rd = new ArrayList<RobotData>();
+                ArrayList<ItemPosition> pos = ((PositionList) arg).getList();
+                for(ItemPosition ip : pos) {
+                    if(ip instanceof Model_iRobot) {
+                        Model_iRobot m = (Model_iRobot) ip;
+                        RobotData nextBot = new RobotData(m.name, m.x, m.y, m.angle, ip.receivedTime);
+                        nextBot.radius = settings.BOT_RADIUS;
+                        rd.add(nextBot);
+                    }
+                    else if(ip instanceof Model_quadcopter) {
+                        Model_quadcopter m = (Model_quadcopter) ip;
+                        RobotData nextBot = new RobotData(ip.name, m.x, m.y, m.z, m.yaw, m.pitch, m.roll, m.receivedTime);
+                        nextBot.radius = settings.BOT_RADIUS;
+                        rd.add(nextBot);
+                    }
+                }
+
+                // the code below doesn't work because when using both bot types it will try to cast one as the other
+                
+				/*if(((PositionList) arg).getList().get(0) instanceof Model_iRobot){
 					ArrayList<Model_iRobot> pos = ((PositionList<Model_iRobot>) arg).getList();
 					// Add robots
 					for(Model_iRobot ip : pos) {
@@ -343,7 +362,7 @@ public class Simulation {
 						nextBot.radius = settings.BOT_RADIUS;
 						rd.add(nextBot);
 					}
-				}
+				}*/
 
 				gl.updateData(rd, simEngine.getTime());
 			}
