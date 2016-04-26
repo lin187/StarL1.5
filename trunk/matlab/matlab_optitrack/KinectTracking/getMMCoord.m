@@ -12,7 +12,7 @@ yCenterPx = 240;
 x = coordinates(1,1);
 y = coordinates(1,2);
 
-if type == MINIDRONE || ARDRONE
+if type == MINIDRONE || type == ARDRONE
     mmpp = mmPerPixel(radius, type);
 elseif type == CREATE2
     mmpp = mm_per_pixel;

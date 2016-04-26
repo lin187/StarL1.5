@@ -148,8 +148,8 @@ public class MotionAutomaton_iRobot extends RobotMotion {
 	public void goTo(ItemPosition dest) {
 		Scanner in = new Scanner(((Model_iRobot)gvh.gps.getMyPosition()).name).useDelimiter("[^0-9]+");
 		int index = in.nextInt();
-		//ObstacleList obsList = gvh.gps.getViews().elementAt(index);
-        obsList = new ObstacleList();
+		ObstacleList obsList = gvh.gps.getViews().elementAt(index);
+        //obsList = new ObstacleList();
 		// work in progress here
 		goTo(dest, obsList);
 	}

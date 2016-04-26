@@ -13,8 +13,8 @@ public class Main {
     public static void main(String[] args) {
 
         SimSettings.Builder settings = new SimSettings.Builder();
-		settings.N_BOTS(Common.numOFbots); // pick N reasonably large (> ~10) for rotations along arcs instead of going across middle always
-		settings.TIC_TIME_RATE(1.5);
+		settings.N_IROBOTS(Common.numOFbots); // pick N reasonably large (> ~10) for rotations along arcs instead of going across middle always
+		settings.TIC_TIME_RATE(5);
         settings.WAYPOINT_FILE("four.wpt");
 		//settings.WAYPOINT_FILE(System.getProperty("user.dir")+"\\trunk\\android\\RaceApp\\waypoints\\four1.wpt");
 		settings.DRAW_WAYPOINTS(false);

@@ -78,10 +78,7 @@ public class MotionAutomatonMiniDrone extends RobotMotion {
         super(gvh.id.getName());
         this.gvh = gvh;
         this.bti = bti;
-
-
     }
-
 
     public void goTo(ItemPosition dest, ObstacleList obsList) {
         goTo(dest);
@@ -124,10 +121,8 @@ public class MotionAutomatonMiniDrone extends RobotMotion {
                             if(mode == OPMODE.GO_TO) {
                                 PID_x.reset();
                                 PID_y.reset();
-                                bti.setMaxTilt(5); // TODO: add max tilt to motion paramters class
+                                setMaxTilt(5); // TODO: add max tilt to motion paramters class
                                 if(landed){
-                                    // just a safe distance from ground
-                                    //takeOff();
                                     next = STAGE.TAKEOFF;
                                 }
                                 else{
@@ -145,80 +140,36 @@ public class MotionAutomatonMiniDrone extends RobotMotion {
                                 next = STAGE.GOAL;
                             }
                             else{
-                                double xCommand = PID_x.getCommand(mypos.x, destination.x);
-                                double yCommand = PID_y.getCommand(mypos.y, destination.y);
-                                bti.setRoll((byte) xCommand);
-                                bti.setPitch((byte) yCommand);
-                                Log.d(TAG, "Sent roll: " + xCommand + " Sent pitch: " + yCommand);
-                                // send a small yaw command if not within 87-93 degrees
+                                double rollCommand = PID_x.getCommand(mypos.x, destination.x);
+                                double pitchCommand = PID_y.getCommand(mypos.y, destination.y);
+                                double yawCommand = calculateYaw();
+                                double gazCommand = 0;
+                                setControlInput(yawCommand, pitchCommand, rollCommand, gazCommand);
                                 // TD_NATHAN: check and resolve: was mypos.angle
-                                if(mypos.yaw > 93) {
-                                    bti.setYaw((byte) 5);
-                                }
-                                else if(mypos.yaw < 87) {
-                                    bti.setYaw((byte) -5);
-                                }
-                                else {
-                                    bti.setYaw((byte) 0);
-                                }
-
-                                //next = STAGE.INIT;
+                                // that was the correct solution, has been resolved
                             }
                             break;
                         case HOVER:
                             if(distance <= param.GOAL_RADIUS) {
-                                bti.hover();
-                                if(mypos.yaw > 93) {
-                                    bti.setYaw((byte) 5);
-                                }
-                                else if(mypos.yaw < 87) {
-                                    bti.setYaw((byte) -5);
-                                }
-                                else {
-                                    bti.setYaw((byte) 0);
-                                }
+                                hover();
+                                double yawCommand = calculateYaw();
+                                setControlInput(yawCommand, 0, 0, 0);
                             }
                             else{
-                                double xCommand = PID_x.getCommand(mypos.x, destination.x);
-                                double yCommand = PID_y.getCommand(mypos.y, destination.y);
-                                bti.setRoll((byte) xCommand);
-                                bti.setPitch((byte) yCommand);
-                                Log.d(TAG, "Sent roll: " + xCommand + " Sent pitch: " + yCommand);
-                                if(mypos.yaw > 93) {
-                                    bti.setYaw((byte) 5);
-                                }
-                                else if(mypos.yaw < 87) {
-                                    bti.setYaw((byte) -5);
-                                }
-                                else {
-                                    bti.setYaw((byte) 0);
-                                }
+                                double rollCommand = PID_x.getCommand(mypos.x, destination.x);
+                                double pitchCommand = PID_y.getCommand(mypos.y, destination.y);
+                                double yawCommand = calculateYaw();
+                                double gazCommand = 0;
+                                setControlInput(yawCommand, pitchCommand, rollCommand, gazCommand);
                             }
-                            /*double xCommand = PID_x.getCommand(mypos.x, destination.x);
-                            double yCommand = PID_y.getCommand(mypos.y, destination.y);
-                            bti.setRoll((byte) xCommand);
-                            bti.setPitch((byte) yCommand);
-                            Log.d(TAG, "Sent roll: " + xCommand + " Sent pitch: " + yCommand);
-                            if(mypos.angle > 93) {
-                                bti.setYaw((byte) 5);
-                            }
-                            else if(mypos.angle < 87) {
-                                bti.setYaw((byte) -5);
-                            }
-                            else {
-                                bti.setYaw((byte) 0);
-                            }*/
-                            // do nothing
                             break;
                         case TAKEOFF:
-                            bti.sendTakeoff();
-                            // sleep to allow time for takeoff
-                            //gvh.sleep(1000);
+                            takeOff();
                             landed = false;
                             next = STAGE.MOVE;
                             break;
                         case LAND:
-                            bti.sendLanding();
+                            land();
                             break;
                         case GOAL:
                             gvh.log.i(TAG, "At goal!");
@@ -253,13 +204,11 @@ public class MotionAutomatonMiniDrone extends RobotMotion {
 
     public void cancel() {
         running = false;
-        bti.sendLanding();
-
+        land();
     }
 
     @Override
     public void motion_stop() {
-        //land();
         stage = STAGE.HOVER;
         this.destination = null;
         running = false;
@@ -285,17 +234,13 @@ public class MotionAutomatonMiniDrone extends RobotMotion {
 
     protected void setControlInput(double yaw_v, double pitch, double roll, double gaz){
         //Bluetooth command to control the drone
+        bti.setRoll((byte) roll);
+        bti.setPitch((byte) pitch);
+        bti.setYaw((byte) yaw_v);
+        // currently not moving to 3-D waypoints, so not sending a gaz command
+        // if in the future you want to send one, uncomment the following line
+        //bti.setThrottle((byte) gaz);
         gvh.log.i(TAG, "control input as, yaw, pitch, roll, thrust " + yaw_v + ", " + pitch + ", " +roll + ", " +gaz);
-		/*
-		if(running) {
-			if(velocity != 0) {
-				sendMotionEvent(Common.MOT_STRAIGHT, velocity);
-			} else {
-				sendMotionEvent(Common.MOT_STOPPED, 0);
-			}
-			bti.send(BluetoothCommands.straight(velocity));
-		}
-		 */
     }
 
     /**
@@ -303,6 +248,7 @@ public class MotionAutomatonMiniDrone extends RobotMotion {
      */
     protected void takeOff(){
         //Bluetooth command to control the drone
+        bti.sendTakeoff();
         gvh.log.i(TAG, "Drone taking off");
     }
 
@@ -311,6 +257,7 @@ public class MotionAutomatonMiniDrone extends RobotMotion {
      */
     protected void land(){
         //Bluetooth command to control the drone
+        bti.sendLanding();
         gvh.log.i(TAG, "Drone landing");
     }
 
@@ -319,7 +266,25 @@ public class MotionAutomatonMiniDrone extends RobotMotion {
      */
     protected void hover(){
         //Bluetooth command to control the drone
+        bti.hover();
         gvh.log.i(TAG, "Drone hovering");
+    }
+
+    private double calculateYaw() {
+        // this method calculates a yaw correction, to keep the drone's yaw angle near 90 degrees
+        if(mypos.yaw > 93) {
+            return 5;
+        }
+        else if(mypos.yaw < 87) {
+            return -5;
+        }
+        else {
+            return 0;
+        }
+    }
+
+    private void setMaxTilt(float val) {
+        bti.setMaxTilt(val);
     }
 
     @Override

@@ -105,7 +105,8 @@ public class FlockingApp extends LogicThread {
     @Override
     public List<Object> callStarL() {
         String robotName = gvh.id.getName();
-        Integer robotNum = Integer.parseInt(robotName.substring(3)); // assumes: botYYY
+        //Integer robotNum = Integer.parseInt(robotName.substring(3)); // assumes: botYYY
+        Integer robotNum = getNumFromName(robotName);
         Integer count = 0;
         Integer leaderNum = 1;
         boolean test = true;
@@ -141,7 +142,8 @@ public class FlockingApp extends LogicThread {
                 case ELECT: {
                     if(le.getLeader() != null) {
                         System.out.printf("robot %3d, leader is: " + le.getLeader() + "\n", robotNum);
-                        leaderNum = Integer.parseInt(le.getLeader().substring(3)); // assumes: botYYY
+                        //leaderNum = Integer.parseInt(le.getLeader().substring(3)); // assumes: botYYY
+                        leaderNum = getNumFromName(le.getLeader());
                         stage = STAGE.MOVE;
                         // All below code in Elect state is to assign order-rank- for each robot in its group
                         if (robotNum!=leaderNum) {
@@ -149,13 +151,15 @@ public class FlockingApp extends LogicThread {
                                 ItemPosition myPosition = gvh.gps.getMyPosition();
                                 int mySummation = myPosition.getX() + myPosition.getY();
                                 int ranking = 1;
-                                PositionList plAll = gvh.gps.getPositions();
+                                PositionList plAll = gvh.gps.get_robot_Positions();
                                 ArrayList<ItemPosition> allBots = plAll.getList();
                                 for (ItemPosition rp :allBots ) {
-                                    Integer rpNum = Integer.valueOf(rp.getName().substring(3));
+                                    //Integer rpNum = Integer.valueOf(rp.getName().substring(3));
+                                    Integer rpNum = getNumFromName(rp.getName());
                                     if (rpNum != leaderNum) {
                                         if (rpNum != robotNum) {
-                                            Integer rpGroup = Integer.valueOf(rp.getName().substring(3)) % Common.numOFgroups;
+                                           // Integer rpGroup = Integer.valueOf(rp.getName().substring(3)) % Common.numOFgroups;
+                                            Integer rpGroup = getNumFromName(rp.getName()) % Common.numOFgroups;
                                             if (gvh.BotGroup.getGroupNum() == rpGroup) {
                                                 int otherSummation =  rp.getX() + rp.getY();
                                                 // if (mySummation == otherSummation){
@@ -167,7 +171,7 @@ public class FlockingApp extends LogicThread {
                                                 if (mySummation >= otherSummation) {
                                                     if (gvh.BotGroup.BeforeBot == null) {
                                                         if (mySummation == otherSummation) {
-                                                            if (robotNum > Integer.valueOf(rp.getName().substring(3)))
+                                                            if (robotNum > getNumFromName(rp.getName())) // changed this
                                                                 gvh.BotGroup.BeforeBot = rp.getName();
                                                         }else
                                                             gvh.BotGroup.BeforeBot = rp.getName();
@@ -177,10 +181,11 @@ public class FlockingApp extends LogicThread {
                                                         int xSub = 0;
                                                         int ySub = 0;
                                                         // int angleSub = 0;
-                                                        PositionList plAllSub = gvh.gps.getPositions();
+                                                        PositionList plAllSub = gvh.gps.get_robot_Positions();
                                                         ArrayList<ItemPosition> allRobots = plAllSub.getList();
                                                         for (ItemPosition rpSub : allRobots) {
-                                                            if (Integer.valueOf(rpSub.getName().substring(3)) == Integer.valueOf(gvh.BotGroup.BeforeBot.substring(3))) {
+                                                            //if (Integer.valueOf(rpSub.getName().substring(3)) == Integer.valueOf(gvh.BotGroup.BeforeBot.substring(3))) {
+                                                            if (getNumFromName(rpSub.getName()) == getNumFromName(gvh.BotGroup.BeforeBot)) {
                                                                 xSub = rpSub.getX();
                                                                 ySub = rpSub.getY();
                                                                 //angleSub = rpSub.angle;
@@ -194,7 +199,8 @@ public class FlockingApp extends LogicThread {
                                                     if (mySummation == otherSummation){
 
                                                         System.out.println("############************** There is potential same locations ***************########### "+ robotName+" and "+ rp.getName());
-                                                        if (robotNum<Integer.valueOf(rp.getName().substring(3))){
+                                                        //if (robotNum<Integer.valueOf(rp.getName().substring(3))){
+                                                        if (robotNum < getNumFromName(rp.getName())){
                                                             gvh.BotGroup.AfterBot = rp.getName();
                                                         }else{
                                                             gvh.BotGroup.BeforeBot = rp.getName();
@@ -209,10 +215,11 @@ public class FlockingApp extends LogicThread {
                                                         int xSub = 0;
                                                         int ySub = 0;
                                                         // int angleSub = 0;
-                                                        PositionList plAllSub = gvh.gps.getPositions();
+                                                        PositionList plAllSub = gvh.gps.get_robot_Positions();
                                                         ArrayList<ItemPosition> allRobots = plAllSub.getList();
                                                         for (ItemPosition rpSub :allRobots) {
-                                                            if (Integer.valueOf(rpSub.getName().substring(3)) == Integer.valueOf(gvh.BotGroup.AfterBot.substring(3))) {
+                                                           // if (Integer.valueOf(rpSub.getName().substring(3)) == Integer.valueOf(gvh.BotGroup.AfterBot.substring(3))) {
+                                                            if (getNumFromName(rpSub.getName()) == getNumFromName(gvh.BotGroup.AfterBot)) {
                                                                 xSub = rpSub.getX();
                                                                 ySub = rpSub.getY();
                                                                 //angleSub = rpSub.angle;
@@ -222,13 +229,15 @@ public class FlockingApp extends LogicThread {
                                                         int afterBotSummation = xSub + ySub ;
 
                                                         if (otherSummation == afterBotSummation)
-                                                            if (robotNum<Integer.valueOf(rp.getName().substring(3)) )
+                                                            //if (robotNum<Integer.valueOf(rp.getName().substring(3)) )
+                                                            if (robotNum < getNumFromName(rp.getName()) )
                                                                 gvh.BotGroup.AfterBot = rp.getName();
 
                                                         if (otherSummation < afterBotSummation)
                                                             gvh.BotGroup.AfterBot = rp.getName();
                                                     }
-                                                else if (Integer.valueOf(gvh.id.getName().substring(3)) > Integer.valueOf(rp.getName().substring(3))) {
+                                               // else if (Integer.valueOf(gvh.id.getName().substring(3)) > Integer.valueOf(rp.getName().substring(3))) {
+                                                else if (getNumFromName(gvh.id.getName()) > getNumFromName(rp.getName())){
                                                     gvh.BotGroup.BeforeBot = rp.getName();
                                                     ranking++;
                                                 } else gvh.BotGroup.AfterBot = rp.getName();
@@ -241,10 +250,11 @@ public class FlockingApp extends LogicThread {
                                 gvh.BotGroup.rank = ranking;
                                 gvh.BotGroup.setAfterBefore = false;
                                 if (gvh.BotGroup.BeforeBot == null) {
-                                    plAll = gvh.gps.getPositions();
+                                    plAll = gvh.gps.get_robot_Positions();
                                     ArrayList<ItemPosition> allRobots = plAll.getList();
                                     for (ItemPosition rp :  allRobots)
-                                        if (Integer.valueOf(rp.getName().substring(3)) == leaderNum)
+                                        //if (Integer.valueOf(rp.getName().substring(3)) == leaderNum)
+                                        if (getNumFromName(rp.getName()) == leaderNum)
                                             gvh.BotGroup.BeforeBot = rp.getName();
                                 }
                                 if (gvh.BotGroup.AfterBot == null)
@@ -349,7 +359,7 @@ public class FlockingApp extends LogicThread {
 
 
                             if (!gvh.id.getName().equals(le.getLeader())) {
-                                PositionList plAll = gvh.gps.getPositions();
+                                PositionList plAll = gvh.gps.get_robot_Positions();
                                 ArrayList<ItemPosition> allBots = plAll.getList();
                                 for (ItemPosition rp : allBots) {
                                     if (rp.getName().equals(gvh.BotGroup.BeforeBot))
@@ -519,7 +529,8 @@ public class FlockingApp extends LogicThread {
 
         int groupDis = 0;
 
-        Integer leadNum = Integer.valueOf(le.getLeader().substring(3));
+       // Integer leadNum = Integer.valueOf(le.getLeader().substring(3));
+        Integer leadNum = getNumFromName(le.getLeader());
 
         boolean once = true;
         for  (int i=0; i<Common.numOFbots; i++) {
@@ -533,7 +544,7 @@ public class FlockingApp extends LogicThread {
 
             }
             if (i !=leadNum) {
-                PositionList plAll = gvh.gps.getPositions();
+                PositionList plAll = gvh.gps.get_robot_Positions();
                 ArrayList<ItemPosition> allBots = plAll.getList();
                 for (ItemPosition rp : allBots) {
                     if (rp.getName().equals("bot"+i))
@@ -569,6 +580,12 @@ public class FlockingApp extends LogicThread {
 
 
         return isFlocking;
+    }
+
+    private int getNumFromName(String name) {
+        // this will work for bots with sequential numbers in their names, not irobot0 quadrotor0
+        String s = name.replaceAll("[^0-9]", "");
+        return Integer.parseInt(s);
     }
 }
 // End class

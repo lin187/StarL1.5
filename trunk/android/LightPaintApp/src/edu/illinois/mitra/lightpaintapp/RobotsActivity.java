@@ -30,6 +30,8 @@ import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.gvh.RealGlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.interfaces.MessageListener;
+import edu.illinois.mitra.starl.interfaces.TrackedRobot;
+import edu.illinois.mitra.starl.models.Model_iRobot;
 import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.HandlerMessage;
 
@@ -102,7 +104,10 @@ public class RobotsActivity extends Activity implements MessageListener {
 		System.out.println("Creating a GVH for " + participants[0][selectedRobot] + ", " + participants[1][selectedRobot]);
 		//gvh = new RealGlobalVarHolder(participants[0][selectedRobot], mapParticipants, mainHandler, participants[1][selectedRobot], this);
         // TD_NATHAN: you need to figure out what this initpos thing is, as the null in the next is probably going to crash it
-        gvh = new RealGlobalVarHolder(participants[0][selectedRobot], mapParticipants, null, mainHandler, participants[1][selectedRobot]);
+        // initpos is the initial position of the robot (i think). it has type Model_irobot, Model_quadrotor, so it is also used to check the bot type
+        // for now I'm passing a Model_irobot with position (0,0). Not 100% sure this will work since I can't really test it.
+        TrackedRobot initpos = new Model_iRobot(participants[0][selectedRobot], 0,0);
+        gvh = new RealGlobalVarHolder(participants[0][selectedRobot], mapParticipants, initpos, mainHandler, participants[1][selectedRobot], this);
 		
 		System.out.println(gvh.id.getParticipants());
 		

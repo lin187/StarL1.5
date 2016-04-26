@@ -75,7 +75,7 @@ if ~isempty(mag_props) && ~isempty(yel_props)
     
     A = yel_center - mag_center;
     
-    if type == MINIDRONE || ARDRONE
+    if type == MINIDRONE || type == ARDRONE
         B = [1,0];
     elseif type == CREATE2
         B = [0,1];

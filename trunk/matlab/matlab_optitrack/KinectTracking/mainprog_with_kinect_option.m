@@ -26,9 +26,9 @@ global ARDRONE
 
 % If using Kinect, modify these as necessary
 if opt_system == KINECT
-    numCreates =0;
+    numCreates =4;
     numDrones = 0;
-    numARDrones = 1;
+    numARDrones = 0;
     BBoxFactor = 1.5;
     
     % Other things needed for Kinect tracking
