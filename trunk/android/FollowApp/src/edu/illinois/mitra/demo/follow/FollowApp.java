@@ -134,6 +134,8 @@ public class FollowApp extends LogicThread {
     private <X, T> T getDestination(Map<X, T> map, int index) {
         // Keys must be 0-A format for this to work
         String key = Integer.toString(index) + "-A";
+        // this is for key that is just an int, no -A
+        //String key = Integer.toString(index);
         return map.get(key);
     }
 }

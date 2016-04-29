@@ -6,8 +6,8 @@ global botArray
 global MINIDRONE
 global CREATE2
 global ARDRONE
-
-% if using ARDrones, check 
+% this function calls imfindcircles on whole image to find all robots
+% if not enough circles found, it returns false
 
 % find any drones
 if numDrones + numARDrones > 0
@@ -140,7 +140,7 @@ end
 found = true;
 
 % this checks to make sure only bot is white
-% the first frame is sometimes very bright, so findBots needs to called
+% the first frame is sometimes very bright, so findBots needs to be called
 % again on a better frame
 num_whites = 0;
 for i = 1:numCreates + numDrones + numARDrones

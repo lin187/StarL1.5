@@ -107,9 +107,10 @@ public class MotionAutomatonMiniDrone extends RobotMotion {
         while(true) {
             //			gvh.gps.getObspointPositions().updateObs();
             if(running) {
-                mypos = (Model_quadcopter)gvh.plat.getModel(); // TD_NATHAN: check
+                mypos = (Model_quadcopter)gvh.gps.getMyPosition(); // TD_NATHAN: check. I fixed it.
    //             if(mypos == null) { continue;}
-                int distance = mypos.distanceTo(destination);
+                // if you change to 3D waypoints, use distanceTo instead of distanceTo2D
+                int distance = mypos.distanceTo2D(destination);
                 colliding = false;
 
                 if(!colliding && stage != null) {

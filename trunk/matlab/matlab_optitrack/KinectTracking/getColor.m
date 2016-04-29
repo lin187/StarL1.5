@@ -1,4 +1,8 @@
 function color = getColor(imgColor, center)
+% this function detects the color of the circle center pixel
+% right now, it only detects red, green, blue, and white
+% if all RGB vals > 100 it returns white
+% otherwise it returns max of RGB values
 colors = ['r', 'g', 'b'];
 centerRounded = round(center);
 x = centerRounded(1,2);

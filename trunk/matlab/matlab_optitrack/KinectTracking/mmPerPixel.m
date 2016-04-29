@@ -1,6 +1,7 @@
 function out = mmPerPixel(radius, type)
-% this function gives the number of mm in one pixel for the minidrone
-% the radius of the minidrone is 115 mm
+% this function gives the number of mm in one pixel for the drones
+% the radius of the minidrone is ~115 mm
+% thre radius of one of the ARDrone circles is ~125 mm
 global MINIDRONE
 global ARDRONE
 if type == MINIDRONE

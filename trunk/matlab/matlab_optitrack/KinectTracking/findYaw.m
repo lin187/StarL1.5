@@ -1,4 +1,4 @@
-function  angle  = findMiniDroneYaw( imgColor, BBox, yaw, center, radius, type)
+function  angle  = findYaw( imgColor, BBox, yaw, center, radius, type)
 % finds the yaw of the minidrone using yellow and cyan markers
 global MINIDRONE
 global CREATE2

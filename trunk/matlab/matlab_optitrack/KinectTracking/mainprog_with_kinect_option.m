@@ -1,7 +1,10 @@
 close all;
 format longg;
-
 load('run_number.mat')
+
+% This is the main program for tracking. It has an option for using Kinect
+% or Optitrack. Optitrack has not been tested. Assuming it does work with
+% Optitrack, you should use this file instead of mainprog for either system
 
 % Select tracking system
 % For Kinect, you will need to specify number of robots below
@@ -11,7 +14,8 @@ opt_system = KINECT;
 
 % Some global variables needed for Kinect
 % Matlab didn't like them being in the Kinect if statement below
-% They aren't needed when using Optitrack
+% They aren't needed when using Optitrack except for the robot types
+% MINIDRONE, CREATE2, ARDRONE
 global numCreates
 global numDrones
 global numARDrones
@@ -23,11 +27,14 @@ global BBoxFactor
 global MINIDRONE
 global CREATE2
 global ARDRONE
+MINIDRONE = 100;
+CREATE2 = 101;
+ARDRONE = 102;
 
 % If using Kinect, modify these as necessary
 if opt_system == KINECT
-    numCreates =4;
-    numDrones = 0;
+    numCreates =0;
+    numDrones = 2;
     numARDrones = 0;
     BBoxFactor = 1.5;
     
@@ -44,9 +51,7 @@ if opt_system == KINECT
     for i = 1:robot_count
         botArray(i) = Robot;
     end
-    MINIDRONE = 100;
-    CREATE2 = 101;
-    ARDRONE = 102;
+    
     times = [];
 end
 
@@ -115,7 +120,7 @@ if opt_system == OPTITRACK
     [robot_count, robot_names] = track_getTrackables();
 end
 
-bots = struct('X',{0},'Y',{0},'Z',{0},'yaw',{0},'visible',{0},'name',robot_names,...
+bots = struct('X',{0},'Y',{0},'Z',{0},'yaw',{0},'pitch',{0},'roll',{0},'type',{0},'visible',{0},'name',robot_names,...
     'history',{ones(MOTION_HISTORY_SIZE,2)*-1},'histangle',{ones(MOTION_HISTORY_SIZE,1)*-1},...
     'hist_index',{1},'drawhistory',{ones(HISTORY_SIZE,2)*-1},'draw_hist_index',{1});
 
@@ -129,6 +134,7 @@ if opt_system == KINECT
         found = findBots(imgColor, imgDepth);
         if found == true
             for j = 1:robot_count
+                bots(j).type = botArray(j).type;
                 % name the robots according to color
                 if botArray(j).color == 'r'
                     bots(j).name = 'bot0';
@@ -157,7 +163,7 @@ end
 frameCount = 0;
 tic;
 while 1
-    tic;
+    %tic;
     frameCount = frameCount + 1;
     
     % get a frame
@@ -196,6 +202,10 @@ while 1
                 bots(i).X = round(x*1000);
                 bots(i).Y = round(z*1000);
                 bots(i).yaw = round(yaw)+90;
+                % these were added to be compatable with new StarL 3D
+                % if using drones, you will need to modify this
+                bots(i).Z = 0;
+                bots(i).type = CREATE2;
                 bots(i).visible = 1;
                 
                 % Append the new point to the history
@@ -221,6 +231,9 @@ while 1
             bots(i).Y = centerMM(1,2);
             bots(i).Z = botArray(i).depth - camDistToFloor;
             bots(i).yaw = botArray(i).yaw;
+            % Pitch and roll aren't estimated with Kinect, so set to 0
+            bots(i).roll = 0;
+            bots(i).pitch = 0;
             bots(i).visible = 1;
             
 %             figure(2);
@@ -231,7 +244,7 @@ while 1
             %may want to add the history stuff from above here
         end
     end
-    times = [times; toc];
+    %times = [times; toc];
     % Update the plot on every 4th frame
     if rem(frameCount,4) == 0
         plot_bots(fig, LINE_LEN, X_MAX, Y_MAX, bots, waypoints, walls,...

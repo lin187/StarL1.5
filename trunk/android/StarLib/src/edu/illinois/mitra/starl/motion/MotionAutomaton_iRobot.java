@@ -148,7 +148,14 @@ public class MotionAutomaton_iRobot extends RobotMotion {
 	public void goTo(ItemPosition dest) {
 		Scanner in = new Scanner(((Model_iRobot)gvh.gps.getMyPosition()).name).useDelimiter("[^0-9]+");
 		int index = in.nextInt();
-		ObstacleList obsList = gvh.gps.getViews().elementAt(index);
+        Vector<ObstacleList> temp = gvh.gps.getViews();
+        ObstacleList obsList;
+        if(!temp.isEmpty()) {
+            obsList = temp.elementAt(index);
+        }
+        else {
+            obsList = new ObstacleList();
+        }
         //obsList = new ObstacleList();
 		// work in progress here
 		goTo(dest, obsList);
@@ -176,7 +183,9 @@ public class MotionAutomaton_iRobot extends RobotMotion {
 		while(true) {
 //			gvh.gps.getObspointPositions().updateObs();
 			if(running) {
-				mypos = (Model_iRobot)gvh.plat.getModel();
+                // why is getModel being used? Think it should be get position.
+				//mypos = (Model_iRobot)gvh.plat.getModel();
+                mypos = (Model_iRobot)gvh.gps.getMyPosition();
 				int distance = mypos.distanceTo(destination);
 				int angle = mypos.angleTo(destination);
 				int absangle = Math.abs(angle);

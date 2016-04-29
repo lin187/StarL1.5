@@ -344,7 +344,7 @@ public class Simulation {
                 }
 
                 // the code below doesn't work because when using both bot types it will try to cast one as the other
-                
+
 				/*if(((PositionList) arg).getList().get(0) instanceof Model_iRobot){
 					ArrayList<Model_iRobot> pos = ((PositionList<Model_iRobot>) arg).getList();
 					// Add robots
