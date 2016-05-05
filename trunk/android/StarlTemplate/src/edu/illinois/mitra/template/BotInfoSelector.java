@@ -15,10 +15,16 @@ public class BotInfoSelector {
     public String bluetooth;
     public TrackedRobot type;
 
-    public BotInfoSelector(String color, int type) {
+
+    public BotInfoSelector(String color, int type, int deviceType) {
         if(color.equals("red")) {
             name = "bot0";
-            ip = "192.168.1.110";
+            if(deviceType == Common.NEXUS7) {
+                ip = "192.168.1.110";
+            }
+            else if(deviceType == Common.MOTOE) {
+                ip = "192.168.1.114";
+            }
             if(type == Common.IROBOT) {
                 bluetooth = "5C:F3:70:75:BB:0E";
                 this.type = new Model_iRobot(name, 0,0);
@@ -32,7 +38,12 @@ public class BotInfoSelector {
 
         if(color.equals("green")) {
             name = "bot1";
-            ip = "192.168.1.111";
+            if(deviceType == Common.NEXUS7) {
+                ip = "192.168.1.111";
+            }
+            else if(deviceType == Common.MOTOE) {
+                ip = "192.168.1.115";
+            }
             if(type == Common.IROBOT) {
                 bluetooth = "5C:F3:70:75:BB:2F";
                 this.type = new Model_iRobot(name, 0,0);

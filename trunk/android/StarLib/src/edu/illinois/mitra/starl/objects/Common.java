@@ -25,6 +25,10 @@ public final class Common {
     public static final int IROBOT = 50;
     public static final int MINIDRONE = 51;
 
+    // Mobile device types
+    public static final int NEXUS7 = 60;
+    public static final int MOTOE = 61;
+
 
 	// Message IDs
 	public static final int MSG_BARRIERSYNC 			= 1;

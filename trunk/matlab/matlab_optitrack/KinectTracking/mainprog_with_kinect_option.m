@@ -33,8 +33,8 @@ ARDRONE = 102;
 
 % If using Kinect, modify these as necessary
 if opt_system == KINECT
-    numCreates =0;
-    numDrones = 2;
+    numCreates =2;
+    numDrones = 0;
     numARDrones = 0;
     BBoxFactor = 1.5;
     

@@ -8,10 +8,12 @@ import java.util.concurrent.Future;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
@@ -53,6 +55,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 	private Future<List<Object>> results;
 	private LogicThread runThread;
 	private MainHandler mainHandler;
+    private WifiManager.MulticastLock multicastLock;
 	
 	// Row 0 = names
 	// Row 1 = MACs
@@ -70,14 +73,20 @@ public class RobotsActivity extends Activity implements MessageListener {
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		setContentView(R.layout.main);
 
+        // this code allows the MotoE to receive broadcast udp packets
+        WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        multicastLock = wifi.createMulticastLock("multicastLock");
+        multicastLock.setReferenceCounted(true);
+        multicastLock.acquire();
+
 		// Load the participants
 		//participants = IdentityLoader.loadIdentities(IDENTITY_FILE_URL);
         numRobots = 2;
         botInfo = new BotInfoSelector[numRobots];
-        botInfo[0] = new BotInfoSelector("red", Common.MINIDRONE);
-        botInfo[1] = new BotInfoSelector("green", Common.MINIDRONE);
-        //botInfo[2] = new BotInfoSelector("blue", Common.IROBOT);
-       // botInfo[3] = new BotInfoSelector("white", Common.IROBOT);
+        botInfo[0] = new BotInfoSelector("red", Common.IROBOT, Common.NEXUS7);
+        botInfo[1] = new BotInfoSelector("green", Common.IROBOT, Common.NEXUS7);
+        //botInfo[2] = new BotInfoSelector("blue", Common.IROBOT, Common.NEXUS7);
+       // botInfo[3] = new BotInfoSelector("white", Common.IROBOT, Common.NEXUS7);
 
         participants = new String[3][numRobots];
         for(i =0; i < numRobots; i++) {
@@ -237,6 +246,10 @@ public class RobotsActivity extends Activity implements MessageListener {
 		gvh.log.e(TAG, "Exiting application");
 		disconnect();
 		finish();
+        if (multicastLock != null) {
+            multicastLock.release();
+            multicastLock = null;
+        }
 		return;
 	}
 

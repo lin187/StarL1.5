@@ -114,28 +114,18 @@ public class RRTNode {
 				validRandom = ((sampledPos.x >= xLower && sampledPos.x <= xUpper) && (sampledPos.y >= yLower && sampledPos.y <= yUpper));
 				validRandom = validRandom && obsList.validstarts(sampledPos, radius);
 				if(validRandom){
-
-//TD_NATHAN: resolve
-                // Changed this to work with coordinate system with negative value.
-                // Need to make it an option somehow
-    			//xRandom = (int)(Math.random() * ((xRange) + 1)) - xRange/2;
-        		//yRandom = (int)(Math.random() * ((yRange) + 1)) - yRange/2;
-        		//sampledPos.x = xRandom;
-        		//sampledPos.y = yRandom;
-        		//validRandom = obsList.validstarts(sampledPos, Radius);
-
-        		// added a check to see if sampledPos is already in tree
-        		boolean notInTree = true;
-        		RRTNode possibleNode = new RRTNode(sampledPos.x, sampledPos.y);
-        		try {
-        			if(kd.search(possibleNode.getValue()) != null) {
-        				notInTree = false;
-        			}
-        		} catch (KeySizeException e) {
-        			e.printStackTrace();
-        		}
-        		validRandom = (validRandom && notInTree);
-    		}
+                    // added a check to see if sampledPos is already in tree
+                    boolean notInTree = true;
+                    RRTNode possibleNode = new RRTNode(sampledPos.x, sampledPos.y);
+                    try {
+                        if(kd.search(possibleNode.getValue()) != null) {
+                            notInTree = false;
+                        }
+                    } catch (KeySizeException e) {
+                        e.printStackTrace();
+                    }
+                    validRandom = (validRandom && notInTree);
+                }
 			}
     		RRTNode sampledNode = new RRTNode(sampledPos.x, sampledPos.y);
     		// with a valid random sampled point, we find it's nearest neighbor in the tree, set it as current Node

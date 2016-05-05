@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.net.wifi.WifiManager;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -69,6 +70,7 @@ public class MiniDroneBTI implements ARDiscoveryServicesDevicesListUpdatedReceiv
     private String mac;
     private GlobalVarHolder gvh;
     boolean connected = false;
+    private WifiManager.MulticastLock multicastLock;
     //private ConnectTask task;
     public MiniDroneBTI(GlobalVarHolder gvh, Context context, String mac) {
         this.context = context;
@@ -265,6 +267,7 @@ public class MiniDroneBTI implements ARDiscoveryServicesDevicesListUpdatedReceiv
                             gvh.plat.sendMainMsg(HandlerMessage.MESSAGE_BLUETOOTH, HandlerMessage.BLUETOOTH_CONNECTING);
                             stopScan();
                             startDeviceController();
+
                         }
                     }
                 }
@@ -296,6 +299,11 @@ public class MiniDroneBTI implements ARDiscoveryServicesDevicesListUpdatedReceiv
                         // put message to GUI in StarL here
                         connected = true;
                         gvh.plat.sendMainMsg(HandlerMessage.MESSAGE_BLUETOOTH, HandlerMessage.BLUETOOTH_CONNECTED);
+                        // it seems the Parrot code takes this lock away at some point, so even though this is in the main RobotsActivity you have to put it here again
+                        WifiManager wifi = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+                        multicastLock = wifi.createMulticastLock("multicastLock");
+                        multicastLock.setReferenceCounted(true);
+                        multicastLock.acquire();
                     }
                 }
             }).start();
