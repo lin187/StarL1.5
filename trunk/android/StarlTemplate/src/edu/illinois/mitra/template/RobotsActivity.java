@@ -73,7 +73,8 @@ public class RobotsActivity extends Activity implements MessageListener {
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		setContentView(R.layout.main);
 
-        // this code allows the MotoE to receive broadcast udp packets
+        // this code allows the MotoE (and probably other phones) to receive broadcast udp packets
+        // they don't accept broadcast messages by default to save battery
         WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
         multicastLock = wifi.createMulticastLock("multicastLock");
         multicastLock.setReferenceCounted(true);
@@ -81,10 +82,12 @@ public class RobotsActivity extends Activity implements MessageListener {
 
 		// Load the participants
 		//participants = IdentityLoader.loadIdentities(IDENTITY_FILE_URL);
-        numRobots = 2;
+        // Put number of robots being used here
+        numRobots = 1;
         botInfo = new BotInfoSelector[numRobots];
-        botInfo[0] = new BotInfoSelector("red", Common.IROBOT, Common.NEXUS7);
-        botInfo[1] = new BotInfoSelector("green", Common.IROBOT, Common.NEXUS7);
+        // add color, robot type, and device type for each robot here
+        botInfo[0] = new BotInfoSelector("red", Common.MINIDRONE, Common.NEXUS7);
+       // botInfo[1] = new BotInfoSelector("green", Common.IROBOT, Common.NEXUS7);
         //botInfo[2] = new BotInfoSelector("blue", Common.IROBOT, Common.NEXUS7);
        // botInfo[3] = new BotInfoSelector("white", Common.IROBOT, Common.NEXUS7);
 
