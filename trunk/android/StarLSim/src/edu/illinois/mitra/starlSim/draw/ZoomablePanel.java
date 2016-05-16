@@ -160,7 +160,7 @@ MouseListener, MouseMotionListener, ExplicitlyDrawable
 		}
 	}
 	
-	private static Font drawFont = new Font("Tahoma", Font.PLAIN, 55).deriveFont(AffineTransform.getScaleInstance(1, -1));
+	private static Font drawFont = new Font("Tahoma", Font.PLAIN, 100).deriveFont(AffineTransform.getScaleInstance(1, -1));
 	
 	// draws onto a buffered image which is later placed on the screen
 	protected void forceDrawComponent(Graphics g, Collection <LogicThread> lts)

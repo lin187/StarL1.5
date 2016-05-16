@@ -179,6 +179,8 @@ public class Simulation {
 			SimApp sa = new SimApp(botName, participants, simEngine, initialPosition, settings.TRACE_OUT_DIR, app, drawFrame, settings.TRACE_CLOCK_DRIFT_MAX, settings.TRACE_CLOCK_SKEW_MAX);
 			bots.add(sa);
 			logicThreads.add(sa.logic);
+			simEngine.addLogging(sa.gvh.log);
+
 		}
 		for(int i = 0; i < settings.N_QUADCOPTERS; i++) {
 			Model_quadcopter initialPosition = null;
@@ -207,10 +209,12 @@ public class Simulation {
 			initialPosition.radius = settings.BOT_RADIUS;
 
 			SimApp sa = new SimApp(botName, participants, simEngine, initialPosition, settings.TRACE_OUT_DIR, app, drawFrame, settings.TRACE_CLOCK_DRIFT_MAX, settings.TRACE_CLOCK_SKEW_MAX);
-
+			
 			bots.add(sa);
 
 			logicThreads.add(sa.logic);
+			simEngine.addLogging(sa.gvh.log);
+			
 		}
 
 		if(settings.USE_GLOBAL_LOGGER)

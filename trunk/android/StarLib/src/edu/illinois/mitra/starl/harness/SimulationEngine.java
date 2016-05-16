@@ -5,7 +5,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.Vector;
 
+import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
+import edu.illinois.mitra.starl.gvh.Logging;
 import edu.illinois.mitra.starl.interfaces.ExplicitlyDrawable;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
 
@@ -23,6 +26,7 @@ public class SimulationEngine extends Thread {
 	private Map<Thread, Long> threadSleeps = new HashMap<Thread, Long>();
 	private Map<Thread, Long> lastUpdateTime = new HashMap<Thread, Long>();
 
+	private Vector<Logging> logs = new Vector<Logging>();
 	private SimGpsProvider gps;
 	private DecoupledSimComChannel comms;
 	private long startTime;
@@ -173,6 +177,9 @@ public class SimulationEngine extends Thread {
 	}
 
 	public void simulationDone() {
+		for(int i = 0; i< logs.size(); i++){
+			logs.get(i).saveLogFile();
+		}
 		done = true;
 	}
 
@@ -200,6 +207,10 @@ public class SimulationEngine extends Thread {
 
 	public void setGps(SimGpsProvider gps) {
 		this.gps = gps;
+	}
+	
+	public void addLogging(Logging log){
+		this.logs.addElement(log); 
 	}
 
 	public DecoupledSimComChannel getComChannel() {
