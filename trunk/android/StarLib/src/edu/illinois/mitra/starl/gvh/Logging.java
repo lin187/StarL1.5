@@ -9,4 +9,6 @@ public abstract class Logging {
 	public abstract void d(String tag, String msg);
 
 	public abstract String getLog();
+	
+	public abstract boolean saveLogFile();
 }

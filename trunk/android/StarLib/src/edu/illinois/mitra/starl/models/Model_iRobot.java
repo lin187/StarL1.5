@@ -200,7 +200,7 @@ public class Model_iRobot extends ItemPosition implements TrackedRobot{
 	
 	private void initial_helper(){
 		angle = 0;
-		radius = 325;
+		radius = 165;
 		type = 0;
 		velocity = 0;
 		leftbump = false;

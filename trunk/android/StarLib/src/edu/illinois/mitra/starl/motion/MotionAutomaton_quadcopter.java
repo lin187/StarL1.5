@@ -285,7 +285,7 @@ public class MotionAutomaton_quadcopter extends RobotMotion {
 			throw new IllegalArgumentException("gaz, vertical speed must be between -1 to 1");
 		}
 		//Bluetooth command to control the drone
-		gvh.log.i(TAG, "control input as, yaw, pitch, roll, thrust " + yaw_v + ", " + pitch + ", " +roll + ", " +gaz);
+	//	gvh.log.i(TAG, "control input as, yaw, pitch, roll, thrust " + yaw_v + ", " + pitch + ", " +roll + ", " +gaz);
 		/*
 		if(running) {
 			if(velocity != 0) {

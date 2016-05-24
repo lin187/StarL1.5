@@ -341,7 +341,7 @@ public class DrawPanel extends ZoomablePanel
 			g.drawOval(rd.x - outerRadius + outerRadius, rd.y - outerRadius - outerRadius, outerRadius*2, outerRadius*2);
 			g.drawOval(rd.x - outerRadius - outerRadius, rd.y - outerRadius + outerRadius, outerRadius*2, outerRadius*2);
 			g.drawOval(rd.x - outerRadius + outerRadius, rd.y - outerRadius + outerRadius, outerRadius*2, outerRadius*2);
-			g.drawString("z: " + rd.z + ", pitch: " + Math.round(rd.pitch*100)/100 + ", roll: " + Math.round(rd.roll*100)/100, rd.x - 55, rd.y + rd.radius + 100);
+			g.drawString("z: " + rd.z + ", pitch: " + Math.round(rd.pitch*100)/100 + ", roll: " + Math.round(rd.roll*100)/100, rd.x - 55, rd.y + rd.radius + 130);
 
 		}
 		else if(rd.name.contains(settings.IROBOT_NAME)){
@@ -377,6 +377,9 @@ public class DrawPanel extends ZoomablePanel
 			}
 			// write name to the right of the robot
 			g.drawString(rd.name+" "+ botType , rd.x - 55, rd.y + radius + 50);
+		}
+		else{
+			g.drawString(rd.name+" ", rd.x - 55, rd.y + radius + 50);
 		}
 
 	}

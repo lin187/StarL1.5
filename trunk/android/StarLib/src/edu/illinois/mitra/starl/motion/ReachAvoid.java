@@ -42,7 +42,7 @@ public class ReachAvoid extends Thread implements Cancellable {
 		if(model instanceof Model_iRobot){
 			radius = ((Model_iRobot) model).radius;
 		}else if(model instanceof Model_quadcopter){
-			radius = ((Model_quadcopter) model).radius;
+			radius = 200+((Model_quadcopter) model).radius;
 		}
 		else{
 			//default value here;
