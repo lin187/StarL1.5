@@ -1,6 +1,6 @@
 package edu.illinois.mitra.starl.motion;
 
-import android.util.Log;
+//import android.util.Log;
 
 import java.util.Arrays;
 
@@ -87,7 +87,8 @@ public class MotionAutomatonMiniDrone extends RobotMotion {
     public void goTo(ItemPosition dest) {
         if((inMotion && !this.destination.equals(dest)) || !inMotion) {
             this.destination = new ItemPosition(dest.name,dest.x,dest.y,0);
-            Log.d(TAG, "Going to X: " + Integer.toString(dest.x) + ", Y: " + Integer.toString(dest.y));
+            gvh.log.d(TAG, "Going to X: " + Integer.toString(dest.x) + ", Y: " + Integer.toString(dest.y));
+      //      Log.d(TAG, "Going to X: " + Integer.toString(dest.x) + ", Y: " + Integer.toString(dest.y));
             //this.destination = dest;
             this.mode = OPMODE.GO_TO;
             startMotion();

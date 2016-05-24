@@ -1,7 +1,5 @@
 package edu.illinois.mitra.starl.motion;
 
-import android.util.Log;
-
 import java.util.Arrays;
 
 

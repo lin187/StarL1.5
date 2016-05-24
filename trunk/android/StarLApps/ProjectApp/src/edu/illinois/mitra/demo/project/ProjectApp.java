@@ -1,4 +1,4 @@
-package edu.illinois.mitra.demo.projectapp;
+package edu.illinois.mitra.demo.project;
 
 import java.awt.Point;
 import java.awt.Polygon;
