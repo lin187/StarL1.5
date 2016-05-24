@@ -27,7 +27,7 @@ import edu.illinois.mitra.starl.objects.PositionList;
  * @version 1.0
  */
 public class Model_iRobot extends ItemPosition implements TrackedRobot{
-	// for default values, see initial_helper()
+
 	public double angle;
 	public int radius;
 	public int type;
@@ -60,10 +60,15 @@ public class Model_iRobot extends ItemPosition implements TrackedRobot{
 			this.y = Integer.parseInt(parts[3]);
 			this.z = Integer.parseInt(parts[4]);
 			this.angle = Integer.parseInt(parts[5]);
-		} else {
-			throw new ItemFormattingException("Should be length 7, is length " + parts.length);
+//		} else {
+//			throw new ItemFormattingException("Should be length 7, is length " + parts.length);
+//        String[] parts = received.replace(",", "").split("\\|");
+//        if(parts.length == 6) {
+//            this.angle = Double.parseDouble(parts[4]);
 		}
-
+        else {
+            throw new ItemFormattingException("Should be length 5, is length " + parts.length);
+        }
 	}
 	
 	public Model_iRobot(String name, int x, int y) {
@@ -90,7 +95,7 @@ public class Model_iRobot extends ItemPosition implements TrackedRobot{
 		this.angle = t_pos.index;
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	@Override 
 	public String toString() {
 		return name + ": " + x + ", " + y + ", " + z + ", angle " + angle;
@@ -286,6 +291,6 @@ public class Model_iRobot extends ItemPosition implements TrackedRobot{
 
 	@Override
 	public void initialize() {
-		rand = new Random(); //initialize random variable for TrackedRobot
+		rand = new Random();
 	}
 }

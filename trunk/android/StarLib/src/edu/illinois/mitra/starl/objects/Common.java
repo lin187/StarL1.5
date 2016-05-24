@@ -15,7 +15,21 @@ import java.util.Enumeration;
 public final class Common {
 	private static final String TAG = "Common";
 	private static final String ERR = "Critical Error";
-	
+
+	// Specify the number of robots and number of groups
+
+	public static final Integer numOFbots = 5;
+	public static final Integer numOFgroups= 2;
+
+    // Bot types
+    public static final int IROBOT = 50;
+    public static final int MINIDRONE = 51;
+
+    // Mobile device types
+    public static final int NEXUS7 = 60;
+    public static final int MOTOE = 61;
+
+
 	// Message IDs
 	public static final int MSG_BARRIERSYNC 			= 1;
 	public static final int MSG_MUTEX_TOKEN_OWNER_BCAST = 2;
@@ -61,6 +75,8 @@ public final class Common {
 	public static final int EVENT_GPS = 1;
 	public static final int EVENT_GPS_SELF = 2;
 	public static final int EVENT_WAYPOINT_RECEIVED = 3;
+
+
 	
 	private Common() {
 	}

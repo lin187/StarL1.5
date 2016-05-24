@@ -34,15 +34,17 @@ public abstract class LogicThread extends StarLCallable implements Cancellable, 
 		if(isSleeping)
 			receive(m);
 		else
-			msgs.add(m);
+            msgs.add(m);
+
 	}
 
 	private volatile boolean isSleeping = false;
 
 	protected final void sleep(int ms) {
 		int toDeliver = msgs.size();
-		for(int i = 0; i < toDeliver; i++)
-			receive(msgs.poll());
+		for(int i = 0; i < toDeliver; i++) {
+            receive(msgs.poll());
+        }
 		isSleeping = true;
 		gvh.sleep(ms);
 		isSleeping = false;

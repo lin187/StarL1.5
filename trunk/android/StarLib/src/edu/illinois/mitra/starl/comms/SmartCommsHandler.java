@@ -143,7 +143,8 @@ public class SmartCommsHandler extends Thread {
 				}
 
 				// Insert/overwrite it in the received message list
-				receivedMessages.add(msg);
+                receivedMessages.add(msg);
+
 			}
 
 			// Send an ACK
