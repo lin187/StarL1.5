@@ -34,7 +34,7 @@ public class TrafficApp extends LogicThread {
 	TreeMap<String, String> R_msgQueue2 = new TreeMap<String, String>();
 	ItemPosition currentDestination, preDestination, myPos;
 	private long timeNow;
-
+		
 	private enum Stage {
 		PICK, GO, REGISTER, WAIT, REQUEST, ENTRY, CS, EXIT, DONE
 	};
@@ -64,148 +64,148 @@ public class TrafficApp extends LogicThread {
 		gvh.comms.addMsgListener(this, REGISTER_MSG);
 		gvh.comms.addMsgListener(this, REGISTER_R_MSG);
 		gvh.comms.addMsgListener(this, UNREGISTER_MSG);
-
+		
 	}
 
 	@Override
 	public List<Object> callStarL() {
 		while(true) {
 			myPos = gvh.gps.getMyPosition();
-			switch(stage) {
-			case PICK:
-				if(destinations.isEmpty()) {
-					stage = Stage.DONE;
-				} else 
-				{
-					currentDestination = (ItemPosition)destinations.peek();
-					if(withinCS(currentDestination)){
-						getWanted();
-						msgQueue.clear();
-						toremoveQueue.clear();
-						R_msgQueue.clear();
-						R_msgQueue2.clear();
-						timeNow = 	gvh.time();
-						requestRegisterList();
-						stage = Stage.REGISTER;
-					}
-					else{
+				switch(stage) {
+				case PICK:
+					if(destinations.isEmpty()) {
+						stage = Stage.DONE;
+					} else 
+					{
+						currentDestination = (ItemPosition)destinations.peek();
+						if(withinCS(currentDestination)){
+							msgQueue.clear();
+							toremoveQueue.clear();
+							R_msgQueue.clear();
+							R_msgQueue2.clear();
+							timeNow = 	gvh.time();
+							requestRegisterList();
+							stage = Stage.REGISTER;
+						}
+						else{
 						gvh.plat.reachAvoid.doReachAvoid(myPos, currentDestination, obEnvironment);
 //						gvh.plat.moat.goTo(currentDestination);	
-						stage = Stage.GO;
+							stage = Stage.GO;
+						}
 					}
-				}
-				break;
-			case GO:
+					break;
+				case GO:
 				if(gvh.plat.reachAvoid.doneFlag) {
-					if(currentDestination != null){
-						destinations.remove();
+						if(currentDestination != null){
+							destinations.remove();
+						}
+						stage = Stage.PICK;
 					}
-					stage = Stage.PICK;
-				}
-				break;
-
-			case REGISTER:
-				if(timeNow+2000<gvh.time())
-					stage = Stage.WAIT;
-				break;
-			case WAIT:
-				getRegisterList();
-				if(ListOfCars.size() == 0){
-					stage = Stage.REGISTER;
-					timeNow = System.currentTimeMillis();
-					requestRegisterList();
-				}
-				else
-					stage = Stage.REQUEST;
-				break;
-			case REQUEST:
-				checkQueue();
-				String[] section_string = new String[sections.size()+1];
-				for(int i = 0; i< sections.size();i++){
-					section_string[i] = sections.get(i);
-				}
-				section_string[sections.size()] = ((String) ("" + timeStamp));
-				//attach the timeStamp at the end of the message
-				MessageContents sections_msg = new MessageContents(section_string);
-				RobotMessage request = new RobotMessage("ALL", name, REQUEST_MSG, sections_msg);
-				gvh.comms.addOutgoingMessage(request);
-				ListOfCars.remove(name);
-				stage = Stage.ENTRY;
-				break;
-
-			case ENTRY:
-				//just wait for others to reply
-				//just a wait stage
-				//send message, stay in ENTRY, when received all messages, go to CS
-				if(ListOfCars.isEmpty()){
+					break;
+					
+				case REGISTER:
+					if(timeNow+2000<gvh.time())
+						stage = Stage.WAIT;
+					break;
+				case WAIT:
+					getRegisterList();
+					if(ListOfCars.size() == 0){
+						stage = Stage.REGISTER;
+						timeNow = System.currentTimeMillis();
+						requestRegisterList();
+					}
+					else
+						stage = Stage.REQUEST;
+					break;
+				case REQUEST:
+					getWanted();
+					String[] section_string = new String[sections.size()+1];
+					for(int i = 0; i< sections.size();i++){
+						section_string[i] = sections.get(i);
+					}
+					section_string[sections.size()] = ((String) ("" + timeStamp));
+					//attach the timeStamp at the end of the message
+					MessageContents sections_msg = new MessageContents(section_string);
+					RobotMessage request = new RobotMessage("ALL", name, REQUEST_MSG, sections_msg);
+					gvh.comms.addOutgoingMessage(request);
+					ListOfCars.remove(name);
+					checkQueue();
+					stage = Stage.ENTRY;
+					break;
+					
+				case ENTRY:
+					//just wait for others to reply
+					//just a wait stage
+					//send message, stay in ENTRY, when received all messages, go to CS
+					if(ListOfCars.isEmpty()){
 					gvh.plat.reachAvoid.doReachAvoid(myPos, currentDestination, obEnvironment);
 //					gvh.plat.moat.goTo(currentDestination);	
-					stage = Stage.CS;
-					//everyone replies, go to CS
-				}
-				break;	
-
-			case CS:
-				if(gvh.plat.reachAvoid.doneFlag) {
-					// it has reached the previous point
-
-					if(currentDestination != null){
-						if(preDestination != null){
-							//release the last CS section
-							release(CSname(preDestination));
-						}
-						preDestination = new ItemPosition(currentDestination);
-						destinations.remove();
-					}
-					currentDestination = (ItemPosition)destinations.peek();
-					if(withinCS(currentDestination)){
 						stage = Stage.CS;
+						//everyone replies, go to CS
+					}
+					break;	
+					
+				case CS:
+				if(gvh.plat.reachAvoid.doneFlag) {
+						// it has reached the previous point
+						
+						if(currentDestination != null){
+							if(preDestination != null){
+								//release the last CS section
+								release(CSname(preDestination));
+							}
+							preDestination = new ItemPosition(currentDestination);
+							destinations.remove();
+						}
+						currentDestination = (ItemPosition)destinations.peek();
+						if(withinCS(currentDestination)){
+							stage = Stage.CS;
 						gvh.plat.reachAvoid.doReachAvoid(myPos, currentDestination, obEnvironment);
 						//gvh.plat.moat.goTo(currentDestination);	
-					}
-					else{
+						}
+						else{
 						gvh.plat.reachAvoid.doReachAvoid(myPos, currentDestination, obEnvironment);
 //						gvh.plat.moat.goTo(currentDestination);	
-						stage = Stage.EXIT;
+							stage = Stage.EXIT;
+						}
 					}
-				}
-				break;
-
-			case EXIT:
+					break;
+					
+				case EXIT:
 				if(gvh.plat.reachAvoid.doneFlag) {
-					releaseAll();
-					preDestination = null;
-					stage = Stage.PICK;	
-				}
-				break;
-
-			case DONE:
+						releaseAll();
+						preDestination = null;
+						stage = Stage.PICK;	
+					}
+					break;
+					
+				case DONE:
 				gvh.plat.reachAvoid.cancel();
-				//gvh.plat.moat.motion_stop();
-
-				//if does not return null, program will never halt
-				//useful for debugging
+				
+					//if does not return null, program will never halt
+					//useful for debugging
+					//return null;
 				//return null;
-				break;
-			}
+					break;
+				}
 
 			sleep(100);
 		}
 	}
-
+	
 
 
 	@Override
 	protected void receive(RobotMessage m) {
 		if(m.getTo().equals(name) || m.getTo().equals("ALL")){
 			if(m.getMID() == REQUEST_MSG){
-				String id = m.getFrom();	
+				String id = m.getFrom();
 				int id_num = Integer.parseInt(id.replaceAll("[^0-9]", ""));
 				MessageContents msg_content = m.getContents();
 				List<String> R_request = new ArrayList<String>(msg_content.getContents());
 				int tStamp = Integer.parseInt(R_request.remove(R_request.size()-1));
 				//get the sections and the timeStamp
-				if(stage == Stage.ENTRY||stage == Stage.REQUEST){
+				if(stage == Stage.ENTRY){
 					boolean intersect = false;
 					for(int i = 0; i<sections.size(); i++){
 						if(R_request.contains(sections.get(i))){
@@ -233,21 +233,16 @@ public class TrafficApp extends LogicThread {
 				if(stage == Stage.GO ||stage == Stage.DONE || stage == Stage.PICK){
 					replyToRequest(m);
 				}
-				if(stage == Stage.REGISTER || stage == Stage.WAIT ){
+				if(stage == Stage.REGISTER || stage == Stage.REQUEST ){
 					//still working on the register list, should deal with message after register
 					QueueMSG(m);
 				}
 				return;
-
+				
 			}
 			if(m.getMID() == REPLY_MSG){
-				if(ListOfCars.contains(m.getFrom())){
 					ListOfCars.remove(m.getFrom());
-				}
-				else{
-					QueueMSG(m);
-				}
-
+	//				System.out.println(name + " get reply from " + m.getFrom());
 				return;
 			}
 			if(m.getMID() == REGISTER_MSG){
@@ -256,11 +251,11 @@ public class TrafficApp extends LogicThread {
 					RobotMessage register_R = new RobotMessage(m.getFrom(), name, REGISTER_R_MSG, register_R_msg);
 					//System.out.println(name + " adding register reply to "+ m.getFrom() + " with Stamp -1");
 					gvh.comms.addOutgoingMessage(register_R);
-
+					
 					if(!R_msgQueue2.containsKey(m.getFrom())){
 						R_msgQueue2.put(m.getFrom(), m.getFrom());
 					}
-
+					
 				}
 				else{
 					if(stage != Stage.GO && stage != Stage.PICK){
@@ -283,7 +278,7 @@ public class TrafficApp extends LogicThread {
 						RobotMessage register_R = new RobotMessage(m.getFrom(), name, REGISTER_R_MSG, register_R_msg);
 						System.out.println(name + " adding register reply to "+ m.getFrom() + " with Stamp -1");
 						gvh.comms.addOutgoingMessage(register_R);
-						 */
+						*/
 					}
 				}
 			}
@@ -301,17 +296,17 @@ public class TrafficApp extends LogicThread {
 			}
 		}
 	}
-
+	
 	private void release(String CSname) {
 		sections.remove(0);
 		//System.out.println(name + " releasing "+ CSname);
 		checkQueue();
 	}
-
+	
 	private void checkQueue() {
 		if(!msgQueue.isEmpty()){
 			for (RobotMessage temp : msgQueue) {
-				receive(temp);
+			    receive(temp);
 			}
 		}
 		while(!toremoveQueue.isEmpty()){
@@ -321,24 +316,24 @@ public class TrafficApp extends LogicThread {
 	}
 
 	private void releaseAll() {
-		//		System.out.println("releasing");
+//		System.out.println("releasing");
 		/*
 		while(!msgQueue.isEmpty()){
 			replyToRequest(msgQueue.remove(0));
 		}
-		 */
+		*/
 		MessageContents sections_msg = new MessageContents("unregister");
 		RobotMessage unregister = new RobotMessage("ALL", name, UNREGISTER_MSG, sections_msg);
 		gvh.comms.addOutgoingMessage(unregister);
 		return;
 	}
-
+	
 	private void replyToRequest(RobotMessage m2) {
-
+		
 		//System.out.println(name + " replying to "+m2.getFrom() + " at Stage " + stage);
 		if(msgQueue.contains(m2)){
 			toremoveQueue.add(m2);
-			//		System.out.println("adding reply to "+m2);
+	//		System.out.println("adding reply to "+m2);
 		}
 		String id = m2.getFrom();
 		MessageContents sections_msg = new MessageContents("OK");
@@ -348,7 +343,7 @@ public class TrafficApp extends LogicThread {
 
 	private void QueueMSG(RobotMessage m) {
 		if(msgQueue.contains(m)){
-			//		System.out.println(name + " queueing "+m);
+	//		System.out.println(name + " queueing "+m);
 			return;
 		}
 		// queue the message
@@ -358,32 +353,32 @@ public class TrafficApp extends LogicThread {
 	/**
 	 * get the section wanted by finding following critical sections in the destinations
 	 * modify the variable sections and return
-	 **/
+	**/
 	private void getWanted() {
 		sections.clear();
 		Iterator<ItemPosition> iterator = destinations.iterator();
 		while(iterator.hasNext()){
-			ItemPosition temp = (ItemPosition) iterator.next();
-			if(withinCS(temp)){
-				sections.add(CSname(temp));
-				//		  System.out.println(name +" wants "+CSname(temp));
-			}
-			else
-				break;
+		  ItemPosition temp = (ItemPosition) iterator.next();
+		  if(withinCS(temp)){
+			  sections.add(CSname(temp));
+	//		  System.out.println(name +" wants "+CSname(temp));
+		  }
+		  else
+			  break;
 		}
 		return;
 	}
-
+	
 	private void requestRegisterList(){
 		MessageContents register_msg = new MessageContents("0");
 		RobotMessage register = new RobotMessage("ALL", name, REGISTER_MSG, register_msg);
 		gvh.comms.addOutgoingMessage(register);
-
+		
 	}
-
-
+	
+	
 	private void getRegisterList() {
-		//construct the Register List from received messages
+			//construct the Register List from received messages
 		/*
 			boolean complete = true;
 			System.out.println("Reply queue is "+R_msgQueue);
@@ -410,15 +405,15 @@ public class TrafficApp extends LogicThread {
 				R_msgQueue2.clear();
 				ListOfCars.clear();
 			}
-		 */
-		//		System.out.println(name +" message queue is "+R_msgQueue);
-		//		System.out.println(name + " register queue is "+R_msgQueue2);
+			*/
+//		System.out.println(name +" message queue is "+R_msgQueue);
+//		System.out.println(name + " register queue is "+R_msgQueue2);
 		int offset = 0;
 		if(!R_msgQueue.isEmpty())
 			offset = R_msgQueue.lastKey();
 		while(!R_msgQueue.isEmpty()){
 			ListOfCars.add(R_msgQueue.remove(R_msgQueue.firstKey()));
-
+			
 		}
 		R_msgQueue2.put(name, name);
 		while(!R_msgQueue2.isEmpty()){
@@ -429,9 +424,9 @@ public class TrafficApp extends LogicThread {
 		System.out.println(name + ListOfCars);
 		return;
 		//everything works out, return
+	
 
-
-
+		
 		/*
 		ListOfCars.clear();
 		ListOfCars.add("bot3");
@@ -442,7 +437,7 @@ public class TrafficApp extends LogicThread {
 		ListOfCars.remove(name);
 		//ListOfCars.add("bot5");
 		return;
-		 */
+		*/
 	}
 
 	private boolean withinCS(ItemPosition current) {
@@ -456,7 +451,7 @@ public class TrafficApp extends LogicThread {
 			return true;
 		return false;
 	}
-
+	
 	private String CSname(ItemPosition current) {
 		if(current.x == CS_A.x && current.y == CS_A.y)
 			return "CS_A";

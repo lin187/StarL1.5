@@ -1,5 +1,10 @@
 package edu.illinois.mitra.starl.motion;
 
+import android.util.Log;
+
+import java.util.Arrays;
+
+
 import java.util.*;
 
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
@@ -7,25 +12,22 @@ import edu.illinois.mitra.starl.interfaces.RobotEventListener.Event;
 import edu.illinois.mitra.starl.models.Model_iRobot;
 import edu.illinois.mitra.starl.objects.*;
 
+
 /**
- * This motion controller is for iRobot models only
- * 
  * Motion controller which extends the RobotMotion abstract class. Capable of
  * going to destination waypoints and turning to face waypoints using custom
  * motion parameters. Includes optional collision avoidance which is controlled
  * by the motion parameters setting.
- * 
- * Behavior of different kind of robots are defined here
- *  
- * default type:
- *	0: get to goal robot
+ *
  *	behavior: marks the unknown obstacle when collide, redo path planning (get around the obstacle)to reach the goal
  *	1: explore the area robot
  *	behavior: explore the shape of the unknown obstacle and sent out the shape to others
- *	2: random moving obstacle robot 
+ *	2: random moving obstacle robot
  *	behavior:acts as simple moving obstacle
  *	3: anti goal robot
  *	behavior:acts as AI opponent try to block robots getting to the goal
+ * 
+ * Behavior of different kind of robots are defined here
  * 
  * @author Adam Zimmerman, Yixiao Lin
  * @version 1.1
@@ -36,20 +38,20 @@ public class MotionAutomaton_iRobot extends RobotMotion {
 
 	// MOTION CONTROL CONSTANTS
 	//	public static int R_arc = 700;
-	//	public static int R_slowfwd = 700;
-	//	public static int A_smallturn = 3;
-	//	public static int A_straight = 6;
-	//	public static int A_arc = 25;
-	//	public static int A_arcexit = 30;
-	//	public static final int param.SLOWTURN_ANGLE = 25;
-	//	public static final int ROBOT_RADIUS = 180;
+//	public static int R_slowfwd = 700;
+//	public static int A_smallturn = 3;
+//	public static int A_straight = 6;
+//	public static int A_arc = 25;
+//	public static int A_arcexit = 30;
+//	public static final int param.SLOWTURN_ANGLE = 25;
+//	public static final int ROBOT_RADIUS = 180;
 
 	// DELAY BETWEEN EACH RUN OF THE AUTOMATON
-	//	private static final int AUTOMATON_PERIOD = 60;
-	//	public static final int SAMPLING_PERIOD = 300;
+//	private static final int AUTOMATON_PERIOD = 60;
+//	public static final int SAMPLING_PERIOD = 300;
 
 	// COLLISION AVOIDANCE CONSTANTS
-	//	public static final int COLLISION_STRAIGHTTIME = 1250;
+//	public static final int COLLISION_STRAIGHTTIME = 1250;
 
 	protected GlobalVarHolder gvh;
 	protected BluetoothInterface bti;
@@ -59,7 +61,7 @@ public class MotionAutomaton_iRobot extends RobotMotion {
 	private Model_iRobot mypos;
 	private ItemPosition blocker;
 	private ObstacleList obsList;
-
+	
 
 	protected enum STAGE {
 		INIT, ARCING, STRAIGHT, TURN, SMALLTURN, GOAL, UNABLE
@@ -80,12 +82,12 @@ public class MotionAutomaton_iRobot extends RobotMotion {
 	private static final MotionParameters DEFAULT_PARAMETERS = MotionParameters.defaultParameters();
 	private volatile MotionParameters param = DEFAULT_PARAMETERS;
 	//need to pass some more parameteres into this param
-	//	MotionParameters.Builder settings = new MotionParameters.Builder();
-
-
-	//	private volatile MotionParameters param = settings.build();
-
-
+//	MotionParameters.Builder settings = new MotionParameters.Builder();
+	
+	
+//	private volatile MotionParameters param = settings.build();
+	
+	
 	// Collision avoidance
 	private enum COLSTAGE {
 		TURN, STRAIGHT
@@ -93,14 +95,14 @@ public class MotionAutomaton_iRobot extends RobotMotion {
 	private COLSTAGE colprev = null;
 	private COLSTAGE colstage = COLSTAGE.TURN;
 	private COLSTAGE colnext = null;
-
+	
 	private enum COLSTAGE0 {
 		BACK, STRAIGHT
 	}
 	private COLSTAGE0 colprev0 = null;
 	private COLSTAGE0 colstage0 = COLSTAGE0.STRAIGHT;
 	private COLSTAGE0 colnext0 = null;
-
+	
 	private enum COLSTAGE1 {
 		BACK, STRAIGHT, TURN, SMALLARC
 	}
@@ -108,14 +110,14 @@ public class MotionAutomaton_iRobot extends RobotMotion {
 	private COLSTAGE1 colstage1 = COLSTAGE1.STRAIGHT;
 	private COLSTAGE1 colnext1 = null;
 
-
+	
 	private enum COLSTAGE2 {
 		BACK, RANDOM, STRAIGHT
 	}
 	private COLSTAGE2 colprev2 = null;
 	private COLSTAGE2 colstage2 = COLSTAGE2.BACK;
 	private COLSTAGE2 colnext2 = null;
-
+	
 	private int col_straightime = 0;
 	private int col_backtime = 0;
 	private int col_turntime = 0;
@@ -135,17 +137,26 @@ public class MotionAutomaton_iRobot extends RobotMotion {
 	public void goTo(ItemPosition dest, ObstacleList obsList) {
 		if((inMotion && !this.destination.equals(dest)) || !inMotion) {
 			this.destination = new ItemPosition(dest.name,dest.x,dest.y,0);
+//            Log.d(TAG, "Going to X: " + Integer.toString(dest.x) + " Y: " + Integer.toString(dest.y));
 			//this.destination = dest;
 			this.mode = OPMODE.GO_TO;
 			this.obsList = obsList;
 			startMotion();
 		}
 	}
-
+	
 	public void goTo(ItemPosition dest) {
 		Scanner in = new Scanner(((Model_iRobot)gvh.gps.getMyPosition()).name).useDelimiter("[^0-9]+");
 		int index = in.nextInt();
-		ObstacleList obsList = gvh.gps.getViews().elementAt(index);
+        Vector<ObstacleList> temp = gvh.gps.getViews();
+        ObstacleList obsList;
+        if(!temp.isEmpty()) {
+            obsList = temp.elementAt(index);
+        }
+        else {
+            obsList = new ObstacleList();
+        }
+        //obsList = new ObstacleList();
 		// work in progress here
 		goTo(dest, obsList);
 	}
@@ -168,11 +179,13 @@ public class MotionAutomaton_iRobot extends RobotMotion {
 	public void run() {
 		super.run();
 		gvh.threadCreated(this);
-
+	
 		while(true) {
-			//			gvh.gps.getObspointPositions().updateObs();
+//			gvh.gps.getObspointPositions().updateObs();
 			if(running) {
-				mypos = (Model_iRobot)gvh.plat.getModel();
+                // why is getModel being used? Think it should be get position.
+				//mypos = (Model_iRobot)gvh.plat.getModel();
+                mypos = (Model_iRobot)gvh.gps.getMyPosition();
 				int distance = mypos.distanceTo(destination);
 				int angle = mypos.angleTo(destination);
 				int absangle = Math.abs(angle);
@@ -199,7 +212,7 @@ public class MotionAutomaton_iRobot extends RobotMotion {
 					next = null;
 					colliding = true;
 				}
-
+					
 				if(!colliding && stage != null) {
 					if(stage != prev)
 						gvh.log.e(TAG, "Stage is: " + stage.toString());
@@ -286,7 +299,7 @@ public class MotionAutomaton_iRobot extends RobotMotion {
 						inMotion = false;
 						break;
 					}
-						
+
 					prev = stage;
 					if(next != null) {
 						stage = next;
@@ -295,7 +308,7 @@ public class MotionAutomaton_iRobot extends RobotMotion {
 					}
 					next = null;
 				} 
-
+	
 				if((colliding || stage == null) ) {
 					switch(param.COLAVOID_MODE) {
 					case USE_COLAVOID:
@@ -335,13 +348,13 @@ public class MotionAutomaton_iRobot extends RobotMotion {
 			if(colstage != colprev) {
 				gvh.log.d(TAG, "Colliding: sending turn command");
 				turn(param.TURNSPEED_MAX, -1 * mypos.angleTo(blocker));
-
+				
 			}
 
 			if(!colliding) {
-
+				
 				colnext = COLSTAGE.STRAIGHT;
-
+				
 			} else {
 				gvh.log.d(TAG, "colliding with " + blocker.name + " - " + mypos.isFacing(blocker) + " - " + mypos.distanceTo(blocker));
 			}
@@ -380,20 +393,20 @@ public class MotionAutomaton_iRobot extends RobotMotion {
 		colnext = null;	
 		return;
 	}
-
+	
 	private void use_colback() {
 		switch(mypos.type) {
-		case 0:
-			goalbot();
-			break;
-		case 1:
-			discoverbot();
-			break;
-		case 2:
-			badbot();
-			break;
-		case 3:
-			break;
+			case 0:
+				goalbot();
+				break;
+			case 1:
+				discoverbot();
+				break;
+			case 2:
+				badbot();
+				break;
+			case 3:
+				break;
 		}	
 	}
 
@@ -408,7 +421,7 @@ public class MotionAutomaton_iRobot extends RobotMotion {
 			colprev0 = null;
 			colstage0 = COLSTAGE0.BACK;
 		}
-
+		
 		switch(colstage0) {
 		case BACK:
 			col_backtime += param.AUTOMATON_PERIOD;
@@ -421,7 +434,7 @@ public class MotionAutomaton_iRobot extends RobotMotion {
 				colstage0 = null;
 				stage = STAGE.UNABLE;
 			}
-			break;
+		break;
 		case STRAIGHT:
 			straight(param.LINSPEED_MAX);
 			if(colliding) {
@@ -429,7 +442,7 @@ public class MotionAutomaton_iRobot extends RobotMotion {
 				straight(0);
 				colnext0 = COLSTAGE0.BACK;
 			}
-			break;
+		break;
 		}
 		colprev0 = colstage0;
 		if(colnext0 != null) {
@@ -437,9 +450,9 @@ public class MotionAutomaton_iRobot extends RobotMotion {
 			gvh.log.i(TAG, "Advancing stage to " + colnext);
 		}
 		colnext0 = null;
-
+		
 	}
-
+	
 	private void discoverbot() {
 		if(stage != null) {
 			gvh.log.d(TAG, "Imminent collision detected!");
@@ -449,7 +462,7 @@ public class MotionAutomaton_iRobot extends RobotMotion {
 			colprev1 = null;
 			colstage1 = COLSTAGE1.BACK;
 		}
-
+	
 		switch(colstage1) {
 		case BACK:
 			col_backtime += param.AUTOMATON_PERIOD;
@@ -457,7 +470,7 @@ public class MotionAutomaton_iRobot extends RobotMotion {
 				col_backtime = 0;
 				straight(0);
 				colnext1 = COLSTAGE1.TURN;
-			}
+				}
 			else
 				straight(-param.LINSPEED_MAX/2);
 			break;
@@ -499,7 +512,7 @@ public class MotionAutomaton_iRobot extends RobotMotion {
 				if(col_straightime < param.COLLISION_AVOID_STRAIGHTTIME)
 					curve(param.LINSPEED_MAX , 320);
 				else {
-
+					
 					colnext1 = COLSTAGE1.STRAIGHT;
 				}
 			}
@@ -517,7 +530,7 @@ public class MotionAutomaton_iRobot extends RobotMotion {
 		}
 		colnext1 = null;
 	}
-
+	
 	private void badbot(){
 		if(stage != null) {
 			gvh.log.d(TAG, "Imminent collision detected!");
@@ -530,14 +543,14 @@ public class MotionAutomaton_iRobot extends RobotMotion {
 		switch(colstage2) {
 		case BACK:
 			col_backtime += param.AUTOMATON_PERIOD;
-			if (col_backtime > param.COLLISION_AVOID_BACKTIME){
-				col_backtime = 0;
-				colstage2 = COLSTAGE2.RANDOM;
-			}
-			else{
-				straight(-param.LINSPEED_MAX/2);
-			}
-			break;
+				if (col_backtime > param.COLLISION_AVOID_BACKTIME){
+					col_backtime = 0;
+					colstage2 = COLSTAGE2.RANDOM;
+				}
+				else{
+					straight(-param.LINSPEED_MAX/2);
+				}
+		break;
 		case RANDOM:	
 			if(col_turntime == 0){
 				RanAngle = (int) (-90 + (Math.random()* 180 ));
@@ -550,8 +563,8 @@ public class MotionAutomaton_iRobot extends RobotMotion {
 				col_turntime = 0;
 				colnext2 = COLSTAGE2.STRAIGHT;
 			}
-
-			break;
+			
+		break;
 		case STRAIGHT:
 			if(colliding){
 				straight(0);
@@ -560,8 +573,8 @@ public class MotionAutomaton_iRobot extends RobotMotion {
 			else{
 				straight(param.LINSPEED_MAX);
 			}
-			break;
-
+		break;
+			
 		}
 		colprev2 = colstage2;
 		if(colnext2 != null) {
@@ -570,10 +583,13 @@ public class MotionAutomaton_iRobot extends RobotMotion {
 		}
 		colnext2 = null;
 	}
-
-
+	
+	
 	public void cancel() {
 		running = false;
+        // 7 is the reset opcode for the create
+        byte[] reset = new byte[]{(byte) 7};
+        bti.send(reset);
 		bti.disconnect();
 	}
 
@@ -679,28 +695,28 @@ public class MotionAutomaton_iRobot extends RobotMotion {
 				ColPoint_x = mypos.radius*(Math.cos(Math.toRadians(mypos.angle+45))) + mypos.x;
 				ColPoint_y = mypos.radius*(Math.sin(Math.toRadians(mypos.angle+45))) + mypos.y;
 				blocker = new ItemPosition("detected", (int) ColPoint_x, (int) ColPoint_y, 0);
-
-
+				
+				
 			}
 			else{
 				ColPoint_x = mypos.radius*(Math.cos(Math.toRadians(mypos.angle-45))) + mypos.x;
 				ColPoint_y = mypos.radius*(Math.sin(Math.toRadians(mypos.angle-45))) + mypos.y;
 				blocker = new ItemPosition("detected", (int) ColPoint_x, (int) ColPoint_y, 0);	
 			}
-
+			
 			return true;
 		}
 		else
 			return false;
 	}
-
+	
 	private boolean collision() {
 		boolean toreturn = collision_mem_less();
 		if(toreturn)
 			obsList.detected(blocker);
 		return toreturn; 
 	}
-
+	
 	// Detects an imminent collision with another robot or with any obstacles
 
 	@Override

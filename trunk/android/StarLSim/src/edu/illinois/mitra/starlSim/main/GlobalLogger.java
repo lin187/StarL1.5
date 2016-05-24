@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import edu.illinois.mitra.starlSim.data.CsvWriter;
 import edu.illinois.mitra.starlSim.draw.RobotData;
 
 /**
@@ -16,6 +17,8 @@ import edu.illinois.mitra.starlSim.draw.RobotData;
  */
 public class GlobalLogger {
 	private FileWriter fileWriter;
+
+    private CsvWriter writer = null;
 
 	/**
 	 * 
@@ -33,6 +36,14 @@ public class GlobalLogger {
 			}
 		}
 
+        try {
+            writer = new CsvWriter("test5.csv", "N Robots",
+                    "Execution duration", "Robot ID", "x",
+                    "y", "Pose", "Local time");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
 		try {
 			fileWriter = new FileWriter(file);
 		} catch(IOException e) {
@@ -48,9 +59,14 @@ public class GlobalLogger {
 			fileWriter.write(Long.toString(time) + "\n");
 			for(RobotData d : data) {
 				fileWriter.write(d.name + "," + d.x + "," + d.y + "," + d.degrees + "," + d.time + "\n");
+
+                // todo: get real number of robots from settings, etc.
+                writer.commit(4, Long.toString(time), d.name, d.x, d.y, d.degrees, d.time);
 			}
 			fileWriter.write("\n\n");
 			fileWriter.flush();
+
+
 		} catch(IOException e) {
 			e.printStackTrace();
 		} catch(NullPointerException e) {

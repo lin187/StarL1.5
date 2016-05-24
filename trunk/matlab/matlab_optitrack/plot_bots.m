@@ -1,9 +1,10 @@
 function plot_bots(fig, LINE_LEN, X_MAX, Y_MAX, bots, waypoints, walls, disp_waypoints, disp_waypoint_names)
+global mm_per_pixel
 sfigure(fig);
 n_wpt = length(waypoints);
 n_wal = length(walls);
 robot_count = size(bots,2);
-
+origin = 2;
 %Calculate history
 hist = [bots.drawhistory];
 histX = reshape(hist(:,1:2:end),[],1);
@@ -45,7 +46,11 @@ for i = 1:robot_count
        rectangle('position',[bots(i).X-LINE_LEN, bots(i).Y-LINE_LEN, 2*LINE_LEN, 2*LINE_LEN],'LineWidth',1,'EdgeColor','r');
     end
 end
-axis([0 X_MAX 0 Y_MAX]);
+if origin == 1
+    axis([0 X_MAX 0 Y_MAX]);
+else
+    axis([-320*mm_per_pixel 320*mm_per_pixel -240*mm_per_pixel, mm_per_pixel*240]);
+end
 drawnow
 
     

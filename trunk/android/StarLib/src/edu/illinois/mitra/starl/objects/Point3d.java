@@ -95,6 +95,10 @@ public class Point3d implements Traceable {
 		}
 		return (int) Math.sqrt(Math.pow(x - other.x, 2) + Math.pow(this.y - other.y, 2) + Math.pow(this.z - other.z, 2));
 	}
+
+    public int distanceTo2D(Point3d other) {
+        return (int) Math.sqrt(Math.pow(x - other.x, 2) + Math.pow(this.y - other.y, 2));
+    }
 	
 	@Override
 	public boolean equals(Object obj) {

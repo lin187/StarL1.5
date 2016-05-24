@@ -107,6 +107,7 @@ public class UdpGpsReceiver extends Thread implements GpsReceiver {
 		    					gvh.log.e(TAG, "Invalid item formatting: " + e.getError());
 		    				}
 		    				break;
+
 		    			case '#':
 		    				try {
 		    					Model_iRobot newpos = new Model_iRobot(parts[i]);

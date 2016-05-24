@@ -314,8 +314,8 @@ public class DrawPanel extends ZoomablePanel
 	}
 	
 	private void drawRobot(Graphics2D g, RobotData rd, boolean drawId){
-		g.setStroke(new BasicStroke(10));
-		
+		g.setStroke(new BasicStroke(this.settings.DRAW_ROBOT_STROKE_SIZE));
+
 		if (rd.c != null)
 			g.setColor(rd.c);
 		else
@@ -323,7 +323,7 @@ public class DrawPanel extends ZoomablePanel
 		int radius = settings.BOT_RADIUS;
 		if (rd.radius != 0)
 			radius = rd.radius;
-
+		
 		double radians = 2 * Math.PI * rd.degrees / 360.0;
 		
 		Point2D.Double from = new Point2D.Double(rd.x, rd.y);
@@ -346,21 +346,21 @@ public class DrawPanel extends ZoomablePanel
 		}
 		else if(rd.name.contains(settings.IROBOT_NAME)){
 			g.drawOval(rd.x - radius, rd.y - radius, radius*2, radius*2);
-			if(rd.leftbump){
-				int x_1 = (int) (rd.radius*(Math.cos(Math.toRadians(rd.degrees+90))) + rd.x);
-				int y_1 = (int) (rd.radius*(Math.sin(Math.toRadians(rd.degrees+90))) + rd.y);
-				int x_2 = (int) (rd.radius*(Math.cos(Math.toRadians(rd.degrees))) + rd.x);
-				int y_2 = (int) (rd.radius*(Math.sin(Math.toRadians(rd.degrees))) + rd.y);
-				g.drawLine(x_1, y_1, x_2, y_2);
-			}
-			
-			if(rd.rightbump){
-				int x_1 = (int) (rd.radius*(Math.cos(Math.toRadians(rd.degrees))) + rd.x);
-				int y_1 = (int) (rd.radius*(Math.sin(Math.toRadians(rd.degrees))) + rd.y);
-				int x_2 = (int) (rd.radius*(Math.cos(Math.toRadians(rd.degrees-90))) + rd.x);
-				int y_2 = (int) (rd.radius*(Math.sin(Math.toRadians(rd.degrees-90))) + rd.y);
-				g.drawLine(x_1, y_1, x_2, y_2);
-			}
+		if(rd.leftbump){
+			int x_1 = (int) (rd.radius*(Math.cos(Math.toRadians(rd.degrees+90))) + rd.x);
+			int y_1 = (int) (rd.radius*(Math.sin(Math.toRadians(rd.degrees+90))) + rd.y);
+			int x_2 = (int) (rd.radius*(Math.cos(Math.toRadians(rd.degrees))) + rd.x);
+			int y_2 = (int) (rd.radius*(Math.sin(Math.toRadians(rd.degrees))) + rd.y);
+			g.drawLine(x_1, y_1, x_2, y_2);
+		}
+		
+		if(rd.rightbump){
+			int x_1 = (int) (rd.radius*(Math.cos(Math.toRadians(rd.degrees))) + rd.x);
+			int y_1 = (int) (rd.radius*(Math.sin(Math.toRadians(rd.degrees))) + rd.y);
+			int x_2 = (int) (rd.radius*(Math.cos(Math.toRadians(rd.degrees-90))) + rd.x);
+			int y_2 = (int) (rd.radius*(Math.sin(Math.toRadians(rd.degrees-90))) + rd.y);
+			g.drawLine(x_1, y_1, x_2, y_2);
+		}
 		}
 			
 		if (drawId)
