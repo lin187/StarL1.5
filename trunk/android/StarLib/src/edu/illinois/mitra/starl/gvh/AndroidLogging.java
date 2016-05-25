@@ -23,4 +23,9 @@ public class AndroidLogging extends Logging {
 	public String getLog() {
 		return null;
 	}
+
+    @Override
+    public boolean saveLogFile() {
+        return false;
+    }
 }
