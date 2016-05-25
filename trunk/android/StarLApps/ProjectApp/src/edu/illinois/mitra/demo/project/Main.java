@@ -17,7 +17,7 @@ public class Main {
         //settings.N_DBOTS(1);
 
         //	settings.N_RBOTS(1);
-        settings.TIC_TIME_RATE(5);
+        settings.TIC_TIME_RATE(10);
         settings.WAYPOINT_FILE("dest_square.wpt");
         settings.INITIAL_POSITIONS_FILE("start_square.wpt");
         settings.OBSPOINT_FILE("Obstacles_square.wpt");
