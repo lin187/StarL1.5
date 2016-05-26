@@ -4,6 +4,7 @@ global MINIDRONE
 global CREATE2
 global ARDRONE
 global camDistToFloor
+global hysteresis
 
 % get pixels in bouding box of bot
 depthFrame = getPixelsInBB(imgDepth, botArray(index).BBox);
@@ -56,9 +57,10 @@ if isempty(centers)
     botArray(index).depths = [botArray(index).depths, botArray(index).depth];
     botArray(index).radii = [botArray(index).radii, botArray(index).radius];
     botArray(index).yaws = [botArray(index).yaws, botArray(index).yaw];
+    botArray(index).hyst = botArray(index).hyst + 1;
     return
 end
-
+botArray(index).hyst = 0;
 % keep strongest circle, put back in original coordinates
 [~, indexCircle] = max(metrics);
 % add center to botArray, add BBox to get back in whole image px coord

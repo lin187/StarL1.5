@@ -24,6 +24,7 @@ global mm_per_pixel
 global camDistToFloor
 global botArray
 global BBoxFactor
+global hysteresis
 global MINIDRONE
 global CREATE2
 global ARDRONE
@@ -34,9 +35,10 @@ ARDRONE = 102;
 % If using Kinect, modify these as necessary
 if opt_system == KINECT
     numCreates =0;
-    numDrones = 1;
+    numDrones = 1; %minidrones
     numARDrones = 0;
     BBoxFactor = 1.5;
+    hysteresis = 10; % number of consecutive frames bot must be lost for auto-shutdown
     
     % Other things needed for Kinect tracking
     warning('off','images:imfindcircles:warnForSmallRadius')
@@ -235,6 +237,14 @@ while 1
             bots(i).roll = 0;
             bots(i).pitch = 0;
             bots(i).visible = 1;
+            % if bot hasn't been found for hysteresis frames, shutdown StarL 
+            if botArray(i).hyst >= hysteresis
+                disp('Exiting...');
+                close all;
+                shutdown_track = 0;
+                judp('SEND',4000,'192.168.1.255',int8('ABORT'));
+                break;
+            end
             
 %             figure(2);
 %             image(imgColor)

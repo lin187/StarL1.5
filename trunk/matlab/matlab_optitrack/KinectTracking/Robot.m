@@ -13,5 +13,6 @@ classdef Robot
         BBoxTight % BBox with BBox factor of 1
         color
         type
+        hyst
     end
 end

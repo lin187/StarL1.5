@@ -34,6 +34,7 @@ if numDrones + numARDrones > 0
             botArray(i).color = getColor(imgColor, centers(index,:));
             botArray(i).type = MINIDRONE;
             botArray(i).yaw = 0;
+            botArray(i).hyst = 0;
             % remove selected circle
             centers(index,:) = [];
             radii(index) = [];
@@ -65,6 +66,7 @@ if numDrones + numARDrones > 0
             botArray(i).color = getColor(imgColor, botArray(i).center);
             botArray(i).type = MINIDRONE;
             botArray(i).yaw = 0;
+            botArray(i).hyst = 0;
         end
         
         % add ARDrones, which are the bigger circles
@@ -94,6 +96,7 @@ if numDrones + numARDrones > 0
                 botArray(i).BBox = getBBox(botArray(i).center, botArray(i).radius, ARDRONE);
                 botArray(i).color = getColor(imgColor, botArray(i).center);
                 botArray(i).yaw = 0;
+                botArray(i).hyst = 0;
                 i = i + 1;
             else 
                 'error: circle does not belong to ARDrone'
@@ -130,6 +133,7 @@ if numCreates > 0
         botArray(i).color = getColor(imgColor, centers(index,:));
         botArray(i).type = CREATE2;
         botArray(i).yaw = 0;
+        botArray(i).hyst = 0;
         % remove selected circle
         centers(index,:) = [];
         radii(index) = [];
@@ -138,6 +142,12 @@ if numCreates > 0
 end
 
 found = true;
+
+if numCreates + numDrones + numARDrones == 2
+    if (botArray(1).color == 'w' || botArray(2).color == 'w')
+        found = false;
+    end
+end
 
 % this checks to make sure only bot is white
 % the first frame is sometimes very bright, so findBots needs to be called
