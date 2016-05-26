@@ -40,7 +40,9 @@ public class SimGpsReceiver implements GpsReceiver {
 	}
 
 	public void receivePosition(boolean inMotion) {
-		gvh.trace.traceEvent(TAG, "Received Position", gvh.gps.getMyPosition(), gvh.time());
+        if(gvh.trace != null) {
+            gvh.trace.traceEvent(TAG, "Received Position", gvh.gps.getMyPosition(), gvh.time());
+        }
 		gvh.sendRobotEvent(Event.GPS_SELF);
 		if(inMotion) {
 			gvh.sendRobotEvent(Event.MOTION, Common.MOT_STRAIGHT);
