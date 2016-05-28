@@ -1,0 +1,16 @@
+<svg width="640" height="480" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with SVG-edit - http://svg-edit.googlecode.com/ -->
+ <g>
+  <title>Layer 1</title>
+  <line id="svg_18" y2="125" x2="145" y1="187" x1="63" stroke-width="5" stroke="#ff00ff" fill="none"/>
+  <line id="svg_19" y2="47" x2="245" y1="125" x1="145" stroke-width="5" stroke="#ffaaaa" fill="none"/>
+  <line id="svg_20" y2="266" x2="535" y1="47" x1="245" stroke-width="5" stroke="#bf5f00" fill="none"/>
+  <line id="svg_21" y2="344" x2="437" y1="266" x1="535" stroke-width="5" stroke="#007f7f" fill="none"/>
+  <line id="svg_22" y2="412" x2="360" y1="344" x1="437" stroke-width="5" stroke="#0000ff" fill="none"/>
+  <line id="svg_24" y2="413" x2="361" y1="186" x1="62"  stroke-width="5" stroke="#5fbf00" fill="none"/>
+  <line id="svg_26" y2="217" x2="274" y1="294" x1="205" stroke-width="5" stroke="#ffff00" fill="none"/>
+  <line id="svg_27" y2="138" x2="361" y1="217" x1="276" stroke-width="5" stroke="#7fff00" fill="none"/>
+  <line id="svg_28" y2="120" x2="152" y1="217" x1="274" stroke-width="5" stroke="#56ffaa" fill="none"/>
+  <line id="svg_29" y2="342" x2="436" y1="216" x1="274" stroke-width="5" stroke="#ff0000" fill="none"/>
+ </g>
+</svg>

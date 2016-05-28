@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/trunk/android/DiffuseApp/DiffuseApp.iml" filepath="$PROJECT_DIR$/trunk/android/DiffuseApp/DiffuseApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/trunk/android/DistributedSearch/DistributedSearch.iml" filepath="$PROJECT_DIR$/trunk/android/DistributedSearch/DistributedSearch.iml" />
       <module fileurl="file://$PROJECT_DIR$/trunk/android/LightPaintApp/LightPaintApp.iml" filepath="$PROJECT_DIR$/trunk/android/LightPaintApp/LightPaintApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/trunk/android/LightPaintLibrary/LightPaintLibrary.iml" filepath="$PROJECT_DIR$/trunk/android/LightPaintLibrary/LightPaintLibrary.iml" />
@@ -15,4 +16,3 @@
     </modules>
   </component>
 </project>
-

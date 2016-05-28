@@ -7,7 +7,7 @@
       <sourceFolder url="file://$MODULE_DIR$/waypoints" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/input_images" type="java-resource" />
     </content>
-    <orderEntry type="jdk" jdkName="JDK" jdkType="JavaSDK" />
+    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="LightPaintLibrary" />
     <orderEntry type="module" module-name="StarLSim" />
@@ -23,4 +23,3 @@
     </orderEntry>
   </component>
 </module>
-
