@@ -32,7 +32,7 @@ MINIDRONE = 100;
 CREATE2 = 101;
 ARDRONE = 102;
 
-ip_prefix = '10.255.24.']
+ip_prefix = '10.255.24.';
 ip_broadcast = [ip_prefix, '255'];
 
 % If using Kinect, modify these as necessary
