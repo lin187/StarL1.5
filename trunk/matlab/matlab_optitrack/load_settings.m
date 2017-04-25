@@ -3,6 +3,7 @@ TTP_FILENAME = 'C:\Users\StarL\Dropbox\research\optitrack\ALL_ROBOTS_PROJECT_new
 USE_SERVER = 1; %Enable/disable the network server
 USE_WPT = 1;    %Enable/disable loading waypoints and walls
 USE_HISTORY = 1;%Enable/disable history
+%WPT_FILENAME = 'smaller_square.wpt';
 WPT_FILENAME = 'smaller_square.wpt';
 % Grid size and spacing parameters
 TX_PERIOD = 0.05;	%sec
