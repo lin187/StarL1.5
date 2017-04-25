@@ -111,7 +111,8 @@ while 1
         disp('Exiting...');
         close all;
         shutdown_track = 0;
-        judp('SEND',4000,'192.168.1.255',int8('ABORT'));
+        //judp('SEND',4000,'192.168.1.255',int8('ABORT'));
+        judp('SEND',4000,'10.255.24.255',int8('ABORT'));
         break;
     end
     
@@ -119,7 +120,8 @@ while 1
         disp('Exiting...');
         close all;
         shutdown_track = 1;
-        judp('SEND',4000,'192.168.1.255',int8('ABORT'));
+        //judp('SEND',4000,'192.168.1.255',int8('ABORT'));
+        judp('SEND',4000,'10.255.24.255',int8('ABORT'));
         break;
     end
 
@@ -144,14 +146,16 @@ while 1
         if send_launch == 1
             server_send_waypoints(waypoints);
             server_send_robots(bots);
-            judp('SEND',4000,'192.168.1.255',int8(['GO ' int2str(size(waypoints,2)) ' ' int2str(run_number)]));
+            //judp('SEND',4000,'192.168.1.255',int8(['GO ' int2str(size(waypoints,2)) ' ' int2str(run_number)]));
+            judp('SEND',4000,'10.255.24.255',int8(['GO ' int2str(size(waypoints,2)) ' ' int2str(run_number)]));
             run_number = run_number + 1;
             send_launch = 0;
         end
         
         % If aborting the robots
         if send_launch == -1
-            judp('SEND',4000,'192.168.1.255',int8('ABORT'));
+            //judp('SEND',4000,'192.168.1.255',int8('ABORT'));
+            judp('SEND',4000,'10.255.24.255',int8('ABORT'));
             disp('Aborting...');
             send_launch = 0;
             waypoints_transmitted = 1;

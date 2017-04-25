@@ -42,7 +42,8 @@ public class RealGlobalVarHolder extends GlobalVarHolder {
 		super.trace = new Trace(name, "/sdcard/trace/", this);
 		super.plat = new RealAndroidPlatform(handler);
 		super.comms = new Comms(this, new SmartUdpComThread(this));
-		super.gps = new Gps(this, new UdpGpsReceiver(this,"192.168.1.100",4000,new PositionList(),new PositionList(), new ObstacleList(), new Vector<ObstacleList>(3,2) ));
+		//super.gps = new Gps(this, new UdpGpsReceiver(this,"192.168.1.100",4000,new PositionList(),new PositionList(), new ObstacleList(), new Vector<ObstacleList>(3,2) ));
+		super.gps = new Gps(this, new UdpGpsReceiver(this,"10.255.24.100",4000,new PositionList(),new PositionList(), new ObstacleList(), new Vector<ObstacleList>(3,2) ));
 		plat.model = initpos;
 		plat.reachAvoid = new ReachAvoid(this);
         if(initpos instanceof Model_iRobot) {
@@ -84,6 +85,6 @@ public class RealGlobalVarHolder extends GlobalVarHolder {
 
 	@Override
 	public void threadDestroyed(Thread thread) {
-		// Nothing happens here		
+		// Nothing happens here
 	}
 }

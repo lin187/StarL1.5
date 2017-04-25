@@ -48,7 +48,7 @@ public class Simulation {
 
 
 	private final DrawFrame drawFrame;
-	private ObstacleList list; 
+	private ObstacleList list;
 
 	public Simulation(Class<? extends LogicThread> app, final SimSettings settings) {
 		if(settings.N_IROBOTS + settings.N_QUADCOPTERS <= 0)
@@ -61,13 +61,15 @@ public class Simulation {
 		// Create participants and instantiate SimApps
 		for(int i = 0; i < settings.N_IROBOTS; i++) {
 			// Mapping between iRobot name and IP address
-			participants.put(settings.IROBOT_NAME + i, "192.168.0." + i);
+			//participants.put(settings.IROBOT_NAME + i, "192.168.0." + i);
+			participants.put(settings.IROBOT_NAME + i, "10.255.24." + i);
 		}
 		for(int j = 0; j < settings.N_QUADCOPTERS; j++) {
 			// Mapping between quadcopter name and IP address
-			participants.put(settings.QUADCOPTER_NAME + j, "192.168.0." + (j+settings.N_IROBOTS));
+			//participants.put(settings.QUADCOPTER_NAME + j, "192.168.0." + (j+settings.N_IROBOTS));
+			participants.put(settings.QUADCOPTER_NAME + j, "10.255.24.0." + (j+settings.N_IROBOTS));
 		}
-		
+
 		// Start the simulation engine
 		LinkedList<LogicThread> logicThreads = new LinkedList<LogicThread>();
 		if(settings.DRAW){
@@ -104,7 +106,7 @@ public class Simulation {
 
 		// Load Obstacles
 		if(settings.OBSPOINT_FILE != null)
-		{			
+		{
 			gps.setObspoints(ObstLoader.loadObspoints(settings.OBSPOINT_FILE));
 			list = gps.getObspointPositions();
 			list.detect_Precision = settings.Detect_Precision;
@@ -135,7 +137,7 @@ public class Simulation {
 			t_initialPositions = WptLoader.loadWaypoints(settings.INITIAL_POSITIONS_FILE);
 		}
 		else
-			t_initialPositions = new PositionList<ItemPosition>();		
+			t_initialPositions = new PositionList<ItemPosition>();
 		Random rand = new Random();
 		/*
 		PositionList<Model_iRobot> initialPositions = new PositionList<Model_iRobot>();
@@ -152,7 +154,7 @@ public class Simulation {
 				initialPosition = new Model_iRobot(initialPos);
 			}
 			// If no initial position was supplied, randomly generate one
-			if(initialPosition == null) {	
+			if(initialPosition == null) {
 				//	System.out.println("null position in list");
 				int retries = 0;
 				boolean valid = false;
@@ -161,7 +163,7 @@ public class Simulation {
 					initialPosition = new Model_iRobot(botName, rand.nextInt(settings.GRID_XSIZE), rand.nextInt(settings.GRID_YSIZE), rand.nextInt(360));
 					if(list != null){
 						valid = (list.validstarts(initialPosition, initialPosition.radius));
-					}	
+					}
 				}
 				if(retries > 10000)
 				{
@@ -172,7 +174,7 @@ public class Simulation {
 				initialPosition.type = 1;
 			}
 			else if((i>=settings.N_DBOTS) && (i<(settings.N_DBOTS + settings.N_RBOTS))){
-				initialPosition.type = 2;	
+				initialPosition.type = 2;
 			}
 			else{
 				initialPosition.type = 0;
@@ -194,7 +196,7 @@ public class Simulation {
 				initialPosition = new Model_quadcopter(initialPos);
 			}
 			// If no initial position was supplied, randomly generate one
-			if(initialPosition == null) {	
+			if(initialPosition == null) {
 				//	System.out.println("null position in list");
 				int retries = 0;
 				boolean valid = false;
@@ -203,7 +205,7 @@ public class Simulation {
 					initialPosition = new Model_quadcopter(botName, rand.nextInt(settings.GRID_XSIZE), rand.nextInt(settings.GRID_YSIZE), 0, rand.nextInt(360));
 					if(list != null){
 						valid = (list.validstarts(initialPosition, initialPosition.radius));
-					}	
+					}
 				}
 				if(retries > 10000)
 				{
@@ -213,12 +215,12 @@ public class Simulation {
 			initialPosition.radius = settings.BOT_RADIUS;
 
 			SimApp sa = new SimApp(botName, participants, simEngine, initialPosition, settings.TRACE_OUT_DIR, app, drawFrame, settings.TRACE_CLOCK_DRIFT_MAX, settings.TRACE_CLOCK_SKEW_MAX);
-			
+
 			bots.add(sa);
 
 			logicThreads.add(sa.logic);
 			simEngine.addLogging(sa.gvh.log);
-			
+
 		}
 
 		if(settings.USE_GLOBAL_LOGGER)
@@ -315,7 +317,7 @@ public class Simulation {
 	 * Add an Observer to the list of GPS observers. This Observer's update
 	 * method will be passed a PositionList object as the argument. This must be
 	 * called before the simulation is started!
-	 * 
+	 *
 	 * @param o
 	 */
 	public void addPositionObserver(Observer o) {

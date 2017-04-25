@@ -16,7 +16,7 @@ import edu.illinois.mitra.starl.interfaces.SmartComThread;
 /**
  * Implements the simple acknowledgment protocol (SAP) in an efficient manner.
  * No spinning threads are left running.
- * 
+ *
  * @author Adam Zimmerman
  * @version 1.0
  * @see RobotMessage
@@ -45,7 +45,7 @@ public class SmartCommsHandler extends Thread {
 
 	/**
 	 * Create a new SCH using the provided SmartComThread.
-	 * 
+	 *
 	 * @param gvh
 	 * @param mConnectedThread
 	 */
@@ -72,7 +72,7 @@ public class SmartCommsHandler extends Thread {
 	/**
 	 * Add an outgoing message. Messages are sent as soon as the SmartComThread
 	 * is available. This function blocks until the message has been sent.
-	 * 
+	 *
 	 * @param msg
 	 *            the message to send
 	 * @param result
@@ -125,7 +125,7 @@ public class SmartCommsHandler extends Thread {
 	/**
 	 * Handles a received message. This is only to be called from the
 	 * SmartCommsHandler to which this is linked!
-	 * 
+	 *
 	 * @param msg
 	 *            the received UDPMessage
 	 */
@@ -206,7 +206,8 @@ public class SmartCommsHandler extends Thread {
 
 	protected String nameToIp(String to) {
 		if(to.equals("ALL") || to.equals("DISCOVER")) {
-			return "192.168.1.255";
+			//return "192.168.1.255";
+			return "10.255.24.255";
 		} else {
 			if(!participants.containsKey(to)) {
 				gvh.log.e(ERR, "Can't find IP address for robot " + to);

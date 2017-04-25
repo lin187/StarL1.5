@@ -1,5 +1,5 @@
 package edu.illinois.mitra.template;
-
+192
 import edu.illinois.mitra.starl.interfaces.TrackedRobot;
 import edu.illinois.mitra.starl.models.Model_iRobot;
 import edu.illinois.mitra.starl.models.Model_quadcopter;
@@ -24,10 +24,12 @@ public class BotInfoSelector {
         if(color.equals("red")) {
             name = "bot0"; // assign name: bot0 is always red
             if(deviceType == Common.NEXUS7) {
-                ip = "192.168.1.110"; // reserved IP address of red Nexus7 tablet
+                //ip = "192.168.1.110"; // reserved IP address of red Nexus7 tablet
+                ip = "10.255.24.110";
             }
             else if(deviceType == Common.MOTOE) {
-                ip = "192.168.1.114"; // reserved IP address of red MotoE phone
+                //ip = "192.168.1.114"; // reserved IP address of red MotoE phone
+                ip = "10.255.24.114";
             }
             if(type == Common.IROBOT) {
                 bluetooth = "5C:F3:70:75:BB:0E"; // bluetooth address of red raspberry pi on red irobot
@@ -43,10 +45,12 @@ public class BotInfoSelector {
         if(color.equals("green")) {
             name = "bot1";
             if(deviceType == Common.NEXUS7) {
-                ip = "192.168.1.111";
+                //ip = "192.168.1.111";
+                ip = "10.255.24.111";
             }
             else if(deviceType == Common.MOTOE) {
-                ip = "192.168.1.115";
+                //ip = "192.168.1.115";
+                ip = "10.255.24.115";
             }
             if(type == Common.IROBOT) {
                 bluetooth = "5C:F3:70:75:BB:2F";
@@ -60,7 +64,8 @@ public class BotInfoSelector {
 
         if(color.equals("blue")) {
             name = "bot2";
-            ip = "192.168.1.112";
+            //ip = "192.168.1.112";
+            ip = "10.255.24.112";
             if(type == Common.IROBOT) {
                 bluetooth = "5C:F3:70:76:CE:B4";
                 this.type = new Model_iRobot(name, 0,0);
@@ -73,7 +78,8 @@ public class BotInfoSelector {
 
         if(color.equals("white")) {
             name = "bot3";
-            ip = "192.168.1.113";
+            //ip = "192.168.1.113";
+            ip = "10.255.24.113";
             if(type == Common.IROBOT) {
                 bluetooth = "5C:F3:70:76:C9:D4";
                 this.type = new Model_iRobot(name, 0,0);

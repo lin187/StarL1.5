@@ -11,7 +11,8 @@ import java.util.Set;
 import edu.illinois.mitra.starl.interfaces.SimComChannel;
 
 public class DecoupledSimComChannel implements SimComChannel {
-	private static final String BROADCAST_IP = "192.168.1.255";
+	//private static final String BROADCAST_IP = "192.168.1.255";
+	private static final String BROADCAST_IP = "10.255.24.255";
 
 	private Map<String, SimSmartComThread> receivers;
 
