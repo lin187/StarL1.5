@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.SmartComThread;
@@ -35,8 +36,15 @@ public class SmartUdpComThread extends Thread implements SmartComThread {
 			try {
 				myLocalIP = Common.getLocalAddress();
 				if(mSocket == null) {
-					mSocket = new DatagramSocket(BCAST_PORT);
+//					changed from
+//					mSocket = new DatagramSocket(BCAST_PORT);
+//					mSocket.setBroadcast(true);
+//					err = false;
+//					to fix E/Critical Error: Could not make socketjava.net.BindException: bind failed: EADDRINUSE (Address already in use)
+					mSocket = new DatagramSocket(null);
+					mSocket.setReuseAddress(true);
 					mSocket.setBroadcast(true);
+					mSocket.bind(new InetSocketAddress(BCAST_PORT));
 					err = false;
 				}
 			} catch (IOException e) {
@@ -56,7 +64,11 @@ public class SmartUdpComThread extends Thread implements SmartComThread {
 			byte[] buf = new byte[1024]; 
 			
 			//Listen on socket to receive messages 
-			while(running) { 
+			while(running) {
+//				if(mSocket == null) {
+//					mSocket = new DatagramSocket(BCAST_PORT);
+//					mSocket.setBroadcast(true);
+//				}
     			DatagramPacket packet = new DatagramPacket(buf, buf.length); 
     			mSocket.receive(packet); 
 

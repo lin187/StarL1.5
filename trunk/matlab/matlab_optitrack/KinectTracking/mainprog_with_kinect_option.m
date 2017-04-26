@@ -1,5 +1,6 @@
 close all;
 format longg;
+
 load('run_number.mat')
 
 % This is the main program for tracking. It has an option for using Kinect
@@ -118,7 +119,7 @@ waypoints_transmitted = 0;
 
 % Launch variable
 global send_launch;
-send_launch = 0;
+send_launch = 1;
 
 % Get all trackable robots, set up a structure to hold them
 if opt_system == OPTITRACK
