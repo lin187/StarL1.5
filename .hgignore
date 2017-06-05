@@ -1,7 +1,0 @@
-syntax:glob
-.metadata*
-.settings*
-*.orig
-bin/**
-traces/**
-*~

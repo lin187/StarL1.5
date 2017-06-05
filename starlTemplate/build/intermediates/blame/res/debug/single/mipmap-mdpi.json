@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\StarLGradle\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi\\ic_launcher.png",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\StarLGradle\\starlTemplate\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\StarLGradle\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi\\ic_launcher_round.png",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\StarLGradle\\starlTemplate\\src\\main\\res\\mipmap-mdpi\\ic_launcher_round.png"
+    }
+]

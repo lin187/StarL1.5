@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\StarLGradle\\starLib\\build\\intermediates\\res\\merged\\debug\\layout\\dialog_login.xml",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\StarLGradle\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\layout\\dialog_login.xml"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\StarLGradle\\starLib\\build\\intermediates\\res\\merged\\debug\\layout\\log_dialog_view.xml",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\StarLGradle\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\layout\\log_dialog_view.xml"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\StarLGradle\\starLib\\build\\intermediates\\res\\merged\\debug\\layout\\main.xml",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\StarLGradle\\starLib\\src\\main\\res\\layout\\main.xml"
+    }
+]

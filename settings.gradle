@@ -1,0 +1,5 @@
+
+include ':starLib'
+include ':starlTemplate'
+include ':followApp'
+include ':dJISDKLIB'
