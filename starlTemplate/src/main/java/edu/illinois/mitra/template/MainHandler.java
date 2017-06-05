@@ -72,7 +72,10 @@ public class MainHandler extends Handler {
 			case HandlerMessage.MESSAGE_BATTERY:
 				pbBattery.setProgress((Integer) msg.obj);
 				break;
-			case HandlerMessage.MESSAGE_REGISTERED:
+			case HandlerMessage.MESSAGE_REGISTERED_DJI:
+				cbRegistered.setChecked((boolean) msg.obj);
+				break;
+			case HandlerMessage.MESSAGE_REGISTERED_3DR:
 				cbRegistered.setChecked((boolean) msg.obj);
 				break;
 		}
