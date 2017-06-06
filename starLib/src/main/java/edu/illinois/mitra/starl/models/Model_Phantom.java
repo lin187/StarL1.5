@@ -15,7 +15,7 @@ import edu.illinois.mitra.starl.objects.PositionList;
  * @version 1.0
  */
 
-public class Model_DJI extends ItemPosition implements TrackedRobot {
+public class Model_Phantom extends ItemPosition implements TrackedRobot {
 	// for default values, see initial_helper()
 	public double yaw;
 	public double pitch;
@@ -80,7 +80,7 @@ public class Model_DJI extends ItemPosition implements TrackedRobot {
 	 * @throws ItemFormattingException
 	 */
 
-	public Model_DJI(String received) throws ItemFormattingException {
+	public Model_Phantom(String received) throws ItemFormattingException {
 		initial_helper();
 		String[] parts = received.replace(",", "").split("\\|");
 		if(parts.length == 9) {
@@ -96,17 +96,17 @@ public class Model_DJI extends ItemPosition implements TrackedRobot {
 		}
 	}
 
-	public Model_DJI(String name, int x, int y) {
+	public Model_Phantom(String name, int x, int y) {
 		super(name, x, y, 0);
 		initial_helper();
 	}
 
-	public Model_DJI(String name, int x, int y, int z) {
+	public Model_Phantom(String name, int x, int y, int z) {
 		super(name, x, y, z);
 		initial_helper();
 	}
 
-	public Model_DJI(String name, int x, int y, int z, double yaw, double pitch, double roll, int radius) {
+	public Model_Phantom(String name, int x, int y, int z, double yaw, double pitch, double roll, int radius) {
 		super(name, x, y, z);
 		initial_helper();
 		this.yaw = yaw;
@@ -115,14 +115,14 @@ public class Model_DJI extends ItemPosition implements TrackedRobot {
 		this.radius = radius;
 	}
 
-	public Model_DJI(String name, int x, int y, int z, int yaw) {
+	public Model_Phantom(String name, int x, int y, int z, int yaw) {
 		super(name, x, y, z);
 		initial_helper();
 		this.yaw = yaw;
 	}
 
 
-	public Model_DJI(ItemPosition t_pos) {
+	public Model_Phantom(ItemPosition t_pos) {
 		super(t_pos.name, t_pos.x, t_pos.y, t_pos.z);
 		initial_helper();
 	}

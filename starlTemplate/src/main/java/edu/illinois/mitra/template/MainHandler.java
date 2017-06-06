@@ -20,7 +20,7 @@ public class MainHandler extends Handler {
 	private CheckBox cbGPS;
 	private CheckBox cbBluetooth;
 	private CheckBox cbRunning;
-	private CheckBox cbRegistered; //status of DJI SDK registration
+	private CheckBox cbRegistered; //status of MAVIC SDK registration
 	private TextView txtDebug;
 
 	private GlobalVarHolder gvh;

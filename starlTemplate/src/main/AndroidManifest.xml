@@ -42,7 +42,7 @@
         android:supportsRtl="true"
         tools:replace= "android:icon">
 
-        <!-- DJI SDK -->
+        <!-- MAVIC SDK -->
         <uses-library android:name="com.android.future.usb.accessory" />
         <meta-data
             android:name="com.dji.sdk.API_KEY"
@@ -59,7 +59,7 @@
         </activity>
         <service android:name="dji.sdk.sdkmanager.DJIGlobalService" >
         </service>
-        <!-- DJI SDK -->
+        <!-- MAVIC SDK -->
 
         <activity android:name=".RobotsActivity"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
@@ -110,7 +110,7 @@
     <!--android:roundIcon="@mipmap/ic_launcher_round"-->
     <!--android:supportsRtl="true"-->
     <!--android:theme="@style/AppTheme">-->
-    <!--&lt;!&ndash; DJI SDK &ndash;&gt;-->
+    <!--&lt;!&ndash; MAVIC SDK &ndash;&gt;-->
     <!--<uses-library android:name="com.android.future.usb.accessory" />-->
     <!--<meta-data-->
     <!--android:name="com.dji.sdk.API_KEY"-->
@@ -126,7 +126,7 @@
     <!--</activity>-->
     <!--<service android:name="dji.sdk.sdkmanager.DJIGlobalService" >-->
     <!--</service>-->
-    <!--&lt;!&ndash; DJI SDK &ndash;&gt;-->
+    <!--&lt;!&ndash; MAVIC SDK &ndash;&gt;-->
     <!--<activity android:name=".RobotsActivity">-->
     <!--<intent-filter>-->
     <!--<action android:name="android.intent.action.MAIN" />-->

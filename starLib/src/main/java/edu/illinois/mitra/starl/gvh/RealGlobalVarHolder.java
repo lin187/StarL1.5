@@ -8,12 +8,14 @@ import android.os.Handler;
 import edu.illinois.mitra.starl.comms.SmartUdpComThread;
 import edu.illinois.mitra.starl.comms.UdpGpsReceiver;
 import edu.illinois.mitra.starl.interfaces.TrackedRobot;
-import edu.illinois.mitra.starl.models.Model_DJI;
+import edu.illinois.mitra.starl.models.Model_Mavic;
+import edu.illinois.mitra.starl.models.Model_Phantom;
 import edu.illinois.mitra.starl.models.Model_iRobot;
 import edu.illinois.mitra.starl.models.Model_quadcopter;
 import edu.illinois.mitra.starl.motion.BluetoothInterface;
 import edu.illinois.mitra.starl.motion.DjiUSB;
-import edu.illinois.mitra.starl.motion.MotionAutomatonDJI;
+import edu.illinois.mitra.starl.motion.MotionAutomaton_Mavic;
+import edu.illinois.mitra.starl.motion.MotionAutomaton_Phantom;
 import edu.illinois.mitra.starl.motion.MotionAutomaton_iRobot;
 import edu.illinois.mitra.starl.motion.ReachAvoid;
 import edu.illinois.mitra.starl.motion.MiniDroneBTI;
@@ -53,8 +55,11 @@ public class RealGlobalVarHolder extends GlobalVarHolder {
 		else if (initpos instanceof Model_quadcopter) {
 			plat.moat = new MotionAutomatonMiniDrone(this, new MiniDroneBTI(this, context, robotMac));
 		}
-		else if(initpos instanceof Model_DJI){
-			plat.moat = new MotionAutomatonDJI(this, new DjiUSB(this, context, robotMac));
+		else if(initpos instanceof Model_Mavic){
+			plat.moat = new MotionAutomaton_Mavic(this, new DjiUSB(this, context, robotMac));
+		}
+		else if(initpos instanceof Model_Phantom){
+			plat.moat = new MotionAutomaton_Phantom(this, new DjiUSB(this, context, robotMac));
 		}
 /*
 //TD_NATHAN: resolve - resolved above

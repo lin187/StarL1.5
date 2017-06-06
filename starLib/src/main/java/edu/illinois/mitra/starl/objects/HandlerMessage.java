@@ -9,7 +9,7 @@ public class HandlerMessage {
 	public static final int MESSAGE_ABORT = 4;
 	public static final int MESSAGE_DEBUG = 5;
 	public static final int MESSAGE_BATTERY = 6;
-	public static final int MESSAGE_REGISTERED_DJI = 7; //status of DJI SDK registration
+	public static final int MESSAGE_REGISTERED_DJI = 7; //status of MAVIC SDK registration
 
 	public static final int MESSAGE_REGISTERED_3DR = 8; //status of 3DR sdk registration
 	

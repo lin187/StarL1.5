@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.RobotEventListener.Event;
-import edu.illinois.mitra.starl.models.Model_quadcopter;
+import edu.illinois.mitra.starl.models.Model_Phantom;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.ObstacleList;
 
@@ -15,7 +15,7 @@ import edu.illinois.mitra.starl.objects.ObstacleList;
 /**
  * Created by VerivitalLab on 2/19/2016.
  */
-public class MotionAutomatonDJI extends RobotMotion {
+public class MotionAutomaton_Phantom extends RobotMotion {
     protected static final String TAG = "MotionAutomaton";
     protected static final String ERR = "Critical Error";
     final int safeHeight = 150;
@@ -26,7 +26,7 @@ public class MotionAutomatonDJI extends RobotMotion {
 
     // Motion tracking
     protected ItemPosition destination;
-    private Model_quadcopter mypos; // TD_NATHAN: probably need to create a minidrone one of these objects, as I think this is for AR drone...?
+    private Model_Phantom mypos; // //todo complete model for phantom
 
     //PID controller parameters
     double saturationLimit = 50;
@@ -74,7 +74,7 @@ public class MotionAutomatonDJI extends RobotMotion {
 
     //	private volatile MotionParameters param = settings.build();
 
-    public MotionAutomatonDJI(GlobalVarHolder gvh, DjiUSB bti) {
+    public MotionAutomaton_Phantom(GlobalVarHolder gvh, DjiUSB bti) {
         super(gvh.id.getName());
         this.gvh = gvh;
         this.bti = bti;
@@ -108,7 +108,7 @@ public class MotionAutomatonDJI extends RobotMotion {
         while(true) {
             //			gvh.gps.getObspointPositions().updateObs();
             if(running) {
-                mypos = (Model_quadcopter)gvh.gps.getMyPosition(); // TD_NATHAN: check. I fixed it.
+                mypos = (Model_Phantom)gvh.gps.getMyPosition(); // TD_NATHAN: check. I fixed it.
    //             if(mypos == null) { continue;}
                 // if you change to 3D waypoints, use distanceTo instead of distanceTo2D
                 int distance = mypos.distanceTo2D(destination);

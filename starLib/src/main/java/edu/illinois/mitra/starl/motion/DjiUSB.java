@@ -11,7 +11,6 @@ import android.widget.Toast;
 import dji.common.error.DJIError;
 import dji.common.error.DJISDKError;
 import dji.common.flightcontroller.FlightControllerState;
-import dji.common.util.CommonCallbacks;
 import dji.sdk.base.BaseComponent;
 import dji.sdk.base.BaseProduct;
 import dji.sdk.flightcontroller.FlightController;
@@ -83,15 +82,12 @@ public class DjiUSB {
     public void sendLanding() {
         if (mFlightController != null)
         {
-            mFlightController.startLanding(null);
         }
     }
 
     public void sendTakeoff() {
         if (mFlightController != null)
         {
-            gvh.log.d(TAG, "Taking off!");
-            mFlightController.startTakeoff(takeOffCallBack);
         }
     }
 
@@ -110,6 +106,7 @@ public class DjiUSB {
     }
 
     public void initConnection() {
+        //Initiates API verification
         mHandler = new Handler(Looper.getMainLooper());
 		DJISDKManager.getInstance().registerApp(context, mDJISDKManagerCallback);
 
@@ -162,18 +159,18 @@ public class DjiUSB {
                 //creates an Aircraft instance
                 if(mProduct instanceof Aircraft) {
                     mAircraft = (Aircraft) mProduct;
-                    gvh.log.d(TAG, "Connected to DJI drone: " + mAircraft.getModel());
+                    gvh.log.d(TAG, "Connected to MAVIC drone: " + mAircraft.getModel());
 
                     //gets the flightcontroller for the aircraft;
                     mFlightController = mAircraft.getFlightController();
                     if(mFlightController != null) {
-                        mFlightController.startTakeoff(takeOffCallBack);
+                        debug(mFlightController);
                     }else{
                         gvh.log.e(TAG, mAircraft.getModel() + " does not have a flight controller!");
                     }
 
                 } else {
-                    gvh.log.e(TAG, "Connected DJI product is not a drone!");
+                    gvh.log.e(TAG, "Connected MAVIC product is not a drone!");
                 }
 
             } else {
@@ -215,20 +212,11 @@ public class DjiUSB {
         mHandler.postDelayed(updateRunnable, 500);
     }
 
-
     private Runnable updateRunnable = new Runnable() {
         @Override
         public void run() {
             Intent intent = new Intent(FLAG_CONNECTION_CHANGE);
             context.sendBroadcast(intent);
-        }
-    };
-
-    //Executes when take off completes (drone arrives at .5 meters)
-    private CommonCallbacks.CompletionCallback takeOffCallBack = new CommonCallbacks.CompletionCallback() {
-        @Override
-        public void onResult(DJIError djiError) {
-            gvh.log.e(TAG, "Take off errors: " + djiError);
         }
     };
 

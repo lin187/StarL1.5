@@ -30,7 +30,7 @@ import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.gvh.RealGlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.interfaces.MessageListener;
-import edu.illinois.mitra.starl.models.Model_DJI;
+import edu.illinois.mitra.starl.models.Model_Mavic;
 import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.HandlerMessage;
 
@@ -40,11 +40,11 @@ public class RobotsActivity extends Activity implements MessageListener {
 	private static final String TAG = "RobotsActivity";
 	private static final String ERR = "Critical Error";
 
-//	//DJI STUFF
+//	//MAVIC STUFF
 //	public static final String FLAG_CONNECTION_CHANGE = "dji_sdk_connection_change";
 //	private static BaseProduct mProduct;
 //	private Handler mHandler;
-//	//end DJI STUFF
+//	//end MAVIC STUFF
 
 	private static final String IDENTITY_FILE_URL = "https://dl.dropbox.com/s/dwfqdhbf5vdtz18/robots.rif?dl=1";
 	private static final String[][] ERROR_PARTICIPANTS = {{"ERROR"}, {"ERROR"}, {"ERROR"}};
@@ -99,7 +99,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 		numRobots = 1;
 		botInfo = new BotInfoSelector[numRobots];
 		// add color, robot type, and device type for each robot here
-		botInfo[0] = new BotInfoSelector("red", Common.DJI, Common.NEXUS7);
+		botInfo[0] = new BotInfoSelector("red", Common.MAVIC, Common.NEXUS7);
 		//botInfo[1] = new BotInfoSelector("green", Common.IROBOT, Common.MOTOE);
 		//botInfo[2] = new BotInfoSelector("blue", Common.IROBOT, Common.NEXUS7);
 		// botInfo[3] = new BotInfoSelector("white", Common.IROBOT, Common.NEXUS7);
@@ -121,8 +121,8 @@ public class RobotsActivity extends Activity implements MessageListener {
 			selectedRobot = 0;
 		}
 
-//		//Initialize DJI SDK Manager
-//		if((botInfo[selectedRobot].type instanceof Model_DJI)) {
+//		//Initialize MAVIC SDK Manager
+//		if((botInfo[selectedRobot].type instanceof Model_Mavic)) {
 //			mHandler = new Handler(Looper.getMainLooper());
 //			DJISDKManager.getInstance().registerApp(this, mDJISDKManagerCallback);
 //		}
@@ -220,7 +220,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 	private CheckBox cbGPS;
 	private CheckBox cbBluetooth;
 	private CheckBox cbRunning;
-	private CheckBox cbRegistered; //status of DJI SDK registration
+	private CheckBox cbRegistered; //status of MAVIC SDK registration
 	private ProgressBar pbBattery;
 
 
@@ -237,7 +237,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 		pbBattery.setMax(100);
 		cbRegistered = (CheckBox) findViewById(R.id.cbRegistered);
 
-		if(!(botInfo[selectedRobot].type instanceof Model_DJI)){
+		if(!(botInfo[selectedRobot].type instanceof Model_Mavic)){
 			cbRegistered.setVisibility(View.GONE);
 		} else {
 			cbBluetooth.setText("Drone Connected");
@@ -294,7 +294,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 		}
 	}
 
-	//DJI INTERFACE IMPLEMENTATION
+	//MAVIC INTERFACE IMPLEMENTATION
 //	private DJISDKManager.SDKManagerCallback mDJISDKManagerCallback = new DJISDKManager.SDKManagerCallback() {
 //		@Override
 //		public void onRegister(DJIError error) {
