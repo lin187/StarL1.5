@@ -1,16 +1,12 @@
 package edu.illinois.mitra.starl.objects;
-
-//todo rewrite this class without awt
-//import java.awt.Polygon; //awt is not supported by android
-//import java.awt.geom.Line2D;
 import java.util.*;
-
 import edu.illinois.mitra.starl.motion.RRTNode;
+import android.graphics.Path;
 /**
  * The obstacle is defined here
  * Each obstacle is a polygon, the list of points should construct a closed shape
- * @author Yixiao Lin
- * @version 1.0
+ * @author Yixiao Lin, updated by Tim Liang and Stirling Carter
+ * @version 2.0
  */
 public class Obstacles {
 	public Vector<Point3d> obstacle;
@@ -85,23 +81,91 @@ public class Obstacles {
 	 */
 	public boolean checkCross(ItemPosition destination, ItemPosition current){
 		boolean check = false;
-//		Line2D.Double path = new Line2D.Double(destination.x, destination.y, current.x, current.y);
-//		Line2D.Double obSeg = new Line2D.Double();
-//		for(int i=0; i<obstacle.size(); i++){
-//			for(int j=0; j<obstacle.size(); j++){
-//				if(i != j)
-//				{
-//					if(obstacle.elementAt(i) != null){
-//						obSeg.setLine(obstacle.elementAt(i).getX(), obstacle.elementAt(i).getY(), obstacle.elementAt(j).getX(), obstacle.elementAt(j).getY());
-//						check = check || obSeg.intersectsLine(path);
-//					}
-//					else
-//						break;
-//				}
-//			}
-//		}
-		//todo check for intersection in a different way
+		double x1, x2, x3, x4, y1, y2 ,y3 ,y4;
+		x1 = destination.x;
+		y1 = destination.y;
+		x2 = current.x;
+		y2 = current.y;
+		for(int i=0; i<obstacle.size(); i++){
+			for(int j=0; j<obstacle.size(); j++){
+				if(i != j)
+				{
+					if(obstacle.elementAt(i) != null){
+						x3 = obstacle.elementAt(i).getX();
+						y3 = obstacle.elementAt(i).getY();
+						x4 = obstacle.elementAt(j).getX();
+						y4 = obstacle.elementAt(j).getY();
+						check = check || linesIntersect(x1, y1, x2, y2, x3, y3, x4, y4);
+					}
+					else
+						break;
+				}
+			}
+		}
 		return check;
+
+	}
+
+	//line intersection calculation method to replace java.awt.geom.Line2D.intersectsLine() since
+	//the java.awt library is not part of android (also this one is supposedly 25% faster)
+	//source: http://www.java-gaming.org/index.php?topic=22590.0
+	private static boolean linesIntersect(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4){
+		// Return false if either of the lines have zero length
+		if (x1 == x2 && y1 == y2 ||
+				x3 == x4 && y3 == y4){
+			return false;
+		}
+		// Fastest method, based on Franklin Antonio's "Faster Line Segment Intersection" topic "in Graphics Gems III" book (http://www.graphicsgems.org/)
+		double ax = x2-x1;
+		double ay = y2-y1;
+		double bx = x3-x4;
+		double by = y3-y4;
+		double cx = x1-x3;
+		double cy = y1-y3;
+
+		double alphaNumerator = by*cx - bx*cy;
+		double commonDenominator = ay*bx - ax*by;
+		if (commonDenominator > 0){
+			if (alphaNumerator < 0 || alphaNumerator > commonDenominator){
+				return false;
+			}
+		}else if (commonDenominator < 0){
+			if (alphaNumerator > 0 || alphaNumerator < commonDenominator){
+				return false;
+			}
+		}
+		double betaNumerator = ax*cy - ay*cx;
+		if (commonDenominator > 0){
+			if (betaNumerator < 0 || betaNumerator > commonDenominator){
+				return false;
+			}
+		}else if (commonDenominator < 0){
+			if (betaNumerator > 0 || betaNumerator < commonDenominator){
+				return false;
+			}
+		}
+		if (commonDenominator == 0){
+			// This code wasn't in Franklin Antonio's method. It was added by Keith Woodward.
+			// The lines are parallel.
+			// Check if they're collinear.
+			double y3LessY1 = y3-y1;
+			double collinearityTestForP3 = x1*(y2-y3) + x2*(y3LessY1) + x3*(y1-y2);   // see http://mathworld.wolfram.com/Collinear.html
+			// If p3 is collinear with p1 and p2 then p4 will also be collinear, since p1-p2 is parallel with p3-p4
+			if (collinearityTestForP3 == 0){
+				// The lines are collinear. Now check if they overlap.
+				if (x1 >= x3 && x1 <= x4 || x1 <= x3 && x1 >= x4 ||
+						x2 >= x3 && x2 <= x4 || x2 <= x3 && x2 >= x4 ||
+						x3 >= x1 && x3 <= x2 || x3 <= x1 && x3 >= x2){
+					if (y1 >= y3 && y1 <= y4 || y1 <= y3 && y1 >= y4 ||
+							y2 >= y3 && y2 <= y4 || y2 <= y3 && y2 >= y4 ||
+							y3 >= y1 && y3 <= y2 || y3 <= y1 && y3 >= y2){
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+		return true;
 	}
 	
 	/**
@@ -113,38 +177,41 @@ public class Obstacles {
 	 */
 	
 	public boolean validItemPos(ItemPosition destination, double radius){
-		//todo implement in different way
-//		if(destination == null)
-//			return false;
-//		if(obstacle.size() == 0)
-//			return true;
-//
-//			Point3d nextpoint = obstacle.firstElement();
-//			Point3d curpoint = obstacle.firstElement();
-//			Line2D.Double segment;
-//			int[] x = new int[obstacle.size()];
-//			int[] y = new int[obstacle.size()];
-//
-//			for(int j = 0; j < obstacle.size() ; j++){
-//				curpoint = obstacle.get(j);
-//				if (j == obstacle.size() -1){
-//					nextpoint = obstacle.firstElement();
-//				}
-//				else{
-//					nextpoint = obstacle.get(j+1);
-//				}
-//				segment = new Line2D.Double(curpoint.x,curpoint.y,nextpoint.x,nextpoint.y);
-//				x[j] = curpoint.x;
-//				y[j] = curpoint.y;
-//				if((segment.ptSegDist(destination.x,destination.y) < radius)){
-//					return false;
-//				}
-//
-//			}
-//			Polygon obspoly = new Polygon(x,y,obstacle.size());
-//			if(obspoly.contains(destination.x, destination.y))
-//				return false;
-//			else
+		if(destination == null)
+			return false;
+		if(obstacle.size() == 0)
+			return true;
+
+			Point3d nextpoint = obstacle.firstElement();
+			Point3d curpoint = obstacle.firstElement();
+			int[] x = new int[obstacle.size()];
+			int[] y = new int[obstacle.size()];
+
+			for(int j = 0; j < obstacle.size() ; j++){
+				curpoint = obstacle.get(j);
+				if (j == obstacle.size() -1){
+					nextpoint = obstacle.firstElement();
+				}
+				else{
+					nextpoint = obstacle.get(j+1);
+				}
+				double x1 = curpoint.x;
+				double y1 = curpoint.y;
+				double x2 = nextpoint.x;
+				double y2 = nextpoint.y;
+				x[j] = curpoint.x;
+				y[j] = curpoint.y;
+				double px = destination.x;
+				double py = destination.y;
+				if(pointToLineSeg(px, py, x1, y1, x2, y2) < radius){
+					return false;
+				}
+
+			}
+			Polygon obspoly = new Polygon(x,y,obstacle.size());
+			if(obspoly.contains(destination.x, destination.y))
+				return false;
+			else
 				return true;
 	}
 	
@@ -155,53 +222,87 @@ public class Obstacles {
 	 * @return
 	 */
 	public boolean validItemPos(ItemPosition destination){
-//			// todo implement in different way
-//			Point3d curpoint = obstacle.firstElement();
-//			int[] x = new int[obstacle.size()];
-//			int[] y = new int[obstacle.size()];
-//
-//			for(int j = 0; j < obstacle.size() ; j++){
-//				curpoint = obstacle.get(j);
-//				x[j] = curpoint.x;
-//				y[j] = curpoint.y;
-//
-//			}
-//			Polygon obspoly = new Polygon(x,y,obstacle.size());
-//			if(obspoly.contains(destination.x, destination.y))
-//				return false;
-//			else
-				return true;
+		Point3d curpoint = obstacle.firstElement();
+		int[] x = new int[obstacle.size()];
+		int[] y = new int[obstacle.size()];
+
+		for(int j = 0; j < obstacle.size() ; j++){
+			curpoint = obstacle.get(j);
+			x[j] = curpoint.x;
+			y[j] = curpoint.y;
+
+		}
+		Polygon obspoly = new Polygon(x,y,obstacle.size());
+		if(obspoly.contains(destination.x, destination.y))
+			return false;
+		else
+			return true;
 	}
 	
 	public double findMinDist(RRTNode destNode, RRTNode currentNode){
-//		Point3d nextpoint = obstacle.firstElement();
-//		Point3d curpoint = obstacle.firstElement();
-//		double minDist = Double.MAX_VALUE;
-//		Line2D.Double current;
-//		current = new Line2D.Double(destNode.position.x,destNode.position.y,currentNode.position.x,currentNode.position.y);
-//		Line2D.Double segment;
-//
-//		for(int j = 0; j < obstacle.size() ; j++){
-//			curpoint = obstacle.get(j);
-//			if (j == obstacle.size() -1){
-//				nextpoint = obstacle.firstElement();
-//			}
-//			else{
-//				nextpoint = obstacle.get(j+1);
-//			}
-//			segment = new Line2D.Double(curpoint.x,curpoint.y,nextpoint.x,nextpoint.y);
-//			double dist1 = segment.ptSegDist(current.x1, current.y1);
-//			double dist2 = segment.ptSegDist(current.x2, current.y2);
-//			double dist3 = current.ptSegDist(segment.x1, segment.y1);
-//			double dist4 = current.ptSegDist(segment.x2, segment.y2);
-//			double temp1 = Math.min(dist1, dist2);
-//			double temp2 = Math.min(dist3, dist4);
-//			double minDistNow = Math.min(temp1, temp2);
-//			minDist = Math.min(minDistNow, minDist);
-//		}
-//		return minDist;
-		return 0;
-		//todo implement in different way
+		Point3d nextpoint = obstacle.firstElement();
+		Point3d curpoint = obstacle.firstElement();
+		double minDist = Double.MAX_VALUE;
+		double cx1 = destNode.position.x;
+		double cy1 = destNode.position.y;
+		double cx2 = currentNode.position.x;
+		double cy2 = currentNode.position.y;
+
+		for(int j = 0; j < obstacle.size() ; j++){
+			curpoint = obstacle.get(j);
+			if (j == obstacle.size() -1){
+				nextpoint = obstacle.firstElement();
+			}
+			else{
+				nextpoint = obstacle.get(j+1);
+			}
+			double sx1 = curpoint.x;
+			double sy1 = curpoint.y;
+			double sx2 = nextpoint.x;
+			double sy2 = nextpoint.y;
+
+			double dist1 = pointToLineSeg(cx1, cy1, sx1, sy1, sx2, sy2);//segment.ptSegDist(current.x1, current.y1);
+			double dist2 = pointToLineSeg(cx2, cy2, sx1, sy1, sx2, sy2);//segment.ptSegDist(current.x2, current.y2);
+			double dist3 = pointToLineSeg(sx1, sy1, cx1, cy1, cx2, cy2);//current.ptSegDist(segment.x1, segment.y1);
+			double dist4 = pointToLineSeg(sx2, sy2, cx1, cy1, cx2, cy2);//current.ptSegDist(segment.x2, segment.y2);
+			double temp1 = Math.min(dist1, dist2);
+			double temp2 = Math.min(dist3, dist4);
+			double minDistNow = Math.min(temp1, temp2);
+			minDist = Math.min(minDistNow, minDist);
+		}
+		return minDist;
+	}
+
+	//returns the shortest distance between a point to a line segment
+	//source: https://stackoverflow.com/questions/849211/shortest-distance-between-a-point-and-a-line-segment?page=1&tab=votes#tab-top
+	private double pointToLineSeg(double px, double py, double x1, double y1, double x2, double y2){
+		double A = px - x1;
+		double B = py - y1;
+		double C = x2 - x1;
+		double D = y2 - y1;
+
+		double dot = A * C + B * D;
+		double len_sq = C * C + D * D;
+		double param = -1;
+		if(len_sq != 0) {
+			param = dot / len_sq;
+		}
+
+		double xx, yy;
+		if(param < 0){
+			xx = x1;
+			yy = y1;
+		} else if(param > 1){
+			xx = x2;
+			yy = y2;
+		} else {
+			xx = x1 + param * C;
+			yy = y1 + param * D;
+		}
+
+		double dx = px - xx;
+		double dy = px - yy;
+		return Math.sqrt(dx * dx + dy * dy);
 	}
 	
 	public Point3d getClosestPointOnSegment(int sx1, int sy1, int sx2, int sy2, int px, int py)
