@@ -1,274 +1,274 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:2:1-74:12
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:2:1-74:12
 	package
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:4:5-42
-		INJECTED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:4:5-42
+		INJECTED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml
+		INJECTED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml
 	android:versionName
-		INJECTED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml
+		INJECTED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml
+		INJECTED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml
 	xmlns:tools
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:3:5-51
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:3:5-51
 	xmlns:android
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:2:11-69
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:2:11-69
 	android:versionCode
-		INJECTED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml
+		INJECTED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml
+		INJECTED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml
 uses-sdk
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:7:5-17
-MERGED from [com.android.support:multidex:1.0.1] C:\Users\cartesh1\.android\build-cache\3d4b670f6a49ff753a08e48fa2c79b1c635ebf40\output\AndroidManifest.xml:18:5-42
-MERGED from [com.android.support:design:25.3.1] C:\Users\cartesh1\.android\build-cache\a27ffaca92fb882651f2f17f052acf8195cb03e3\output\AndroidManifest.xml:21:5-23:62
-MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\cartesh1\.android\build-cache\70478a32bba8f7f6cc4484a510e9d7e2397a941a\output\AndroidManifest.xml:21:5-23:78
-MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\cartesh1\.android\build-cache\7b406c100f68d2a4d8e639e8453013e0ad946569\output\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\cartesh1\.android\build-cache\d67a481fe6b3e30c86e0d956588b7c33615e81d2\output\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:recyclerview-v7:25.3.1] C:\Users\cartesh1\.android\build-cache\beecfb47154ba3b54f5c897187695570a380c539\output\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:transition:25.3.1] C:\Users\cartesh1\.android\build-cache\516f1ed58b03b33ea92555e6cf2db3063c818e7a\output\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-v4:25.3.1] C:\Users\cartesh1\.android\build-cache\39b8e492f3855f2e7178831641feb10a7be17f42\output\AndroidManifest.xml:21:5-23:54
-MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\cartesh1\.android\build-cache\d23ea1c8927e1bb28f04c2c7c8858370e2d728ec\output\AndroidManifest.xml:21:5-23:60
-MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\cartesh1\.android\build-cache\5c8e69f5aa5e15b60654fd54b2c20b15cf954fd6\output\AndroidManifest.xml:21:5-23:63
-MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\cartesh1\.android\build-cache\195d16b5d86a22999ea40c5dde2d1529b0b6467e\output\AndroidManifest.xml:21:5-23:58
-MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\cartesh1\.android\build-cache\0c667bf9009f31233a2387b3ccb86f8435dd4dad\output\AndroidManifest.xml:21:5-23:61
-MERGED from [com.android.support:support-compat:25.3.1] C:\Users\cartesh1\.android\build-cache\4676f349fa1267cda7dc5282c44c55a97bef549a\output\AndroidManifest.xml:21:5-23:58
-MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\cartesh1\.android\build-cache\d43b32c795aba7ddd58b83cbf90005c893dd169c\output\AndroidManifest.xml:5:5-7:41
-MERGED from [starl:followApp:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\followApp\build\intermediates\bundles\default\AndroidManifest.xml:8:5-10:41
-MERGED from [starl:starLib:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:7:5-9:41
-MERGED from [starl:dJISDKLIB:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\dJISDKLIB\build\intermediates\bundles\default\AndroidManifest.xml:7:5-9:41
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:7:5-17
+MERGED from [com.android.support:multidex:1.0.1] C:\Users\yangy14\.android\build-cache\c4ffe1a3ece0baba50f9f97ab854ac55068fc986\output\AndroidManifest.xml:18:5-42
+MERGED from [com.android.support:design:25.3.1] C:\Users\yangy14\.android\build-cache\d520ad5bdc61aaf6c3cc3957bad17d65548d5ec4\output\AndroidManifest.xml:21:5-23:62
+MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\yangy14\.android\build-cache\ee50d30de987868cfbccab1b8b79dd014cde0426\output\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\yangy14\.android\build-cache\ce97ef34401f8e0c94b1bdc7bf55af8c41a30181\output\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\yangy14\.android\build-cache\fa8cfc311bbe693419772910d523b6293db35fea\output\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:recyclerview-v7:25.3.1] C:\Users\yangy14\.android\build-cache\1ed27703390f8553265583ad3f4bb1cd83eb018e\output\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:transition:25.3.1] C:\Users\yangy14\.android\build-cache\3213b93eff13957ab33687d15a1b946541e4218e\output\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\yangy14\.android\build-cache\384012f16e95f888702472c3ca70d54b6df0d86c\output\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\yangy14\.android\build-cache\6ce748226c7f3bd29ef6d174de30c060fec210a1\output\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\yangy14\.android\build-cache\5279e4a7d1cc9ba63a86bf3327b6e319bc843261\output\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\yangy14\.android\build-cache\8d58f1bc1d6c772cf91747ca1945d4bbba090cfc\output\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\yangy14\.android\build-cache\ce90046f4e63c9b290c0dd52414492e7a650ce07\output\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\yangy14\.android\build-cache\895b54d74f4b4e1fb73c4751ceae6ff64c788414\output\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\yangy14\.android\build-cache\f765362e34e6c5fec05b6b252c383bec4c69aae4\output\AndroidManifest.xml:5:5-7:41
+MERGED from [starl:followApp:unspecified] D:\6-6change\starl\followApp\build\intermediates\bundles\default\AndroidManifest.xml:8:5-10:41
+MERGED from [starl:starLib:unspecified] D:\6-6change\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:7:5-9:41
+MERGED from [starl:dJISDKLIB:unspecified] D:\6-6change\starl\dJISDKLIB\build\intermediates\bundles\default\AndroidManifest.xml:7:5-9:41
 	tools:overrideLibrary
-		ADDED from [com.android.support:design:25.3.1] C:\Users\cartesh1\.android\build-cache\a27ffaca92fb882651f2f17f052acf8195cb03e3\output\AndroidManifest.xml:23:9-59
+		ADDED from [com.android.support:design:25.3.1] C:\Users\yangy14\.android\build-cache\d520ad5bdc61aaf6c3cc3957bad17d65548d5ec4\output\AndroidManifest.xml:23:9-59
 	android:targetSdkVersion
-		INJECTED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml
+		INJECTED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml
+		INJECTED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml
+		INJECTED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml
+		INJECTED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:8:5-80
-MERGED from [starl:followApp:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\followApp\build\intermediates\bundles\default\AndroidManifest.xml:12:5-81
-MERGED from [starl:starLib:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:11:5-81
-MERGED from [starl:starLib:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:27:5-81
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:8:5-80
+MERGED from [starl:followApp:unspecified] D:\6-6change\starl\followApp\build\intermediates\bundles\default\AndroidManifest.xml:12:5-81
+MERGED from [starl:starLib:unspecified] D:\6-6change\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:11:5-81
+MERGED from [starl:starLib:unspecified] D:\6-6change\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:27:5-81
 	android:name
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:8:22-78
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:8:22-78
 uses-permission#android.permission.READ_PHONE_STATE
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:9:5-74
-MERGED from [starl:followApp:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\followApp\build\intermediates\bundles\default\AndroidManifest.xml:13:5-75
-MERGED from [starl:starLib:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:12:5-75
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:9:5-74
+MERGED from [starl:followApp:unspecified] D:\6-6change\starl\followApp\build\intermediates\bundles\default\AndroidManifest.xml:13:5-75
+MERGED from [starl:starLib:unspecified] D:\6-6change\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:12:5-75
 	android:name
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:9:22-72
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:9:22-72
 uses-permission#android.permission.ACCESS_WIFI_STATE
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:10:5-75
-MERGED from [starl:followApp:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\followApp\build\intermediates\bundles\default\AndroidManifest.xml:14:5-76
-MERGED from [starl:starLib:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:13:5-76
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:10:5-75
+MERGED from [starl:followApp:unspecified] D:\6-6change\starl\followApp\build\intermediates\bundles\default\AndroidManifest.xml:14:5-76
+MERGED from [starl:starLib:unspecified] D:\6-6change\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:13:5-76
 	android:name
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:10:22-73
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:10:22-73
 uses-permission#android.permission.CHANGE_WIFI_STATE
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:11:5-75
-MERGED from [starl:followApp:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\followApp\build\intermediates\bundles\default\AndroidManifest.xml:15:5-76
-MERGED from [starl:starLib:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:14:5-76
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:11:5-75
+MERGED from [starl:followApp:unspecified] D:\6-6change\starl\followApp\build\intermediates\bundles\default\AndroidManifest.xml:15:5-76
+MERGED from [starl:starLib:unspecified] D:\6-6change\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:14:5-76
 	android:name
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:11:22-73
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:11:22-73
 uses-permission#android.permission.UPDATE_DEVICE_STATS
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:12:5-77
-MERGED from [starl:followApp:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\followApp\build\intermediates\bundles\default\AndroidManifest.xml:16:5-78
-MERGED from [starl:starLib:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:15:5-78
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:12:5-77
+MERGED from [starl:followApp:unspecified] D:\6-6change\starl\followApp\build\intermediates\bundles\default\AndroidManifest.xml:16:5-78
+MERGED from [starl:starLib:unspecified] D:\6-6change\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:15:5-78
 	android:name
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:12:22-75
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:12:22-75
 uses-permission#android.permission.WAKE_LOCK
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:13:5-67
-MERGED from [starl:followApp:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\followApp\build\intermediates\bundles\default\AndroidManifest.xml:17:5-68
-MERGED from [starl:starLib:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:16:5-68
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:13:5-67
+MERGED from [starl:followApp:unspecified] D:\6-6change\starl\followApp\build\intermediates\bundles\default\AndroidManifest.xml:17:5-68
+MERGED from [starl:starLib:unspecified] D:\6-6change\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:16:5-68
 	android:name
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:13:22-65
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:13:22-65
 uses-permission#android.permission.INTERNET
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:14:5-66
-MERGED from [starl:followApp:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\followApp\build\intermediates\bundles\default\AndroidManifest.xml:18:5-67
-MERGED from [starl:starLib:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:17:5-67
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:14:5-66
+MERGED from [starl:followApp:unspecified] D:\6-6change\starl\followApp\build\intermediates\bundles\default\AndroidManifest.xml:18:5-67
+MERGED from [starl:starLib:unspecified] D:\6-6change\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:17:5-67
 	android:name
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:14:22-64
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:14:22-64
 uses-permission#android.permission.BLUETOOTH
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:15:5-67
-MERGED from [starl:followApp:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\followApp\build\intermediates\bundles\default\AndroidManifest.xml:19:5-68
-MERGED from [starl:starLib:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:18:5-68
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:15:5-67
+MERGED from [starl:followApp:unspecified] D:\6-6change\starl\followApp\build\intermediates\bundles\default\AndroidManifest.xml:19:5-68
+MERGED from [starl:starLib:unspecified] D:\6-6change\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:18:5-68
 	android:name
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:15:22-65
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:15:22-65
 uses-permission#android.permission.BLUETOOTH_ADMIN
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:16:5-73
-MERGED from [starl:followApp:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\followApp\build\intermediates\bundles\default\AndroidManifest.xml:20:5-74
-MERGED from [starl:starLib:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:19:5-74
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:16:5-73
+MERGED from [starl:followApp:unspecified] D:\6-6change\starl\followApp\build\intermediates\bundles\default\AndroidManifest.xml:20:5-74
+MERGED from [starl:starLib:unspecified] D:\6-6change\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:19:5-74
 	android:name
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:16:22-71
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:16:22-71
 uses-permission#android.permission.VIBRATE
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:17:5-65
-MERGED from [starl:followApp:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\followApp\build\intermediates\bundles\default\AndroidManifest.xml:21:5-66
-MERGED from [starl:starLib:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:20:5-66
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:17:5-65
+MERGED from [starl:followApp:unspecified] D:\6-6change\starl\followApp\build\intermediates\bundles\default\AndroidManifest.xml:21:5-66
+MERGED from [starl:starLib:unspecified] D:\6-6change\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:20:5-66
 	android:name
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:17:22-63
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:17:22-63
 uses-permission#android.permission.CAMERA
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:18:5-64
-MERGED from [starl:followApp:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\followApp\build\intermediates\bundles\default\AndroidManifest.xml:22:5-65
-MERGED from [starl:starLib:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:21:5-65
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:18:5-64
+MERGED from [starl:followApp:unspecified] D:\6-6change\starl\followApp\build\intermediates\bundles\default\AndroidManifest.xml:22:5-65
+MERGED from [starl:starLib:unspecified] D:\6-6change\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:21:5-65
 	android:name
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:18:22-62
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:18:22-62
 uses-permission#android.permission.ACCESS_COARSE_LOCATION
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:19:5-81
-MERGED from [starl:starLib:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:22:5-81
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:19:5-81
+MERGED from [starl:starLib:unspecified] D:\6-6change\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:22:5-81
 	android:name
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:19:22-78
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:19:22-78
 uses-permission#android.permission.ACCESS_NETWORK_STATE
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:20:5-79
-MERGED from [starl:starLib:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:24:5-79
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:20:5-79
+MERGED from [starl:starLib:unspecified] D:\6-6change\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:24:5-79
 	android:name
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:20:22-76
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:20:22-76
 uses-permission#android.permission.ACCESS_FINE_LOCATION
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:21:5-79
-MERGED from [starl:starLib:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:25:5-79
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:21:5-79
+MERGED from [starl:starLib:unspecified] D:\6-6change\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:25:5-79
 	android:name
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:21:22-76
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:21:22-76
 uses-permission#android.permission.MOUNT_UNMOUNT_FILESYSTEMS
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:22:5-84
-MERGED from [starl:starLib:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:26:5-84
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:22:5-84
+MERGED from [starl:starLib:unspecified] D:\6-6change\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:26:5-84
 	android:name
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:22:22-81
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:22:22-81
 uses-permission#android.permission.READ_EXTERNAL_STORAGE
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:24:5-80
-MERGED from [starl:starLib:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:28:5-80
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:24:5-80
+MERGED from [starl:starLib:unspecified] D:\6-6change\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:28:5-80
 	android:name
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:24:22-77
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:24:22-77
 uses-permission#android.permission.SYSTEM_ALERT_WINDOW
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:25:5-78
-MERGED from [starl:starLib:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:29:5-78
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:25:5-78
+MERGED from [starl:starLib:unspecified] D:\6-6change\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:29:5-78
 	android:name
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:25:22-75
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:25:22-75
 uses-permission#android.permission.READ_LOGS
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:26:5-68
-MERGED from [starl:starLib:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:30:5-68
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:26:5-68
+MERGED from [starl:starLib:unspecified] D:\6-6change\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:30:5-68
 	android:name
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:26:22-65
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:26:22-65
 uses-feature#android.hardware.camera
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:27:5-59
-MERGED from [starl:followApp:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\followApp\build\intermediates\bundles\default\AndroidManifest.xml:24:5-60
-MERGED from [starl:starLib:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:32:5-60
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:27:5-59
+MERGED from [starl:followApp:unspecified] D:\6-6change\starl\followApp\build\intermediates\bundles\default\AndroidManifest.xml:24:5-60
+MERGED from [starl:starLib:unspecified] D:\6-6change\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:32:5-60
 	android:name
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:27:19-57
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:27:19-57
 uses-feature#android.hardware.camera.autofocus
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:28:5-69
-MERGED from [starl:followApp:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\followApp\build\intermediates\bundles\default\AndroidManifest.xml:25:5-70
-MERGED from [starl:starLib:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:33:5-70
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:28:5-69
+MERGED from [starl:followApp:unspecified] D:\6-6change\starl\followApp\build\intermediates\bundles\default\AndroidManifest.xml:25:5-70
+MERGED from [starl:starLib:unspecified] D:\6-6change\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:33:5-70
 	android:name
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:28:19-67
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:28:19-67
 uses-feature#android.hardware.usb.host
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:29:5-31:36
-MERGED from [starl:starLib:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:34:5-36:36
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:29:5-31:36
+MERGED from [starl:starLib:unspecified] D:\6-6change\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:34:5-36:36
 	android:required
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:31:9-33
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:31:9-33
 	android:name
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:30:9-49
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:30:9-49
 uses-feature#android.hardware.usb.accessory
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:32:5-34:35
-MERGED from [starl:starLib:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:37:5-39:35
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:32:5-34:35
+MERGED from [starl:starLib:unspecified] D:\6-6change\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:37:5-39:35
 	android:required
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:34:9-32
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:34:9-32
 	android:name
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:33:9-54
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:33:9-54
 application
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:37:5-73:19
-MERGED from [com.android.support:design:25.3.1] C:\Users\cartesh1\.android\build-cache\a27ffaca92fb882651f2f17f052acf8195cb03e3\output\AndroidManifest.xml:29:5-20
-MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\cartesh1\.android\build-cache\70478a32bba8f7f6cc4484a510e9d7e2397a941a\output\AndroidManifest.xml:29:5-20
-MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\cartesh1\.android\build-cache\7b406c100f68d2a4d8e639e8453013e0ad946569\output\AndroidManifest.xml:26:5-20
-MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\cartesh1\.android\build-cache\d67a481fe6b3e30c86e0d956588b7c33615e81d2\output\AndroidManifest.xml:26:5-20
-MERGED from [com.android.support:transition:25.3.1] C:\Users\cartesh1\.android\build-cache\516f1ed58b03b33ea92555e6cf2db3063c818e7a\output\AndroidManifest.xml:26:5-20
-MERGED from [com.android.support:support-v4:25.3.1] C:\Users\cartesh1\.android\build-cache\39b8e492f3855f2e7178831641feb10a7be17f42\output\AndroidManifest.xml:29:5-20
-MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\cartesh1\.android\build-cache\d23ea1c8927e1bb28f04c2c7c8858370e2d728ec\output\AndroidManifest.xml:29:5-20
-MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\cartesh1\.android\build-cache\5c8e69f5aa5e15b60654fd54b2c20b15cf954fd6\output\AndroidManifest.xml:29:5-20
-MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\cartesh1\.android\build-cache\195d16b5d86a22999ea40c5dde2d1529b0b6467e\output\AndroidManifest.xml:29:5-20
-MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\cartesh1\.android\build-cache\0c667bf9009f31233a2387b3ccb86f8435dd4dad\output\AndroidManifest.xml:29:5-20
-MERGED from [com.android.support:support-compat:25.3.1] C:\Users\cartesh1\.android\build-cache\4676f349fa1267cda7dc5282c44c55a97bef549a\output\AndroidManifest.xml:29:5-20
-MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\cartesh1\.android\build-cache\d43b32c795aba7ddd58b83cbf90005c893dd169c\output\AndroidManifest.xml:9:5-20
-MERGED from [starl:starLib:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:41:5-42:19
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:37:5-73:19
+MERGED from [com.android.support:design:25.3.1] C:\Users\yangy14\.android\build-cache\d520ad5bdc61aaf6c3cc3957bad17d65548d5ec4\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\yangy14\.android\build-cache\ee50d30de987868cfbccab1b8b79dd014cde0426\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\yangy14\.android\build-cache\ce97ef34401f8e0c94b1bdc7bf55af8c41a30181\output\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\yangy14\.android\build-cache\fa8cfc311bbe693419772910d523b6293db35fea\output\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:transition:25.3.1] C:\Users\yangy14\.android\build-cache\3213b93eff13957ab33687d15a1b946541e4218e\output\AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\yangy14\.android\build-cache\384012f16e95f888702472c3ca70d54b6df0d86c\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\yangy14\.android\build-cache\6ce748226c7f3bd29ef6d174de30c060fec210a1\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\yangy14\.android\build-cache\5279e4a7d1cc9ba63a86bf3327b6e319bc843261\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\yangy14\.android\build-cache\8d58f1bc1d6c772cf91747ca1945d4bbba090cfc\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\yangy14\.android\build-cache\ce90046f4e63c9b290c0dd52414492e7a650ce07\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\yangy14\.android\build-cache\895b54d74f4b4e1fb73c4751ceae6ff64c788414\output\AndroidManifest.xml:29:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\yangy14\.android\build-cache\f765362e34e6c5fec05b6b252c383bec4c69aae4\output\AndroidManifest.xml:9:5-20
+MERGED from [starl:starLib:unspecified] D:\6-6change\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:41:5-42:19
 	android:label
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:39:9-41
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:39:9-41
 	android:supportsRtl
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:42:9-35
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:42:9-35
 	android:debuggable
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:41:9-34
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:41:9-34
 	android:allowBackup
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:40:9-35
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:40:9-35
 	android:icon
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:38:9-38
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:38:9-38
 	tools:replace
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:43:9-38
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:43:9-38
 uses-library#com.android.future.usb.accessory
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:46:9-73
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:46:9-73
 	android:name
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:46:23-70
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:46:23-70
 meta-data#com.dji.sdk.API_KEY
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:47:9-49:56
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:47:9-49:56
 	android:value
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:49:13-53
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:49:13-53
 	android:name
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:48:13-47
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:48:13-47
 activity#dji.sdk.sdkmanager.DJIAoaControllerActivity
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:50:9-59:20
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:50:9-59:20
 	android:theme
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:52:13-61
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:52:13-61
 	android:name
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:51:13-71
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:51:13-71
 intent-filter#android.hardware.usb.action.USB_ACCESSORY_ATTACHED
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:53:13-55:29
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:53:13-55:29
 action#android.hardware.usb.action.USB_ACCESSORY_ATTACHED
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:54:17-93
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:54:17-93
 	android:name
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:54:25-90
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:54:25-90
 meta-data#android.hardware.usb.action.USB_ACCESSORY_ATTACHED
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:56:13-58:60
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:56:13-58:60
 	android:resource
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:58:17-57
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:58:17-57
 	android:name
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:57:17-82
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:57:17-82
 service#dji.sdk.sdkmanager.DJIGlobalService
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:60:9-61:19
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:60:9-61:19
 	android:name
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:60:18-68
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:60:18-68
 activity#edu.illinois.mitra.template.RobotsActivity
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:64:9-71:20
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:64:9-71:20
 	android:label
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:66:13-45
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:66:13-45
 	android:theme
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:65:13-71
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:65:13-71
 	android:name
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:64:19-49
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:64:19-49
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:67:13-70:29
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:67:13-70:29
 action#android.intent.action.MAIN
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:68:17-69
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:68:17-69
 	android:name
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:68:25-66
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:68:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:69:17-77
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:69:17-77
 	android:name
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:69:27-74
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:69:27-74
 service#com.parrot.arsdk.ardiscovery.ARDiscoveryService
-ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:72:9-83
+ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:72:9-83
 	android:name
-		ADDED from C:\Users\cartesh1\Desktop\Builds\Current\starl\starlTemplate\src\main\AndroidManifest.xml:72:18-80
+		ADDED from D:\6-6change\starl\starlTemplate\src\main\AndroidManifest.xml:72:18-80
 meta-data#android.support.VERSION
-ADDED from [com.android.support:design:25.3.1] C:\Users\cartesh1\.android\build-cache\a27ffaca92fb882651f2f17f052acf8195cb03e3\output\AndroidManifest.xml:25:5-27:34
-MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\cartesh1\.android\build-cache\70478a32bba8f7f6cc4484a510e9d7e2397a941a\output\AndroidManifest.xml:25:5-27:34
-MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\cartesh1\.android\build-cache\7b406c100f68d2a4d8e639e8453013e0ad946569\output\AndroidManifest.xml:22:5-24:34
-MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\cartesh1\.android\build-cache\d67a481fe6b3e30c86e0d956588b7c33615e81d2\output\AndroidManifest.xml:22:5-24:34
-MERGED from [com.android.support:recyclerview-v7:25.3.1] C:\Users\cartesh1\.android\build-cache\beecfb47154ba3b54f5c897187695570a380c539\output\AndroidManifest.xml:22:5-24:34
-MERGED from [com.android.support:transition:25.3.1] C:\Users\cartesh1\.android\build-cache\516f1ed58b03b33ea92555e6cf2db3063c818e7a\output\AndroidManifest.xml:22:5-24:34
-MERGED from [com.android.support:support-v4:25.3.1] C:\Users\cartesh1\.android\build-cache\39b8e492f3855f2e7178831641feb10a7be17f42\output\AndroidManifest.xml:25:5-27:34
-MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\cartesh1\.android\build-cache\d23ea1c8927e1bb28f04c2c7c8858370e2d728ec\output\AndroidManifest.xml:25:5-27:34
-MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\cartesh1\.android\build-cache\5c8e69f5aa5e15b60654fd54b2c20b15cf954fd6\output\AndroidManifest.xml:25:5-27:34
-MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\cartesh1\.android\build-cache\195d16b5d86a22999ea40c5dde2d1529b0b6467e\output\AndroidManifest.xml:25:5-27:34
-MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\cartesh1\.android\build-cache\0c667bf9009f31233a2387b3ccb86f8435dd4dad\output\AndroidManifest.xml:25:5-27:34
-MERGED from [com.android.support:support-compat:25.3.1] C:\Users\cartesh1\.android\build-cache\4676f349fa1267cda7dc5282c44c55a97bef549a\output\AndroidManifest.xml:25:5-27:34
+ADDED from [com.android.support:design:25.3.1] C:\Users\yangy14\.android\build-cache\d520ad5bdc61aaf6c3cc3957bad17d65548d5ec4\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:appcompat-v7:25.3.1] C:\Users\yangy14\.android\build-cache\ee50d30de987868cfbccab1b8b79dd014cde0426\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] C:\Users\yangy14\.android\build-cache\ce97ef34401f8e0c94b1bdc7bf55af8c41a30181\output\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:support-vector-drawable:25.3.1] C:\Users\yangy14\.android\build-cache\fa8cfc311bbe693419772910d523b6293db35fea\output\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:recyclerview-v7:25.3.1] C:\Users\yangy14\.android\build-cache\1ed27703390f8553265583ad3f4bb1cd83eb018e\output\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:transition:25.3.1] C:\Users\yangy14\.android\build-cache\3213b93eff13957ab33687d15a1b946541e4218e\output\AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:support-v4:25.3.1] C:\Users\yangy14\.android\build-cache\384012f16e95f888702472c3ca70d54b6df0d86c\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-fragment:25.3.1] C:\Users\yangy14\.android\build-cache\6ce748226c7f3bd29ef6d174de30c060fec210a1\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-media-compat:25.3.1] C:\Users\yangy14\.android\build-cache\5279e4a7d1cc9ba63a86bf3327b6e319bc843261\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-core-ui:25.3.1] C:\Users\yangy14\.android\build-cache\8d58f1bc1d6c772cf91747ca1945d4bbba090cfc\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-core-utils:25.3.1] C:\Users\yangy14\.android\build-cache\ce90046f4e63c9b290c0dd52414492e7a650ce07\output\AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-compat:25.3.1] C:\Users\yangy14\.android\build-cache\895b54d74f4b4e1fb73c4751ceae6ff64c788414\output\AndroidManifest.xml:25:5-27:34
 	android:value
-		ADDED from [com.android.support:design:25.3.1] C:\Users\cartesh1\.android\build-cache\a27ffaca92fb882651f2f17f052acf8195cb03e3\output\AndroidManifest.xml:27:9-31
+		ADDED from [com.android.support:design:25.3.1] C:\Users\yangy14\.android\build-cache\d520ad5bdc61aaf6c3cc3957bad17d65548d5ec4\output\AndroidManifest.xml:27:9-31
 	android:name
-		ADDED from [com.android.support:design:25.3.1] C:\Users\cartesh1\.android\build-cache\a27ffaca92fb882651f2f17f052acf8195cb03e3\output\AndroidManifest.xml:26:9-47
+		ADDED from [com.android.support:design:25.3.1] C:\Users\yangy14\.android\build-cache\d520ad5bdc61aaf6c3cc3957bad17d65548d5ec4\output\AndroidManifest.xml:26:9-47
 uses-permission#android.permission.CHANGE_WIFI_MULTICAST_STATE
-ADDED from [starl:starLib:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:23:5-86
+ADDED from [starl:starLib:unspecified] D:\6-6change\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:23:5-86
 	android:name
-		ADDED from [starl:starLib:unspecified] C:\Users\cartesh1\Desktop\Builds\Current\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:23:22-83
+		ADDED from [starl:starLib:unspecified] D:\6-6change\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:23:22-83

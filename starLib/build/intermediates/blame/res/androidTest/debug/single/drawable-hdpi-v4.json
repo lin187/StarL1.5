@@ -6,5 +6,9 @@
     {
         "merged": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\starLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ic_launcher.png",
         "source": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\starLib\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\6-6change\\starl\\starLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ic_launcher.png",
+        "source": "D:\\6-6change\\starl\\starLib\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ic_launcher.png"
     }
 ]

@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="C:\Users\cartesh1\Desktop\Builds\Current\starl\followApp\src\main\assets"/><source path="C:\Users\cartesh1\Desktop\Builds\Current\starl\followApp\build\generated\assets\shaders\release"/></dataSet><dataSet config="release"><source path="C:\Users\cartesh1\Desktop\Builds\Current\starl\followApp\src\release\assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="D:\6-6change\starl\followApp\src\main\assets"/><source path="D:\6-6change\starl\followApp\build\generated\assets\shaders\release"/></dataSet><dataSet config="release"><source path="D:\6-6change\starl\followApp\src\release\assets"/></dataSet></merger>
