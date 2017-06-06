@@ -7,20 +7,17 @@ import android.content.Context;
 import android.os.Handler;
 import edu.illinois.mitra.starl.comms.SmartUdpComThread;
 import edu.illinois.mitra.starl.comms.UdpGpsReceiver;
-import edu.illinois.mitra.starl.interfaces.DSM;
 import edu.illinois.mitra.starl.interfaces.TrackedRobot;
-import edu.illinois.mitra.starl.models.Model_Mavic;
+import edu.illinois.mitra.starl.models.Model_DJI;
 import edu.illinois.mitra.starl.models.Model_iRobot;
 import edu.illinois.mitra.starl.models.Model_quadcopter;
 import edu.illinois.mitra.starl.motion.BluetoothInterface;
-import edu.illinois.mitra.starl.motion.MavicBTI;
+import edu.illinois.mitra.starl.motion.DjiUSB;
 import edu.illinois.mitra.starl.motion.MotionAutomatonMavic;
 import edu.illinois.mitra.starl.motion.MotionAutomaton_iRobot;
 import edu.illinois.mitra.starl.motion.ReachAvoid;
 import edu.illinois.mitra.starl.motion.MiniDroneBTI;
-import edu.illinois.mitra.starl.motion.RobotMotion;
 import edu.illinois.mitra.starl.motion.MotionAutomatonMiniDrone;
-import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.ObstacleList;
 import edu.illinois.mitra.starl.objects.PositionList;
 
@@ -56,8 +53,8 @@ public class RealGlobalVarHolder extends GlobalVarHolder {
         else if (initpos instanceof Model_quadcopter) {
             plat.moat = new MotionAutomatonMiniDrone(this, new MiniDroneBTI(this, context, robotMac));
         }
-        else if(initpos instanceof Model_Mavic){
-			plat.moat = new MotionAutomatonMavic(this, new MavicBTI(this, context, robotMac));
+        else if(initpos instanceof Model_DJI){
+			plat.moat = new MotionAutomatonMavic(this, new DjiUSB(this, context, robotMac));
 		}
 /*
 //TD_NATHAN: resolve - resolved above

@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="kd">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../starLib/libs/kd.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

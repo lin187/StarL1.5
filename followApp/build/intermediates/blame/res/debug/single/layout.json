@@ -1,5 +1,9 @@
 [
     {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\layout\\main.xml",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starLib\\build\\intermediates\\bundles\\default\\res\\layout\\main.xml"
+    },
+    {
         "merged": "C:\\Users\\liangt\\Documents\\GitHub\\StarLGradle\\followApp\\build\\intermediates\\res\\merged\\debug\\layout\\dialog_login.xml",
         "source": "C:\\Users\\liangt\\Documents\\GitHub\\StarLGradle\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\layout\\dialog_login.xml"
     },
@@ -8,7 +12,15 @@
         "source": "C:\\Users\\liangt\\Documents\\GitHub\\StarLGradle\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\layout\\log_dialog_view.xml"
     },
     {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\layout\\dialog_login.xml",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\layout\\dialog_login.xml"
+    },
+    {
         "merged": "C:\\Users\\liangt\\Documents\\GitHub\\StarLGradle\\followApp\\build\\intermediates\\res\\merged\\debug\\layout\\main.xml",
         "source": "C:\\Users\\liangt\\Documents\\GitHub\\StarLGradle\\starLib\\build\\intermediates\\bundles\\default\\res\\layout\\main.xml"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\layout\\log_dialog_view.xml",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\layout\\log_dialog_view.xml"
     }
 ]

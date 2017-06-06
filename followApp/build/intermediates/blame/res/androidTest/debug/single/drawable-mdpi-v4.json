@@ -1,5 +1,9 @@
 [
     {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4\\ic_launcher.png",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starLib\\build\\intermediates\\bundles\\default\\res\\drawable-mdpi-v4\\ic_launcher.png"
+    },
+    {
         "merged": "C:\\Users\\liangt\\Documents\\GitHub\\StarLGradle\\followApp\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4\\ic_launcher.png",
         "source": "C:\\Users\\liangt\\Documents\\GitHub\\StarLGradle\\starLib\\build\\intermediates\\bundles\\default\\res\\drawable-mdpi-v4\\ic_launcher.png"
     }

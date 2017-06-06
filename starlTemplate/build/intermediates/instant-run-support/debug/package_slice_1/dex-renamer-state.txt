@@ -1,4 +1,0 @@
-#Fri Jun 02 14:12:33 CDT 2017
-base.0=C\:\\Users\\liangt\\Documents\\GitHub\\StarLGradle\\starlTemplate\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\5\\slice_1
-renamed.0=classes.dex
-file.0=C\:\\Users\\liangt\\Documents\\GitHub\\StarLGradle\\starlTemplate\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\5\\slice_1\\classes.dex

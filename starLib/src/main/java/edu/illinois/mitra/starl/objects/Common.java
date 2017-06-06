@@ -24,7 +24,7 @@ public final class Common {
     // Bot types
     public static final int IROBOT = 50;
     public static final int MINIDRONE = 51;
-	public static final int MAVIC = 53;
+	public static final int DJI = 53;
 
     // Mobile device types
     public static final int NEXUS7 = 60;
