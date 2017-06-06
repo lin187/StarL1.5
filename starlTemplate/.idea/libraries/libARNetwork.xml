@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="libARNetwork">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../starLib/libs/libARNetwork.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

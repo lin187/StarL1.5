@@ -29,11 +29,6 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-<<<<<<< HEAD
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.READ_LOGS" />
-=======
->>>>>>> 1029c75efcaedcd3fded3d5d043fea130665a1e5
 
     <application
         android:icon="@drawable/ic_launcher"

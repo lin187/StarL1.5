@@ -22,7 +22,7 @@ public class MotionAutomatonMavic extends RobotMotion {
     private boolean landed = true;
 
     protected GlobalVarHolder gvh;
-    protected DjiUSB bti;
+    protected MavicBTI bti;
 
     // Motion tracking
     protected ItemPosition destination;
@@ -74,7 +74,7 @@ public class MotionAutomatonMavic extends RobotMotion {
 
     //	private volatile MotionParameters param = settings.build();
 
-    public MotionAutomatonMavic(GlobalVarHolder gvh, DjiUSB bti) {
+    public MotionAutomatonMavic(GlobalVarHolder gvh, MavicBTI bti) {
         super(gvh.id.getName());
         this.gvh = gvh;
         this.bti = bti;

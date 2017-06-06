@@ -1,6 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
-<merger version="3"><dataSet config="main"><source path="C:\Users\liangt\Documents\GitHub\starl\followApp\src\main\shaders"/></dataSet><dataSet config="debug"><source path="C:\Users\liangt\Documents\GitHub\starl\followApp\src\debug\shaders"/></dataSet></merger>
-=======
 <merger version="3"><dataSet config="main"><source path="D:\starl\followApp\src\main\shaders"/></dataSet><dataSet config="debug"><source path="D:\starl\followApp\src\debug\shaders"/></dataSet></merger>
->>>>>>> 1029c75efcaedcd3fded3d5d043fea130665a1e5

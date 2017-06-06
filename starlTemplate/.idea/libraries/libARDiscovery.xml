@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="libARDiscovery">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../starLib/libs/libARDiscovery.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

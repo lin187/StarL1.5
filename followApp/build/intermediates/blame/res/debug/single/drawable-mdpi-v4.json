@@ -1,15 +1,6 @@
 [
     {
-<<<<<<< HEAD
-        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4\\ic_launcher.png",
-        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starLib\\build\\intermediates\\bundles\\default\\res\\drawable-mdpi-v4\\ic_launcher.png"
-    },
-    {
-        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\StarLGradle\\followApp\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4\\ic_launcher.png",
-        "source": "C:\\Users\\liangt\\Documents\\GitHub\\StarLGradle\\starLib\\build\\intermediates\\bundles\\default\\res\\drawable-mdpi-v4\\ic_launcher.png"
-=======
         "merged": "D:\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4\\ic_launcher.png",
         "source": "D:\\starl\\starLib\\build\\intermediates\\bundles\\default\\res\\drawable-mdpi-v4\\ic_launcher.png"
->>>>>>> 1029c75efcaedcd3fded3d5d043fea130665a1e5
     }
 ]

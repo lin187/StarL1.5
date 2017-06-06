@@ -1,19 +1,10 @@
 [
     {
-<<<<<<< HEAD
-        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\color-v11\\abc_background_cache_hint_selector_material_light.xml",
-        "source": "C:\\Users\\liangt\\.android\\build-cache\\13e2a3a29d358bb025b759d048771c09735c4241\\output\\res\\color-v11\\abc_background_cache_hint_selector_material_light.xml"
-    },
-    {
-        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\color-v11\\abc_background_cache_hint_selector_material_dark.xml",
-        "source": "C:\\Users\\liangt\\.android\\build-cache\\13e2a3a29d358bb025b759d048771c09735c4241\\output\\res\\color-v11\\abc_background_cache_hint_selector_material_dark.xml"
-=======
         "merged": "D:\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\color-v11\\abc_background_cache_hint_selector_material_light.xml",
         "source": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\color-v11\\abc_background_cache_hint_selector_material_light.xml"
     },
     {
         "merged": "D:\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\color-v11\\abc_background_cache_hint_selector_material_dark.xml",
         "source": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\color-v11\\abc_background_cache_hint_selector_material_dark.xml"
->>>>>>> 1029c75efcaedcd3fded3d5d043fea130665a1e5
     }
 ]

@@ -15,6 +15,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.net.wifi.WifiManager;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CheckBox;
@@ -22,6 +23,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.StrictMode;
 
 import edu.illinois.mitra.starl.comms.MessageContents;
@@ -30,9 +33,15 @@ import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.gvh.RealGlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.interfaces.MessageListener;
-import edu.illinois.mitra.starl.models.Model_DJI;
+import edu.illinois.mitra.starl.models.Model_Mavic;
 import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.HandlerMessage;
+
+import dji.common.error.DJIError;
+import dji.common.error.DJISDKError;
+import dji.sdk.base.BaseComponent;
+import dji.sdk.base.BaseProduct;
+import dji.sdk.sdkmanager.DJISDKManager;
 
 import edu.illinois.mitra.demo.follow.FollowApp;
 
@@ -40,11 +49,11 @@ public class RobotsActivity extends Activity implements MessageListener {
 	private static final String TAG = "RobotsActivity";
 	private static final String ERR = "Critical Error";
 
-//	//DJI STUFF
-//	public static final String FLAG_CONNECTION_CHANGE = "dji_sdk_connection_change";
-//	private static BaseProduct mProduct;
-//	private Handler mHandler;
-//	//end DJI STUFF
+	//DJI STUFF
+	public static final String FLAG_CONNECTION_CHANGE = "dji_sdk_connection_change";
+	private static BaseProduct mProduct;
+	private Handler mHandler;
+	//end DJI STUFF
 
 	private static final String IDENTITY_FILE_URL = "https://dl.dropbox.com/s/dwfqdhbf5vdtz18/robots.rif?dl=1";
 	private static final String[][] ERROR_PARTICIPANTS = {{"ERROR"}, {"ERROR"}, {"ERROR"}};
@@ -99,7 +108,7 @@ public class RobotsActivity extends Activity implements MessageListener {
         numRobots = 1;
         botInfo = new BotInfoSelector[numRobots];
         // add color, robot type, and device type for each robot here
-        botInfo[0] = new BotInfoSelector("red", Common.DJI, Common.NEXUS7);
+        botInfo[0] = new BotInfoSelector("red", Common.MAVIC, Common.NEXUS7);
         //botInfo[1] = new BotInfoSelector("green", Common.IROBOT, Common.MOTOE);
         //botInfo[2] = new BotInfoSelector("blue", Common.IROBOT, Common.NEXUS7);
        // botInfo[3] = new BotInfoSelector("white", Common.IROBOT, Common.NEXUS7);
@@ -121,11 +130,11 @@ public class RobotsActivity extends Activity implements MessageListener {
 			selectedRobot = 0;
 		}
 
-//		//Initialize DJI SDK Manager
-//		if((botInfo[selectedRobot].type instanceof Model_DJI)) {
-//			mHandler = new Handler(Looper.getMainLooper());
-//			DJISDKManager.getInstance().registerApp(this, mDJISDKManagerCallback);
-//		}
+		//Initialize DJI SDK Manager
+		if((botInfo[selectedRobot].type instanceof Model_Mavic)) {
+			mHandler = new Handler(Looper.getMainLooper());
+			DJISDKManager.getInstance().registerApp(this, mDJISDKManagerCallback);
+		}
 
 		// Set up the GUI
 		setupGUI();
@@ -237,10 +246,10 @@ public class RobotsActivity extends Activity implements MessageListener {
 		pbBattery.setMax(100);
 		cbRegistered = (CheckBox) findViewById(R.id.cbRegistered);
 
-		if(!(botInfo[selectedRobot].type instanceof Model_DJI)){
+		if(!(botInfo[selectedRobot].type instanceof Model_Mavic)){
 			cbRegistered.setVisibility(View.GONE);
 		} else {
-			cbBluetooth.setText("Drone Connected");
+			cbBluetooth.setText("Wi-Fi");
 		}
 
 		txtRobotName.setText(participants[0][selectedRobot]);
@@ -295,78 +304,74 @@ public class RobotsActivity extends Activity implements MessageListener {
 	}
 
 	//DJI INTERFACE IMPLEMENTATION
-//	private DJISDKManager.SDKManagerCallback mDJISDKManagerCallback = new DJISDKManager.SDKManagerCallback() {
-//		@Override
-//		public void onRegister(DJIError error) {
-//			Log.d(TAG, error == null ? "success" : error.getDescription());
-//			if(error == DJISDKError.REGISTRATION_SUCCESS) {
-//				DJISDKManager.getInstance().startConnectionToProduct();
-//				Handler handler = new Handler(Looper.getMainLooper());
-//				handler.post(new Runnable() {
-//					@Override
-//					public void run() {
-//						Toast.makeText(getApplicationContext(), "Register Success", Toast.LENGTH_LONG).show();
-//						cbRegistered.setChecked(true);
-//					}
-//				});
-//			} else {
-//				Handler handler = new Handler(Looper.getMainLooper());
-//				handler.post(new Runnable() {
-//					@Override
-//					public void run() {
-//						Toast.makeText(getApplicationContext(), "Register SDK failed for package: " + getApplication().getPackageName(), Toast.LENGTH_LONG).show();
-//						cbRegistered.setChecked(false);
-//					}
-//				});
-//			}
-//			gvh.log.d(TAG, "StarLib registered: " + DjiUSB.getAPIStatus());
-//			gvh.log.d(TAG, "Attempting to enable bridge mode.");
-//			DJISDKManager.getInstance().enableBridgeModeWithBridgeAppIP("10.255.24.152");
-//			Log.e("TAG", error.toString());
-//		}
-//		@Override
-//		public void onProductChange(BaseProduct oldProduct, BaseProduct newProduct) {
-//			mProduct = newProduct;
-//			if(mProduct != null) {
-//				mProduct.setBaseProductListener(mDJIBaseProductListener);
-//			}
-//			notifyStatusChange();
-//			gvh.log.d(TAG, "onProductChange was called!");
-//		}
-//	};
-//
-//	private BaseProduct.BaseProductListener mDJIBaseProductListener = new BaseProduct.BaseProductListener() {
-//		@Override
-//		public void onComponentChange(BaseProduct.ComponentKey key, BaseComponent oldComponent, BaseComponent newComponent) {
-//			if(newComponent != null) {
-//				newComponent.setComponentListener(mDJIComponentListener);
-//			}
-//			notifyStatusChange();
-//		}
-//		@Override
-//		public void onConnectivityChange(boolean isConnected) {
-//			notifyStatusChange();
-//		}
-//	};
-//
-//	private BaseComponent.ComponentListener mDJIComponentListener = new BaseComponent.ComponentListener() {
-//		@Override
-//		public void onConnectivityChange(boolean isConnected) {
-//			notifyStatusChange();
-//		}
-//	};
-//
-//	private void notifyStatusChange() {
-//		mHandler.removeCallbacks(updateRunnable);
-//		mHandler.postDelayed(updateRunnable, 500);
-//	}
-//
-//	private Runnable updateRunnable = new Runnable() {
-//		@Override
-//		public void run() {
-//			Intent intent = new Intent(FLAG_CONNECTION_CHANGE);
-//			sendBroadcast(intent);
-//		}
-//	};
+	private DJISDKManager.SDKManagerCallback mDJISDKManagerCallback = new DJISDKManager.SDKManagerCallback() {
+		@Override
+		public void onRegister(DJIError error) {
+			Log.d(TAG, error == null ? "success" : error.getDescription());
+			if(error == DJISDKError.REGISTRATION_SUCCESS) {
+				DJISDKManager.getInstance().startConnectionToProduct();
+				Handler handler = new Handler(Looper.getMainLooper());
+				handler.post(new Runnable() {
+					@Override
+					public void run() {
+						Toast.makeText(getApplicationContext(), "Register Success", Toast.LENGTH_LONG).show();
+						cbRegistered.setChecked(true);
+					}
+				});
+			} else {
+				Handler handler = new Handler(Looper.getMainLooper());
+				handler.post(new Runnable() {
+					@Override
+					public void run() {
+						Toast.makeText(getApplicationContext(), "Register SDK failed for package: " + getApplication().getPackageName(), Toast.LENGTH_LONG).show();
+						cbRegistered.setChecked(false);
+					}
+				});
+			}
+			Log.e("TAG", error.toString());
+		}
+		@Override
+		public void onProductChange(BaseProduct oldProduct, BaseProduct newProduct) {
+			mProduct = newProduct;
+			if(mProduct != null) {
+				mProduct.setBaseProductListener(mDJIBaseProductListener);
+			}
+			notifyStatusChange();
+		}
+	};
+
+	private BaseProduct.BaseProductListener mDJIBaseProductListener = new BaseProduct.BaseProductListener() {
+		@Override
+		public void onComponentChange(BaseProduct.ComponentKey key, BaseComponent oldComponent, BaseComponent newComponent) {
+			if(newComponent != null) {
+				newComponent.setComponentListener(mDJIComponentListener);
+			}
+			notifyStatusChange();
+		}
+		@Override
+		public void onConnectivityChange(boolean isConnected) {
+			notifyStatusChange();
+		}
+	};
+
+	private BaseComponent.ComponentListener mDJIComponentListener = new BaseComponent.ComponentListener() {
+		@Override
+		public void onConnectivityChange(boolean isConnected) {
+			notifyStatusChange();
+		}
+	};
+
+	private void notifyStatusChange() {
+		mHandler.removeCallbacks(updateRunnable);
+		mHandler.postDelayed(updateRunnable, 500);
+	}
+
+	private Runnable updateRunnable = new Runnable() {
+		@Override
+		public void run() {
+			Intent intent = new Intent(FLAG_CONNECTION_CHANGE);
+			sendBroadcast(intent);
+		}
+	};
 
 }
