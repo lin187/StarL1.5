@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <instant-run
-    abi="x86"
-    api-level="24"
+    abi="armeabi-v7a,armeabi"
+    api-level="22"
     build-mode="FULL"
-    density="420dpi"
+    density="xhdpi"
     format="10"
     plugin-version="2.3.2"
-    timestamp="1496693404222"
-    token="-112556373785605748"
+    timestamp="1496766405872"
+    token="5770215733852100058"
     verifier="FULL_BUILD_REQUESTED" >
 
     <task
@@ -18,87 +18,87 @@
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="1625" />
+        duration="1474" />
     <task
         name="verifier"
-        duration="745" />
+        duration="896" />
 
     <artifact
-        location="D:\starl\starlTemplate\build\intermediates\split-apk\debug\dep\dependencies.apk"
+        location="C:\Users\liangt\Documents\GitHub\starl\starlTemplate\build\intermediates\split-apk\debug\dep\dependencies.apk"
         type="SPLIT" />
     <artifact
-        location="D:\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_5.apk"
+        location="C:\Users\liangt\Documents\GitHub\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_3.apk"
         type="SPLIT" />
     <artifact
-        location="D:\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_2.apk"
+        location="C:\Users\liangt\Documents\GitHub\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_4.apk"
         type="SPLIT" />
     <artifact
-        location="D:\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_7.apk"
+        location="C:\Users\liangt\Documents\GitHub\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_1.apk"
         type="SPLIT" />
     <artifact
-        location="D:\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_4.apk"
+        location="C:\Users\liangt\Documents\GitHub\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_5.apk"
         type="SPLIT" />
     <artifact
-        location="D:\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_1.apk"
+        location="C:\Users\liangt\Documents\GitHub\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_2.apk"
         type="SPLIT" />
     <artifact
-        location="D:\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_6.apk"
+        location="C:\Users\liangt\Documents\GitHub\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_7.apk"
         type="SPLIT" />
     <artifact
-        location="D:\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_0.apk"
+        location="C:\Users\liangt\Documents\GitHub\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_0.apk"
         type="SPLIT" />
     <artifact
-        location="D:\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_3.apk"
+        location="C:\Users\liangt\Documents\GitHub\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_6.apk"
         type="SPLIT" />
     <artifact
-        location="D:\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_9.apk"
+        location="C:\Users\liangt\Documents\GitHub\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_9.apk"
         type="SPLIT" />
     <artifact
-        location="D:\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_8.apk"
+        location="C:\Users\liangt\Documents\GitHub\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_8.apk"
         type="SPLIT" />
     <artifact
-        location="D:\starl\starlTemplate\build\outputs\apk\starlTemplate-debug.apk"
+        location="C:\Users\liangt\Documents\GitHub\starl\starlTemplate\build\outputs\apk\starlTemplate-debug.apk"
         type="SPLIT_MAIN" />
 
     <build
         build-mode="FULL"
-        timestamp="1496693404222"
+        timestamp="1496766405872"
         verifier="FULL_BUILD_REQUESTED" >
         <artifact
-            location="D:\starl\starlTemplate\build\intermediates\split-apk\debug\dep\dependencies.apk"
+            location="C:\Users\liangt\Documents\GitHub\starl\starlTemplate\build\intermediates\split-apk\debug\dep\dependencies.apk"
             type="SPLIT" />
         <artifact
-            location="D:\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_5.apk"
+            location="C:\Users\liangt\Documents\GitHub\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_3.apk"
             type="SPLIT" />
         <artifact
-            location="D:\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_2.apk"
+            location="C:\Users\liangt\Documents\GitHub\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_4.apk"
             type="SPLIT" />
         <artifact
-            location="D:\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_7.apk"
+            location="C:\Users\liangt\Documents\GitHub\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_1.apk"
             type="SPLIT" />
         <artifact
-            location="D:\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_4.apk"
+            location="C:\Users\liangt\Documents\GitHub\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_5.apk"
             type="SPLIT" />
         <artifact
-            location="D:\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_1.apk"
+            location="C:\Users\liangt\Documents\GitHub\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_2.apk"
             type="SPLIT" />
         <artifact
-            location="D:\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_6.apk"
+            location="C:\Users\liangt\Documents\GitHub\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_7.apk"
             type="SPLIT" />
         <artifact
-            location="D:\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_0.apk"
+            location="C:\Users\liangt\Documents\GitHub\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_0.apk"
             type="SPLIT" />
         <artifact
-            location="D:\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_3.apk"
+            location="C:\Users\liangt\Documents\GitHub\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_6.apk"
             type="SPLIT" />
         <artifact
-            location="D:\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_9.apk"
+            location="C:\Users\liangt\Documents\GitHub\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_9.apk"
             type="SPLIT" />
         <artifact
-            location="D:\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_8.apk"
+            location="C:\Users\liangt\Documents\GitHub\starl\starlTemplate\build\intermediates\split-apk\debug\slices\slice_8.apk"
             type="SPLIT" />
         <artifact
-            location="D:\starl\starlTemplate\build\outputs\apk\starlTemplate-debug.apk"
+            location="C:\Users\liangt\Documents\GitHub\starl\starlTemplate\build\outputs\apk\starlTemplate-debug.apk"
             type="SPLIT_MAIN" />
     </build>
 

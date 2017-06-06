@@ -1,0 +1,54 @@
+[
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\release\\drawable\\btn_draw_started.png",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\drawable\\btn_draw_started.png"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\release\\drawable\\btn_lock_selector.xml",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\drawable\\btn_lock_selector.xml"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\release\\drawable\\btn_zoom_selector.xml",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\drawable\\btn_zoom_selector.xml"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\release\\drawable\\radio_checked.png",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\drawable\\radio_checked.png"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\release\\drawable\\btn_radio_selector.xml",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\drawable\\btn_radio_selector.xml"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\release\\drawable\\radio_unchecked.png",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\drawable\\radio_unchecked.png"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\release\\drawable\\btn_draw_start_plane.png",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\drawable\\btn_draw_start_plane.png"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\release\\drawable\\draw_route.png",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\drawable\\draw_route.png"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\release\\drawable\\draw_route_pass.png",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\drawable\\draw_route_pass.png"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\release\\drawable\\draw_arrow.png",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\drawable\\draw_arrow.png"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\release\\drawable\\btn_draw_starter.png",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\drawable\\btn_draw_starter.png"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\release\\drawable\\btn_draw_end.png",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\drawable\\btn_draw_end.png"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\release\\drawable\\ic_launcher.png",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\drawable\\ic_launcher.png"
+    }
+]

@@ -7,18 +7,17 @@ import android.content.Context;
 import android.os.Handler;
 import edu.illinois.mitra.starl.comms.SmartUdpComThread;
 import edu.illinois.mitra.starl.comms.UdpGpsReceiver;
-import edu.illinois.mitra.starl.interfaces.DSM;
 import edu.illinois.mitra.starl.interfaces.TrackedRobot;
+import edu.illinois.mitra.starl.models.Model_DJI;
 import edu.illinois.mitra.starl.models.Model_iRobot;
 import edu.illinois.mitra.starl.models.Model_quadcopter;
-//import edu.illinois.mitra.starl.models.Model_3DR;
 import edu.illinois.mitra.starl.motion.BluetoothInterface;
+import edu.illinois.mitra.starl.motion.DjiUSB;
+import edu.illinois.mitra.starl.motion.MotionAutomatonDJI;
 import edu.illinois.mitra.starl.motion.MotionAutomaton_iRobot;
 import edu.illinois.mitra.starl.motion.ReachAvoid;
 import edu.illinois.mitra.starl.motion.MiniDroneBTI;
-import edu.illinois.mitra.starl.motion.RobotMotion;
 import edu.illinois.mitra.starl.motion.MotionAutomatonMiniDrone;
-import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.ObstacleList;
 import edu.illinois.mitra.starl.objects.PositionList;
 
@@ -47,13 +46,16 @@ public class RealGlobalVarHolder extends GlobalVarHolder {
 		super.gps = new Gps(this, new UdpGpsReceiver(this,"10.255.24.100",4000,new PositionList(),new PositionList(), new ObstacleList(), new Vector<ObstacleList>(3,2) ));
 		plat.model = initpos;
 		plat.reachAvoid = new ReachAvoid(this);
-        if(initpos instanceof Model_iRobot) {
-            plat.moat = new MotionAutomaton_iRobot(this, new BluetoothInterface(this, robotMac.trim()));
-        }
+		if(initpos instanceof Model_iRobot) {
+			plat.moat = new MotionAutomaton_iRobot(this, new BluetoothInterface(this, robotMac.trim()));
+		}
 
-        else if (initpos instanceof Model_quadcopter) {
-            plat.moat = new MotionAutomatonMiniDrone(this, new MiniDroneBTI(this, context, robotMac));
-        }
+		else if (initpos instanceof Model_quadcopter) {
+			plat.moat = new MotionAutomatonMiniDrone(this, new MiniDroneBTI(this, context, robotMac));
+		}
+		else if(initpos instanceof Model_DJI){
+			plat.moat = new MotionAutomatonDJI(this, new DjiUSB(this, context, robotMac));
+		}
 /*
 //TD_NATHAN: resolve - resolved above
         if(type == Common.IROBOT) {

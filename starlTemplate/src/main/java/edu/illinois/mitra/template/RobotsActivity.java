@@ -15,7 +15,6 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.net.wifi.WifiManager;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CheckBox;
@@ -23,8 +22,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.os.StrictMode;
 
 import edu.illinois.mitra.starl.comms.MessageContents;
@@ -33,15 +30,9 @@ import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.gvh.RealGlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.interfaces.MessageListener;
-import edu.illinois.mitra.starl.models.Model_Mavic;
+import edu.illinois.mitra.starl.models.Model_DJI;
 import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.HandlerMessage;
-
-import dji.common.error.DJIError;
-import dji.common.error.DJISDKError;
-import dji.sdk.base.BaseComponent;
-import dji.sdk.base.BaseProduct;
-import dji.sdk.sdkmanager.DJISDKManager;
 
 import edu.illinois.mitra.demo.follow.FollowApp;
 
@@ -49,11 +40,11 @@ public class RobotsActivity extends Activity implements MessageListener {
 	private static final String TAG = "RobotsActivity";
 	private static final String ERR = "Critical Error";
 
-	//DJI STUFF
-	public static final String FLAG_CONNECTION_CHANGE = "dji_sdk_connection_change";
-	private static BaseProduct mProduct;
-	private Handler mHandler;
-	//end DJI STUFF
+//	//DJI STUFF
+//	public static final String FLAG_CONNECTION_CHANGE = "dji_sdk_connection_change";
+//	private static BaseProduct mProduct;
+//	private Handler mHandler;
+//	//end DJI STUFF
 
 	private static final String IDENTITY_FILE_URL = "https://dl.dropbox.com/s/dwfqdhbf5vdtz18/robots.rif?dl=1";
 	private static final String[][] ERROR_PARTICIPANTS = {{"ERROR"}, {"ERROR"}, {"ERROR"}};
@@ -72,15 +63,15 @@ public class RobotsActivity extends Activity implements MessageListener {
 	private Future<List<Object>> results;
 	private LogicThread runThread;
 	private MainHandler mainHandler;
-    private WifiManager.MulticastLock multicastLock;
+	private WifiManager.MulticastLock multicastLock;
 
 	// Row 0 = names
 	// Row 1 = MACs
 	// Row 2 = IPs
 	private String[][] participants;
-    private int numRobots;
-    private BotInfoSelector[] botInfo;
-    private int i;
+	private int numRobots;
+	private BotInfoSelector[] botInfo;
+	private int i;
 
 
 
@@ -95,30 +86,30 @@ public class RobotsActivity extends Activity implements MessageListener {
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		setContentView(R.layout.main);
 
-        // this code allows the MotoE (and probably other phones) to receive broadcast udp packets
-        // they don't accept broadcast messages by default to save battery
-        WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE); //changed tim to prevent memory leak added getApplicationContext()
-        multicastLock = wifi.createMulticastLock("multicastLock");
-        multicastLock.setReferenceCounted(true);
-        multicastLock.acquire();
+		// this code allows the MotoE (and probably other phones) to receive broadcast udp packets
+		// they don't accept broadcast messages by default to save battery
+		WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE); //changed tim to prevent memory leak added getApplicationContext()
+		multicastLock = wifi.createMulticastLock("multicastLock");
+		multicastLock.setReferenceCounted(true);
+		multicastLock.acquire();
 
 		// Load the participants
 		//participants = IdentityLoader.loadIdentities(IDENTITY_FILE_URL);
-        // Put number of robots being used here
-        numRobots = 1;
-        botInfo = new BotInfoSelector[numRobots];
-        // add color, robot type, and device type for each robot here
-        botInfo[0] = new BotInfoSelector("red", Common.MAVIC, Common.NEXUS7);
-        //botInfo[1] = new BotInfoSelector("green", Common.IROBOT, Common.MOTOE);
-        //botInfo[2] = new BotInfoSelector("blue", Common.IROBOT, Common.NEXUS7);
-       // botInfo[3] = new BotInfoSelector("white", Common.IROBOT, Common.NEXUS7);
+		// Put number of robots being used here
+		numRobots = 1;
+		botInfo = new BotInfoSelector[numRobots];
+		// add color, robot type, and device type for each robot here
+		botInfo[0] = new BotInfoSelector("red", Common.DJI, Common.NEXUS7);
+		//botInfo[1] = new BotInfoSelector("green", Common.IROBOT, Common.MOTOE);
+		//botInfo[2] = new BotInfoSelector("blue", Common.IROBOT, Common.NEXUS7);
+		// botInfo[3] = new BotInfoSelector("white", Common.IROBOT, Common.NEXUS7);
 
-        participants = new String[3][numRobots];
-        for(i =0; i < numRobots; i++) {
-            participants[0][i] = botInfo[i].name;
-            participants[1][i] = botInfo[i].bluetooth;
-            participants[2][i] = botInfo[i].ip;
-        }
+		participants = new String[3][numRobots];
+		for(i =0; i < numRobots; i++) {
+			participants[0][i] = botInfo[i].name;
+			participants[1][i] = botInfo[i].bluetooth;
+			participants[2][i] = botInfo[i].ip;
+		}
 
 
 		// Initialize preferences holder
@@ -130,11 +121,11 @@ public class RobotsActivity extends Activity implements MessageListener {
 			selectedRobot = 0;
 		}
 
-		//Initialize DJI SDK Manager
-		if((botInfo[selectedRobot].type instanceof Model_Mavic)) {
-			mHandler = new Handler(Looper.getMainLooper());
-			DJISDKManager.getInstance().registerApp(this, mDJISDKManagerCallback);
-		}
+//		//Initialize DJI SDK Manager
+//		if((botInfo[selectedRobot].type instanceof Model_DJI)) {
+//			mHandler = new Handler(Looper.getMainLooper());
+//			DJISDKManager.getInstance().registerApp(this, mDJISDKManagerCallback);
+//		}
 
 		// Set up the GUI
 		setupGUI();
@@ -164,7 +155,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 
 	public void createAppInstance(GlobalVarHolder gvh) {
 		runThread = new FollowApp(gvh);	// Instantiate your application here!
-							// Example: runThread = new LightPaintActivity(gvh);
+		// Example: runThread = new LightPaintActivity(gvh);
 	}
 
 	public void launch(int numWaypoints, int runNum) {
@@ -224,7 +215,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 
 	private TextView txtRobotName;
 	private TextView txtDebug;
-    private TextView txtDestination;
+	private TextView txtDestination;
 	private ProgressBar pbBluetooth;
 	private CheckBox cbGPS;
 	private CheckBox cbBluetooth;
@@ -246,10 +237,10 @@ public class RobotsActivity extends Activity implements MessageListener {
 		pbBattery.setMax(100);
 		cbRegistered = (CheckBox) findViewById(R.id.cbRegistered);
 
-		if(!(botInfo[selectedRobot].type instanceof Model_Mavic)){
+		if(!(botInfo[selectedRobot].type instanceof Model_DJI)){
 			cbRegistered.setVisibility(View.GONE);
 		} else {
-			cbBluetooth.setText("Wi-Fi");
+			cbBluetooth.setText("Drone Connected");
 		}
 
 		txtRobotName.setText(participants[0][selectedRobot]);
@@ -284,94 +275,98 @@ public class RobotsActivity extends Activity implements MessageListener {
 		gvh.log.e(TAG, "Exiting application");
 		disconnect();
 		finish();
-        if (multicastLock != null) {
-            multicastLock.release();
-            multicastLock = null;
-        }
+		if (multicastLock != null) {
+			multicastLock.release();
+			multicastLock = null;
+		}
 		return;
 	}
 
 	@Override
 	public void messageReceived(RobotMessage m) {
 		switch(m.getMID()) {
-		case Common.MSG_ACTIVITYLAUNCH:
-			gvh.plat.sendMainMsg(HandlerMessage.MESSAGE_LAUNCH, Integer.parseInt(m.getContents(0)), Integer.parseInt(m.getContents(1)));
-			break;
-		case Common.MSG_ACTIVITYABORT:
-			gvh.plat.sendMainMsg(HandlerMessage.MESSAGE_ABORT, null);
-			break;
+			case Common.MSG_ACTIVITYLAUNCH:
+				gvh.plat.sendMainMsg(HandlerMessage.MESSAGE_LAUNCH, Integer.parseInt(m.getContents(0)), Integer.parseInt(m.getContents(1)));
+				break;
+			case Common.MSG_ACTIVITYABORT:
+				gvh.plat.sendMainMsg(HandlerMessage.MESSAGE_ABORT, null);
+				break;
 		}
 	}
 
 	//DJI INTERFACE IMPLEMENTATION
-	private DJISDKManager.SDKManagerCallback mDJISDKManagerCallback = new DJISDKManager.SDKManagerCallback() {
-		@Override
-		public void onRegister(DJIError error) {
-			Log.d(TAG, error == null ? "success" : error.getDescription());
-			if(error == DJISDKError.REGISTRATION_SUCCESS) {
-				DJISDKManager.getInstance().startConnectionToProduct();
-				Handler handler = new Handler(Looper.getMainLooper());
-				handler.post(new Runnable() {
-					@Override
-					public void run() {
-						Toast.makeText(getApplicationContext(), "Register Success", Toast.LENGTH_LONG).show();
-						cbRegistered.setChecked(true);
-					}
-				});
-			} else {
-				Handler handler = new Handler(Looper.getMainLooper());
-				handler.post(new Runnable() {
-					@Override
-					public void run() {
-						Toast.makeText(getApplicationContext(), "Register SDK failed for package: " + getApplication().getPackageName(), Toast.LENGTH_LONG).show();
-						cbRegistered.setChecked(false);
-					}
-				});
-			}
-			Log.e("TAG", error.toString());
-		}
-		@Override
-		public void onProductChange(BaseProduct oldProduct, BaseProduct newProduct) {
-			mProduct = newProduct;
-			if(mProduct != null) {
-				mProduct.setBaseProductListener(mDJIBaseProductListener);
-			}
-			notifyStatusChange();
-		}
-	};
-
-	private BaseProduct.BaseProductListener mDJIBaseProductListener = new BaseProduct.BaseProductListener() {
-		@Override
-		public void onComponentChange(BaseProduct.ComponentKey key, BaseComponent oldComponent, BaseComponent newComponent) {
-			if(newComponent != null) {
-				newComponent.setComponentListener(mDJIComponentListener);
-			}
-			notifyStatusChange();
-		}
-		@Override
-		public void onConnectivityChange(boolean isConnected) {
-			notifyStatusChange();
-		}
-	};
-
-	private BaseComponent.ComponentListener mDJIComponentListener = new BaseComponent.ComponentListener() {
-		@Override
-		public void onConnectivityChange(boolean isConnected) {
-			notifyStatusChange();
-		}
-	};
-
-	private void notifyStatusChange() {
-		mHandler.removeCallbacks(updateRunnable);
-		mHandler.postDelayed(updateRunnable, 500);
-	}
-
-	private Runnable updateRunnable = new Runnable() {
-		@Override
-		public void run() {
-			Intent intent = new Intent(FLAG_CONNECTION_CHANGE);
-			sendBroadcast(intent);
-		}
-	};
+//	private DJISDKManager.SDKManagerCallback mDJISDKManagerCallback = new DJISDKManager.SDKManagerCallback() {
+//		@Override
+//		public void onRegister(DJIError error) {
+//			Log.d(TAG, error == null ? "success" : error.getDescription());
+//			if(error == DJISDKError.REGISTRATION_SUCCESS) {
+//				DJISDKManager.getInstance().startConnectionToProduct();
+//				Handler handler = new Handler(Looper.getMainLooper());
+//				handler.post(new Runnable() {
+//					@Override
+//					public void run() {
+//						Toast.makeText(getApplicationContext(), "Register Success", Toast.LENGTH_LONG).show();
+//						cbRegistered.setChecked(true);
+//					}
+//				});
+//			} else {
+//				Handler handler = new Handler(Looper.getMainLooper());
+//				handler.post(new Runnable() {
+//					@Override
+//					public void run() {
+//						Toast.makeText(getApplicationContext(), "Register SDK failed for package: " + getApplication().getPackageName(), Toast.LENGTH_LONG).show();
+//						cbRegistered.setChecked(false);
+//					}
+//				});
+//			}
+//			gvh.log.d(TAG, "StarLib registered: " + DjiUSB.getAPIStatus());
+//			gvh.log.d(TAG, "Attempting to enable bridge mode.");
+//			DJISDKManager.getInstance().enableBridgeModeWithBridgeAppIP("10.255.24.152");
+//			Log.e("TAG", error.toString());
+//		}
+//		@Override
+//		public void onProductChange(BaseProduct oldProduct, BaseProduct newProduct) {
+//			mProduct = newProduct;
+//			if(mProduct != null) {
+//				mProduct.setBaseProductListener(mDJIBaseProductListener);
+//			}
+//			notifyStatusChange();
+//			gvh.log.d(TAG, "onProductChange was called!");
+//		}
+//	};
+//
+//	private BaseProduct.BaseProductListener mDJIBaseProductListener = new BaseProduct.BaseProductListener() {
+//		@Override
+//		public void onComponentChange(BaseProduct.ComponentKey key, BaseComponent oldComponent, BaseComponent newComponent) {
+//			if(newComponent != null) {
+//				newComponent.setComponentListener(mDJIComponentListener);
+//			}
+//			notifyStatusChange();
+//		}
+//		@Override
+//		public void onConnectivityChange(boolean isConnected) {
+//			notifyStatusChange();
+//		}
+//	};
+//
+//	private BaseComponent.ComponentListener mDJIComponentListener = new BaseComponent.ComponentListener() {
+//		@Override
+//		public void onConnectivityChange(boolean isConnected) {
+//			notifyStatusChange();
+//		}
+//	};
+//
+//	private void notifyStatusChange() {
+//		mHandler.removeCallbacks(updateRunnable);
+//		mHandler.postDelayed(updateRunnable, 500);
+//	}
+//
+//	private Runnable updateRunnable = new Runnable() {
+//		@Override
+//		public void run() {
+//			Intent intent = new Intent(FLAG_CONNECTION_CHANGE);
+//			sendBroadcast(intent);
+//		}
+//	};
 
 }

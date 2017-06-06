@@ -1,16 +1,16 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 10
-    buildToolsVersion "25.0.0"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
 
     defaultConfig {
-        minSdkVersion 10
-        targetSdkVersion 10
-        compileOptions {
-            sourceCompatibility JavaVersion.VERSION_1_7
-            targetCompatibility JavaVersion.VERSION_1_7
-        }
+        minSdkVersion 19
+        targetSdkVersion 25
+//        compileOptions {
+//            sourceCompatibility JavaVersion.VERSION_1_7
+//            targetCompatibility JavaVersion.VERSION_1_7
+//        }
     }
 
     buildTypes {
@@ -22,14 +22,6 @@ android {
 }
 
 dependencies {
-    compile files('libs/gson-2.2.2.jar')
-    compile files('libs/android-support-v4.jar')
-    compile files('libs/jmdns.jar')
-    compile files('libs/kd.jar')
-    compile files('libs/libARCommands.jar')
-    compile files('libs/libARDiscovery.jar')
-    compile files('libs/libARNetwork.jar')
-    compile files('libs/libARNetworkAL.jar')
-    compile files('libs/libARSAL.jar')
-    compile files('libs/libjson.jar')
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile project(':dJISDKLIB')
 }

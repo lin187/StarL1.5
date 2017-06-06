@@ -1,6 +1,14 @@
 [
     {
-        "merged": "D:\\starl\\followApp\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\main.xml",
-        "source": "D:\\starl\\starLib\\build\\intermediates\\bundles\\default\\res\\layout\\main.xml"
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\log_dialog_view.xml",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\layout\\log_dialog_view.xml"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\main.xml",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starLib\\build\\intermediates\\bundles\\default\\res\\layout\\main.xml"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\dialog_login.xml",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\layout\\dialog_login.xml"
     }
 ]
