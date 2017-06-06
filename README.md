@@ -6,7 +6,7 @@ This is the API development branch. This version of StarL uses a different build
 Deployment directions:
 
 1. Clone the repo and do a git checkout for the APIdev branch 
-2. Uninstall the app
+2. Uninstall the app on the tablet
 3. Clean Project
 4. Rebuild project 
 5. Run on a device
@@ -22,7 +22,14 @@ https://gradle.org/
 
 DJI SDK 
 ========
-@tim @stirling
+
+stirling.h.carter@vanderbilt.edu
+timothy.liang@vanderbilt.edu
+
+Compatible with Mavic and Phantom DJI drones.
+The tablet must be connected to the remote controller of the drone via USB or WiFi bridge app.
+
+The API is implemented in the DjiController.java class and there are separate Model and MotionAutomaton classes for the Mavic and Phantom.
 
 Ehang SDK 
 ========
