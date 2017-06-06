@@ -8,12 +8,19 @@ import android.os.Handler;
 import edu.illinois.mitra.starl.comms.SmartUdpComThread;
 import edu.illinois.mitra.starl.comms.UdpGpsReceiver;
 import edu.illinois.mitra.starl.interfaces.TrackedRobot;
+<<<<<<< HEAD
 import edu.illinois.mitra.starl.models.Model_DJI;
+=======
+>>>>>>> 1029c75efcaedcd3fded3d5d043fea130665a1e5
 import edu.illinois.mitra.starl.models.Model_iRobot;
 import edu.illinois.mitra.starl.models.Model_quadcopter;
+//import edu.illinois.mitra.starl.models.Model_3DR;
 import edu.illinois.mitra.starl.motion.BluetoothInterface;
+<<<<<<< HEAD
 import edu.illinois.mitra.starl.motion.DjiUSB;
 import edu.illinois.mitra.starl.motion.MotionAutomatonMavic;
+=======
+>>>>>>> 1029c75efcaedcd3fded3d5d043fea130665a1e5
 import edu.illinois.mitra.starl.motion.MotionAutomaton_iRobot;
 import edu.illinois.mitra.starl.motion.ReachAvoid;
 import edu.illinois.mitra.starl.motion.MiniDroneBTI;
@@ -53,9 +60,12 @@ public class RealGlobalVarHolder extends GlobalVarHolder {
         else if (initpos instanceof Model_quadcopter) {
             plat.moat = new MotionAutomatonMiniDrone(this, new MiniDroneBTI(this, context, robotMac));
         }
+<<<<<<< HEAD
         else if(initpos instanceof Model_DJI){
 			plat.moat = new MotionAutomatonMavic(this, new DjiUSB(this, context, robotMac));
 		}
+=======
+>>>>>>> 1029c75efcaedcd3fded3d5d043fea130665a1e5
 /*
 //TD_NATHAN: resolve - resolved above
         if(type == Common.IROBOT) {

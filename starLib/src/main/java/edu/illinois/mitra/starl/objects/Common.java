@@ -26,6 +26,8 @@ public final class Common {
     public static final int MINIDRONE = 51;
 	public static final int DJI = 53;
 
+	public static final int o3DR = 54;      //cannot start a variable name with number, so add a letter o
+
     // Mobile device types
     public static final int NEXUS7 = 60;
     public static final int MOTOE = 61;

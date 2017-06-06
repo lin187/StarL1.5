@@ -1,10 +1,15 @@
 [
     {
+<<<<<<< HEAD
         "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\accessory_filter.xml",
         "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\xml\\accessory_filter.xml"
     },
     {
         "merged": "C:\\Users\\liangt\\Documents\\GitHub\\StarLGradle\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\accessory_filter.xml",
         "source": "C:\\Users\\liangt\\Documents\\GitHub\\StarLGradle\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\xml\\accessory_filter.xml"
+=======
+        "merged": "D:\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\accessory_filter.xml",
+        "source": "D:\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\xml\\accessory_filter.xml"
+>>>>>>> 1029c75efcaedcd3fded3d5d043fea130665a1e5
     }
 ]

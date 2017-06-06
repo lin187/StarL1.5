@@ -7,6 +7,7 @@
 package edu.illinois.mitra.starl;
 
 public final class R {
+<<<<<<< HEAD
     public static final class anim {
         public static int core_hold = 0x7f040000;
         public static int core_hyperspace_in = 0x7f040001;
@@ -358,4 +359,6 @@ public final class R {
     public static final class xml {
         public static int accessory_filter = 0x7f050000;
     }
+=======
+>>>>>>> 1029c75efcaedcd3fded3d5d043fea130665a1e5
 }

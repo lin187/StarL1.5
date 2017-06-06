@@ -4,6 +4,7 @@ import edu.illinois.mitra.starl.interfaces.TrackedRobot;
 import edu.illinois.mitra.starl.models.Model_DJI;
 import edu.illinois.mitra.starl.models.Model_iRobot;
 import edu.illinois.mitra.starl.models.Model_quadcopter;
+import edu.illinois.mitra.starl.models.Model_3DR;
 import edu.illinois.mitra.starl.objects.Common;
 
 /**
@@ -45,6 +46,10 @@ public class BotInfoSelector {
                 this.type = new Model_DJI(name, 0, 0);
             }
 
+            else if(type == Common.o3DR){
+                bluetooth = "o3DR USES WIFI";
+                this.type = new Model_3DR(name, 0, 0);
+            }
         }
 
         if(color.equals("green")) {

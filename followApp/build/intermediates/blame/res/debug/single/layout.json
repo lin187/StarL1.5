@@ -1,5 +1,6 @@
 [
     {
+<<<<<<< HEAD
         "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\layout\\main.xml",
         "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starLib\\build\\intermediates\\bundles\\default\\res\\layout\\main.xml"
     },
@@ -22,5 +23,9 @@
     {
         "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\layout\\log_dialog_view.xml",
         "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\layout\\log_dialog_view.xml"
+=======
+        "merged": "D:\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\layout\\main.xml",
+        "source": "D:\\starl\\starLib\\build\\intermediates\\bundles\\default\\res\\layout\\main.xml"
+>>>>>>> 1029c75efcaedcd3fded3d5d043fea130665a1e5
     }
 ]

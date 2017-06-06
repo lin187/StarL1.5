@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "C:\\Users\\liangt\\Documents\\GitHub\\StarLGradle\\followApp\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
+        "outputFile": "D:\\starl\\followApp\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
         "map": [
             {
                 "to": {
@@ -11,7 +11,7 @@
                     "endOffset": 95
                 },
                 "from": {
-                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\StarLGradle\\starLib\\build\\intermediates\\bundles\\default\\res\\values\\values.xml",
+                    "file": "D:\\starl\\starLib\\build\\intermediates\\bundles\\default\\res\\values\\values.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
