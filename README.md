@@ -23,6 +23,8 @@ https://gradle.org/
 DJI SDK 
 ========
 
+![](https://media.giphy.com/media/xE8TXvuMhQrxC/giphy.gif)
+
 stirling.h.carter@vanderbilt.edu
 timothy.liang@vanderbilt.edu
 
