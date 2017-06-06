@@ -14,5 +14,13 @@
     {
         "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\ic_launcher.png",
         "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starlTemplate\\src\\main\\res\\drawable-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\6-6change\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\icon.png",
+        "source": "D:\\6-6change\\starl\\starlTemplate\\src\\main\\res\\drawable-hdpi\\icon.png"
+    },
+    {
+        "merged": "D:\\6-6change\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\ic_launcher.png",
+        "source": "D:\\6-6change\\starl\\starlTemplate\\src\\main\\res\\drawable-hdpi\\ic_launcher.png"
     }
 ]

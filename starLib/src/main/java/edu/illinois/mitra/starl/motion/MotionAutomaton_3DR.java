@@ -24,11 +24,11 @@ public class MotionAutomaton_3DR extends RobotMotion{
     private boolean landed = true;
 
     protected GlobalVarHolder gvh;
-    protected MiniDroneBTI bti;   //3DR is connected with wifi, so should we modify BTI to wifi?
+    protected o3DRBTI bti;   //3DR is connected with wifi, so should we modify BTI to wifi?
 
     // Motion tracking
     protected ItemPosition destination;
-    private Model_3DR mypos; // TD_NATHAN: probably need to create a minidrone one of these objects, as I think this is for AR drone...?
+    private Model_3DR mypos; // TODO: 6/6/2017 for 3DR
 
     //PID controller parameters
     double saturationLimit = 0;

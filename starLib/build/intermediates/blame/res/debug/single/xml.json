@@ -6,5 +6,9 @@
     {
         "merged": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\starLib\\build\\intermediates\\res\\merged\\debug\\xml\\accessory_filter.xml",
         "source": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\xml\\accessory_filter.xml"
+    },
+    {
+        "merged": "D:\\6-6change\\starl\\starLib\\build\\intermediates\\res\\merged\\debug\\xml\\accessory_filter.xml",
+        "source": "D:\\6-6change\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\xml\\accessory_filter.xml"
     }
 ]

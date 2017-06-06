@@ -6,5 +6,9 @@
     {
         "merged": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_launcher.png",
         "source": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\starLib\\build\\intermediates\\bundles\\default\\res\\drawable-hdpi-v4\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\6-6change\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_launcher.png",
+        "source": "D:\\6-6change\\starl\\starLib\\build\\intermediates\\bundles\\default\\res\\drawable-hdpi-v4\\ic_launcher.png"
     }
 ]
