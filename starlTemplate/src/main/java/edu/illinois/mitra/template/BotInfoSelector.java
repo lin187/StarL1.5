@@ -2,6 +2,7 @@ package edu.illinois.mitra.template;
 
 import edu.illinois.mitra.starl.interfaces.TrackedRobot;
 import edu.illinois.mitra.starl.models.Model_Mavic;
+import edu.illinois.mitra.starl.models.Model_Phantom;
 import edu.illinois.mitra.starl.models.Model_iRobot;
 import edu.illinois.mitra.starl.models.Model_quadcopter;
 import edu.illinois.mitra.starl.models.Model_3DR;
@@ -42,13 +43,18 @@ public class BotInfoSelector {
                 this.type = new Model_quadcopter(name, 0,0);
             }
             else if(type == Common.MAVIC){
-                bluetooth = "MAVIC USES WIFI???";
+                bluetooth = "Mavic uses USB";
                 this.type = new Model_Mavic(name, 0, 0);
             }
 
             else if(type == Common.o3DR){
                 bluetooth = "o3DR USES WIFI";
                 this.type = new Model_3DR(name, 0, 0);
+            }
+
+            else if(type == Common.PHANTOM){
+                bluetooth = "Phantom uses USB";
+                this.type = new Model_Phantom(name, 0, 0);
             }
         }
 

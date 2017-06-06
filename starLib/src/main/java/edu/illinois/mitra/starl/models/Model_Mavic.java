@@ -74,7 +74,7 @@ public class Model_Mavic extends ItemPosition implements TrackedRobot {
 	public double windyNoise;
 
 	/**
-	 * Construct an Model_quadcopter from a received GPS broadcast message
+	 * Construct an Model_Mavic from a received GPS broadcast message
 	 *
 	 * @param received GPS broadcast received
 	 * @throws ItemFormattingException
@@ -243,7 +243,7 @@ public class Model_Mavic extends ItemPosition implements TrackedRobot {
 		pitch = 0.0;
 		roll = 0.0;
 		radius = 340;
-		mass = 0.5; // default mass is 500 grams
+		mass = 0.734; // Mavic drone mass is 734g with battery without gimbal cover | 743g with cover
 		v_x = 0.0;
 		v_y = 0.0;
 		v_z = 0.0;

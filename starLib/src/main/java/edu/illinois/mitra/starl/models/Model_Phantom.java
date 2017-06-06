@@ -243,7 +243,7 @@ public class Model_Phantom extends ItemPosition implements TrackedRobot {
 		pitch = 0.0;
 		roll = 0.0;
 		radius = 340;
-		mass = 0.5; // default mass is 500 grams
+		mass = 1.216; // Phantom 3 mass with battery + propellers is 1216g
 		v_x = 0.0;
 		v_y = 0.0;
 		v_z = 0.0;

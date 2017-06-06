@@ -11,6 +11,7 @@ import android.widget.Toast;
 import dji.common.error.DJIError;
 import dji.common.error.DJISDKError;
 import dji.common.flightcontroller.FlightControllerState;
+import dji.common.util.CommonCallbacks;
 import dji.sdk.base.BaseComponent;
 import dji.sdk.base.BaseProduct;
 import dji.sdk.flightcontroller.FlightController;
@@ -39,7 +40,6 @@ public class DjiUSB {
         this.context = context;
         this.mac = mac;
         this.gvh = gvh;
-        gvh.log.d(TAG, "HEY THE MAVICBTI CONSTRUCTOR ACTUALLY GOT CALLED!!!!!!!!!!");
         initConnection();
     }
 
@@ -82,12 +82,24 @@ public class DjiUSB {
     public void sendLanding() {
         if (mFlightController != null)
         {
+            mFlightController.startLanding(new CommonCallbacks.CompletionCallback() {
+                @Override
+                public void onResult(DJIError djiError) {
+                    gvh.log.e(TAG, "Landing error: " + (djiError == null ? "no errors" : djiError));
+                }
+            });
         }
     }
 
     public void sendTakeoff() {
         if (mFlightController != null)
         {
+            mFlightController.startTakeoff(new CommonCallbacks.CompletionCallback() {
+                @Override
+                public void onResult(DJIError djiError) {
+                    gvh.log.e(TAG, "Take-off error: "+ (djiError == null ? "no errors" : djiError));
+                }
+            });
         }
     }
 
@@ -159,7 +171,7 @@ public class DjiUSB {
                 //creates an Aircraft instance
                 if(mProduct instanceof Aircraft) {
                     mAircraft = (Aircraft) mProduct;
-                    gvh.log.d(TAG, "Connected to MAVIC drone: " + mAircraft.getModel());
+                    gvh.log.d(TAG, "Connected to DJI drone: " + mAircraft.getModel());
 
                     //gets the flightcontroller for the aircraft;
                     mFlightController = mAircraft.getFlightController();
@@ -170,7 +182,7 @@ public class DjiUSB {
                     }
 
                 } else {
-                    gvh.log.e(TAG, "Connected MAVIC product is not a drone!");
+                    gvh.log.e(TAG, "Connected DJI product is not a drone!");
                 }
 
             } else {
@@ -206,7 +218,6 @@ public class DjiUSB {
         }
     };
 
-    //todo comment this and updateRunnable
     private void notifyStatusChange() {
         mHandler.removeCallbacks(updateRunnable);
         mHandler.postDelayed(updateRunnable, 500);
