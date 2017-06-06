@@ -22,7 +22,7 @@ public class MotionAutomaton_Phantom extends RobotMotion {
     private boolean landed = true;
 
     protected GlobalVarHolder gvh;
-    protected DjiUSB bti;
+    protected DjiController bti;
 
     // Motion tracking
     protected ItemPosition destination;
@@ -74,7 +74,7 @@ public class MotionAutomaton_Phantom extends RobotMotion {
 
     //	private volatile MotionParameters param = settings.build();
 
-    public MotionAutomaton_Phantom(GlobalVarHolder gvh, DjiUSB bti) {
+    public MotionAutomaton_Phantom(GlobalVarHolder gvh, DjiController bti) {
         super(gvh.id.getName());
         this.gvh = gvh;
         this.bti = bti;

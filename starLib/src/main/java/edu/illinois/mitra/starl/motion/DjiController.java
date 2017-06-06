@@ -1,4 +1,7 @@
-//Written by Tim Liang - @timliang on verivital.slack.com for questions
+//Written by:
+//      Tim Liang - @timliang on verivital.slack.com for questions
+//      Stirling Carter - @stirlingcarter on verivital.slack.com for questions
+
 package edu.illinois.mitra.starl.motion;
 
 import android.content.Context;
@@ -10,7 +13,13 @@ import android.widget.Toast;
 
 import dji.common.error.DJIError;
 import dji.common.error.DJISDKError;
+import dji.common.flightcontroller.ConnectionFailSafeBehavior;
 import dji.common.flightcontroller.FlightControllerState;
+import dji.common.flightcontroller.FlightOrientationMode;
+import dji.common.flightcontroller.virtualstick.FlightControlData;
+import dji.common.flightcontroller.virtualstick.RollPitchControlMode;
+import dji.common.flightcontroller.virtualstick.VerticalControlMode;
+import dji.common.flightcontroller.virtualstick.YawControlMode;
 import dji.common.util.CommonCallbacks;
 import dji.sdk.base.BaseComponent;
 import dji.sdk.base.BaseProduct;
@@ -20,7 +29,7 @@ import dji.sdk.sdkmanager.DJISDKManager;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.objects.HandlerMessage;
 
-public class DjiUSB {
+public class DjiController {
 
     private static final String FLAG_CONNECTION_CHANGE = "dji_sdk_connection_change";
     private static final boolean USING_WIFI_BRIDGE = true;
@@ -29,14 +38,17 @@ public class DjiUSB {
     private Aircraft mAircraft;
     private FlightController mFlightController;
     private Handler mHandler;
+    private FlightControlData mFlightControlData;
 
-    private static String TAG = "DjiUSB";
+
+
+    private static String TAG = "DjiController";
     
     private Context context;
     private String mac;
     private GlobalVarHolder gvh;
 
-    public DjiUSB(GlobalVarHolder gvh, Context context, String mac) {
+    public DjiController(GlobalVarHolder gvh, Context context, String mac) {
         this.context = context;
         this.mac = mac;
         this.gvh = gvh;
@@ -51,24 +63,33 @@ public class DjiUSB {
     // sets pitch to val percent of max angle
     // positive value moves forward, negative backward
     public void setPitch(double val) {
+        val *= 3.6;
         if (mFlightController != null)
         {
+            mFlightControlData.setPitch((float)val);
+            mFlightController.sendVirtualStickFlightControlData(mFlightControlData, null);
         }
     }
 
     // sets roll to val percent of max angle
     // positive value moves right, negative left
     public void setRoll(double val) {
+        val *= 3.6;
         if (mFlightController != null)
         {
+            mFlightControlData.setRoll((float)val);
+            mFlightController.sendVirtualStickFlightControlData(mFlightControlData, null);
         }
     }
 
     // sets yaw to val percent of max angular rotation
     // positive value turns right (clockwise from above), negative turns left
     public void setYaw(double val) {
+        val *= 3.6;
         if (mFlightController != null)
         {
+            mFlightControlData.setYaw((float)val);
+            mFlightController.sendVirtualStickFlightControlData(mFlightControlData, null);
         }
     }
 
@@ -76,6 +97,8 @@ public class DjiUSB {
     public void setThrottle(double val) {
         if (mFlightController != null)
         {
+            mFlightControlData.setVerticalThrottle((float)val);
+            mFlightController.sendVirtualStickFlightControlData(mFlightControlData, null);
         }
     }
 
@@ -103,18 +126,17 @@ public class DjiUSB {
         }
     }
 
-    // make the drone stop and fall to the ground
+    // make the drone land immediately
     public void sendEmergency() {
-        if (mFlightController != null)
-        {
-        }
+        sendLanding();
     }
 
     public void hover() {
-        // setting this flag to 0 causes the drone to ignore roll/pitch commands and attempt to hover
+        //no commands = DJI will automatically hover
     }
 
     public void setMaxTilt(float maxTilt) {
+        //no
     }
 
     public void initConnection() {
@@ -156,7 +178,7 @@ public class DjiUSB {
                     }
                 });
             }
-            gvh.log.d(TAG, "StarLib registered: " + DjiUSB.getAPIStatus());
+            gvh.log.d(TAG, "StarLib registered: " + DjiController.getAPIStatus());
             Log.e("TAG", error.toString());
         }
         @Override
@@ -176,7 +198,7 @@ public class DjiUSB {
                     //gets the flightcontroller for the aircraft;
                     mFlightController = mAircraft.getFlightController();
                     if(mFlightController != null) {
-                        debug(mFlightController);
+                        constructFlightController();
                     }else{
                         gvh.log.e(TAG, mAircraft.getModel() + " does not have a flight controller!");
                     }
@@ -240,4 +262,18 @@ public class DjiUSB {
         gvh.log.d(TAG, "Landing confirmation required:" + fState.isLandingConfirmationNeeded());
     }
 
+    //important flight control information.
+    private void constructFlightController(){
+        mFlightController.setVirtualStickAdvancedModeEnabled(true);
+        mFlightController.setConnectionFailSafeBehavior(ConnectionFailSafeBehavior.LANDING, null);
+        mFlightController.setRollPitchControlMode(RollPitchControlMode.ANGLE);
+        mFlightController.setYawControlMode(YawControlMode.ANGLE);
+        mFlightController.setVerticalControlMode(VerticalControlMode.VELOCITY);
+        mFlightController.setTerrainFollowModeEnabled(false, null);
+        mFlightController.setTripodModeEnabled(false, null);
+        mFlightController.setFlightOrientationMode(FlightOrientationMode.AIRCRAFT_HEADING, null);
+        if (!mFlightController.isVirtualStickControlModeAvailable()){
+            gvh.log.e(TAG, "Virtual Stick Control mode is unavailable, probably because a mission is running.");
+        }
+    }
 }

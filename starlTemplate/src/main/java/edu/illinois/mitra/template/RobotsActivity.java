@@ -319,7 +319,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 //					}
 //				});
 //			}
-//			gvh.log.d(TAG, "StarLib registered: " + DjiUSB.getAPIStatus());
+//			gvh.log.d(TAG, "StarLib registered: " + DjiController.getAPIStatus());
 //			gvh.log.d(TAG, "Attempting to enable bridge mode.");
 //			DJISDKManager.getInstance().enableBridgeModeWithBridgeAppIP("10.255.24.152");
 //			Log.e("TAG", error.toString());

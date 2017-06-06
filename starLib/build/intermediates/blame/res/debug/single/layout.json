@@ -4,6 +4,18 @@
         "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\layout\\dialog_login.xml"
     },
     {
+        "merged": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\starLib\\build\\intermediates\\res\\merged\\debug\\layout\\main.xml",
+        "source": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\starLib\\src\\main\\res\\layout\\main.xml"
+    },
+    {
+        "merged": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\starLib\\build\\intermediates\\res\\merged\\debug\\layout\\dialog_login.xml",
+        "source": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\layout\\dialog_login.xml"
+    },
+    {
+        "merged": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\starLib\\build\\intermediates\\res\\merged\\debug\\layout\\log_dialog_view.xml",
+        "source": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\layout\\log_dialog_view.xml"
+    },
+    {
         "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starLib\\build\\intermediates\\res\\merged\\debug\\layout\\log_dialog_view.xml",
         "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\layout\\log_dialog_view.xml"
     },
