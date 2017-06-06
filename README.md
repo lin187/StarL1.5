@@ -26,6 +26,7 @@ DJI SDK
 ![](https://media.giphy.com/media/xE8TXvuMhQrxC/giphy.gif)
 
 stirling.h.carter@vanderbilt.edu
+
 timothy.liang@vanderbilt.edu
 
 Compatible with Mavic and Phantom DJI drones.
