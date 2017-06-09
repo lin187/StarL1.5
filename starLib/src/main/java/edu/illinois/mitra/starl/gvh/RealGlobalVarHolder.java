@@ -8,12 +8,15 @@ import android.os.Handler;
 import edu.illinois.mitra.starl.comms.SmartUdpComThread;
 import edu.illinois.mitra.starl.comms.UdpGpsReceiver;
 import edu.illinois.mitra.starl.interfaces.TrackedRobot;
+import edu.illinois.mitra.starl.models.Model_GhostAerial;
 import edu.illinois.mitra.starl.models.Model_Mavic;
 import edu.illinois.mitra.starl.models.Model_Phantom;
 import edu.illinois.mitra.starl.models.Model_iRobot;
 import edu.illinois.mitra.starl.models.Model_quadcopter;
 import edu.illinois.mitra.starl.motion.BluetoothInterface;
 import edu.illinois.mitra.starl.motion.DjiController;
+import edu.illinois.mitra.starl.motion.GhostAerialBTI;
+import edu.illinois.mitra.starl.motion.MotionAutomaton_GhostAerial;
 import edu.illinois.mitra.starl.motion.MotionAutomaton_Mavic;
 import edu.illinois.mitra.starl.motion.MotionAutomaton_Phantom;
 import edu.illinois.mitra.starl.motion.MotionAutomaton_iRobot;
@@ -60,6 +63,9 @@ public class RealGlobalVarHolder extends GlobalVarHolder {
 		}
 		else if(initpos instanceof Model_Phantom){
 			plat.moat = new MotionAutomaton_Phantom(this, new DjiController(this, context, robotMac));
+		}
+		else if (initpos instanceof Model_GhostAerial){
+			plat.moat = new MotionAutomaton_GhostAerial(this, new GhostAerialBTI(this, context, robotMac));
 		}
 /*
 //TD_NATHAN: resolve - resolved above

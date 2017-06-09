@@ -42,6 +42,7 @@
 
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" /> <!-- Permissions and features -->
     <application
+        android:name="edu.illinois.mitra.template.myApp"
         android:allowBackup="true"
         android:debuggable="true"
         android:icon="@drawable/icon"

@@ -1,7 +1,0 @@
-#Tue Jun 06 11:26:56 CDT 2017
-base.0=C\:\\Users\\liangt\\Documents\\GitHub\\starl\\starlTemplate\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run-bootstrap_759e43b8a0236e5671f3e311294a86746721e091
-renamed.1=classes.dex
-renamed.0=classes2.dex
-file.1=C\:\\Users\\liangt\\Documents\\GitHub\\starl\\starlTemplate\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run_a2ebab91f8109f92cc3d6d5e6d2ed5aa86f54144\\classes.dex
-base.1=C\:\\Users\\liangt\\Documents\\GitHub\\starl\\starlTemplate\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run_a2ebab91f8109f92cc3d6d5e6d2ed5aa86f54144
-file.0=C\:\\Users\\liangt\\Documents\\GitHub\\starl\\starlTemplate\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10000\\instant-run-bootstrap_759e43b8a0236e5671f3e311294a86746721e091\\classes.dex

@@ -1,8 +1,11 @@
+/*
 package edu.illinois.mitra.starl.motion;
 
+*/
 /**
  * Created by yangy14 on 6/2/2017.
- */
+ *//*
+
 
 import java.util.Arrays;
 
@@ -24,7 +27,7 @@ public class MotionAutomaton_3DR extends RobotMotion{
     private boolean landed = true;
 
     protected GlobalVarHolder gvh;
-    protected o3DRBTI bti;   //3DR is connected with wifi, so should we modify BTI to wifi?
+    //protected o3DRBTI bti;   //3DR is connected with wifi, so should we modify BTI to wifi?
 
     // Motion tracking
     protected ItemPosition destination;
@@ -242,27 +245,33 @@ public class MotionAutomaton_3DR extends RobotMotion{
         gvh.log.i(TAG, "control input as, yaw, pitch, roll, thrust " + yaw_v + ", " + pitch + ", " +roll + ", " +gaz);
     }
 
-    /**
+    */
+/**
      *  	take off from ground
-     */
+     *//*
+
     protected void takeOff(){
         //Bluetooth command to control the drone
         bti.sendTakeoff();
         gvh.log.i(TAG, "Drone taking off");
     }
 
-    /**
+    */
+/**
      * land on the ground
-     */
+     *//*
+
     protected void land(){
         //Bluetooth command to control the drone
         bti.sendLanding();
         gvh.log.i(TAG, "Drone landing");
     }
 
-    /**
+    */
+/**
      * hover at current position
-     */
+     *//*
+
     protected void hover(){
         //Bluetooth command to control the drone
         bti.hover();
@@ -297,3 +306,4 @@ public class MotionAutomaton_3DR extends RobotMotion{
     }
 
 }
+*/

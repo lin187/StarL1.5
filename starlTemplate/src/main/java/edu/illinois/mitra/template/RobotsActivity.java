@@ -93,10 +93,11 @@ public class RobotsActivity extends Activity implements MessageListener {
 		numRobots = 1;
 		botInfo = new BotInfoSelector[numRobots];
 		// add color, robot type, and device type for each robot here
-		botInfo[0] = new BotInfoSelector("red", Common.MAVIC, Common.NEXUS7);
+		//botInfo[0] = new BotInfoSelector("red", Common.MAVIC, Common.NEXUS7);
 		//botInfo[1] = new BotInfoSelector("green", Common.IROBOT, Common.MOTOE);
 		//botInfo[2] = new BotInfoSelector("blue", Common.IROBOT, Common.NEXUS7);
 		// botInfo[3] = new BotInfoSelector("white", Common.IROBOT, Common.NEXUS7);
+		botInfo[0] = new BotInfoSelector("blue", Common.GHOSTAERIAL, Common.NEXUS7);
 
 		participants = new String[3][numRobots];
 		for (i = 0; i < numRobots; i++) {

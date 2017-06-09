@@ -1,6 +1,7 @@
 package edu.illinois.mitra.template;
 
 import edu.illinois.mitra.starl.interfaces.TrackedRobot;
+import edu.illinois.mitra.starl.models.Model_GhostAerial;
 import edu.illinois.mitra.starl.models.Model_Mavic;
 import edu.illinois.mitra.starl.models.Model_Phantom;
 import edu.illinois.mitra.starl.models.Model_iRobot;
@@ -56,6 +57,10 @@ public class BotInfoSelector {
                 bluetooth = "Phantom uses USB";
                 this.type = new Model_Phantom(name, 0, 0);
             }
+            else if(type == Common.GHOSTAERIAL) {
+                bluetooth = "98:D3:32:20:58:5B"; // bluetooth address of GBOX
+                this.type = new Model_GhostAerial(name, 0,0);
+            }
         }
 
         if(color.equals("green")) {
@@ -76,6 +81,10 @@ public class BotInfoSelector {
                 bluetooth = "green1";
                 this.type = new Model_quadcopter(name, 0,0);
             }
+            else if(type == Common.GHOSTAERIAL) {
+                bluetooth = "98:D3:32:20:58:5B"; // bluetooth address of GBOX
+                this.type = new Model_GhostAerial(name, 0,0);
+            }
         }
 
         if(color.equals("blue")) {
@@ -90,6 +99,10 @@ public class BotInfoSelector {
                 bluetooth = "Mars_122317";
                 this.type = new Model_quadcopter(name, 0,0);
             }
+            else if(type == Common.GHOSTAERIAL) {
+                bluetooth = "98:D3:32:20:58:5B"; // bluetooth address of GBOX
+                this.type = new Model_GhostAerial(name, 0,0);
+            }
         }
 
         if(color.equals("white")) {
@@ -102,6 +115,10 @@ public class BotInfoSelector {
             }
             else if(type == Common.MINIDRONE) {
                 //bluetooth = ""; There isn't a white drone set-up yet
+            }
+            else if(type == Common.GHOSTAERIAL) {
+                bluetooth = "98:D3:32:20:58:5B"; // bluetooth address of GBOX
+                this.type = new Model_GhostAerial(name, 0,0);
             }
         }
 
