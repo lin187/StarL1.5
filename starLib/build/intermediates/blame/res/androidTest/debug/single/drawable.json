@@ -4,16 +4,16 @@
         "source": "D:\\6-6change\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\drawable\\draw_route.png"
     },
     {
-        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\draw_route_pass.png",
-        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\drawable\\draw_route_pass.png"
+        "merged": "D:\\6-6change\\starl\\starLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\draw_arrow.png",
+        "source": "D:\\6-6change\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\drawable\\draw_arrow.png"
     },
     {
         "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\btn_draw_end.png",
         "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\drawable\\btn_draw_end.png"
     },
     {
-        "merged": "D:\\6-6change\\starl\\starLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\draw_arrow.png",
-        "source": "D:\\6-6change\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\drawable\\draw_arrow.png"
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\draw_route_pass.png",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\drawable\\draw_route_pass.png"
     },
     {
         "merged": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\starLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\btn_draw_starter.png",

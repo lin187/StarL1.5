@@ -8,12 +8,12 @@
         "source": "C:\\Users\\cartesh1\\.android\\build-cache\\70478a32bba8f7f6cc4484a510e9d7e2397a941a\\output\\res\\drawable-v21\\notification_action_background.xml"
     },
     {
-        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\abc_edit_text_material.xml",
-        "source": "C:\\Users\\liangt\\.android\\build-cache\\13e2a3a29d358bb025b759d048771c09735c4241\\output\\res\\drawable-v21\\abc_edit_text_material.xml"
-    },
-    {
         "merged": "D:\\6-6change\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\notification_action_background.xml",
         "source": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\drawable-v21\\notification_action_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\abc_edit_text_material.xml",
+        "source": "C:\\Users\\liangt\\.android\\build-cache\\13e2a3a29d358bb025b759d048771c09735c4241\\output\\res\\drawable-v21\\abc_edit_text_material.xml"
     },
     {
         "merged": "D:\\6-6change\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\drawable-v21\\design_password_eye.xml",

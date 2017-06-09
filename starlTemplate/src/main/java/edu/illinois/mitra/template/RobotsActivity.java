@@ -31,6 +31,7 @@ import edu.illinois.mitra.starl.gvh.RealGlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.interfaces.MessageListener;
 import edu.illinois.mitra.starl.models.Model_Mavic;
+import edu.illinois.mitra.starl.models.Model_Phantom;
 import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.HandlerMessage;
 
@@ -39,12 +40,6 @@ import edu.illinois.mitra.demo.follow.FollowApp;
 public class RobotsActivity extends Activity implements MessageListener {
 	private static final String TAG = "RobotsActivity";
 	private static final String ERR = "Critical Error";
-
-//	//MAVIC STUFF
-//	public static final String FLAG_CONNECTION_CHANGE = "dji_sdk_connection_change";
-//	private static BaseProduct mProduct;
-//	private Handler mHandler;
-//	//end MAVIC STUFF
 
 	private static final String IDENTITY_FILE_URL = "https://dl.dropbox.com/s/dwfqdhbf5vdtz18/robots.rif?dl=1";
 	private static final String[][] ERROR_PARTICIPANTS = {{"ERROR"}, {"ERROR"}, {"ERROR"}};
@@ -74,10 +69,9 @@ public class RobotsActivity extends Activity implements MessageListener {
 	private int i;
 
 
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		//testing TURN STICT MODE OFF
+		//testing TURN STRICT MODE OFF
 		StrictMode.ThreadPolicy tp = StrictMode.ThreadPolicy.LAX;
 		StrictMode.setThreadPolicy(tp);
 
@@ -105,7 +99,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 		// botInfo[3] = new BotInfoSelector("white", Common.IROBOT, Common.NEXUS7);
 
 		participants = new String[3][numRobots];
-		for(i =0; i < numRobots; i++) {
+		for (i = 0; i < numRobots; i++) {
 			participants[0][i] = botInfo[i].name;
 			participants[1][i] = botInfo[i].bluetooth;
 			participants[2][i] = botInfo[i].ip;
@@ -116,16 +110,10 @@ public class RobotsActivity extends Activity implements MessageListener {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		selectedRobot = prefs.getInt(PREF_SELECTED_ROBOT, 0);
 
-		if(selectedRobot >= participants[0].length) {
+		if (selectedRobot >= participants[0].length) {
 			Toast.makeText(this, "Identity error! Reselect robot identity", Toast.LENGTH_LONG).show();
 			selectedRobot = 0;
 		}
-
-//		//Initialize MAVIC SDK Manager
-//		if((botInfo[selectedRobot].type instanceof Model_Mavic)) {
-//			mHandler = new Handler(Looper.getMainLooper());
-//			DJISDKManager.getInstance().registerApp(this, mDJISDKManagerCallback);
-//		}
 
 		// Set up the GUI
 		setupGUI();
@@ -133,7 +121,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 		// Create the main handler
 		mainHandler = new MainHandler(this, pbBluetooth, pbBattery, cbGPS, cbBluetooth, cbRunning, txtDebug, cbRegistered);
 
-		if(participants == null) {
+		if (participants == null) {
 			Toast.makeText(this, "Error loading identity file!", Toast.LENGTH_LONG).show();
 			participants = ERROR_PARTICIPANTS;
 			selectedRobot = 0;
@@ -141,7 +129,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 
 		// Create the global variable holder
 		HashMap<String, String> hm_participants = new HashMap<String, String>();
-		for(int i = 0; i < participants[0].length; i++) {
+		for (int i = 0; i < participants[0].length; i++) {
 			hm_participants.put(participants[0][i], participants[2][i]);
 		}
 		gvh = new RealGlobalVarHolder(participants[0][selectedRobot], hm_participants, botInfo[selectedRobot].type, mainHandler, participants[1][selectedRobot], this);
@@ -154,14 +142,14 @@ public class RobotsActivity extends Activity implements MessageListener {
 	}
 
 	public void createAppInstance(GlobalVarHolder gvh) {
-		runThread = new FollowApp(gvh);	// Instantiate your application here!
+		runThread = new FollowApp(gvh);    // Instantiate your application here!
 		// Example: runThread = new LightPaintActivity(gvh);
 	}
 
 	public void launch(int numWaypoints, int runNum) {
-		if(!launched) {
-			if(gvh.gps.getWaypointPositions().getNumPositions() == numWaypoints) {
-				if(ENABLE_TRACING)
+		if (!launched) {
+			if (gvh.gps.getWaypointPositions().getNumPositions() == numWaypoints) {
+				if (ENABLE_TRACING)
 					gvh.trace.traceStart(runNum);
 				launched = true;
 				cbRunning.setChecked(true);
@@ -194,14 +182,14 @@ public class RobotsActivity extends Activity implements MessageListener {
 		gvh.gps.startGps();
 
 		// Register this as a listener
-		gvh.comms.addMsgListener(this, Common.MSG_ACTIVITYLAUNCH,Common.MSG_ACTIVITYABORT);
+		gvh.comms.addMsgListener(this, Common.MSG_ACTIVITYLAUNCH, Common.MSG_ACTIVITYABORT);
 	}
 
 	public void disconnect() {
 		gvh.log.i(TAG, "Disconnecting and stopping all background threads");
 
 		// Shut down the logic thread if it was running
-		if(launched) {
+		if (launched) {
 			runThread.cancel();
 			executor.shutdownNow();
 		}
@@ -220,7 +208,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 	private CheckBox cbGPS;
 	private CheckBox cbBluetooth;
 	private CheckBox cbRunning;
-	private CheckBox cbRegistered; //status of MAVIC SDK registration
+	private CheckBox cbRegistered; //status of DJI SDK registration
 	private ProgressBar pbBattery;
 
 
@@ -237,7 +225,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 		pbBattery.setMax(100);
 		cbRegistered = (CheckBox) findViewById(R.id.cbRegistered);
 
-		if(!(botInfo[selectedRobot].type instanceof Model_Mavic)){
+		if (!(botInfo[selectedRobot].type instanceof Model_Mavic || botInfo[selectedRobot].type instanceof Model_Phantom)) {
 			cbRegistered.setVisibility(View.GONE);
 		} else {
 			cbBluetooth.setText("Drone Connected");
@@ -284,7 +272,7 @@ public class RobotsActivity extends Activity implements MessageListener {
 
 	@Override
 	public void messageReceived(RobotMessage m) {
-		switch(m.getMID()) {
+		switch (m.getMID()) {
 			case Common.MSG_ACTIVITYLAUNCH:
 				gvh.plat.sendMainMsg(HandlerMessage.MESSAGE_LAUNCH, Integer.parseInt(m.getContents(0)), Integer.parseInt(m.getContents(1)));
 				break;
@@ -293,80 +281,5 @@ public class RobotsActivity extends Activity implements MessageListener {
 				break;
 		}
 	}
-
-	//MAVIC INTERFACE IMPLEMENTATION
-//	private DJISDKManager.SDKManagerCallback mDJISDKManagerCallback = new DJISDKManager.SDKManagerCallback() {
-//		@Override
-//		public void onRegister(DJIError error) {
-//			Log.d(TAG, error == null ? "success" : error.getDescription());
-//			if(error == DJISDKError.REGISTRATION_SUCCESS) {
-//				DJISDKManager.getInstance().startConnectionToProduct();
-//				Handler handler = new Handler(Looper.getMainLooper());
-//				handler.post(new Runnable() {
-//					@Override
-//					public void run() {
-//						Toast.makeText(getApplicationContext(), "Register Success", Toast.LENGTH_LONG).show();
-//						cbRegistered.setChecked(true);
-//					}
-//				});
-//			} else {
-//				Handler handler = new Handler(Looper.getMainLooper());
-//				handler.post(new Runnable() {
-//					@Override
-//					public void run() {
-//						Toast.makeText(getApplicationContext(), "Register SDK failed for package: " + getApplication().getPackageName(), Toast.LENGTH_LONG).show();
-//						cbRegistered.setChecked(false);
-//					}
-//				});
-//			}
-//			gvh.log.d(TAG, "StarLib registered: " + DjiController.getAPIStatus());
-//			gvh.log.d(TAG, "Attempting to enable bridge mode.");
-//			DJISDKManager.getInstance().enableBridgeModeWithBridgeAppIP("10.255.24.152");
-//			Log.e("TAG", error.toString());
-//		}
-//		@Override
-//		public void onProductChange(BaseProduct oldProduct, BaseProduct newProduct) {
-//			mProduct = newProduct;
-//			if(mProduct != null) {
-//				mProduct.setBaseProductListener(mDJIBaseProductListener);
-//			}
-//			notifyStatusChange();
-//			gvh.log.d(TAG, "onProductChange was called!");
-//		}
-//	};
-//
-//	private BaseProduct.BaseProductListener mDJIBaseProductListener = new BaseProduct.BaseProductListener() {
-//		@Override
-//		public void onComponentChange(BaseProduct.ComponentKey key, BaseComponent oldComponent, BaseComponent newComponent) {
-//			if(newComponent != null) {
-//				newComponent.setComponentListener(mDJIComponentListener);
-//			}
-//			notifyStatusChange();
-//		}
-//		@Override
-//		public void onConnectivityChange(boolean isConnected) {
-//			notifyStatusChange();
-//		}
-//	};
-//
-//	private BaseComponent.ComponentListener mDJIComponentListener = new BaseComponent.ComponentListener() {
-//		@Override
-//		public void onConnectivityChange(boolean isConnected) {
-//			notifyStatusChange();
-//		}
-//	};
-//
-//	private void notifyStatusChange() {
-//		mHandler.removeCallbacks(updateRunnable);
-//		mHandler.postDelayed(updateRunnable, 500);
-//	}
-//
-//	private Runnable updateRunnable = new Runnable() {
-//		@Override
-//		public void run() {
-//			Intent intent = new Intent(FLAG_CONNECTION_CHANGE);
-//			sendBroadcast(intent);
-//		}
-//	};
 
 }

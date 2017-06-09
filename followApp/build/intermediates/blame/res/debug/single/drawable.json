@@ -1,23 +1,23 @@
 [
     {
-        "merged": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\drawable\\btn_draw_end.png",
-        "source": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\drawable\\btn_draw_end.png"
-    },
-    {
-        "merged": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\drawable\\draw_arrow.png",
-        "source": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\drawable\\draw_arrow.png"
-    },
-    {
-        "merged": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\drawable\\radio_checked.png",
-        "source": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\drawable\\radio_checked.png"
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\drawable\\btn_lock_selector.xml",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\drawable\\btn_lock_selector.xml"
     },
     {
         "merged": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\drawable\\btn_draw_start_plane.png",
         "source": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\drawable\\btn_draw_start_plane.png"
     },
     {
-        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\drawable\\btn_lock_selector.xml",
-        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\drawable\\btn_lock_selector.xml"
+        "merged": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\drawable\\radio_checked.png",
+        "source": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\drawable\\radio_checked.png"
+    },
+    {
+        "merged": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\drawable\\draw_arrow.png",
+        "source": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\drawable\\draw_arrow.png"
+    },
+    {
+        "merged": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\drawable\\btn_draw_end.png",
+        "source": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\drawable\\btn_draw_end.png"
     },
     {
         "merged": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\drawable\\draw_route.png",

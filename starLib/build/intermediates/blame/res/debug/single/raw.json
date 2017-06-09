@@ -24,12 +24,12 @@
         "source": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\raw\\iframe_1280x720_ins.h264"
     },
     {
-        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starLib\\build\\intermediates\\res\\merged\\debug\\raw\\iframe_p4p_720_4x3.h264",
-        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\raw\\iframe_p4p_720_4x3.h264"
-    },
-    {
         "merged": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\starLib\\build\\intermediates\\res\\merged\\debug\\raw\\iframe_wm220_1280x720.h264",
         "source": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\raw\\iframe_wm220_1280x720.h264"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starLib\\build\\intermediates\\res\\merged\\debug\\raw\\iframe_p4p_720_4x3.h264",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\raw\\iframe_p4p_720_4x3.h264"
     },
     {
         "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starLib\\build\\intermediates\\res\\merged\\debug\\raw\\gimbal_param_infos",
@@ -100,12 +100,12 @@
         "source": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\raw\\iframe_640x368_wm620.h264"
     },
     {
-        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starLib\\build\\intermediates\\res\\merged\\debug\\raw\\iframe_p4p_720_3x2.h264",
-        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\raw\\iframe_p4p_720_3x2.h264"
-    },
-    {
         "merged": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\starLib\\build\\intermediates\\res\\merged\\debug\\raw\\iframe_1360x720_wm620.h264",
         "source": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\raw\\iframe_1360x720_wm620.h264"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starLib\\build\\intermediates\\res\\merged\\debug\\raw\\iframe_p4p_720_3x2.h264",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\raw\\iframe_p4p_720_3x2.h264"
     },
     {
         "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starLib\\build\\intermediates\\res\\merged\\debug\\raw\\iframe_1080x720_gd600.h264",

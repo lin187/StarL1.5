@@ -12,16 +12,16 @@
         "source": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_push_right_out.xml"
     },
     {
-        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_hold.xml",
-        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_hold.xml"
+        "merged": "D:\\6-6change\\starl\\followApp\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_zoom_exit.xml",
+        "source": "D:\\6-6change\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_zoom_exit.xml"
     },
     {
         "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_zoom_exit.xml",
         "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_zoom_exit.xml"
     },
     {
-        "merged": "D:\\6-6change\\starl\\followApp\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_zoom_exit.xml",
-        "source": "D:\\6-6change\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_zoom_exit.xml"
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_hold.xml",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_hold.xml"
     },
     {
         "merged": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\followApp\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_other.xml",

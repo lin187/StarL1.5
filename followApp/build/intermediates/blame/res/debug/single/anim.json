@@ -4,12 +4,12 @@
         "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_zoom_exit_back.xml"
     },
     {
-        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\anim\\core_push_right_in.xml",
-        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_push_right_in.xml"
-    },
-    {
         "merged": "D:\\6-6change\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\anim\\core_push_up_out.xml",
         "source": "D:\\6-6change\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_push_up_out.xml"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\anim\\core_push_right_in.xml",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_push_right_in.xml"
     },
     {
         "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\anim\\core_hyperspace_out.xml",

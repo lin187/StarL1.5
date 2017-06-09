@@ -16,20 +16,20 @@
         "source": "D:\\6-6change\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\raw\\iframe_1920x1024_wm620.h264"
     },
     {
-        "merged": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\raw\\iframe_848x480.h264",
-        "source": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\raw\\iframe_848x480.h264"
-    },
-    {
         "merged": "D:\\6-6change\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\raw\\iframe_1440x1088_wm620.h264",
         "source": "D:\\6-6change\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\raw\\iframe_1440x1088_wm620.h264"
     },
     {
-        "merged": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\raw\\iframe_608x448_wm620.h264",
-        "source": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\raw\\iframe_608x448_wm620.h264"
+        "merged": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\raw\\iframe_848x480.h264",
+        "source": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\raw\\iframe_848x480.h264"
     },
     {
         "merged": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\raw\\iframe_1760x720_wm620.h264",
         "source": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\raw\\iframe_1760x720_wm620.h264"
+    },
+    {
+        "merged": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\raw\\iframe_608x448_wm620.h264",
+        "source": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\raw\\iframe_608x448_wm620.h264"
     },
     {
         "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\raw\\iframe_1344x720_wm620.h264",
@@ -152,12 +152,12 @@
         "source": "D:\\6-6change\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\raw\\iframe_720x480_wm620.h264"
     },
     {
-        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\raw\\iframe_1280x720_wm620.h264",
-        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\raw\\iframe_1280x720_wm620.h264"
-    },
-    {
         "merged": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\raw\\iframe_wm220_1280x720.h264",
         "source": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\raw\\iframe_wm220_1280x720.h264"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\raw\\iframe_1280x720_wm620.h264",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\raw\\iframe_1280x720_wm620.h264"
     },
     {
         "merged": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\raw\\gimbal_param_infos",

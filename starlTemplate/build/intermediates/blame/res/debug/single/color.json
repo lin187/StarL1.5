@@ -56,12 +56,12 @@
         "source": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\color\\abc_tint_default.xml"
     },
     {
-        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\color\\abc_tint_spinner.xml",
-        "source": "C:\\Users\\liangt\\.android\\build-cache\\13e2a3a29d358bb025b759d048771c09735c4241\\output\\res\\color\\abc_tint_spinner.xml"
-    },
-    {
         "merged": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\color\\design_error.xml",
         "source": "C:\\Users\\cartesh1\\.android\\build-cache\\a27ffaca92fb882651f2f17f052acf8195cb03e3\\output\\res\\color\\design_error.xml"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\color\\abc_tint_spinner.xml",
+        "source": "C:\\Users\\liangt\\.android\\build-cache\\13e2a3a29d358bb025b759d048771c09735c4241\\output\\res\\color\\abc_tint_spinner.xml"
     },
     {
         "merged": "C:\\Users\\cartesh1\\Desktop\\Builds\\Current\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\color\\abc_tint_switch_track.xml",
