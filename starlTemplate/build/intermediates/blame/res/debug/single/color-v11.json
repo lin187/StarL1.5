@@ -4,7 +4,15 @@
         "source": "C:\\Users\\alexaad1\\.android\\build-cache\\d5f7d3ddb8b19ced645a8028ff853fa8cec00ba7\\output\\res\\color-v11\\abc_background_cache_hint_selector_material_dark.xml"
     },
     {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\color-v11\\abc_background_cache_hint_selector_material_light.xml",
+        "source": "C:\\Users\\liangt\\.android\\build-cache\\13e2a3a29d358bb025b759d048771c09735c4241\\output\\res\\color-v11\\abc_background_cache_hint_selector_material_light.xml"
+    },
+    {
         "merged": "C:\\Users\\alexaad1\\Documents\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\color-v11\\abc_background_cache_hint_selector_material_light.xml",
         "source": "C:\\Users\\alexaad1\\.android\\build-cache\\d5f7d3ddb8b19ced645a8028ff853fa8cec00ba7\\output\\res\\color-v11\\abc_background_cache_hint_selector_material_light.xml"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\color-v11\\abc_background_cache_hint_selector_material_dark.xml",
+        "source": "C:\\Users\\liangt\\.android\\build-cache\\13e2a3a29d358bb025b759d048771c09735c4241\\output\\res\\color-v11\\abc_background_cache_hint_selector_material_dark.xml"
     }
 ]

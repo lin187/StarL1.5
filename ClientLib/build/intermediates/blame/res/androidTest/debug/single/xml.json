@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\dronekit-android-dronekit-android-v3.0.2\\ClientLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\google_analytics_tracker.xml",
+        "source": "C:\\Users\\liangt\\Documents\\dronekit-android-dronekit-android-v3.0.2\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\xml\\google_analytics_tracker.xml"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\dronekit-android-dronekit-android-v3.0.2\\ClientLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\device_filter.xml",
+        "source": "C:\\Users\\liangt\\Documents\\dronekit-android-dronekit-android-v3.0.2\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\xml\\device_filter.xml"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\dronekit-android-dronekit-android-v3.0.2\\ClientLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\filepaths.xml",
+        "source": "C:\\Users\\liangt\\Documents\\dronekit-android-dronekit-android-v3.0.2\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\xml\\filepaths.xml"
+    }
+]
