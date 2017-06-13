@@ -1,4 +1,4 @@
-package edu.illinois.mitra.template;
+package com.visis.testcontroller;
 
 import android.app.Application;
 
@@ -9,6 +9,7 @@ import com.ehang.coptersdk.CopterControl;
  */
 
 public class myApp extends Application {
+
     @Override
     public void onCreate() {
         super.onCreate();

@@ -1,10 +1,4 @@
-package edu.illinois.mitra.template;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+package com.visis.testcontroller;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -14,15 +8,27 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.net.wifi.WifiManager;
+import android.os.Bundle;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.os.Bundle;
-import android.os.StrictMode;
+
+import com.ehang.coptersdk.CopterControl;
+import com.ehang.coptersdk.OnSendListener;
+import com.ehang.coptersdk.connection.OnConnectionListener;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import edu.illinois.mitra.starl.comms.MessageContents;
 import edu.illinois.mitra.starl.comms.RobotMessage;
@@ -35,11 +41,11 @@ import edu.illinois.mitra.starl.models.Model_Phantom;
 import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.HandlerMessage;
 
-import edu.illinois.mitra.demo.follow.FollowApp;
-
-public class RobotsActivity extends Activity implements MessageListener {
+public class RobotsActivity extends Activity implements MessageListener, Joystick.JoystickListener {
 	private static final String TAG = "RobotsActivity";
 	private static final String ERR = "Critical Error";
+	private long lastTap_disArmButton = -1;
+	private static long DOUBLE_TAP_SENSITIVITY = 1000;
 
 	private static final String IDENTITY_FILE_URL = "https://dl.dropbox.com/s/dwfqdhbf5vdtz18/robots.rif?dl=1";
 	private static final String[][] ERROR_PARTICIPANTS = {{"ERROR"}, {"ERROR"}, {"ERROR"}};
@@ -78,7 +84,8 @@ public class RobotsActivity extends Activity implements MessageListener {
 		//StrictMode.ThreadPolicy()
 		super.onCreate(savedInstanceState);
 		this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		setContentView(R.layout.main);
+		Joystick joystick = new Joystick(this);
+		setContentView(R.layout.testmain);
 
 		// this code allows the MotoE (and probably other phones) to receive broadcast udp packets
 		// they don't accept broadcast messages by default to save battery
@@ -133,18 +140,25 @@ public class RobotsActivity extends Activity implements MessageListener {
 		for (int i = 0; i < participants[0].length; i++) {
 			hm_participants.put(participants[0][i], participants[2][i]);
 		}
+
+		Log.i("GA", "GVH STARTING");
 		gvh = new RealGlobalVarHolder(participants[0][selectedRobot], hm_participants, botInfo[selectedRobot].type, mainHandler, participants[1][selectedRobot], this);
+		Log.i("GA", "SET GVH");
 		mainHandler.setGvh(gvh);
 
+		Log.i("GA", "CONNECT");
 		//Connect
 		connect();
 
+		Log.i("GA", "CREATE APP");
 		createAppInstance(gvh);
 	}
 
 	public void createAppInstance(GlobalVarHolder gvh) {
-		runThread = new FollowApp(gvh);    // Instantiate your application here!
+
+		runThread = new Test(gvh);    // Instantiate your application here!
 		// Example: runThread = new LightPaintActivity(gvh);
+		Log.i("GA", "CREATED APP");
 	}
 
 	public void launch(int numWaypoints, int runNum) {
@@ -211,6 +225,8 @@ public class RobotsActivity extends Activity implements MessageListener {
 	private CheckBox cbRunning;
 	private CheckBox cbRegistered; //status of DJI SDK registration
 	private ProgressBar pbBattery;
+	private Button arm;
+	private Button disarm;
 
 
 	private void setupGUI() {
@@ -225,6 +241,10 @@ public class RobotsActivity extends Activity implements MessageListener {
 		pbBattery = (ProgressBar) findViewById(R.id.pbBattery);
 		pbBattery.setMax(100);
 		cbRegistered = (CheckBox) findViewById(R.id.cbRegistered);
+		arm = (Button)findViewById(R.id.arm);
+		disarm = (Button)findViewById(R.id.disarm);
+
+
 
 		if (!(botInfo[selectedRobot].type instanceof Model_Mavic || botInfo[selectedRobot].type instanceof Model_Phantom)) {
 			cbRegistered.setVisibility(View.GONE);
@@ -257,6 +277,44 @@ public class RobotsActivity extends Activity implements MessageListener {
 			}
 		});
 
+		arm.setOnClickListener(new OnClickListener() {
+			public void onClick(View arg0) {
+				if (CopterControl.getInstance().isCopterConnected()){
+					CopterControl.getInstance().unLock(new OnSendListener() {
+						@Override
+						public void onSuccess() {
+							Toast.makeText(getApplicationContext(), "UnLock Succeeds", Toast.LENGTH_SHORT).show();
+						}
+						@Override
+						public void onFailure() {
+							Toast.makeText(getApplicationContext(), "UnLock Fails", Toast.LENGTH_SHORT).show();
+						}
+					});
+				}
+			}
+		});
+
+
+		disarm.setOnClickListener(new OnClickListener() {
+			public void onClick(View arg0) {
+				if (CopterControl.getInstance().isCopterConnected()){
+					CopterControl.getInstance().lock(new OnSendListener() {
+						@Override
+						public void onSuccess() {
+							Toast.makeText(getApplicationContext(), "Lock Succeeds", Toast.LENGTH_SHORT).show();
+
+						}
+						@Override
+						public void onFailure() {
+							Toast.makeText(getApplicationContext(), "Lock Fails", Toast
+									.LENGTH_SHORT).show();
+						}
+					});
+				}
+			}
+		});
+
+
 	}
 
 	@Override
@@ -282,5 +340,20 @@ public class RobotsActivity extends Activity implements MessageListener {
 				break;
 		}
 	}
+
+	@Override
+	public void OnJoystickMoved(float xPercent, float yPercent, int source) {
+		switch (source)
+		{
+			case R.id.leftJoystick:
+				Log.d(TAG, "Left Joystick:"+ " X percent: " + xPercent + " Y percent: " + yPercent);
+				break;
+			case R.id.rightJoystick:
+				Log.d(TAG, "Right Joystick:" + " X percent: " + xPercent + " Y percent: " + yPercent);
+				break;
+
+		}
+	}
+
 
 }

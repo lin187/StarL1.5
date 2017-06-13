@@ -1,4 +1,4 @@
-package edu.illinois.mitra.template;
+package com.visis.testcontroller;
 
 import android.content.Context;
 import android.os.Handler;
@@ -8,6 +8,7 @@ import android.widget.CheckBox;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.objects.HandlerMessage;
 

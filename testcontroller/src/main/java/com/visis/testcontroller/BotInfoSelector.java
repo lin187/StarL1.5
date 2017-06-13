@@ -1,12 +1,12 @@
-package edu.illinois.mitra.template;
+package com.visis.testcontroller;
 
 import edu.illinois.mitra.starl.interfaces.TrackedRobot;
+import edu.illinois.mitra.starl.models.Model_3DR;
 import edu.illinois.mitra.starl.models.Model_GhostAerial;
 import edu.illinois.mitra.starl.models.Model_Mavic;
 import edu.illinois.mitra.starl.models.Model_Phantom;
 import edu.illinois.mitra.starl.models.Model_iRobot;
 import edu.illinois.mitra.starl.models.Model_quadcopter;
-import edu.illinois.mitra.starl.models.Model_3DR;
 import edu.illinois.mitra.starl.objects.Common;
 
 /**

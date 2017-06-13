@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/starLib/starLib.iml" filepath="$PROJECT_DIR$/starLib/starLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/starl.iml" filepath="$PROJECT_DIR$/starl.iml" />
       <module fileurl="file://$PROJECT_DIR$/starlTemplate/starlTemplate.iml" filepath="$PROJECT_DIR$/starlTemplate/starlTemplate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/testcontroller/testcontroller.iml" filepath="$PROJECT_DIR$/testcontroller/testcontroller.iml" />
     </modules>
   </component>
 </project>

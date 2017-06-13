@@ -1,4 +1,7 @@
-package edu.illinois.mitra.template;
+package com.visis.testcontroller;
+
+import android.os.AsyncTask;
+import android.util.Log;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -9,9 +12,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
-
-import android.os.AsyncTask;
-import android.util.Log;
 
 public class IdentityLoader {
 

@@ -42,7 +42,6 @@ public class GhostAerialBTI implements DeviceControllerListener {
     private String mac;
     private GlobalVarHolder gvh;
     private OnConnectionListener GBoxListener;
-    private ConnectionListener CopterConnListener;
 
     //private ConnectTask task;
     public GhostAerialBTI(GlobalVarHolder gvh, Context context, String mac) {
@@ -58,10 +57,9 @@ public class GhostAerialBTI implements DeviceControllerListener {
 
     public void myConnect() {
         bound = false;
-        BTAdapter = BluetoothAdapter.getDefaultAdapter();
+        //BTAdapter = BluetoothAdapter.getDefaultAdapter();
         initReceivers();
         CopterControl.getInstance().getConnection().connect(mac,GBoxListener);
-        CopterControl.getInstance().getConnection().addCopterConnectionListener(CopterConnListener);
 
 
         //registerReceivers();
@@ -187,21 +185,11 @@ public class GhostAerialBTI implements DeviceControllerListener {
             };
             //devicesListUpdatedReceiver = new DeviceFinder();
 
-            CopterConnListener = new ConnectionListener() {
-                @Override
-                public void onConnect() {
-                    Toast.makeText(context, "Copter Connected", Toast.LENGTH_SHORT).show();
-                    Log.i(TAG, ""+ CopterControl.getInstance().getCurrentMode());
-                }
-                @Override
-                public void onDisconnect() {
-                    Toast.makeText(context, "Copter Disconnected", Toast.LENGTH_SHORT).show();
-                }
-            };
-
         }
 
     private void setupController() {
+        Log.d(TAG, "Setup Controller");
+        Log.i(TAG,"connected " + CopterControl.getInstance().isCopterConnected());
         deviceController = new GhostAerialDeviceController(context);
         deviceController.setListener(this);
         // start the device controller

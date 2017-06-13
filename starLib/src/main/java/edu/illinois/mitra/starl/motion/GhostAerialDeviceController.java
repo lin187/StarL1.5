@@ -55,7 +55,7 @@ public class GhostAerialDeviceController
     private void startNetwork()
     {
         final Context context = this.context;
-        OnSendListener pairListener = new OnSendListener() {
+         OnSendListener pairListener = new OnSendListener() {
             @Override
             public void onSuccess() {
                 Toast.makeText(context, "Pairing Succeeds", Toast.LENGTH_SHORT).show();
@@ -70,7 +70,7 @@ public class GhostAerialDeviceController
         };
 
         CopterControl.getInstance().startPair(pairListener);
-        Toast.makeText(context,"Paired: " + CopterControl.getInstance(), Toast.LENGTH_SHORT).show();
+        Log.i(TAG,"Paired: " + CopterControl.getInstance());
 
     }
 
@@ -82,7 +82,7 @@ public class GhostAerialDeviceController
 
     protected void registerListeners ()
     {
-
+        Log.i(TAG, "Register listeners");
         CopterListener = new ConnectionListener(){
             @Override
             public void onConnect() {
@@ -104,10 +104,11 @@ public class GhostAerialDeviceController
             }
             @Override
             public void onDisconnect() {
-                Toast.makeText(context, TAG + "Copter Disconnected", Toast.LENGTH_SHORT).show();
+                Log.i(TAG, "Copter Disconnected");
 
             }
         };
+
         CopterControl.getInstance().getConnection().addCopterConnectionListener(CopterListener);
 
     }

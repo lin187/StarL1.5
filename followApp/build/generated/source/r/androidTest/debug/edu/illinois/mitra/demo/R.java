@@ -50,6 +50,7 @@ public final class R {
         public static final int btnConnect = 0x7f0a0013;
         public static final int cbBluetooth = 0x7f0a0017;
         public static final int cbGPS = 0x7f0a0015;
+        public static final int cbRegistered = 0x7f0a001a;
         public static final int cbRunning = 0x7f0a0019;
         public static final int dbg_region = 0x7f0a0009;
         public static final int demi = 0x7f0a0003;
@@ -70,7 +71,7 @@ public final class R {
         public static final int phone = 0x7f0a0001;
         public static final int set_sre_button = 0x7f0a000b;
         public static final int textView1 = 0x7f0a0011;
-        public static final int tv_debug = 0x7f0a001a;
+        public static final int tv_debug = 0x7f0a001b;
         public static final int txtRobotName = 0x7f0a0012;
         public static final int webview = 0x7f0a0006;
     }

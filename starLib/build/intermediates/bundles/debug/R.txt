@@ -32,6 +32,7 @@ int id bold 0x7f0a0002
 int id btnConnect 0x7f0a0013
 int id cbBluetooth 0x7f0a0017
 int id cbGPS 0x7f0a0015
+int id cbRegistered 0x7f0a001a
 int id cbRunning 0x7f0a0019
 int id dbg_region 0x7f0a0009
 int id demi 0x7f0a0003
@@ -52,7 +53,7 @@ int id pb_bluetooth 0x7f0a0018
 int id phone 0x7f0a0001
 int id set_sre_button 0x7f0a000b
 int id textView1 0x7f0a0011
-int id tv_debug 0x7f0a001a
+int id tv_debug 0x7f0a001b
 int id txtRobotName 0x7f0a0012
 int id webview 0x7f0a0006
 int layout dialog_login 0x7f030000
