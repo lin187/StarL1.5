@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\dronekit-android-dronekit-android-v3.0.2\\ClientLib\\build\\intermediates\\res\\merged\\debug\\color\\common_google_signin_btn_tint.xml",
+        "source": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\color\\common_google_signin_btn_tint.xml"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\dronekit-android-dronekit-android-v3.0.2\\ClientLib\\build\\intermediates\\res\\merged\\debug\\color\\common_google_signin_btn_text_dark.xml",
+        "source": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\color\\common_google_signin_btn_text_dark.xml"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\dronekit-android-dronekit-android-v3.0.2\\ClientLib\\build\\intermediates\\res\\merged\\debug\\color\\common_google_signin_btn_text_light.xml",
+        "source": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\color\\common_google_signin_btn_text_light.xml"
+    }
+]

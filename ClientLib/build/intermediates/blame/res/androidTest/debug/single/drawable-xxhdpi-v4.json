@@ -1,0 +1,30 @@
+[
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\dronekit-android-dronekit-android-v3.0.2\\ClientLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xxhdpi-v4\\ic_stat_notify.png",
+        "source": "C:\\Users\\liangt\\Documents\\dronekit-android-dronekit-android-v3.0.2\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\drawable-xxhdpi-v4\\ic_stat_notify.png"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\dronekit-android-dronekit-android-v3.0.2\\ClientLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xxhdpi-v4\\common_google_signin_btn_text_dark_normal_background.9.png",
+        "source": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\drawable-xxhdpi-v4\\common_google_signin_btn_text_dark_normal_background.9.png"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\dronekit-android-dronekit-android-v3.0.2\\ClientLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xxhdpi-v4\\common_google_signin_btn_icon_light_normal_background.9.png",
+        "source": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\drawable-xxhdpi-v4\\common_google_signin_btn_icon_light_normal_background.9.png"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\dronekit-android-dronekit-android-v3.0.2\\ClientLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xxhdpi-v4\\common_google_signin_btn_text_light_normal_background.9.png",
+        "source": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\drawable-xxhdpi-v4\\common_google_signin_btn_text_light_normal_background.9.png"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\dronekit-android-dronekit-android-v3.0.2\\ClientLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xxhdpi-v4\\googleg_standard_color_18.png",
+        "source": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\drawable-xxhdpi-v4\\googleg_standard_color_18.png"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\dronekit-android-dronekit-android-v3.0.2\\ClientLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xxhdpi-v4\\googleg_disabled_color_18.png",
+        "source": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\drawable-xxhdpi-v4\\googleg_disabled_color_18.png"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\dronekit-android-dronekit-android-v3.0.2\\ClientLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-xxhdpi-v4\\common_google_signin_btn_icon_dark_normal_background.9.png",
+        "source": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\drawable-xxhdpi-v4\\common_google_signin_btn_icon_dark_normal_background.9.png"
+    }
+]

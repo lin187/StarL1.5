@@ -1,5 +1,9 @@
 [
     {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starLib\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi-v4\\ic_launcher.png",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starLib\\src\\main\\res\\drawable-ldpi\\ic_launcher.png"
+    },
+    {
         "merged": "C:\\Users\\alexaad1\\Documents\\starl\\starLib\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi-v4\\ic_launcher.png",
         "source": "C:\\Users\\alexaad1\\Documents\\starl\\starLib\\src\\main\\res\\drawable-ldpi\\ic_launcher.png"
     }

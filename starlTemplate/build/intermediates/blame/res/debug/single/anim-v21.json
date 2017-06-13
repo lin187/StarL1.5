@@ -1,5 +1,13 @@
 [
     {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\anim-v21\\design_bottom_sheet_slide_in.xml",
+        "source": "C:\\Users\\liangt\\.android\\build-cache\\9426fab8a161c9a02f0b77339c56d61be73d544c\\output\\res\\anim-v21\\design_bottom_sheet_slide_in.xml"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\anim-v21\\design_bottom_sheet_slide_out.xml",
+        "source": "C:\\Users\\liangt\\.android\\build-cache\\9426fab8a161c9a02f0b77339c56d61be73d544c\\output\\res\\anim-v21\\design_bottom_sheet_slide_out.xml"
+    },
+    {
         "merged": "C:\\Users\\alexaad1\\Documents\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\anim-v21\\design_bottom_sheet_slide_in.xml",
         "source": "C:\\Users\\alexaad1\\.android\\build-cache\\e95b28d8e91acfed4f863a6a8959e2c14e89ce72\\output\\res\\anim-v21\\design_bottom_sheet_slide_in.xml"
     },
