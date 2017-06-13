@@ -1,58 +1,58 @@
 [
     {
-        "merged": "C:\\Users\\liangt\\Documents\\dronekit-android-dronekit-android-v3.0.2\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_text_dark.xml",
-        "source": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\drawable\\common_google_signin_btn_text_dark.xml"
+        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_text_dark.xml",
+        "source": "C:\\Users\\alexaad1\\.android\\build-cache\\626ec84d24a8789a44478cb955dea42f8eb8289e\\output\\res\\drawable\\common_google_signin_btn_text_dark.xml"
     },
     {
-        "merged": "C:\\Users\\liangt\\Documents\\dronekit-android-dronekit-android-v3.0.2\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_text_light.xml",
-        "source": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\drawable\\common_google_signin_btn_text_light.xml"
+        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_text_light_focused.xml",
+        "source": "C:\\Users\\alexaad1\\.android\\build-cache\\626ec84d24a8789a44478cb955dea42f8eb8289e\\output\\res\\drawable\\common_google_signin_btn_text_light_focused.xml"
     },
     {
-        "merged": "C:\\Users\\liangt\\Documents\\dronekit-android-dronekit-android-v3.0.2\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_text_light_focused.xml",
-        "source": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\drawable\\common_google_signin_btn_text_light_focused.xml"
+        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_icon_dark_focused.xml",
+        "source": "C:\\Users\\alexaad1\\.android\\build-cache\\626ec84d24a8789a44478cb955dea42f8eb8289e\\output\\res\\drawable\\common_google_signin_btn_icon_dark_focused.xml"
     },
     {
-        "merged": "C:\\Users\\liangt\\Documents\\dronekit-android-dronekit-android-v3.0.2\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_icon_light.xml",
-        "source": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\drawable\\common_google_signin_btn_icon_light.xml"
+        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_icon_light.xml",
+        "source": "C:\\Users\\alexaad1\\.android\\build-cache\\626ec84d24a8789a44478cb955dea42f8eb8289e\\output\\res\\drawable\\common_google_signin_btn_icon_light.xml"
     },
     {
-        "merged": "C:\\Users\\liangt\\Documents\\dronekit-android-dronekit-android-v3.0.2\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_icon_disabled.xml",
-        "source": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\drawable\\common_google_signin_btn_icon_disabled.xml"
+        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_icon_disabled.xml",
+        "source": "C:\\Users\\alexaad1\\.android\\build-cache\\626ec84d24a8789a44478cb955dea42f8eb8289e\\output\\res\\drawable\\common_google_signin_btn_icon_disabled.xml"
     },
     {
-        "merged": "C:\\Users\\liangt\\Documents\\dronekit-android-dronekit-android-v3.0.2\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_text_dark_focused.xml",
-        "source": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\drawable\\common_google_signin_btn_text_dark_focused.xml"
+        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_icon_light_focused.xml",
+        "source": "C:\\Users\\alexaad1\\.android\\build-cache\\626ec84d24a8789a44478cb955dea42f8eb8289e\\output\\res\\drawable\\common_google_signin_btn_icon_light_focused.xml"
     },
     {
-        "merged": "C:\\Users\\liangt\\Documents\\dronekit-android-dronekit-android-v3.0.2\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_text_light_normal.xml",
-        "source": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\drawable\\common_google_signin_btn_text_light_normal.xml"
+        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_text_dark_focused.xml",
+        "source": "C:\\Users\\alexaad1\\.android\\build-cache\\626ec84d24a8789a44478cb955dea42f8eb8289e\\output\\res\\drawable\\common_google_signin_btn_text_dark_focused.xml"
     },
     {
-        "merged": "C:\\Users\\liangt\\Documents\\dronekit-android-dronekit-android-v3.0.2\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_icon_dark.xml",
-        "source": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\drawable\\common_google_signin_btn_icon_dark.xml"
+        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_text_light_normal.xml",
+        "source": "C:\\Users\\alexaad1\\.android\\build-cache\\626ec84d24a8789a44478cb955dea42f8eb8289e\\output\\res\\drawable\\common_google_signin_btn_text_light_normal.xml"
     },
     {
-        "merged": "C:\\Users\\liangt\\Documents\\dronekit-android-dronekit-android-v3.0.2\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_icon_dark_normal.xml",
-        "source": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\drawable\\common_google_signin_btn_icon_dark_normal.xml"
+        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_text_dark_normal.xml",
+        "source": "C:\\Users\\alexaad1\\.android\\build-cache\\626ec84d24a8789a44478cb955dea42f8eb8289e\\output\\res\\drawable\\common_google_signin_btn_text_dark_normal.xml"
     },
     {
-        "merged": "C:\\Users\\liangt\\Documents\\dronekit-android-dronekit-android-v3.0.2\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_icon_dark_focused.xml",
-        "source": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\drawable\\common_google_signin_btn_icon_dark_focused.xml"
+        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_icon_light_normal.xml",
+        "source": "C:\\Users\\alexaad1\\.android\\build-cache\\626ec84d24a8789a44478cb955dea42f8eb8289e\\output\\res\\drawable\\common_google_signin_btn_icon_light_normal.xml"
     },
     {
-        "merged": "C:\\Users\\liangt\\Documents\\dronekit-android-dronekit-android-v3.0.2\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_icon_light_focused.xml",
-        "source": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\drawable\\common_google_signin_btn_icon_light_focused.xml"
+        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_text_disabled.xml",
+        "source": "C:\\Users\\alexaad1\\.android\\build-cache\\626ec84d24a8789a44478cb955dea42f8eb8289e\\output\\res\\drawable\\common_google_signin_btn_text_disabled.xml"
     },
     {
-        "merged": "C:\\Users\\liangt\\Documents\\dronekit-android-dronekit-android-v3.0.2\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_text_dark_normal.xml",
-        "source": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\drawable\\common_google_signin_btn_text_dark_normal.xml"
+        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_text_light.xml",
+        "source": "C:\\Users\\alexaad1\\.android\\build-cache\\626ec84d24a8789a44478cb955dea42f8eb8289e\\output\\res\\drawable\\common_google_signin_btn_text_light.xml"
     },
     {
-        "merged": "C:\\Users\\liangt\\Documents\\dronekit-android-dronekit-android-v3.0.2\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_icon_light_normal.xml",
-        "source": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\drawable\\common_google_signin_btn_icon_light_normal.xml"
+        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_icon_dark.xml",
+        "source": "C:\\Users\\alexaad1\\.android\\build-cache\\626ec84d24a8789a44478cb955dea42f8eb8289e\\output\\res\\drawable\\common_google_signin_btn_icon_dark.xml"
     },
     {
-        "merged": "C:\\Users\\liangt\\Documents\\dronekit-android-dronekit-android-v3.0.2\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_text_disabled.xml",
-        "source": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\drawable\\common_google_signin_btn_text_disabled.xml"
+        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_icon_dark_normal.xml",
+        "source": "C:\\Users\\alexaad1\\.android\\build-cache\\626ec84d24a8789a44478cb955dea42f8eb8289e\\output\\res\\drawable\\common_google_signin_btn_icon_dark_normal.xml"
     }
 ]
