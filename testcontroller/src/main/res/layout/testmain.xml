@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:weightSum="1" android:orientation="vertical">
+    android:weightSum="1"
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/linearLayout3"
@@ -26,18 +27,58 @@
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:id="@+id/txtRobotName" android:layout_gravity="center_horizontal" android:text="%RobotName"></TextView>
     <Button android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:text="Connect" android:layout_width="wrap_content" android:id="@+id/btnConnect"></Button>
+
     <LinearLayout android:layout_width="match_parent" android:id="@+id/linearLayout1" android:layout_height="wrap_content" android:orientation="vertical">
+
+        <CheckBox android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/cbRegistered" android:text="Registered" android:clickable="false"></CheckBox>
+
         <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/cbGPS" android:text="GPS" android:clickable="false"></CheckBox>
+
+        <CheckBox android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/cbRunning" android:text="Running" android:clickable="false"
+            android:layout_weight="1"></CheckBox>
+
         <LinearLayout android:layout_width="match_parent" android:id="@+id/linearLayout2" android:layout_height="wrap_content">
             <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/cbBluetooth" android:text="Bluetooth" android:clickable="false"></CheckBox>
             <ProgressBar android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="40px" android:id="@+id/pb_bluetooth" android:visibility="invisible"></ProgressBar>
         </LinearLayout>
-        <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/cbRunning" android:text="Running" android:clickable="false"></CheckBox>
-        <Button android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:text="Arm" android:layout_width="wrap_content" android:id="@+id/arm"></Button>
-        <Button android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:text="Disarm" android:layout_width="wrap_content" android:id="@+id/disarm"></Button>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:text="Takeoff" android:layout_width="wrap_content" android:id="@+id/btnTakeoff"
+                android:layout_weight="1"></Button>
+
+            <Button android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:text="Avatar" android:layout_width="wrap_content" android:id="@+id/avatar"
+                android:layout_weight="1"></Button>
+
+            <Button android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:text="Manual" android:layout_width="wrap_content" android:id="@+id/manual"
+                android:layout_weight="1"></Button>
+
+            <Button android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:text="Disarm" android:layout_width="wrap_content" android:id="@+id/disarm"
+                android:layout_weight="1"></Button>
+
+            <Button android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:text="Arm" android:layout_width="wrap_content" android:id="@+id/arm"
+                android:layout_weight="1"></Button>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtMode"
+                android:layout_weight="1" />
+        </LinearLayout>
+
     </LinearLayout>
+
     <LinearLayout android:layout_height="match_parent" android:layout_width="wrap_content">
-        <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/cbRegistered" android:text="Registered" android:clickable="false"></CheckBox>
+
         <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
             <com.visis.testcontroller.Joystick
                 android:layout_height="match_parent"
