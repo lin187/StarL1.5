@@ -68,7 +68,7 @@ public class Test extends LogicThread {
                     if(destinations.isEmpty()) {
                         stage = Stage.DONE;
                     } else {
-                        currentDestination = getDestination(destinations, destIndex);
+
                         //Log.d(TAG, currentDestination.toString());
                         destIndex++;
                         if(destIndex >= numWaypoints) {
@@ -105,34 +105,6 @@ public class Test extends LogicThread {
         }
     }
 
-    @Override
-    protected void receive(RobotMessage m) {
-        boolean alreadyReceived = false;
-        for(RobotMessage msg : receivedMsgs) {
-            if(msg.getFrom().equals(m.getFrom()) && msg.getContents().equals(m.getContents())) {
-                alreadyReceived = true;
-                break;
-            }
-        }
-        if(m.getMID() == ARRIVED_MSG && !m.getFrom().equals(name) && !alreadyReceived) {
-            gvh.log.d(TAG, "Adding to message count from " + m.getFrom());
-            receivedMsgs.add(m);
-            messageCount++;
-        }
-       /* if((messageCount == numBots) && arrived) {
-            messageCount = 0;
-            stage = Stage.PICK;
-        }*/
-    }
 
-
-    @SuppressWarnings("unchecked")
-    private <X, T> T getDestination(Map<X, T> map, int index) {
-        // Keys must be 0-A format for this to work
-        String key = Integer.toString(index) + "-A";
-        // this is for key that is just an int, no -A
-        //String key = Integer.toString(index);
-        return map.get(key);
-    }
 }
 

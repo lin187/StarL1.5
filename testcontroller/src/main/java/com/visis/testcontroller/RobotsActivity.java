@@ -38,12 +38,14 @@ import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.interfaces.MessageListener;
 import edu.illinois.mitra.starl.models.Model_Mavic;
 import edu.illinois.mitra.starl.models.Model_Phantom;
+import edu.illinois.mitra.starl.motion.GhostAerialBTI;
 import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.HandlerMessage;
 
 public class RobotsActivity extends Activity implements MessageListener, Joystick.JoystickListener {
 	private static final String TAG = "RobotsActivity";
 	private static final String ERR = "Critical Error";
+	private static final float TAKEOFF_ALTITIDE = 1.0f ;
 	private long lastTap_disArmButton = -1;
 	private static long DOUBLE_TAP_SENSITIVITY = 1000;
 
@@ -227,7 +229,11 @@ public class RobotsActivity extends Activity implements MessageListener, Joystic
 	private ProgressBar pbBattery;
 	private Button arm;
 	private Button disarm;
-
+	private Button connect;
+	private Button manual;
+	private Button avatar;
+	private Button btnTakeoff;
+	private boolean avatarSet;
 
 	private void setupGUI() {
 		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -243,7 +249,11 @@ public class RobotsActivity extends Activity implements MessageListener, Joystic
 		cbRegistered = (CheckBox) findViewById(R.id.cbRegistered);
 		arm = (Button)findViewById(R.id.arm);
 		disarm = (Button)findViewById(R.id.disarm);
-
+		connect = (Button)findViewById(R.id.btnConnect);
+		manual = (Button)findViewById(R.id.manual);
+		avatar = (Button)findViewById(R.id.avatar);
+		btnTakeoff = (Button)findViewById(R.id.btnTakeoff);
+		avatarSet = false;
 
 
 		if (!(botInfo[selectedRobot].type instanceof Model_Mavic || botInfo[selectedRobot].type instanceof Model_Phantom)) {
@@ -314,6 +324,66 @@ public class RobotsActivity extends Activity implements MessageListener, Joystic
 			}
 		});
 
+		connect.setOnClickListener(new OnClickListener() {
+			public void onClick(View arg0) {
+				if (!CopterControl.getInstance().isCopterConnected()){
+					CopterControl.getInstance().getConnection().connect(participants[1][selectedRobot], new OnConnectionListener() {
+						@Override
+						public void onSuccess() {
+							Log.d(TAG, "Success");
+						}
+
+						@Override
+						public void onFailure() {
+							Log.d(TAG, "Success");
+						}
+					});
+				}
+			}
+		});
+
+		manual.setOnClickListener(new OnClickListener() {
+			public void onClick(View arg0) {
+				if (!CopterControl.getInstance().isCopterConnected()){
+					CopterControl.getInstance().manual(new OnSendListener() {
+						@Override
+						public void onSuccess() {
+							Toast.makeText(getApplicationContext(), "Set Manual mode Succeeds", Toast.LENGTH_SHORT).show();
+						}
+						@Override
+						public void onFailure() {
+							Toast.makeText(getApplicationContext(), "Set Manual mode Fails", Toast.LENGTH_SHORT).show();
+						}
+					});
+				}
+			}
+		});
+
+		avatar.setOnClickListener(new OnClickListener() {
+			public void onClick(View arg0) {
+				if (!avatarSet){
+					CopterControl.getInstance().startAvatar();
+				}else
+					CopterControl.getInstance().stopAvatar();
+			}
+		});
+
+		btnTakeoff.setOnClickListener(new OnClickListener() {
+			public void onClick(View arg0) {
+				if (CopterControl.getInstance().isCopterConnected()) {
+					CopterControl.getInstance().takeoff(TAKEOFF_ALTITIDE, new OnSendListener() {
+						@Override
+						public void onSuccess() {
+							Toast.makeText(getApplicationContext(), "Takeoff Succeeds", Toast.LENGTH_SHORT).show();
+
+						}
+						@Override
+						public void onFailure() {
+							Toast.makeText(getApplicationContext(), "Takeoff Fails", Toast.LENGTH_SHORT).show();
+						}
+					});
+				}
+		}});
 
 	}
 
@@ -347,6 +417,10 @@ public class RobotsActivity extends Activity implements MessageListener, Joystic
 		{
 			case R.id.leftJoystick:
 				Log.d(TAG, "Left Joystick:"+ " X percent: " + xPercent + " Y percent: " + yPercent);
+				if (CopterControl.getInstance().isCopterConnected()) {
+					CopterControl.getInstance().setThrottle((int) (yPercent * 100.0));
+					CopterControl.getInstance().attitudeControl(null, null, limiting(xPercent)); //goes from -90 to 90, but need -45 to 45
+				}
 				break;
 			case R.id.rightJoystick:
 				Log.d(TAG, "Right Joystick:" + " X percent: " + xPercent + " Y percent: " + yPercent);
@@ -355,5 +429,13 @@ public class RobotsActivity extends Activity implements MessageListener, Joystic
 		}
 	}
 
-
+	public float limiting (double val)
+	{
+		if (val < 0)
+			return 0.0f;
+		else if(val > 360)
+			return 360.0f;
+		else
+			return (float)val;
+	}
 }
