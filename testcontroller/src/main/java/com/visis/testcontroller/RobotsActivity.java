@@ -427,21 +427,25 @@ public class RobotsActivity extends Activity implements MessageListener, Joystic
 		switch (source)
 		{
 			case R.id.leftJoystick:
-				Log.d("Joystick", "Left Joystick:"+ "Throttle: " + (int) (yPercent * 100.0) + " Yaw: " + ((int) Math.toDegrees(Math.asin(limiting(xPercent))))/2);
+				Log.d("Joystick", "Left Joystick:"+ "Throttle: " + (limitingAbsHun(yPercent)) + " Roll: " + ((int) Math.toDegrees(Math.asin(limitingAbsOne(xPercent/100.0))))/2);
 				if (CopterControl.getInstance().isCopterConnected()) {
-					CopterControl.getInstance().setThrottle((int) (yPercent * 100.0));
-					CopterControl.getInstance().attitudeControl((float)((Math.toDegrees(Math.asin(limiting(xPercent))))/2.0), null); //goes from -90 to 90, but need -45 to 45
+					CopterControl.getInstance().setThrottle(-1*(limitingAbsHun(yPercent)));
+					CopterControl.getInstance().attitudeControl((float)((int) Math.toDegrees(Math.asin(limitingAbsOne(xPercent/100.0)))/2), null); //goes from -90 to 90, but need -45 to 45
 				}
 
 				break;
 			case R.id.rightJoystick:
-				Log.d("Joystick", "Right Joystick:" + " X percent: " + xPercent + " Y percent: " + yPercent);
+				Log.d("Joystick", "Right Joystick:" + " Yaw: " + yPercent + "Pitch: " + (float)((int) Math.toDegrees(Math.asin(limitingAbsOne(xPercent/100.0)))/2));
+				if (CopterControl.getInstance().isCopterConnected()) {
+					CopterControl.getInstance().attitudeControl(null,null,((float)((int) Math.toDegrees(Math.asin(limitingAbsOne(yPercent/100.0)))/2)));
+					CopterControl.getInstance().attitudeControl(null,(float)((int) Math.toDegrees(Math.asin(limitingAbsOne(xPercent/100.0)))/2)); //goes from -90 to 90, but need -45 to 45
+				}
 				break;
 
 		}
 	}
 
-	public double limiting (double val)
+	public double limitingAbsOne (double val)
 	{
 		if (val < -1)
 			return -1.0;
@@ -449,5 +453,15 @@ public class RobotsActivity extends Activity implements MessageListener, Joystic
 			return 1.0;
 		else
 			return (float)val;
+	}
+
+	public int limitingAbsHun (double val)
+	{
+		if (val < -100)
+			return -100;
+		else if(val > 100)
+			return 100;
+		else
+			return (int)val;
 	}
 }
