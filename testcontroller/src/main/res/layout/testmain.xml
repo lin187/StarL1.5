@@ -35,6 +35,9 @@
         <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/cbRunning" android:text="Running" android:clickable="false"></CheckBox>
         <Button android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:text="Arm" android:layout_width="wrap_content" android:id="@+id/arm"></Button>
         <Button android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:text="Disarm" android:layout_width="wrap_content" android:id="@+id/disarm"></Button>
+        <Button android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:text="manual" android:layout_width="wrap_content" android:id="@+id/manual"></Button>
+        <Button android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:text="avatar" android:layout_width="wrap_content" android:id="@+id/avatar"></Button>
+        <Button android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:text="takeoff" android:layout_width="wrap_content" android:id="@+id/btnTakeoff"></Button>
     </LinearLayout>
     <LinearLayout android:layout_height="match_parent" android:layout_width="wrap_content">
         <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/cbRegistered" android:text="Registered" android:clickable="false"></CheckBox>
