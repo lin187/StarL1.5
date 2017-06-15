@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.ehang.coptersdk.CopterControl;
 import com.ehang.coptersdk.OnSendListener;
+import com.ehang.coptersdk.bean.FlightMode;
 import com.ehang.coptersdk.connection.OnConnectionListener;
 
 import java.util.HashMap;
@@ -234,6 +235,7 @@ public class RobotsActivity extends Activity implements MessageListener, Joystic
 	private Button avatar;
 	private Button btnTakeoff;
 	private boolean avatarSet;
+	private TextView txtMode;
 
 	private void setupGUI() {
 		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -253,8 +255,10 @@ public class RobotsActivity extends Activity implements MessageListener, Joystic
 		manual = (Button)findViewById(R.id.manual);
 		avatar = (Button)findViewById(R.id.avatar);
 		btnTakeoff = (Button)findViewById(R.id.btnTakeoff);
+		txtMode = (TextView) findViewById(R.id.txtMode);
 		avatarSet = false;
 
+		txtMode.setText("Mode: ???");
 
 		if (!(botInfo[selectedRobot].type instanceof Model_Mavic || botInfo[selectedRobot].type instanceof Model_Phantom)) {
 			cbRegistered.setVisibility(View.GONE);
@@ -294,6 +298,12 @@ public class RobotsActivity extends Activity implements MessageListener, Joystic
 						@Override
 						public void onSuccess() {
 							Toast.makeText(getApplicationContext(), "UnLock Succeeds", Toast.LENGTH_SHORT).show();
+							CopterControl.getInstance().setOnModeChangeListener(new CopterControl.OnModeChangeListener() {
+								@Override
+								public void onChange(FlightMode flightMode) {
+									txtMode.setText("Mode: " + flightMode.toString());
+								}
+							});
 						}
 						@Override
 						public void onFailure() {
@@ -385,6 +395,7 @@ public class RobotsActivity extends Activity implements MessageListener, Joystic
 				}
 		}});
 
+
 	}
 
 	@Override
@@ -416,26 +427,41 @@ public class RobotsActivity extends Activity implements MessageListener, Joystic
 		switch (source)
 		{
 			case R.id.leftJoystick:
-				Log.d(TAG, "Left Joystick:"+ " X percent: " + xPercent + " Y percent: " + yPercent);
+				Log.d("Joystick", "Left Joystick:"+ "Throttle: " + (limitingAbsHun(yPercent)) + " Roll: " + ((int) Math.toDegrees(Math.asin(limitingAbsOne(xPercent/100.0))))/2);
 				if (CopterControl.getInstance().isCopterConnected()) {
-					CopterControl.getInstance().setThrottle((int) (yPercent * 100.0));
-					CopterControl.getInstance().attitudeControl(null, null, limiting(xPercent)); //goes from -90 to 90, but need -45 to 45
+					CopterControl.getInstance().setThrottle(-1*(limitingAbsHun(yPercent)));
+					CopterControl.getInstance().attitudeControl((float)((int) Math.toDegrees(Math.asin(limitingAbsOne(xPercent/100.0)))/2), null); //goes from -90 to 90, but need -45 to 45
 				}
+
 				break;
 			case R.id.rightJoystick:
-				Log.d(TAG, "Right Joystick:" + " X percent: " + xPercent + " Y percent: " + yPercent);
+				Log.d("Joystick", "Right Joystick:" + " Yaw: " + yPercent + "Pitch: " + (float)((int) Math.toDegrees(Math.asin(limitingAbsOne(xPercent/100.0)))/2));
+				if (CopterControl.getInstance().isCopterConnected()) {
+					CopterControl.getInstance().attitudeControl(null,null,((float)((int) Math.toDegrees(Math.asin(limitingAbsOne(yPercent/100.0)))/2)));
+					CopterControl.getInstance().attitudeControl(null,(float)((int) Math.toDegrees(Math.asin(limitingAbsOne(xPercent/100.0)))/2)); //goes from -90 to 90, but need -45 to 45
+				}
 				break;
 
 		}
 	}
 
-	public float limiting (double val)
+	public double limitingAbsOne (double val)
 	{
-		if (val < 0)
-			return 0.0f;
-		else if(val > 360)
-			return 360.0f;
+		if (val < -1)
+			return -1.0;
+		else if(val > 1)
+			return 1.0;
 		else
 			return (float)val;
+	}
+
+	public int limitingAbsHun (double val)
+	{
+		if (val < -100)
+			return -100;
+		else if(val > 100)
+			return 100;
+		else
+			return (int)val;
 	}
 }
