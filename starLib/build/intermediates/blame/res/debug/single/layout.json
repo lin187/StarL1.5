@@ -1,14 +1,14 @@
 [
     {
-        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\starLib\\build\\intermediates\\res\\merged\\debug\\layout\\log_dialog_view.xml",
-        "source": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\layout\\log_dialog_view.xml"
+        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starLib\\build\\intermediates\\res\\merged\\debug\\layout\\log_dialog_view.xml",
+        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\layout\\log_dialog_view.xml"
     },
     {
-        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\starLib\\build\\intermediates\\res\\merged\\debug\\layout\\main.xml",
-        "source": "C:\\Users\\alexaad1\\Documents\\starl\\starLib\\src\\main\\res\\layout\\main.xml"
+        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starLib\\build\\intermediates\\res\\merged\\debug\\layout\\dialog_login.xml",
+        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\layout\\dialog_login.xml"
     },
     {
-        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\starLib\\build\\intermediates\\res\\merged\\debug\\layout\\dialog_login.xml",
-        "source": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\layout\\dialog_login.xml"
+        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starLib\\build\\intermediates\\res\\merged\\debug\\layout\\main.xml",
+        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starLib\\src\\main\\res\\layout\\main.xml"
     }
 ]
