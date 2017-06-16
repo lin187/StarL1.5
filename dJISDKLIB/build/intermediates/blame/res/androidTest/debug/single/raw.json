@@ -112,12 +112,12 @@
         "source": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\raw\\iframe_1280x720_wm220.h264"
     },
     {
-        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\raw\\iframe_1080x720_wm620.h264",
-        "source": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\raw\\iframe_1080x720_wm620.h264"
-    },
-    {
         "merged": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\raw\\iframe_1280x720_3s.h264",
         "source": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\raw\\iframe_1280x720_3s.h264"
+    },
+    {
+        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\raw\\iframe_1080x720_wm620.h264",
+        "source": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\raw\\iframe_1080x720_wm620.h264"
     },
     {
         "merged": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\raw\\iframe_1920x1024_wm620.h264",
