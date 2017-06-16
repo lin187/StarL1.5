@@ -1,14 +1,27 @@
 [
     {
-        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\ClientLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\filepaths.xml",
-        "source": "C:\\Users\\alexaad1\\Documents\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\xml\\filepaths.xml"
+<<<<<<< HEAD
+        "merged": "D:\\6-9Starl\\starl\\ClientLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\google_analytics_tracker.xml",
+        "source": "D:\\6-9Starl\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\xml\\google_analytics_tracker.xml"
     },
     {
-        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\ClientLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\google_analytics_tracker.xml",
-        "source": "C:\\Users\\alexaad1\\Documents\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\xml\\google_analytics_tracker.xml"
+        "merged": "D:\\6-9Starl\\starl\\ClientLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\device_filter.xml",
+        "source": "D:\\6-9Starl\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\xml\\device_filter.xml"
     },
     {
-        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\ClientLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\device_filter.xml",
-        "source": "C:\\Users\\alexaad1\\Documents\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\xml\\device_filter.xml"
+        "merged": "D:\\6-9Starl\\starl\\ClientLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\filepaths.xml",
+        "source": "D:\\6-9Starl\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\xml\\filepaths.xml"
+=======
+        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\google_analytics_tracker.xml",
+        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\xml\\google_analytics_tracker.xml"
+    },
+    {
+        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\device_filter.xml",
+        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\xml\\device_filter.xml"
+    },
+    {
+        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\filepaths.xml",
+        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\xml\\filepaths.xml"
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
     }
 ]

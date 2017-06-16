@@ -27,7 +27,11 @@ public class MotionAutomaton_3DR extends RobotMotion{
     private boolean landed = true;
 
     protected GlobalVarHolder gvh;
+<<<<<<< HEAD
+    protected o3DRController controller;   //3DR is connected with wifi, so should we modify BTI to wifi?
+=======
     //protected o3DRBTI bti;   //3DR is connected with wifi, so should we modify BTI to wifi?
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
 
     // Motion tracking
     protected ItemPosition destination;
@@ -74,10 +78,10 @@ public class MotionAutomaton_3DR extends RobotMotion{
 
     //	private volatile MotionParameters param = settings.build();
 
-    public MotionAutomaton_3DR(GlobalVarHolder gvh, MiniDroneBTI bti) {
+    public MotionAutomaton_3DR(GlobalVarHolder gvh, o3DRController controller) {
         super(gvh.id.getName());
         this.gvh = gvh;
-        this.bti = bti;
+        this.controller = controller;
     }
 
     public void goTo(ItemPosition dest, ObstacleList obsList) {
@@ -236,12 +240,12 @@ public class MotionAutomaton_3DR extends RobotMotion{
 
     protected void setControlInput(double yaw_v, double pitch, double roll, double gaz){
         //Bluetooth command to control the drone
-        bti.setRoll((byte) roll);
-        bti.setPitch((byte) pitch);
-        bti.setYaw((byte) yaw_v);
+        controller.setRoll((byte) roll);
+        controller.setPitch((byte) pitch);
+        controller.setYaw((byte) yaw_v);
         // currently not moving to 3-D waypoints, so not sending a gaz command
         // if in the future you want to send one, uncomment the following line
-        bti.setThrottle((byte) gaz);
+        controller.setThrottle((byte) gaz);
         gvh.log.i(TAG, "control input as, yaw, pitch, roll, thrust " + yaw_v + ", " + pitch + ", " +roll + ", " +gaz);
     }
 
@@ -252,7 +256,7 @@ public class MotionAutomaton_3DR extends RobotMotion{
 
     protected void takeOff(){
         //Bluetooth command to control the drone
-        bti.sendTakeoff();
+        controller.sendTakeoff();
         gvh.log.i(TAG, "Drone taking off");
     }
 
@@ -263,7 +267,7 @@ public class MotionAutomaton_3DR extends RobotMotion{
 
     protected void land(){
         //Bluetooth command to control the drone
-        bti.sendLanding();
+        controller.sendLanding();
         gvh.log.i(TAG, "Drone landing");
     }
 
@@ -274,7 +278,7 @@ public class MotionAutomaton_3DR extends RobotMotion{
 
     protected void hover(){
         //Bluetooth command to control the drone
-        bti.hover();
+        controller.hover();
         gvh.log.i(TAG, "Drone hovering");
     }
 
@@ -292,7 +296,7 @@ public class MotionAutomaton_3DR extends RobotMotion{
     }
 
     private void setMaxTilt(float val) {
-        bti.setMaxTilt(val);
+        controller.setMaxTilt(val);
     }
 
     @Override

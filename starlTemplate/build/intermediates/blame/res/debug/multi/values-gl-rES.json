@@ -1,6 +1,10 @@
 [
     {
-        "outputFile": "C:\\Users\\alexaad1\\Documents\\starl\\starlTemplate\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-gl-rES\\values-gl-rES.xml",
+<<<<<<< HEAD
+        "outputFile": "D:\\6-9Starl\\starl\\starlTemplate\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-gl-rES\\values-gl-rES.xml",
+=======
+        "outputFile": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starlTemplate\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-gl-rES\\values-gl-rES.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
         "map": [
             {
                 "to": {
@@ -11,7 +15,11 @@
                     "endOffset": 162
                 },
                 "from": {
-                    "file": "C:\\Users\\alexaad1\\.android\\build-cache\\d5f7d3ddb8b19ced645a8028ff853fa8cec00ba7\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+<<<<<<< HEAD
+                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+=======
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -30,7 +38,11 @@
                     "endOffset": 270
                 },
                 "from": {
-                    "file": "C:\\Users\\alexaad1\\.android\\build-cache\\d5f7d3ddb8b19ced645a8028ff853fa8cec00ba7\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+<<<<<<< HEAD
+                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+=======
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
@@ -49,7 +61,11 @@
                     "endOffset": 393
                 },
                 "from": {
-                    "file": "C:\\Users\\alexaad1\\.android\\build-cache\\d5f7d3ddb8b19ced645a8028ff853fa8cec00ba7\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+<<<<<<< HEAD
+                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+=======
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,
@@ -68,7 +84,11 @@
                     "endOffset": 505
                 },
                 "from": {
-                    "file": "C:\\Users\\alexaad1\\.android\\build-cache\\d5f7d3ddb8b19ced645a8028ff853fa8cec00ba7\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+<<<<<<< HEAD
+                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+=======
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 5,
                         "startColumn": 4,
@@ -87,7 +107,11 @@
                     "endOffset": 613
                 },
                 "from": {
-                    "file": "C:\\Users\\alexaad1\\.android\\build-cache\\d5f7d3ddb8b19ced645a8028ff853fa8cec00ba7\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+<<<<<<< HEAD
+                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+=======
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 6,
                         "startColumn": 4,
@@ -106,7 +130,11 @@
                     "endOffset": 698
                 },
                 "from": {
-                    "file": "C:\\Users\\alexaad1\\.android\\build-cache\\d5f7d3ddb8b19ced645a8028ff853fa8cec00ba7\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+<<<<<<< HEAD
+                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+=======
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 7,
                         "startColumn": 4,
@@ -125,7 +153,11 @@
                     "endOffset": 800
                 },
                 "from": {
-                    "file": "C:\\Users\\alexaad1\\.android\\build-cache\\d5f7d3ddb8b19ced645a8028ff853fa8cec00ba7\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+<<<<<<< HEAD
+                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+=======
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 8,
                         "startColumn": 4,
@@ -144,7 +176,11 @@
                     "endOffset": 926
                 },
                 "from": {
-                    "file": "C:\\Users\\alexaad1\\.android\\build-cache\\d5f7d3ddb8b19ced645a8028ff853fa8cec00ba7\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+<<<<<<< HEAD
+                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+=======
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 9,
                         "startColumn": 4,
@@ -163,7 +199,11 @@
                     "endOffset": 1010
                 },
                 "from": {
-                    "file": "C:\\Users\\alexaad1\\.android\\build-cache\\d5f7d3ddb8b19ced645a8028ff853fa8cec00ba7\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+<<<<<<< HEAD
+                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+=======
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 10,
                         "startColumn": 4,
@@ -182,7 +222,11 @@
                     "endOffset": 1091
                 },
                 "from": {
-                    "file": "C:\\Users\\alexaad1\\.android\\build-cache\\d5f7d3ddb8b19ced645a8028ff853fa8cec00ba7\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+<<<<<<< HEAD
+                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+=======
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 11,
                         "startColumn": 4,
@@ -201,7 +245,11 @@
                     "endOffset": 1173
                 },
                 "from": {
-                    "file": "C:\\Users\\alexaad1\\.android\\build-cache\\d5f7d3ddb8b19ced645a8028ff853fa8cec00ba7\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+<<<<<<< HEAD
+                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+=======
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 12,
                         "startColumn": 4,
@@ -220,7 +268,11 @@
                     "endOffset": 1280
                 },
                 "from": {
-                    "file": "C:\\Users\\alexaad1\\.android\\build-cache\\d5f7d3ddb8b19ced645a8028ff853fa8cec00ba7\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+<<<<<<< HEAD
+                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+=======
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 13,
                         "startColumn": 4,
@@ -239,7 +291,11 @@
                     "endOffset": 1389
                 },
                 "from": {
-                    "file": "C:\\Users\\alexaad1\\.android\\build-cache\\d5f7d3ddb8b19ced645a8028ff853fa8cec00ba7\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+<<<<<<< HEAD
+                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+=======
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 14,
                         "startColumn": 4,
@@ -258,7 +314,11 @@
                     "endOffset": 1488
                 },
                 "from": {
-                    "file": "C:\\Users\\alexaad1\\.android\\build-cache\\d5f7d3ddb8b19ced645a8028ff853fa8cec00ba7\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+<<<<<<< HEAD
+                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+=======
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 15,
                         "startColumn": 4,
@@ -277,7 +337,11 @@
                     "endOffset": 1596
                 },
                 "from": {
-                    "file": "C:\\Users\\alexaad1\\.android\\build-cache\\d5f7d3ddb8b19ced645a8028ff853fa8cec00ba7\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+<<<<<<< HEAD
+                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+=======
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 16,
                         "startColumn": 4,
@@ -296,7 +360,11 @@
                     "endOffset": 1699
                 },
                 "from": {
-                    "file": "C:\\Users\\alexaad1\\.android\\build-cache\\d5f7d3ddb8b19ced645a8028ff853fa8cec00ba7\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+<<<<<<< HEAD
+                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+=======
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 17,
                         "startColumn": 4,
@@ -315,7 +383,11 @@
                     "endOffset": 1806
                 },
                 "from": {
-                    "file": "C:\\Users\\alexaad1\\.android\\build-cache\\d5f7d3ddb8b19ced645a8028ff853fa8cec00ba7\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+<<<<<<< HEAD
+                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+=======
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 18,
                         "startColumn": 4,
@@ -334,7 +406,11 @@
                     "endOffset": 1928
                 },
                 "from": {
-                    "file": "C:\\Users\\alexaad1\\.android\\build-cache\\d5f7d3ddb8b19ced645a8028ff853fa8cec00ba7\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+<<<<<<< HEAD
+                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+=======
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 19,
                         "startColumn": 4,
@@ -353,7 +429,11 @@
                     "endOffset": 2028
                 },
                 "from": {
-                    "file": "C:\\Users\\alexaad1\\.android\\build-cache\\d5f7d3ddb8b19ced645a8028ff853fa8cec00ba7\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+<<<<<<< HEAD
+                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+=======
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 20,
                         "startColumn": 4,
@@ -372,7 +452,11 @@
                     "endOffset": 2110
                 },
                 "from": {
-                    "file": "C:\\Users\\alexaad1\\.android\\build-cache\\d5f7d3ddb8b19ced645a8028ff853fa8cec00ba7\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+<<<<<<< HEAD
+                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+=======
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 21,
                         "startColumn": 4,
@@ -391,7 +475,11 @@
                     "endOffset": 2211
                 },
                 "from": {
-                    "file": "C:\\Users\\alexaad1\\.android\\build-cache\\d5f7d3ddb8b19ced645a8028ff853fa8cec00ba7\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+<<<<<<< HEAD
+                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+=======
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-gl-rES\\values-gl-rES.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 22,
                         "startColumn": 4,

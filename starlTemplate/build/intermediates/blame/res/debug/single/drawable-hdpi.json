@@ -1,10 +1,19 @@
 [
     {
-        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\icon.png",
-        "source": "C:\\Users\\alexaad1\\Documents\\starl\\starlTemplate\\src\\main\\res\\drawable-hdpi\\icon.png"
+<<<<<<< HEAD
+        "merged": "D:\\6-9Starl\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\icon.png",
+        "source": "D:\\6-9Starl\\starl\\starlTemplate\\src\\main\\res\\drawable-hdpi\\icon.png"
     },
     {
-        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\ic_launcher.png",
-        "source": "C:\\Users\\alexaad1\\Documents\\starl\\starlTemplate\\src\\main\\res\\drawable-hdpi\\ic_launcher.png"
+        "merged": "D:\\6-9Starl\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\ic_launcher.png",
+        "source": "D:\\6-9Starl\\starl\\starlTemplate\\src\\main\\res\\drawable-hdpi\\ic_launcher.png"
+=======
+        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\icon.png",
+        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starlTemplate\\src\\main\\res\\drawable-hdpi\\icon.png"
+    },
+    {
+        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\ic_launcher.png",
+        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starlTemplate\\src\\main\\res\\drawable-hdpi\\ic_launcher.png"
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
     }
 ]

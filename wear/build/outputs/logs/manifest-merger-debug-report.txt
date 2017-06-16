@@ -1,0 +1,78 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml:2:1-29:12
+	package
+		ADDED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml:3:5-45
+		INJECTED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml:2:11-69
+	android:versionCode
+		INJECTED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml
+meta-data#com.google.android.wearable.standalone
+ADDED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml:5:5-7:32
+	android:value
+		ADDED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml:7:9-29
+	android:name
+		ADDED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml:6:9-62
+uses-feature#android.hardware.type.watch
+ADDED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml:9:5-64
+	android:name
+		ADDED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml:9:19-61
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml:11:5-81
+	android:name
+		ADDED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml:11:22-78
+uses-permission#android.permission.RECORD_AUDIO
+ADDED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml:12:5-71
+	android:name
+		ADDED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml:12:22-68
+application
+ADDED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml:14:5-27:19
+MERGED from [com.google.android.support:wearable:2.0.0] C:\Users\wangcs2\.android\build-cache\14b6afac9498a47c9c8caccf7cc4d2f4e6639573\output\AndroidManifest.xml:6:5-19
+MERGED from [com.android.support:percent:23.0.1] C:\Users\wangcs2\.android\build-cache\ac6af6ee433faf2a65807e464250d6f0aa7fa15c\output\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.0.1] C:\Users\wangcs2\.android\build-cache\5544da34b89694d64a2f2e7d3b9b430a4cd1cc19\output\AndroidManifest.xml:22:5-20
+	android:label
+		ADDED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml:17:9-41
+	android:supportsRtl
+		ADDED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml:18:9-35
+	android:allowBackup
+		ADDED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml:15:9-36
+	android:icon
+		ADDED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml:16:9-43
+	android:theme
+		ADDED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml:19:9-59
+activity#edu.cmu.pocketsphinx.demo.wear.WearActivity
+ADDED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml:20:9-26:20
+	android:label
+		ADDED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml:20:48-80
+	android:name
+		ADDED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml:20:19-47
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml:21:13-25:29
+action#android.intent.action.MAIN
+ADDED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml:22:17-69
+	android:name
+		ADDED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml:22:25-66
+category#android.intent.category.LAUNCHER
+ADDED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml:24:17-77
+	android:name
+		ADDED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml:24:27-74
+uses-sdk
+INJECTED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [starl:aars:unspecified] C:\Users\wangcs2\.android\build-cache\cb1a1b2e2e8884fd94a48c8fb90bd8f2e4e56dec\output\AndroidManifest.xml:7:5-9:41
+MERGED from [starl:models:unspecified] C:\Users\wangcs2\Desktop\EhangFinal\starl\models\build\intermediates\bundles\default\AndroidManifest.xml:7:5-9:41
+MERGED from [com.google.android.support:wearable:2.0.0] C:\Users\wangcs2\.android\build-cache\14b6afac9498a47c9c8caccf7cc4d2f4e6639573\output\AndroidManifest.xml:4:5-72
+MERGED from [com.android.support:percent:23.0.1] C:\Users\wangcs2\.android\build-cache\ac6af6ee433faf2a65807e464250d6f0aa7fa15c\output\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:recyclerview-v7:23.0.1] C:\Users\wangcs2\.android\build-cache\9331edf19654e49570ac5a87dc9997d263b8df33\output\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.0.1] C:\Users\wangcs2\.android\build-cache\5544da34b89694d64a2f2e7d3b9b430a4cd1cc19\output\AndroidManifest.xml:20:5-43
+	android:targetSdkVersion
+		INJECTED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\wangcs2\Desktop\EhangFinal\starl\wear\src\main\AndroidManifest.xml
