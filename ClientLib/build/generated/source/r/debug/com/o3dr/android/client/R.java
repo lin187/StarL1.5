@@ -8,6 +8,7 @@
 package com.o3dr.android.client;
 
 public final class R {
+<<<<<<< HEAD
     public static final class anim {
         public static int abc_fade_in=0x7f040000;
         public static int abc_fade_out=0x7f040001;
@@ -7077,11 +7078,30 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 
 
           <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+=======
+    public static final class attr {
+        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>standard</code></td><td>0</td><td></td></tr>
+<tr><td><code>wide</code></td><td>1</td><td></td></tr>
+<tr><td><code>icon_only</code></td><td>2</td><td></td></tr>
+</table>
+         */
+        public static int buttonSize=0x7f010003;
+        /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
+<<<<<<< HEAD
           @attr name com.o3dr.android.client:subtitle
         */
         public static int Toolbar_subtitle = 3;
@@ -7212,11 +7232,31 @@ containing a value of this type.
           <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
 in (inches), mm (millimeters).
+=======
+         */
+        public static int circleCrop=0x7f010002;
+        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>dark</code></td><td>0</td><td></td></tr>
+<tr><td><code>light</code></td><td>1</td><td></td></tr>
+<tr><td><code>auto</code></td><td>2</td><td></td></tr>
+</table>
+         */
+        public static int colorScheme=0x7f010004;
+        /** <p>Must be a floating point value, such as "<code>1.2</code>".
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
+<<<<<<< HEAD
           @attr name com.o3dr.android.client:titleMargins
         */
         public static int Toolbar_titleMargins = 19;
@@ -7246,11 +7286,181 @@ containing a value of this type.
         */
         public static int Toolbar_titleTextColor = 27;
         /** Attributes that can be used with a View.
+=======
+         */
+        public static int imageAspectRatio=0x7f010001;
+        /** <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>none</code></td><td>0</td><td></td></tr>
+<tr><td><code>adjust_width</code></td><td>1</td><td></td></tr>
+<tr><td><code>adjust_height</code></td><td>2</td><td></td></tr>
+</table>
+         */
+        public static int imageAspectRatioAdjust=0x7f010000;
+        /** <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+         */
+        public static int scopeUris=0x7f010005;
+    }
+    public static final class color {
+        public static int common_google_signin_btn_text_dark=0x7f060008;
+        public static int common_google_signin_btn_text_dark_default=0x7f060000;
+        public static int common_google_signin_btn_text_dark_disabled=0x7f060001;
+        public static int common_google_signin_btn_text_dark_focused=0x7f060002;
+        public static int common_google_signin_btn_text_dark_pressed=0x7f060003;
+        public static int common_google_signin_btn_text_light=0x7f060009;
+        public static int common_google_signin_btn_text_light_default=0x7f060004;
+        public static int common_google_signin_btn_text_light_disabled=0x7f060005;
+        public static int common_google_signin_btn_text_light_focused=0x7f060006;
+        public static int common_google_signin_btn_text_light_pressed=0x7f060007;
+        public static int common_google_signin_btn_tint=0x7f06000a;
+    }
+    public static final class drawable {
+        public static int common_full_open_on_phone=0x7f020000;
+        public static int common_google_signin_btn_icon_dark=0x7f020001;
+        public static int common_google_signin_btn_icon_dark_focused=0x7f020002;
+        public static int common_google_signin_btn_icon_dark_normal=0x7f020003;
+        public static int common_google_signin_btn_icon_dark_normal_background=0x7f020004;
+        public static int common_google_signin_btn_icon_disabled=0x7f020005;
+        public static int common_google_signin_btn_icon_light=0x7f020006;
+        public static int common_google_signin_btn_icon_light_focused=0x7f020007;
+        public static int common_google_signin_btn_icon_light_normal=0x7f020008;
+        public static int common_google_signin_btn_icon_light_normal_background=0x7f020009;
+        public static int common_google_signin_btn_text_dark=0x7f02000a;
+        public static int common_google_signin_btn_text_dark_focused=0x7f02000b;
+        public static int common_google_signin_btn_text_dark_normal=0x7f02000c;
+        public static int common_google_signin_btn_text_dark_normal_background=0x7f02000d;
+        public static int common_google_signin_btn_text_disabled=0x7f02000e;
+        public static int common_google_signin_btn_text_light=0x7f02000f;
+        public static int common_google_signin_btn_text_light_focused=0x7f020010;
+        public static int common_google_signin_btn_text_light_normal=0x7f020011;
+        public static int common_google_signin_btn_text_light_normal_background=0x7f020012;
+        public static int googleg_disabled_color_18=0x7f020013;
+        public static int googleg_standard_color_18=0x7f020014;
+        public static int ic_stat_notify=0x7f020015;
+    }
+    public static final class id {
+        public static int adjust_height=0x7f080000;
+        public static int adjust_width=0x7f080001;
+        public static int auto=0x7f080006;
+        public static int dark=0x7f080007;
+        public static int icon_only=0x7f080003;
+        public static int light=0x7f080008;
+        public static int none=0x7f080002;
+        public static int standard=0x7f080004;
+        public static int wide=0x7f080005;
+    }
+    public static final class integer {
+        public static int core_lib_version=0x7f070000;
+        public static int google_play_services_version=0x7f070001;
+    }
+    public static final class layout {
+        public static int list_item_tlog_info=0x7f030000;
+    }
+    public static final class string {
+        public static int common_google_play_services_enable_button=0x7f050000;
+        public static int common_google_play_services_enable_text=0x7f050001;
+        public static int common_google_play_services_enable_title=0x7f050002;
+        public static int common_google_play_services_install_button=0x7f050003;
+        public static int common_google_play_services_install_text=0x7f050004;
+        public static int common_google_play_services_install_title=0x7f050005;
+        public static int common_google_play_services_notification_ticker=0x7f050006;
+        public static int common_google_play_services_unknown_issue=0x7f050007;
+        public static int common_google_play_services_unsupported_text=0x7f050008;
+        public static int common_google_play_services_update_button=0x7f050009;
+        public static int common_google_play_services_update_text=0x7f05000a;
+        public static int common_google_play_services_update_title=0x7f05000b;
+        public static int common_google_play_services_updating_text=0x7f05000c;
+        public static int common_google_play_services_wear_update_text=0x7f05000d;
+        public static int common_open_on_phone=0x7f05000e;
+        public static int common_signin_button_text=0x7f05000f;
+        public static int common_signin_button_text_long=0x7f050010;
+        public static int copter_alt_hold_label=0x7f050011;
+        public static int copter_auto_label=0x7f050012;
+        public static int copter_auto_tune_label=0x7f050013;
+        public static int copter_guided_label=0x7f050014;
+        public static int copter_loiter_label=0x7f050015;
+        public static int copter_pos_hold_label=0x7f050016;
+        public static int copter_rtl_label=0x7f050017;
+        public static int error_accelerometers_not_healthy=0x7f050018;
+        public static int error_acro_bal_roll_pitch=0x7f050019;
+        public static int error_altitude_disparity=0x7f05001a;
+        public static int error_auto_tune_failed=0x7f05001b;
+        public static int error_barometer_not_healthy=0x7f05001c;
+        public static int error_check_angle_max=0x7f05001d;
+        public static int error_check_board_voltage=0x7f05001e;
+        public static int error_check_failsafe_threshold=0x7f05001f;
+        public static int error_check_geo_fence=0x7f050020;
+        public static int error_check_magnetic_field=0x7f050021;
+        public static int error_compass_calibration_running=0x7f050022;
+        public static int error_compass_not_calibrated=0x7f050023;
+        public static int error_compass_not_healthy=0x7f050024;
+        public static int error_compass_offsets_too_high=0x7f050025;
+        public static int error_crash=0x7f050026;
+        public static int error_duplicate_aux_switch_options=0x7f050027;
+        public static int error_ekf_home_variance=0x7f050028;
+        public static int error_ekf_variance=0x7f050029;
+        public static int error_gps_glitch=0x7f05002a;
+        public static int error_gyro_calibration_failed=0x7f05002b;
+        public static int error_gyros_not_healthy=0x7f05002c;
+        public static int error_high_gps_hdop=0x7f05002d;
+        public static int error_inconsistent_accelerometers=0x7f05002e;
+        public static int error_inconsistent_compass=0x7f05002f;
+        public static int error_inconsistent_gyros=0x7f050030;
+        public static int error_ins_not_calibrated=0x7f050031;
+        public static int error_low_battery=0x7f050032;
+        public static int error_mode_not_armable=0x7f050033;
+        public static int error_need_gps_lock=0x7f050034;
+        public static int error_no_dataflash=0x7f050035;
+        public static int error_no_error=0x7f050036;
+        public static int error_parachute_too_low=0x7f050037;
+        public static int error_rc_failsafe=0x7f050038;
+        public static int error_rc_not_calibrated=0x7f050039;
+        public static int error_rotor_not_spinning=0x7f05003a;
+        public static int error_safety_switch=0x7f05003b;
+        public static int error_throttle_below_failsafe=0x7f05003c;
+        public static int error_throttle_too_high=0x7f05003d;
+        public static int error_vehicle_leaning=0x7f05003e;
+        public static int error_waiting_for_navigation_alignment=0x7f05003f;
+        public static int label_cable_cam=0x7f050040;
+        public static int label_follow=0x7f050041;
+        public static int label_free_flight=0x7f050042;
+        public static int label_inspect=0x7f050043;
+        public static int label_orbit=0x7f050044;
+        public static int label_pano=0x7f050045;
+        public static int label_preset_cable_cam=0x7f050046;
+        public static int label_preset_orbit=0x7f050047;
+        public static int label_preset_selfie=0x7f050048;
+        public static int label_return_home=0x7f050049;
+        public static int label_rewind=0x7f05004a;
+        public static int label_scan=0x7f05004b;
+        public static int label_selfie=0x7f05004c;
+        public static int label_survey=0x7f05004d;
+        public static int label_tlog_title=0x7f05004e;
+        public static int label_transect=0x7f05004f;
+        public static int label_zipline=0x7f050050;
+        public static int loading_data=0x7f050051;
+        public static int tlog_selector_label=0x7f050052;
+    }
+    public static final class xml {
+        public static int device_filter=0x7f040000;
+        public static int filepaths=0x7f040001;
+        public static int google_analytics_tracker=0x7f040002;
+    }
+    public static final class styleable {
+        /** Attributes that can be used with a LoadingImageView.
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
            <p>Includes the following attributes:</p>
            <table>
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
+<<<<<<< HEAD
            <tr><td><code>{@link #View_android_focusable android:focusable}</code></td><td></td></tr>
            <tr><td><code>{@link #View_android_theme android:theme}</code></td><td></td></tr>
            <tr><td><code>{@link #View_paddingEnd com.o3dr.android.client:paddingEnd}</code></td><td></td></tr>
@@ -7287,11 +7497,31 @@ containing a value of this type.
           <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
 in (inches), mm (millimeters).
+=======
+           <tr><td><code>{@link #LoadingImageView_circleCrop com.o3dr.android.client:circleCrop}</code></td><td></td></tr>
+           <tr><td><code>{@link #LoadingImageView_imageAspectRatio com.o3dr.android.client:imageAspectRatio}</code></td><td></td></tr>
+           <tr><td><code>{@link #LoadingImageView_imageAspectRatioAdjust com.o3dr.android.client:imageAspectRatioAdjust}</code></td><td></td></tr>
+           </table>
+           @see #LoadingImageView_circleCrop
+           @see #LoadingImageView_imageAspectRatio
+           @see #LoadingImageView_imageAspectRatioAdjust
+         */
+        public static final int[] LoadingImageView = {
+            0x7f010000, 0x7f010001, 0x7f010002
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.o3dr.android.client.R.attr#circleCrop}
+          attribute's value can be found in the {@link #LoadingImageView} array.
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
+<<<<<<< HEAD
           @attr name com.o3dr.android.client:paddingEnd
         */
         public static int View_paddingEnd = 3;
@@ -7303,11 +7533,23 @@ containing a value of this type.
           <p>Must be a dimension value, which is a floating point number appended with a unit such as "<code>14.5sp</code>".
 Available units are: px (pixels), dp (density-independent pixels), sp (scaled pixels based on preferred font size),
 in (inches), mm (millimeters).
+=======
+          @attr name com.o3dr.android.client:circleCrop
+        */
+        public static int LoadingImageView_circleCrop = 2;
+        /**
+          <p>This symbol is the offset where the {@link com.o3dr.android.client.R.attr#imageAspectRatio}
+          attribute's value can be found in the {@link #LoadingImageView} array.
+
+
+          <p>Must be a floating point value, such as "<code>1.2</code>".
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
 theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
+<<<<<<< HEAD
           @attr name com.o3dr.android.client:paddingStart
         */
         public static int View_paddingStart = 2;
@@ -7322,11 +7564,36 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         */
         public static int View_theme = 4;
         /** Attributes that can be used with a ViewBackgroundHelper.
+=======
+          @attr name com.o3dr.android.client:imageAspectRatio
+        */
+        public static int LoadingImageView_imageAspectRatio = 1;
+        /**
+          <p>This symbol is the offset where the {@link com.o3dr.android.client.R.attr#imageAspectRatioAdjust}
+          attribute's value can be found in the {@link #LoadingImageView} array.
+
+
+          <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>none</code></td><td>0</td><td></td></tr>
+<tr><td><code>adjust_width</code></td><td>1</td><td></td></tr>
+<tr><td><code>adjust_height</code></td><td>2</td><td></td></tr>
+</table>
+          @attr name com.o3dr.android.client:imageAspectRatioAdjust
+        */
+        public static int LoadingImageView_imageAspectRatioAdjust = 0;
+        /** Attributes that can be used with a SignInButton.
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
            <p>Includes the following attributes:</p>
            <table>
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
+<<<<<<< HEAD
            <tr><td><code>{@link #ViewBackgroundHelper_android_background android:background}</code></td><td></td></tr>
            <tr><td><code>{@link #ViewBackgroundHelper_backgroundTint com.o3dr.android.client:backgroundTint}</code></td><td></td></tr>
            <tr><td><code>{@link #ViewBackgroundHelper_backgroundTintMode com.o3dr.android.client:backgroundTintMode}</code></td><td></td></tr>
@@ -7365,11 +7632,53 @@ containing a value of this type.
 
 
           <p>Must be one of the following constant values.</p>
+=======
+           <tr><td><code>{@link #SignInButton_buttonSize com.o3dr.android.client:buttonSize}</code></td><td></td></tr>
+           <tr><td><code>{@link #SignInButton_colorScheme com.o3dr.android.client:colorScheme}</code></td><td></td></tr>
+           <tr><td><code>{@link #SignInButton_scopeUris com.o3dr.android.client:scopeUris}</code></td><td></td></tr>
+           </table>
+           @see #SignInButton_buttonSize
+           @see #SignInButton_colorScheme
+           @see #SignInButton_scopeUris
+         */
+        public static final int[] SignInButton = {
+            0x7f010003, 0x7f010004, 0x7f010005
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.o3dr.android.client.R.attr#buttonSize}
+          attribute's value can be found in the {@link #SignInButton} array.
+
+
+          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be one of the following constant values.</p>
 <table>
 <colgroup align="left" />
 <colgroup align="left" />
 <colgroup align="left" />
 <tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>standard</code></td><td>0</td><td></td></tr>
+<tr><td><code>wide</code></td><td>1</td><td></td></tr>
+<tr><td><code>icon_only</code></td><td>2</td><td></td></tr>
+</table>
+          @attr name com.o3dr.android.client:buttonSize
+        */
+        public static int SignInButton_buttonSize = 0;
+        /**
+          <p>This symbol is the offset where the {@link com.o3dr.android.client.R.attr#colorScheme}
+          attribute's value can be found in the {@link #SignInButton} array.
+
+
+          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be one of the following constant values.</p>
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<<<<<<< HEAD
 <tr><td><code>src_over</code></td><td>3</td><td></td></tr>
 <tr><td><code>src_in</code></td><td>5</td><td></td></tr>
 <tr><td><code>src_atop</code></td><td>9</td><td></td></tr>
@@ -7414,5 +7723,25 @@ containing a value of this type.
           @attr name android:layout
         */
         public static int ViewStubCompat_android_layout = 1;
+=======
+<tr><td><code>dark</code></td><td>0</td><td></td></tr>
+<tr><td><code>light</code></td><td>1</td><td></td></tr>
+<tr><td><code>auto</code></td><td>2</td><td></td></tr>
+</table>
+          @attr name com.o3dr.android.client:colorScheme
+        */
+        public static int SignInButton_colorScheme = 1;
+        /**
+          <p>This symbol is the offset where the {@link com.o3dr.android.client.R.attr#scopeUris}
+          attribute's value can be found in the {@link #SignInButton} array.
+
+
+          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+          @attr name com.o3dr.android.client:scopeUris
+        */
+        public static int SignInButton_scopeUris = 2;
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
     };
 }

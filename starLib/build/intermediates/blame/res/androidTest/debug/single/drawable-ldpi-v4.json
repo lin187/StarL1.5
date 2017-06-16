@@ -1,6 +1,11 @@
 [
     {
+<<<<<<< HEAD
         "merged": "D:\\6-9Starl\\starl\\starLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-ldpi-v4\\ic_launcher.png",
         "source": "D:\\6-9Starl\\starl\\starLib\\build\\intermediates\\bundles\\debug\\res\\drawable-ldpi-v4\\ic_launcher.png"
+=======
+        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-ldpi-v4\\ic_launcher.png",
+        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starLib\\build\\intermediates\\bundles\\debug\\res\\drawable-ldpi-v4\\ic_launcher.png"
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
     }
 ]

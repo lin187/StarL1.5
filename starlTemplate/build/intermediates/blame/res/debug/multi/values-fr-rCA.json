@@ -1,6 +1,10 @@
 [
     {
+<<<<<<< HEAD
         "outputFile": "D:\\6-9Starl\\starl\\starlTemplate\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-fr-rCA\\values-fr-rCA.xml",
+=======
+        "outputFile": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starlTemplate\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-fr-rCA\\values-fr-rCA.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
         "map": [
             {
                 "to": {
@@ -11,7 +15,11 @@
                     "endOffset": 211
                 },
                 "from": {
+<<<<<<< HEAD
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+=======
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -25,12 +33,21 @@
                 "to": {
                     "startLine": 3,
                     "startColumn": 4,
+<<<<<<< HEAD
                     "startOffset": 216,
                     "endColumn": 107,
                     "endOffset": 319
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+=======
+                    "startOffset": 166,
+                    "endColumn": 107,
+                    "endOffset": 269
+                },
+                "from": {
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
@@ -44,12 +61,21 @@
                 "to": {
                     "startLine": 4,
                     "startColumn": 4,
+<<<<<<< HEAD
                     "startOffset": 324,
                     "endColumn": 122,
                     "endOffset": 442
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+=======
+                    "startOffset": 274,
+                    "endColumn": 122,
+                    "endOffset": 392
+                },
+                "from": {
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,
@@ -63,12 +89,21 @@
                 "to": {
                     "startLine": 5,
                     "startColumn": 4,
+<<<<<<< HEAD
                     "startOffset": 447,
                     "endColumn": 114,
                     "endOffset": 557
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+=======
+                    "startOffset": 397,
+                    "endColumn": 114,
+                    "endOffset": 507
+                },
+                "from": {
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 5,
                         "startColumn": 4,
@@ -82,12 +117,21 @@
                 "to": {
                     "startLine": 6,
                     "startColumn": 4,
+<<<<<<< HEAD
                     "startOffset": 562,
                     "endColumn": 110,
                     "endOffset": 668
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+=======
+                    "startOffset": 512,
+                    "endColumn": 110,
+                    "endOffset": 618
+                },
+                "from": {
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 6,
                         "startColumn": 4,
@@ -101,12 +145,21 @@
                 "to": {
                     "startLine": 7,
                     "startColumn": 4,
+<<<<<<< HEAD
                     "startOffset": 673,
                     "endColumn": 86,
                     "endOffset": 755
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+=======
+                    "startOffset": 623,
+                    "endColumn": 86,
+                    "endOffset": 705
+                },
+                "from": {
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 7,
                         "startColumn": 4,
@@ -120,12 +173,21 @@
                 "to": {
                     "startLine": 8,
                     "startColumn": 4,
+<<<<<<< HEAD
                     "startOffset": 760,
                     "endColumn": 115,
                     "endOffset": 871
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+=======
+                    "startOffset": 710,
+                    "endColumn": 115,
+                    "endOffset": 821
+                },
+                "from": {
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 8,
                         "startColumn": 4,
@@ -139,12 +201,21 @@
                 "to": {
                     "startLine": 9,
                     "startColumn": 4,
+<<<<<<< HEAD
                     "startOffset": 876,
                     "endColumn": 129,
                     "endOffset": 1001
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+=======
+                    "startOffset": 826,
+                    "endColumn": 129,
+                    "endOffset": 951
+                },
+                "from": {
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 9,
                         "startColumn": 4,
@@ -158,12 +229,21 @@
                 "to": {
                     "startLine": 10,
                     "startColumn": 4,
+<<<<<<< HEAD
                     "startOffset": 1006,
                     "endColumn": 82,
                     "endOffset": 1084
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+=======
+                    "startOffset": 956,
+                    "endColumn": 82,
+                    "endOffset": 1034
+                },
+                "from": {
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 10,
                         "startColumn": 4,
@@ -177,12 +257,21 @@
                 "to": {
                     "startLine": 11,
                     "startColumn": 4,
+<<<<<<< HEAD
                     "startOffset": 1089,
                     "endColumn": 79,
                     "endOffset": 1164
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+=======
+                    "startOffset": 1039,
+                    "endColumn": 79,
+                    "endOffset": 1114
+                },
+                "from": {
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 11,
                         "startColumn": 4,
@@ -196,12 +285,21 @@
                 "to": {
                     "startLine": 12,
                     "startColumn": 4,
+<<<<<<< HEAD
                     "startOffset": 1169,
                     "endColumn": 95,
                     "endOffset": 1260
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+=======
+                    "startOffset": 1119,
+                    "endColumn": 95,
+                    "endOffset": 1210
+                },
+                "from": {
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 12,
                         "startColumn": 4,
@@ -215,12 +313,21 @@
                 "to": {
                     "startLine": 13,
                     "startColumn": 4,
+<<<<<<< HEAD
                     "startOffset": 1265,
                     "endColumn": 109,
                     "endOffset": 1370
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+=======
+                    "startOffset": 1215,
+                    "endColumn": 109,
+                    "endOffset": 1320
+                },
+                "from": {
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 13,
                         "startColumn": 4,
@@ -234,12 +341,21 @@
                 "to": {
                     "startLine": 14,
                     "startColumn": 4,
+<<<<<<< HEAD
                     "startOffset": 1375,
                     "endColumn": 111,
                     "endOffset": 1482
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+=======
+                    "startOffset": 1325,
+                    "endColumn": 111,
+                    "endOffset": 1432
+                },
+                "from": {
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 14,
                         "startColumn": 4,
@@ -253,12 +369,21 @@
                 "to": {
                     "startLine": 15,
                     "startColumn": 4,
+<<<<<<< HEAD
                     "startOffset": 1487,
                     "endColumn": 102,
                     "endOffset": 1585
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+=======
+                    "startOffset": 1437,
+                    "endColumn": 102,
+                    "endOffset": 1535
+                },
+                "from": {
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 15,
                         "startColumn": 4,
@@ -272,12 +397,21 @@
                 "to": {
                     "startLine": 16,
                     "startColumn": 4,
+<<<<<<< HEAD
                     "startOffset": 1590,
                     "endColumn": 110,
                     "endOffset": 1696
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+=======
+                    "startOffset": 1540,
+                    "endColumn": 110,
+                    "endOffset": 1646
+                },
+                "from": {
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 16,
                         "startColumn": 4,
@@ -291,12 +425,21 @@
                 "to": {
                     "startLine": 17,
                     "startColumn": 4,
+<<<<<<< HEAD
                     "startOffset": 1701,
                     "endColumn": 106,
                     "endOffset": 1803
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+=======
+                    "startOffset": 1651,
+                    "endColumn": 106,
+                    "endOffset": 1753
+                },
+                "from": {
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 17,
                         "startColumn": 4,
@@ -310,12 +453,21 @@
                 "to": {
                     "startLine": 18,
                     "startColumn": 4,
+<<<<<<< HEAD
                     "startOffset": 1808,
                     "endColumn": 101,
                     "endOffset": 1905
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+=======
+                    "startOffset": 1758,
+                    "endColumn": 101,
+                    "endOffset": 1855
+                },
+                "from": {
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 18,
                         "startColumn": 4,
@@ -329,12 +481,21 @@
                 "to": {
                     "startLine": 19,
                     "startColumn": 4,
+<<<<<<< HEAD
                     "startOffset": 1910,
                     "endColumn": 121,
                     "endOffset": 2027
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+=======
+                    "startOffset": 1860,
+                    "endColumn": 121,
+                    "endOffset": 1977
+                },
+                "from": {
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 19,
                         "startColumn": 4,
@@ -348,12 +509,21 @@
                 "to": {
                     "startLine": 20,
                     "startColumn": 4,
+<<<<<<< HEAD
                     "startOffset": 2032,
                     "endColumn": 98,
                     "endOffset": 2126
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+=======
+                    "startOffset": 1982,
+                    "endColumn": 98,
+                    "endOffset": 2076
+                },
+                "from": {
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 20,
                         "startColumn": 4,
@@ -367,6 +537,7 @@
                 "to": {
                     "startLine": 21,
                     "startColumn": 4,
+<<<<<<< HEAD
                     "startOffset": 2131,
                     "endColumn": 107,
                     "endOffset": 2234
@@ -696,6 +867,14 @@
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+=======
+                    "startOffset": 2081,
+                    "endColumn": 85,
+                    "endOffset": 2162
+                },
+                "from": {
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 21,
                         "startColumn": 4,
@@ -707,6 +886,7 @@
             },
             {
                 "to": {
+<<<<<<< HEAD
                     "startLine": 39,
                     "startColumn": 4,
                     "startOffset": 4967,
@@ -715,6 +895,16 @@
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+=======
+                    "startLine": 22,
+                    "startColumn": 4,
+                    "startOffset": 2167,
+                    "endColumn": 100,
+                    "endOffset": 2263
+                },
+                "from": {
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-fr-rCA\\values-fr-rCA.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 22,
                         "startColumn": 4,

@@ -607,6 +607,7 @@ public final class R {
         public static final int radio_unchecked = 0x7f02007f;
     }
     public static final class id {
+<<<<<<< HEAD
         public static final int action0 = 0x7f0c007c;
         public static final int action_bar = 0x7f0c0055;
         public static final int action_bar_activity_content = 0x7f0c0000;
@@ -759,6 +760,36 @@ public final class R {
         public static final int core_lib_version = 0x7f0d0003;
         public static final int google_play_services_version = 0x7f0d0004;
         public static final int status_bar_notification_info_maxnum = 0x7f0d0005;
+=======
+        public static final int bold = 0x7f0a0002;
+        public static final int btnConnect = 0x7f0a0013;
+        public static final int cbBluetooth = 0x7f0a0017;
+        public static final int cbGPS = 0x7f0a0015;
+        public static final int cbRegistered = 0x7f0a001a;
+        public static final int cbRunning = 0x7f0a0019;
+        public static final int dbg_region = 0x7f0a0009;
+        public static final int demi = 0x7f0a0003;
+        public static final int linearLayout1 = 0x7f0a0014;
+        public static final int linearLayout2 = 0x7f0a0016;
+        public static final int linearLayout3 = 0x7f0a000f;
+        public static final int log_dlg_content = 0x7f0a000d;
+        public static final int log_dlg_control = 0x7f0a0007;
+        public static final int log_dlg_lock = 0x7f0a0008;
+        public static final int log_dlg_rg = 0x7f0a000e;
+        public static final int log_dlg_scroll = 0x7f0a000c;
+        public static final int nbold = 0x7f0a0004;
+        public static final int nlight = 0x7f0a0005;
+        public static final int numberPicker1 = 0x7f0a000a;
+        public static final int pad = 0x7f0a0000;
+        public static final int pbBattery = 0x7f0a0010;
+        public static final int pb_bluetooth = 0x7f0a0018;
+        public static final int phone = 0x7f0a0001;
+        public static final int set_sre_button = 0x7f0a000b;
+        public static final int textView1 = 0x7f0a0011;
+        public static final int tv_debug = 0x7f0a001b;
+        public static final int txtRobotName = 0x7f0a0012;
+        public static final int webview = 0x7f0a0006;
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
     }
     public static final class layout {
         public static final int abc_action_bar_title_item = 0x7f030000;

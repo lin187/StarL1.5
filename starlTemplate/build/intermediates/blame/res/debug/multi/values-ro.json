@@ -1,6 +1,10 @@
 [
     {
+<<<<<<< HEAD
         "outputFile": "D:\\6-9Starl\\starl\\starlTemplate\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-ro\\values-ro.xml",
+=======
+        "outputFile": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starlTemplate\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-ro\\values-ro.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
         "map": [
             {
                 "to": {
@@ -11,7 +15,7 @@
                     "endOffset": 221
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-ro\\values-ro.xml",
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-ro\\values-ro.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -30,7 +34,7 @@
                     "endOffset": 329
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-ro\\values-ro.xml",
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-ro\\values-ro.xml",
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
@@ -49,7 +53,7 @@
                     "endOffset": 452
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-ro\\values-ro.xml",
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-ro\\values-ro.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,
@@ -68,7 +72,7 @@
                     "endOffset": 556
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-ro\\values-ro.xml",
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-ro\\values-ro.xml",
                     "position": {
                         "startLine": 5,
                         "startColumn": 4,
@@ -87,7 +91,7 @@
                     "endOffset": 669
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-ro\\values-ro.xml",
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-ro\\values-ro.xml",
                     "position": {
                         "startLine": 6,
                         "startColumn": 4,
@@ -106,7 +110,7 @@
                     "endOffset": 757
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-ro\\values-ro.xml",
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-ro\\values-ro.xml",
                     "position": {
                         "startLine": 7,
                         "startColumn": 4,
@@ -125,7 +129,7 @@
                     "endOffset": 869
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-ro\\values-ro.xml",
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-ro\\values-ro.xml",
                     "position": {
                         "startLine": 8,
                         "startColumn": 4,
@@ -144,7 +148,7 @@
                     "endOffset": 990
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-ro\\values-ro.xml",
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-ro\\values-ro.xml",
                     "position": {
                         "startLine": 9,
                         "startColumn": 4,
@@ -163,7 +167,7 @@
                     "endOffset": 1075
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-ro\\values-ro.xml",
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-ro\\values-ro.xml",
                     "position": {
                         "startLine": 10,
                         "startColumn": 4,
@@ -182,7 +186,7 @@
                     "endOffset": 1157
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-ro\\values-ro.xml",
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-ro\\values-ro.xml",
                     "position": {
                         "startLine": 11,
                         "startColumn": 4,
@@ -201,7 +205,7 @@
                     "endOffset": 1240
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-ro\\values-ro.xml",
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-ro\\values-ro.xml",
                     "position": {
                         "startLine": 12,
                         "startColumn": 4,
@@ -220,7 +224,7 @@
                     "endOffset": 1352
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-ro\\values-ro.xml",
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-ro\\values-ro.xml",
                     "position": {
                         "startLine": 13,
                         "startColumn": 4,
@@ -239,7 +243,7 @@
                     "endOffset": 1465
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-ro\\values-ro.xml",
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-ro\\values-ro.xml",
                     "position": {
                         "startLine": 14,
                         "startColumn": 4,
@@ -258,7 +262,7 @@
                     "endOffset": 1565
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-ro\\values-ro.xml",
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-ro\\values-ro.xml",
                     "position": {
                         "startLine": 15,
                         "startColumn": 4,
@@ -277,7 +281,7 @@
                     "endOffset": 1679
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-ro\\values-ro.xml",
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-ro\\values-ro.xml",
                     "position": {
                         "startLine": 16,
                         "startColumn": 4,
@@ -296,7 +300,7 @@
                     "endOffset": 1784
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-ro\\values-ro.xml",
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-ro\\values-ro.xml",
                     "position": {
                         "startLine": 17,
                         "startColumn": 4,
@@ -315,7 +319,7 @@
                     "endOffset": 1890
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-ro\\values-ro.xml",
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-ro\\values-ro.xml",
                     "position": {
                         "startLine": 18,
                         "startColumn": 4,
@@ -334,7 +338,7 @@
                     "endOffset": 2011
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-ro\\values-ro.xml",
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-ro\\values-ro.xml",
                     "position": {
                         "startLine": 19,
                         "startColumn": 4,
@@ -353,7 +357,7 @@
                     "endOffset": 2114
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-ro\\values-ro.xml",
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-ro\\values-ro.xml",
                     "position": {
                         "startLine": 20,
                         "startColumn": 4,
@@ -367,6 +371,7 @@
                 "to": {
                     "startLine": 21,
                     "startColumn": 4,
+<<<<<<< HEAD
                     "startOffset": 2119,
                     "endColumn": 108,
                     "endOffset": 2223
@@ -696,6 +701,14 @@
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-ro\\values-ro.xml",
+=======
+                    "startOffset": 2069,
+                    "endColumn": 82,
+                    "endOffset": 2147
+                },
+                "from": {
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-ro\\values-ro.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 21,
                         "startColumn": 4,
@@ -707,6 +720,7 @@
             },
             {
                 "to": {
+<<<<<<< HEAD
                     "startLine": 39,
                     "startColumn": 4,
                     "startOffset": 4798,
@@ -715,6 +729,16 @@
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-ro\\values-ro.xml",
+=======
+                    "startLine": 22,
+                    "startColumn": 4,
+                    "startOffset": 2152,
+                    "endColumn": 100,
+                    "endOffset": 2248
+                },
+                "from": {
+                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-ro\\values-ro.xml",
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 22,
                         "startColumn": 4,

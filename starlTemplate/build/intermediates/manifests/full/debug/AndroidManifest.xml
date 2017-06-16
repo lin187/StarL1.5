@@ -56,9 +56,14 @@
         android:value="25.3.1" />
 
     <uses-permission android:name="android.permission.UPDATE_DEVICE_STATS" />
+<<<<<<< HEAD
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" /> <!-- Permissions and features -->
+=======
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" /> <!-- Permissions and features -->
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
     <application
+        android:name="edu.illinois.mitra.template.myApp"
         android:allowBackup="true"
         android:debuggable="true"
         android:icon="@drawable/icon"

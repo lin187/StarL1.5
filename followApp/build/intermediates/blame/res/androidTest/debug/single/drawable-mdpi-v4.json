@@ -1,5 +1,6 @@
 [
     {
+<<<<<<< HEAD
         "merged": "D:\\6-9Starl\\starl\\followApp\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4\\abc_scrubber_control_to_pressed_mtrl_005.png",
         "source": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\drawable-mdpi-v4\\abc_scrubber_control_to_pressed_mtrl_005.png"
     },
@@ -238,5 +239,9 @@
     {
         "merged": "D:\\6-9Starl\\starl\\followApp\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4\\abc_btn_check_to_on_mtrl_015.png",
         "source": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\drawable-mdpi-v4\\abc_btn_check_to_on_mtrl_015.png"
+=======
+        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\followApp\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-mdpi-v4\\ic_launcher.png",
+        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starLib\\build\\intermediates\\bundles\\default\\res\\drawable-mdpi-v4\\ic_launcher.png"
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
     }
 ]
