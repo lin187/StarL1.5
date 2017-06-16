@@ -176,6 +176,7 @@ public class GhostAerialBTI implements DeviceControllerListener {
                 public void onSuccess() {
                     Toast.makeText(context, "Bluetooth Connected", Toast.LENGTH_SHORT).show();
                     Log.i(TAG,"connected " + CopterControl.getInstance().isCopterConnected());
+                    gvh.plat.sendMainMsg(HandlerMessage.COPTER_CONNECTED,CopterControl.getInstance().isCopterConnected());
                     setupController();
                 }
                 @Override
@@ -230,6 +231,7 @@ public class GhostAerialBTI implements DeviceControllerListener {
 
         private void startDeviceController() {
             Log.d(TAG, "staring device controller");
+
             if (deviceController != null) {
                 new Thread(new Runnable() {
                     @Override
