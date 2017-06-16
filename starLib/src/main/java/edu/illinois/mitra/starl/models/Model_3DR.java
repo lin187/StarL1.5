@@ -4,6 +4,8 @@ package edu.illinois.mitra.starl.models;
  * Created by yangy14 on 6/2/2017.
  */
 
+import com.o3dr.android.client.*;
+
 import java.util.Random;
 
 import edu.illinois.mitra.starl.exceptions.ItemFormattingException;
@@ -15,6 +17,7 @@ import edu.illinois.mitra.starl.objects.PositionList;
 
 public class Model_3DR extends ItemPosition implements TrackedRobot {
 
+    public Drone drone;
 
     // for default values, see initial_helper()
     public double yaw;
@@ -75,7 +78,8 @@ public class Model_3DR extends ItemPosition implements TrackedRobot {
 
     public Model_3DR(String received) throws ItemFormattingException{
         initial_helper();
-        String[] parts = received.replace(",", "").split("\\|");
+        String[] parts = received.replace(",", "").
+                split("\\|");
         if(parts.length == 9) {
             this.name = parts[1];
             this.x = Integer.parseInt(parts[2]);

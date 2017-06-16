@@ -25,7 +25,10 @@ public final class Common {
     public static final int IROBOT = 50;
     public static final int MINIDRONE = 51;
 	public static final int GHOSTAERIAL=52;
+<<<<<<< HEAD
+=======
 
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
 	public static final int MAVIC = 53;
 
 	public static final int o3DR = 54;      //cannot start a variable name with number, so add a letter o

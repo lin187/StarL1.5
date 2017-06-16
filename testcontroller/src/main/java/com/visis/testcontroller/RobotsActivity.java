@@ -25,6 +25,7 @@ import com.ehang.coptersdk.OnSendListener;
 import com.ehang.coptersdk.bean.FlightMode;
 import com.ehang.coptersdk.connection.OnConnectionListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -47,8 +48,8 @@ public class RobotsActivity extends Activity implements MessageListener, Joystic
 	private static final String TAG = "RobotsActivity";
 	private static final String ERR = "Critical Error";
 	private static final float TAKEOFF_ALTITIDE = 1.0f ;
-	private long lastTap_disArmButton = -1;
-	private static long DOUBLE_TAP_SENSITIVITY = 1000;
+	private final static int HEARTBEAT_MSG = 1;
+	private final static int STATUS_REFRESH_INTERNAL = 500;
 
 	private static final String IDENTITY_FILE_URL = "https://dl.dropbox.com/s/dwfqdhbf5vdtz18/robots.rif?dl=1";
 	private static final String[][] ERROR_PARTICIPANTS = {{"ERROR"}, {"ERROR"}, {"ERROR"}};
@@ -130,7 +131,7 @@ public class RobotsActivity extends Activity implements MessageListener, Joystic
 		setupGUI();
 
 		// Create the main handler
-		mainHandler = new MainHandler(this, pbBluetooth, pbBattery, cbGPS, cbBluetooth, cbRunning, txtDebug, cbRegistered);
+		mainHandler = new MainHandler(this, pbBluetooth, pbBattery, cbGPS, cbBluetooth, cbRunning, txtDebug, cbRegistered, ghostControls);
 
 		if (participants == null) {
 			Toast.makeText(this, "Error loading identity file!", Toast.LENGTH_LONG).show();
@@ -230,13 +231,16 @@ public class RobotsActivity extends Activity implements MessageListener, Joystic
 	private ProgressBar pbBattery;
 	private Button arm;
 	private Button disarm;
+	private CheckBox cbArm;
 	private Button connect;
-	private Button manual;
-	private Button avatar;
+	private CheckBox manual;
+	private CheckBox avatar;
 	private Button btnTakeoff;
 	private boolean avatarSet;
 	private TextView txtMode;
+	private CheckBox copter;
 
+	private ArrayList<TextView> ghostControls;
 	private void setupGUI() {
 		final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
@@ -250,15 +254,26 @@ public class RobotsActivity extends Activity implements MessageListener, Joystic
 		pbBattery.setMax(100);
 		cbRegistered = (CheckBox) findViewById(R.id.cbRegistered);
 		arm = (Button)findViewById(R.id.arm);
+		cbArm = (CheckBox)findViewById(R.id.cbArm);
 		disarm = (Button)findViewById(R.id.disarm);
 		connect = (Button)findViewById(R.id.btnConnect);
-		manual = (Button)findViewById(R.id.manual);
-		avatar = (Button)findViewById(R.id.avatar);
+		manual = (CheckBox)findViewById(R.id.manual);
+		avatar = (CheckBox)findViewById(R.id.avatar);
 		btnTakeoff = (Button)findViewById(R.id.btnTakeoff);
 		txtMode = (TextView) findViewById(R.id.txtMode);
+		copter = (CheckBox)findViewById(R.id.cbConnect);
 		avatarSet = false;
 
+		ghostControls = new ArrayList<>();
+		ghostControls.add(cbArm);
+		ghostControls.add(manual);
+		ghostControls.add(avatar);
+		ghostControls.add(txtMode);
+		ghostControls.add(copter);
+
+
 		txtMode.setText("Mode: ???");
+
 
 		if (!(botInfo[selectedRobot].type instanceof Model_Mavic || botInfo[selectedRobot].type instanceof Model_Phantom)) {
 			cbRegistered.setVisibility(View.GONE);
@@ -298,12 +313,8 @@ public class RobotsActivity extends Activity implements MessageListener, Joystic
 						@Override
 						public void onSuccess() {
 							Toast.makeText(getApplicationContext(), "UnLock Succeeds", Toast.LENGTH_SHORT).show();
-							CopterControl.getInstance().setOnModeChangeListener(new CopterControl.OnModeChangeListener() {
-								@Override
-								public void onChange(FlightMode flightMode) {
-									txtMode.setText("Mode: " + flightMode.toString());
-								}
-							});
+							gvh.plat.sendMainMsg(HandlerMessage.ARM_TOGGLE,true);
+							gvh.plat.sendMainMsg(HandlerMessage.HEARTBEAT_MODE, CopterControl.getInstance().getCurrentMode().name());
 						}
 						@Override
 						public void onFailure() {
@@ -322,6 +333,7 @@ public class RobotsActivity extends Activity implements MessageListener, Joystic
 						@Override
 						public void onSuccess() {
 							Toast.makeText(getApplicationContext(), "Lock Succeeds", Toast.LENGTH_SHORT).show();
+							gvh.plat.sendMainMsg(HandlerMessage.ARM_TOGGLE,false);
 
 						}
 						@Override
@@ -341,11 +353,20 @@ public class RobotsActivity extends Activity implements MessageListener, Joystic
 						@Override
 						public void onSuccess() {
 							Log.d(TAG, "Success");
+							gvh.plat.sendMainMsg(HandlerMessage.COPTER_CONNECTED,true);
+							CopterControl.getInstance().setOnModeChangeListener(new CopterControl
+									.OnModeChangeListener() {
+								@Override
+								public void onChange(FlightMode flightMode) {
+									gvh.plat.sendMainMsg(HandlerMessage.HEARTBEAT_MODE, CopterControl.getInstance().getCurrentMode().name());
+								}
+							});
 						}
 
 						@Override
 						public void onFailure() {
 							Log.d(TAG, "Success");
+							gvh.plat.sendMainMsg(HandlerMessage.COPTER_CONNECTED,false);
 						}
 					});
 				}
@@ -359,10 +380,12 @@ public class RobotsActivity extends Activity implements MessageListener, Joystic
 						@Override
 						public void onSuccess() {
 							Toast.makeText(getApplicationContext(), "Set Manual mode Succeeds", Toast.LENGTH_SHORT).show();
+							gvh.plat.sendMainMsg(HandlerMessage.MANUAL_MODE,true);
 						}
 						@Override
 						public void onFailure() {
 							Toast.makeText(getApplicationContext(), "Set Manual mode Fails", Toast.LENGTH_SHORT).show();
+							gvh.plat.sendMainMsg(HandlerMessage.MANUAL_MODE,false);
 						}
 					});
 				}
@@ -373,8 +396,13 @@ public class RobotsActivity extends Activity implements MessageListener, Joystic
 			public void onClick(View arg0) {
 				if (!avatarSet){
 					CopterControl.getInstance().startAvatar();
-				}else
+					avatarSet = true;
+					gvh.plat.sendMainMsg(HandlerMessage.AVATAR_MODE,avatarSet);
+				}else {
 					CopterControl.getInstance().stopAvatar();
+					avatarSet = false;
+					gvh.plat.sendMainMsg(HandlerMessage.MANUAL_MODE, avatarSet);
+				}
 			}
 		});
 

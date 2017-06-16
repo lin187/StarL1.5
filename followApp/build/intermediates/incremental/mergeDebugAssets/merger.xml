@@ -1,2 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< HEAD
+<merger version="3"><dataSet config="main"><source path="D:\6-9Starl\starl\followApp\src\main\assets"/><source path="D:\6-9Starl\starl\followApp\build\generated\assets\shaders\debug"/></dataSet><dataSet config="debug"><source path="D:\6-9Starl\starl\followApp\src\debug\assets"/></dataSet></merger>
+=======
 <merger version="3"><dataSet config="main"><source path="C:\Users\wangcs2\Desktop\EhangFinal\starl\followApp\src\main\assets"/><source path="C:\Users\wangcs2\Desktop\EhangFinal\starl\followApp\build\generated\assets\shaders\debug"/></dataSet><dataSet config="debug"><source path="C:\Users\wangcs2\Desktop\EhangFinal\starl\followApp\src\debug\assets"/></dataSet></merger>
+>>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
