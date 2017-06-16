@@ -32,12 +32,12 @@
         "source": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\drawable\\common_google_signin_btn_text_dark_focused.xml"
     },
     {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_text_light_focused.xml",
-        "source": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\drawable\\common_google_signin_btn_text_light_focused.xml"
-    },
-    {
         "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_text_light_normal.xml",
         "source": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\drawable\\common_google_signin_btn_text_light_normal.xml"
+    },
+    {
+        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_text_light_focused.xml",
+        "source": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\drawable\\common_google_signin_btn_text_light_focused.xml"
     },
     {
         "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable\\common_google_signin_btn_icon_light.xml",

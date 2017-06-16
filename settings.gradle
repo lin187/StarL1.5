@@ -1,5 +1,5 @@
 
-include ':starLib', ':testcontroller', ':ClientLib', ':Mavlink', ':models', ':wear', ':speechapp', ':aars'
+include ':starLib', ':testcontroller', ':ClientLib', ':Mavlink', ':models', ':wear', ':speechapp', ':aars', ':avatardemo'
 include ':starlTemplate'
 include ':followApp'
 include ':dJISDKLIB'
