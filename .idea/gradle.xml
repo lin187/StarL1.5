@@ -8,10 +8,13 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/ClientLib" />
+            <option value="$PROJECT_DIR$/Mavlink" />
             <option value="$PROJECT_DIR$/dJISDKLIB" />
             <option value="$PROJECT_DIR$/followApp" />
             <option value="$PROJECT_DIR$/starLib" />
             <option value="$PROJECT_DIR$/starlTemplate" />
+            <option value="$PROJECT_DIR$/testcontroller" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

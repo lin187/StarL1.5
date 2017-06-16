@@ -1,5 +1,5 @@
 
-include ':starLib'
+include ':starLib', ':ClientLib', ':Mavlink', ':testcontroller'
 include ':starlTemplate'
 include ':followApp'
 include ':dJISDKLIB'
