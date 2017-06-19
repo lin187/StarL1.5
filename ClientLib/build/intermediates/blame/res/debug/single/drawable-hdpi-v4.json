@@ -1,6 +1,5 @@
 [
     {
-<<<<<<< HEAD
         "merged": "D:\\6-9Starl\\starl\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\abc_list_longpressed_holo.9.png",
         "source": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\drawable-hdpi-v4\\abc_list_longpressed_holo.9.png"
     },
@@ -239,37 +238,5 @@
     {
         "merged": "D:\\6-9Starl\\starl\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\notification_bg_low_pressed.9.png",
         "source": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\drawable-hdpi-v4\\notification_bg_low_pressed.9.png"
-=======
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\googleg_disabled_color_18.png",
-        "source": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\drawable-hdpi-v4\\googleg_disabled_color_18.png"
-    },
-    {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\common_google_signin_btn_text_dark_normal_background.9.png",
-        "source": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\drawable-hdpi-v4\\common_google_signin_btn_text_dark_normal_background.9.png"
-    },
-    {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\common_full_open_on_phone.png",
-        "source": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\drawable-hdpi-v4\\common_full_open_on_phone.png"
-    },
-    {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\common_google_signin_btn_icon_light_normal_background.9.png",
-        "source": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\drawable-hdpi-v4\\common_google_signin_btn_icon_light_normal_background.9.png"
-    },
-    {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\googleg_standard_color_18.png",
-        "source": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\drawable-hdpi-v4\\googleg_standard_color_18.png"
-    },
-    {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\common_google_signin_btn_text_light_normal_background.9.png",
-        "source": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\drawable-hdpi-v4\\common_google_signin_btn_text_light_normal_background.9.png"
-    },
-    {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_stat_notify.png",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\src\\main\\res\\drawable-hdpi\\ic_stat_notify.png"
-    },
-    {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\common_google_signin_btn_icon_dark_normal_background.9.png",
-        "source": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\drawable-hdpi-v4\\common_google_signin_btn_icon_dark_normal_background.9.png"
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
     }
 ]

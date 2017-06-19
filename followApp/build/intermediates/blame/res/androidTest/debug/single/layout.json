@@ -1,6 +1,5 @@
 [
     {
-<<<<<<< HEAD
         "merged": "D:\\6-9Starl\\starl\\followApp\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\abc_activity_chooser_view_list_item.xml",
         "source": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\layout\\abc_activity_chooser_view_list_item.xml"
     },
@@ -171,17 +170,5 @@
     {
         "merged": "D:\\6-9Starl\\starl\\followApp\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\notification_action_tombstone.xml",
         "source": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\layout\\notification_action_tombstone.xml"
-=======
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\followApp\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\main.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starLib\\build\\intermediates\\bundles\\default\\res\\layout\\main.xml"
-    },
-    {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\followApp\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\dialog_login.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\layout\\dialog_login.xml"
-    },
-    {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\followApp\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\log_dialog_view.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\layout\\log_dialog_view.xml"
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
     }
 ]

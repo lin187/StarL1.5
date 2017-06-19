@@ -1,10 +1,6 @@
 [
     {
-<<<<<<< HEAD
         "outputFile": "D:\\6-9Starl\\starl\\starlTemplate\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-eu-rES\\values-eu-rES.xml",
-=======
-        "outputFile": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starlTemplate\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-eu-rES\\values-eu-rES.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
         "map": [
             {
                 "to": {
@@ -15,11 +11,7 @@
                     "endOffset": 159
                 },
                 "from": {
-<<<<<<< HEAD
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-eu-rES\\values-eu-rES.xml",
-=======
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-eu-rES\\values-eu-rES.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -38,11 +30,7 @@
                     "endOffset": 267
                 },
                 "from": {
-<<<<<<< HEAD
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-eu-rES\\values-eu-rES.xml",
-=======
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-eu-rES\\values-eu-rES.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
@@ -61,11 +49,7 @@
                     "endOffset": 390
                 },
                 "from": {
-<<<<<<< HEAD
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-eu-rES\\values-eu-rES.xml",
-=======
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-eu-rES\\values-eu-rES.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,
@@ -84,11 +68,7 @@
                     "endOffset": 488
                 },
                 "from": {
-<<<<<<< HEAD
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-eu-rES\\values-eu-rES.xml",
-=======
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-eu-rES\\values-eu-rES.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 5,
                         "startColumn": 4,
@@ -107,11 +87,7 @@
                     "endOffset": 598
                 },
                 "from": {
-<<<<<<< HEAD
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-eu-rES\\values-eu-rES.xml",
-=======
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-eu-rES\\values-eu-rES.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 6,
                         "startColumn": 4,
@@ -130,11 +106,7 @@
                     "endOffset": 684
                 },
                 "from": {
-<<<<<<< HEAD
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-eu-rES\\values-eu-rES.xml",
-=======
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-eu-rES\\values-eu-rES.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 7,
                         "startColumn": 4,
@@ -153,11 +125,7 @@
                     "endOffset": 790
                 },
                 "from": {
-<<<<<<< HEAD
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-eu-rES\\values-eu-rES.xml",
-=======
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-eu-rES\\values-eu-rES.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 8,
                         "startColumn": 4,
@@ -176,11 +144,7 @@
                     "endOffset": 914
                 },
                 "from": {
-<<<<<<< HEAD
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-eu-rES\\values-eu-rES.xml",
-=======
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-eu-rES\\values-eu-rES.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 9,
                         "startColumn": 4,
@@ -199,11 +163,7 @@
                     "endOffset": 1001
                 },
                 "from": {
-<<<<<<< HEAD
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-eu-rES\\values-eu-rES.xml",
-=======
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-eu-rES\\values-eu-rES.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 10,
                         "startColumn": 4,
@@ -222,11 +182,7 @@
                     "endOffset": 1085
                 },
                 "from": {
-<<<<<<< HEAD
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-eu-rES\\values-eu-rES.xml",
-=======
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-eu-rES\\values-eu-rES.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 11,
                         "startColumn": 4,
@@ -245,11 +201,7 @@
                     "endOffset": 1167
                 },
                 "from": {
-<<<<<<< HEAD
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-eu-rES\\values-eu-rES.xml",
-=======
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-eu-rES\\values-eu-rES.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 12,
                         "startColumn": 4,
@@ -268,11 +220,7 @@
                     "endOffset": 1276
                 },
                 "from": {
-<<<<<<< HEAD
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-eu-rES\\values-eu-rES.xml",
-=======
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-eu-rES\\values-eu-rES.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 13,
                         "startColumn": 4,
@@ -291,11 +239,7 @@
                     "endOffset": 1386
                 },
                 "from": {
-<<<<<<< HEAD
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-eu-rES\\values-eu-rES.xml",
-=======
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-eu-rES\\values-eu-rES.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 14,
                         "startColumn": 4,
@@ -314,11 +258,7 @@
                     "endOffset": 1485
                 },
                 "from": {
-<<<<<<< HEAD
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-eu-rES\\values-eu-rES.xml",
-=======
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-eu-rES\\values-eu-rES.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 15,
                         "startColumn": 4,
@@ -337,11 +277,7 @@
                     "endOffset": 1594
                 },
                 "from": {
-<<<<<<< HEAD
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-eu-rES\\values-eu-rES.xml",
-=======
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-eu-rES\\values-eu-rES.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 16,
                         "startColumn": 4,
@@ -360,11 +296,7 @@
                     "endOffset": 1707
                 },
                 "from": {
-<<<<<<< HEAD
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-eu-rES\\values-eu-rES.xml",
-=======
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-eu-rES\\values-eu-rES.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 17,
                         "startColumn": 4,
@@ -383,11 +315,7 @@
                     "endOffset": 1818
                 },
                 "from": {
-<<<<<<< HEAD
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-eu-rES\\values-eu-rES.xml",
-=======
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-eu-rES\\values-eu-rES.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 18,
                         "startColumn": 4,
@@ -406,11 +334,7 @@
                     "endOffset": 1955
                 },
                 "from": {
-<<<<<<< HEAD
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-eu-rES\\values-eu-rES.xml",
-=======
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-eu-rES\\values-eu-rES.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 19,
                         "startColumn": 4,
@@ -429,11 +353,7 @@
                     "endOffset": 2054
                 },
                 "from": {
-<<<<<<< HEAD
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-eu-rES\\values-eu-rES.xml",
-=======
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-eu-rES\\values-eu-rES.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 20,
                         "startColumn": 4,
@@ -452,11 +372,7 @@
                     "endOffset": 2136
                 },
                 "from": {
-<<<<<<< HEAD
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-eu-rES\\values-eu-rES.xml",
-=======
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-eu-rES\\values-eu-rES.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 21,
                         "startColumn": 4,
@@ -475,11 +391,7 @@
                     "endOffset": 2237
                 },
                 "from": {
-<<<<<<< HEAD
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-eu-rES\\values-eu-rES.xml",
-=======
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-eu-rES\\values-eu-rES.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 22,
                         "startColumn": 4,

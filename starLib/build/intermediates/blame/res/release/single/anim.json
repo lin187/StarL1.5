@@ -1,58 +1,98 @@
 [
     {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\core_zoom_enter.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_zoom_enter.xml"
+        "merged": "D:\\6-9Starl\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\core_hold.xml",
+        "source": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_hold.xml"
     },
     {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\core_push_left_in.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_push_left_in.xml"
+        "merged": "D:\\6-9Starl\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\core_push_right_out.xml",
+        "source": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_push_right_out.xml"
     },
     {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\core_zoom_enter_back.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_zoom_enter_back.xml"
+        "merged": "D:\\6-9Starl\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\core_zoom_exit.xml",
+        "source": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_zoom_exit.xml"
     },
     {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\core_other.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_other.xml"
+        "merged": "D:\\6-9Starl\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\abc_slide_out_top.xml",
+        "source": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\anim\\abc_slide_out_top.xml"
     },
     {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\core_hyperspace_out.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_hyperspace_out.xml"
+        "merged": "D:\\6-9Starl\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\abc_slide_in_top.xml",
+        "source": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\anim\\abc_slide_in_top.xml"
     },
     {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\core_push_up_in.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_push_up_in.xml"
+        "merged": "D:\\6-9Starl\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\abc_fade_in.xml",
+        "source": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\anim\\abc_fade_in.xml"
     },
     {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\core_zoom_exit_back.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_zoom_exit_back.xml"
+        "merged": "D:\\6-9Starl\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\core_hyperspace_in.xml",
+        "source": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_hyperspace_in.xml"
     },
     {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\core_hold.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_hold.xml"
+        "merged": "D:\\6-9Starl\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\core_other.xml",
+        "source": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_other.xml"
     },
     {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\core_push_left_out.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_push_left_out.xml"
+        "merged": "D:\\6-9Starl\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\abc_popup_enter.xml",
+        "source": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\anim\\abc_popup_enter.xml"
     },
     {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\core_push_right_in.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_push_right_in.xml"
+        "merged": "D:\\6-9Starl\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\core_push_up_out.xml",
+        "source": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_push_up_out.xml"
     },
     {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\core_push_right_out.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_push_right_out.xml"
+        "merged": "D:\\6-9Starl\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\core_hyperspace_out.xml",
+        "source": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_hyperspace_out.xml"
     },
     {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\core_push_up_out.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_push_up_out.xml"
+        "merged": "D:\\6-9Starl\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\core_zoom_enter.xml",
+        "source": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_zoom_enter.xml"
     },
     {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\core_hyperspace_in.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_hyperspace_in.xml"
+        "merged": "D:\\6-9Starl\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\abc_slide_out_bottom.xml",
+        "source": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\anim\\abc_slide_out_bottom.xml"
     },
     {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\core_zoom_exit.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_zoom_exit.xml"
+        "merged": "D:\\6-9Starl\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\abc_shrink_fade_out_from_bottom.xml",
+        "source": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\anim\\abc_shrink_fade_out_from_bottom.xml"
+    },
+    {
+        "merged": "D:\\6-9Starl\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\core_zoom_enter_back.xml",
+        "source": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_zoom_enter_back.xml"
+    },
+    {
+        "merged": "D:\\6-9Starl\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\abc_grow_fade_in_from_bottom.xml",
+        "source": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\anim\\abc_grow_fade_in_from_bottom.xml"
+    },
+    {
+        "merged": "D:\\6-9Starl\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\core_push_right_in.xml",
+        "source": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_push_right_in.xml"
+    },
+    {
+        "merged": "D:\\6-9Starl\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\abc_slide_in_bottom.xml",
+        "source": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\anim\\abc_slide_in_bottom.xml"
+    },
+    {
+        "merged": "D:\\6-9Starl\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\abc_popup_exit.xml",
+        "source": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\anim\\abc_popup_exit.xml"
+    },
+    {
+        "merged": "D:\\6-9Starl\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\abc_fade_out.xml",
+        "source": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\anim\\abc_fade_out.xml"
+    },
+    {
+        "merged": "D:\\6-9Starl\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\core_push_left_out.xml",
+        "source": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_push_left_out.xml"
+    },
+    {
+        "merged": "D:\\6-9Starl\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\core_push_left_in.xml",
+        "source": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_push_left_in.xml"
+    },
+    {
+        "merged": "D:\\6-9Starl\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\core_zoom_exit_back.xml",
+        "source": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_zoom_exit_back.xml"
+    },
+    {
+        "merged": "D:\\6-9Starl\\starl\\starLib\\build\\intermediates\\res\\merged\\release\\anim\\core_push_up_in.xml",
+        "source": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_push_up_in.xml"
     }
 ]

@@ -1,6 +1,5 @@
 [
     {
-<<<<<<< HEAD
         "merged": "D:\\6-9Starl\\starl\\starLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ic_stat_notify.png",
         "source": "D:\\6-9Starl\\starl\\ClientLib\\build\\intermediates\\bundles\\default\\res\\drawable-hdpi-v4\\ic_stat_notify.png"
     },
@@ -243,9 +242,5 @@
     {
         "merged": "D:\\6-9Starl\\starl\\starLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\googleg_standard_color_18.png",
         "source": "C:\\Users\\yangy14\\.android\\build-cache\\fe70e074586192de6c4fa9efc4378cbd56e45e0e\\output\\res\\drawable-hdpi-v4\\googleg_standard_color_18.png"
-=======
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starLib\\build\\intermediates\\res\\merged\\androidTest\\debug\\drawable-hdpi-v4\\ic_launcher.png",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starLib\\build\\intermediates\\bundles\\debug\\res\\drawable-hdpi-v4\\ic_launcher.png"
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
     }
 ]

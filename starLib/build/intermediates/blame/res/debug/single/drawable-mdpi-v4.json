@@ -1,6 +1,5 @@
 [
     {
-<<<<<<< HEAD
         "merged": "D:\\6-9Starl\\starl\\starLib\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4\\abc_ic_star_black_16dp.png",
         "source": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\drawable-mdpi-v4\\abc_ic_star_black_16dp.png"
     },
@@ -239,9 +238,5 @@
     {
         "merged": "D:\\6-9Starl\\starl\\starLib\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4\\googleg_standard_color_18.png",
         "source": "C:\\Users\\yangy14\\.android\\build-cache\\fe70e074586192de6c4fa9efc4378cbd56e45e0e\\output\\res\\drawable-mdpi-v4\\googleg_standard_color_18.png"
-=======
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starLib\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4\\ic_launcher.png",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starLib\\src\\main\\res\\drawable-mdpi\\ic_launcher.png"
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
     }
 ]

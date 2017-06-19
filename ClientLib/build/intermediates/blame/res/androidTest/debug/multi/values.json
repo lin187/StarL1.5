@@ -1,17 +1,12 @@
 [
     {
-<<<<<<< HEAD
         "outputFile": "D:\\6-9Starl\\starl\\ClientLib\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
-=======
-        "outputFile": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
         "map": [
             {
                 "to": {
                     "startLine": 2,
                     "startColumn": 4,
                     "startOffset": 105,
-<<<<<<< HEAD
                     "endColumn": 54,
                     "endOffset": 155
                 },
@@ -61,25 +56,11 @@
                         "startOffset": 155,
                         "endColumn": 48,
                         "endOffset": 199
-=======
-                    "endColumn": 89,
-                    "endOffset": 190
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 4,
-                        "startColumn": 0,
-                        "startOffset": 215,
-                        "endColumn": 85,
-                        "endOffset": 300
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 5,
                     "startColumn": 4,
                     "startOffset": 254,
@@ -94,28 +75,11 @@
                         "startOffset": 204,
                         "endColumn": 40,
                         "endOffset": 240
-=======
-                    "startLine": 3,
-                    "startColumn": 4,
-                    "startOffset": 195,
-                    "endColumn": 79,
-                    "endOffset": 270
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 5,
-                        "startColumn": 0,
-                        "startOffset": 301,
-                        "endColumn": 75,
-                        "endOffset": 376
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 6,
                     "startColumn": 4,
                     "startOffset": 295,
@@ -130,28 +94,11 @@
                         "startOffset": 245,
                         "endColumn": 54,
                         "endOffset": 295
-=======
-                    "startLine": 4,
-                    "startColumn": 4,
-                    "startOffset": 275,
-                    "endColumn": 89,
-                    "endOffset": 360
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 6,
-                        "startColumn": 0,
-                        "startOffset": 377,
-                        "endColumn": 85,
-                        "endOffset": 462
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 7,
                     "startColumn": 4,
                     "startOffset": 350,
@@ -166,28 +113,11 @@
                         "startOffset": 300,
                         "endColumn": 57,
                         "endOffset": 353
-=======
-                    "startLine": 5,
-                    "startColumn": 4,
-                    "startOffset": 365,
-                    "endColumn": 89,
-                    "endOffset": 450
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 7,
-                        "startColumn": 0,
-                        "startOffset": 463,
-                        "endColumn": 85,
-                        "endOffset": 548
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 8,
                     "startColumn": 4,
                     "startOffset": 408,
@@ -202,28 +132,11 @@
                         "startOffset": 358,
                         "endColumn": 61,
                         "endOffset": 415
-=======
-                    "startLine": 6,
-                    "startColumn": 4,
-                    "startOffset": 455,
-                    "endColumn": 79,
-                    "endOffset": 530
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 8,
-                        "startColumn": 0,
-                        "startOffset": 549,
-                        "endColumn": 75,
-                        "endOffset": 624
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 9,
                     "startColumn": 4,
                     "startOffset": 470,
@@ -238,28 +151,11 @@
                         "startOffset": 420,
                         "endColumn": 67,
                         "endOffset": 483
-=======
-                    "startLine": 7,
-                    "startColumn": 4,
-                    "startOffset": 535,
-                    "endColumn": 80,
-                    "endOffset": 611
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 9,
-                        "startColumn": 0,
-                        "startOffset": 625,
-                        "endColumn": 76,
-                        "endOffset": 701
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 10,
                     "startColumn": 4,
                     "startOffset": 538,
@@ -274,28 +170,11 @@
                         "startOffset": 488,
                         "endColumn": 77,
                         "endOffset": 561
-=======
-                    "startLine": 8,
-                    "startColumn": 4,
-                    "startOffset": 616,
-                    "endColumn": 79,
-                    "endOffset": 691
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 10,
-                        "startColumn": 0,
-                        "startOffset": 702,
-                        "endColumn": 75,
-                        "endOffset": 777
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 11,
                     "startColumn": 4,
                     "startOffset": 616,
@@ -310,28 +189,11 @@
                         "startOffset": 566,
                         "endColumn": 80,
                         "endOffset": 642
-=======
-                    "startLine": 9,
-                    "startColumn": 4,
-                    "startOffset": 696,
-                    "endColumn": 79,
-                    "endOffset": 771
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 11,
-                        "startColumn": 0,
-                        "startOffset": 778,
-                        "endColumn": 75,
-                        "endOffset": 853
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 12,
                     "startColumn": 4,
                     "startOffset": 697,
@@ -346,28 +208,11 @@
                         "startOffset": 647,
                         "endColumn": 60,
                         "endOffset": 703
-=======
-                    "startLine": 33,
-                    "startColumn": 4,
-                    "startOffset": 1499,
-                    "endColumn": 52,
-                    "endOffset": 1547
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 2,
-                        "startColumn": 4,
-                        "startOffset": 55,
-                        "endColumn": 52,
-                        "endOffset": 103
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 13,
                     "startColumn": 4,
                     "startOffset": 758,
@@ -382,28 +227,11 @@
                         "startOffset": 708,
                         "endColumn": 74,
                         "endOffset": 778
-=======
-                    "startLine": 34,
-                    "startColumn": 4,
-                    "startOffset": 1552,
-                    "endColumn": 67,
-                    "endOffset": 1615
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\132b4886fb87eb88a3d27bf35f46dab037d8e3ff\\output\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 4,
-                        "startColumn": 0,
-                        "startOffset": 276,
-                        "endColumn": 63,
-                        "endOffset": 339
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 14,
                     "startColumn": 4,
                     "startOffset": 833,
@@ -418,28 +246,11 @@
                         "startOffset": 783,
                         "endColumn": 75,
                         "endOffset": 854
-=======
-                    "startLine": 35,
-                    "startColumn": 4,
-                    "startOffset": 1620,
-                    "endColumn": 104,
-                    "endOffset": 1720
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 14,
-                        "startColumn": 0,
-                        "startOffset": 951,
-                        "endColumn": 100,
-                        "endOffset": 1051
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 15,
                     "startColumn": 4,
                     "startOffset": 909,
@@ -454,28 +265,11 @@
                         "startOffset": 859,
                         "endColumn": 76,
                         "endOffset": 931
-=======
-                    "startLine": 36,
-                    "startColumn": 4,
-                    "startOffset": 1725,
-                    "endColumn": 180,
-                    "endOffset": 1901
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 15,
-                        "startColumn": 0,
-                        "startOffset": 1052,
-                        "endColumn": 180,
-                        "endOffset": 1232
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 16,
                     "startColumn": 4,
                     "startOffset": 986,
@@ -642,28 +436,11 @@
                         "startOffset": 1594,
                         "endColumn": 105,
                         "endOffset": 1695
-=======
-                    "startLine": 37,
-                    "startColumn": 4,
-                    "startOffset": 1906,
-                    "endColumn": 124,
-                    "endOffset": 2026
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 16,
-                        "startColumn": 0,
-                        "startOffset": 1233,
-                        "endColumn": 120,
-                        "endOffset": 1353
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 25,
                     "startColumn": 4,
                     "startOffset": 1750,
@@ -11079,28 +10856,11 @@
                         "startOffset": 120015,
                         "endColumn": 99,
                         "endOffset": 120110
-=======
-                    "startLine": 38,
-                    "startColumn": 4,
-                    "startOffset": 2031,
-                    "endColumn": 106,
-                    "endOffset": 2133
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 17,
-                        "startColumn": 0,
-                        "startOffset": 1354,
-                        "endColumn": 102,
-                        "endOffset": 1456
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1749,
                     "startColumn": 4,
                     "startOffset": 128238,
@@ -11115,28 +10875,11 @@
                         "startOffset": 120115,
                         "endColumn": 89,
                         "endOffset": 120200
-=======
-                    "startLine": 39,
-                    "startColumn": 4,
-                    "startOffset": 2138,
-                    "endColumn": 179,
-                    "endOffset": 2313
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 18,
-                        "startColumn": 0,
-                        "startOffset": 1457,
-                        "endColumn": 179,
-                        "endOffset": 1636
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1750,
                     "startColumn": 4,
                     "startOffset": 128328,
@@ -11151,28 +10894,11 @@
                         "startOffset": 120205,
                         "endColumn": 109,
                         "endOffset": 120310
-=======
-                    "startLine": 40,
-                    "startColumn": 4,
-                    "startOffset": 2318,
-                    "endColumn": 122,
-                    "endOffset": 2436
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 19,
-                        "startColumn": 0,
-                        "startOffset": 1637,
-                        "endColumn": 118,
-                        "endOffset": 1755
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1751,
                     "startColumn": 4,
                     "startOffset": 128438,
@@ -11187,28 +10913,11 @@
                         "startOffset": 120315,
                         "endColumn": 93,
                         "endOffset": 120404
-=======
-                    "startLine": 41,
-                    "startColumn": 4,
-                    "startOffset": 2441,
-                    "endColumn": 102,
-                    "endOffset": 2539
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 20,
-                        "startColumn": 0,
-                        "startOffset": 1756,
-                        "endColumn": 98,
-                        "endOffset": 1854
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1752,
                     "startColumn": 4,
                     "startOffset": 128532,
@@ -11223,28 +10932,11 @@
                         "startOffset": 120409,
                         "endColumn": 105,
                         "endOffset": 120510
-=======
-                    "startLine": 42,
-                    "startColumn": 4,
-                    "startOffset": 2544,
-                    "endColumn": 166,
-                    "endOffset": 2706
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\132b4886fb87eb88a3d27bf35f46dab037d8e3ff\\output\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 7,
-                        "startColumn": 0,
-                        "startOffset": 439,
-                        "endColumn": 166,
-                        "endOffset": 605
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1753,
                     "startColumn": 4,
                     "startOffset": 128638,
@@ -11259,28 +10951,11 @@
                         "startOffset": 120515,
                         "endColumn": 91,
                         "endOffset": 120602
-=======
-                    "startLine": 43,
-                    "startColumn": 4,
-                    "startOffset": 2711,
-                    "endColumn": 187,
-                    "endOffset": 2894
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 21,
-                        "startColumn": 0,
-                        "startOffset": 1855,
-                        "endColumn": 187,
-                        "endOffset": 2042
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1754,
                     "startColumn": 4,
                     "startOffset": 128730,
@@ -11297,28 +10972,11 @@
                         "endLine": 1639,
                         "endColumn": 12,
                         "endOffset": 120702
-=======
-                    "startLine": 44,
-                    "startColumn": 4,
-                    "startOffset": 2899,
-                    "endColumn": 104,
-                    "endOffset": 2999
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 22,
-                        "startColumn": 0,
-                        "startOffset": 2043,
-                        "endColumn": 100,
-                        "endOffset": 2143
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1756,
                     "startColumn": 4,
                     "startOffset": 128830,
@@ -11335,28 +10993,11 @@
                         "endLine": 1641,
                         "endColumn": 12,
                         "endOffset": 120814
-=======
-                    "startLine": 45,
-                    "startColumn": 4,
-                    "startOffset": 3004,
-                    "endColumn": 180,
-                    "endOffset": 3180
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 23,
-                        "startColumn": 0,
-                        "startOffset": 2144,
-                        "endColumn": 180,
-                        "endOffset": 2324
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1758,
                     "startColumn": 4,
                     "startOffset": 128942,
@@ -11373,28 +11014,11 @@
                         "endLine": 1643,
                         "endColumn": 12,
                         "endOffset": 120928
-=======
-                    "startLine": 46,
-                    "startColumn": 4,
-                    "startOffset": 3185,
-                    "endColumn": 124,
-                    "endOffset": 3305
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 24,
-                        "startColumn": 0,
-                        "startOffset": 2325,
-                        "endColumn": 120,
-                        "endOffset": 2445
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1760,
                     "startColumn": 4,
                     "startOffset": 129056,
@@ -11411,28 +11035,11 @@
                         "endLine": 1645,
                         "endColumn": 12,
                         "endOffset": 121044
-=======
-                    "startLine": 47,
-                    "startColumn": 4,
-                    "startOffset": 3310,
-                    "endColumn": 174,
-                    "endOffset": 3480
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 25,
-                        "startColumn": 0,
-                        "startOffset": 2446,
-                        "endColumn": 174,
-                        "endOffset": 2620
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1762,
                     "startColumn": 4,
                     "startOffset": 129172,
@@ -11449,28 +11056,11 @@
                         "endLine": 1647,
                         "endColumn": 12,
                         "endOffset": 121160
-=======
-                    "startLine": 48,
-                    "startColumn": 4,
-                    "startOffset": 3485,
-                    "endColumn": 147,
-                    "endOffset": 3628
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 26,
-                        "startColumn": 0,
-                        "startOffset": 2621,
-                        "endColumn": 143,
-                        "endOffset": 2764
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1764,
                     "startColumn": 4,
                     "startOffset": 129288,
@@ -11485,28 +11075,11 @@
                         "startOffset": 121165,
                         "endColumn": 93,
                         "endOffset": 121254
-=======
-                    "startLine": 49,
-                    "startColumn": 4,
-                    "startOffset": 3633,
-                    "endColumn": 62,
-                    "endOffset": 3691
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 27,
-                        "startColumn": 0,
-                        "startOffset": 2765,
-                        "endColumn": 58,
-                        "endOffset": 2823
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1765,
                     "startColumn": 4,
                     "startOffset": 129382,
@@ -11521,28 +11094,11 @@
                         "startOffset": 121259,
                         "endColumn": 113,
                         "endOffset": 121368
-=======
-                    "startLine": 50,
-                    "startColumn": 4,
-                    "startOffset": 3696,
-                    "endColumn": 61,
-                    "endOffset": 3753
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 28,
-                        "startColumn": 0,
-                        "startOffset": 2824,
-                        "endColumn": 57,
-                        "endOffset": 2881
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1766,
                     "startColumn": 4,
                     "startOffset": 129496,
@@ -11557,28 +11113,11 @@
                         "startOffset": 121373,
                         "endColumn": 111,
                         "endOffset": 121480
-=======
-                    "startLine": 51,
-                    "startColumn": 4,
-                    "startOffset": 3758,
-                    "endColumn": 78,
-                    "endOffset": 3832
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\8e066461af0bbfd892b13ee44ff11a70a5dab140\\output\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 29,
-                        "startColumn": 0,
-                        "startOffset": 2882,
-                        "endColumn": 74,
-                        "endOffset": 2956
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1767,
                     "startColumn": 4,
                     "startOffset": 129608,
@@ -11595,28 +11134,11 @@
                         "endLine": 1652,
                         "endColumn": 12,
                         "endOffset": 121582
-=======
-                    "startLine": 52,
-                    "startColumn": 4,
-                    "startOffset": 3837,
-                    "endColumn": 61,
-                    "endOffset": 3894
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 3,
-                        "startColumn": 4,
-                        "startOffset": 108,
-                        "endColumn": 61,
-                        "endOffset": 165
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1769,
                     "startColumn": 4,
                     "startOffset": 129710,
@@ -11633,28 +11155,11 @@
                         "endLine": 1654,
                         "endColumn": 12,
                         "endOffset": 121702
-=======
-                    "startLine": 53,
-                    "startColumn": 4,
-                    "startOffset": 3899,
-                    "endColumn": 53,
-                    "endOffset": 3948
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 4,
-                        "startColumn": 4,
-                        "startOffset": 170,
-                        "endColumn": 53,
-                        "endOffset": 219
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1771,
                     "startColumn": 4,
                     "startOffset": 129830,
@@ -11671,28 +11176,11 @@
                         "endLine": 1656,
                         "endColumn": 12,
                         "endOffset": 121824
-=======
-                    "startLine": 54,
-                    "startColumn": 4,
-                    "startOffset": 3953,
-                    "endColumn": 60,
-                    "endOffset": 4009
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 5,
-                        "startColumn": 4,
-                        "startOffset": 224,
-                        "endColumn": 60,
-                        "endOffset": 280
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1773,
                     "startColumn": 4,
                     "startOffset": 129952,
@@ -11707,28 +11195,11 @@
                         "startOffset": 121829,
                         "endColumn": 81,
                         "endOffset": 121906
-=======
-                    "startLine": 55,
-                    "startColumn": 4,
-                    "startOffset": 4014,
-                    "endColumn": 56,
-                    "endOffset": 4066
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 6,
-                        "startColumn": 4,
-                        "startOffset": 285,
-                        "endColumn": 56,
-                        "endOffset": 337
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1774,
                     "startColumn": 4,
                     "startOffset": 130034,
@@ -11743,28 +11214,11 @@
                         "startOffset": 121911,
                         "endColumn": 103,
                         "endOffset": 122010
-=======
-                    "startLine": 56,
-                    "startColumn": 4,
-                    "startOffset": 4071,
-                    "endColumn": 51,
-                    "endOffset": 4118
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 7,
-                        "startColumn": 4,
-                        "startOffset": 342,
-                        "endColumn": 51,
-                        "endOffset": 389
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1775,
                     "startColumn": 4,
                     "startOffset": 130138,
@@ -11779,28 +11233,11 @@
                         "startOffset": 122015,
                         "endColumn": 119,
                         "endOffset": 122130
-=======
-                    "startLine": 57,
-                    "startColumn": 4,
-                    "startOffset": 4123,
-                    "endColumn": 63,
-                    "endOffset": 4182
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 8,
-                        "startColumn": 4,
-                        "startOffset": 394,
-                        "endColumn": 63,
-                        "endOffset": 453
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1776,
                     "startColumn": 4,
                     "startOffset": 130258,
@@ -11815,28 +11252,11 @@
                         "startOffset": 122135,
                         "endColumn": 125,
                         "endOffset": 122256
-=======
-                    "startLine": 58,
-                    "startColumn": 4,
-                    "startOffset": 4187,
-                    "endColumn": 56,
-                    "endOffset": 4239
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 9,
-                        "startColumn": 4,
-                        "startOffset": 458,
-                        "endColumn": 56,
-                        "endOffset": 510
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1777,
                     "startColumn": 4,
                     "startOffset": 130384,
@@ -11851,28 +11271,11 @@
                         "startOffset": 122261,
                         "endColumn": 97,
                         "endOffset": 122354
-=======
-                    "startLine": 59,
-                    "startColumn": 4,
-                    "startOffset": 4244,
-                    "endColumn": 87,
-                    "endOffset": 4327
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 10,
-                        "startColumn": 4,
-                        "startOffset": 515,
-                        "endColumn": 87,
-                        "endOffset": 598
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1778,
                     "startColumn": 4,
                     "startOffset": 130482,
@@ -11887,28 +11290,11 @@
                         "startOffset": 122359,
                         "endColumn": 93,
                         "endOffset": 122448
-=======
-                    "startLine": 60,
-                    "startColumn": 4,
-                    "startOffset": 4332,
-                    "endColumn": 73,
-                    "endOffset": 4401
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 11,
-                        "startColumn": 4,
-                        "startOffset": 603,
-                        "endColumn": 73,
-                        "endOffset": 672
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1779,
                     "startColumn": 4,
                     "startOffset": 130576,
@@ -11923,28 +11309,11 @@
                         "startOffset": 122453,
                         "endColumn": 87,
                         "endOffset": 122536
-=======
-                    "startLine": 61,
-                    "startColumn": 4,
-                    "startOffset": 4406,
-                    "endColumn": 71,
-                    "endOffset": 4473
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 12,
-                        "startColumn": 4,
-                        "startOffset": 677,
-                        "endColumn": 71,
-                        "endOffset": 744
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1780,
                     "startColumn": 4,
                     "startOffset": 130664,
@@ -11959,28 +11328,11 @@
                         "startOffset": 122541,
                         "endColumn": 111,
                         "endOffset": 122648
-=======
-                    "startLine": 62,
-                    "startColumn": 4,
-                    "startOffset": 4478,
-                    "endColumn": 68,
-                    "endOffset": 4542
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 13,
-                        "startColumn": 4,
-                        "startOffset": 749,
-                        "endColumn": 68,
-                        "endOffset": 813
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1781,
                     "startColumn": 4,
                     "startOffset": 130776,
@@ -11995,28 +11347,11 @@
                         "startOffset": 122653,
                         "endColumn": 115,
                         "endOffset": 122764
-=======
-                    "startLine": 63,
-                    "startColumn": 4,
-                    "startOffset": 4547,
-                    "endColumn": 77,
-                    "endOffset": 4620
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 14,
-                        "startColumn": 4,
-                        "startOffset": 818,
-                        "endColumn": 77,
-                        "endOffset": 891
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1782,
                     "startColumn": 4,
                     "startOffset": 130892,
@@ -12031,28 +11366,11 @@
                         "startOffset": 122769,
                         "endColumn": 121,
                         "endOffset": 122886
-=======
-                    "startLine": 64,
-                    "startColumn": 4,
-                    "startOffset": 4625,
-                    "endColumn": 65,
-                    "endOffset": 4686
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 15,
-                        "startColumn": 4,
-                        "startOffset": 896,
-                        "endColumn": 65,
-                        "endOffset": 957
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1783,
                     "startColumn": 4,
                     "startOffset": 131014,
@@ -12067,28 +11385,11 @@
                         "startOffset": 122891,
                         "endColumn": 111,
                         "endOffset": 122998
-=======
-                    "startLine": 65,
-                    "startColumn": 4,
-                    "startOffset": 4691,
-                    "endColumn": 73,
-                    "endOffset": 4760
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 16,
-                        "startColumn": 4,
-                        "startOffset": 962,
-                        "endColumn": 73,
-                        "endOffset": 1031
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1784,
                     "startColumn": 4,
                     "startOffset": 131126,
@@ -12105,28 +11406,11 @@
                         "endLine": 1670,
                         "endColumn": 12,
                         "endOffset": 123173
-=======
-                    "startLine": 66,
-                    "startColumn": 4,
-                    "startOffset": 4765,
-                    "endColumn": 83,
-                    "endOffset": 4844
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 17,
-                        "startColumn": 4,
-                        "startOffset": 1036,
-                        "endColumn": 83,
-                        "endOffset": 1115
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1787,
                     "startColumn": 4,
                     "startOffset": 131301,
@@ -12141,28 +11425,11 @@
                         "startOffset": 123178,
                         "endColumn": 115,
                         "endOffset": 123289
-=======
-                    "startLine": 67,
-                    "startColumn": 4,
-                    "startOffset": 4849,
-                    "endColumn": 65,
-                    "endOffset": 4910
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 18,
-                        "startColumn": 4,
-                        "startOffset": 1120,
-                        "endColumn": 65,
-                        "endOffset": 1181
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1788,
                     "startColumn": 4,
                     "startOffset": 131417,
@@ -12177,28 +11444,11 @@
                         "startOffset": 123294,
                         "endColumn": 85,
                         "endOffset": 123375
-=======
-                    "startLine": 68,
-                    "startColumn": 4,
-                    "startOffset": 4915,
-                    "endColumn": 75,
-                    "endOffset": 4986
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 19,
-                        "startColumn": 4,
-                        "startOffset": 1186,
-                        "endColumn": 75,
-                        "endOffset": 1257
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1789,
                     "startColumn": 4,
                     "startOffset": 131503,
@@ -12213,28 +11463,11 @@
                         "startOffset": 123380,
                         "endColumn": 91,
                         "endOffset": 123467
-=======
-                    "startLine": 69,
-                    "startColumn": 4,
-                    "startOffset": 4991,
-                    "endColumn": 89,
-                    "endOffset": 5076
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 20,
-                        "startColumn": 4,
-                        "startOffset": 1262,
-                        "endColumn": 89,
-                        "endOffset": 1347
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1790,
                     "startColumn": 4,
                     "startOffset": 131595,
@@ -12251,28 +11484,11 @@
                         "endLine": 1675,
                         "endColumn": 12,
                         "endOffset": 123579
-=======
-                    "startLine": 70,
-                    "startColumn": 4,
-                    "startOffset": 5081,
-                    "endColumn": 79,
-                    "endOffset": 5156
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 21,
-                        "startColumn": 4,
-                        "startOffset": 1352,
-                        "endColumn": 79,
-                        "endOffset": 1427
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1792,
                     "startColumn": 4,
                     "startOffset": 131707,
@@ -12289,28 +11505,11 @@
                         "endLine": 1677,
                         "endColumn": 12,
                         "endOffset": 123703
-=======
-                    "startLine": 71,
-                    "startColumn": 4,
-                    "startOffset": 5161,
-                    "endColumn": 73,
-                    "endOffset": 5230
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 22,
-                        "startColumn": 4,
-                        "startOffset": 1432,
-                        "endColumn": 73,
-                        "endOffset": 1501
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1794,
                     "startColumn": 4,
                     "startOffset": 131831,
@@ -12325,28 +11524,11 @@
                         "startOffset": 123708,
                         "endColumn": 66,
                         "endOffset": 123770
-=======
-                    "startLine": 72,
-                    "startColumn": 4,
-                    "startOffset": 5235,
-                    "endColumn": 83,
-                    "endOffset": 5314
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 23,
-                        "startColumn": 4,
-                        "startOffset": 1506,
-                        "endColumn": 83,
-                        "endOffset": 1585
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1795,
                     "startColumn": 4,
                     "startOffset": 131898,
@@ -12363,28 +11545,11 @@
                         "endLine": 1680,
                         "endColumn": 12,
                         "endOffset": 123896
-=======
-                    "startLine": 73,
-                    "startColumn": 4,
-                    "startOffset": 5319,
-                    "endColumn": 53,
-                    "endOffset": 5368
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 24,
-                        "startColumn": 4,
-                        "startOffset": 1590,
-                        "endColumn": 53,
-                        "endOffset": 1639
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1797,
                     "startColumn": 4,
                     "startOffset": 132024,
@@ -12399,28 +11564,11 @@
                         "startOffset": 123901,
                         "endColumn": 67,
                         "endOffset": 123964
-=======
-                    "startLine": 74,
-                    "startColumn": 4,
-                    "startOffset": 5373,
-                    "endColumn": 91,
-                    "endOffset": 5460
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 25,
-                        "startColumn": 4,
-                        "startOffset": 1644,
-                        "endColumn": 91,
-                        "endOffset": 1731
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1798,
                     "startColumn": 4,
                     "startOffset": 132092,
@@ -12437,28 +11585,11 @@
                         "endLine": 1683,
                         "endColumn": 12,
                         "endOffset": 124092
-=======
-                    "startLine": 75,
-                    "startColumn": 4,
-                    "startOffset": 5465,
-                    "endColumn": 69,
-                    "endOffset": 5530
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 26,
-                        "startColumn": 4,
-                        "startOffset": 1736,
-                        "endColumn": 69,
-                        "endOffset": 1801
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1800,
                     "startColumn": 4,
                     "startOffset": 132220,
@@ -12475,28 +11606,11 @@
                         "endLine": 1685,
                         "endColumn": 12,
                         "endOffset": 124236
-=======
-                    "startLine": 76,
-                    "startColumn": 4,
-                    "startOffset": 5535,
-                    "endColumn": 59,
-                    "endOffset": 5590
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 27,
-                        "startColumn": 4,
-                        "startOffset": 1806,
-                        "endColumn": 59,
-                        "endOffset": 1861
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1802,
                     "startColumn": 4,
                     "startOffset": 132364,
@@ -12513,28 +11627,11 @@
                         "endLine": 1687,
                         "endColumn": 12,
                         "endOffset": 124364
-=======
-                    "startLine": 77,
-                    "startColumn": 4,
-                    "startOffset": 5595,
-                    "endColumn": 55,
-                    "endOffset": 5646
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 28,
-                        "startColumn": 4,
-                        "startOffset": 1866,
-                        "endColumn": 55,
-                        "endOffset": 1917
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1804,
                     "startColumn": 4,
                     "startOffset": 132492,
@@ -12549,28 +11646,11 @@
                         "startOffset": 124369,
                         "endColumn": 68,
                         "endOffset": 124433
-=======
-                    "startLine": 78,
-                    "startColumn": 4,
-                    "startOffset": 5651,
-                    "endColumn": 81,
-                    "endOffset": 5728
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 29,
-                        "startColumn": 4,
-                        "startOffset": 1922,
-                        "endColumn": 81,
-                        "endOffset": 1999
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1805,
                     "startColumn": 4,
                     "startOffset": 132561,
@@ -12585,28 +11665,11 @@
                         "startOffset": 124438,
                         "endColumn": 94,
                         "endOffset": 124528
-=======
-                    "startLine": 79,
-                    "startColumn": 4,
-                    "startOffset": 5733,
-                    "endColumn": 69,
-                    "endOffset": 5798
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 30,
-                        "startColumn": 4,
-                        "startOffset": 2004,
-                        "endColumn": 69,
-                        "endOffset": 2069
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1806,
                     "startColumn": 4,
                     "startOffset": 132656,
@@ -12621,28 +11684,11 @@
                         "startOffset": 124533,
                         "endColumn": 114,
                         "endOffset": 124643
-=======
-                    "startLine": 80,
-                    "startColumn": 4,
-                    "startOffset": 5803,
-                    "endColumn": 61,
-                    "endOffset": 5860
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 31,
-                        "startColumn": 4,
-                        "startOffset": 2074,
-                        "endColumn": 61,
-                        "endOffset": 2131
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1807,
                     "startColumn": 4,
                     "startOffset": 132771,
@@ -12657,28 +11703,11 @@
                         "startOffset": 124648,
                         "endColumn": 112,
                         "endOffset": 124756
-=======
-                    "startLine": 81,
-                    "startColumn": 4,
-                    "startOffset": 5865,
-                    "endColumn": 89,
-                    "endOffset": 5950
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 32,
-                        "startColumn": 4,
-                        "startOffset": 2136,
-                        "endColumn": 89,
-                        "endOffset": 2221
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1808,
                     "startColumn": 4,
                     "startOffset": 132884,
@@ -12693,28 +11722,11 @@
                         "startOffset": 124761,
                         "endColumn": 98,
                         "endOffset": 124855
-=======
-                    "startLine": 82,
-                    "startColumn": 4,
-                    "startOffset": 5955,
-                    "endColumn": 75,
-                    "endOffset": 6026
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 33,
-                        "startColumn": 4,
-                        "startOffset": 2226,
-                        "endColumn": 75,
-                        "endOffset": 2297
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1809,
                     "startColumn": 4,
                     "startOffset": 132983,
@@ -12729,28 +11741,11 @@
                         "startOffset": 124860,
                         "endColumn": 108,
                         "endOffset": 124964
-=======
-                    "startLine": 83,
-                    "startColumn": 4,
-                    "startOffset": 6031,
-                    "endColumn": 71,
-                    "endOffset": 6098
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 34,
-                        "startColumn": 4,
-                        "startOffset": 2302,
-                        "endColumn": 71,
-                        "endOffset": 2369
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1810,
                     "startColumn": 4,
                     "startOffset": 133092,
@@ -12765,28 +11760,11 @@
                         "startOffset": 124969,
                         "endColumn": 110,
                         "endOffset": 125075
-=======
-                    "startLine": 84,
-                    "startColumn": 4,
-                    "startOffset": 6103,
-                    "endColumn": 94,
-                    "endOffset": 6193
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 35,
-                        "startColumn": 4,
-                        "startOffset": 2374,
-                        "endColumn": 94,
-                        "endOffset": 2464
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1811,
                     "startColumn": 4,
                     "startOffset": 133203,
@@ -12801,28 +11779,11 @@
                         "startOffset": 125080,
                         "endColumn": 110,
                         "endOffset": 125186
-=======
-                    "startLine": 85,
-                    "startColumn": 4,
-                    "startOffset": 6198,
-                    "endColumn": 58,
-                    "endOffset": 6252
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 36,
-                        "startColumn": 4,
-                        "startOffset": 2469,
-                        "endColumn": 58,
-                        "endOffset": 2523
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1812,
                     "startColumn": 4,
                     "startOffset": 133314,
@@ -12837,28 +11798,11 @@
                         "startOffset": 125191,
                         "endColumn": 100,
                         "endOffset": 125287
-=======
-                    "startLine": 86,
-                    "startColumn": 4,
-                    "startOffset": 6257,
-                    "endColumn": 67,
-                    "endOffset": 6320
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 37,
-                        "startColumn": 4,
-                        "startOffset": 2528,
-                        "endColumn": 67,
-                        "endOffset": 2591
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1813,
                     "startColumn": 4,
                     "startOffset": 133415,
@@ -12873,28 +11817,11 @@
                         "startOffset": 125292,
                         "endColumn": 104,
                         "endOffset": 125392
-=======
-                    "startLine": 87,
-                    "startColumn": 4,
-                    "startOffset": 6325,
-                    "endColumn": 61,
-                    "endOffset": 6382
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 38,
-                        "startColumn": 4,
-                        "startOffset": 2596,
-                        "endColumn": 61,
-                        "endOffset": 2653
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1814,
                     "startColumn": 4,
                     "startOffset": 133520,
@@ -12909,28 +11836,11 @@
                         "startOffset": 125397,
                         "endColumn": 99,
                         "endOffset": 125492
-=======
-                    "startLine": 88,
-                    "startColumn": 4,
-                    "startOffset": 6387,
-                    "endColumn": 68,
-                    "endOffset": 6451
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 39,
-                        "startColumn": 4,
-                        "startOffset": 2658,
-                        "endColumn": 68,
-                        "endOffset": 2722
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1815,
                     "startColumn": 4,
                     "startOffset": 133620,
@@ -12947,28 +11857,11 @@
                         "endLine": 1700,
                         "endColumn": 12,
                         "endOffset": 125622
-=======
-                    "startLine": 89,
-                    "startColumn": 4,
-                    "startOffset": 6456,
-                    "endColumn": 52,
-                    "endOffset": 6504
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 40,
-                        "startColumn": 4,
-                        "startOffset": 2727,
-                        "endColumn": 52,
-                        "endOffset": 2775
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1817,
                     "startColumn": 4,
                     "startOffset": 133750,
@@ -12983,28 +11876,11 @@
                         "startOffset": 125627,
                         "endColumn": 90,
                         "endOffset": 125713
-=======
-                    "startLine": 90,
-                    "startColumn": 4,
-                    "startOffset": 6509,
-                    "endColumn": 69,
-                    "endOffset": 6574
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 41,
-                        "startColumn": 4,
-                        "startOffset": 2780,
-                        "endColumn": 69,
-                        "endOffset": 2845
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1818,
                     "startColumn": 4,
                     "startOffset": 133841,
@@ -13019,28 +11895,11 @@
                         "startOffset": 125718,
                         "endColumn": 122,
                         "endOffset": 125836
-=======
-                    "startLine": 91,
-                    "startColumn": 4,
-                    "startOffset": 6579,
-                    "endColumn": 57,
-                    "endOffset": 6632
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 42,
-                        "startColumn": 4,
-                        "startOffset": 2850,
-                        "endColumn": 57,
-                        "endOffset": 2903
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1819,
                     "startColumn": 4,
                     "startOffset": 133964,
@@ -13055,28 +11914,11 @@
                         "startOffset": 125841,
                         "endColumn": 93,
                         "endOffset": 125930
-=======
-                    "startLine": 92,
-                    "startColumn": 4,
-                    "startOffset": 6637,
-                    "endColumn": 69,
-                    "endOffset": 6702
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 43,
-                        "startColumn": 4,
-                        "startOffset": 2908,
-                        "endColumn": 69,
-                        "endOffset": 2973
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1820,
                     "startColumn": 4,
                     "startOffset": 134058,
@@ -13093,28 +11935,11 @@
                         "endLine": 1705,
                         "endColumn": 12,
                         "endOffset": 126042
-=======
-                    "startLine": 93,
-                    "startColumn": 4,
-                    "startOffset": 6707,
-                    "endColumn": 71,
-                    "endOffset": 6774
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 44,
-                        "startColumn": 4,
-                        "startOffset": 2978,
-                        "endColumn": 71,
-                        "endOffset": 3045
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1822,
                     "startColumn": 4,
                     "startOffset": 134170,
@@ -13129,28 +11954,11 @@
                         "startOffset": 126047,
                         "endColumn": 85,
                         "endOffset": 126128
-=======
-                    "startLine": 94,
-                    "startColumn": 4,
-                    "startOffset": 6779,
-                    "endColumn": 61,
-                    "endOffset": 6836
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 45,
-                        "startColumn": 4,
-                        "startOffset": 3050,
-                        "endColumn": 61,
-                        "endOffset": 3107
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1823,
                     "startColumn": 4,
                     "startOffset": 134256,
@@ -13165,28 +11973,11 @@
                         "startOffset": 126133,
                         "endColumn": 103,
                         "endOffset": 126232
-=======
-                    "startLine": 95,
-                    "startColumn": 4,
-                    "startOffset": 6841,
-                    "endColumn": 81,
-                    "endOffset": 6918
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 46,
-                        "startColumn": 4,
-                        "startOffset": 3112,
-                        "endColumn": 81,
-                        "endOffset": 3189
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1824,
                     "startColumn": 4,
                     "startOffset": 134360,
@@ -13201,28 +11992,11 @@
                         "startOffset": 126237,
                         "endColumn": 95,
                         "endOffset": 126328
-=======
-                    "startLine": 96,
-                    "startColumn": 4,
-                    "startOffset": 6923,
-                    "endColumn": 69,
-                    "endOffset": 6988
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 47,
-                        "startColumn": 4,
-                        "startOffset": 3194,
-                        "endColumn": 69,
-                        "endOffset": 3259
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1825,
                     "startColumn": 4,
                     "startOffset": 134456,
@@ -13237,28 +12011,11 @@
                         "startOffset": 126333,
                         "endColumn": 74,
                         "endOffset": 126403
-=======
-                    "startLine": 97,
-                    "startColumn": 4,
-                    "startOffset": 6993,
-                    "endColumn": 68,
-                    "endOffset": 7057
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 48,
-                        "startColumn": 4,
-                        "startOffset": 3264,
-                        "endColumn": 68,
-                        "endOffset": 3328
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1826,
                     "startColumn": 4,
                     "startOffset": 134531,
@@ -13273,28 +12030,11 @@
                         "startOffset": 126408,
                         "endColumn": 69,
                         "endOffset": 126473
-=======
-                    "startLine": 98,
-                    "startColumn": 4,
-                    "startOffset": 7062,
-                    "endColumn": 99,
-                    "endOffset": 7157
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 49,
-                        "startColumn": 4,
-                        "startOffset": 3333,
-                        "endColumn": 99,
-                        "endOffset": 3428
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1827,
                     "startColumn": 4,
                     "startOffset": 134601,
@@ -13309,28 +12049,11 @@
                         "startOffset": 126478,
                         "endColumn": 87,
                         "endOffset": 126561
-=======
-                    "startLine": 99,
-                    "startColumn": 4,
-                    "startOffset": 7162,
-                    "endColumn": 53,
-                    "endOffset": 7211
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 50,
-                        "startColumn": 4,
-                        "startOffset": 3433,
-                        "endColumn": 53,
-                        "endOffset": 3482
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1828,
                     "startColumn": 4,
                     "startOffset": 134689,
@@ -13347,28 +12070,11 @@
                         "endLine": 1713,
                         "endColumn": 12,
                         "endOffset": 126679
-=======
-                    "startLine": 100,
-                    "startColumn": 4,
-                    "startOffset": 7216,
-                    "endColumn": 47,
-                    "endOffset": 7259
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 51,
-                        "startColumn": 4,
-                        "startOffset": 3487,
-                        "endColumn": 47,
-                        "endOffset": 3530
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1830,
                     "startColumn": 4,
                     "startOffset": 134807,
@@ -13385,28 +12091,11 @@
                         "endLine": 1715,
                         "endColumn": 12,
                         "endOffset": 126783
-=======
-                    "startLine": 101,
-                    "startColumn": 4,
-                    "startOffset": 7264,
-                    "endColumn": 57,
-                    "endOffset": 7317
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 52,
-                        "startColumn": 4,
-                        "startOffset": 3535,
-                        "endColumn": 57,
-                        "endOffset": 3588
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1832,
                     "startColumn": 4,
                     "startOffset": 134911,
@@ -13423,28 +12112,11 @@
                         "endLine": 1717,
                         "endColumn": 12,
                         "endOffset": 126887
-=======
-                    "startLine": 102,
-                    "startColumn": 4,
-                    "startOffset": 7322,
-                    "endColumn": 49,
-                    "endOffset": 7367
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 53,
-                        "startColumn": 4,
-                        "startOffset": 3593,
-                        "endColumn": 49,
-                        "endOffset": 3638
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1834,
                     "startColumn": 4,
                     "startOffset": 135015,
@@ -13461,28 +12133,11 @@
                         "endLine": 1719,
                         "endColumn": 12,
                         "endOffset": 127013
-=======
-                    "startLine": 103,
-                    "startColumn": 4,
-                    "startOffset": 7372,
-                    "endColumn": 45,
-                    "endOffset": 7413
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 54,
-                        "startColumn": 4,
-                        "startOffset": 3643,
-                        "endColumn": 45,
-                        "endOffset": 3684
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1836,
                     "startColumn": 4,
                     "startOffset": 135141,
@@ -13497,28 +12152,11 @@
                         "startOffset": 127018,
                         "endColumn": 87,
                         "endOffset": 127101
-=======
-                    "startLine": 104,
-                    "startColumn": 4,
-                    "startOffset": 7418,
-                    "endColumn": 43,
-                    "endOffset": 7457
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 55,
-                        "startColumn": 4,
-                        "startOffset": 3689,
-                        "endColumn": 43,
-                        "endOffset": 3728
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1837,
                     "startColumn": 4,
                     "startOffset": 135229,
@@ -13533,28 +12171,11 @@
                         "startOffset": 127106,
                         "endColumn": 107,
                         "endOffset": 127209
-=======
-                    "startLine": 105,
-                    "startColumn": 4,
-                    "startOffset": 7462,
-                    "endColumn": 60,
-                    "endOffset": 7518
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 56,
-                        "startColumn": 4,
-                        "startOffset": 3733,
-                        "endColumn": 60,
-                        "endOffset": 3789
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1838,
                     "startColumn": 4,
                     "startOffset": 135337,
@@ -13569,28 +12190,11 @@
                         "startOffset": 127214,
                         "endColumn": 99,
                         "endOffset": 127309
-=======
-                    "startLine": 106,
-                    "startColumn": 4,
-                    "startOffset": 7523,
-                    "endColumn": 52,
-                    "endOffset": 7571
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 57,
-                        "startColumn": 4,
-                        "startOffset": 3794,
-                        "endColumn": 52,
-                        "endOffset": 3842
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1839,
                     "startColumn": 4,
                     "startOffset": 135437,
@@ -13605,28 +12209,11 @@
                         "startOffset": 127314,
                         "endColumn": 89,
                         "endOffset": 127399
-=======
-                    "startLine": 107,
-                    "startColumn": 4,
-                    "startOffset": 7576,
-                    "endColumn": 54,
-                    "endOffset": 7626
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 58,
-                        "startColumn": 4,
-                        "startOffset": 3847,
-                        "endColumn": 54,
-                        "endOffset": 3897
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1840,
                     "startColumn": 4,
                     "startOffset": 135527,
@@ -13641,28 +12228,11 @@
                         "startOffset": 127404,
                         "endColumn": 109,
                         "endOffset": 127509
-=======
-                    "startLine": 108,
-                    "startColumn": 4,
-                    "startOffset": 7631,
-                    "endColumn": 57,
-                    "endOffset": 7684
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 59,
-                        "startColumn": 4,
-                        "startOffset": 3902,
-                        "endColumn": 57,
-                        "endOffset": 3955
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1841,
                     "startColumn": 4,
                     "startOffset": 135637,
@@ -13677,28 +12247,11 @@
                         "startOffset": 127514,
                         "endColumn": 83,
                         "endOffset": 127593
-=======
-                    "startLine": 109,
-                    "startColumn": 4,
-                    "startOffset": 7689,
-                    "endColumn": 47,
-                    "endOffset": 7732
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 60,
-                        "startColumn": 4,
-                        "startOffset": 3960,
-                        "endColumn": 47,
-                        "endOffset": 4003
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1842,
                     "startColumn": 4,
                     "startOffset": 135721,
@@ -13713,28 +12266,11 @@
                         "startOffset": 127598,
                         "endColumn": 101,
                         "endOffset": 127695
-=======
-                    "startLine": 110,
-                    "startColumn": 4,
-                    "startOffset": 7737,
-                    "endColumn": 43,
-                    "endOffset": 7776
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 61,
-                        "startColumn": 4,
-                        "startOffset": 4008,
-                        "endColumn": 43,
-                        "endOffset": 4047
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1843,
                     "startColumn": 4,
                     "startOffset": 135823,
@@ -13749,28 +12285,11 @@
                         "startOffset": 127700,
                         "endColumn": 83,
                         "endOffset": 127779
-=======
-                    "startLine": 111,
-                    "startColumn": 4,
-                    "startOffset": 7781,
-                    "endColumn": 47,
-                    "endOffset": 7824
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 62,
-                        "startColumn": 4,
-                        "startOffset": 4052,
-                        "endColumn": 47,
-                        "endOffset": 4095
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1844,
                     "startColumn": 4,
                     "startOffset": 135907,
@@ -13785,28 +12304,11 @@
                         "startOffset": 127784,
                         "endColumn": 53,
                         "endOffset": 127833
-=======
-                    "startLine": 112,
-                    "startColumn": 4,
-                    "startOffset": 7829,
-                    "endColumn": 47,
-                    "endOffset": 7872
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 63,
-                        "startColumn": 4,
-                        "startOffset": 4100,
-                        "endColumn": 47,
-                        "endOffset": 4143
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1845,
                     "startColumn": 4,
                     "startOffset": 135961,
@@ -13821,28 +12323,11 @@
                         "startOffset": 127838,
                         "endColumn": 63,
                         "endOffset": 127897
-=======
-                    "startLine": 113,
-                    "startColumn": 4,
-                    "startOffset": 7877,
-                    "endColumn": 64,
-                    "endOffset": 7937
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 64,
-                        "startColumn": 4,
-                        "startOffset": 4148,
-                        "endColumn": 64,
-                        "endOffset": 4208
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1846,
                     "startColumn": 4,
                     "startOffset": 136025,
@@ -13857,28 +12342,11 @@
                         "startOffset": 127902,
                         "endColumn": 105,
                         "endOffset": 128003
-=======
-                    "startLine": 114,
-                    "startColumn": 4,
-                    "startOffset": 7942,
-                    "endColumn": 51,
-                    "endOffset": 7989
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 65,
-                        "startColumn": 4,
-                        "startOffset": 4213,
-                        "endColumn": 51,
-                        "endOffset": 4260
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1847,
                     "startColumn": 4,
                     "startOffset": 136131,
@@ -13893,28 +12361,11 @@
                         "startOffset": 128008,
                         "endColumn": 109,
                         "endOffset": 128113
-=======
-                    "startLine": 115,
-                    "startColumn": 4,
-                    "startOffset": 7994,
-                    "endColumn": 49,
-                    "endOffset": 8039
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 66,
-                        "startColumn": 4,
-                        "startOffset": 4265,
-                        "endColumn": 49,
-                        "endOffset": 4310
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1848,
                     "startColumn": 4,
                     "startOffset": 136241,
@@ -13929,28 +12380,11 @@
                         "startOffset": 128118,
                         "endColumn": 83,
                         "endOffset": 128197
-=======
-                    "startLine": 116,
-                    "startColumn": 4,
-                    "startOffset": 8044,
-                    "endColumn": 56,
-                    "endOffset": 8096
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 67,
-                        "startColumn": 4,
-                        "startOffset": 4315,
-                        "endColumn": 56,
-                        "endOffset": 4367
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 1849,
                     "startColumn": 4,
                     "startOffset": 136325,
@@ -13965,22 +12399,6 @@
                         "startOffset": 128202,
                         "endColumn": 119,
                         "endOffset": 128317
-=======
-                    "startLine": 117,
-                    "startColumn": 4,
-                    "startOffset": 8101,
-                    "endColumn": 76,
-                    "endOffset": 8173
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\bundles\\debug\\res\\values\\values.xml",
-                    "position": {
-                        "startLine": 68,
-                        "startColumn": 4,
-                        "startOffset": 4372,
-                        "endColumn": 76,
-                        "endOffset": 4444
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     }
                 }
             }

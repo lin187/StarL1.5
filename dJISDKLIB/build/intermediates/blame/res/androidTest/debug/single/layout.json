@@ -1,19 +1,10 @@
 [
     {
-<<<<<<< HEAD
         "merged": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\log_dialog_view.xml",
         "source": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\layout\\log_dialog_view.xml"
     },
     {
         "merged": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\dialog_login.xml",
         "source": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\layout\\dialog_login.xml"
-=======
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\dialog_login.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\layout\\dialog_login.xml"
-    },
-    {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\log_dialog_view.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\layout\\log_dialog_view.xml"
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
     }
 ]

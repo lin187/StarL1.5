@@ -1,10 +1,10 @@
 [
     {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\speechapp\\build\\intermediates\\res\\merged\\debug\\color-v11\\abc_background_cache_hint_selector_material_light.xml",
-        "source": "C:\\Users\\wangcs2\\.android\\build-cache\\dddcc5f4416dc19610c79bfa0e8f85a174fa104b\\output\\res\\color-v11\\abc_background_cache_hint_selector_material_light.xml"
+        "merged": "D:\\6-9Starl\\starl\\speechapp\\build\\intermediates\\res\\merged\\debug\\color-v11\\abc_background_cache_hint_selector_material_dark.xml",
+        "source": "C:\\Users\\yangy14\\.android\\build-cache\\5525c73edf00b5f2e2a4bed383d24d1e7b8a3595\\output\\res\\color-v11\\abc_background_cache_hint_selector_material_dark.xml"
     },
     {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\speechapp\\build\\intermediates\\res\\merged\\debug\\color-v11\\abc_background_cache_hint_selector_material_dark.xml",
-        "source": "C:\\Users\\wangcs2\\.android\\build-cache\\dddcc5f4416dc19610c79bfa0e8f85a174fa104b\\output\\res\\color-v11\\abc_background_cache_hint_selector_material_dark.xml"
+        "merged": "D:\\6-9Starl\\starl\\speechapp\\build\\intermediates\\res\\merged\\debug\\color-v11\\abc_background_cache_hint_selector_material_light.xml",
+        "source": "C:\\Users\\yangy14\\.android\\build-cache\\5525c73edf00b5f2e2a4bed383d24d1e7b8a3595\\output\\res\\color-v11\\abc_background_cache_hint_selector_material_light.xml"
     }
 ]

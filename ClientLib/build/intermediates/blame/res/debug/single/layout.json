@@ -1,6 +1,5 @@
 [
     {
-<<<<<<< HEAD
         "merged": "D:\\6-9Starl\\starl\\ClientLib\\build\\intermediates\\res\\merged\\debug\\layout\\select_dialog_item_material.xml",
         "source": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\layout\\select_dialog_item_material.xml"
     },
@@ -159,9 +158,5 @@
     {
         "merged": "D:\\6-9Starl\\starl\\ClientLib\\build\\intermediates\\res\\merged\\debug\\layout\\support_simple_spinner_dropdown_item.xml",
         "source": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\layout\\support_simple_spinner_dropdown_item.xml"
-=======
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\build\\intermediates\\res\\merged\\debug\\layout\\list_item_tlog_info.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\src\\main\\res\\layout\\list_item_tlog_info.xml"
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
     }
 ]

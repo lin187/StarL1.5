@@ -20,9 +20,6 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':dJISDKLIB')
-<<<<<<< HEAD
     compile project(':ClientLib')
-=======
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
     compile files('libs/EHangAndroidSDK2.0.5.jar')
 }

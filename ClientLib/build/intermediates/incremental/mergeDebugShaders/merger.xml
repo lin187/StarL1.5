@@ -1,6 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< HEAD
 <merger version="3"><dataSet config="main"><source path="D:\6-9Starl\starl\ClientLib\src\main\shaders"/></dataSet><dataSet config="debug"><source path="D:\6-9Starl\starl\ClientLib\src\debug\shaders"/></dataSet></merger>
-=======
-<merger version="3"><dataSet config="main"><source path="C:\Users\wangcs2\Desktop\EhangFinal\starl\ClientLib\src\main\shaders"/></dataSet><dataSet config="debug"><source path="C:\Users\wangcs2\Desktop\EhangFinal\starl\ClientLib\src\debug\shaders"/></dataSet></merger>
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c

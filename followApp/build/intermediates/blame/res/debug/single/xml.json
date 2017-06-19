@@ -1,6 +1,5 @@
 [
     {
-<<<<<<< HEAD
         "merged": "D:\\6-9Starl\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\xml\\accessory_filter.xml",
         "source": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\xml\\accessory_filter.xml"
     },
@@ -15,9 +14,5 @@
     {
         "merged": "D:\\6-9Starl\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\xml\\filepaths.xml",
         "source": "D:\\6-9Starl\\starl\\ClientLib\\build\\intermediates\\bundles\\default\\res\\xml\\filepaths.xml"
-=======
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\followApp\\build\\intermediates\\res\\merged\\debug\\xml\\accessory_filter.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\xml\\accessory_filter.xml"
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
     }
 ]

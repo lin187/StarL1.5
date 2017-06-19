@@ -1,10 +1,6 @@
 [
     {
-<<<<<<< HEAD
         "outputFile": "D:\\6-9Starl\\starl\\starlTemplate\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-pt-rBR\\values-pt-rBR.xml",
-=======
-        "outputFile": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\starlTemplate\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-pt-rBR\\values-pt-rBR.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
         "map": [
             {
                 "to": {
@@ -15,11 +11,7 @@
                     "endOffset": 220
                 },
                 "from": {
-<<<<<<< HEAD
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
-=======
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -33,21 +25,12 @@
                 "to": {
                     "startLine": 3,
                     "startColumn": 4,
-<<<<<<< HEAD
                     "startOffset": 225,
                     "endColumn": 107,
                     "endOffset": 328
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
-=======
-                    "startOffset": 175,
-                    "endColumn": 107,
-                    "endOffset": 278
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
@@ -61,21 +44,12 @@
                 "to": {
                     "startLine": 4,
                     "startColumn": 4,
-<<<<<<< HEAD
                     "startOffset": 333,
                     "endColumn": 122,
                     "endOffset": 451
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
-=======
-                    "startOffset": 283,
-                    "endColumn": 122,
-                    "endOffset": 401
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,
@@ -89,21 +63,12 @@
                 "to": {
                     "startLine": 5,
                     "startColumn": 4,
-<<<<<<< HEAD
                     "startOffset": 456,
                     "endColumn": 105,
                     "endOffset": 557
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
-=======
-                    "startOffset": 406,
-                    "endColumn": 105,
-                    "endOffset": 507
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 5,
                         "startColumn": 4,
@@ -117,21 +82,12 @@
                 "to": {
                     "startLine": 6,
                     "startColumn": 4,
-<<<<<<< HEAD
                     "startOffset": 562,
                     "endColumn": 106,
                     "endOffset": 664
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
-=======
-                    "startOffset": 512,
-                    "endColumn": 106,
-                    "endOffset": 614
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 6,
                         "startColumn": 4,
@@ -145,21 +101,12 @@
                 "to": {
                     "startLine": 7,
                     "startColumn": 4,
-<<<<<<< HEAD
                     "startOffset": 669,
                     "endColumn": 88,
                     "endOffset": 753
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
-=======
-                    "startOffset": 619,
-                    "endColumn": 88,
-                    "endOffset": 703
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 7,
                         "startColumn": 4,
@@ -173,21 +120,12 @@
                 "to": {
                     "startLine": 8,
                     "startColumn": 4,
-<<<<<<< HEAD
                     "startOffset": 758,
                     "endColumn": 100,
                     "endOffset": 854
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
-=======
-                    "startOffset": 708,
-                    "endColumn": 100,
-                    "endOffset": 804
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 8,
                         "startColumn": 4,
@@ -201,21 +139,12 @@
                 "to": {
                     "startLine": 9,
                     "startColumn": 4,
-<<<<<<< HEAD
                     "startOffset": 859,
                     "endColumn": 117,
                     "endOffset": 972
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
-=======
-                    "startOffset": 809,
-                    "endColumn": 117,
-                    "endOffset": 922
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 9,
                         "startColumn": 4,
@@ -229,21 +158,12 @@
                 "to": {
                     "startLine": 10,
                     "startColumn": 4,
-<<<<<<< HEAD
                     "startOffset": 977,
                     "endColumn": 82,
                     "endOffset": 1055
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
-=======
-                    "startOffset": 927,
-                    "endColumn": 82,
-                    "endOffset": 1005
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 10,
                         "startColumn": 4,
@@ -257,21 +177,12 @@
                 "to": {
                     "startLine": 11,
                     "startColumn": 4,
-<<<<<<< HEAD
                     "startOffset": 1060,
                     "endColumn": 79,
                     "endOffset": 1135
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
-=======
-                    "startOffset": 1010,
-                    "endColumn": 79,
-                    "endOffset": 1085
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 11,
                         "startColumn": 4,
@@ -285,21 +196,12 @@
                 "to": {
                     "startLine": 12,
                     "startColumn": 4,
-<<<<<<< HEAD
                     "startOffset": 1140,
                     "endColumn": 86,
                     "endOffset": 1222
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
-=======
-                    "startOffset": 1090,
-                    "endColumn": 86,
-                    "endOffset": 1172
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 12,
                         "startColumn": 4,
@@ -313,21 +215,12 @@
                 "to": {
                     "startLine": 13,
                     "startColumn": 4,
-<<<<<<< HEAD
                     "startOffset": 1227,
                     "endColumn": 106,
                     "endOffset": 1329
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
-=======
-                    "startOffset": 1177,
-                    "endColumn": 106,
-                    "endOffset": 1279
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 13,
                         "startColumn": 4,
@@ -341,21 +234,12 @@
                 "to": {
                     "startLine": 14,
                     "startColumn": 4,
-<<<<<<< HEAD
                     "startOffset": 1334,
                     "endColumn": 111,
                     "endOffset": 1441
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
-=======
-                    "startOffset": 1284,
-                    "endColumn": 111,
-                    "endOffset": 1391
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 14,
                         "startColumn": 4,
@@ -369,21 +253,12 @@
                 "to": {
                     "startLine": 15,
                     "startColumn": 4,
-<<<<<<< HEAD
                     "startOffset": 1446,
                     "endColumn": 101,
                     "endOffset": 1543
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
-=======
-                    "startOffset": 1396,
-                    "endColumn": 101,
-                    "endOffset": 1493
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 15,
                         "startColumn": 4,
@@ -397,21 +272,12 @@
                 "to": {
                     "startLine": 16,
                     "startColumn": 4,
-<<<<<<< HEAD
                     "startOffset": 1548,
                     "endColumn": 107,
                     "endOffset": 1651
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
-=======
-                    "startOffset": 1498,
-                    "endColumn": 107,
-                    "endOffset": 1601
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 16,
                         "startColumn": 4,
@@ -425,21 +291,12 @@
                 "to": {
                     "startLine": 17,
                     "startColumn": 4,
-<<<<<<< HEAD
                     "startOffset": 1656,
                     "endColumn": 106,
                     "endOffset": 1758
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
-=======
-                    "startOffset": 1606,
-                    "endColumn": 106,
-                    "endOffset": 1708
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 17,
                         "startColumn": 4,
@@ -453,21 +310,12 @@
                 "to": {
                     "startLine": 18,
                     "startColumn": 4,
-<<<<<<< HEAD
                     "startOffset": 1763,
                     "endColumn": 109,
                     "endOffset": 1868
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
-=======
-                    "startOffset": 1713,
-                    "endColumn": 109,
-                    "endOffset": 1818
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 18,
                         "startColumn": 4,
@@ -481,21 +329,12 @@
                 "to": {
                     "startLine": 19,
                     "startColumn": 4,
-<<<<<<< HEAD
                     "startOffset": 1873,
                     "endColumn": 124,
                     "endOffset": 1993
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
-=======
-                    "startOffset": 1823,
-                    "endColumn": 124,
-                    "endOffset": 1943
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 19,
                         "startColumn": 4,
@@ -509,21 +348,12 @@
                 "to": {
                     "startLine": 20,
                     "startColumn": 4,
-<<<<<<< HEAD
                     "startOffset": 1998,
                     "endColumn": 99,
                     "endOffset": 2093
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
-=======
-                    "startOffset": 1948,
-                    "endColumn": 99,
-                    "endOffset": 2043
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 20,
                         "startColumn": 4,
@@ -537,7 +367,6 @@
                 "to": {
                     "startLine": 21,
                     "startColumn": 4,
-<<<<<<< HEAD
                     "startOffset": 2098,
                     "endColumn": 106,
                     "endOffset": 2200
@@ -867,14 +696,6 @@
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
-=======
-                    "startOffset": 2048,
-                    "endColumn": 84,
-                    "endOffset": 2128
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 21,
                         "startColumn": 4,
@@ -886,7 +707,6 @@
             },
             {
                 "to": {
-<<<<<<< HEAD
                     "startLine": 39,
                     "startColumn": 4,
                     "startOffset": 4782,
@@ -895,16 +715,6 @@
                 },
                 "from": {
                     "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
-=======
-                    "startLine": 22,
-                    "startColumn": 4,
-                    "startOffset": 2133,
-                    "endColumn": 100,
-                    "endOffset": 2229
-                },
-                "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\4d4cf9604ae4783fe5574450d25194c9ff42d9fd\\output\\res\\values-pt-rBR\\values-pt-rBR.xml",
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
                     "position": {
                         "startLine": 22,
                         "startColumn": 4,

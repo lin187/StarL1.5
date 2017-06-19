@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "D:\\6-9Starl\\starl\\ClientLib\\build\\intermediates\\res\\merged\\release\\xml\\device_filter.xml",
+        "source": "D:\\6-9Starl\\starl\\ClientLib\\src\\main\\res\\xml\\device_filter.xml"
+    },
+    {
+        "merged": "D:\\6-9Starl\\starl\\ClientLib\\build\\intermediates\\res\\merged\\release\\xml\\google_analytics_tracker.xml",
+        "source": "D:\\6-9Starl\\starl\\ClientLib\\src\\main\\res\\xml\\google_analytics_tracker.xml"
+    },
+    {
+        "merged": "D:\\6-9Starl\\starl\\ClientLib\\build\\intermediates\\res\\merged\\release\\xml\\filepaths.xml",
+        "source": "D:\\6-9Starl\\starl\\ClientLib\\src\\main\\res\\xml\\filepaths.xml"
+    }
+]

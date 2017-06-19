@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
-<<<<<<< HEAD
     <string msgid="4600421777120114993" name="abc_action_bar_home_description">"Navega a la pàgina d\'inici"</string>
     <string msgid="1397052879051804371" name="abc_action_bar_home_description_format">"%1$s, %2$s"</string>
     <string msgid="6623331958280229229" name="abc_action_bar_home_subtitle_description_format">"%1$s, %2$s, %3$s"</string>
@@ -20,8 +19,6 @@
     <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"Comparteix amb"</string>
     <string msgid="7165123711973476752" name="abc_shareactionprovider_share_with_application">"Comparteix amb %s"</string>
     <string msgid="1603543279005712093" name="abc_toolbar_collapse_description">"Replega"</string>
-=======
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
     <string msgid="8585111718777012708" name="common_google_play_services_enable_button">"Activa"</string>
     <string msgid="7045129128108380659" name="common_google_play_services_enable_text">"<ns1:g id="APP_NAME">%1$s</ns1:g> no funcionarà si no actives els Serveis de Google Play."</string>
     <string msgid="3147157405986503375" name="common_google_play_services_enable_title">"Activa els Serveis de Google Play"</string>
@@ -39,9 +36,6 @@
     <string msgid="5201977337835724196" name="common_open_on_phone">"Obre al telèfon"</string>
     <string msgid="3441753203274453993" name="common_signin_button_text">"Inicia sessió"</string>
     <string msgid="669893613918351210" name="common_signin_button_text_long">"Inicia la sessió amb Google"</string>
-<<<<<<< HEAD
     <string msgid="146198913615257606" name="search_menu_title">"Cerca"</string>
     <string msgid="2869576371154716097" name="status_bar_notification_info_overflow">"+999"</string>
-=======
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
 </resources>
