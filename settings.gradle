@@ -4,4 +4,3 @@ include ':starLib', ':testcontroller', ':ClientLib', ':Mavlink', ':models', ':we
 include ':starlTemplate'
 include ':followApp'
 include ':dJISDKLIB'
-include ':starLSim'

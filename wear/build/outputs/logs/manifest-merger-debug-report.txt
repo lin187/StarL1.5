@@ -1,78 +1,78 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml:2:1-29:12
+ADDED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml:2:1-29:12
 	package
-		ADDED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml:3:5-45
-		INJECTED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml
+		ADDED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml:3:5-45
+		INJECTED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml
+		INJECTED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml
 	android:versionName
-		INJECTED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml
+		INJECTED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml
+		INJECTED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml:2:11-69
+		ADDED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml:2:11-69
 	android:versionCode
-		INJECTED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml
+		INJECTED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml
+		INJECTED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml
 meta-data#com.google.android.wearable.standalone
-ADDED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml:5:5-7:32
+ADDED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml:5:5-7:32
 	android:value
-		ADDED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml:7:9-29
+		ADDED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml:7:9-29
 	android:name
-		ADDED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml:6:9-62
+		ADDED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml:6:9-62
 uses-feature#android.hardware.type.watch
-ADDED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml:9:5-64
+ADDED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml:9:5-64
 	android:name
-		ADDED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml:9:19-61
+		ADDED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml:9:19-61
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-ADDED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml:11:5-81
+ADDED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml:11:5-81
 	android:name
-		ADDED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml:11:22-78
+		ADDED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml:11:22-78
 uses-permission#android.permission.RECORD_AUDIO
-ADDED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml:12:5-71
+ADDED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml:12:5-71
 	android:name
-		ADDED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml:12:22-68
+		ADDED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml:12:22-68
 application
-ADDED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml:14:5-27:19
-MERGED from [com.google.android.support:wearable:2.0.0] C:\Users\liangt\.android\build-cache\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\output\AndroidManifest.xml:6:5-19
-MERGED from [com.android.support:percent:23.0.1] C:\Users\liangt\.android\build-cache\afba38ee37918cd7a4366d071b165ea0d117a961\output\AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:support-v4:23.0.1] C:\Users\liangt\.android\build-cache\9759b76474db5fbdf5ca638e430d479292ed5d6c\output\AndroidManifest.xml:22:5-20
+ADDED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml:14:5-27:19
+MERGED from [com.google.android.support:wearable:2.0.0] C:\Users\yangy14\.android\build-cache\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\output\AndroidManifest.xml:6:5-19
+MERGED from [com.android.support:percent:23.0.1] C:\Users\yangy14\.android\build-cache\adb2afb5b51811ddae1f50d6f02686abfa858235\output\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.0.1] C:\Users\yangy14\.android\build-cache\5ad5286da072dc10ae29a617c7e39ee675e7a463\output\AndroidManifest.xml:22:5-20
 	android:label
-		ADDED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml:17:9-41
+		ADDED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml:17:9-41
 	android:supportsRtl
-		ADDED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml:18:9-35
+		ADDED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml:18:9-35
 	android:allowBackup
-		ADDED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml:15:9-36
+		ADDED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml:15:9-36
 	android:icon
-		ADDED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml:16:9-43
+		ADDED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml:16:9-43
 	android:theme
-		ADDED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml:19:9-59
+		ADDED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml:19:9-59
 activity#edu.cmu.pocketsphinx.demo.wear.WearActivity
-ADDED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml:20:9-26:20
+ADDED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml:20:9-26:20
 	android:label
-		ADDED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml:20:48-80
+		ADDED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml:20:48-80
 	android:name
-		ADDED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml:20:19-47
+		ADDED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml:20:19-47
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml:21:13-25:29
+ADDED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml:21:13-25:29
 action#android.intent.action.MAIN
-ADDED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml:22:17-69
+ADDED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml:22:17-69
 	android:name
-		ADDED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml:22:25-66
+		ADDED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml:22:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml:24:17-77
+ADDED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml:24:17-77
 	android:name
-		ADDED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml:24:27-74
+		ADDED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml:24:27-74
 uses-sdk
-INJECTED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml reason: use-sdk injection requested
-MERGED from [starl:aars:unspecified] C:\Users\liangt\.android\build-cache\a86e7faeaff93decdf2e356621ea07a7476f6363\output\AndroidManifest.xml:7:5-9:41
-MERGED from [starl:models:unspecified] C:\Users\liangt\Documents\GitHub\starl\models\build\intermediates\bundles\default\AndroidManifest.xml:7:5-9:41
-MERGED from [com.google.android.support:wearable:2.0.0] C:\Users\liangt\.android\build-cache\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\output\AndroidManifest.xml:4:5-72
-MERGED from [com.android.support:percent:23.0.1] C:\Users\liangt\.android\build-cache\afba38ee37918cd7a4366d071b165ea0d117a961\output\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:recyclerview-v7:23.0.1] C:\Users\liangt\.android\build-cache\19b2fd8f00fe824d9f99ee232d2d6c9bb48c8274\output\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:support-v4:23.0.1] C:\Users\liangt\.android\build-cache\9759b76474db5fbdf5ca638e430d479292ed5d6c\output\AndroidManifest.xml:20:5-43
+INJECTED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [starl:aars:unspecified] C:\Users\yangy14\.android\build-cache\72756fed6e1c84fd1257c754c4711ed7a65d87aa\output\AndroidManifest.xml:7:5-9:41
+MERGED from [starl:models:unspecified] D:\6-9Starl\starl\models\build\intermediates\bundles\default\AndroidManifest.xml:7:5-9:41
+MERGED from [com.google.android.support:wearable:2.0.0] C:\Users\yangy14\.android\build-cache\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\output\AndroidManifest.xml:4:5-72
+MERGED from [com.android.support:percent:23.0.1] C:\Users\yangy14\.android\build-cache\adb2afb5b51811ddae1f50d6f02686abfa858235\output\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:recyclerview-v7:23.0.1] C:\Users\yangy14\.android\build-cache\2c503531d3bb294b905f64a6fb4b8a6b9837bf3d\output\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.0.1] C:\Users\yangy14\.android\build-cache\5ad5286da072dc10ae29a617c7e39ee675e7a463\output\AndroidManifest.xml:20:5-43
 	android:targetSdkVersion
-		INJECTED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml
+		INJECTED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml
+		INJECTED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\liangt\Documents\GitHub\starl\wear\src\main\AndroidManifest.xml
+		INJECTED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml
+		INJECTED from D:\6-9Starl\starl\wear\src\main\AndroidManifest.xml

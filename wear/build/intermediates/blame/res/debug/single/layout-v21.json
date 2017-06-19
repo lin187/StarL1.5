@@ -1,14 +1,14 @@
 [
     {
-        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\wear\\build\\intermediates\\res\\merged\\debug\\layout-v21\\overlay_confirmation.xml",
-        "source": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\layout-v21\\overlay_confirmation.xml"
+        "merged": "D:\\6-9Starl\\starl\\wear\\build\\intermediates\\res\\merged\\debug\\layout-v21\\dismiss_overlay.xml",
+        "source": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\layout-v21\\dismiss_overlay.xml"
     },
     {
-        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\wear\\build\\intermediates\\res\\merged\\debug\\layout-v21\\accept_deny_dialog.xml",
-        "source": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\layout-v21\\accept_deny_dialog.xml"
+        "merged": "D:\\6-9Starl\\starl\\wear\\build\\intermediates\\res\\merged\\debug\\layout-v21\\overlay_confirmation.xml",
+        "source": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\layout-v21\\overlay_confirmation.xml"
     },
     {
-        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\wear\\build\\intermediates\\res\\merged\\debug\\layout-v21\\dismiss_overlay.xml",
-        "source": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\layout-v21\\dismiss_overlay.xml"
+        "merged": "D:\\6-9Starl\\starl\\wear\\build\\intermediates\\res\\merged\\debug\\layout-v21\\accept_deny_dialog.xml",
+        "source": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\layout-v21\\accept_deny_dialog.xml"
     }
 ]
