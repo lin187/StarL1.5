@@ -9,6 +9,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ehang.coptersdk.CopterControl;
+
+import java.util.ArrayList;
+
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.objects.HandlerMessage;
 
@@ -23,10 +27,15 @@ public class MainHandler extends Handler {
 	private CheckBox cbRunning;
 	private CheckBox cbRegistered; //status of DJI SDK registration
 	private TextView txtDebug;
+	private CheckBox cbArm;
+	private CheckBox manual;
+	private CheckBox avatar;
+	private TextView txtMode;
+	private CheckBox copterConn;
 
 	private GlobalVarHolder gvh;
 
-	public MainHandler(RobotsActivity app, ProgressBar pbBluetooth, ProgressBar pbBattery, CheckBox cbGPS, CheckBox cbBluetooth, CheckBox cbRunning, TextView txtDebug, CheckBox cbRegistered) {
+	public MainHandler(RobotsActivity app, ProgressBar pbBluetooth, ProgressBar pbBattery, CheckBox cbGPS, CheckBox cbBluetooth, CheckBox cbRunning, TextView txtDebug, CheckBox cbRegistered, ArrayList<TextView> ga) {
 		super();
 		this.app = app;
 		this.appContext = app.getApplicationContext();
@@ -37,6 +46,11 @@ public class MainHandler extends Handler {
 		this.cbRunning = cbRunning;
 		this.txtDebug = txtDebug;
 		this.cbRegistered = cbRegistered;
+		this.cbArm = (CheckBox)ga.get(0);
+		this.manual= (CheckBox)ga.get(1);
+		this.avatar= (CheckBox)ga.get(2);
+		this.txtMode= ga.get(3);
+		this.copterConn= (CheckBox)ga.get(4);
 	}
 
 	public void setGvh(GlobalVarHolder gvh) {
@@ -79,6 +93,24 @@ public class MainHandler extends Handler {
 			case HandlerMessage.MESSAGE_REGISTERED_3DR:
 				cbRegistered.setChecked((boolean) msg.obj);
 				break;
+			case HandlerMessage.COPTER_CONNECTED:
+				copterConn.setChecked((boolean) msg.obj);
+				break;
+			case HandlerMessage.MANUAL_MODE:
+				manual.setChecked((boolean) msg.obj);
+				break;
+			case HandlerMessage.AVATAR_MODE:
+				avatar.setChecked((boolean) msg.obj);
+				break;
+			case HandlerMessage.ARM_TOGGLE:
+				cbArm.setChecked((boolean) msg.obj);
+				break;
+			case HandlerMessage.HEARTBEAT_MODE:
+				if (CopterControl.getInstance().isCopterConnected()){
+					gvh.plat.sendMainMsg(HandlerMessage.ARM_TOGGLE, CopterControl.getInstance().isArmed());
+					gvh.plat.sendMainMsg(HandlerMessage.COPTER_CONNECTED, CopterControl.getInstance().isCopterConnected());
+					txtMode.setText((String) msg.obj);
+				}
 		}
 	}
 }

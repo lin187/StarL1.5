@@ -27,6 +27,7 @@
 
     <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:textAppearance="?android:attr/textAppearanceLarge" android:id="@+id/txtRobotName" android:layout_gravity="center_horizontal" android:text="%RobotName"></TextView>
     <Button android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:text="Connect" android:layout_width="wrap_content" android:id="@+id/btnConnect"></Button>
+    <CheckBox android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/cbConnect" android:text="GA Connected" android:clickable="false"></CheckBox>
 
     <LinearLayout android:layout_width="match_parent" android:id="@+id/linearLayout1" android:layout_height="wrap_content" android:orientation="vertical">
 
@@ -41,32 +42,51 @@
             <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/cbBluetooth" android:text="Bluetooth" android:clickable="false"></CheckBox>
             <ProgressBar android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="40px" android:id="@+id/pb_bluetooth" android:visibility="invisible"></ProgressBar>
         </LinearLayout>
-        <CheckBox android:layout_width="wrap_content" android:layout_height="wrap_content" android:id="@+id/cbRunning" android:text="Running" android:clickable="false"></CheckBox>
-        <Button android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:text="Arm" android:layout_width="wrap_content" android:id="@+id/arm"></Button>
-        <Button android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:text="Disarm" android:layout_width="wrap_content" android:id="@+id/disarm"></Button>
-        <Button android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:text="manual" android:layout_width="wrap_content" android:id="@+id/manual"></Button>
-        <Button android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:text="avatar" android:layout_width="wrap_content" android:id="@+id/avatar"></Button>
-        <Button android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:text="takeoff" android:layout_width="wrap_content" android:id="@+id/btnTakeoff"></Button>
+
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <Button android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:text="Takeoff" android:layout_width="wrap_content" android:id="@+id/btnTakeoff"
-                android:layout_weight="1"></Button>
+            <Button
+                android:id="@+id/disarm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Disarm"></Button>
 
-            <Button android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:text="Avatar" android:layout_width="wrap_content" android:id="@+id/avatar"
-                android:layout_weight="1"></Button>
+            <CheckBox
+                android:id="@+id/manual"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:text="Manual"></CheckBox>
 
-            <Button android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:text="Manual" android:layout_width="wrap_content" android:id="@+id/manual"
-                android:layout_weight="1"></Button>
+            <CheckBox
+                android:id="@+id/avatar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:text="Avatar"></CheckBox>
 
-            <Button android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:text="Disarm" android:layout_width="wrap_content" android:id="@+id/disarm"
-                android:layout_weight="1"></Button>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <Button android:layout_gravity="center_horizontal" android:layout_height="wrap_content" android:text="Arm" android:layout_width="wrap_content" android:id="@+id/arm"
-                android:layout_weight="1"></Button>
+                <CheckBox
+                    android:id="@+id/cbArm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:text="cbArm"></CheckBox>
+
+                <Button android:layout_gravity="center_horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Arm"  android:id="@+id/arm"></Button>
+            </LinearLayout>
+
+            <Button android:layout_gravity="center_horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Takeoff"  android:id="@+id/btnTakeoff"></Button>
         </LinearLayout>
 
         <LinearLayout

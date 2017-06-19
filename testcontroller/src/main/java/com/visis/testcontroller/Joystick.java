@@ -79,7 +79,7 @@ public class Joystick extends SurfaceView implements SurfaceHolder.Callback, Vie
         centerX =  getWidth()/2;
         centerY = getHeight()/8;
         baseR = Math.min(getWidth(),getHeight())/3;
-        thumbpadR =  baseR = Math.min(getWidth(),getHeight())/5;
+        thumbpadR = Math.min(getWidth(),getHeight())/5;
 
     }
 
