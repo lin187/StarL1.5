@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "D:\\6-9Starl\\starl\\wear\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
+        "outputFile": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\wear\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values\\values.xml",
         "map": [
             {
                 "to": {
@@ -12,7 +12,7 @@
                     "endOffset": 245
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 0,
@@ -32,7 +32,7 @@
                     "endOffset": 304
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 11,
                         "startColumn": 0,
@@ -51,7 +51,7 @@
                     "endOffset": 366
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 12,
                         "startColumn": 0,
@@ -70,7 +70,7 @@
                     "endOffset": 427
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 15,
                         "startColumn": 0,
@@ -89,7 +89,7 @@
                     "endOffset": 496
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 16,
                         "startColumn": 0,
@@ -108,7 +108,7 @@
                     "endOffset": 536
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 17,
                         "startColumn": 0,
@@ -127,7 +127,7 @@
                     "endOffset": 582
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 18,
                         "startColumn": 0,
@@ -146,7 +146,7 @@
                     "endOffset": 628
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 19,
                         "startColumn": 0,
@@ -165,7 +165,7 @@
                     "endOffset": 667
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 20,
                         "startColumn": 0,
@@ -184,7 +184,7 @@
                     "endOffset": 725
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 21,
                         "startColumn": 0,
@@ -203,7 +203,7 @@
                     "endOffset": 788
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 22,
                         "startColumn": 0,
@@ -222,7 +222,7 @@
                     "endOffset": 845
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 23,
                         "startColumn": 0,
@@ -241,7 +241,7 @@
                     "endOffset": 903
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 24,
                         "startColumn": 0,
@@ -260,7 +260,7 @@
                     "endOffset": 947
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 25,
                         "startColumn": 0,
@@ -279,7 +279,7 @@
                     "endOffset": 991
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 26,
                         "startColumn": 0,
@@ -298,7 +298,7 @@
                     "endOffset": 1034
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 27,
                         "startColumn": 0,
@@ -317,7 +317,7 @@
                     "endOffset": 1086
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 28,
                         "startColumn": 0,
@@ -336,7 +336,7 @@
                     "endOffset": 1144
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 29,
                         "startColumn": 0,
@@ -355,7 +355,7 @@
                     "endOffset": 1198
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 30,
                         "startColumn": 0,
@@ -374,7 +374,7 @@
                     "endOffset": 1246
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 31,
                         "startColumn": 0,
@@ -393,7 +393,7 @@
                     "endOffset": 1302
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 32,
                         "startColumn": 0,
@@ -412,7 +412,7 @@
                     "endOffset": 1357
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 33,
                         "startColumn": 0,
@@ -431,7 +431,7 @@
                     "endOffset": 1397
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 34,
                         "startColumn": 0,
@@ -450,7 +450,7 @@
                     "endOffset": 1436
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 35,
                         "startColumn": 0,
@@ -469,7 +469,7 @@
                     "endOffset": 1481
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 36,
                         "startColumn": 0,
@@ -488,7 +488,7 @@
                     "endOffset": 1522
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 37,
                         "startColumn": 0,
@@ -507,7 +507,7 @@
                     "endOffset": 1579
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 38,
                         "startColumn": 0,
@@ -526,7 +526,7 @@
                     "endOffset": 1641
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 39,
                         "startColumn": 0,
@@ -545,7 +545,7 @@
                     "endOffset": 1679
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 40,
                         "startColumn": 0,
@@ -564,7 +564,7 @@
                     "endOffset": 1734
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 41,
                         "startColumn": 0,
@@ -583,7 +583,7 @@
                     "endOffset": 1791
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 42,
                         "startColumn": 0,
@@ -602,7 +602,7 @@
                     "endOffset": 1831
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 43,
                         "startColumn": 0,
@@ -621,7 +621,7 @@
                     "endOffset": 10341
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 46,
                         "startColumn": 0,
@@ -640,7 +640,7 @@
                     "endOffset": 10429
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 47,
                         "startColumn": 0,
@@ -659,7 +659,7 @@
                     "endOffset": 10519
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 48,
                         "startColumn": 0,
@@ -678,7 +678,7 @@
                     "endOffset": 10608
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 49,
                         "startColumn": 0,
@@ -697,7 +697,7 @@
                     "endOffset": 10702
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 52,
                         "startColumn": 0,
@@ -716,7 +716,7 @@
                     "endOffset": 10798
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 53,
                         "startColumn": 0,
@@ -735,7 +735,7 @@
                     "endOffset": 10866
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 56,
                         "startColumn": 0,
@@ -754,7 +754,7 @@
                     "endOffset": 10930
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 57,
                         "startColumn": 0,
@@ -773,7 +773,7 @@
                     "endOffset": 10992
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 58,
                         "startColumn": 0,
@@ -792,7 +792,7 @@
                     "endOffset": 11059
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 59,
                         "startColumn": 0,
@@ -811,7 +811,7 @@
                     "endOffset": 11119
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 60,
                         "startColumn": 0,
@@ -830,7 +830,7 @@
                     "endOffset": 11179
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 61,
                         "startColumn": 0,
@@ -849,7 +849,7 @@
                     "endOffset": 11240
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 62,
                         "startColumn": 0,
@@ -868,7 +868,7 @@
                     "endOffset": 11301
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 63,
                         "startColumn": 0,
@@ -887,7 +887,7 @@
                     "endOffset": 11363
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 64,
                         "startColumn": 0,
@@ -906,7 +906,7 @@
                     "endOffset": 11423
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 65,
                         "startColumn": 0,
@@ -925,7 +925,7 @@
                     "endOffset": 11479
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 66,
                         "startColumn": 0,
@@ -944,7 +944,7 @@
                     "endOffset": 11543
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 67,
                         "startColumn": 0,
@@ -963,7 +963,7 @@
                     "endOffset": 11597
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 68,
                         "startColumn": 0,
@@ -982,7 +982,7 @@
                     "endOffset": 11660
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 69,
                         "startColumn": 0,
@@ -1001,7 +1001,7 @@
                     "endOffset": 11722
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 70,
                         "startColumn": 0,
@@ -1020,7 +1020,7 @@
                     "endOffset": 11780
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 71,
                         "startColumn": 0,
@@ -1039,7 +1039,7 @@
                     "endOffset": 11844
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 72,
                         "startColumn": 0,
@@ -1058,7 +1058,7 @@
                     "endOffset": 11912
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 73,
                         "startColumn": 0,
@@ -1077,7 +1077,7 @@
                     "endOffset": 11971
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 74,
                         "startColumn": 0,
@@ -1096,7 +1096,7 @@
                     "endOffset": 12028
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 75,
                         "startColumn": 0,
@@ -1115,7 +1115,7 @@
                     "endOffset": 12091
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 76,
                         "startColumn": 0,
@@ -1134,7 +1134,7 @@
                     "endOffset": 12147
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 77,
                         "startColumn": 0,
@@ -1153,7 +1153,7 @@
                     "endOffset": 12209
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 78,
                         "startColumn": 0,
@@ -1172,7 +1172,7 @@
                     "endOffset": 12261
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 79,
                         "startColumn": 0,
@@ -1191,7 +1191,7 @@
                     "endOffset": 12315
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 80,
                         "startColumn": 0,
@@ -1210,7 +1210,7 @@
                     "endOffset": 12371
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 81,
                         "startColumn": 0,
@@ -1229,7 +1229,7 @@
                     "endOffset": 12418
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 82,
                         "startColumn": 0,
@@ -1248,7 +1248,7 @@
                     "endOffset": 12471
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 83,
                         "startColumn": 0,
@@ -1267,7 +1267,7 @@
                     "endOffset": 12546
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\2c503531d3bb294b905f64a6fb4b8a6b9837bf3d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\19b2fd8f00fe824d9f99ee232d2d6c9bb48c8274\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 5,
                         "startColumn": 4,
@@ -1286,7 +1286,7 @@
                     "endOffset": 12614
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 84,
                         "startColumn": 0,
@@ -1305,7 +1305,7 @@
                     "endOffset": 12680
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 85,
                         "startColumn": 0,
@@ -1324,7 +1324,7 @@
                     "endOffset": 12744
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 86,
                         "startColumn": 0,
@@ -1343,7 +1343,7 @@
                     "endOffset": 12796
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 87,
                         "startColumn": 0,
@@ -1362,7 +1362,7 @@
                     "endOffset": 12851
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 88,
                         "startColumn": 0,
@@ -1381,7 +1381,7 @@
                     "endOffset": 12902
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 89,
                         "startColumn": 0,
@@ -1400,7 +1400,7 @@
                     "endOffset": 12954
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 90,
                         "startColumn": 0,
@@ -1419,7 +1419,7 @@
                     "endOffset": 13005
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 93,
                         "startColumn": 0,
@@ -1438,7 +1438,7 @@
                     "endOffset": 13056
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 94,
                         "startColumn": 0,
@@ -1457,7 +1457,7 @@
                     "endOffset": 13107
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 95,
                         "startColumn": 0,
@@ -1476,7 +1476,7 @@
                     "endOffset": 13158
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 96,
                         "startColumn": 0,
@@ -1495,7 +1495,7 @@
                     "endOffset": 13220
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 99,
                         "startColumn": 0,
@@ -1514,7 +1514,7 @@
                     "endOffset": 13278
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 100,
                         "startColumn": 0,
@@ -1533,7 +1533,7 @@
                     "endOffset": 13364
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 101,
                         "startColumn": 0,
@@ -1552,7 +1552,7 @@
                     "endOffset": 13452
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 102,
                         "startColumn": 0,
@@ -1571,7 +1571,7 @@
                     "endOffset": 13528
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 103,
                         "startColumn": 0,
@@ -1590,7 +1590,7 @@
                     "endOffset": 13605
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 104,
                         "startColumn": 0,
@@ -1609,7 +1609,7 @@
                     "endOffset": 13687
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 105,
                         "startColumn": 0,
@@ -1628,7 +1628,7 @@
                     "endOffset": 13767
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 106,
                         "startColumn": 0,
@@ -1647,7 +1647,7 @@
                     "endOffset": 13832
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 107,
                         "startColumn": 0,
@@ -1666,7 +1666,7 @@
                     "endOffset": 13894
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 108,
                         "startColumn": 0,
@@ -1685,7 +1685,7 @@
                     "endOffset": 13967
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 109,
                         "startColumn": 0,
@@ -1704,7 +1704,7 @@
                     "endOffset": 14040
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 110,
                         "startColumn": 0,
@@ -1723,7 +1723,7 @@
                     "endOffset": 14124
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 111,
                         "startColumn": 0,
@@ -1742,7 +1742,7 @@
                     "endOffset": 14210
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 112,
                         "startColumn": 0,
@@ -1761,7 +1761,7 @@
                     "endOffset": 14283
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 113,
                         "startColumn": 0,
@@ -1780,7 +1780,7 @@
                     "endOffset": 14356
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 114,
                         "startColumn": 0,
@@ -1799,7 +1799,7 @@
                     "endOffset": 14429
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 115,
                         "startColumn": 0,
@@ -1818,7 +1818,7 @@
                     "endOffset": 14513
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 116,
                         "startColumn": 0,
@@ -1837,7 +1837,7 @@
                     "endOffset": 14599
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 117,
                         "startColumn": 0,
@@ -1856,7 +1856,7 @@
                     "endOffset": 14672
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 118,
                         "startColumn": 0,
@@ -1875,7 +1875,7 @@
                     "endOffset": 14731
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 119,
                         "startColumn": 0,
@@ -1894,7 +1894,7 @@
                     "endOffset": 14797
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\2c503531d3bb294b905f64a6fb4b8a6b9837bf3d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\19b2fd8f00fe824d9f99ee232d2d6c9bb48c8274\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 8,
                         "startColumn": 4,
@@ -1913,7 +1913,7 @@
                     "endOffset": 14872
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 123,
                         "startColumn": 0,
@@ -1932,7 +1932,7 @@
                     "endOffset": 14939
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 125,
                         "startColumn": 0,
@@ -1951,7 +1951,7 @@
                     "endOffset": 15009
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 128,
                         "startColumn": 0,
@@ -1970,7 +1970,7 @@
                     "endOffset": 15072
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 129,
                         "startColumn": 0,
@@ -1989,7 +1989,7 @@
                     "endOffset": 15134
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 130,
                         "startColumn": 0,
@@ -2008,7 +2008,7 @@
                     "endOffset": 15205
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 131,
                         "startColumn": 0,
@@ -2028,7 +2028,7 @@
                     "endOffset": 15399
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 134,
                         "startColumn": 0,
@@ -2049,7 +2049,7 @@
                     "endOffset": 15596
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 137,
                         "startColumn": 0,
@@ -2070,7 +2070,7 @@
                     "endOffset": 15799
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 140,
                         "startColumn": 0,
@@ -2091,7 +2091,7 @@
                     "endOffset": 16000
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 143,
                         "startColumn": 0,
@@ -2112,7 +2112,7 @@
                     "endOffset": 16206
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 146,
                         "startColumn": 0,
@@ -2133,7 +2133,7 @@
                     "endOffset": 16416
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 149,
                         "startColumn": 0,
@@ -2153,7 +2153,7 @@
                     "endOffset": 16471
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\wear\\src\\main\\res\\values\\strings.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\wear\\src\\main\\res\\values\\strings.xml",
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
@@ -2172,7 +2172,7 @@
                     "endOffset": 16533
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 152,
                         "startColumn": 0,
@@ -2191,7 +2191,7 @@
                     "endOffset": 16598
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 153,
                         "startColumn": 0,
@@ -2210,7 +2210,7 @@
                     "endOffset": 16665
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 154,
                         "startColumn": 0,
@@ -2229,7 +2229,7 @@
                     "endOffset": 16736
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 155,
                         "startColumn": 0,
@@ -2248,7 +2248,7 @@
                     "endOffset": 16801
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 156,
                         "startColumn": 0,
@@ -2267,7 +2267,7 @@
                     "endOffset": 16866
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 157,
                         "startColumn": 0,
@@ -2286,7 +2286,7 @@
                     "endOffset": 16939
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 158,
                         "startColumn": 0,
@@ -2305,7 +2305,7 @@
                     "endOffset": 17006
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 159,
                         "startColumn": 0,
@@ -2324,7 +2324,7 @@
                     "endOffset": 17073
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 160,
                         "startColumn": 0,
@@ -2343,7 +2343,7 @@
                     "endOffset": 17129
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 161,
                         "startColumn": 0,
@@ -2362,7 +2362,7 @@
                     "endOffset": 17188
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 162,
                         "startColumn": 0,
@@ -2381,7 +2381,7 @@
                     "endOffset": 17249
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 163,
                         "startColumn": 0,
@@ -2400,7 +2400,7 @@
                     "endOffset": 17312
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 164,
                         "startColumn": 0,
@@ -2419,7 +2419,7 @@
                     "endOffset": 17378
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 165,
                         "startColumn": 0,
@@ -2438,7 +2438,7 @@
                     "endOffset": 17457
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 166,
                         "startColumn": 0,
@@ -2457,7 +2457,7 @@
                     "endOffset": 17536
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 167,
                         "startColumn": 0,
@@ -2476,7 +2476,7 @@
                     "endOffset": 17604
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 168,
                         "startColumn": 0,
@@ -2495,7 +2495,7 @@
                     "endOffset": 17685
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 169,
                         "startColumn": 0,
@@ -2514,7 +2514,7 @@
                     "endOffset": 17766
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 170,
                         "startColumn": 0,
@@ -2533,7 +2533,7 @@
                     "endOffset": 17832
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 171,
                         "startColumn": 0,
@@ -2552,7 +2552,7 @@
                     "endOffset": 17900
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 172,
                         "startColumn": 0,
@@ -2571,7 +2571,7 @@
                     "endOffset": 17957
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 173,
                         "startColumn": 0,
@@ -2590,7 +2590,7 @@
                     "endOffset": 18017
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 174,
                         "startColumn": 0,
@@ -2609,7 +2609,7 @@
                     "endOffset": 18090
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 175,
                         "startColumn": 0,
@@ -2628,7 +2628,7 @@
                     "endOffset": 18163
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 176,
                         "startColumn": 0,
@@ -2647,7 +2647,7 @@
                     "endOffset": 18225
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 177,
                         "startColumn": 0,
@@ -2666,7 +2666,7 @@
                     "endOffset": 18300
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 178,
                         "startColumn": 0,
@@ -2685,7 +2685,7 @@
                     "endOffset": 18375
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 179,
                         "startColumn": 0,
@@ -2704,7 +2704,7 @@
                     "endOffset": 18496
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\wear\\src\\main\\res\\values\\strings.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\wear\\src\\main\\res\\values\\strings.xml",
                     "position": {
                         "startLine": 7,
                         "startColumn": 4,
@@ -2723,7 +2723,7 @@
                     "endOffset": 18558
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 180,
                         "startColumn": 0,
@@ -2742,7 +2742,7 @@
                     "endOffset": 18680
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\wear\\src\\main\\res\\values\\strings.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\wear\\src\\main\\res\\values\\strings.xml",
                     "position": {
                         "startLine": 8,
                         "startColumn": 4,
@@ -2761,7 +2761,7 @@
                     "endOffset": 18730
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 181,
                         "startColumn": 0,
@@ -2780,7 +2780,7 @@
                     "endOffset": 18774
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 182,
                         "startColumn": 0,
@@ -2799,7 +2799,7 @@
                     "endOffset": 18865
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\wear\\src\\main\\res\\values\\strings.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\wear\\src\\main\\res\\values\\strings.xml",
                     "position": {
                         "startLine": 5,
                         "startColumn": 4,
@@ -2818,7 +2818,7 @@
                     "endOffset": 19016
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\wear\\src\\main\\res\\values\\strings.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\wear\\src\\main\\res\\values\\strings.xml",
                     "position": {
                         "startLine": 6,
                         "startColumn": 4,
@@ -2837,7 +2837,7 @@
                     "endOffset": 19100
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 183,
                         "startColumn": 0,
@@ -2856,7 +2856,7 @@
                     "endOffset": 19184
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\wear\\src\\main\\res\\values\\strings.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\wear\\src\\main\\res\\values\\strings.xml",
                     "position": {
                         "startLine": 9,
                         "startColumn": 4,
@@ -2875,7 +2875,7 @@
                     "endOffset": 19236
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 184,
                         "startColumn": 0,
@@ -2894,7 +2894,7 @@
                     "endOffset": 19406
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 185,
                         "startColumn": 0,
@@ -2913,7 +2913,7 @@
                     "endOffset": 19583
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 186,
                         "startColumn": 0,
@@ -2933,7 +2933,7 @@
                     "endOffset": 19860
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 189,
                         "startColumn": 0,
@@ -2954,7 +2954,7 @@
                     "endOffset": 20328
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 194,
                         "startColumn": 0,
@@ -2975,7 +2975,7 @@
                     "endOffset": 20934
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\values\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\6d193b17f4ea6e390e3f28af14c7ca694e79f1e6\\output\\res\\values\\values.xml",
                     "position": {
                         "startLine": 202,
                         "startColumn": 0,

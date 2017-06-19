@@ -18,6 +18,7 @@ android {
 }
 
 dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':dJISDKLIB')
     compile project(':ClientLib')

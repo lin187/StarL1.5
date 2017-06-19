@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "D:\\6-9Starl\\starl\\followApp\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-zh-rCN\\values-zh-rCN.xml",
+        "outputFile": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\followApp\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values-zh-rCN\\values-zh-rCN.xml",
         "map": [
             {
                 "to": {
@@ -11,7 +11,7 @@
                     "endOffset": 196
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\13e2a3a29d358bb025b759d048771c09735c4241\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -30,7 +30,7 @@
                     "endOffset": 303
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\13e2a3a29d358bb025b759d048771c09735c4241\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
@@ -49,7 +49,7 @@
                     "endOffset": 426
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\13e2a3a29d358bb025b759d048771c09735c4241\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,
@@ -68,7 +68,7 @@
                     "endOffset": 521
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\13e2a3a29d358bb025b759d048771c09735c4241\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 5,
                         "startColumn": 4,
@@ -87,7 +87,7 @@
                     "endOffset": 621
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\13e2a3a29d358bb025b759d048771c09735c4241\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 6,
                         "startColumn": 4,
@@ -106,7 +106,7 @@
                     "endOffset": 703
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\13e2a3a29d358bb025b759d048771c09735c4241\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 7,
                         "startColumn": 4,
@@ -125,7 +125,7 @@
                     "endOffset": 800
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\13e2a3a29d358bb025b759d048771c09735c4241\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 8,
                         "startColumn": 4,
@@ -144,7 +144,7 @@
                     "endOffset": 906
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\13e2a3a29d358bb025b759d048771c09735c4241\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 9,
                         "startColumn": 4,
@@ -163,7 +163,7 @@
                     "endOffset": 982
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\13e2a3a29d358bb025b759d048771c09735c4241\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 10,
                         "startColumn": 4,
@@ -182,7 +182,7 @@
                     "endOffset": 1058
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\13e2a3a29d358bb025b759d048771c09735c4241\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 11,
                         "startColumn": 4,
@@ -201,7 +201,7 @@
                     "endOffset": 1136
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\13e2a3a29d358bb025b759d048771c09735c4241\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 12,
                         "startColumn": 4,
@@ -220,7 +220,7 @@
                     "endOffset": 1232
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\13e2a3a29d358bb025b759d048771c09735c4241\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 13,
                         "startColumn": 4,
@@ -239,7 +239,7 @@
                     "endOffset": 1328
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\13e2a3a29d358bb025b759d048771c09735c4241\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 14,
                         "startColumn": 4,
@@ -258,7 +258,7 @@
                     "endOffset": 1423
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\13e2a3a29d358bb025b759d048771c09735c4241\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 15,
                         "startColumn": 4,
@@ -277,7 +277,7 @@
                     "endOffset": 1520
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\13e2a3a29d358bb025b759d048771c09735c4241\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 16,
                         "startColumn": 4,
@@ -296,7 +296,7 @@
                     "endOffset": 1615
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\13e2a3a29d358bb025b759d048771c09735c4241\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 17,
                         "startColumn": 4,
@@ -315,7 +315,7 @@
                     "endOffset": 1713
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\13e2a3a29d358bb025b759d048771c09735c4241\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 18,
                         "startColumn": 4,
@@ -334,7 +334,7 @@
                     "endOffset": 1825
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\13e2a3a29d358bb025b759d048771c09735c4241\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 19,
                         "startColumn": 4,
@@ -353,7 +353,7 @@
                     "endOffset": 1919
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\13e2a3a29d358bb025b759d048771c09735c4241\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 20,
                         "startColumn": 4,
@@ -372,7 +372,7 @@
                     "endOffset": 2022
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\fe70e074586192de6c4fa9efc4378cbd56e45e0e\\output\\res\\values-zh-rCN\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\values-zh-rCN\\values.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 0,
@@ -391,7 +391,7 @@
                     "endOffset": 2183
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\fe70e074586192de6c4fa9efc4378cbd56e45e0e\\output\\res\\values-zh-rCN\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\values-zh-rCN\\values.xml",
                     "position": {
                         "startLine": 5,
                         "startColumn": 0,
@@ -410,7 +410,7 @@
                     "endOffset": 2300
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\fe70e074586192de6c4fa9efc4378cbd56e45e0e\\output\\res\\values-zh-rCN\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\values-zh-rCN\\values.xml",
                     "position": {
                         "startLine": 6,
                         "startColumn": 0,
@@ -429,7 +429,7 @@
                     "endOffset": 2404
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\fe70e074586192de6c4fa9efc4378cbd56e45e0e\\output\\res\\values-zh-rCN\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\values-zh-rCN\\values.xml",
                     "position": {
                         "startLine": 7,
                         "startColumn": 0,
@@ -448,7 +448,7 @@
                     "endOffset": 2568
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\fe70e074586192de6c4fa9efc4378cbd56e45e0e\\output\\res\\values-zh-rCN\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\values-zh-rCN\\values.xml",
                     "position": {
                         "startLine": 8,
                         "startColumn": 0,
@@ -467,7 +467,7 @@
                     "endOffset": 2686
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\fe70e074586192de6c4fa9efc4378cbd56e45e0e\\output\\res\\values-zh-rCN\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\values-zh-rCN\\values.xml",
                     "position": {
                         "startLine": 9,
                         "startColumn": 0,
@@ -486,7 +486,7 @@
                     "endOffset": 2807
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\fe70e074586192de6c4fa9efc4378cbd56e45e0e\\output\\res\\values-zh-rCN\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\values-zh-rCN\\values.xml",
                     "position": {
                         "startLine": 10,
                         "startColumn": 0,
@@ -505,7 +505,7 @@
                     "endOffset": 2965
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\27b8d3bd00f4ccbe89e23bf2284024e3ad76ad97\\output\\res\\values-zh-rCN\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\11d9d66ffd50b7e4303c661a21622e830cbec61e\\output\\res\\values-zh-rCN\\values.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 0,
@@ -524,7 +524,7 @@
                     "endOffset": 3132
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\fe70e074586192de6c4fa9efc4378cbd56e45e0e\\output\\res\\values-zh-rCN\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\values-zh-rCN\\values.xml",
                     "position": {
                         "startLine": 11,
                         "startColumn": 0,
@@ -543,7 +543,7 @@
                     "endOffset": 3235
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\fe70e074586192de6c4fa9efc4378cbd56e45e0e\\output\\res\\values-zh-rCN\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\values-zh-rCN\\values.xml",
                     "position": {
                         "startLine": 12,
                         "startColumn": 0,
@@ -562,7 +562,7 @@
                     "endOffset": 3396
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\fe70e074586192de6c4fa9efc4378cbd56e45e0e\\output\\res\\values-zh-rCN\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\values-zh-rCN\\values.xml",
                     "position": {
                         "startLine": 13,
                         "startColumn": 0,
@@ -581,7 +581,7 @@
                     "endOffset": 3513
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\fe70e074586192de6c4fa9efc4378cbd56e45e0e\\output\\res\\values-zh-rCN\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\values-zh-rCN\\values.xml",
                     "position": {
                         "startLine": 14,
                         "startColumn": 0,
@@ -600,7 +600,7 @@
                     "endOffset": 3676
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\fe70e074586192de6c4fa9efc4378cbd56e45e0e\\output\\res\\values-zh-rCN\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\values-zh-rCN\\values.xml",
                     "position": {
                         "startLine": 15,
                         "startColumn": 0,
@@ -619,7 +619,7 @@
                     "endOffset": 3814
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\fe70e074586192de6c4fa9efc4378cbd56e45e0e\\output\\res\\values-zh-rCN\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\values-zh-rCN\\values.xml",
                     "position": {
                         "startLine": 16,
                         "startColumn": 0,
@@ -638,7 +638,7 @@
                     "endOffset": 3900
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\fe70e074586192de6c4fa9efc4378cbd56e45e0e\\output\\res\\values-zh-rCN\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\values-zh-rCN\\values.xml",
                     "position": {
                         "startLine": 17,
                         "startColumn": 0,
@@ -657,7 +657,7 @@
                     "endOffset": 3987
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\fe70e074586192de6c4fa9efc4378cbd56e45e0e\\output\\res\\values-zh-rCN\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\values-zh-rCN\\values.xml",
                     "position": {
                         "startLine": 18,
                         "startColumn": 0,
@@ -676,7 +676,7 @@
                     "endOffset": 4090
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\fe70e074586192de6c4fa9efc4378cbd56e45e0e\\output\\res\\values-zh-rCN\\values.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\fa8e6fd74f171cc41a76ea1c6875cb2df21d84cf\\output\\res\\values-zh-rCN\\values.xml",
                     "position": {
                         "startLine": 19,
                         "startColumn": 0,
@@ -695,7 +695,7 @@
                     "endOffset": 4162
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -714,7 +714,7 @@
                     "endOffset": 4259
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
@@ -733,7 +733,7 @@
                     "endOffset": 4350
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,
@@ -752,7 +752,7 @@
                     "endOffset": 4411
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 5,
                         "startColumn": 4,
@@ -771,7 +771,7 @@
                     "endOffset": 4478
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 6,
                         "startColumn": 4,
@@ -790,7 +790,7 @@
                     "endOffset": 4560
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 7,
                         "startColumn": 4,
@@ -809,7 +809,7 @@
                     "endOffset": 4640
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 8,
                         "startColumn": 4,
@@ -828,7 +828,7 @@
                     "endOffset": 4748
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 9,
                         "startColumn": 4,
@@ -847,7 +847,7 @@
                     "endOffset": 4826
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 10,
                         "startColumn": 4,
@@ -866,7 +866,7 @@
                     "endOffset": 4919
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 11,
                         "startColumn": 4,
@@ -885,7 +885,7 @@
                     "endOffset": 5017
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 12,
                         "startColumn": 4,
@@ -904,7 +904,7 @@
                     "endOffset": 5126
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 13,
                         "startColumn": 4,
@@ -923,7 +923,7 @@
                     "endOffset": 5205
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 14,
                         "startColumn": 4,
@@ -942,7 +942,7 @@
                     "endOffset": 5301
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 15,
                         "startColumn": 4,
@@ -961,7 +961,7 @@
                     "endOffset": 5381
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 16,
                         "startColumn": 4,
@@ -980,7 +980,7 @@
                     "endOffset": 5486
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 17,
                         "startColumn": 4,
@@ -999,7 +999,7 @@
                     "endOffset": 5556
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 18,
                         "startColumn": 4,
@@ -1018,7 +1018,7 @@
                     "endOffset": 5632
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 19,
                         "startColumn": 4,
@@ -1037,7 +1037,7 @@
                     "endOffset": 5699
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 20,
                         "startColumn": 4,
@@ -1056,7 +1056,7 @@
                     "endOffset": 5779
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 21,
                         "startColumn": 4,
@@ -1075,7 +1075,7 @@
                     "endOffset": 5851
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 22,
                         "startColumn": 4,
@@ -1094,7 +1094,7 @@
                     "endOffset": 5937
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 23,
                         "startColumn": 4,
@@ -1113,7 +1113,7 @@
                     "endOffset": 6007
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 24,
                         "startColumn": 4,
@@ -1132,7 +1132,7 @@
                     "endOffset": 6093
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 25,
                         "startColumn": 4,
@@ -1151,7 +1151,7 @@
                     "endOffset": 6172
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 26,
                         "startColumn": 4,
@@ -1170,7 +1170,7 @@
                     "endOffset": 6262
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 27,
                         "startColumn": 4,
@@ -1189,7 +1189,7 @@
                     "endOffset": 6341
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 28,
                         "startColumn": 4,
@@ -1208,7 +1208,7 @@
                     "endOffset": 6426
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 29,
                         "startColumn": 4,
@@ -1227,7 +1227,7 @@
                     "endOffset": 6502
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 30,
                         "startColumn": 4,
@@ -1246,7 +1246,7 @@
                     "endOffset": 6595
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 31,
                         "startColumn": 4,
@@ -1265,7 +1265,7 @@
                     "endOffset": 6662
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 32,
                         "startColumn": 4,
@@ -1284,7 +1284,7 @@
                     "endOffset": 6748
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 33,
                         "startColumn": 4,
@@ -1303,7 +1303,7 @@
                     "endOffset": 6816
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 34,
                         "startColumn": 4,
@@ -1322,7 +1322,7 @@
                     "endOffset": 6898
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 35,
                         "startColumn": 4,
@@ -1341,7 +1341,7 @@
                     "endOffset": 6979
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 36,
                         "startColumn": 4,
@@ -1360,7 +1360,7 @@
                     "endOffset": 7077
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 37,
                         "startColumn": 4,
@@ -1379,7 +1379,7 @@
                     "endOffset": 7155
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 38,
                         "startColumn": 4,
@@ -1398,7 +1398,7 @@
                     "endOffset": 7249
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 39,
                         "startColumn": 4,
@@ -1417,7 +1417,7 @@
                     "endOffset": 7325
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 40,
                         "startColumn": 4,
@@ -1436,7 +1436,7 @@
                     "endOffset": 7430
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 41,
                         "startColumn": 4,
@@ -1455,7 +1455,7 @@
                     "endOffset": 7509
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 42,
                         "startColumn": 4,
@@ -1474,7 +1474,7 @@
                     "endOffset": 7611
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 43,
                         "startColumn": 4,
@@ -1493,7 +1493,7 @@
                     "endOffset": 7677
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 44,
                         "startColumn": 4,
@@ -1512,7 +1512,7 @@
                     "endOffset": 7768
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 45,
                         "startColumn": 4,
@@ -1531,7 +1531,7 @@
                     "endOffset": 7848
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 46,
                         "startColumn": 4,
@@ -1550,7 +1550,7 @@
                     "endOffset": 7946
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 47,
                         "startColumn": 4,
@@ -1569,7 +1569,7 @@
                     "endOffset": 8023
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 48,
                         "startColumn": 4,
@@ -1588,7 +1588,7 @@
                     "endOffset": 8097
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 49,
                         "startColumn": 4,
@@ -1607,7 +1607,7 @@
                     "endOffset": 8171
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 50,
                         "startColumn": 4,
@@ -1626,7 +1626,7 @@
                     "endOffset": 8277
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 51,
                         "startColumn": 4,
@@ -1645,7 +1645,7 @@
                     "endOffset": 8354
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 52,
                         "startColumn": 4,
@@ -1664,7 +1664,7 @@
                     "endOffset": 8455
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 53,
                         "startColumn": 4,
@@ -1683,7 +1683,7 @@
                     "endOffset": 8533
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 54,
                         "startColumn": 4,
@@ -1702,7 +1702,7 @@
                     "endOffset": 8634
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 55,
                         "startColumn": 4,
@@ -1721,7 +1721,7 @@
                     "endOffset": 8698
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 56,
                         "startColumn": 4,
@@ -1740,7 +1740,7 @@
                     "endOffset": 8788
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 57,
                         "startColumn": 4,
@@ -1759,7 +1759,7 @@
                     "endOffset": 8874
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 58,
                         "startColumn": 4,
@@ -1778,7 +1778,7 @@
                     "endOffset": 8963
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 59,
                         "startColumn": 4,
@@ -1797,7 +1797,7 @@
                     "endOffset": 9034
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 60,
                         "startColumn": 4,
@@ -1816,7 +1816,7 @@
                     "endOffset": 9167
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 61,
                         "startColumn": 4,
@@ -1835,7 +1835,7 @@
                     "endOffset": 9235
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 62,
                         "startColumn": 4,
@@ -1854,7 +1854,7 @@
                     "endOffset": 9337
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 63,
                         "startColumn": 4,
@@ -1873,7 +1873,7 @@
                     "endOffset": 9417
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 64,
                         "startColumn": 4,
@@ -1892,7 +1892,7 @@
                     "endOffset": 9500
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 65,
                         "startColumn": 4,
@@ -1911,7 +1911,7 @@
                     "endOffset": 9562
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 66,
                         "startColumn": 4,
@@ -1930,7 +1930,7 @@
                     "endOffset": 9650
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 67,
                         "startColumn": 4,
@@ -1949,7 +1949,7 @@
                     "endOffset": 9724
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 68,
                         "startColumn": 4,
@@ -1968,7 +1968,7 @@
                     "endOffset": 9819
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 69,
                         "startColumn": 4,
@@ -1987,7 +1987,7 @@
                     "endOffset": 9896
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 70,
                         "startColumn": 4,
@@ -2006,7 +2006,7 @@
                     "endOffset": 9997
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 71,
                         "startColumn": 4,
@@ -2025,7 +2025,7 @@
                     "endOffset": 10061
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 72,
                         "startColumn": 4,
@@ -2044,7 +2044,7 @@
                     "endOffset": 10151
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 73,
                         "startColumn": 4,
@@ -2063,7 +2063,7 @@
                     "endOffset": 10225
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 74,
                         "startColumn": 4,
@@ -2082,7 +2082,7 @@
                     "endOffset": 10321
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 75,
                         "startColumn": 4,
@@ -2101,7 +2101,7 @@
                     "endOffset": 10390
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 76,
                         "startColumn": 4,
@@ -2120,7 +2120,7 @@
                     "endOffset": 10471
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 77,
                         "startColumn": 4,
@@ -2139,7 +2139,7 @@
                     "endOffset": 10550
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 78,
                         "startColumn": 4,
@@ -2158,7 +2158,7 @@
                     "endOffset": 10638
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 79,
                         "startColumn": 4,
@@ -2177,7 +2177,7 @@
                     "endOffset": 10709
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 80,
                         "startColumn": 4,
@@ -2196,7 +2196,7 @@
                     "endOffset": 10813
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 81,
                         "startColumn": 4,
@@ -2215,7 +2215,7 @@
                     "endOffset": 10894
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 82,
                         "startColumn": 4,
@@ -2234,7 +2234,7 @@
                     "endOffset": 10994
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 83,
                         "startColumn": 4,
@@ -2253,7 +2253,7 @@
                     "endOffset": 11066
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 84,
                         "startColumn": 4,
@@ -2272,7 +2272,7 @@
                     "endOffset": 11161
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 85,
                         "startColumn": 4,
@@ -2291,7 +2291,7 @@
                     "endOffset": 11243
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 86,
                         "startColumn": 4,
@@ -2310,7 +2310,7 @@
                     "endOffset": 11336
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 87,
                         "startColumn": 4,
@@ -2329,7 +2329,7 @@
                     "endOffset": 11405
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 88,
                         "startColumn": 4,
@@ -2348,7 +2348,7 @@
                     "endOffset": 11485
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 89,
                         "startColumn": 4,
@@ -2367,7 +2367,7 @@
                     "endOffset": 11561
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 90,
                         "startColumn": 4,
@@ -2386,7 +2386,7 @@
                     "endOffset": 11642
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 91,
                         "startColumn": 4,
@@ -2405,7 +2405,7 @@
                     "endOffset": 11732
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 92,
                         "startColumn": 4,
@@ -2424,7 +2424,7 @@
                     "endOffset": 11822
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 93,
                         "startColumn": 4,
@@ -2443,7 +2443,7 @@
                     "endOffset": 11880
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 94,
                         "startColumn": 4,
@@ -2462,7 +2462,7 @@
                     "endOffset": 11953
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 95,
                         "startColumn": 4,
@@ -2481,7 +2481,7 @@
                     "endOffset": 12031
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 96,
                         "startColumn": 4,
@@ -2500,7 +2500,7 @@
                     "endOffset": 12116
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 97,
                         "startColumn": 4,
@@ -2519,7 +2519,7 @@
                     "endOffset": 12194
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 98,
                         "startColumn": 4,
@@ -2538,7 +2538,7 @@
                     "endOffset": 12292
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 99,
                         "startColumn": 4,
@@ -2557,7 +2557,7 @@
                     "endOffset": 12390
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 100,
                         "startColumn": 4,
@@ -2576,7 +2576,7 @@
                     "endOffset": 12483
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 101,
                         "startColumn": 4,
@@ -2595,7 +2595,7 @@
                     "endOffset": 12568
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 102,
                         "startColumn": 4,
@@ -2614,7 +2614,7 @@
                     "endOffset": 12653
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 103,
                         "startColumn": 4,
@@ -2633,7 +2633,7 @@
                     "endOffset": 12751
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 104,
                         "startColumn": 4,
@@ -2652,7 +2652,7 @@
                     "endOffset": 12871
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 105,
                         "startColumn": 4,
@@ -2671,7 +2671,7 @@
                     "endOffset": 12977
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 106,
                         "startColumn": 4,
@@ -2690,7 +2690,7 @@
                     "endOffset": 13064
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 107,
                         "startColumn": 4,
@@ -2709,7 +2709,7 @@
                     "endOffset": 13154
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 108,
                         "startColumn": 4,
@@ -2728,7 +2728,7 @@
                     "endOffset": 13231
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 109,
                         "startColumn": 4,
@@ -2747,7 +2747,7 @@
                     "endOffset": 13310
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 110,
                         "startColumn": 4,
@@ -2766,7 +2766,7 @@
                     "endOffset": 13401
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 111,
                         "startColumn": 4,
@@ -2785,7 +2785,7 @@
                     "endOffset": 13502
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 112,
                         "startColumn": 4,
@@ -2804,7 +2804,7 @@
                     "endOffset": 13608
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 113,
                         "startColumn": 4,
@@ -2823,7 +2823,7 @@
                     "endOffset": 13722
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 114,
                         "startColumn": 4,
@@ -2842,7 +2842,7 @@
                     "endOffset": 13833
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 115,
                         "startColumn": 4,
@@ -2861,7 +2861,7 @@
                     "endOffset": 13927
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 116,
                         "startColumn": 4,
@@ -2880,7 +2880,7 @@
                     "endOffset": 14032
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 117,
                         "startColumn": 4,
@@ -2899,7 +2899,7 @@
                     "endOffset": 14128
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 118,
                         "startColumn": 4,
@@ -2918,7 +2918,7 @@
                     "endOffset": 14210
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 119,
                         "startColumn": 4,
@@ -2937,7 +2937,7 @@
                     "endOffset": 14304
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 120,
                         "startColumn": 4,
@@ -2956,7 +2956,7 @@
                     "endOffset": 14409
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 121,
                         "startColumn": 4,
@@ -2975,7 +2975,7 @@
                     "endOffset": 14519
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 122,
                         "startColumn": 4,
@@ -2994,7 +2994,7 @@
                     "endOffset": 14607
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 123,
                         "startColumn": 4,
@@ -3013,7 +3013,7 @@
                     "endOffset": 14701
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 124,
                         "startColumn": 4,
@@ -3032,7 +3032,7 @@
                     "endOffset": 14785
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 125,
                         "startColumn": 4,
@@ -3051,7 +3051,7 @@
                     "endOffset": 14884
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 126,
                         "startColumn": 4,
@@ -3070,7 +3070,7 @@
                     "endOffset": 14967
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 127,
                         "startColumn": 4,
@@ -3089,7 +3089,7 @@
                     "endOffset": 15077
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 128,
                         "startColumn": 4,
@@ -3108,7 +3108,7 @@
                     "endOffset": 15189
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 129,
                         "startColumn": 4,
@@ -3127,7 +3127,7 @@
                     "endOffset": 15264
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 130,
                         "startColumn": 4,
@@ -3146,7 +3146,7 @@
                     "endOffset": 15364
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 131,
                         "startColumn": 4,
@@ -3165,7 +3165,7 @@
                     "endOffset": 15467
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 132,
                         "startColumn": 4,
@@ -3184,7 +3184,7 @@
                     "endOffset": 15547
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 133,
                         "startColumn": 4,
@@ -3203,7 +3203,7 @@
                     "endOffset": 15625
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 134,
                         "startColumn": 4,
@@ -3222,7 +3222,7 @@
                     "endOffset": 15704
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 135,
                         "startColumn": 4,
@@ -3241,7 +3241,7 @@
                     "endOffset": 15796
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 136,
                         "startColumn": 4,
@@ -3260,7 +3260,7 @@
                     "endOffset": 15881
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 137,
                         "startColumn": 4,
@@ -3279,7 +3279,7 @@
                     "endOffset": 15981
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 138,
                         "startColumn": 4,
@@ -3298,7 +3298,7 @@
                     "endOffset": 16083
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 139,
                         "startColumn": 4,
@@ -3317,7 +3317,7 @@
                     "endOffset": 16180
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 140,
                         "startColumn": 4,
@@ -3336,7 +3336,7 @@
                     "endOffset": 16281
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 141,
                         "startColumn": 4,
@@ -3355,7 +3355,7 @@
                     "endOffset": 16377
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 142,
                         "startColumn": 4,
@@ -3374,7 +3374,7 @@
                     "endOffset": 16477
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 143,
                         "startColumn": 4,
@@ -3393,7 +3393,7 @@
                     "endOffset": 16572
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 144,
                         "startColumn": 4,
@@ -3412,7 +3412,7 @@
                     "endOffset": 16662
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 145,
                         "startColumn": 4,
@@ -3431,7 +3431,7 @@
                     "endOffset": 16770
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 146,
                         "startColumn": 4,
@@ -3450,7 +3450,7 @@
                     "endOffset": 16880
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 147,
                         "startColumn": 4,
@@ -3469,7 +3469,7 @@
                     "endOffset": 16976
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 148,
                         "startColumn": 4,
@@ -3488,7 +3488,7 @@
                     "endOffset": 17061
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 149,
                         "startColumn": 4,
@@ -3507,7 +3507,7 @@
                     "endOffset": 17138
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 150,
                         "startColumn": 4,
@@ -3526,7 +3526,7 @@
                     "endOffset": 17231
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 151,
                         "startColumn": 4,
@@ -3545,7 +3545,7 @@
                     "endOffset": 17305
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 152,
                         "startColumn": 4,
@@ -3564,7 +3564,7 @@
                     "endOffset": 17385
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 153,
                         "startColumn": 4,
@@ -3583,7 +3583,7 @@
                     "endOffset": 17464
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 154,
                         "startColumn": 4,
@@ -3602,7 +3602,7 @@
                     "endOffset": 17553
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 155,
                         "startColumn": 4,
@@ -3621,7 +3621,7 @@
                     "endOffset": 17633
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 156,
                         "startColumn": 4,
@@ -3640,7 +3640,7 @@
                     "endOffset": 17732
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 157,
                         "startColumn": 4,
@@ -3659,7 +3659,7 @@
                     "endOffset": 17813
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 158,
                         "startColumn": 4,
@@ -3678,7 +3678,7 @@
                     "endOffset": 17904
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 159,
                         "startColumn": 4,
@@ -3697,7 +3697,7 @@
                     "endOffset": 17977
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 160,
                         "startColumn": 4,
@@ -3716,7 +3716,7 @@
                     "endOffset": 18066
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 161,
                         "startColumn": 4,
@@ -3735,7 +3735,7 @@
                     "endOffset": 18154
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 162,
                         "startColumn": 4,
@@ -3754,7 +3754,7 @@
                     "endOffset": 18241
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 163,
                         "startColumn": 4,
@@ -3773,7 +3773,7 @@
                     "endOffset": 18320
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 164,
                         "startColumn": 4,
@@ -3792,7 +3792,7 @@
                     "endOffset": 18402
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 165,
                         "startColumn": 4,
@@ -3811,7 +3811,7 @@
                     "endOffset": 18501
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 166,
                         "startColumn": 4,
@@ -3830,7 +3830,7 @@
                     "endOffset": 18594
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 167,
                         "startColumn": 4,
@@ -3849,7 +3849,7 @@
                     "endOffset": 18685
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 168,
                         "startColumn": 4,
@@ -3868,7 +3868,7 @@
                     "endOffset": 18784
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 169,
                         "startColumn": 4,
@@ -3887,7 +3887,7 @@
                     "endOffset": 18857
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 170,
                         "startColumn": 4,
@@ -3906,7 +3906,7 @@
                     "endOffset": 18944
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 171,
                         "startColumn": 4,
@@ -3925,7 +3925,7 @@
                     "endOffset": 19013
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 172,
                         "startColumn": 4,
@@ -3944,7 +3944,7 @@
                     "endOffset": 19083
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 173,
                         "startColumn": 4,
@@ -3963,7 +3963,7 @@
                     "endOffset": 19172
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 174,
                         "startColumn": 4,
@@ -3982,7 +3982,7 @@
                     "endOffset": 19243
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 175,
                         "startColumn": 4,
@@ -4001,7 +4001,7 @@
                     "endOffset": 19368
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 176,
                         "startColumn": 4,
@@ -4020,7 +4020,7 @@
                     "endOffset": 19440
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 177,
                         "startColumn": 4,
@@ -4039,7 +4039,7 @@
                     "endOffset": 19525
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 178,
                         "startColumn": 4,
@@ -4058,7 +4058,7 @@
                     "endOffset": 19595
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 179,
                         "startColumn": 4,
@@ -4077,7 +4077,7 @@
                     "endOffset": 19679
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 180,
                         "startColumn": 4,
@@ -4096,7 +4096,7 @@
                     "endOffset": 19747
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 181,
                         "startColumn": 4,
@@ -4115,7 +4115,7 @@
                     "endOffset": 19830
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 182,
                         "startColumn": 4,
@@ -4134,7 +4134,7 @@
                     "endOffset": 19897
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 183,
                         "startColumn": 4,
@@ -4153,7 +4153,7 @@
                     "endOffset": 19980
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 184,
                         "startColumn": 4,
@@ -4172,7 +4172,7 @@
                     "endOffset": 20047
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 185,
                         "startColumn": 4,
@@ -4191,7 +4191,7 @@
                     "endOffset": 20133
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 186,
                         "startColumn": 4,
@@ -4210,7 +4210,7 @@
                     "endOffset": 20196
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 187,
                         "startColumn": 4,
@@ -4229,7 +4229,7 @@
                     "endOffset": 20276
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 188,
                         "startColumn": 4,
@@ -4248,7 +4248,7 @@
                     "endOffset": 20337
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 189,
                         "startColumn": 4,
@@ -4267,7 +4267,7 @@
                     "endOffset": 20416
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 190,
                         "startColumn": 4,
@@ -4286,7 +4286,7 @@
                     "endOffset": 20477
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 191,
                         "startColumn": 4,
@@ -4305,7 +4305,7 @@
                     "endOffset": 20544
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 192,
                         "startColumn": 4,
@@ -4324,7 +4324,7 @@
                     "endOffset": 20614
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 193,
                         "startColumn": 4,
@@ -4343,7 +4343,7 @@
                     "endOffset": 20718
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 194,
                         "startColumn": 4,
@@ -4362,7 +4362,7 @@
                     "endOffset": 20782
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 195,
                         "startColumn": 4,
@@ -4381,7 +4381,7 @@
                     "endOffset": 20866
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 196,
                         "startColumn": 4,
@@ -4400,7 +4400,7 @@
                     "endOffset": 20929
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 197,
                         "startColumn": 4,
@@ -4419,7 +4419,7 @@
                     "endOffset": 20999
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 198,
                         "startColumn": 4,
@@ -4438,7 +4438,7 @@
                     "endOffset": 21065
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 199,
                         "startColumn": 4,
@@ -4457,7 +4457,7 @@
                     "endOffset": 21141
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 200,
                         "startColumn": 4,
@@ -4476,7 +4476,7 @@
                     "endOffset": 21211
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 201,
                         "startColumn": 4,
@@ -4495,7 +4495,7 @@
                     "endOffset": 21298
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 202,
                         "startColumn": 4,
@@ -4514,7 +4514,7 @@
                     "endOffset": 21390
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 203,
                         "startColumn": 4,
@@ -4533,7 +4533,7 @@
                     "endOffset": 21500
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 204,
                         "startColumn": 4,
@@ -4552,7 +4552,7 @@
                     "endOffset": 21574
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 205,
                         "startColumn": 4,
@@ -4571,7 +4571,7 @@
                     "endOffset": 21668
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 206,
                         "startColumn": 4,
@@ -4590,7 +4590,7 @@
                     "endOffset": 21757
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 207,
                         "startColumn": 4,
@@ -4609,7 +4609,7 @@
                     "endOffset": 21827
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 208,
                         "startColumn": 4,
@@ -4628,7 +4628,7 @@
                     "endOffset": 21904
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 209,
                         "startColumn": 4,
@@ -4647,7 +4647,7 @@
                     "endOffset": 21982
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 210,
                         "startColumn": 4,
@@ -4666,7 +4666,7 @@
                     "endOffset": 22060
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 211,
                         "startColumn": 4,
@@ -4685,7 +4685,7 @@
                     "endOffset": 22152
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 212,
                         "startColumn": 4,
@@ -4704,7 +4704,7 @@
                     "endOffset": 22244
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 213,
                         "startColumn": 4,
@@ -4723,7 +4723,7 @@
                     "endOffset": 22330
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 214,
                         "startColumn": 4,
@@ -4742,7 +4742,7 @@
                     "endOffset": 22411
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 215,
                         "startColumn": 4,
@@ -4761,7 +4761,7 @@
                     "endOffset": 22493
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 216,
                         "startColumn": 4,
@@ -4780,7 +4780,7 @@
                     "endOffset": 22575
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 217,
                         "startColumn": 4,
@@ -4799,7 +4799,7 @@
                     "endOffset": 22658
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 218,
                         "startColumn": 4,
@@ -4818,7 +4818,7 @@
                     "endOffset": 22724
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 219,
                         "startColumn": 4,
@@ -4837,7 +4837,7 @@
                     "endOffset": 22816
                 },
                 "from": {
-                    "file": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 220,
                         "startColumn": 4,
@@ -4856,7 +4856,7 @@
                     "endOffset": 22894
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\13e2a3a29d358bb025b759d048771c09735c4241\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 21,
                         "startColumn": 4,
@@ -4875,7 +4875,7 @@
                     "endOffset": 22995
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\ee50d30de987868cfbccab1b8b79dd014cde0426\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\13e2a3a29d358bb025b759d048771c09735c4241\\output\\res\\values-zh-rCN\\values-zh-rCN.xml",
                     "position": {
                         "startLine": 22,
                         "startColumn": 4,

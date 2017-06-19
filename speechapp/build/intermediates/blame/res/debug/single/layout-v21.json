@@ -1,18 +1,18 @@
 [
     {
-        "merged": "D:\\6-9Starl\\starl\\speechapp\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_template_custom_big.xml",
-        "source": "C:\\Users\\yangy14\\.android\\build-cache\\5525c73edf00b5f2e2a4bed383d24d1e7b8a3595\\output\\res\\layout-v21\\notification_template_custom_big.xml"
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\speechapp\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_template_custom_big.xml",
+        "source": "C:\\Users\\liangt\\.android\\build-cache\\bcbc288efdfeb443379198a24d118a40a4af0eff\\output\\res\\layout-v21\\notification_template_custom_big.xml"
     },
     {
-        "merged": "D:\\6-9Starl\\starl\\speechapp\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_action.xml",
-        "source": "C:\\Users\\yangy14\\.android\\build-cache\\5525c73edf00b5f2e2a4bed383d24d1e7b8a3595\\output\\res\\layout-v21\\notification_action.xml"
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\speechapp\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_template_icon_group.xml",
+        "source": "C:\\Users\\liangt\\.android\\build-cache\\bcbc288efdfeb443379198a24d118a40a4af0eff\\output\\res\\layout-v21\\notification_template_icon_group.xml"
     },
     {
-        "merged": "D:\\6-9Starl\\starl\\speechapp\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_template_icon_group.xml",
-        "source": "C:\\Users\\yangy14\\.android\\build-cache\\5525c73edf00b5f2e2a4bed383d24d1e7b8a3595\\output\\res\\layout-v21\\notification_template_icon_group.xml"
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\speechapp\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_action_tombstone.xml",
+        "source": "C:\\Users\\liangt\\.android\\build-cache\\bcbc288efdfeb443379198a24d118a40a4af0eff\\output\\res\\layout-v21\\notification_action_tombstone.xml"
     },
     {
-        "merged": "D:\\6-9Starl\\starl\\speechapp\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_action_tombstone.xml",
-        "source": "C:\\Users\\yangy14\\.android\\build-cache\\5525c73edf00b5f2e2a4bed383d24d1e7b8a3595\\output\\res\\layout-v21\\notification_action_tombstone.xml"
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\speechapp\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_action.xml",
+        "source": "C:\\Users\\liangt\\.android\\build-cache\\bcbc288efdfeb443379198a24d118a40a4af0eff\\output\\res\\layout-v21\\notification_action.xml"
     }
 ]
