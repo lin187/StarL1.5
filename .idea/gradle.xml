@@ -10,11 +10,15 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/ClientLib" />
             <option value="$PROJECT_DIR$/Mavlink" />
+            <option value="$PROJECT_DIR$/aars" />
             <option value="$PROJECT_DIR$/dJISDKLIB" />
             <option value="$PROJECT_DIR$/followApp" />
+            <option value="$PROJECT_DIR$/models" />
+            <option value="$PROJECT_DIR$/speechapp" />
             <option value="$PROJECT_DIR$/starLib" />
             <option value="$PROJECT_DIR$/starlTemplate" />
             <option value="$PROJECT_DIR$/testcontroller" />
+            <option value="$PROJECT_DIR$/wear" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

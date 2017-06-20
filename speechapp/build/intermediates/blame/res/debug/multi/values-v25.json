@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\speechapp\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v25\\values-v25.xml",
+        "outputFile": "C:\\Users\\alexaad1\\Documents\\starl\\speechapp\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v25\\values-v25.xml",
         "map": [
             {
                 "to": {
@@ -11,7 +11,7 @@
                     "endOffset": 121
                 },
                 "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\dddcc5f4416dc19610c79bfa0e8f85a174fa104b\\output\\res\\values-v25\\values-v25.xml",
+                    "file": "C:\\Users\\alexaad1\\.android\\build-cache\\676c23434f8611dbc585d71140e4995f94140dd2\\output\\res\\values-v25\\values-v25.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,
@@ -30,7 +30,7 @@
                     "endOffset": 204
                 },
                 "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\dddcc5f4416dc19610c79bfa0e8f85a174fa104b\\output\\res\\values-v25\\values-v25.xml",
+                    "file": "C:\\Users\\alexaad1\\.android\\build-cache\\676c23434f8611dbc585d71140e4995f94140dd2\\output\\res\\values-v25\\values-v25.xml",
                     "position": {
                         "startLine": 3,
                         "startColumn": 4,
@@ -50,7 +50,7 @@
                     "endOffset": 303
                 },
                 "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\dddcc5f4416dc19610c79bfa0e8f85a174fa104b\\output\\res\\values-v25\\values-v25.xml",
+                    "file": "C:\\Users\\alexaad1\\.android\\build-cache\\676c23434f8611dbc585d71140e4995f94140dd2\\output\\res\\values-v25\\values-v25.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 4,
@@ -71,7 +71,7 @@
                     "endOffset": 414
                 },
                 "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\dddcc5f4416dc19610c79bfa0e8f85a174fa104b\\output\\res\\values-v25\\values-v25.xml",
+                    "file": "C:\\Users\\alexaad1\\.android\\build-cache\\676c23434f8611dbc585d71140e4995f94140dd2\\output\\res\\values-v25\\values-v25.xml",
                     "position": {
                         "startLine": 6,
                         "startColumn": 4,

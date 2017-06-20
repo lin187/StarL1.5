@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\wear\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-notround-v23\\values-notround-v23.xml",
+        "outputFile": "C:\\Users\\alexaad1\\Documents\\starl\\wear\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-notround-v23\\values-notround-v23.xml",
         "map": [
             {
                 "to": {
@@ -11,7 +11,7 @@
                     "endOffset": 107
                 },
                 "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\14b6afac9498a47c9c8caccf7cc4d2f4e6639573\\output\\res\\values-notround-v23\\values.xml",
+                    "file": "C:\\Users\\alexaad1\\.android\\build-cache\\93376359717209ef28cbd32aa00203f1259b63bd\\output\\res\\values-notround-v23\\values.xml",
                     "position": {
                         "startLine": 4,
                         "startColumn": 0,
@@ -30,7 +30,7 @@
                     "endOffset": 169
                 },
                 "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\14b6afac9498a47c9c8caccf7cc4d2f4e6639573\\output\\res\\values-notround-v23\\values.xml",
+                    "file": "C:\\Users\\alexaad1\\.android\\build-cache\\93376359717209ef28cbd32aa00203f1259b63bd\\output\\res\\values-notround-v23\\values.xml",
                     "position": {
                         "startLine": 5,
                         "startColumn": 0,
@@ -49,7 +49,7 @@
                     "endOffset": 217
                 },
                 "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\14b6afac9498a47c9c8caccf7cc4d2f4e6639573\\output\\res\\values-notround-v23\\values.xml",
+                    "file": "C:\\Users\\alexaad1\\.android\\build-cache\\93376359717209ef28cbd32aa00203f1259b63bd\\output\\res\\values-notround-v23\\values.xml",
                     "position": {
                         "startLine": 6,
                         "startColumn": 0,
@@ -68,7 +68,7 @@
                     "endOffset": 268
                 },
                 "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\14b6afac9498a47c9c8caccf7cc4d2f4e6639573\\output\\res\\values-notround-v23\\values.xml",
+                    "file": "C:\\Users\\alexaad1\\.android\\build-cache\\93376359717209ef28cbd32aa00203f1259b63bd\\output\\res\\values-notround-v23\\values.xml",
                     "position": {
                         "startLine": 7,
                         "startColumn": 0,
@@ -87,7 +87,7 @@
                     "endOffset": 321
                 },
                 "from": {
-                    "file": "C:\\Users\\wangcs2\\.android\\build-cache\\14b6afac9498a47c9c8caccf7cc4d2f4e6639573\\output\\res\\values-notround-v23\\values.xml",
+                    "file": "C:\\Users\\alexaad1\\.android\\build-cache\\93376359717209ef28cbd32aa00203f1259b63bd\\output\\res\\values-notround-v23\\values.xml",
                     "position": {
                         "startLine": 8,
                         "startColumn": 0,

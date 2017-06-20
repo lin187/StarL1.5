@@ -1,10 +1,6 @@
 /*
  * This file is auto-generated.  DO NOT MODIFY.
-<<<<<<< HEAD
- * Original file: D:\\6-9Starl\\starl\\ClientLib\\src\\main\\java\\com\\o3dr\\services\\android\\lib\\model\\IApiListener.aidl
-=======
- * Original file: C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\ClientLib\\src\\main\\java\\com\\o3dr\\services\\android\\lib\\model\\IApiListener.aidl
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
+ * Original file: C:\\Users\\alexaad1\\Documents\\starl\\ClientLib\\src\\main\\java\\com\\o3dr\\services\\android\\lib\\model\\IApiListener.aidl
  */
 package com.o3dr.services.android.lib.model;
 /**

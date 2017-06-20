@@ -1,115 +1,58 @@
 [
     {
-<<<<<<< HEAD
-        "merged": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_hold.xml",
-        "source": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_hold.xml"
+        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_zoom_exit.xml",
+        "source": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_zoom_exit.xml"
     },
     {
-        "merged": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_zoom_enter.xml",
-        "source": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_zoom_enter.xml"
+        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_zoom_enter.xml",
+        "source": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_zoom_enter.xml"
     },
     {
-        "merged": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_hyperspace_in.xml",
-        "source": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_hyperspace_in.xml"
+        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_other.xml",
+        "source": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_other.xml"
     },
     {
-        "merged": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_other.xml",
-        "source": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_other.xml"
+        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_zoom_enter_back.xml",
+        "source": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_zoom_enter_back.xml"
     },
     {
-        "merged": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_zoom_exit_back.xml",
-        "source": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_zoom_exit_back.xml"
+        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_push_right_in.xml",
+        "source": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_push_right_in.xml"
     },
     {
-        "merged": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_zoom_exit.xml",
-        "source": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_zoom_exit.xml"
+        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_push_right_out.xml",
+        "source": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_push_right_out.xml"
     },
     {
-        "merged": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_push_right_out.xml",
-        "source": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_push_right_out.xml"
+        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_push_left_out.xml",
+        "source": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_push_left_out.xml"
     },
     {
-        "merged": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_zoom_enter_back.xml",
-        "source": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_zoom_enter_back.xml"
+        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_hold.xml",
+        "source": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_hold.xml"
     },
     {
-        "merged": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_hyperspace_out.xml",
-        "source": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_hyperspace_out.xml"
+        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_zoom_exit_back.xml",
+        "source": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_zoom_exit_back.xml"
     },
     {
-        "merged": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_push_left_in.xml",
-        "source": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_push_left_in.xml"
+        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_push_left_in.xml",
+        "source": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_push_left_in.xml"
     },
     {
-        "merged": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_push_left_out.xml",
-        "source": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_push_left_out.xml"
+        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_push_up_out.xml",
+        "source": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_push_up_out.xml"
     },
     {
-        "merged": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_push_right_in.xml",
-        "source": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_push_right_in.xml"
+        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_hyperspace_in.xml",
+        "source": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_hyperspace_in.xml"
     },
     {
-        "merged": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_push_up_in.xml",
-        "source": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_push_up_in.xml"
+        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_push_up_in.xml",
+        "source": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_push_up_in.xml"
     },
     {
-        "merged": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_push_up_out.xml",
-        "source": "D:\\6-9Starl\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_push_up_out.xml"
-=======
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_push_right_in.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_push_right_in.xml"
-    },
-    {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_push_right_out.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_push_right_out.xml"
-    },
-    {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_push_left_out.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_push_left_out.xml"
-    },
-    {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_zoom_enter_back.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_zoom_enter_back.xml"
-    },
-    {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_push_up_out.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_push_up_out.xml"
-    },
-    {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_other.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_other.xml"
-    },
-    {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_push_up_in.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_push_up_in.xml"
-    },
-    {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_hold.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_hold.xml"
-    },
-    {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_hyperspace_in.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_hyperspace_in.xml"
-    },
-    {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_push_left_in.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_push_left_in.xml"
-    },
-    {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_zoom_exit.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_zoom_exit.xml"
-    },
-    {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_hyperspace_out.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_hyperspace_out.xml"
-    },
-    {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_zoom_exit_back.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_zoom_exit_back.xml"
-    },
-    {
-        "merged": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_zoom_enter.xml",
-        "source": "C:\\Users\\wangcs2\\Desktop\\EhangFinal\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_zoom_enter.xml"
->>>>>>> b0b84a086f2b80e9b37a77f85273819698a3c74c
+        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\res\\merged\\androidTest\\debug\\anim\\core_hyperspace_out.xml",
+        "source": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\debug\\res\\anim\\core_hyperspace_out.xml"
     }
 ]
