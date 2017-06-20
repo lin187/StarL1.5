@@ -1,77 +1,77 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\alexaad1\Documents\starl\speechapp\src\main\AndroidManifest.xml:2:1-22:12
+ADDED from D:\withSIM\starl\speechapp\src\main\AndroidManifest.xml:2:1-22:12
 	package
-		ADDED from C:\Users\alexaad1\Documents\starl\speechapp\src\main\AndroidManifest.xml:3:5-40
-		INJECTED from C:\Users\alexaad1\Documents\starl\speechapp\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\alexaad1\Documents\starl\speechapp\src\main\AndroidManifest.xml
+		ADDED from D:\withSIM\starl\speechapp\src\main\AndroidManifest.xml:3:5-40
+		INJECTED from D:\withSIM\starl\speechapp\src\main\AndroidManifest.xml
+		INJECTED from D:\withSIM\starl\speechapp\src\main\AndroidManifest.xml
 	android:versionName
-		INJECTED from C:\Users\alexaad1\Documents\starl\speechapp\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\alexaad1\Documents\starl\speechapp\src\main\AndroidManifest.xml
+		INJECTED from D:\withSIM\starl\speechapp\src\main\AndroidManifest.xml
+		INJECTED from D:\withSIM\starl\speechapp\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from C:\Users\alexaad1\Documents\starl\speechapp\src\main\AndroidManifest.xml:2:11-69
+		ADDED from D:\withSIM\starl\speechapp\src\main\AndroidManifest.xml:2:11-69
 	android:versionCode
-		INJECTED from C:\Users\alexaad1\Documents\starl\speechapp\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\alexaad1\Documents\starl\speechapp\src\main\AndroidManifest.xml
+		INJECTED from D:\withSIM\starl\speechapp\src\main\AndroidManifest.xml
+		INJECTED from D:\withSIM\starl\speechapp\src\main\AndroidManifest.xml
 uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-ADDED from C:\Users\alexaad1\Documents\starl\speechapp\src\main\AndroidManifest.xml:5:5-81
+ADDED from D:\withSIM\starl\speechapp\src\main\AndroidManifest.xml:5:5-81
 	android:name
-		ADDED from C:\Users\alexaad1\Documents\starl\speechapp\src\main\AndroidManifest.xml:5:22-78
+		ADDED from D:\withSIM\starl\speechapp\src\main\AndroidManifest.xml:5:22-78
 uses-permission#android.permission.RECORD_AUDIO
-ADDED from C:\Users\alexaad1\Documents\starl\speechapp\src\main\AndroidManifest.xml:6:5-71
+ADDED from D:\withSIM\starl\speechapp\src\main\AndroidManifest.xml:6:5-71
 	android:name
-		ADDED from C:\Users\alexaad1\Documents\starl\speechapp\src\main\AndroidManifest.xml:6:22-68
+		ADDED from D:\withSIM\starl\speechapp\src\main\AndroidManifest.xml:6:22-68
 application
-ADDED from C:\Users\alexaad1\Documents\starl\speechapp\src\main\AndroidManifest.xml:8:5-21:19
-MERGED from [com.android.support:appcompat-v7:25.2.0] C:\Users\alexaad1\.android\build-cache\676c23434f8611dbc585d71140e4995f94140dd2\output\AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:support-v4:25.2.0] C:\Users\alexaad1\.android\build-cache\62370d877bd64132268fd8b84dd0e467c201608c\output\AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:support-fragment:25.2.0] C:\Users\alexaad1\.android\build-cache\2aa41a82d74dea263c29dc0f49dd6c44ae915b1b\output\AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:support-media-compat:25.2.0] C:\Users\alexaad1\.android\build-cache\f06b955b3780d1609385a8eb42cff99065f23a87\output\AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:support-core-ui:25.2.0] C:\Users\alexaad1\.android\build-cache\7c3326e3c876312bcccb39f6a2feaa957b6067f0\output\AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:support-core-utils:25.2.0] C:\Users\alexaad1\.android\build-cache\6dfd0ef707a4e84cd8d8942897012d1fd785662b\output\AndroidManifest.xml:25:5-20
-MERGED from [com.android.support:animated-vector-drawable:25.2.0] C:\Users\alexaad1\.android\build-cache\2fa54e7ba18e2308880ddc619e5f91fff2a62acb\output\AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:support-vector-drawable:25.2.0] C:\Users\alexaad1\.android\build-cache\df1f6ebfd6a3f1877aeac18bf581039e0aaf242b\output\AndroidManifest.xml:23:5-20
-MERGED from [com.android.support:support-compat:25.2.0] C:\Users\alexaad1\.android\build-cache\5f09df0f52e59977a2165d52ae2af2aaad192e05\output\AndroidManifest.xml:25:5-20
+ADDED from D:\withSIM\starl\speechapp\src\main\AndroidManifest.xml:8:5-21:19
+MERGED from [com.android.support:appcompat-v7:25.2.0] C:\Users\yangy14\.android\build-cache\5525c73edf00b5f2e2a4bed383d24d1e7b8a3595\output\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-v4:25.2.0] C:\Users\yangy14\.android\build-cache\fcc10d52887664bc12df84d34406db5f25343419\output\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-fragment:25.2.0] C:\Users\yangy14\.android\build-cache\16db095d2df8f296ef88fd8a8212397f91083b55\output\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-media-compat:25.2.0] C:\Users\yangy14\.android\build-cache\a4acf94244006f628b0026f5173130b738e767cd\output\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-ui:25.2.0] C:\Users\yangy14\.android\build-cache\35c37eed6b36dba536d436a551db54373a594414\output\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:support-core-utils:25.2.0] C:\Users\yangy14\.android\build-cache\533233d92efd78be01a8a88b7898c49355ff6050\output\AndroidManifest.xml:25:5-20
+MERGED from [com.android.support:animated-vector-drawable:25.2.0] C:\Users\yangy14\.android\build-cache\e0909753ba4d4ed74222b00b756a2654b528bb5d\output\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-vector-drawable:25.2.0] C:\Users\yangy14\.android\build-cache\6a7500296645cf24b336decac18d9bfed8bd7953\output\AndroidManifest.xml:23:5-20
+MERGED from [com.android.support:support-compat:25.2.0] C:\Users\yangy14\.android\build-cache\90cae4260ad6b331e5a54e14f31a1965fb516375\output\AndroidManifest.xml:25:5-20
 	android:label
-		ADDED from C:\Users\alexaad1\Documents\starl\speechapp\src\main\AndroidManifest.xml:11:9-41
+		ADDED from D:\withSIM\starl\speechapp\src\main\AndroidManifest.xml:11:9-41
 	android:allowBackup
-		ADDED from C:\Users\alexaad1\Documents\starl\speechapp\src\main\AndroidManifest.xml:9:9-36
+		ADDED from D:\withSIM\starl\speechapp\src\main\AndroidManifest.xml:9:9-36
 	android:icon
-		ADDED from C:\Users\alexaad1\Documents\starl\speechapp\src\main\AndroidManifest.xml:10:9-38
+		ADDED from D:\withSIM\starl\speechapp\src\main\AndroidManifest.xml:10:9-38
 activity#edu.cmu.pocketsphinx.demo.PocketSphinxActivity
-ADDED from C:\Users\alexaad1\Documents\starl\speechapp\src\main\AndroidManifest.xml:12:9-20:20
+ADDED from D:\withSIM\starl\speechapp\src\main\AndroidManifest.xml:12:9-20:20
 	android:label
-		ADDED from C:\Users\alexaad1\Documents\starl\speechapp\src\main\AndroidManifest.xml:14:13-45
+		ADDED from D:\withSIM\starl\speechapp\src\main\AndroidManifest.xml:14:13-45
 	android:name
-		ADDED from C:\Users\alexaad1\Documents\starl\speechapp\src\main\AndroidManifest.xml:13:13-48
+		ADDED from D:\withSIM\starl\speechapp\src\main\AndroidManifest.xml:13:13-48
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from C:\Users\alexaad1\Documents\starl\speechapp\src\main\AndroidManifest.xml:15:13-19:29
+ADDED from D:\withSIM\starl\speechapp\src\main\AndroidManifest.xml:15:13-19:29
 action#android.intent.action.MAIN
-ADDED from C:\Users\alexaad1\Documents\starl\speechapp\src\main\AndroidManifest.xml:16:17-69
+ADDED from D:\withSIM\starl\speechapp\src\main\AndroidManifest.xml:16:17-69
 	android:name
-		ADDED from C:\Users\alexaad1\Documents\starl\speechapp\src\main\AndroidManifest.xml:16:25-66
+		ADDED from D:\withSIM\starl\speechapp\src\main\AndroidManifest.xml:16:25-66
 category#android.intent.category.LAUNCHER
-ADDED from C:\Users\alexaad1\Documents\starl\speechapp\src\main\AndroidManifest.xml:18:17-77
+ADDED from D:\withSIM\starl\speechapp\src\main\AndroidManifest.xml:18:17-77
 	android:name
-		ADDED from C:\Users\alexaad1\Documents\starl\speechapp\src\main\AndroidManifest.xml:18:27-74
+		ADDED from D:\withSIM\starl\speechapp\src\main\AndroidManifest.xml:18:27-74
 uses-sdk
-INJECTED from C:\Users\alexaad1\Documents\starl\speechapp\src\main\AndroidManifest.xml reason: use-sdk injection requested
-MERGED from [starl:aars:unspecified] C:\Users\alexaad1\.android\build-cache\14d16e3b930ce060bc10cc63712b6382260f98fd\output\AndroidManifest.xml:7:5-9:41
-MERGED from [starl:models:unspecified] C:\Users\alexaad1\Documents\starl\models\build\intermediates\bundles\default\AndroidManifest.xml:7:5-9:41
-MERGED from [com.android.support:appcompat-v7:25.2.0] C:\Users\alexaad1\.android\build-cache\676c23434f8611dbc585d71140e4995f94140dd2\output\AndroidManifest.xml:21:5-23:78
-MERGED from [com.android.support:support-v4:25.2.0] C:\Users\alexaad1\.android\build-cache\62370d877bd64132268fd8b84dd0e467c201608c\output\AndroidManifest.xml:21:5-23:54
-MERGED from [com.android.support:support-fragment:25.2.0] C:\Users\alexaad1\.android\build-cache\2aa41a82d74dea263c29dc0f49dd6c44ae915b1b\output\AndroidManifest.xml:21:5-23:60
-MERGED from [com.android.support:support-media-compat:25.2.0] C:\Users\alexaad1\.android\build-cache\f06b955b3780d1609385a8eb42cff99065f23a87\output\AndroidManifest.xml:21:5-23:63
-MERGED from [com.android.support:support-core-ui:25.2.0] C:\Users\alexaad1\.android\build-cache\7c3326e3c876312bcccb39f6a2feaa957b6067f0\output\AndroidManifest.xml:21:5-23:58
-MERGED from [com.android.support:support-core-utils:25.2.0] C:\Users\alexaad1\.android\build-cache\6dfd0ef707a4e84cd8d8942897012d1fd785662b\output\AndroidManifest.xml:21:5-23:61
-MERGED from [com.android.support:animated-vector-drawable:25.2.0] C:\Users\alexaad1\.android\build-cache\2fa54e7ba18e2308880ddc619e5f91fff2a62acb\output\AndroidManifest.xml:20:5-44
-MERGED from [com.android.support:support-vector-drawable:25.2.0] C:\Users\alexaad1\.android\build-cache\df1f6ebfd6a3f1877aeac18bf581039e0aaf242b\output\AndroidManifest.xml:21:5-43
-MERGED from [com.android.support:support-compat:25.2.0] C:\Users\alexaad1\.android\build-cache\5f09df0f52e59977a2165d52ae2af2aaad192e05\output\AndroidManifest.xml:21:5-23:58
+INJECTED from D:\withSIM\starl\speechapp\src\main\AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [starl:aars:unspecified] C:\Users\yangy14\.android\build-cache\b0388cab241939f0eb0e5ca18441a6df5dad29d2\output\AndroidManifest.xml:7:5-9:41
+MERGED from [starl:models:unspecified] D:\withSIM\starl\models\build\intermediates\bundles\default\AndroidManifest.xml:7:5-9:41
+MERGED from [com.android.support:appcompat-v7:25.2.0] C:\Users\yangy14\.android\build-cache\5525c73edf00b5f2e2a4bed383d24d1e7b8a3595\output\AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:support-v4:25.2.0] C:\Users\yangy14\.android\build-cache\fcc10d52887664bc12df84d34406db5f25343419\output\AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-fragment:25.2.0] C:\Users\yangy14\.android\build-cache\16db095d2df8f296ef88fd8a8212397f91083b55\output\AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-media-compat:25.2.0] C:\Users\yangy14\.android\build-cache\a4acf94244006f628b0026f5173130b738e767cd\output\AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-core-ui:25.2.0] C:\Users\yangy14\.android\build-cache\35c37eed6b36dba536d436a551db54373a594414\output\AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-utils:25.2.0] C:\Users\yangy14\.android\build-cache\533233d92efd78be01a8a88b7898c49355ff6050\output\AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:animated-vector-drawable:25.2.0] C:\Users\yangy14\.android\build-cache\e0909753ba4d4ed74222b00b756a2654b528bb5d\output\AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:25.2.0] C:\Users\yangy14\.android\build-cache\6a7500296645cf24b336decac18d9bfed8bd7953\output\AndroidManifest.xml:21:5-43
+MERGED from [com.android.support:support-compat:25.2.0] C:\Users\yangy14\.android\build-cache\90cae4260ad6b331e5a54e14f31a1965fb516375\output\AndroidManifest.xml:21:5-23:58
 	tools:overrideLibrary
-		ADDED from [com.android.support:appcompat-v7:25.2.0] C:\Users\alexaad1\.android\build-cache\676c23434f8611dbc585d71140e4995f94140dd2\output\AndroidManifest.xml:23:9-75
+		ADDED from [com.android.support:appcompat-v7:25.2.0] C:\Users\yangy14\.android\build-cache\5525c73edf00b5f2e2a4bed383d24d1e7b8a3595\output\AndroidManifest.xml:23:9-75
 	android:targetSdkVersion
-		INJECTED from C:\Users\alexaad1\Documents\starl\speechapp\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\alexaad1\Documents\starl\speechapp\src\main\AndroidManifest.xml
+		INJECTED from D:\withSIM\starl\speechapp\src\main\AndroidManifest.xml
+		INJECTED from D:\withSIM\starl\speechapp\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from C:\Users\alexaad1\Documents\starl\speechapp\src\main\AndroidManifest.xml
-		INJECTED from C:\Users\alexaad1\Documents\starl\speechapp\src\main\AndroidManifest.xml
+		INJECTED from D:\withSIM\starl\speechapp\src\main\AndroidManifest.xml
+		INJECTED from D:\withSIM\starl\speechapp\src\main\AndroidManifest.xml

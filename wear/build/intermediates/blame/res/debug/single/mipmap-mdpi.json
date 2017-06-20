@@ -2,5 +2,9 @@
     {
         "merged": "C:\\Users\\alexaad1\\Documents\\starl\\wear\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi\\ic_launcher.png",
         "source": "C:\\Users\\alexaad1\\Documents\\starl\\wear\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\withSIM\\starl\\wear\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi\\ic_launcher.png",
+        "source": "D:\\withSIM\\starl\\wear\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
     }
 ]

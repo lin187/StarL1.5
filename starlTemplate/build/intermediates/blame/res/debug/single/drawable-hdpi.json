@@ -1,5 +1,13 @@
 [
     {
+        "merged": "D:\\withSIM\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\icon.png",
+        "source": "D:\\withSIM\\starl\\starlTemplate\\src\\main\\res\\drawable-hdpi\\icon.png"
+    },
+    {
+        "merged": "D:\\withSIM\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\ic_launcher.png",
+        "source": "D:\\withSIM\\starl\\starlTemplate\\src\\main\\res\\drawable-hdpi\\ic_launcher.png"
+    },
+    {
         "merged": "C:\\Users\\alexaad1\\Documents\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi\\icon.png",
         "source": "C:\\Users\\alexaad1\\Documents\\starl\\starlTemplate\\src\\main\\res\\drawable-hdpi\\icon.png"
     },

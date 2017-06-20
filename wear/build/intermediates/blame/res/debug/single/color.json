@@ -1,11 +1,23 @@
 [
     {
+        "merged": "D:\\withSIM\\starl\\wear\\build\\intermediates\\res\\merged\\debug\\color\\card_text_color.xml",
+        "source": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\color\\card_text_color.xml"
+    },
+    {
         "merged": "C:\\Users\\alexaad1\\Documents\\starl\\wear\\build\\intermediates\\res\\merged\\debug\\color\\card_grey_text_color.xml",
         "source": "C:\\Users\\alexaad1\\.android\\build-cache\\93376359717209ef28cbd32aa00203f1259b63bd\\output\\res\\color\\card_grey_text_color.xml"
     },
     {
+        "merged": "D:\\withSIM\\starl\\wear\\build\\intermediates\\res\\merged\\debug\\color\\card_grey_text_color.xml",
+        "source": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\color\\card_grey_text_color.xml"
+    },
+    {
         "merged": "C:\\Users\\alexaad1\\Documents\\starl\\wear\\build\\intermediates\\res\\merged\\debug\\color\\circular_button.xml",
         "source": "C:\\Users\\alexaad1\\.android\\build-cache\\93376359717209ef28cbd32aa00203f1259b63bd\\output\\res\\color\\circular_button.xml"
+    },
+    {
+        "merged": "D:\\withSIM\\starl\\wear\\build\\intermediates\\res\\merged\\debug\\color\\circular_button.xml",
+        "source": "C:\\Users\\yangy14\\.android\\build-cache\\6bb9e105fbcdf1d728f5fee7255d4dea76731d0d\\output\\res\\color\\circular_button.xml"
     },
     {
         "merged": "C:\\Users\\alexaad1\\Documents\\starl\\wear\\build\\intermediates\\res\\merged\\debug\\color\\card_text_color.xml",

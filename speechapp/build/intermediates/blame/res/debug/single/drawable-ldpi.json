@@ -2,5 +2,9 @@
     {
         "merged": "C:\\Users\\alexaad1\\Documents\\starl\\speechapp\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi\\icon.png",
         "source": "C:\\Users\\alexaad1\\Documents\\starl\\speechapp\\src\\main\\res\\drawable-ldpi\\icon.png"
+    },
+    {
+        "merged": "D:\\withSIM\\starl\\speechapp\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi\\icon.png",
+        "source": "D:\\withSIM\\starl\\speechapp\\src\\main\\res\\drawable-ldpi\\icon.png"
     }
 ]

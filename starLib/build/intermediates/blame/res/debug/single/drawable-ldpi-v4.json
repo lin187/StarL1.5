@@ -2,5 +2,9 @@
     {
         "merged": "C:\\Users\\alexaad1\\Documents\\starl\\starLib\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi-v4\\ic_launcher.png",
         "source": "C:\\Users\\alexaad1\\Documents\\starl\\starLib\\src\\main\\res\\drawable-ldpi\\ic_launcher.png"
+    },
+    {
+        "merged": "D:\\withSIM\\starl\\starLib\\build\\intermediates\\res\\merged\\debug\\drawable-ldpi-v4\\ic_launcher.png",
+        "source": "D:\\withSIM\\starl\\starLib\\src\\main\\res\\drawable-ldpi\\ic_launcher.png"
     }
 ]

@@ -8,8 +8,24 @@
         "source": "C:\\Users\\alexaad1\\.android\\build-cache\\676c23434f8611dbc585d71140e4995f94140dd2\\output\\res\\layout-v21\\notification_action.xml"
     },
     {
+        "merged": "D:\\withSIM\\starl\\speechapp\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_template_custom_big.xml",
+        "source": "C:\\Users\\yangy14\\.android\\build-cache\\5525c73edf00b5f2e2a4bed383d24d1e7b8a3595\\output\\res\\layout-v21\\notification_template_custom_big.xml"
+    },
+    {
         "merged": "C:\\Users\\alexaad1\\Documents\\starl\\speechapp\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_template_icon_group.xml",
         "source": "C:\\Users\\alexaad1\\.android\\build-cache\\676c23434f8611dbc585d71140e4995f94140dd2\\output\\res\\layout-v21\\notification_template_icon_group.xml"
+    },
+    {
+        "merged": "D:\\withSIM\\starl\\speechapp\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_action.xml",
+        "source": "C:\\Users\\yangy14\\.android\\build-cache\\5525c73edf00b5f2e2a4bed383d24d1e7b8a3595\\output\\res\\layout-v21\\notification_action.xml"
+    },
+    {
+        "merged": "D:\\withSIM\\starl\\speechapp\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_action_tombstone.xml",
+        "source": "C:\\Users\\yangy14\\.android\\build-cache\\5525c73edf00b5f2e2a4bed383d24d1e7b8a3595\\output\\res\\layout-v21\\notification_action_tombstone.xml"
+    },
+    {
+        "merged": "D:\\withSIM\\starl\\speechapp\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_template_icon_group.xml",
+        "source": "C:\\Users\\yangy14\\.android\\build-cache\\5525c73edf00b5f2e2a4bed383d24d1e7b8a3595\\output\\res\\layout-v21\\notification_template_icon_group.xml"
     },
     {
         "merged": "C:\\Users\\alexaad1\\Documents\\starl\\speechapp\\build\\intermediates\\res\\merged\\debug\\layout-v21\\notification_action_tombstone.xml",
