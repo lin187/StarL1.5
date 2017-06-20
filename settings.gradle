@@ -1,6 +1,8 @@
 
+
 include ':starLib', ':ClientLib', ':Mavlink', ':testcontroller'
 include ':starLib', ':testcontroller', ':ClientLib', ':Mavlink', ':models', ':wear', ':speechapp', ':aars'
 include ':starlTemplate'
 include ':followApp'
 include ':dJISDKLIB'
+include ':starLSim'

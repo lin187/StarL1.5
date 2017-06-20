@@ -1,6 +1,6 @@
 [
     {
-        "outputFile": "D:\\6-9Starl\\starl\\speechapp\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v18\\values-v18.xml",
+        "outputFile": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\speechapp\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v18\\values-v18.xml",
         "map": [
             {
                 "to": {
@@ -11,7 +11,7 @@
                     "endOffset": 99
                 },
                 "from": {
-                    "file": "C:\\Users\\yangy14\\.android\\build-cache\\5525c73edf00b5f2e2a4bed383d24d1e7b8a3595\\output\\res\\values-v18\\values-v18.xml",
+                    "file": "C:\\Users\\liangt\\.android\\build-cache\\bcbc288efdfeb443379198a24d118a40a4af0eff\\output\\res\\values-v18\\values-v18.xml",
                     "position": {
                         "startLine": 2,
                         "startColumn": 4,

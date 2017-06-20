@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starLSim\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\filepaths.xml",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\ClientLib\\build\\intermediates\\bundles\\default\\res\\xml\\filepaths.xml"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starLSim\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\accessory_filter.xml",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\xml\\accessory_filter.xml"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starLSim\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\device_filter.xml",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\ClientLib\\build\\intermediates\\bundles\\default\\res\\xml\\device_filter.xml"
+    },
+    {
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starLSim\\build\\intermediates\\res\\merged\\androidTest\\debug\\xml\\google_analytics_tracker.xml",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\ClientLib\\build\\intermediates\\bundles\\default\\res\\xml\\google_analytics_tracker.xml"
+    }
+]

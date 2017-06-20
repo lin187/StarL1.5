@@ -1,10 +1,10 @@
 [
     {
-        "merged": "D:\\6-9Starl\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\ic_launcher.png",
-        "source": "D:\\6-9Starl\\starl\\starlTemplate\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\ic_launcher_round.png",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starlTemplate\\src\\main\\res\\mipmap-hdpi\\ic_launcher_round.png"
     },
     {
-        "merged": "D:\\6-9Starl\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\ic_launcher_round.png",
-        "source": "D:\\6-9Starl\\starl\\starlTemplate\\src\\main\\res\\mipmap-hdpi\\ic_launcher_round.png"
+        "merged": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starlTemplate\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi\\ic_launcher.png",
+        "source": "C:\\Users\\liangt\\Documents\\GitHub\\starl\\starlTemplate\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
     }
 ]

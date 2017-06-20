@@ -93,7 +93,6 @@ def getMavenRepoUrl(){
  * Improve build server performance by allowing disabling of pre-dexing
  * (see http://tools.android.com/tech-docs/new-build-system/tips#TOC-Improving-Build-Server-performance.)
  */
-project.ext.preDexLibs = !project.hasProperty('disablePreDex')
 
 subprojects {
     project.plugins.whenPluginAdded { plugin ->
