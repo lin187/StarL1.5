@@ -10,6 +10,7 @@ import com.MAVLink.common.msg_command_long;
 import com.MAVLink.enums.MAV_CMD;
 import com.o3dr.android.client.BuildConfig;
 import com.o3dr.services.android.lib.drone.connection.ConnectionParameter;
+import com.o3dr.services.android.lib.drone.connection.ConnectionType;
 import com.o3dr.services.android.lib.gcs.link.LinkConnectionStatus;
 
 import org.junit.Assert;
@@ -57,7 +58,7 @@ public class BasicTest {
     public void setUp() throws Exception {
         final Context context = RuntimeEnvironment.application.getApplicationContext();
 
-        ConnectionParameter connParams = new ConnectionParameter(0, new Bundle());
+        ConnectionParameter connParams = new ConnectionParameter(ConnectionType.TYPE_USB, new Bundle());
         mavClient = new MockMAVLinkClient(context, inputStreamListener, connParams);
 
         drone = new ArduCopter("test:" + FirmwareType.ARDU_COPTER.getType(), context, mavClient, dpHandler, new AndroidApWarningParser(), new LogMessageListener() {
