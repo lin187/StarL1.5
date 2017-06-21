@@ -220,3 +220,14 @@ starLSim/build/intermediates/transforms/
 starLSim/build/tmp/compileDebugJavaWithJavac/
 starLSim/build/tmp/compileReleaseJavaWithJavac/
 starLib/build/tmp/
+/starLib/build/outputs/aar/
+dJISDKLIB/build/
+followApp/build/generated/source/r/
+followApp/build/outputs/
+models/build/
+speechapp/build/
+starLSim/build/
+starLib/build/
+starlTemplate/build/
+wear/build/
+/followApp/build/
