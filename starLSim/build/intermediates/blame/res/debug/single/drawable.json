@@ -4,12 +4,12 @@
         "source": "C:\\Users\\alexaad1\\.android\\build-cache\\626ec84d24a8789a44478cb955dea42f8eb8289e\\output\\res\\drawable\\common_google_signin_btn_icon_dark.xml"
     },
     {
-        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\starLSim\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_icon_dark_normal.xml",
-        "source": "C:\\Users\\alexaad1\\.android\\build-cache\\626ec84d24a8789a44478cb955dea42f8eb8289e\\output\\res\\drawable\\common_google_signin_btn_icon_dark_normal.xml"
-    },
-    {
         "merged": "C:\\Users\\alexaad1\\Documents\\starl\\starLSim\\build\\intermediates\\res\\merged\\debug\\drawable\\draw_route.png",
         "source": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\drawable\\draw_route.png"
+    },
+    {
+        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\starLSim\\build\\intermediates\\res\\merged\\debug\\drawable\\common_google_signin_btn_icon_dark_normal.xml",
+        "source": "C:\\Users\\alexaad1\\.android\\build-cache\\626ec84d24a8789a44478cb955dea42f8eb8289e\\output\\res\\drawable\\common_google_signin_btn_icon_dark_normal.xml"
     },
     {
         "merged": "C:\\Users\\alexaad1\\Documents\\starl\\starLSim\\build\\intermediates\\res\\merged\\debug\\drawable\\abc_vector_test.xml",

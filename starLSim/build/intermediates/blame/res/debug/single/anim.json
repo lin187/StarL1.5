@@ -1,11 +1,11 @@
 [
     {
-        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\starLSim\\build\\intermediates\\res\\merged\\debug\\anim\\abc_popup_enter.xml",
-        "source": "C:\\Users\\alexaad1\\.android\\build-cache\\d5f7d3ddb8b19ced645a8028ff853fa8cec00ba7\\output\\res\\anim\\abc_popup_enter.xml"
-    },
-    {
         "merged": "C:\\Users\\alexaad1\\Documents\\starl\\starLSim\\build\\intermediates\\res\\merged\\debug\\anim\\core_push_right_in.xml",
         "source": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_push_right_in.xml"
+    },
+    {
+        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\starLSim\\build\\intermediates\\res\\merged\\debug\\anim\\abc_popup_enter.xml",
+        "source": "C:\\Users\\alexaad1\\.android\\build-cache\\d5f7d3ddb8b19ced645a8028ff853fa8cec00ba7\\output\\res\\anim\\abc_popup_enter.xml"
     },
     {
         "merged": "C:\\Users\\alexaad1\\Documents\\starl\\starLSim\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_out_bottom.xml",
@@ -16,12 +16,12 @@
         "source": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_hyperspace_out.xml"
     },
     {
-        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\starLSim\\build\\intermediates\\res\\merged\\debug\\anim\\core_zoom_exit_back.xml",
-        "source": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_zoom_exit_back.xml"
-    },
-    {
         "merged": "C:\\Users\\alexaad1\\Documents\\starl\\starLSim\\build\\intermediates\\res\\merged\\debug\\anim\\abc_slide_in_bottom.xml",
         "source": "C:\\Users\\alexaad1\\.android\\build-cache\\d5f7d3ddb8b19ced645a8028ff853fa8cec00ba7\\output\\res\\anim\\abc_slide_in_bottom.xml"
+    },
+    {
+        "merged": "C:\\Users\\alexaad1\\Documents\\starl\\starLSim\\build\\intermediates\\res\\merged\\debug\\anim\\core_zoom_exit_back.xml",
+        "source": "C:\\Users\\alexaad1\\Documents\\starl\\dJISDKLIB\\build\\intermediates\\bundles\\default\\res\\anim\\core_zoom_exit_back.xml"
     },
     {
         "merged": "C:\\Users\\alexaad1\\Documents\\starl\\starLSim\\build\\intermediates\\res\\merged\\debug\\anim\\core_hyperspace_in.xml",

@@ -23,6 +23,7 @@ MERGED from [com.android.support:recyclerview-v7:25.3.1] C:\Users\alexaad1\.andr
 MERGED from [com.android.support:transition:25.3.1] C:\Users\alexaad1\.android\build-cache\3db5ec05481df1a57df4704aed356bdf8acf9aef\output\AndroidManifest.xml:20:5-44
 MERGED from [com.android.support.constraint:constraint-layout:1.0.2] C:\Users\alexaad1\.android\build-cache\cd090a435d0802044b41dcb02940651fcad79594\output\AndroidManifest.xml:5:5-7:41
 MERGED from [starl:followApp:unspecified] C:\Users\alexaad1\Documents\starl\followApp\build\intermediates\bundles\default\AndroidManifest.xml:8:5-10:41
+MERGED from [starl:starLSim:unspecified] C:\Users\alexaad1\Documents\starl\starLSim\build\intermediates\bundles\default\AndroidManifest.xml:5:5-7:41
 MERGED from [starl:starLib:unspecified] C:\Users\alexaad1\Documents\starl\starLib\build\intermediates\bundles\default\AndroidManifest.xml:7:5-9:41
 MERGED from [starl:dJISDKLIB:unspecified] C:\Users\alexaad1\Documents\starl\dJISDKLIB\build\intermediates\bundles\default\AndroidManifest.xml:7:5-9:41
 MERGED from [starl:ClientLib:unspecified] C:\Users\alexaad1\Documents\starl\ClientLib\build\intermediates\bundles\default\AndroidManifest.xml:7:5-9:41
