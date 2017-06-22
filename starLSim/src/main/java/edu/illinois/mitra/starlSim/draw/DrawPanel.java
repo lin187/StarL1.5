@@ -342,7 +342,16 @@ public class DrawPanel extends ZoomablePanel
 			g.drawOval(rd.x - outerRadius - outerRadius, rd.y - outerRadius + outerRadius, outerRadius*2, outerRadius*2);
 			g.drawOval(rd.x - outerRadius + outerRadius, rd.y - outerRadius + outerRadius, outerRadius*2, outerRadius*2);
 			g.drawString("z: " + rd.z + ", pitch: " + Math.round(rd.pitch*100)/100 + ", roll: " + Math.round(rd.roll*100)/100, rd.x - 55, rd.y + rd.radius + 130);
-
+		}else if(rd.name.contains(settings.GHOST_NAME)) {
+			int outerRadius = (int)Math.round((Math.sqrt(2)-1)*rd.radius);
+			int offset = (int) Math.round(Math.sqrt(2)* outerRadius);
+			g.drawRect(rd.x-offset/2, rd.y-offset/2, offset, offset);
+			//g.drawOval(rd.x - radius, rd.y - radius, radius*2, radius*2);
+			g.drawOval(rd.x - outerRadius - outerRadius, rd.y - outerRadius - outerRadius, outerRadius*2, outerRadius*2);
+			g.drawOval(rd.x - outerRadius + outerRadius, rd.y - outerRadius - outerRadius, outerRadius*2, outerRadius*2);
+			g.drawOval(rd.x - outerRadius - outerRadius, rd.y - outerRadius + outerRadius, outerRadius*2, outerRadius*2);
+			g.drawOval(rd.x - outerRadius + outerRadius, rd.y - outerRadius + outerRadius, outerRadius*2, outerRadius*2);
+			g.drawString("z: " + rd.z + ", pitch: " + Math.round(rd.pitch*100)/100 + ", roll: " + Math.round(rd.roll*100)/100, rd.x - 55, rd.y + rd.radius + 130);
 		}
 		else if(rd.name.contains(settings.IROBOT_NAME)){
 			g.drawOval(rd.x - radius, rd.y - radius, radius*2, radius*2);
@@ -353,6 +362,7 @@ public class DrawPanel extends ZoomablePanel
 			int y_2 = (int) (rd.radius*(Math.sin(Math.toRadians(rd.degrees))) + rd.y);
 			g.drawLine(x_1, y_1, x_2, y_2);
 		}
+
 		
 		if(rd.rightbump){
 			int x_1 = (int) (rd.radius*(Math.cos(Math.toRadians(rd.degrees))) + rd.x);
