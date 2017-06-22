@@ -244,7 +244,7 @@ public class SimSettings {
 		private int N_DBOTS = 0;
 		private int N_RBOTS = 0;
 		private int N_QUADCOPTERS = 0;
-		private int N_GHOSTS = 1;
+		private int N_GHOSTS = 0;
 		
 		private long SIM_TIMEOUT = 0;
 		private long TIMEOUT = 0;
