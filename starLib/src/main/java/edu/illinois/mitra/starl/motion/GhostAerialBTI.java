@@ -100,7 +100,15 @@ public class GhostAerialBTI implements DeviceControllerListener {
         // positive value turns right (clockwise from above), negative turns left
         public void setYaw(double val) {
             if (deviceController != null) {
-                deviceController.setYaw(val);
+                if(val > 1 )
+                {
+                    deviceController.setYaw(1);
+                }else if (val < -1){
+                    deviceController.setYaw(-1);
+                }else{
+                    deviceController.setYaw(val);
+                }
+
             }
         }
 

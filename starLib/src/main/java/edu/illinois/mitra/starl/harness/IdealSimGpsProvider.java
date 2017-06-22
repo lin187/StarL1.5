@@ -7,6 +7,7 @@ import java.util.Random;
 import java.util.Vector;
 
 import edu.illinois.mitra.starl.interfaces.TrackedRobot;
+import edu.illinois.mitra.starl.models.Model_GhostAerial;
 import edu.illinois.mitra.starl.models.Model_iRobot;
 import edu.illinois.mitra.starl.models.Model_quadcopter;
 import edu.illinois.mitra.starl.objects.*;
@@ -91,7 +92,12 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
         return null;
     }
 
-    @Override
+	@Override
+	public PositionList<Model_GhostAerial> getGhostAerialsPositions() {
+		return null;
+	}
+
+	@Override
     public PositionList<ItemPosition> getAllPositions() {
         // TD_NATHAN: resolve if necessary
         return null;
@@ -137,7 +143,7 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 				se.registerThread(this);
 				
 				while(true) {					
-					for(TrackedRobot r : robots.values()) {
+					for(edu.illinois.mitra.starl.harness.IdealSimGpsProvider.TrackedRobot r : robots.values()) {
 						if(r.inMotion()) {
 							r.updatePos();
 							receivers.get(r.getName()).receivePosition(r.inMotion());	
@@ -312,6 +318,10 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
         //((Model_quadcopter) quadcopters.get(name).cur).rollR = roll;
         //((Model_quadcopter) quadcopters.get(name).cur).gazR = gaz;
     }
+
+	@Override
+	public void setControlInputGA(String name, double v_yaw, double pitch, double roll, double gaz) {}
+
 
     /*
     // TD_NATHAN: old version

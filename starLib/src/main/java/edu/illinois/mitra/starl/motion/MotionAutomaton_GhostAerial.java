@@ -1,6 +1,7 @@
 package edu.illinois.mitra.starl.motion;
 
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
+import edu.illinois.mitra.starl.models.Model_GhostAerial;
 import edu.illinois.mitra.starl.models.Model_quadcopter;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.ObstacleList;
@@ -21,7 +22,7 @@ public class MotionAutomaton_GhostAerial extends RobotMotion {
 
     // Motion tracking
     protected ItemPosition destination;
-    private Model_quadcopter mypos; // TD_NATHAN: probably need to create a minidrone one of these objects, as I think this is for AR drone...?
+    private Model_GhostAerial mypos; // TD_NATHAN: probably need to create a minidrone one of these objects, as I think this is for AR drone...?
 
     //PID controller parameters
     double saturationLimit = 50;
@@ -130,26 +131,29 @@ public class MotionAutomaton_GhostAerial extends RobotMotion {
     public void run() {
         super.run();
         gvh.threadCreated(this);
+        // some control parameters
+        double kpx,kpy,kpz, kdx,kdy,kdz;
+        kpx = kpy = kpz = 0.00033;
+        kdx = kdy = kdz = 0.0006;
         while(true) {
             //			gvh.gps.getObspointPositions().updateObs();
             if(running) {
-                mypos = (Model_quadcopter) gvh.gps.getMyPosition(); // TD_NATHAN: check. I fixed it.
-                //             if(mypos == null) { continue;}
-                // if you change to 3D waypoints, use distanceTo instead of distanceTo2D
-                int distance = mypos.distanceTo2D(destination);
-                colliding = false;
+                mypos = (Model_GhostAerial)gvh.plat.getModel();
+//				System.out.println(mypos.toString());
+                int distance = (int) Math.sqrt(Math.pow((mypos.x - destination.x),2) + Math.pow((mypos.y - destination.y), 2));
+                //int distance = mypos.distanceTo(destination);
+                if(mypos.gaz < -50){
+                    //		System.out.println("going down");
+                }
+                colliding = (stage != STAGE.LAND && mypos.gaz < -50);
 
                 if(!colliding && stage != null) {
-                    if(stage != prev)
-                        gvh.log.e(TAG, "Stage is: " + stage.toString());
-
                     switch(stage) {
                         case INIT:
                             if(mode == OPMODE.GO_TO) {
-                                PID_x.reset();
-                                PID_y.reset();
-                                setMaxTilt(5); // TODO: add max tilt to motion paramters class
-                                if(landed){
+                                if(mypos.z < safeHeight){
+                                    // just a safe distance from ground
+                                    takeOff();
                                     next = STAGE.TAKEOFF;
                                 }
                                 else{
@@ -163,56 +167,92 @@ public class MotionAutomaton_GhostAerial extends RobotMotion {
                             }
                             break;
                         case MOVE:
+                            if(mypos.z < safeHeight){
+                                // just a safe distance from ground
+                                takeOff();
+                                next = STAGE.TAKEOFF;
+                                break;
+                            }
                             if(distance <= param.GOAL_RADIUS) {
                                 next = STAGE.GOAL;
                             }
                             else{
-                                double rollCommand = PID_x.getCommand(mypos.x, destination.x);
-                                double pitchCommand = PID_y.getCommand(mypos.y, destination.y);
-                                double yawCommand = calculateYaw();
-                                double gazCommand = 0;
-                                setControlInput(yawCommand, pitchCommand, rollCommand, gazCommand);
-                                // TD_NATHAN: check and resolve: was mypos.angle
-                                // that was the correct solution, has been resolved
+                                double Ax_d, Ay_d = 0.0;
+                                double Ryaw, Rroll, Rpitch, Rvs, Ryawsp = 0.0;
+                                //		System.out.println(destination.x - mypos.x + " , " + mypos.v_x);
+                                Ax_d = (kpx * (destination.x - mypos.x) - kdx * mypos.v_x) ;
+                                Ay_d = (kpy * (destination.y - mypos.y) - kdy * mypos.v_y) ;
+                                Ryaw = Math.atan2(destination.y - mypos.y, destination.x - mypos.x);
+                                //Ryaw = Math.atan2((destination.y - mypos.x), (destination.x - mypos.y));
+                                Ryawsp = kpz * ((Ryaw - Math.toRadians(mypos.yaw)));
+                                Rroll = Math.asin((Ay_d * Math.cos(Math.toRadians(mypos.yaw)) - Ax_d * Math.sin(Math.toRadians(mypos.yaw))) %1);
+                                Rpitch = Math.asin( (-Ay_d * Math.sin(Math.toRadians(mypos.yaw)) - Ax_d * Math.cos(Math.toRadians(mypos.yaw))) / (Math.cos(Rroll)) %1);
+                                Rvs = (kpz * (destination.z - mypos.z) - kdz * mypos.v_z);
+                                //	System.out.println(Ryaw + " , " + Ryawsp + " , " +  Rroll  + " , " +  Rpitch + " , " + Rvs);
+
+                                setControlInputRescale(Math.toDegrees(Ryawsp),Math.toDegrees(Rpitch)%360,Math.toDegrees(Rroll)%360,Rvs);
+                                //setControlInput(Ryawsp/param.max_yaw_speed, Rpitch%param.max_pitch_roll, Rroll%param.max_pitch_roll, Rvs/param.max_gaz);
+                                //next = STAGE.INIT;
                             }
                             break;
                         case HOVER:
-                            if(distance <= param.GOAL_RADIUS) {
-                                hover();
-                                double yawCommand = calculateYaw();
-                                setControlInput(yawCommand, 0, 0, 0);
-                            }
-                            else{
-                                double rollCommand = PID_x.getCommand(mypos.x, destination.x);
-                                double pitchCommand = PID_y.getCommand(mypos.y, destination.y);
-                                double yawCommand = calculateYaw();
-                                double gazCommand = 0;
-                                setControlInput(yawCommand, pitchCommand, rollCommand, gazCommand);
-                            }
+                            setControlInput(0,0,0, 0);
+                            // do nothing
                             break;
                         case TAKEOFF:
-                            takeOff();
-                            landed = false;
-                            next = STAGE.MOVE;
+                            switch(mypos.z/(safeHeight/2)){
+                                case 0:// 0 - 1/2 safeHeight
+                                    setControlInput(0,0,0,1);
+                                    break;
+                                case 1: // 1/2- 1 safeHeight
+                                    setControlInput(0,0,0, 0.5);
+                                    break;
+                                default: // above safeHeight:
+                                    hover();
+                                    if(prev != null){
+                                        next = prev;
+                                    }
+                                    else{
+                                        next = STAGE.HOVER;
+                                    }
+                                    break;
+                            }
                             break;
                         case LAND:
-                            land();
+                            switch(mypos.z/(safeHeight/2)){
+                                case 0:// 0 - 1/2 safeHeight
+                                    setControlInput(0,0,0,0);
+                                    next = STAGE.STOP;
+                                    break;
+                                case 1: // 1/2- 1 safeHeight
+                                    setControlInput(0,0,0, -0.05);
+                                    break;
+                                default:   // above safeHeight
+                                    setControlInput(0,0,0,-0.5);
+                                    break;
+                            }
                             break;
                         case GOAL:
+                            done = true;
                             gvh.log.i(TAG, "At goal!");
+                            gvh.log.i("DoneFlag", "write");
                             if(param.STOP_AT_DESTINATION){
+                                hover();
                                 next = STAGE.HOVER;
                             }
-                            // running = false;
+                            running = false;
                             inMotion = false;
                             break;
                         case STOP:
+                            gvh.log.i("FailFlag", "write");
+                            System.out.println("STOP");
+                            motion_stop();
                             //do nothing
                     }
                     if(next != null) {
                         prev = stage;
                         stage = next;
-                        System.out.println("Stage transition to " + stage.toString() + "previous stage is "+ prev);
+//						System.out.println("Stage transition to " + stage.toString() + ", the previous stage is "+ prev);
 
                         gvh.log.i(TAG, "Stage transition to " + stage.toString());
                         gvh.trace.traceEvent(TAG, "Stage transition", stage.toString(), gvh.time());
@@ -221,8 +261,11 @@ public class MotionAutomaton_GhostAerial extends RobotMotion {
                 }
 
                 if((colliding || stage == null) ) {
-                    land();
-                    stage = STAGE.LAND;
+                    gvh.log.i("FailFlag", "write");
+                    done = false;
+                    motion_stop();
+                    //	land();
+                    //	stage = STAGE.LAND;
                 }
             }
             gvh.sleep(param.AUTOMATON_PERIOD);
@@ -231,13 +274,26 @@ public class MotionAutomaton_GhostAerial extends RobotMotion {
 
     protected void setControlInput(double yaw_v, double pitch, double roll, double gaz){
         //Bluetooth command to control the drone
-        bti.setRoll((byte) roll);
-        bti.setPitch((byte) pitch);
-        bti.setYaw((byte) yaw_v);
+        bti.setRoll(roll);
+        bti.setPitch(pitch);
+        bti.setYaw(yaw_v);
         // currently not moving to 3-D waypoints, so not sending a gaz command
         // if in the future you want to send one, uncomment the following line
         //bti.setThrottle((byte) gaz);
         gvh.log.i(TAG, "control input as, yaw, pitch, roll, thrust " + yaw_v + ", " + pitch + ", " +roll + ", " +gaz);
+    }
+
+    private void setControlInputRescale(double yaw_v, double pitch, double roll, double gaz){
+        setControlInput(rescale(yaw_v, mypos.max_yaw_speed), rescale(pitch, mypos.max_pitch_roll), rescale(roll, mypos.max_pitch_roll), rescale(gaz, mypos.max_gaz));
+    }
+
+    private double rescale(double value, double max_value){
+        if(Math.abs(value) > max_value){
+            return (Math.signum(value));
+        }
+        else{
+            return value/max_value;
+        }
     }
 
     /**
@@ -276,10 +332,10 @@ public class MotionAutomaton_GhostAerial extends RobotMotion {
     private double calculateYaw() {
         // this method calculates a yaw correction, to keep the drone's yaw angle near 90 degrees
         if(mypos.yaw > 93) {
-            return 5;
+            return 1;
         }
         else if(mypos.yaw < 87) {
-            return -5;
+            return -1;
         }
         else {
             return 0;
@@ -287,6 +343,9 @@ public class MotionAutomaton_GhostAerial extends RobotMotion {
     }
 
     private void setMaxTilt(float val) {
-        bti.setMaxTilt(val);
+       // bti.setMaxTilt(val);
     }
+
+
+
 }

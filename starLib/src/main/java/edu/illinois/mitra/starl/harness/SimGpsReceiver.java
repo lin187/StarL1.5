@@ -6,6 +6,7 @@ import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.GpsReceiver;
 import edu.illinois.mitra.starl.interfaces.RobotEventListener.Event;
 import edu.illinois.mitra.starl.interfaces.TrackedRobot;
+import edu.illinois.mitra.starl.models.Model_GhostAerial;
 import edu.illinois.mitra.starl.models.Model_iRobot;
 import edu.illinois.mitra.starl.models.Model_quadcopter;
 import edu.illinois.mitra.starl.objects.Common;
@@ -58,6 +59,9 @@ public class SimGpsReceiver implements GpsReceiver {
 		else if(gvh.gps.getMyPosition() instanceof Model_iRobot){
 			Model_iRobot log_p = (Model_iRobot) gvh.gps.getMyPosition();
 			gvh.log.i("POSITION", log_p.name + " " + log_p.x  + " " +log_p.y  + " " +log_p.z  + " " +log_p.angle);		
+		}else if(gvh.gps.getMyPosition() instanceof Model_GhostAerial){
+			Model_GhostAerial log_p = (Model_GhostAerial) gvh.gps.getMyPosition();
+			gvh.log.i("POSITION", log_p.name + " " + log_p.x  + " " +log_p.y  + " " +log_p.z  + " " +log_p.yaw  + " " +log_p.pitch  + " " +log_p.roll  + " " +log_p.gaz);
 		}
 	}
 

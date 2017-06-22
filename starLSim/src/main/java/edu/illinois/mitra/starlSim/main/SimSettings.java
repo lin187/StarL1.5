@@ -154,6 +154,11 @@ public class SimSettings {
 	 * quadcopter name prefix
 	 */
 	public final String QUADCOPTER_NAME;
+
+	/**
+	 * ghost name prefix
+	 */
+	public final String GHOST_NAME;
 	
 	/**
 	 * Millimeters. The radius of simulated robots.
@@ -263,6 +268,7 @@ public class SimSettings {
 		private int MSG_RANDOM_SEED = 0;
 		private String IROBOT_NAME = "iRobot";
 		private String QUADCOPTER_NAME = "quadcopter";
+		private String GHOST_NAME = "ghostie";
 		private int BOT_RADIUS = 165;
 		private String TRACE_OUT_DIR;
 		private boolean THREE_D = false;
@@ -530,6 +536,7 @@ public class SimSettings {
 		this.MSG_RANDOM_SEED = builder.MSG_RANDOM_SEED;
 		this.IROBOT_NAME = builder.IROBOT_NAME;
 		this.QUADCOPTER_NAME = builder.QUADCOPTER_NAME;
+		this.GHOST_NAME = builder.GHOST_NAME;
 		this.BOT_RADIUS = builder.BOT_RADIUS;
 		this.TRACE_OUT_DIR = builder.TRACE_OUT_DIR;
 		this.THREE_D = builder.THREE_D;
