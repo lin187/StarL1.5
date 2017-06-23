@@ -28,6 +28,7 @@ import edu.illinois.mitra.starl.harness.SimGpsProvider;
 import edu.illinois.mitra.starl.harness.SimulationEngine;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.interfaces.TrackedRobot;
+import edu.illinois.mitra.starl.models.Model_3DR;
 import edu.illinois.mitra.starl.models.Model_GhostAerial;
 import edu.illinois.mitra.starl.models.Model_iRobot;
 import edu.illinois.mitra.starl.models.Model_quadcopter;
@@ -52,7 +53,7 @@ public class Simulation {
 	private ObstacleList list;
 
 	public Simulation(Class<? extends LogicThread> app, final SimSettings settings) {
-		if (settings.N_IROBOTS + settings.N_QUADCOPTERS + settings.N_GHOSTS <= 0)
+		if (settings.N_IROBOTS + settings.N_QUADCOPTERS + settings.N_GHOSTS +settings.N_o3DR <= 0)
 			throw new IllegalArgumentException("Must have more than zero robots to simulate!");
 
 		// Create set of robots whose wireless is blocked for passage between
@@ -75,6 +76,12 @@ public class Simulation {
 			// Mapping between quadcopter name and IP address
 			//participants.put(settings.QUADCOPTER_NAME + j, "192.168.0." + (j+settings.N_IROBOTS));
 			participants.put(settings.GHOST_NAME + j, "10.255.24.0." + (j + settings.N_IROBOTS));
+		}
+
+		for(int j = 0; j < settings.N_o3DR; j++) {
+			// Mapping between 3dr name and IP address
+			//participants.put(settings.o3DR_NAME + j, "192.168.0." + (j+settings.N_IROBOTS));
+			participants.put(settings.o3DR_NAME + j, "10.1.1.10" + (j+settings.N_IROBOTS+settings.N_o3DR+settings.N_GHOSTS));
 		}
 
 		// Start the simulation engine
@@ -252,6 +259,41 @@ public class Simulation {
 			simEngine.addLogging(sa.gvh.log);
 
 		}
+
+		for (int i = 0; i < settings.N_o3DR; i++) {
+			Model_3DR initialPosition = null;
+			String botName = settings.o3DR_NAME + i;
+			ItemPosition initialPos = t_initialPositions.getPosition(botName);
+			if (initialPos != null) {
+				initialPosition = new Model_3DR(initialPos);
+			}
+			// If no initial position was supplied, randomly generate one
+			if (initialPosition == null) {
+				//	System.out.println("null position in list");
+				int retries = 0;
+				boolean valid = false;
+				while (retries++ < 10000 && (!acceptableStart(initialPosition) || !valid)) {
+					initialPosition = new Model_3DR(botName, rand.nextInt(settings.GRID_XSIZE), rand.nextInt(settings.GRID_YSIZE), 0, rand.nextInt(360));
+					if (list != null) {
+						valid = (list.validstarts(initialPosition, initialPosition.radius));
+					}
+				}
+				if (retries > 10000) {
+					System.out.println("too many tries for BOT" + botName + "please increase settings.GRID_XSIZE/GRID_YSIZE/GRID_ZSIZE or remove some obstacles");
+				}
+			}
+			initialPosition.radius = settings.BOT_RADIUS;
+
+			SimApp sa = new SimApp(botName, participants, simEngine, initialPosition, settings.TRACE_OUT_DIR, app, drawFrame, settings.TRACE_CLOCK_DRIFT_MAX, settings.TRACE_CLOCK_SKEW_MAX);
+
+			bots.add(sa);
+
+			logicThreads.add(sa.logic);
+			simEngine.addLogging(sa.gvh.log);
+
+		}
+
+
 		if (settings.USE_GLOBAL_LOGGER)
 			gps.addObserver(createGlobalLogger(settings));
 
@@ -415,12 +457,19 @@ public class Simulation {
                         RobotData nextBot = new RobotData(ip.name, m.x, m.y, m.z, m.yaw, m.pitch, m.roll, m.receivedTime);
                         nextBot.radius = settings.BOT_RADIUS;
                         rd.add(nextBot);
-                    } else if(ip instanceof Model_GhostAerial) {
+                    }
+                    else if(ip instanceof Model_GhostAerial) {
 						Model_GhostAerial m = (Model_GhostAerial) ip;
 						RobotData nextBot = new RobotData(ip.name, m.x, m.y, m.z, m.yaw, m.pitch, m.roll, m.receivedTime);
 						nextBot.radius = settings.BOT_RADIUS;
 						rd.add(nextBot);
 					}
+                    else if(ip instanceof Model_3DR) {
+                        Model_3DR m = (Model_3DR) ip;
+                        RobotData nextBot = new RobotData(ip.name, m.x, m.y, m.z, m.yaw, m.pitch, m.roll, m.receivedTime);
+                        nextBot.radius = settings.BOT_RADIUS;
+                        rd.add(nextBot);
+                    }
                 }
 
                 // the code below doesn't work because when using both bot types it will try to cast one as the other
