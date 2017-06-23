@@ -232,3 +232,17 @@ starlTemplate/build/
 wear/build/
 /followApp/build/
 /raceApp/build/
+models/src/main/assets/sync/assets.lst
+models/src/main/assets/sync/cmudict-en-us.dict.md5
+models/src/main/assets/sync/digits.gram.md5
+models/src/main/assets/sync/en-phone.dmp.md5
+models/src/main/assets/sync/en-us-ptm/README.md5
+models/src/main/assets/sync/en-us-ptm/feat.params.md5
+models/src/main/assets/sync/en-us-ptm/mdef.md5
+models/src/main/assets/sync/en-us-ptm/means.md5
+models/src/main/assets/sync/en-us-ptm/noisedict.md5
+models/src/main/assets/sync/en-us-ptm/sendump.md5
+models/src/main/assets/sync/en-us-ptm/transition_matrices.md5
+models/src/main/assets/sync/en-us-ptm/variances.md5
+models/src/main/assets/sync/menu.gram.md5
+models/src/main/assets/sync/weather.dmp.md5
