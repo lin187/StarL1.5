@@ -16,6 +16,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    dexOptions {
+        additionalParameters=['--core-library']
+    }
+
 }
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -25,7 +29,6 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     compile project(':dJISDKLIB')
     compile project(':ClientLib')
-    // <------------
     compile project(':starLib')
     compile project(':followApp')
 }
