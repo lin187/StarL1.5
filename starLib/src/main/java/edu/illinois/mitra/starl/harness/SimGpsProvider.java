@@ -23,6 +23,8 @@ public interface SimGpsProvider {
 
 	public abstract void setControlInputGA(String name, double v_yaw, double pitch, double roll, double gaz);
 
+	public abstract void setControlInputMav(String name, double v_yaw, double pitch, double roll, double gaz);
+
 	// Implemented only be realistic gps provider
 	public abstract void setVelocity(String name, int fwd, int rad);
 

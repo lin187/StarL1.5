@@ -65,6 +65,7 @@ public class MotionAutomaton_iRobot extends RobotMotion {
 		INIT, ARCING, STRAIGHT, TURN, SMALLTURN, GOAL, UNABLE
 	}
 
+
 	private STAGE next = null;
 	protected STAGE stage = STAGE.INIT;
 	private STAGE prev = null;
@@ -166,6 +167,30 @@ public class MotionAutomaton_iRobot extends RobotMotion {
 			startMotion();
 		}
 	}
+
+	public void takePicture(){}
+
+	@Override
+	public void rotateGimbal(float y) {
+
+	}
+
+	@Override
+	public void rotateGimbal(float p, float y) {
+
+	}
+
+	@Override
+	public void rotateGimbal(float p, float y, float r) {
+
+	}
+
+	@Override
+	public void downloadPhotos() {
+
+	}
+
+	;
 
 	@Override
 	public synchronized void start() {

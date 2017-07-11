@@ -79,6 +79,9 @@ public class FollowApp extends LogicThread {
                             destIndex = 0;
                         }
                         gvh.plat.moat.goTo(currentDestination);
+
+                        //gvh.plat.moat.takePicture();
+                        //gvh.plat.moat.takePicture();
                         stage = Stage.GO;
                     }
                     break;
@@ -93,6 +96,8 @@ public class FollowApp extends LogicThread {
                         gvh.log.d(TAG, "At Goal, sent message");
                         gvh.comms.addOutgoingMessage(inform);
                         arrived = true;
+                        //gvh.plat.moat.rotateGimbal(15);
+                        //gvh.plat.moat.takePicture();
                         stage = Stage.WAIT;
                     }
                     break;

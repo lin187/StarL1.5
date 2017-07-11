@@ -287,6 +287,30 @@ public class MotionAutomaton_GhostAerial extends RobotMotion {
         setControlInput(rescale(yaw_v, mypos.max_yaw_speed), rescale(pitch, mypos.max_pitch_roll), rescale(roll, mypos.max_pitch_roll), rescale(gaz, mypos.max_gaz));
     }
 
+    public void takePicture(){}
+
+    @Override
+    public void rotateGimbal(float y) {
+
+    }
+
+    @Override
+    public void rotateGimbal(float p, float y) {
+
+    }
+
+    @Override
+    public void rotateGimbal(float p, float y, float r) {
+
+    }
+
+    @Override
+    public void downloadPhotos() {
+
+    }
+
+    ;
+
     private double rescale(double value, double max_value){
         if(Math.abs(value) > max_value){
             return (Math.signum(value));

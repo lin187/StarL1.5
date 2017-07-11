@@ -48,7 +48,7 @@ public class SimSettings {
     /**
      * The number of 3dr solo to simulate.
      */
-    public final int N_o3DR;
+    public final int N_MAVICS;
 	
 	/**
 	 * Default 0.
@@ -167,7 +167,7 @@ public class SimSettings {
     /**
      * 3dr solo name prefix
      */
-    public final String o3DR_NAME;
+    public final String MAVIC_NAME;
 	
 	/**
 	 * Millimeters. The radius of simulated robots.
@@ -254,7 +254,7 @@ public class SimSettings {
 		private int N_RBOTS = 0;
 		private int N_QUADCOPTERS = 0;
 		private int N_GHOSTS = 0;
-        private int N_o3DR = 0;
+        private int N_MAVICS = 0;
 		
 		private long SIM_TIMEOUT = 0;
 		private long TIMEOUT = 0;
@@ -279,10 +279,10 @@ public class SimSettings {
 		private String IROBOT_NAME = "iRobot";
 		private String QUADCOPTER_NAME = "quadcopter";
 		private String GHOST_NAME = "ghostie";
-        private String o3DR_NAME = "3DRSolo";
+        private String MAVIC_NAME = "mavic";
 		private int BOT_RADIUS = 165;
 		private String TRACE_OUT_DIR;
-		private boolean THREE_D = false;
+		private boolean THREE_D = true;
 		private boolean USE_GLOBAL_LOGGER = false;
 		private boolean DRAW = true;
 		private boolean DRAW_TRACE = false;
@@ -336,8 +336,8 @@ public class SimSettings {
 			return this;
 		}
 
-        public Builder N_o3DR(int N_o3DR) {
-            this.N_o3DR = N_o3DR;
+        public Builder N_MAVICS(int N_MAVICS) {
+            this.N_MAVICS = N_MAVICS;
             return this;
         }
 		
@@ -449,8 +449,8 @@ public class SimSettings {
 			return this;
 		}
 
-        public Builder o3DR_NAME(String o3DR_NAME) {
-            this.o3DR_NAME = o3DR_NAME;
+        public Builder MAVIC_NAME(String MAVIC_NAME) {
+            this.MAVIC_NAME = MAVIC_NAME;
             return this;
         }
 
@@ -543,7 +543,7 @@ public class SimSettings {
 		this.N_RBOTS = builder.N_RBOTS;
 		this.N_QUADCOPTERS = builder.N_QUADCOPTERS;
 		this.N_GHOSTS = builder.N_GHOSTS;
-        this.N_o3DR = builder.N_o3DR;
+        this.N_MAVICS = builder.N_MAVICS;
 		this.SENSEPOINT_FILE = builder.SENSEPOINT_FILE;
 		this.WAYPOINT_FILE = builder.WAYPOINT_FILE;
 		this.OBSPOINT_FILE = builder.OBSPOINT_FILE;
@@ -565,7 +565,7 @@ public class SimSettings {
 		this.IROBOT_NAME = builder.IROBOT_NAME;
 		this.QUADCOPTER_NAME = builder.QUADCOPTER_NAME;
 		this.GHOST_NAME = builder.GHOST_NAME;
-        this.o3DR_NAME = builder.o3DR_NAME;
+        this.MAVIC_NAME = builder.MAVIC_NAME;
 		this.BOT_RADIUS = builder.BOT_RADIUS;
 		this.TRACE_OUT_DIR = builder.TRACE_OUT_DIR;
 		this.THREE_D = builder.THREE_D;

@@ -193,7 +193,7 @@ public class Model_Mavic extends ItemPosition implements TrackedRobot {
 	 */
 
 	/** 
-	 * @param other The ItemPosition to measure against
+	 * @param //other The ItemPosition to measure against
 	 * @return Number of degrees this position must rotate to face position other
 	 */
 	/*
