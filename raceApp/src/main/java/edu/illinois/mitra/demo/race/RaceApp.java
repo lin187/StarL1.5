@@ -8,6 +8,7 @@ import java.util.Random;
 import edu.illinois.mitra.starl.comms.RobotMessage;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
+import edu.illinois.mitra.starl.models.Model_GhostAerial;
 import edu.illinois.mitra.starl.models.Model_quadcopter;
 import edu.illinois.mitra.starl.motion.MotionParameters;
 import edu.illinois.mitra.starl.motion.RRTNode;
@@ -37,7 +38,7 @@ public class RaceApp extends LogicThread {
 		super(gvh);
 		MotionParameters.Builder settings = new MotionParameters.Builder();
 //		settings.ROBOT_RADIUS(400);
-		settings.COLAVOID_MODE(COLAVOID_MODE_TYPE.USE_COLAVOID);
+		settings.COLAVOID_MODE(COLAVOID_MODE_TYPE.STOP_ON_COLLISION);
 		///settings.GOAL_RADIUS(150);
 		MotionParameters param = settings.build();
 		
@@ -59,7 +60,7 @@ public class RaceApp extends LogicThread {
 		//	Model_iRobot log_p = (Model_iRobot) gvh.gps.getMyPosition();
 		//	gvh.log.i("POSITION", log_p.name + " " + log_p.x  + " " +log_p.y  + " " +log_p.z  + " " +log_p.angle);
 			
-			if(gvh.plat.model instanceof Model_quadcopter){
+			if((gvh.plat.model instanceof Model_quadcopter) || (gvh.plat.model instanceof Model_GhostAerial)){
 				gvh.log.i("WIND", ((Model_quadcopter)gvh.plat.model).windxNoise + " " +  ((Model_quadcopter)gvh.plat.model).windyNoise);
 			}
 			switch(stage) {

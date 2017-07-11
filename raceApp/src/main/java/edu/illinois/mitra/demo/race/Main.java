@@ -13,7 +13,7 @@ public class Main {
 		settings.GPS_POSITION_NOISE(4);
 		settings.TIC_TIME_RATE(0.5);
         settings.WAYPOINT_FILE("four.wpt");
-        settings.INITIAL_POSITIONS_FILE("start.wpt");
+        settings.INITIAL_POSITIONS_FILE("");
         settings.DRAW_TRACE_LENGTH(-1);
 		settings.DRAW_WAYPOINTS(false);
 		settings.DRAW_WAYPOINT_NAMES(false);
