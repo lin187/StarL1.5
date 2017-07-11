@@ -15,7 +15,6 @@ import edu.illinois.mitra.starlSim.draw.DrawFrame;
 public class SimApp implements Callable<List<Object>> {
 	protected String name;
 	protected GlobalVarHolder gvh;
-
 	public LogicThread logic;
 
 	public SimApp(String name, HashMap<String, String> participants, SimulationEngine engine, TrackedRobot initpos, String traceDir, Class<? extends LogicThread> app, DrawFrame drawFrame, int driftMax, double skewBound) {
