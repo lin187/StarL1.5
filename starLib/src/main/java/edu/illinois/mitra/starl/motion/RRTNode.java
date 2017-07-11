@@ -1,10 +1,5 @@
 package edu.illinois.mitra.starl.motion;
 
-
-
-
-import android.graphics.Point;
-
 import java.util.Stack;
 
 import edu.illinois.mitra.starl.objects.ItemPosition;
@@ -58,10 +53,12 @@ public class RRTNode {
 	 * @param destination
 	 * @param K
 	 * @param obsList
-	 * @param xRange
-	 * @param yRange
+	 * @param xLower
+	 * @param xUpper
+	 * @param yLower
+	 * @param yUpper
 	 * @param RobotPos
-	 * @param Radius
+	 * @param radius
 	 * @return
 	 */
 	
@@ -208,7 +205,7 @@ public class RRTNode {
 		else
 			return toggleNode;
 	}
-
-	
 }
+
+
 
