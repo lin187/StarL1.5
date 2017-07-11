@@ -6,10 +6,14 @@ package edu.illinois.mitra.starl.motion;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
+
+import java.io.File;
+import java.util.List;
 
 import dji.common.error.DJIError;
 import dji.common.error.DJISDKError;
@@ -27,7 +31,11 @@ import dji.sdk.flightcontroller.FlightController;
 import dji.sdk.products.Aircraft;
 import dji.sdk.sdkmanager.DJISDKManager;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
+import edu.illinois.mitra.starl.interfaces.RobotEventListener;
 import edu.illinois.mitra.starl.objects.HandlerMessage;
+import dji.sdk.camera.*;
+import dji.sdk.gimbal.*;
+import dji.common.gimbal.*;
 
 public class DjiController {
 
@@ -36,10 +44,12 @@ public class DjiController {
     
     private BaseProduct mProduct;
     private Aircraft mAircraft;
+    private Camera mCamera = mAircraft.getCamera();
     private FlightController mFlightController;
     private Handler mHandler;
     private FlightControlData mFlightControlData;
-
+    private Gimbal mGimbal = mAircraft.getGimbal();
+    private PlaybackManager mPlaybackManager = mCamera.getPlaybackManager();
 
 
     private static String TAG = "DjiController";
@@ -63,7 +73,7 @@ public class DjiController {
     // sets pitch to val percent of max angle
     // positive value moves forward, negative backward
     public void setPitch(double val) {
-        val *= 3.6;
+        val *= .14;
         if (mFlightController != null)
         {
             mFlightControlData.setPitch((float)val);
@@ -74,7 +84,7 @@ public class DjiController {
     // sets roll to val percent of max angle
     // positive value moves right, negative left
     public void setRoll(double val) {
-        val *= 3.6;
+        val *= .14;
         if (mFlightController != null)
         {
             mFlightControlData.setRoll((float)val);
@@ -85,7 +95,7 @@ public class DjiController {
     // sets yaw to val percent of max angular rotation
     // positive value turns right (clockwise from above), negative turns left
     public void setYaw(double val) {
-        val *= 3.6;
+        val *= .14;
         if (mFlightController != null)
         {
             mFlightControlData.setYaw((float)val);
@@ -124,6 +134,58 @@ public class DjiController {
                 }
             });
         }
+    }
+
+    public void takePicture() {
+        if (mFlightController != null)
+        {
+            mCamera.startShootPhoto(null);
+        }
+    }
+
+    public void rotateGimbal(float y){
+        Rotation rot = new Rotation.Builder().yaw(y).build();
+        mGimbal.rotate(rot,null);
+    }
+
+    public void rotateGimbal(float p, float y){
+        Rotation rot = new Rotation.Builder().pitch(p).yaw(y).build();
+        mGimbal.rotate(rot,null);
+    }
+
+    public void rotateGimbal(float p, float y, float r){
+        Rotation rot = new Rotation.Builder().pitch(p).yaw(y).roll(r).build();
+        mGimbal.rotate(rot,null);
+    }
+
+    public void downloadPhotos(){
+        String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();
+        File dir = new File(baseDir);
+        if (!dir.exists() || !dir.isDirectory()){
+            dir.mkdirs();
+        }
+        mPlaybackManager.selectAllFiles();
+        mPlaybackManager.downloadSelectedFiles(dir, new PlaybackManager.FileDownloadCallback() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onEnd() {
+
+            }
+
+            @Override
+            public void onError(Exception e) {
+
+            }
+
+            @Override
+            public void onProgressUpdate(int i) {
+
+            }
+        });
     }
 
     // make the drone land immediately
@@ -197,6 +259,7 @@ public class DjiController {
 
                     //gets the flightcontroller for the aircraft;
                     mFlightController = mAircraft.getFlightController();
+                    mFlightControlData = new FlightControlData(0,0,0,0);
                     if(mFlightController != null) {
                         constructFlightController();
                     }else{

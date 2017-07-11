@@ -7,8 +7,11 @@ import java.util.Arrays;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.RobotEventListener.Event;
 import edu.illinois.mitra.starl.models.Model_Mavic;
+import edu.illinois.mitra.starl.models.Model_quadcopter;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.ObstacleList;
+import dji.sdk.gimbal.*;
+import dji.common.gimbal.*;
 
 //import edu.illinois.mitra.starl.models.Model_quadcopter;
 
@@ -86,7 +89,7 @@ public class MotionAutomaton_Mavic extends RobotMotion {
 
     public void goTo(ItemPosition dest) {
         if((inMotion && !this.destination.equals(dest)) || !inMotion) {
-            this.destination = new ItemPosition(dest.name,dest.x,dest.y,0);
+            this.destination = new ItemPosition(dest.name,dest.x,dest.y,dest.z);
             gvh.log.d(TAG, "Going to X: " + Integer.toString(dest.x) + ", Y: " + Integer.toString(dest.y));
       //      Log.d(TAG, "Going to X: " + Integer.toString(dest.x) + ", Y: " + Integer.toString(dest.y));
             //this.destination = dest;
@@ -101,6 +104,7 @@ public class MotionAutomaton_Mavic extends RobotMotion {
         gvh.log.d(TAG, "STARTED!");
     }
 
+/*
     @Override
     public void run() {
         super.run();
@@ -145,6 +149,10 @@ public class MotionAutomaton_Mavic extends RobotMotion {
                                 double rollCommand = PID_x.getCommand(mypos.x, destination.x);
                                 double pitchCommand = PID_y.getCommand(mypos.y, destination.y);
                                 double yawCommand = calculateYaw();
+                                System.out.println(rollCommand);
+                                System.out.println(pitchCommand);
+                                System.out.println(yawCommand);
+                                System.out.println();
                                 double gazCommand = 0;
                                 setControlInput(yawCommand, pitchCommand, rollCommand, gazCommand);
                                 // TD_NATHAN: check and resolve: was mypos.angle
@@ -167,6 +175,7 @@ public class MotionAutomaton_Mavic extends RobotMotion {
                             break;
                         case TAKEOFF:
                             takeOff();
+                            //takePicture();
                             landed = false;
                             next = STAGE.MOVE;
                             break;
@@ -198,6 +207,152 @@ public class MotionAutomaton_Mavic extends RobotMotion {
                 if((colliding || stage == null) ) {
                     land();
                     stage = STAGE.LAND;
+                }
+            }
+            gvh.sleep(param.AUTOMATON_PERIOD);
+        }
+    }
+*/
+
+    @Override
+    public void run() {
+        super.run();
+        gvh.threadCreated(this);
+        // some control parameters
+        double kpx,kpy,kpz, kdx,kdy,kdz;
+        kpx = kpy = kpz = 0.00033;
+        kdx = kdy = kdz = 0.0006;
+        while(true) {
+            //			gvh.gps.getObspointPositions().updateObs();
+            if(running) {
+                mypos = (Model_Mavic) gvh.plat.getModel();
+//				System.out.println(mypos.toString());
+                int distance = (int) Math.sqrt(Math.pow((mypos.x - destination.x),2) + Math.pow((mypos.y - destination.y), 2));
+                //int distance = mypos.distanceTo(destination);
+                if(mypos.gaz < -50){
+                    //		System.out.println("going down");
+                }
+                colliding = (stage != MotionAutomaton_Mavic.STAGE.LAND && mypos.gaz < -50);
+
+                if(!colliding && stage != null) {
+                    switch(stage) {
+                        case INIT:
+                            if(mode == MotionAutomaton_Mavic.OPMODE.GO_TO) {
+                                if(mypos.z < safeHeight){
+                                    // just a safe distance from ground
+                                    takeOff();
+                                    next = MotionAutomaton_Mavic.STAGE.TAKEOFF;
+                                }
+                                else{
+                                    if(distance <= param.GOAL_RADIUS) {
+                                        next = MotionAutomaton_Mavic.STAGE.GOAL;
+                                    }
+                                    else{
+                                        next = MotionAutomaton_Mavic.STAGE.MOVE;
+                                    }
+                                }
+                            }
+                            break;
+                        case MOVE:
+                            if(mypos.z < safeHeight){
+                                // just a safe distance from ground
+                                takeOff();
+                                next = MotionAutomaton_Mavic.STAGE.TAKEOFF;
+                                break;
+                            }
+                            if(distance <= param.GOAL_RADIUS) {
+                                next = MotionAutomaton_Mavic.STAGE.GOAL;
+                            }
+                            else{
+                                double Ax_d, Ay_d = 0.0;
+                                double Ryaw, Rroll, Rpitch, Rvs, Ryawsp = 0.0;
+                                //		System.out.println(destination.x - mypos.x + " , " + mypos.v_x);
+                                Ax_d = (kpx * (destination.x - mypos.x) - kdx * mypos.v_x) ;
+                                Ay_d = (kpy * (destination.y - mypos.y) - kdy * mypos.v_y) ;
+                                Ryaw = Math.atan2(destination.y - mypos.y, destination.x - mypos.x);
+                                //Ryaw = Math.atan2((destination.y - mypos.x), (destination.x - mypos.y));
+                                Ryawsp = kpz * ((Ryaw - Math.toRadians(mypos.yaw)));
+                                Rroll = Math.asin((Ay_d * Math.cos(Math.toRadians(mypos.yaw)) - Ax_d * Math.sin(Math.toRadians(mypos.yaw))) %1);
+                                Rpitch = Math.asin( (-Ay_d * Math.sin(Math.toRadians(mypos.yaw)) - Ax_d * Math.cos(Math.toRadians(mypos.yaw))) / (Math.cos(Rroll)) %1);
+                                Rvs = (kpz * (destination.z - mypos.z) - kdz * mypos.v_z);
+                                //	System.out.println(Ryaw + " , " + Ryawsp + " , " +  Rroll  + " , " +  Rpitch + " , " + Rvs);
+
+                                setControlInputRescale(Math.toDegrees(Ryawsp),Math.toDegrees(Rpitch)%360,Math.toDegrees(Rroll)%360,Rvs);
+                                //setControlInput(Ryawsp/param.max_yaw_speed, Rpitch%param.max_pitch_roll, Rroll%param.max_pitch_roll, Rvs/param.max_gaz);
+                                //next = STAGE.INIT;
+                            }
+                            break;
+                        case HOVER:
+                            setControlInput(0,0,0, 0);
+                            // do nothing
+                            break;
+                        case TAKEOFF:
+                            switch(mypos.z/(safeHeight/2)){
+                                case 0:// 0 - 1/2 safeHeight
+                                    setControlInput(0,0,0,1);
+                                    break;
+                                case 1: // 1/2- 1 safeHeight
+                                    setControlInput(0,0,0, 0.5);
+                                    break;
+                                default: // above safeHeight:
+                                    hover();
+                                    if(prev != null){
+                                        next = prev;
+                                    }
+                                    else{
+                                        next = MotionAutomaton_Mavic.STAGE.HOVER;
+                                    }
+                                    break;
+                            }
+                            break;
+                        case LAND:
+                            switch(mypos.z/(safeHeight/2)){
+                                case 0:// 0 - 1/2 safeHeight
+                                    setControlInput(0,0,0,0);
+                                    next = MotionAutomaton_Mavic.STAGE.STOP;
+                                    break;
+                                case 1: // 1/2- 1 safeHeight
+                                    setControlInput(0,0,0, -0.05);
+                                    break;
+                                default:   // above safeHeight
+                                    setControlInput(0,0,0,-0.5);
+                                    break;
+                            }
+                            break;
+                        case GOAL:
+                            done = true;
+                            gvh.log.i(TAG, "At goal!");
+                            gvh.log.i("DoneFlag", "write");
+                            if(param.STOP_AT_DESTINATION){
+                                hover();
+                                next = MotionAutomaton_Mavic.STAGE.HOVER;
+                            }
+                            running = false;
+                            inMotion = false;
+                            break;
+                        case STOP:
+                            gvh.log.i("FailFlag", "write");
+                            System.out.println("STOP");
+                            motion_stop();
+                            //do nothing
+                    }
+                    if(next != null) {
+                        prev = stage;
+                        stage = next;
+//						System.out.println("Stage transition to " + stage.toString() + ", the previous stage is "+ prev);
+
+                        gvh.log.i(TAG, "Stage transition to " + stage.toString());
+                        gvh.trace.traceEvent(TAG, "Stage transition", stage.toString(), gvh.time());
+                    }
+                    next = null;
+                }
+
+                if((colliding || stage == null) ) {
+                    gvh.log.i("FailFlag", "write");
+                    done = false;
+                    motion_stop();
+                    //	land();
+                    //	stage = STAGE.LAND;
                 }
             }
             gvh.sleep(param.AUTOMATON_PERIOD);
@@ -254,6 +409,12 @@ public class MotionAutomaton_Mavic extends RobotMotion {
         gvh.log.i(TAG, "Drone taking off");
     }
 
+    public void takePicture(){
+        //Bluetooth command to control the drone
+        bti.takePicture();
+        gvh.log.i(TAG, "Taking picture");
+    }
+
     /**
      * land on the ground
      */
@@ -275,10 +436,10 @@ public class MotionAutomaton_Mavic extends RobotMotion {
     private double calculateYaw() {
         // this method calculates a yaw correction, to keep the drone's yaw angle near 90 degrees
         if(mypos.yaw > 93) {
-            return 5;
+            return 1;
         }
         else if(mypos.yaw < 87) {
-            return -5;
+            return -1;
         }
         else {
             return 0;
@@ -286,7 +447,36 @@ public class MotionAutomaton_Mavic extends RobotMotion {
     }
 
     private void setMaxTilt(float val) {
-        bti.setMaxTilt(val);
+        //bti.setMaxTilt(val);
+        //TODO figure out a way to do this w mavic
+    }
+    private void setControlInputRescale(double yaw_v, double pitch, double roll, double gaz){
+        setControlInput(rescale(yaw_v, mypos.max_yaw_speed), rescale(pitch, mypos.max_pitch_roll), rescale(roll, mypos.max_pitch_roll), rescale(gaz, mypos.max_gaz));
+    }
+
+    private double rescale(double value, double max_value){
+        if(Math.abs(value) > max_value){
+            return (Math.signum(value));
+        }
+        else{
+            return value/max_value;
+        }
+    }
+
+    public void rotateGimbal(float p, float y){
+        bti.rotateGimbal(p,y);
+    }
+
+    public void rotateGimbal(float y){
+        bti.rotateGimbal(y);
+    }
+
+    public void rotateGimbal(float p, float y, float r){
+        bti.rotateGimbal(p,y,r);
+    }
+
+    public void downloadPhotos(){
+        bti.downloadPhotos();
     }
 
     @Override

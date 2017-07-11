@@ -28,6 +28,14 @@ public abstract class RobotMotion extends Thread implements Cancellable {
 	public abstract void goTo(ItemPosition dest, ObstacleList obsList);
 	
 	public abstract void goTo(ItemPosition dest);
+
+	public abstract void takePicture();
+
+	public abstract void rotateGimbal(float y);
+	public abstract void rotateGimbal(float p, float y);
+	public abstract void rotateGimbal(float p, float y, float r);
+
+	public abstract void downloadPhotos();
 	
 	/**
 	 * Turn to face a destination using the default motion parameters

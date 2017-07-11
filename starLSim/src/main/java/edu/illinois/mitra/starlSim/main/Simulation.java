@@ -30,6 +30,7 @@ import edu.illinois.mitra.starl.interfaces.LogicThread;
 import edu.illinois.mitra.starl.interfaces.TrackedRobot;
 import edu.illinois.mitra.starl.models.Model_3DR;
 import edu.illinois.mitra.starl.models.Model_GhostAerial;
+import edu.illinois.mitra.starl.models.Model_Mavic;
 import edu.illinois.mitra.starl.models.Model_iRobot;
 import edu.illinois.mitra.starl.models.Model_quadcopter;
 import edu.illinois.mitra.starl.objects.ItemPosition;
@@ -53,7 +54,7 @@ public class Simulation {
 	private ObstacleList list;
 
 	public Simulation(Class<? extends LogicThread> app, final SimSettings settings) {
-		if (settings.N_IROBOTS + settings.N_QUADCOPTERS + settings.N_GHOSTS +settings.N_o3DR <= 0)
+		if (settings.N_IROBOTS + settings.N_QUADCOPTERS + settings.N_GHOSTS +settings.N_MAVICS <= 0)
 			throw new IllegalArgumentException("Must have more than zero robots to simulate!");
 
 		// Create set of robots whose wireless is blocked for passage between
@@ -78,10 +79,10 @@ public class Simulation {
 			participants.put(settings.GHOST_NAME + j, "10.255.24.0." + (j + settings.N_IROBOTS));
 		}
 
-		for(int j = 0; j < settings.N_o3DR; j++) {
+		for(int j = 0; j < settings.N_MAVICS; j++) {
 			// Mapping between 3dr name and IP address
 			//participants.put(settings.o3DR_NAME + j, "192.168.0." + (j+settings.N_IROBOTS));
-			participants.put(settings.o3DR_NAME + j, "10.1.1.10" + (j+settings.N_IROBOTS+settings.N_o3DR+settings.N_GHOSTS));
+			participants.put(settings.MAVIC_NAME + j, "10.1.1.10" + (j+settings.N_IROBOTS+settings.N_MAVICS+settings.N_GHOSTS));
 		}
 
 		// Start the simulation engine
@@ -260,12 +261,12 @@ public class Simulation {
 
 		}
 
-		for (int i = 0; i < settings.N_o3DR; i++) {
-			Model_3DR initialPosition = null;
-			String botName = settings.o3DR_NAME + i;
+		for (int i = 0; i < settings.N_MAVICS; i++) {
+			Model_Mavic initialPosition = null;
+			String botName = settings.MAVIC_NAME + i;
 			ItemPosition initialPos = t_initialPositions.getPosition(botName);
 			if (initialPos != null) {
-				initialPosition = new Model_3DR(initialPos);
+				initialPosition = new Model_Mavic(initialPos);
 			}
 			// If no initial position was supplied, randomly generate one
 			if (initialPosition == null) {
@@ -273,7 +274,7 @@ public class Simulation {
 				int retries = 0;
 				boolean valid = false;
 				while (retries++ < 10000 && (!acceptableStart(initialPosition) || !valid)) {
-					initialPosition = new Model_3DR(botName, rand.nextInt(settings.GRID_XSIZE), rand.nextInt(settings.GRID_YSIZE), 0, rand.nextInt(360));
+					initialPosition = new Model_Mavic(botName, rand.nextInt(settings.GRID_XSIZE), rand.nextInt(settings.GRID_YSIZE), 0, rand.nextInt(360));
 					if (list != null) {
 						valid = (list.validstarts(initialPosition, initialPosition.radius));
 					}
@@ -350,6 +351,11 @@ public class Simulation {
 								rd.add(nextBot);
 							} else if (targetList.get(i) instanceof Model_GhostAerial) {
 								Model_GhostAerial ip = (Model_GhostAerial) targetList.get(i);
+								RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.z, ip.yaw, ip.pitch, ip.roll, ip.receivedTime);
+								nextBot.radius = settings.BOT_RADIUS;
+								rd.add(nextBot);
+							}else if (targetList.get(i) instanceof Model_Mavic) {
+								Model_Mavic ip = (Model_Mavic) targetList.get(i);
 								RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.z, ip.yaw, ip.pitch, ip.roll, ip.receivedTime);
 								nextBot.radius = settings.BOT_RADIUS;
 								rd.add(nextBot);
@@ -464,8 +470,8 @@ public class Simulation {
 						nextBot.radius = settings.BOT_RADIUS;
 						rd.add(nextBot);
 					}
-                    else if(ip instanceof Model_3DR) {
-                        Model_3DR m = (Model_3DR) ip;
+                    else if(ip instanceof Model_Mavic) {
+                        Model_Mavic m = (Model_Mavic) ip;
                         RobotData nextBot = new RobotData(ip.name, m.x, m.y, m.z, m.yaw, m.pitch, m.roll, m.receivedTime);
                         nextBot.radius = settings.BOT_RADIUS;
                         rd.add(nextBot);

@@ -209,6 +209,30 @@ public class MotionAutomaton_Phantom extends RobotMotion {
         land();
     }
 
+    public void takePicture(){}
+
+    @Override
+    public void rotateGimbal(float y) {
+
+    }
+
+    @Override
+    public void rotateGimbal(float p, float y) {
+
+    }
+
+    @Override
+    public void rotateGimbal(float p, float y, float r) {
+
+    }
+
+    @Override
+    public void downloadPhotos() {
+
+    }
+
+    ;
+
     @Override
     public void motion_stop() {
         stage = STAGE.HOVER;

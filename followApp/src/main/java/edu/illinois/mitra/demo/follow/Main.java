@@ -7,10 +7,10 @@ public class Main {
 
 	public static void main(String[] args) {
 		SimSettings.Builder settings = new SimSettings.Builder();
-        settings.N_IROBOTS(1);
-		settings.(0);
-		settings.TIC_TIME_RATE(2);
-        settings.WAYPOINT_FILE("square.wpt");
+		settings.N_IROBOTS(0);
+		settings.N_MAVICS(1);
+		settings.TIC_TIME_RATE(5);
+        settings.WAYPOINT_FILE("sphere.wpt");
 		//settings.WAYPOINT_FILE(System.getProperty("user.dir")+"\\trunk\\android\\RaceApp\\waypoints\\four1.wpt");
 		settings.DRAW_WAYPOINTS(false);
 		settings.DRAW_WAYPOINT_NAMES(false);

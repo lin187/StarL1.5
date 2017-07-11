@@ -3,6 +3,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion '25.0.3'
     defaultConfig {
+
         applicationId "edu.illinois.mitra.template"
         minSdkVersion 19
         targetSdkVersion 25
@@ -31,5 +32,6 @@ dependencies {
     compile project(':ClientLib')
     compile project(':starLib')
     compile project(':followApp')
+
 }
 

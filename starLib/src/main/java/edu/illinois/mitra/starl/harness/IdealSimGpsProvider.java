@@ -322,6 +322,8 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 	@Override
 	public void setControlInputGA(String name, double v_yaw, double pitch, double roll, double gaz) {}
 
+	@Override
+	public void setControlInputMav(String name, double v_yaw, double pitch, double roll, double gaz) {}
 
     /*
     // TD_NATHAN: old version

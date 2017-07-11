@@ -68,6 +68,30 @@ public class IdealSimMotionAutomaton extends RobotMotion implements RobotEventLi
 		}
 	}
 
+	public void takePicture(){}
+
+	@Override
+	public void rotateGimbal(float y) {
+
+	}
+
+	@Override
+	public void rotateGimbal(float p, float y) {
+
+	}
+
+	@Override
+	public void rotateGimbal(float p, float y, float r) {
+
+	}
+
+	@Override
+	public void downloadPhotos() {
+
+	}
+
+	;
+
 	@Override
 	public void motion_resume() {
 		// I don't think anything needs to happen here

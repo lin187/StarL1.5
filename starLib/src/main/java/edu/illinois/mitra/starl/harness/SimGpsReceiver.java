@@ -7,6 +7,7 @@ import edu.illinois.mitra.starl.interfaces.GpsReceiver;
 import edu.illinois.mitra.starl.interfaces.RobotEventListener.Event;
 import edu.illinois.mitra.starl.interfaces.TrackedRobot;
 import edu.illinois.mitra.starl.models.Model_GhostAerial;
+import edu.illinois.mitra.starl.models.Model_Mavic;
 import edu.illinois.mitra.starl.models.Model_iRobot;
 import edu.illinois.mitra.starl.models.Model_quadcopter;
 import edu.illinois.mitra.starl.objects.Common;
@@ -61,6 +62,9 @@ public class SimGpsReceiver implements GpsReceiver {
 			gvh.log.i("POSITION", log_p.name + " " + log_p.x  + " " +log_p.y  + " " +log_p.z  + " " +log_p.angle);		
 		}else if(gvh.gps.getMyPosition() instanceof Model_GhostAerial){
 			Model_GhostAerial log_p = (Model_GhostAerial) gvh.gps.getMyPosition();
+			gvh.log.i("POSITION", log_p.name + " " + log_p.x  + " " +log_p.y  + " " +log_p.z  + " " +log_p.yaw  + " " +log_p.pitch  + " " +log_p.roll  + " " +log_p.gaz);
+		}else if(gvh.gps.getMyPosition() instanceof Model_Mavic){
+			Model_Mavic log_p = (Model_Mavic) gvh.gps.getMyPosition();
 			gvh.log.i("POSITION", log_p.name + " " + log_p.x  + " " +log_p.y  + " " +log_p.z  + " " +log_p.yaw  + " " +log_p.pitch  + " " +log_p.roll  + " " +log_p.gaz);
 		}
 	}

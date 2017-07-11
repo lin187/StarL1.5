@@ -218,6 +218,30 @@ public class MotionAutomaton_3DR extends RobotMotion{
         inMotion = false;
     }
 
+    public void takePicture(){}
+
+    @Override
+    public void rotateGimbal(float y) {
+
+    }
+
+    @Override
+    public void rotateGimbal(float p, float y) {
+
+    }
+
+    @Override
+    public void rotateGimbal(float p, float y, float r) {
+
+    }
+
+    @Override
+    public void downloadPhotos() {
+
+    }
+
+    ;
+
     @Override
     public void motion_resume() {
         running = true;
