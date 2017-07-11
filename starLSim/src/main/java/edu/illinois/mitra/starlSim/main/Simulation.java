@@ -69,13 +69,13 @@ public class Simulation {
 		for (int j = 0; j < settings.N_QUADCOPTERS; j++) {
 			// Mapping between quadcopter name and IP address
 			//participants.put(settings.QUADCOPTER_NAME + j, "192.168.0." + (j+settings.N_IROBOTS));
-			participants.put(settings.QUADCOPTER_NAME + j, "10.255.24.0." + (j + settings.N_IROBOTS));
+			participants.put(settings.QUADCOPTER_NAME + j, "10.255.24.0." + (j + settings.N_IROBOTS+settings.N_o3DR+settings.N_GHOSTS ));
 		}
 
 		for (int j = 0; j < settings.N_GHOSTS; j++) {
 			// Mapping between quadcopter name and IP address
 			//participants.put(settings.QUADCOPTER_NAME + j, "192.168.0." + (j+settings.N_IROBOTS));
-			participants.put(settings.GHOST_NAME + j, "10.255.24.0." + (j + settings.N_IROBOTS));
+			participants.put(settings.GHOST_NAME + j, "10.255.24.0." + (j + settings.N_IROBOTS +settings.N_o3DR));
 		}
 
 		for(int j = 0; j < settings.N_o3DR; j++) {
