@@ -10,6 +10,7 @@ import edu.illinois.mitra.starl.models.Model_GhostAerial;
 import edu.illinois.mitra.starl.models.Model_Mavic;
 import edu.illinois.mitra.starl.models.Model_iRobot;
 import edu.illinois.mitra.starl.models.Model_quadcopter;
+import edu.illinois.mitra.starl.models.Model_3DR;
 import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.ObstacleList;
@@ -52,19 +53,26 @@ public class SimGpsReceiver implements GpsReceiver {
 			gvh.sendRobotEvent(Event.MOTION, Common.MOT_STOPPED);
 		}
 		this.inMotion = inMotion;
-		
-		if(gvh.gps.getMyPosition() instanceof Model_quadcopter){
+
+        if(gvh.gps.getMyPosition() instanceof Model_iRobot){
+            Model_iRobot log_p = (Model_iRobot) gvh.gps.getMyPosition();
+            gvh.log.i("POSITION", log_p.name + " " + log_p.x  + " " +log_p.y  + " " +log_p.z  + " " +log_p.angle);
+        }
+        else if(gvh.gps.getMyPosition() instanceof Model_quadcopter){
 			Model_quadcopter log_p = (Model_quadcopter) gvh.gps.getMyPosition();
 			gvh.log.i("POSITION", log_p.name + " " + log_p.x  + " " +log_p.y  + " " +log_p.z  + " " +log_p.yaw  + " " +log_p.pitch  + " " +log_p.roll  + " " +log_p.gaz);
 		}
-		else if(gvh.gps.getMyPosition() instanceof Model_iRobot){
-			Model_iRobot log_p = (Model_iRobot) gvh.gps.getMyPosition();
-			gvh.log.i("POSITION", log_p.name + " " + log_p.x  + " " +log_p.y  + " " +log_p.z  + " " +log_p.angle);		
-		}else if(gvh.gps.getMyPosition() instanceof Model_GhostAerial){
+
+		else if(gvh.gps.getMyPosition() instanceof Model_GhostAerial){
 			Model_GhostAerial log_p = (Model_GhostAerial) gvh.gps.getMyPosition();
 			gvh.log.i("POSITION", log_p.name + " " + log_p.x  + " " +log_p.y  + " " +log_p.z  + " " +log_p.yaw  + " " +log_p.pitch  + " " +log_p.roll  + " " +log_p.gaz);
-		}else if(gvh.gps.getMyPosition() instanceof Model_Mavic){
+		}
+		else if(gvh.gps.getMyPosition() instanceof Model_Mavic){
 			Model_Mavic log_p = (Model_Mavic) gvh.gps.getMyPosition();
+			gvh.log.i("POSITION", log_p.name + " " + log_p.x  + " " +log_p.y  + " " +log_p.z  + " " +log_p.yaw  + " " +log_p.pitch  + " " +log_p.roll  + " " +log_p.gaz);
+		}
+		else if(gvh.gps.getMyPosition() instanceof Model_3DR){
+			Model_3DR log_p = (Model_3DR) gvh.gps.getMyPosition();
 			gvh.log.i("POSITION", log_p.name + " " + log_p.x  + " " +log_p.y  + " " +log_p.z  + " " +log_p.yaw  + " " +log_p.pitch  + " " +log_p.roll  + " " +log_p.gaz);
 		}
 	}

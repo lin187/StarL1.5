@@ -4,6 +4,7 @@ import java.util.Observer;
 import java.util.Vector;
 
 import edu.illinois.mitra.starl.interfaces.TrackedRobot;
+import edu.illinois.mitra.starl.models.Model_3DR;
 import edu.illinois.mitra.starl.models.Model_GhostAerial;
 import edu.illinois.mitra.starl.models.Model_iRobot;
 import edu.illinois.mitra.starl.models.Model_quadcopter;
@@ -24,6 +25,8 @@ public interface SimGpsProvider {
 	public abstract void setControlInputGA(String name, double v_yaw, double pitch, double roll, double gaz);
 
 	public abstract void setControlInputMav(String name, double v_yaw, double pitch, double roll, double gaz);
+
+	public abstract void setControlInput3DR(String name, double v_yaw, double pitch, double roll, double gaz);
 
 	// Implemented only be realistic gps provider
 	public abstract void setVelocity(String name, int fwd, int rad);

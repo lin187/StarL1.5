@@ -35,15 +35,22 @@ public class MotionAutomaton_3DR extends RobotMotion{
     private Model_3DR mypos; // TODO: 6/6/2017 for 3DR
 
     //PID controller parameters
-    double saturationLimit = 0;
-    double windUpLimit = 0;
-    int filterLength = 0;
-    double Kpx = 0;
-    double Kpy = 0;
-    double Kix = 0;
-    double Kiy = 0;
-    double Kdx = 0;
-    double Kdy = 0;
+    double saturationLimit = 50;
+    double windUpLimit = 185;
+    int filterLength = 8;
+    /*double Kpx = 0.2;
+    double Kpy = 0.2;
+    double Kix = 0.04;
+    double Kiy = 0.04;
+    double Kdx = 0.4;
+    double Kdy = 0.45;*/
+    // the ones below work pretty well
+    double Kpx = 0.0714669809792096;
+    double Kpy = 0.0714669809792096;
+    double Kix = 0.0110786899216426;
+    double Kiy = 0.0110786899216426;
+    double Kdx = 0.113205037832174;
+    double Kdy = 0.113205037832174;
 
     PIDController PID_x = new PIDController(Kpx, Kix, Kdx, saturationLimit, windUpLimit, filterLength);
     PIDController PID_y = new PIDController(Kpy, Kiy, Kdy, saturationLimit, windUpLimit, filterLength);
@@ -153,42 +160,62 @@ public class MotionAutomaton_3DR extends RobotMotion{
                             }
                             break;
                         case HOVER:
-                            if(distance <= param.GOAL_RADIUS) {
-                                hover();
-                                double yawCommand = calculateYaw();
-                                setControlInput(yawCommand, 0, 0, 0);
-                            }
-                            else{
-                                double rollCommand = PID_x.getCommand(mypos.x, destination.x);
-                                double pitchCommand = PID_y.getCommand(mypos.y, destination.y);
-                                double yawCommand = calculateYaw();
-                                double gazCommand = 0;
-                                setControlInput(yawCommand, pitchCommand, rollCommand, gazCommand);
-                            }
+                            setControlInput(0, 0, 0, 0);
                             break;
                         case TAKEOFF:
-                            takeOff();
-                            landed = false;
-                            next = STAGE.MOVE;
+                            switch(mypos.z/(safeHeight/2)){
+                                case 0:// 0 - 1/2 safeHeight
+                                    setControlInput(0,0,0,1);
+                                    break;
+                                case 1: // 1/2- 1 safeHeight
+                                    setControlInput(0,0,0, 0.5);
+                                    break;
+                                default: // above safeHeight:
+                                    hover();
+                                    if(prev != null){
+                                        next = prev;
+                                    }
+                                    else{
+                                        next = STAGE.HOVER;
+                                    }
+                                    break;
+                            }
                             break;
                         case LAND:
-                            land();
+                            switch(mypos.z/(safeHeight/2)){
+                                case 0:// 0 - 1/2 safeHeight
+                                    setControlInput(0,0,0,0);
+                                    next = STAGE.STOP;
+                                    break;
+                                case 1: // 1/2- 1 safeHeight
+                                    setControlInput(0,0,0, -0.05);
+                                    break;
+                                default:   // above safeHeight
+                                    setControlInput(0,0,0,-0.5);
+                                    break;
+                            }
                             break;
                         case GOAL:
+                            done = true;
                             gvh.log.i(TAG, "At goal!");
+                            gvh.log.i("DoneFlag", "write");
                             if(param.STOP_AT_DESTINATION){
+                                hover();
                                 next = STAGE.HOVER;
                             }
-                            // running = false;
+                            running = false;
                             inMotion = false;
                             break;
                         case STOP:
+                            gvh.log.i("FailFlag", "write");
+                            System.out.println("STOP");
+                            motion_stop();
                             //do nothing
                     }
                     if(next != null) {
                         prev = stage;
                         stage = next;
-                        System.out.println("Stage transition to " + stage.toString() + "previous stage is "+ prev);
+//						System.out.println("Stage transition to " + stage.toString() + ", the previous stage is "+ prev);
 
                         gvh.log.i(TAG, "Stage transition to " + stage.toString());
                         gvh.trace.traceEvent(TAG, "Stage transition", stage.toString(), gvh.time());
@@ -197,13 +224,17 @@ public class MotionAutomaton_3DR extends RobotMotion{
                 }
 
                 if((colliding || stage == null) ) {
-                    land();
-                    stage = STAGE.LAND;
+                    gvh.log.i("FailFlag", "write");
+                    done = false;
+                    motion_stop();
+                    //	land();
+                    //	stage = STAGE.LAND;
                 }
             }
             gvh.sleep(param.AUTOMATON_PERIOD);
         }
     }
+
 
     public void cancel() {
         running = false;
@@ -304,10 +335,10 @@ public class MotionAutomaton_3DR extends RobotMotion{
     private double calculateYaw() {
         // this method calculates a yaw correction, to keep the drone's yaw angle near 90 degrees
         if(mypos.yaw > 93) {
-            return 5;
+            return 1;
         }
         else if(mypos.yaw < 87) {
-            return -5;
+            return -1;
         }
         else {
             return 0;
@@ -315,7 +346,7 @@ public class MotionAutomaton_3DR extends RobotMotion{
     }
 
     private void setMaxTilt(float val) {
-        controller.setMaxTilt(val);
+        //controller.setMaxTilt(val);
     }
 
     @Override

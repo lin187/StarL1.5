@@ -10,6 +10,7 @@ import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
 import edu.illinois.mitra.starl.interfaces.TrackedRobot;
+import edu.illinois.mitra.starl.models.Model_3DR;
 import edu.illinois.mitra.starl.models.Model_GhostAerial;
 import edu.illinois.mitra.starl.models.Model_Mavic;
 import edu.illinois.mitra.starl.models.Model_iRobot;
@@ -35,6 +36,7 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 	private Map<String, TrackedModel<Model_quadcopter>> quadcopters;
 	private Map<String, TrackedModel<Model_GhostAerial>> ghosts;
 	private Map<String, TrackedModel<Model_Mavic>> mavics;
+	private Map<String, TrackedModel<Model_3DR>> o3DRs;
 	
 
 	// Waypoint positions and robot positions that are shared among all robots	
@@ -42,6 +44,7 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 	private PositionList<Model_quadcopter> quadcopter_positions;
 	private PositionList<Model_GhostAerial> ghost_positions;
 	private PositionList<Model_Mavic> mavic_positions;
+	private PositionList<Model_3DR> o3DR_positions;
 	private PositionList<ItemPosition> allpos;
 
 	private PositionList<ItemPosition> waypoint_positions;
@@ -68,6 +71,7 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 		quadcopters = new ConcurrentHashMap<String, TrackedModel<Model_quadcopter>>();
 		ghosts = new ConcurrentHashMap<String, TrackedModel<Model_GhostAerial>>();
 		mavics = new ConcurrentHashMap<String, TrackedModel<Model_Mavic>>();
+		o3DRs = new ConcurrentHashMap<String, TrackedModel<Model_3DR>>();
 
 		waypoint_positions = new PositionList<ItemPosition>();
 		sensepoint_positions = new PositionList<ItemPosition>();
@@ -76,6 +80,7 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 		quadcopter_positions = new PositionList<Model_quadcopter>();
 		ghost_positions = new PositionList<Model_GhostAerial>();
 		mavic_positions = new PositionList<Model_Mavic>();
+		o3DR_positions = new PositionList<Model_3DR>();
 	}
 	
 	@Override
@@ -109,6 +114,11 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 				mavics.put(((Model_Mavic)bot).name, new TrackedModel<Model_Mavic>((Model_Mavic) bot));
 			}
 			mavic_positions.update((Model_Mavic) bot);
+		}else if(bot instanceof Model_3DR){
+			synchronized(o3DRs) {
+				o3DRs.put(((Model_3DR)bot).name, new TrackedModel<Model_3DR>((Model_3DR) bot));
+			}
+			o3DR_positions.update((Model_3DR) bot);
 		}
 		else{
 			throw new RuntimeException("after adding a new model, one need to add model handling in simulation under RealisticSimGpsProvider");
@@ -160,6 +170,17 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 		((Model_Mavic) mavics.get(name).cur).rollR = roll;
 		((Model_Mavic) mavics.get(name).cur).gazR = gaz;
 	}
+
+	//Called from realisticSimMotionAutomaton_3DR
+	//@Override
+	public void setControlInput3DR(String name, double v_yaw, double pitch, double roll, double gaz) {
+		/** TODO: replace with PID model here
+		 */
+		((Model_3DR) o3DRs.get(name).cur).v_yawR = v_yaw;
+		((Model_3DR) o3DRs.get(name).cur).pitchR = pitch;
+		((Model_3DR) o3DRs.get(name).cur).rollR = roll;
+		((Model_3DR) o3DRs.get(name).cur).gazR = gaz;
+	}
 	
 	@Override
 	public synchronized void halt(String name) {
@@ -185,6 +206,11 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 	//@Override
 	public PositionList<Model_Mavic> getMavicPositions() {
 		return mavic_positions;
+	}
+
+	//@Override
+	public PositionList<Model_3DR> get3DRPositions() {
+		return o3DR_positions;
 	}
 
 	@Override
@@ -284,6 +310,14 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 							//}
 						}
 					}
+					synchronized(o3DRs) {
+						for(TrackedModel<Model_3DR> r : o3DRs.values()) {
+							//if(r.cur.inMotion()) {
+							r.updatePos();
+							receivers.get(r.getName()).receivePosition((r.cur.inMotion()));
+							//}
+						}
+					}
 					setChanged();
 					notifyObservers(allpos);
 				//	notifyObservers(quadcopter_positions);
@@ -340,6 +374,8 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 				myRadius = ((Model_GhostAerial) cur).radius;
 			}else if(cur instanceof Model_Mavic){
 				myRadius = ((Model_Mavic) cur).radius;
+			}else if(cur instanceof Model_3DR){
+				myRadius = ((Model_3DR) cur).radius;
 			}
 			else{
 				throw new RuntimeException("after adding a new model, one need to add collision handling under RealisticSimGpsProvider");
@@ -383,6 +419,17 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 				}
 			}
 			for(Model_Mavic current : mavic_positions.getList()) {
+				if(!current.name.equals(cur.name)) {
+					if(bot.distanceTo(current) <= myRadius + current.radius){
+						//update sensors for both robots
+						current.collision(cur);
+						cur.collision(current);
+						toReturn = true;
+					}
+					//min_distance = Math.min(bot.distanceTo(current) - current.radius, min_distance);
+				}
+			}
+			for(Model_3DR current : o3DR_positions.getList()) {
 				if(!current.name.equals(cur.name)) {
 					if(bot.distanceTo(current) <= myRadius + current.radius){
 						//update sensors for both robots
