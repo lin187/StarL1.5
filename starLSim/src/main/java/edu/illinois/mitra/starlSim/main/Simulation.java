@@ -329,21 +329,24 @@ public class Simulation {
 					//				ArrayList<Model_quadcopter> pos2;
 					ArrayList<RobotData> rd = new ArrayList<RobotData>();
 					ArrayList targetList = ((PositionList) arg).getList();
+					
 					if (targetList.size() > 0) {
+						int iiRobot = 0; //tracks ith iRobot since only iRobots access the views vector
 						for (int i = 0; i < targetList.size(); i++) {
 							if (targetList.get(i) instanceof Model_iRobot) {
 
 								Model_iRobot ip = (Model_iRobot) targetList.get(i);
 								if (i < 12) {
-									RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.angle, c[i], views.elementAt(i), ip.leftbump, ip.rightbump);
+									RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.angle, c[i], views.elementAt(iiRobot), ip.leftbump, ip.rightbump);
 									nextBot.radius = settings.BOT_RADIUS;
 									nextBot.type = ip.type;
 									rd.add(nextBot);
 								} else {
-									RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.angle, c[0], views.elementAt(i), ip.leftbump, ip.rightbump);
+									RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.angle, c[0], views.elementAt(iiRobot), ip.leftbump, ip.rightbump);
 									nextBot.radius = settings.BOT_RADIUS;
 									rd.add(nextBot);
 								}
+								iiRobot++;
 							} else if (targetList.get(i) instanceof Model_quadcopter) {
 								Model_quadcopter ip = (Model_quadcopter) targetList.get(i);
 								RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.z, ip.yaw, ip.pitch, ip.roll, ip.receivedTime);
