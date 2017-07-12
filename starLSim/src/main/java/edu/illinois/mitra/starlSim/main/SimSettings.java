@@ -467,9 +467,9 @@ public class SimSettings {
 		}
 
         public Builder MAVIC_NAME(String MAVIC_NAME) {
-            this.MAVIC_NAME = MAVIC_NAME;
-            return this;
-        }
+			this.MAVIC_NAME = MAVIC_NAME;
+			return this;
+		}
 
 		public Builder o3DR_NAME(String o3DR_NAME) {
 			this.o3DR_NAME = o3DR_NAME;
