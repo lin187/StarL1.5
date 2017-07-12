@@ -19,6 +19,7 @@ ClientLib/build/intermediates/lint/
 ClientLib/build/intermediates/manifest/tmp/
 ClientLib/build/intermediates/rs/
 ClientLib/build/intermediates/shaders/
+ClientLib/libs/Mavlink.jar
 dJISDKLIB/build/generated/assets/
 dJISDKLIB/build/generated/res/
 dJISDKLIB/build/generated/source/aidl/
