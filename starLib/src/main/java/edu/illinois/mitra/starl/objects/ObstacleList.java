@@ -50,14 +50,12 @@ public class ObstacleList {
      */
 	public boolean badPath(ItemPosition destination, ItemPosition current){
 		boolean check = false;
-		for(int i=0; i< ObList.size(); i++){
-			if(ObList.elementAt(i) != null){
-				check = check || ObList.elementAt(i).checkCross(destination, current);
+		for(int i=0; i< ObList.size() && ObList.elementAt(i) != null; i++){
+			if(ObList.elementAt(i).checkCross(destination, current)){
+				return true;
 			}
-			else
-			break;
 		}
-		return check;
+		return false;
 	}
 
 	/**
@@ -147,9 +145,9 @@ public class ObstacleList {
 			for(int i=0; i< ObList.size() && ObList.elementAt(i) != null; i++){
                 double minDist = ObList.elementAt(i).findMinDist(destinationNode, currentNode);
                 if(minDist < Radius){
-                    System.out.println("Added node was too close to obstacle");
-                    //return false;
-					return true;
+                    //System.out.println("Added node was too close to obstacle, minDist: " + minDist + " Radius: " + Radius);
+                    //return (Math.abs(minDist - 200) <= .001);
+					return false;
                 }
 			}
 			return true;

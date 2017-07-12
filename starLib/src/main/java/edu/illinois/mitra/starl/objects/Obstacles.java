@@ -105,7 +105,7 @@ public class Obstacles {
         }
         return false;
 
-}
+    }
 
     //line intersection calculation method to replace java.awt.geom.Line2D.intersectsLine() since
     //the java.awt library is not part of android (also this one is supposedly 25% faster)
@@ -256,10 +256,15 @@ public class Obstacles {
             double sx2 = nextpoint.x;
             double sy2 = nextpoint.y;
 
-            double dist1 = pointToLineSeg(cx1, cy1, sx1, sy1, sx2, sy2);//segment.ptSegDist(current.x1, current.y1);
-            double dist2 = pointToLineSeg(cx2, cy2, sx1, sy1, sx2, sy2);//segment.ptSegDist(current.x2, current.y2);
-            double dist3 = pointToLineSeg(sx1, sy1, cx1, cy1, cx2, cy2);//current.ptSegDist(segment.x1, segment.y1);
-            double dist4 = pointToLineSeg(sx2, sy2, cx1, cy1, cx2, cy2);//current.ptSegDist(segment.x2, segment.y2);
+            double dist1 = shortestDistance(cx1, cy1, sx1, sy1, sx2, sy2);//segment.ptSegDist(current.x1, current.y1);
+            double dist2 = shortestDistance(cx2, cy2, sx1, sy1, sx2, sy2);//segment.ptSegDist(current.x2, current.y2);
+            double dist3 = shortestDistance(sx1, sy1, cx1, cy1, cx2, cy2);//current.ptSegDist(segment.x1, segment.y1);
+            double dist4 = shortestDistance(sx2, sy2, cx1, cy1, cx2, cy2);//current.ptSegDist(segment.x2, segment.y2);
+            //System.out.println("dist 1: " + dist1);
+            //System.out.print("dist 2: " + dist2);
+            //System.out.printf("| %f %f %f %f %f %f \n", cx2, cy2, sx1, sy1, sx2, sy2);
+            //System.out.println("dist 3: " + dist3);
+            //System.out.println("dist 4: " + dist4);
             double temp1 = Math.min(dist1, dist2);
             double temp2 = Math.min(dist3, dist4);
             double minDistNow = Math.min(temp1, temp2);
@@ -298,6 +303,27 @@ public class Obstacles {
         double dx = px - xx;
         double dy = px - yy;
         return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    private static double shortestDistance(double x3,double y3, double x1,double y1,double x2,double y2)
+    {
+        double px=x2-x1;
+        double py=y2-y1;
+        double temp=(px*px)+(py*py);
+        double u=((x3 - x1) * px + (y3 - y1) * py) / (temp);
+        if(u>1){
+            u=1;
+        }
+        else if(u<0){
+            u=0;
+        }
+        double x = x1 + u * px;
+        double y = y1 + u * py;
+
+        double dx = x - x3;
+        double dy = y - y3;
+        return Math.sqrt(dx*dx + dy*dy);
+
     }
 
     public Point3d getClosestPointOnSegment(int sx1, int sy1, int sx2, int sy2, int px, int py) {
