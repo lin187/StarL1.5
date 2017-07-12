@@ -98,9 +98,11 @@ public class RRTNode {
         		catch (Exception e) {
         		    System.err.println(e);
         		}
-    			//System.out.println("Path found!");
+    			System.out.println("Path found!");
     			break;
-    		}
+    		} else {
+				System.out.println("Added node was invalid.");
+			}
     		//not find yet, keep exploring
     		//random a sample point in the valid set of space
     		boolean validRandom = false;
