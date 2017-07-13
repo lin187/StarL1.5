@@ -7,11 +7,13 @@ public class Main {
 
 	public static void main(String[] args) {
 		SimSettings.Builder settings = new SimSettings.Builder();
-		settings.OBSPOINT_FILE("Obstacles.wpt");
+		settings.OBSPOINT_FILE("");
 		settings.N_IROBOTS(0);
-		settings.N_QUADCOPTERS(1);
+		settings.N_QUADCOPTERS(0);
+		settings.N_GHOSTS(1);
+		settings.N_MAVICS(0);
 		settings.GPS_POSITION_NOISE(4);
-		settings.TIC_TIME_RATE(3);
+		settings.TIC_TIME_RATE(1);
         settings.WAYPOINT_FILE("four.wpt");
         settings.INITIAL_POSITIONS_FILE("start.wpt");
         settings.DRAW_TRACE_LENGTH(-1);

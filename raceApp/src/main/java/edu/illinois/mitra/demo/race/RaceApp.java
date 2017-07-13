@@ -1,5 +1,7 @@
 package edu.illinois.mitra.demo.race;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +10,7 @@ import java.util.Random;
 import edu.illinois.mitra.starl.comms.RobotMessage;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.LogicThread;
+import edu.illinois.mitra.starl.models.Model_GhostAerial;
 import edu.illinois.mitra.starl.models.Model_quadcopter;
 import edu.illinois.mitra.starl.motion.MotionParameters;
 import edu.illinois.mitra.starl.motion.RRTNode;
@@ -38,7 +41,7 @@ public class RaceApp extends LogicThread {
 		MotionParameters.Builder settings = new MotionParameters.Builder();
 //		settings.ROBOT_RADIUS(400);
 		settings.COLAVOID_MODE(COLAVOID_MODE_TYPE.USE_COLAVOID);
-		///settings.GOAL_RADIUS(150);
+		settings.GOAL_RADIUS(150);
 		MotionParameters param = settings.build();
 
 		gvh.plat.moat.setParameters(param);
@@ -61,6 +64,8 @@ public class RaceApp extends LogicThread {
 
 			if(gvh.plat.model instanceof Model_quadcopter){
 				gvh.log.i("WIND", ((Model_quadcopter)gvh.plat.model).windxNoise + " " +  ((Model_quadcopter)gvh.plat.model).windyNoise);
+			} else if(gvh.plat.model instanceof Model_GhostAerial){
+				gvh.log.i("WIND", ((Model_GhostAerial)gvh.plat.model).windxNoise + " " +  ((Model_GhostAerial)gvh.plat.model).windyNoise);
 			}
 			switch(stage) {
 				case PICK:
@@ -73,11 +78,13 @@ public class RaceApp extends LogicThread {
 						kdTree = gvh.plat.reachAvoid.kdTree;
 						gvh.log.i("DoReachAvoid", currentDestination.x + " " +currentDestination.y);
 						doReachavoidCalls.update(new ItemPosition(name + "'s " + "doReachAvoid Call to destination: " + currentDestination.name, gvh.gps.getMyPosition().x,gvh.gps.getMyPosition().y));
+						System.out.println(name + " going to " + currentDestination.getName());
 						stage = Stage.GO;
 					}
 					break;
 				case GO:
 					if(gvh.plat.reachAvoid.doneFlag) {
+						//System.out.println("doneFlag????");
 						gvh.log.i("DoneFlag", "read");
 						if(currentDestination != null)
 							destinations.remove(currentDestination.getName());

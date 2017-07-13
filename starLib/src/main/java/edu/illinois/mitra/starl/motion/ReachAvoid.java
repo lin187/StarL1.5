@@ -43,9 +43,9 @@ public class ReachAvoid extends Thread implements Cancellable {
 		if(model instanceof Model_iRobot){
 			radius = ((Model_iRobot) model).radius;
 		}else if(model instanceof Model_quadcopter){
-			radius = 100+((Model_quadcopter) model).radius;
+			radius = 110 + ((Model_quadcopter) model).radius;
 		}else if(model instanceof Model_GhostAerial){
-			radius = 100+((Model_GhostAerial) model).radius;
+			radius = 110 + ((Model_GhostAerial) model).radius;
 		}
 		else{
 			//default value here;
@@ -93,14 +93,16 @@ public class ReachAvoid extends Thread implements Cancellable {
 				//do nothing
 				break;
 			case PLAN:
+				double magic = .0011;
 				int xRange = Math.abs(start.x - dest.x);
 				int yRange = Math.abs(start.y - dest.y);
-				xLower = Math.min(start.x, dest.x) - (xRange+radius)*(counter+1)/2;
-				xUpper = Math.max(start.x, dest.x) + (xRange+radius)*(counter+1)/2;
-				yLower = Math.min(start.y, dest.y) - (yRange+radius)*(counter+1)/2;
-				yUpper = Math.max(start.y, dest.y) + (yRange+radius)*(counter+1)/2;
+				xLower = Math.min(start.x, dest.x) - (int)((xRange+radius)*(counter+1)*radius*magic);
+				xUpper = Math.max(start.x, dest.x) + (int)((xRange+radius)*(counter+1)*radius*magic);
+				yLower = Math.min(start.y, dest.y) - (int)((yRange+radius)*(counter+1)*radius*magic);
+				yUpper = Math.max(start.y, dest.y) + (int)((yRange+radius)*(counter+1)*radius*magic);
 				
 				RRTNode path = new RRTNode(start.x, start.y);
+				System.out.println("Getting pathStack from " + start  + " to " + dest);
 				pathStack = path.findRoute(dest, 1000, planObs, xLower, xUpper, yLower,yUpper, start, radius);
 				if(pathStack == null){
 					counter ++ ; 
@@ -116,10 +118,17 @@ public class ReachAvoid extends Thread implements Cancellable {
 					kdTree =  path.stopNode;
 					stage = STAGE_R.PICK;
 				}
+				try {
+					System.out.println("Found a pathStack of size: " + pathStack.size());
+				} catch(Exception e){
+					System.out.println("Accessing pathStack produced exception: " + e);
+					return;
+				}
 				break;
 				
 			case PICK:
 				if(!pathStack.empty()){
+					System.out.println("Picking a new point");
 					//if did not reach last midway point, go back to path planning
 					ItemPosition goMidPoint = pathStack.pop();
 					gvh.plat.moat.goTo(goMidPoint);
@@ -127,7 +136,9 @@ public class ReachAvoid extends Thread implements Cancellable {
 					stage = STAGE_R.MOVE;
 				}
 				else{
+					System.out.println("pathStack is empty");
 					if(gvh.plat.moat.done){
+						System.out.println("ReachAvoid Done");
 						gvh.log.i(TAG, " dest Reached: " + dest.toString());
 						stage = STAGE_R.IDLE;
 						doneFlag = true;
@@ -145,6 +156,7 @@ public class ReachAvoid extends Thread implements Cancellable {
 				}
 				break;
 			case MOVE:
+				System.out.println("MOVING");
 				if(!unsafe.validstarts(gvh.gps.getMyPosition(), radius +1) ){
 					System.out.println("reachAvoid failed, safty ");
 					gvh.log.i(TAG, " Failed: " + dest.toString());
@@ -153,9 +165,11 @@ public class ReachAvoid extends Thread implements Cancellable {
 				}
 				//check fail flag here
 				if(gvh.plat.moat.done) {
+					System.out.println("Switching to PICK");
 					stage = STAGE_R.PICK;
 				}
 				else if (!gvh.plat.moat.inMotion){
+					System.out.print("Switching to PLAN");
 					stage = STAGE_R.PLAN;
 				}
 				break;

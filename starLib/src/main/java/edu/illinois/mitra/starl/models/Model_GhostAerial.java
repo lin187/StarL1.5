@@ -63,7 +63,7 @@ public class Model_GhostAerial extends ItemPosition implements TrackedRobot {
     private double v_z_p = 0.0;
 
     // platform specific control parameters: see page 78 of http://www.msh-tools.com/ardrone/ARDrone_Developer_Guide.pdf
-    public double max_gaz = 1000; // millimeter/s 200 to 2000
+    public double max_gaz = 2000; // millimeter/s 200 to 2000
     public double max_pitch_roll = 20;  // in degrees
     public double max_yaw_speed = 200;  // degrees/s
     public double windx = 0;   // millimeter/s
@@ -238,11 +238,11 @@ public void setPos(Model_Quadcopter other) {
 
     private void initial_helper(){
         height = 50;
-        yaw = 0.0;
+        yaw = 90.0;
         pitch = 0.0;
         roll = 0.0;
         radius = 340;
-        mass = 0.5; // default mass is 500 grams
+        mass = 1.2; // default mass is 500 grams
         v_x = 0.0;
         v_y = 0.0;
         v_z = 0.0;

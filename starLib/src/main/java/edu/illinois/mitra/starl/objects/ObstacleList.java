@@ -130,23 +130,21 @@ public class ObstacleList {
 
 	public boolean validPath(RRTNode destinationNode, RRTNode currentNode,  int Radius){
 		if(destinationNode == null){
-			System.out.println("Added node was null");
+			//System.out.println("Added node was null");
 			return false;
 		}
 		if(ObList == null){
 			return true;
 		}
 		if(badPath(destinationNode, currentNode)) {
-			System.out.println("Added node had bad path");
+			//System.out.println("Added node had bad path");
 			return false;
 		}
-		//todo(tim) fix minDist detection
 		else{
 			for(int i=0; i< ObList.size() && ObList.elementAt(i) != null; i++){
-                double minDist = ObList.elementAt(i).findMinDist(destinationNode, currentNode);
+                double minDist = ObList.elementAt(i).findMinDist(destinationNode, currentNode) - 20;
                 if(minDist < Radius){
                     //System.out.println("Added node was too close to obstacle, minDist: " + minDist + " Radius: " + Radius);
-                    //return (Math.abs(minDist - 200) <= .001);
 					return false;
                 }
 			}
