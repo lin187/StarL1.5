@@ -68,6 +68,10 @@ public class SimGlobalVarHolder extends GlobalVarHolder {
 			plat.moat = new RealisticSimMotionAutomaton_3DR(this, engine.getGps());
 			plat.moat.start();
 		}
+		else if(initpos instanceof Model_3DR){
+			plat.moat = new RealisticSimMotionAutomaton_3DR(this, engine.getGps());
+			plat.moat.start();
+		}
 		else {
 			throw new RuntimeException("After adding a model, please add the motion controler for that model in SimGlobalVarHolder.java");
 		}

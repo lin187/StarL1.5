@@ -49,7 +49,6 @@ public class Simulation {
 
 	private final SimSettings settings;
 
-
 	private final DrawFrame drawFrame;
 	private ObstacleList list;
 
@@ -377,7 +376,7 @@ public class Simulation {
 
 								Model_iRobot ip = (Model_iRobot) targetList.get(i);
 								if (i < 12) {
-									RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.angle, c[i], views.elementAt(i-settings.N_o3DR-settings.N_GHOSTS), ip.leftbump, ip.rightbump);
+									RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.angle, c[i-settings.N_GHOSTS-settings.N_o3DR], views.elementAt(i-settings.N_GHOSTS-settings.N_o3DR), ip.leftbump, ip.rightbump);
 									nextBot.radius = settings.BOT_RADIUS;
 									nextBot.type = ip.type;
 									rd.add(nextBot);

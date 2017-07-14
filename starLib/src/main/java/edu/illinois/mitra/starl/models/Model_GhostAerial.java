@@ -192,7 +192,6 @@ public boolean isFacing(Point3d other) {
  */
 
     /**
-     * @param other The ItemPosition to measure against
      * @return Number of degrees this position must rotate to face position other
      */
 /*

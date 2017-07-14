@@ -10,6 +10,7 @@ import edu.illinois.mitra.starl.interfaces.TrackedRobot;
 import edu.illinois.mitra.starl.models.Model_GhostAerial;
 import edu.illinois.mitra.starl.models.Model_iRobot;
 import edu.illinois.mitra.starl.models.Model_quadcopter;
+import edu.illinois.mitra.starl.models.Model_3DR;
 import edu.illinois.mitra.starl.objects.*;
 
 public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {	
@@ -91,6 +92,12 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
         // TD_NATHAN: resolve as necessary
         return null;
     }
+
+	@Override
+	public PositionList<Model_3DR> get3DRPositions() {
+		// TD_NATHAN: resolve as necessary
+		return null;
+	}
 
 	@Override
 	public PositionList<Model_GhostAerial> getGhostAerialsPositions() {

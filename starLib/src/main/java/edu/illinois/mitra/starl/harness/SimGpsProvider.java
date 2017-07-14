@@ -8,6 +8,7 @@ import edu.illinois.mitra.starl.models.Model_3DR;
 import edu.illinois.mitra.starl.models.Model_GhostAerial;
 import edu.illinois.mitra.starl.models.Model_iRobot;
 import edu.illinois.mitra.starl.models.Model_quadcopter;
+import edu.illinois.mitra.starl.models.Model_3DR;
 import edu.illinois.mitra.starl.objects.*;
 
 public interface SimGpsProvider {
@@ -38,6 +39,8 @@ public interface SimGpsProvider {
 	public abstract PositionList<Model_quadcopter> getQuadcopterPositions();
 
 	public abstract PositionList<Model_GhostAerial> getGhostAerialsPositions();
+
+	public abstract PositionList<Model_3DR> get3DRPositions();
 	
 	public abstract PositionList<ItemPosition> getAllPositions();
 

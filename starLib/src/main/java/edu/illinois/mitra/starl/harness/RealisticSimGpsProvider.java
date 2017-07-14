@@ -15,6 +15,7 @@ import edu.illinois.mitra.starl.models.Model_GhostAerial;
 import edu.illinois.mitra.starl.models.Model_Mavic;
 import edu.illinois.mitra.starl.models.Model_iRobot;
 import edu.illinois.mitra.starl.models.Model_quadcopter;
+import edu.illinois.mitra.starl.models.Model_3DR;
 import edu.illinois.mitra.starl.objects.Common;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.ObstacleList;
@@ -181,7 +182,7 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 		((Model_3DR) o3DRs.get(name).cur).rollR = roll;
 		((Model_3DR) o3DRs.get(name).cur).gazR = gaz;
 	}
-	
+
 	@Override
 	public synchronized void halt(String name) {
 		setVelocity(name, 0, 0);
@@ -208,7 +209,7 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 		return mavic_positions;
 	}
 
-	//@Override
+	@Override
 	public PositionList<Model_3DR> get3DRPositions() {
 		return o3DR_positions;
 	}
@@ -302,6 +303,7 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 							//}
 						}
 					}
+
 					synchronized(mavics) {
 						for(TrackedModel<Model_Mavic> r : mavics.values()) {
 							//if(r.cur.inMotion()) {
@@ -418,6 +420,7 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 					//min_distance = Math.min(bot.distanceTo(current) - current.radius, min_distance);
 				}
 			}
+
 			for(Model_Mavic current : mavic_positions.getList()) {
 				if(!current.name.equals(cur.name)) {
 					if(bot.distanceTo(current) <= myRadius + current.radius){
