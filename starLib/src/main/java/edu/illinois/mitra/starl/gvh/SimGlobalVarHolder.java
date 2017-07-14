@@ -6,6 +6,7 @@ import edu.illinois.mitra.starl.harness.IdealSimGpsProvider;
 import edu.illinois.mitra.starl.harness.IdealSimMotionAutomaton;
 import edu.illinois.mitra.starl.harness.RealisticSimMotionAutomaton_ghost;
 import edu.illinois.mitra.starl.harness.RealisticSimMotionAutomaton_iRobot;
+import edu.illinois.mitra.starl.harness.RealisticSimMotionAutomaton_mavic;
 import edu.illinois.mitra.starl.harness.RealisticSimMotionAutomaton_quadcopter;
 import edu.illinois.mitra.starl.harness.RealisticSimMotionAutomaton_3DR;
 import edu.illinois.mitra.starl.harness.SimGpsReceiver;
@@ -59,6 +60,12 @@ public class SimGlobalVarHolder extends GlobalVarHolder {
 		}
 		else if(initpos instanceof Model_GhostAerial){
 			plat.moat = new RealisticSimMotionAutomaton_ghost(this, engine.getGps());
+			plat.moat.start();
+		}else if(initpos instanceof Model_Mavic){
+			plat.moat = new RealisticSimMotionAutomaton_mavic(this, engine.getGps());
+			plat.moat.start();
+		}else if(initpos instanceof Model_3DR){
+			plat.moat = new RealisticSimMotionAutomaton_3DR(this, engine.getGps());
 			plat.moat.start();
 		}
 		else if(initpos instanceof Model_3DR){

@@ -25,7 +25,7 @@ public class ObstacleList {
 		this.ObList = (Vector<Obstacles>)Oblist.clone();
 		lastUpdateTime = System.currentTimeMillis();
 	}
-	
+
     /**
     *
     */
@@ -34,32 +34,30 @@ public class ObstacleList {
 		lastUpdateTime = System.currentTimeMillis();
 	}
 
-	
+
 	public ObstacleList clone(){
 		ObstacleList toReturn = new ObstacleList(ObList);
 		toReturn.de_Radius = this.de_Radius;
 		toReturn.detect_Precision = this.detect_Precision;
 		toReturn.lastUpdateTime = this.lastUpdateTime;
 		return toReturn;
-		
+
 	}
-	
-	
+
+
     /**
      * check if the line alone destination and current has any intersection with any obstacles
      */
 	public boolean badPath(ItemPosition destination, ItemPosition current){
 		boolean check = false;
-		for(int i=0; i< ObList.size(); i++){
-			if(ObList.elementAt(i) != null){
-				check = check || ObList.elementAt(i).checkCross(destination, current);
+		for(int i=0; i< ObList.size() && ObList.elementAt(i) != null; i++){
+			if(ObList.elementAt(i).checkCross(destination, current)){
+				return true;
 			}
-			else
-			break;
 		}
-		return check;
+		return false;
 	}
-	
+
 	/**
 	 *
 	 * @param Oblist
@@ -77,32 +75,29 @@ public class ObstacleList {
         this.ObList.add(o);
         this.updateObs();
     }
-	
+
 	/**
 	* This method is used for checking if the line alone destination and current has any intersection with any obstacles
 	*/
 	public boolean badPath(RRTNode destinationNode, RRTNode currentNode){
-		ItemPosition destination = new ItemPosition("NodeToIPDes", destinationNode.position.x, destinationNode.position.y, 0); 
+		ItemPosition destination = new ItemPosition("NodeToIPDes", destinationNode.position.x, destinationNode.position.y, 0);
 		ItemPosition current = new ItemPosition("NodeToIPCurrt", currentNode.position.x, currentNode.position.y, 0);
 		boolean check = false;
-		for(int i=0; i< ObList.size(); i++){
-			if(ObList.elementAt(i) != null){
-				check = check || ObList.elementAt(i).checkCross(destination, current);
-			}
-			else{
-				break;
+		for(int i=0; i< ObList.size() && ObList.elementAt(i) != null; i++){
+			if(ObList.elementAt(i).checkCross(destination, current)){
+				return true;
 			}
 		}
-		return check;
+		return false;
 	}
-	
+
 	/**
 	 * check if the point is reachable by robot
 	 * @param destination
 	 * @param radius
 	 * @return boolean
-	 * 
-	 * 
+	 *
+	 *
 	 */
 	public boolean validstarts(ItemPosition destination, double radius){
 		if(destination == null){
@@ -122,11 +117,11 @@ public class ObstacleList {
 		}
 		return check;
 	}
-	
+
 	/**
 	 * return true if the path specified by two RRTNode has a line such that every point alone the line is reachable by robots.
 	 * It checks if two line segments smallest distance is bigger than radius
-	 * For example, line AB and CD, the shortest distance is minimum of A to CD, B to CD, C to AB, D to AB 
+	 * For example, line AB and CD, the shortest distance is minimum of A to CD, B to CD, C to AB, D to AB
 	 * @param destinationNode
 	 * @param currentNode
 	 * @param Radius
@@ -135,34 +130,29 @@ public class ObstacleList {
 
 	public boolean validPath(RRTNode destinationNode, RRTNode currentNode,  int Radius){
 		if(destinationNode == null){
+			//System.out.println("Added node was null");
 			return false;
 		}
 		if(ObList == null){
 			return true;
 		}
-		if(badPath(destinationNode, currentNode)){
+		if(badPath(destinationNode, currentNode)) {
+			//System.out.println("Added node had bad path");
 			return false;
 		}
 		else{
-			boolean check = true;
-			for(int i=0; i< ObList.size(); i++){
-				if(ObList.elementAt(i) != null){
-					double minDist = ObList.elementAt(i).findMinDist(destinationNode, currentNode);
-					check = check && (minDist> Radius); 
-					if(!check){
-						break;
-					}
-				}
-				else{
-					break;
-				}
+			for(int i=0; i< ObList.size() && ObList.elementAt(i) != null; i++){
+                double minDist = ObList.elementAt(i).findMinDist(destinationNode, currentNode) - 20;
+                if(minDist < Radius){
+                    //System.out.println("Added node was too close to obstacle, minDist: " + minDist + " Radius: " + Radius);
+					return false;
+                }
 			}
-			return check;
-			
+			return true;
 		}
 	}
-	
-	
+
+
 	/**
 	 * methods for hidden or time vise obstacles
 	 *
@@ -201,7 +191,7 @@ public class ObstacleList {
 	public ObstacleList downloadObs() {
 		if(ObList == null)
 			return null;
-		
+
 		ObstacleList obsList = new ObstacleList();
 		for(int i = 0; i< ObList.size(); i++){
 			Obstacles temp = new Obstacles(ObList.get(i));
@@ -223,11 +213,11 @@ public class ObstacleList {
 			}
 		}
 	}
-	
+
 	/**
 	 * add the detected obstacle to the current map
 	 * Please avoid using this method on the gvh obstacle map, it will cause all other robot to detect this obstacle as well
-	 * 
+	 *
 	 * @param blocker
 	 */
 	public void detected(ItemPosition blocker){
@@ -236,7 +226,7 @@ public class ObstacleList {
 			if(ObList.elementAt(i) != null){
 				uncontained = uncontained && ObList.elementAt(i).validItemPos(blocker);
 			}
-		
+
 		}
 		if(uncontained){
 			Obstacles newObs = new Obstacles(blocker.x, blocker.y);
@@ -244,7 +234,7 @@ public class ObstacleList {
 			ObList.lastElement().ToGrid(detect_Precision * de_Radius);
 		}
 	}
- 
+
 	/**
      *
      * @param robotPos
@@ -255,7 +245,7 @@ public class ObstacleList {
 			return;
 		if(ObList == null)
 			return;
-		
+
 		for(int i=0; i< ObList.size(); i++){
 			if(ObList.elementAt(i) != null){
 				if(!ObList.elementAt(i).validItemPos(robotPos, radius)){
@@ -267,5 +257,5 @@ public class ObstacleList {
 		}
 		return;
 	}
-	
+
 }

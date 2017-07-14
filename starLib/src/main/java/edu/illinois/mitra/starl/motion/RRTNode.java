@@ -89,6 +89,7 @@ public class RRTNode {
     //for(i< k)  keep finding	
     	for(int i = 0; i<K; i++){
     	//if can go from current to destination, meaning path found, add destinationNode to final, stop looping.
+			//System.out.println("Adding node (" + addedNode.position.x + ", " + addedNode.position.y + ")");
 			if(obsList.validPath(addedNode, destNode, radius)){
     			destNode.parent = addedNode;
     			stopNode = destNode;
@@ -100,7 +101,9 @@ public class RRTNode {
         		}
     			//System.out.println("Path found!");
     			break;
-    		}
+    		} else {
+				//System.out.println("Added node was invalid.");
+			}
     		//not find yet, keep exploring
     		//random a sample point in the valid set of space
     		boolean validRandom = false;

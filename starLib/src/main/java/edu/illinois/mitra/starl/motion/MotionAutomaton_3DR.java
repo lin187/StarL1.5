@@ -28,8 +28,29 @@ public class MotionAutomaton_3DR extends RobotMotion {
 
     // Motion tracking
     protected ItemPosition destination;
-    private Model_3DR mypos;
+    private Model_3DR mypos; // TODO: 6/6/2017 for 3DR
 
+    //PID controller parameters
+    double saturationLimit = 50;
+    double windUpLimit = 185;
+    int filterLength = 8;
+    /*double Kpx = 0.2;
+    double Kpy = 0.2;
+    double Kix = 0.04;
+    double Kiy = 0.04;
+    double Kdx = 0.4;
+    double Kdy = 0.45;*/
+    // the ones below work pretty well
+    double Kpx = 0.0714669809792096;
+    double Kpy = 0.0714669809792096;
+    double Kix = 0.0110786899216426;
+    double Kiy = 0.0110786899216426;
+    double Kdx = 0.113205037832174;
+    double Kdy = 0.113205037832174;
+
+    PIDController PID_x = new PIDController(Kpx, Kix, Kdx, saturationLimit, windUpLimit, filterLength);
+    PIDController PID_y = new PIDController(Kpy, Kiy, Kdy, saturationLimit, windUpLimit, filterLength);
+    //need to set to new values as the 3DR
 
     protected enum STAGE {
         INIT, MOVE, HOVER, TAKEOFF, LAND, GOAL, STOP
@@ -194,6 +215,7 @@ public class MotionAutomaton_3DR extends RobotMotion {
                             break;
                         case GOAL:
                             System.out.println("Done flag");
+
                             done = true;
                             gvh.log.i(TAG, "At goal!");
                             gvh.log.i("DoneFlag", "write");
@@ -233,6 +255,7 @@ public class MotionAutomaton_3DR extends RobotMotion {
         }
     }
 
+
     public void cancel() {
         running = false;
         bti.disconnect();
@@ -250,6 +273,9 @@ public class MotionAutomaton_3DR extends RobotMotion {
     public void takePicture(){}
 
  /*   @Override
+=======
+    @Override
+>>>>>>> a46592728b3e054fe8a3d11ec7511018c2934dd1
     public void rotateGimbal(float y) {
 
     }
@@ -267,7 +293,9 @@ public class MotionAutomaton_3DR extends RobotMotion {
     @Override
     public void downloadPhotos() {
 
+<<<<<<< HEAD
     }*/
+
 
     ;
 
@@ -352,6 +380,23 @@ public class MotionAutomaton_3DR extends RobotMotion {
         gvh.log.i(TAG, "Drone hovering");
     }
 
+    private double calculateYaw() {
+        // this method calculates a yaw correction, to keep the drone's yaw angle near 90 degrees
+        if(mypos.yaw > 93) {
+            return 1;
+        }
+        else if(mypos.yaw < 87) {
+            return -1;
+        }
+        else {
+            return 0;
+        }
+    }
+
+    private void setMaxTilt(float val) {
+        //controller.setMaxTilt(val);
+    }
+
     @Override
     public void turnTo(ItemPosition dest) {
         throw new IllegalArgumentException("solo does not have a corresponding turn to");
@@ -362,6 +407,21 @@ public class MotionAutomaton_3DR extends RobotMotion {
         // TODO Auto-generated method stub
     }
 
+    public void rotateGimbal(float y){
+
+    }
+
+    public void rotateGimbal(float p, float y){
+
+    }
+
+    public void rotateGimbal(float p, float y, float r){
+
+    }
+
+    public void downloadPhotos(){
+
+    }
 
     /**
      * Slow down linearly upon coming within R_slowfwd of the goal

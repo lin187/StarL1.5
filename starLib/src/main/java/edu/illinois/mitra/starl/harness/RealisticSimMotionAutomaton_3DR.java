@@ -49,6 +49,7 @@ public class RealisticSimMotionAutomaton_3DR extends MotionAutomaton_3DR {
     protected void land(){
         gvh.log.i(TAG, "Drone landing");
         //setControlInput(my_model.yaw, 0, 0, 5);
+        setControlInput(my_model.yaw, 0, 0, -1);
     }
 
     /**

@@ -9,12 +9,12 @@ import edu.illinois.mitra.starl.objects.*;
 
 /**
  * This motion controller is for quadcopter models only
- * 
+ *
  * Motion controller which extends the RobotMotion abstract class. Capable of
  * going to destination or passing through a destination without stopping.
  * Includes optional collision avoidance which is controlled
  * by the motion parameters setting.
- *  
+ *
  * @author Yixiao Lin
  * @version 1.0
  */
@@ -95,8 +95,11 @@ public class MotionAutomaton_quadcopter extends RobotMotion {
 			if(running) {
 				mypos = (Model_quadcopter)gvh.plat.getModel();
 //				System.out.println(mypos.toString());
-				int distance = (int) Math.sqrt(Math.pow((mypos.x - destination.x),2) + Math.pow((mypos.y - destination.y), 2)); 
-				//int distance = mypos.distanceTo(destination);		
+				System.out.printf("mypos (%d, %d) \n", mypos.x, mypos.y);
+				System.out.printf("destination (%d, %d) \n", destination.x, destination.y);
+				int distance = (int) Math.sqrt(Math.pow((mypos.x - destination.x),2) + Math.pow((mypos.y - destination.y), 2));
+				System.out.println("distance:" + distance);
+				//int distance = mypos.distanceTo(destination);
 				if(mypos.gaz < -50){
 			//		System.out.println("going down");
 				}
@@ -113,13 +116,14 @@ public class MotionAutomaton_quadcopter extends RobotMotion {
 							}
 							else{
 								if(distance <= param.GOAL_RADIUS) {
+									System.out.println(">>>Distance: " + distance + " - GOAL_RADIUS " + param.GOAL_RADIUS);
 									next = STAGE.GOAL;
 								}
 								else{
 									next = STAGE.MOVE;
 								}
 							}
-						}	
+						}
 						break;
 					case MOVE:
 						if(mypos.z < safeHeight){
@@ -129,6 +133,7 @@ public class MotionAutomaton_quadcopter extends RobotMotion {
 							break;
 						}
 						if(distance <= param.GOAL_RADIUS) {
+							System.out.println(">>>Distance: " + distance + " - GOAL_RADIUS " + param.GOAL_RADIUS);
 							next = STAGE.GOAL;
 						}
 						else{
@@ -188,6 +193,7 @@ public class MotionAutomaton_quadcopter extends RobotMotion {
 						}
 						break;
 					case GOAL:
+						System.out.println("Done flag");
 						done = true;
 						gvh.log.i(TAG, "At goal!");
 						gvh.log.i("DoneFlag", "write");
@@ -213,7 +219,7 @@ public class MotionAutomaton_quadcopter extends RobotMotion {
 						gvh.trace.traceEvent(TAG, "Stage transition", stage.toString(), gvh.time());
 					}
 					next = null;
-				} 
+				}
 
 				if((colliding || stage == null) ) {
 					gvh.log.i("FailFlag", "write");
@@ -240,6 +246,30 @@ public class MotionAutomaton_quadcopter extends RobotMotion {
 		running = false;
 		inMotion = false;
 	}
+
+	public void takePicture(){}
+
+	@Override
+	public void rotateGimbal(float y) {
+
+	}
+
+	@Override
+	public void rotateGimbal(float p, float y) {
+
+	}
+
+	@Override
+	public void rotateGimbal(float p, float y, float r) {
+
+	}
+
+	@Override
+	public void downloadPhotos() {
+
+	}
+
+	;
 
 	@Override
 	public void motion_resume() {
@@ -329,13 +359,13 @@ public class MotionAutomaton_quadcopter extends RobotMotion {
 
 	@Override
 	public void setParameters(MotionParameters param) {
-		// TODO Auto-generated method stub		
+		// TODO Auto-generated method stub
 	}
 
 
 	/**
 	 * Slow down linearly upon coming within R_slowfwd of the goal
-	 * 
+	 *
 	 * @param distance
 	 * @return
 	 */
