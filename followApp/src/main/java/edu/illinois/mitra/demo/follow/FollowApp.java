@@ -72,12 +72,15 @@ public class FollowApp extends LogicThread {
                     if(destinations.isEmpty()) {
                         stage = Stage.DONE;
                     } else {
-                        currentDestination = getDestination(destinations, destIndex);
-                        //Log.d(TAG, currentDestination.toString());
-                        destIndex++;
+//                        currentDestination = getDestination(destinations, destIndex);
+//                        //Log.d(TAG, currentDestination.toString());
+//                        destIndex++;
                         if(destIndex >= numWaypoints) {
                             destIndex = 0;
                         }
+                        currentDestination = getDestination(destinations, destIndex);
+                        //Log.d(TAG, currentDestination.toString());
+                        destIndex++;
                         gvh.plat.moat.goTo(currentDestination);
                         stage = Stage.GO;
                     }

@@ -81,7 +81,7 @@ public class Simulation {
 		for(int j = 0; j < settings.N_o3DR; j++) {
 			// Mapping between 3dr name and IP address
 			//participants.put(settings.o3DR_NAME + j, "192.168.0." + (j+settings.N_IROBOTS));
-			participants.put(settings.o3DR_NAME + j, "10.1.1.10" + (j+settings.N_IROBOTS+settings.N_o3DR+settings.N_GHOSTS));
+			participants.put(settings.o3DR_NAME + j, "10.1.1.10" + (j+settings.N_IROBOTS+settings.N_GHOSTS));
 		}
 
 		// Start the simulation engine
@@ -334,7 +334,7 @@ public class Simulation {
 
 								Model_iRobot ip = (Model_iRobot) targetList.get(i);
 								if (i < 12) {
-									RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.angle, c[i], views.elementAt(i), ip.leftbump, ip.rightbump);
+									RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.angle, c[i-settings.N_GHOSTS-settings.N_o3DR], views.elementAt(i-settings.N_GHOSTS-settings.N_o3DR), ip.leftbump, ip.rightbump);
 									nextBot.radius = settings.BOT_RADIUS;
 									nextBot.type = ip.type;
 									rd.add(nextBot);
@@ -350,6 +350,11 @@ public class Simulation {
 								rd.add(nextBot);
 							} else if (targetList.get(i) instanceof Model_GhostAerial) {
 								Model_GhostAerial ip = (Model_GhostAerial) targetList.get(i);
+								RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.z, ip.yaw, ip.pitch, ip.roll, ip.receivedTime);
+								nextBot.radius = settings.BOT_RADIUS;
+								rd.add(nextBot);
+							} else if (targetList.get(i) instanceof Model_3DR) {
+								Model_3DR ip = (Model_3DR) targetList.get(i);
 								RobotData nextBot = new RobotData(ip.name, ip.x, ip.y, ip.z, ip.yaw, ip.pitch, ip.roll, ip.receivedTime);
 								nextBot.radius = settings.BOT_RADIUS;
 								rd.add(nextBot);

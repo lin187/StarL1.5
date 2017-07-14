@@ -279,7 +279,7 @@ public class SimSettings {
 		private String IROBOT_NAME = "iRobot";
 		private String QUADCOPTER_NAME = "quadcopter";
 		private String GHOST_NAME = "ghostie";
-        private String o3DR_NAME = "3DRSolo";
+        private String o3DR_NAME = "Solo";
 		private int BOT_RADIUS = 165;
 		private String TRACE_OUT_DIR;
 		private boolean THREE_D = false;
