@@ -43,8 +43,8 @@ public class MotionAutomaton_Phantom extends RobotMotion {
     double Kpy = 0.0314669809792096;
     double Kix = 0.0110786899216426;
     double Kiy = 0.0110786899216426;
-    double Kdx = 0.213205037832174;
-    double Kdy = 0.213205037832174;
+    double Kdx = 0.159205037832174; //113....
+    double Kdy = 0.159205037832174;
 
     PIDController PID_x = new PIDController(Kpx, Kix, Kdx, saturationLimit, windUpLimit, filterLength);
     PIDController PID_y = new PIDController(Kpy, Kiy, Kdy, saturationLimit, windUpLimit, filterLength);
@@ -124,7 +124,7 @@ public class MotionAutomaton_Phantom extends RobotMotion {
                             if(mode == OPMODE.GO_TO) {
                                 PID_x.reset();
                                 PID_y.reset();
-                                setMaxTilt(5); // TODO: add max tilt to motion paramters class
+                                setMaxTilt(20); // TODO: add max tilt to motion paramters class
                                 if(landed){
                                     next = STAGE.TAKEOFF;
                                 }
