@@ -40,17 +40,17 @@ import dji.common.gimbal.*;
 public class DjiController {
 
     private static final String FLAG_CONNECTION_CHANGE = "dji_sdk_connection_change";
-    private static final boolean USING_WIFI_BRIDGE = true;
+    private static final boolean USING_WIFI_BRIDGE = false;
 
     private float maxTilt; //degrees
     private BaseProduct mProduct;
     private Aircraft mAircraft;
-    private Camera mCamera = mAircraft.getCamera();
+    //private Camera mCamera;
     private FlightController mFlightController;
     private Handler mHandler;
     private FlightControlData mFlightControlData;
-    private Gimbal mGimbal = mAircraft.getGimbal();
-    private PlaybackManager mPlaybackManager = mCamera.getPlaybackManager();
+    //private Gimbal mGimbal = mAircraft.getGimbal();
+    //private PlaybackManager mPlaybackManager = mCamera.getPlaybackManager();
 
 
     private static String TAG = "DjiController";
@@ -71,45 +71,23 @@ public class DjiController {
         return DJISDKManager.getInstance().hasSDKRegistered();
     }
 
-    // sets pitch to val percent of max angle
-    // positive value moves forward, negative backward
-    public void setPitch(double val) {
-        val *= .14;
-        if (mFlightController != null)
-        {
-            mFlightControlData.setPitch((float)val);
-            mFlightController.sendVirtualStickFlightControlData(mFlightControlData, null);
-        }
-    }
-
-    // sets roll to val percent of max angle
-    // positive value moves right, negative left
-    public void setRoll(double val) {
-        val *= maxTilt;
-        if (mFlightController != null)
-        {
-            mFlightControlData.setRoll((float)val);
-            mFlightController.sendVirtualStickFlightControlData(mFlightControlData, null);
-        }
-    }
-
-    // sets yaw to val angular velocity
-    // positive value turns right (clockwise from above), negative turns left
-    public void setYaw(double val) {
-        val *= 5;
-        if (mFlightController != null)
-        {
-            mFlightControlData.setYaw((float)val);
-            mFlightController.sendVirtualStickFlightControlData(mFlightControlData, null);
-        }
-    }
-
-    // moves the drone up (+ val) or down (- val)
-    public void setThrottle(double val) {
-        if (mFlightController != null)
-        {
-            mFlightControlData.setVerticalThrottle((float)val);
-            mFlightController.sendVirtualStickFlightControlData(mFlightControlData, null);
+    public void setInputs(float yaw, float pitch, float roll, float gaz){
+        if(mFlightController != null){
+            mFlightControlData.setYaw(yaw * 50);
+            mFlightControlData.setPitch(pitch * maxTilt);
+            mFlightControlData.setRoll(roll * maxTilt);
+            mFlightControlData.setVerticalThrottle(gaz);
+            mFlightController.sendVirtualStickFlightControlData(mFlightControlData, new CommonCallbacks.CompletionCallback() {
+                @Override
+                public void onResult(DJIError djiError) {
+                    gvh.log.e(TAG, "Attempted to send " +
+                            mFlightControlData.getYaw() + " " +
+                            mFlightControlData.getPitch() + " " +
+                            mFlightControlData.getRoll() + " " +
+                            mFlightControlData.getVerticalThrottle());
+                    gvh.log.e(TAG, "Errors " + (djiError == null ? "no errors" : djiError));
+                }
+            });
         }
     }
 
@@ -120,6 +98,7 @@ public class DjiController {
                 @Override
                 public void onResult(DJIError djiError) {
                     gvh.log.e(TAG, "Landing error: " + (djiError == null ? "no errors" : djiError));
+                    mFlightController.turnOffMotors(null);
                 }
             });
         }
@@ -138,55 +117,55 @@ public class DjiController {
     }
 
     public void takePicture() {
-        if (mFlightController != null)
-        {
-            mCamera.startShootPhoto(null);
-        }
+//        if (mFlightController != null)
+//        {
+//            mCamera.startShootPhoto(null);
+//        }
     }
 
     public void rotateGimbal(float y){
-        Rotation rot = new Rotation.Builder().yaw(y).build();
-        mGimbal.rotate(rot,null);
+//        Rotation rot = new Rotation.Builder().yaw(y).build();
+//        mGimbal.rotate(rot,null);
     }
 
     public void rotateGimbal(float p, float y){
-        Rotation rot = new Rotation.Builder().pitch(p).yaw(y).build();
-        mGimbal.rotate(rot,null);
+//        Rotation rot = new Rotation.Builder().pitch(p).yaw(y).build();
+//        mGimbal.rotate(rot,null);
     }
 
     public void rotateGimbal(float p, float y, float r){
-        Rotation rot = new Rotation.Builder().pitch(p).yaw(y).roll(r).build();
-        mGimbal.rotate(rot,null);
+//        Rotation rot = new Rotation.Builder().pitch(p).yaw(y).roll(r).build();
+//        mGimbal.rotate(rot,null);
     }
 
     public void downloadPhotos(){
-        String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();
-        File dir = new File(baseDir);
-        if (!dir.exists() || !dir.isDirectory()){
-            dir.mkdirs();
-        }
-        mPlaybackManager.selectAllFiles();
-        mPlaybackManager.downloadSelectedFiles(dir, new PlaybackManager.FileDownloadCallback() {
-            @Override
-            public void onStart() {
-
-            }
-
-            @Override
-            public void onEnd() {
-
-            }
-
-            @Override
-            public void onError(Exception e) {
-
-            }
-
-            @Override
-            public void onProgressUpdate(int i) {
-
-            }
-        });
+//        String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();
+//        File dir = new File(baseDir);
+//        if (!dir.exists() || !dir.isDirectory()){
+//            dir.mkdirs();
+//        }
+//        mPlaybackManager.selectAllFiles();
+//        mPlaybackManager.downloadSelectedFiles(dir, new PlaybackManager.FileDownloadCallback() {
+//            @Override
+//            public void onStart() {
+//
+//            }
+//
+//            @Override
+//            public void onEnd() {
+//
+//            }
+//
+//            @Override
+//            public void onError(Exception e) {
+//
+//            }
+//
+//            @Override
+//            public void onProgressUpdate(int i) {
+//
+//            }
+//        });
     }
 
     // make the drone land immediately
@@ -263,6 +242,7 @@ public class DjiController {
                     mFlightControlData = new FlightControlData(0,0,0,0);
                     if(mFlightController != null) {
                         constructFlightController();
+                        //sendTakeoff();
                     }else{
                         gvh.log.e(TAG, mAircraft.getModel() + " does not have a flight controller!");
                     }

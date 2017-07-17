@@ -90,7 +90,7 @@ public class BotInfoSelector {
         if(color.equals("blue")) {
             name = "bot2";
             //ip = "192.168.1.112";
-            ip = "10.255.24.203";
+            ip = "10.255.24.152";
             if(type == Common.IROBOT) {
                 bluetooth = "5C:F3:70:76:CE:B4";
                 this.type = new Model_iRobot(name, 0,0);
@@ -98,6 +98,10 @@ public class BotInfoSelector {
             else if(type == Common.MINIDRONE) {
                 bluetooth = "Travis_064729";
                 this.type = new Model_quadcopter(name, 0,0);
+            }
+            else if(type == Common.PHANTOM){
+                bluetooth = "NA";
+                this.type = new Model_Phantom(name, 0, 0);
             }
             else if(type == Common.GHOSTAERIAL) {
                 bluetooth = "98:D3:32:20:58:5B"; // bluetooth address of GBOX

@@ -14,6 +14,7 @@ import edu.illinois.mitra.starl.exceptions.ItemFormattingException;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.GpsReceiver;
 import edu.illinois.mitra.starl.interfaces.RobotEventListener.Event;
+import edu.illinois.mitra.starl.models.Model_Phantom;
 import edu.illinois.mitra.starl.models.Model_iRobot;
 import edu.illinois.mitra.starl.models.Model_quadcopter;
 import edu.illinois.mitra.starl.objects.Common;
@@ -129,7 +130,7 @@ public class UdpGpsReceiver extends Thread implements GpsReceiver {
 		    				break;
 		    			case '$':
 		    				try {
-		    					Model_quadcopter newpos = new Model_quadcopter(parts[i]);
+		    					Model_Phantom newpos = new Model_Phantom(parts[i]); //TODO(TIM) MAKE THIS APPLY TO ALL ROBOTS SUPER IMPORTANT
 		    					robotPositions.update(newpos, gvh.time());
 		    					gvh.sendRobotEvent(Event.GPS);
 		    					if(newpos.name.equals(name)) {

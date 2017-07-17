@@ -39,9 +39,9 @@ public class MotionAutomaton_Phantom extends RobotMotion {
     double Kdx = 0.4;
     double Kdy = 0.45;*/
     // the ones below work pretty well
-    double Kpx = 0.0314669809792096;
+    double Kpx = 0.0314669809792096; //314....
     double Kpy = 0.0314669809792096;
-    double Kix = 0.0110786899216426;
+    double Kix = 0.0110786899216426; //011...
     double Kiy = 0.0110786899216426;
     double Kdx = 0.159205037832174; //113....
     double Kdy = 0.159205037832174;
@@ -109,7 +109,8 @@ public class MotionAutomaton_Phantom extends RobotMotion {
         while(true) {
             //			gvh.gps.getObspointPositions().updateObs();
             if(running) {
-                mypos = (Model_Phantom)gvh.gps.getMyPosition(); // TD_NATHAN: check. I fixed it.
+                ItemPosition temp = gvh.gps.getMyPosition();
+                mypos = (Model_Phantom)temp; // TD_NATHAN: check. I fixed it.
    //             if(mypos == null) { continue;}
                 // if you change to 3D waypoints, use distanceTo instead of distanceTo2D
                 int distance = mypos.distanceTo2D(destination);
@@ -124,7 +125,7 @@ public class MotionAutomaton_Phantom extends RobotMotion {
                             if(mode == OPMODE.GO_TO) {
                                 PID_x.reset();
                                 PID_y.reset();
-                                setMaxTilt(20); // TODO: add max tilt to motion paramters class
+                                setMaxTilt(30); // TODO: add max tilt to motion paramters class
                                 if(landed){
                                     next = STAGE.TAKEOFF;
                                 }
@@ -267,12 +268,7 @@ public class MotionAutomaton_Phantom extends RobotMotion {
 
     protected void setControlInput(double yaw_v, double pitch, double roll, double gaz){
         //Bluetooth command to control the drone
-        bti.setRoll((byte) roll);
-        bti.setPitch((byte) pitch);
-        bti.setYaw((byte) yaw_v);
-        // currently not moving to 3-D waypoints, so not sending a gaz command
-        // if in the future you want to send one, uncomment the following line
-        bti.setThrottle((byte) gaz);
+        bti.setInputs((float)yaw_v, (float)pitch, (float)roll, (float)gaz);
         gvh.log.i(TAG, "control input as, yaw, pitch, roll, thrust " + yaw_v + ", " + pitch + ", " +roll + ", " +gaz);
     }
 
