@@ -4,6 +4,7 @@ import java.util.Stack;
 
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.ObstacleList;
+import edu.illinois.mitra.starl.objects.Point3d;
 import edu.wlu.cs.levy.CG.KDTree;
 import edu.wlu.cs.levy.CG.KeySizeException;
 
@@ -15,7 +16,7 @@ import edu.wlu.cs.levy.CG.KeySizeException;
  */
 
 public class RRTNode {
-	public Point position = new Point();
+	public Point3d position = new Point3d();
 	public RRTNode parent;
 	public static RRTNode stopNode;
 	public KDTree<RRTNode> kd;
@@ -46,7 +47,7 @@ public class RRTNode {
 
 	/**
 	 * methods to find the route
-	 if find a path, return a midway point stack
+	 if find a path, return a midway Point3d stack
 	 if can not find a path, return null
 	 remember to handle the null stack when writing apps using RRT path planning
 	 the obstacle list will be modified to remove any obstacle that is inside a robot
@@ -105,7 +106,7 @@ public class RRTNode {
 				//System.out.println("Added node was invalid.");
 			}
     		//not find yet, keep exploring
-    		//random a sample point in the valid set of space
+    		//random a sample Point3d in the valid set of space
     		boolean validRandom = false;
     		int xRandom = 0;
     		int yRandom = 0;
@@ -132,7 +133,7 @@ public class RRTNode {
                 }
 			}
     		RRTNode sampledNode = new RRTNode(sampledPos.x, sampledPos.y);
-    		// with a valid random sampled point, we find it's nearest neighbor in the tree, set it as current Node
+    		// with a valid random sampled Point3d, we find it's nearest neighbor in the tree, set it as current Node
     		try{
     		currentNode = kd.nearest(sampledNode.getValue());
     		}
@@ -179,7 +180,7 @@ public class RRTNode {
 
     /**
      * toggle function deals with constrains by the environment as well as robot systems.
-     * It changes sampledNode to some point alone the line of sampledNode and currentNode so that no obstacles are in the middle
+     * It changes sampledNode to some Point3d alone the line of sampledNode and currentNode so that no obstacles are in the middle
      * In other words, it changes sampledNode to somewhere alone the line where robot can reach
      *
      * TODO: we can add robot system constraints later
