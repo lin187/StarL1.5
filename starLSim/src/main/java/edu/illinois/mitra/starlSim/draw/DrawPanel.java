@@ -362,7 +362,7 @@ public class DrawPanel extends ZoomablePanel
 			g.drawOval(rd.x - outerRadius + outerRadius, rd.y - outerRadius - outerRadius, outerRadius*2, outerRadius*2);
 			g.drawOval(rd.x - outerRadius - outerRadius, rd.y - outerRadius + outerRadius, outerRadius*2, outerRadius*2);
 			g.drawOval(rd.x - outerRadius + outerRadius, rd.y - outerRadius + outerRadius, outerRadius*2, outerRadius*2);
-			g.drawString("z: " + rd.z + ", pitch: " + Math.round(rd.pitch*100)/100 + ", roll: " + Math.round(rd.roll*100)/100, rd.x - 55, rd.y + rd.radius + 130);
+			g.drawString("z: " + rd.z + ", pitch: " + Math.round(rd.pitch*100)/100 + ", roll: " + Math.round(rd.roll*100)/100 + ", yaw: " + rd.yaw, rd.x - 55, rd.y + rd.radius + 130);
 		}
 		else if(rd.name.contains(settings.PHANTOM_NAME)){
 			int outerRadius = (int)Math.round((Math.sqrt(2)-1)*rd.radius);
@@ -373,7 +373,7 @@ public class DrawPanel extends ZoomablePanel
 			g.drawOval(rd.x - outerRadius + outerRadius, rd.y - outerRadius - outerRadius, outerRadius*2, outerRadius*2);
 			g.drawOval(rd.x - outerRadius - outerRadius, rd.y - outerRadius + outerRadius, outerRadius*2, outerRadius*2);
 			g.drawOval(rd.x - outerRadius + outerRadius, rd.y - outerRadius + outerRadius, outerRadius*2, outerRadius*2);
-			g.drawString("z: " + rd.z + ", pitch: " + Math.round(rd.pitch*100)/100 + ", roll: " + Math.round(rd.roll*100)/100, rd.x - 55, rd.y + rd.radius + 130);
+			g.drawString("z: " + rd.z + ", pitch: " + Math.round(rd.pitch*100)/100 + ", roll: " + Math.round(rd.roll*100)/100 + ", yaw: " + rd.yaw, rd.x - 55, rd.y + rd.radius + 130);
 		}
 		else if(rd.name.contains(settings.o3DR_NAME)){
 			int outerRadius = (int)Math.round((Math.sqrt(2)-1)*rd.radius);

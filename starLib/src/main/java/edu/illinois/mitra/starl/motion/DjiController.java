@@ -41,7 +41,8 @@ public class DjiController {
 
     private static final String FLAG_CONNECTION_CHANGE = "dji_sdk_connection_change";
     private static final boolean USING_WIFI_BRIDGE = true;
-    
+
+    private float maxTilt; //degrees
     private BaseProduct mProduct;
     private Aircraft mAircraft;
     private Camera mCamera = mAircraft.getCamera();
@@ -84,7 +85,7 @@ public class DjiController {
     // sets roll to val percent of max angle
     // positive value moves right, negative left
     public void setRoll(double val) {
-        val *= .14;
+        val *= maxTilt;
         if (mFlightController != null)
         {
             mFlightControlData.setRoll((float)val);
@@ -92,10 +93,10 @@ public class DjiController {
         }
     }
 
-    // sets yaw to val percent of max angular rotation
+    // sets yaw to val angular velocity
     // positive value turns right (clockwise from above), negative turns left
     public void setYaw(double val) {
-        val *= .14;
+        val *= 5;
         if (mFlightController != null)
         {
             mFlightControlData.setYaw((float)val);
@@ -198,7 +199,7 @@ public class DjiController {
     }
 
     public void setMaxTilt(float maxTilt) {
-        //no
+        this.maxTilt = maxTilt;
     }
 
     public void initConnection() {
@@ -330,7 +331,7 @@ public class DjiController {
         mFlightController.setVirtualStickAdvancedModeEnabled(true);
         mFlightController.setConnectionFailSafeBehavior(ConnectionFailSafeBehavior.LANDING, null);
         mFlightController.setRollPitchControlMode(RollPitchControlMode.ANGLE);
-        mFlightController.setYawControlMode(YawControlMode.ANGLE);
+        mFlightController.setYawControlMode(YawControlMode.ANGULAR_VELOCITY);
         mFlightController.setVerticalControlMode(VerticalControlMode.VELOCITY);
         mFlightController.setTerrainFollowModeEnabled(false, null);
         mFlightController.setTripodModeEnabled(false, null);

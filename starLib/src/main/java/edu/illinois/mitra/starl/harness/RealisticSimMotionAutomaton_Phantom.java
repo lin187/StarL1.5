@@ -9,16 +9,24 @@ public class RealisticSimMotionAutomaton_Phantom extends MotionAutomaton_Phantom
 	private SimGpsProvider gpsp;
 	private String name;
 	private Model_Phantom my_model;
+	private float maxTilt;
 
 	public RealisticSimMotionAutomaton_Phantom(GlobalVarHolder gvh, SimGpsProvider gpsp) {
 		super(gvh, null);
 		name = gvh.id.getName();
 		this.gpsp = gpsp;
 		this.my_model = (Model_Phantom)gvh.plat.model;
+		maxTilt = (float)this.my_model.max_pitch_roll;
+		my_model.yaw = 90;
 	}
 
 	@Override
 	public void setControlInput(double yaw_v, double pitch, double roll, double gaz){
+//		double temp;
+//		temp = pitch;
+//		pitch = roll;
+		pitch *= -1;
+		roll *= -1;
 		if(yaw_v > 1 || yaw_v < -1){
 			throw new IllegalArgumentException("yaw speed must be between -1 to 1");
 		}
@@ -31,12 +39,18 @@ public class RealisticSimMotionAutomaton_Phantom extends MotionAutomaton_Phantom
 		if(gaz > 1 || gaz < -1){
 			throw new IllegalArgumentException("gaz, vertical speed must be between -1 to 1");
 		}
-		gpsp.setControlInputPhantom(name, yaw_v*my_model.max_yaw_speed, pitch*my_model.max_pitch_roll, roll*my_model.max_pitch_roll, gaz*my_model.max_gaz);
+		System.out.printf("CINPUT: %f %f %f %f\n", yaw_v, pitch, roll, gaz);
+		gpsp.setControlInputPhantom(name, yaw_v*my_model.max_yaw_speed, pitch*maxTilt, roll*maxTilt, gaz*my_model.max_gaz);
+		//gpsp.setControlInputPhantom(name, yaw_v*1500, 0, 0, gaz*my_model.max_gaz);
 	}
 
 	/**
 	 *  	take off from ground
 	 */
+	@Override
+	protected void setMaxTilt(float val) {
+		maxTilt = val;
+	}
 	@Override
 	protected void takeOff(){
 		gvh.log.i(TAG, "Drone taking off");

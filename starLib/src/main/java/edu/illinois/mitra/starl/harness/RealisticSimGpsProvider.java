@@ -388,6 +388,7 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 			
 			Point3d p_point = cur.predict(noises, timeSinceUpdate);
 			boolean collided = checkCollision(p_point);
+			//boolean collided = false; todo(tim) address collisions
 			cur.updatePos(!collided);
 			
 			cur.updateSensor(obspoint_positions, sensepoint_positions);

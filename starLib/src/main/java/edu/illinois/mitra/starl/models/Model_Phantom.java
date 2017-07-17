@@ -239,7 +239,7 @@ public class Model_Phantom extends ItemPosition implements TrackedRobot {
 
 	private void initial_helper(){
 		height = 50;
-		yaw = 0.0;
+		yaw = 90;
 		pitch = 0.0;
 		roll = 0.0;
 		radius = 340;

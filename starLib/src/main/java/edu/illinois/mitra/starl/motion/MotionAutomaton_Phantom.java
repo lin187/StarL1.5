@@ -39,12 +39,12 @@ public class MotionAutomaton_Phantom extends RobotMotion {
     double Kdx = 0.4;
     double Kdy = 0.45;*/
     // the ones below work pretty well
-    double Kpx = 0.0714669809792096;
-    double Kpy = 0.0714669809792096;
+    double Kpx = 0.0314669809792096;
+    double Kpy = 0.0314669809792096;
     double Kix = 0.0110786899216426;
     double Kiy = 0.0110786899216426;
-    double Kdx = 0.113205037832174;
-    double Kdy = 0.113205037832174;
+    double Kdx = 0.213205037832174;
+    double Kdy = 0.213205037832174;
 
     PIDController PID_x = new PIDController(Kpx, Kix, Kdx, saturationLimit, windUpLimit, filterLength);
     PIDController PID_y = new PIDController(Kpy, Kiy, Kdy, saturationLimit, windUpLimit, filterLength);
@@ -85,8 +85,9 @@ public class MotionAutomaton_Phantom extends RobotMotion {
     }
 
     public void goTo(ItemPosition dest) {
-        if((inMotion && !this.destination.equals(dest)) || !inMotion) {
-            this.destination = new ItemPosition(dest.name,dest.x,dest.y,0);
+        if(!inMotion || !this.destination.equals(dest)) {
+            done = false;
+            this.destination = new ItemPosition(dest.name,dest.x,dest.y,0); //Todo(TIM) add dest.z?
             gvh.log.d(TAG, "Going to X: " + Integer.toString(dest.x) + ", Y: " + Integer.toString(dest.y));
       //      Log.d(TAG, "Going to X: " + Integer.toString(dest.x) + ", Y: " + Integer.toString(dest.y));
             //this.destination = dest;
@@ -138,6 +139,11 @@ public class MotionAutomaton_Phantom extends RobotMotion {
                             }
                             break;
                         case MOVE:
+                            if(landed){
+                                takeOff();
+                                next = STAGE.TAKEOFF;
+                                break;
+                            }
                             if(distance <= param.GOAL_RADIUS) {
                                 next = STAGE.GOAL;
                             }
@@ -146,7 +152,7 @@ public class MotionAutomaton_Phantom extends RobotMotion {
                                 double pitchCommand = PID_y.getCommand(mypos.y, destination.y);
                                 double yawCommand = calculateYaw();
                                 double gazCommand = 0;
-                                setControlInput(yawCommand, pitchCommand, rollCommand, gazCommand);
+                                setControlInputRescale(yawCommand, pitchCommand, rollCommand, gazCommand);
                                 // TD_NATHAN: check and resolve: was mypos.angle
                                 // that was the correct solution, has been resolved
                             }
@@ -174,15 +180,16 @@ public class MotionAutomaton_Phantom extends RobotMotion {
                             land();
                             break;
                         case GOAL:
+                            done = true;
                             gvh.log.i(TAG, "At goal!");
                             if(param.STOP_AT_DESTINATION){
                                 next = STAGE.HOVER;
                             }
-                           // running = false;
+                            //running = false;
                             inMotion = false;
                             break;
                         case STOP:
-                            //do nothing
+                            motion_stop();
                     }
                     if(next != null) {
                         prev = stage;
@@ -196,8 +203,8 @@ public class MotionAutomaton_Phantom extends RobotMotion {
                 }
 
                 if((colliding || stage == null) ) {
-                    land();
-                    stage = STAGE.LAND;
+                    //land(); todo(tim) address collisions
+                    //stage = STAGE.LAND;
                 }
             }
             gvh.sleep(param.AUTOMATON_PERIOD);
@@ -235,7 +242,7 @@ public class MotionAutomaton_Phantom extends RobotMotion {
 
     @Override
     public void motion_stop() {
-        stage = STAGE.HOVER;
+        stage = STAGE.LAND;
         this.destination = null;
         running = false;
         inMotion = false;
@@ -298,19 +305,19 @@ public class MotionAutomaton_Phantom extends RobotMotion {
 
     private double calculateYaw() {
         // this method calculates a yaw correction, to keep the drone's yaw angle near 90 degrees
-        if(mypos.yaw > 93) {
-            return 5;
-        }
-        else if(mypos.yaw < 87) {
+        if(mypos.yaw > 90) {
             return -5;
+        }
+        else if(mypos.yaw < 90) {
+            return 5;
         }
         else {
             return 0;
         }
     }
 
-    private void setMaxTilt(float val) {
-        //bti.setMaxTilt(val);
+     protected void setMaxTilt(float val) {
+        bti.setMaxTilt(val);
     }
 
     @Override
