@@ -8,6 +8,8 @@ import java.util.Vector;
 
 import edu.illinois.mitra.starl.interfaces.TrackedRobot;
 import edu.illinois.mitra.starl.models.Model_GhostAerial;
+import edu.illinois.mitra.starl.models.Model_Mavic;
+import edu.illinois.mitra.starl.models.Model_Phantom;
 import edu.illinois.mitra.starl.models.Model_iRobot;
 import edu.illinois.mitra.starl.models.Model_quadcopter;
 import edu.illinois.mitra.starl.models.Model_3DR;
@@ -101,6 +103,16 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 
 	@Override
 	public PositionList<Model_GhostAerial> getGhostAerialsPositions() {
+		return null;
+	}
+
+	@Override
+	public PositionList<Model_Mavic> getMavicPositions(){
+		return null;
+	}
+
+	@Override
+	public PositionList<Model_Phantom> getPhantomPositions(){
 		return null;
 	}
 
@@ -331,6 +343,9 @@ public class IdealSimGpsProvider extends Observable implements SimGpsProvider  {
 
 	@Override
 	public void setControlInputMav(String name, double v_yaw, double pitch, double roll, double gaz) {}
+
+	@Override
+	public void setControlInputPhantom(String name, double v_yaw, double pitch, double roll, double gaz) {}
 
 	@Override
 	public void setControlInput3DR(String name, double v_yaw, double pitch, double roll, double gaz) {}

@@ -1,20 +1,20 @@
 package edu.illinois.mitra.starl.harness;
 
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
-import edu.illinois.mitra.starl.models.Model_Mavic;
-import edu.illinois.mitra.starl.motion.MotionAutomaton_Mavic;
+import edu.illinois.mitra.starl.models.Model_Phantom;
+import edu.illinois.mitra.starl.motion.MotionAutomaton_Phantom;
 
 
-public class RealisticSimMotionAutomaton_mavic extends MotionAutomaton_Mavic {
+public class RealisticSimMotionAutomaton_Phantom extends MotionAutomaton_Phantom {
 	private SimGpsProvider gpsp;
 	private String name;
-	private Model_Mavic my_model;
+	private Model_Phantom my_model;
 
-	public RealisticSimMotionAutomaton_mavic(GlobalVarHolder gvh, SimGpsProvider gpsp) {
+	public RealisticSimMotionAutomaton_Phantom(GlobalVarHolder gvh, SimGpsProvider gpsp) {
 		super(gvh, null);
 		name = gvh.id.getName();
 		this.gpsp = gpsp;
-		this.my_model = (Model_Mavic)gvh.plat.model;
+		this.my_model = (Model_Phantom)gvh.plat.model;
 	}
 
 	@Override
@@ -31,7 +31,7 @@ public class RealisticSimMotionAutomaton_mavic extends MotionAutomaton_Mavic {
 		if(gaz > 1 || gaz < -1){
 			throw new IllegalArgumentException("gaz, vertical speed must be between -1 to 1");
 		}
-		gpsp.setControlInputMav(name, yaw_v*my_model.max_yaw_speed, pitch*my_model.max_pitch_roll, roll*my_model.max_pitch_roll, gaz*my_model.max_gaz);
+		gpsp.setControlInputPhantom(name, yaw_v*my_model.max_yaw_speed, pitch*my_model.max_pitch_roll, roll*my_model.max_pitch_roll, gaz*my_model.max_gaz);
 	}
 
 	/**

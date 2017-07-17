@@ -155,14 +155,14 @@ public class MotionAutomaton_Phantom extends RobotMotion {
                             if(distance <= param.GOAL_RADIUS) {
                                 hover();
                                 double yawCommand = calculateYaw();
-                                setControlInput(yawCommand, 0, 0, 0);
+                                setControlInputRescale(yawCommand, 0, 0, 0);
                             }
                             else{
                                 double rollCommand = PID_x.getCommand(mypos.x, destination.x);
                                 double pitchCommand = PID_y.getCommand(mypos.y, destination.y);
                                 double yawCommand = calculateYaw();
                                 double gazCommand = 0;
-                                setControlInput(yawCommand, pitchCommand, rollCommand, gazCommand);
+                                setControlInputRescale(yawCommand, pitchCommand, rollCommand, gazCommand);
                             }
                             break;
                         case TAKEOFF:
@@ -310,7 +310,7 @@ public class MotionAutomaton_Phantom extends RobotMotion {
     }
 
     private void setMaxTilt(float val) {
-        bti.setMaxTilt(val);
+        //bti.setMaxTilt(val);
     }
 
     @Override
@@ -323,28 +323,20 @@ public class MotionAutomaton_Phantom extends RobotMotion {
         // TODO Auto-generated method stub
     }
 
+    private void setControlInputRescale(double yaw_v, double pitch, double roll, double gaz){
+        setControlInput(rescale(yaw_v, 50), rescale(pitch, 50), rescale(roll, 50), rescale(gaz, 50));
+    }
+    private void setControlInputRescaleD(double yaw_v, double pitch, double roll, double gaz){
+        setControlInput(rescale(yaw_v, mypos.max_yaw_speed), rescale(pitch, mypos.max_pitch_roll), rescale(roll, mypos.max_pitch_roll), rescale(gaz, mypos.max_gaz));
+    }
 
-    /**
-     * Slow down linearly upon coming within R_slowfwd of the goal
-     *
-     * @param distance
-     * @return
-     */
-	/*
-	private int LinSpeed(int distance) {
-		if(distance > param.SLOWFWD_RADIUS)
-			return param.LINSPEED_MAX;
-		if(distance > param.GOAL_RADIUS && distance <= param.SLOWFWD_RADIUS) {
-			return param.LINSPEED_MIN + (int) ((distance - param.GOAL_RADIUS) * linspeed);
-		}
-		return param.LINSPEED_MIN;
-	}
-	// Detects an imminent collision with another robot or with any obstacles
-	@Override
-	public void setParameters(MotionParameters param) {
-		this.param = param;/		this.linspeed = (double) (param.LINSPEED_MAX - param.LINSPEED_MIN) / Math.abs((param.SLOWFWD_RADIUS - param.GOAL_RADIUS));
-		this.turnspeed = (param.TURNSPEED_MAX - param.TURNSPEED_MIN) / (param.SLOWTURN_ANGLE - param.SMALLTURN_ANGLE);
-	}
-	 */
+    private double rescale(double value, double max_value){
+        if(Math.abs(value) > max_value){
+            return (Math.signum(value));
+        }
+        else{
+            return value/max_value;
+        }
+    }
 
 }
