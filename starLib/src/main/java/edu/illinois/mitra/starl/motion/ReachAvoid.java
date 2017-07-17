@@ -4,7 +4,10 @@ import java.util.Stack;
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
 import edu.illinois.mitra.starl.interfaces.Cancellable;
 import edu.illinois.mitra.starl.interfaces.TrackedRobot;
+import edu.illinois.mitra.starl.models.Model_3DR;
 import edu.illinois.mitra.starl.models.Model_GhostAerial;
+import edu.illinois.mitra.starl.models.Model_Mavic;
+import edu.illinois.mitra.starl.models.Model_Phantom;
 import edu.illinois.mitra.starl.models.Model_iRobot;
 import edu.illinois.mitra.starl.models.Model_quadcopter;
 import edu.illinois.mitra.starl.objects.ItemPosition;
@@ -46,7 +49,14 @@ public class ReachAvoid extends Thread implements Cancellable {
 			radius = 110 + ((Model_quadcopter) model).radius;
 		}else if(model instanceof Model_GhostAerial){
 			radius = 110 + ((Model_GhostAerial) model).radius;
+		}else if(model instanceof Model_Mavic){
+			radius = 110 + ((Model_Mavic) model).radius;
+		}else if(model instanceof Model_Phantom){
+			radius = 110 + ((Model_Phantom) model).radius;
+		}else if(model instanceof Model_3DR){
+			radius = 110 + ((Model_3DR) model).radius;
 		}
+
 		else{
 			//default value here;
 			radius = 200;
