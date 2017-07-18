@@ -125,7 +125,7 @@ public class MotionAutomaton_Phantom extends RobotMotion {
                             if(mode == OPMODE.GO_TO) {
                                 PID_x.reset();
                                 PID_y.reset();
-                                setMaxTilt(30); // TODO: add max tilt to motion paramters class
+                                setMaxTilt(2.5f); // TODO: add max tilt to motion paramters class
                                 if(landed){
                                     next = STAGE.TAKEOFF;
                                 }
@@ -243,6 +243,7 @@ public class MotionAutomaton_Phantom extends RobotMotion {
 
     @Override
     public void motion_stop() {
+        land();
         stage = STAGE.LAND;
         this.destination = null;
         running = false;
