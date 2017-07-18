@@ -71,12 +71,23 @@ public class DjiController {
         return DJISDKManager.getInstance().hasSDKRegistered();
     }
 
+    public void setVelocityMode(boolean velocityMode){
+        if(mFlightController != null){
+            mFlightController.setRollPitchControlMode(velocityMode?
+                    RollPitchControlMode.VELOCITY: RollPitchControlMode.ANGLE);
+        }
+    }
+
     public void setInputs(float yaw, float pitch, float roll, float gaz){
         if(mFlightController != null){
-            mFlightControlData.setYaw(yaw * 50);
+            mFlightControlData.setYaw(yaw*5);
             mFlightControlData.setPitch(pitch * maxTilt);
             mFlightControlData.setRoll(roll * maxTilt);
-            mFlightControlData.setVerticalThrottle(gaz);
+            mFlightControlData.setVerticalThrottle(0);
+//            mFlightControlData.setYaw(0f);
+//            mFlightControlData.setPitch(0f);
+//            mFlightControlData.setRoll(0f);
+//            mFlightControlData.setVerticalThrottle(0f);
             mFlightController.sendVirtualStickFlightControlData(mFlightControlData, new CommonCallbacks.CompletionCallback() {
                 @Override
                 public void onResult(DJIError djiError) {
@@ -98,7 +109,15 @@ public class DjiController {
                 @Override
                 public void onResult(DJIError djiError) {
                     gvh.log.e(TAG, "Landing error: " + (djiError == null ? "no errors" : djiError));
-                    mFlightController.turnOffMotors(null);
+                    if(mFlightController.getState().isLandingConfirmationNeeded()){
+                        gvh.log.e(TAG, "Landing confirmation required!");
+                        mFlightController.confirmLanding(new CommonCallbacks.CompletionCallback() {
+                            @Override
+                            public void onResult(DJIError djiError) {
+                                gvh.log.e(TAG, "Confirmed landing with following errors: "+ (djiError == null ? "no errors" : djiError));
+                            }
+                        });
+                    }
                 }
             });
         }
@@ -188,7 +207,7 @@ public class DjiController {
 
         //connects to WIFI bridge app
         if(USING_WIFI_BRIDGE){
-            DJISDKManager.getInstance().enableBridgeModeWithBridgeAppIP("10.255.24.152");
+            DJISDKManager.getInstance().enableBridgeModeWithBridgeAppIP(mac);
         }
     }
 
@@ -308,7 +327,8 @@ public class DjiController {
 
     //important flight control information.
     private void constructFlightController(){
-        mFlightController.setVirtualStickAdvancedModeEnabled(true);
+        mFlightController.setVirtualStickModeEnabled(true, null);
+        //mFlightController.setVirtualStickAdvancedModeEnabled(true);
         mFlightController.setConnectionFailSafeBehavior(ConnectionFailSafeBehavior.LANDING, null);
         mFlightController.setRollPitchControlMode(RollPitchControlMode.ANGLE);
         mFlightController.setYawControlMode(YawControlMode.ANGULAR_VELOCITY);
@@ -318,6 +338,8 @@ public class DjiController {
         mFlightController.setFlightOrientationMode(FlightOrientationMode.AIRCRAFT_HEADING, null);
         if (!mFlightController.isVirtualStickControlModeAvailable()){
             gvh.log.e(TAG, "Virtual Stick Control mode is unavailable, probably because a mission is running.");
+        } else {
+            gvh.log.e(TAG, "Finished setting up flight controller.");
         }
     }
 }

@@ -51,7 +51,7 @@ public class MotionAutomaton_Phantom extends RobotMotion {
 
 
     protected enum STAGE {
-        INIT, MOVE, HOVER, TAKEOFF, LAND, GOAL, STOP
+        INIT, MOVE, ROTATO, HOVER, TAKEOFF, LAND, GOAL, STOP
     }
 
     private STAGE next = null;
@@ -119,6 +119,9 @@ public class MotionAutomaton_Phantom extends RobotMotion {
                 if(!colliding && stage != null) {
                     if(stage != prev)
                         gvh.log.e(TAG, "Stage is: " + stage.toString());
+                    if((mypos.yaw >= 93 || mypos.yaw <= 87) && !landed){
+                        stage = STAGE.ROTATO;
+                    }
 
                     switch(stage) {
                         case INIT:
@@ -158,11 +161,16 @@ public class MotionAutomaton_Phantom extends RobotMotion {
                                 // that was the correct solution, has been resolved
                             }
                             break;
+                        case ROTATO:
+                            if(mypos.yaw <= 93 && mypos.yaw >= 87){
+                                next = STAGE.MOVE;
+                            }
+                            else{
+                                rotateDrone();
+                            }
                         case HOVER:
                             if(distance <= param.GOAL_RADIUS) {
                                 hover();
-                                double yawCommand = calculateYaw();
-                                setControlInputRescale(yawCommand, 0, 0, 0);
                             }
                             else{
                                 double rollCommand = PID_x.getCommand(mypos.x, destination.x);
@@ -255,6 +263,11 @@ public class MotionAutomaton_Phantom extends RobotMotion {
         running = true;
     }
 
+    protected void rotateDrone(){
+        bti.setVelocityMode(true);
+        bti.setInputs((float)rescale(calculateYaw(), 5), 0, 0, 0);
+    }
+
     private void startMotion() {
         running = true;
         stage = STAGE.INIT;
@@ -269,6 +282,7 @@ public class MotionAutomaton_Phantom extends RobotMotion {
 
     protected void setControlInput(double yaw_v, double pitch, double roll, double gaz){
         //Bluetooth command to control the drone
+        bti.setVelocityMode(false);
         bti.setInputs((float)yaw_v, (float)pitch, (float)roll, (float)gaz);
         gvh.log.i(TAG, "control input as, yaw, pitch, roll, thrust " + yaw_v + ", " + pitch + ", " +roll + ", " +gaz);
     }
@@ -296,11 +310,12 @@ public class MotionAutomaton_Phantom extends RobotMotion {
      */
     protected void hover(){
         //Bluetooth command to control the drone
-        bti.hover();
+        bti.setVelocityMode(true);
+        bti.setInputs(0,0,0,0);
         gvh.log.i(TAG, "Drone hovering");
     }
 
-    private double calculateYaw() {
+    protected double calculateYaw() {
         // this method calculates a yaw correction, to keep the drone's yaw angle near 90 degrees
         if(mypos.yaw > 90) {
             return -5;
@@ -327,11 +342,8 @@ public class MotionAutomaton_Phantom extends RobotMotion {
         // TODO Auto-generated method stub
     }
 
-    private void setControlInputRescale(double yaw_v, double pitch, double roll, double gaz){
-        setControlInput(rescale(yaw_v, 50), rescale(pitch, 50), rescale(roll, 50), rescale(gaz, 50));
-    }
-    private void setControlInputRescaleD(double yaw_v, double pitch, double roll, double gaz){
-        setControlInput(rescale(yaw_v, mypos.max_yaw_speed), rescale(pitch, mypos.max_pitch_roll), rescale(roll, mypos.max_pitch_roll), rescale(gaz, mypos.max_gaz));
+    protected void setControlInputRescale(double yaw_v, double pitch, double roll, double gaz){
+        setControlInput(rescale(yaw_v, 5), rescale(pitch, 50), rescale(roll, 50), rescale(gaz, 50));
     }
 
     private double rescale(double value, double max_value){

@@ -318,7 +318,7 @@ public class Model_Phantom extends ItemPosition implements TrackedRobot {
 	}
 
 	@Override
-	public void collision(Point3d collision_point) {
+	public void collision(Point3d collision_point) { //todo(tim) address collision
 		// No collision point, set both sensor to false
 		if(collision_point == null){
 			return;

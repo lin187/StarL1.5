@@ -17,7 +17,6 @@ public class RealisticSimMotionAutomaton_Phantom extends MotionAutomaton_Phantom
 		this.gpsp = gpsp;
 		this.my_model = (Model_Phantom)gvh.plat.model;
 		maxTilt = (float)this.my_model.max_pitch_roll;
-		my_model.yaw = 90;
 	}
 
 	@Override
@@ -51,6 +50,12 @@ public class RealisticSimMotionAutomaton_Phantom extends MotionAutomaton_Phantom
 	protected void setMaxTilt(float val) {
 		maxTilt = val;
 	}
+
+	@Override
+	protected void rotateDrone(){
+		setControlInputRescale(calculateYaw(), 0, 0, 0);
+	}
+
 	@Override
 	protected void takeOff(){
 		gvh.log.i(TAG, "Drone taking off");
