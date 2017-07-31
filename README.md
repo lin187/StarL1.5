@@ -20,7 +20,7 @@ https://en.wikipedia.org/wiki/Gradle
 
 https://gradle.org/
 
-DJI SDK 
+DJI SDK - STATUS: PID needs more tuning
 ========
 
 ![](https://media.giphy.com/media/xE8TXvuMhQrxC/giphy.gif)
@@ -34,11 +34,11 @@ The tablet must be connected to the remote controller of the drone via USB or Wi
 
 The API is implemented in the DjiController.java class and there are separate Model and MotionAutomaton classes for the Mavic and Phantom.
 
-Ehang SDK 
+Ehang SDK - STATUS: Partially Working
 ========
 @Christina @Anissa
 
-3DR SDK
+3DR SDK - STATUS: Untested
 ========
 @Austin @Mark
 
