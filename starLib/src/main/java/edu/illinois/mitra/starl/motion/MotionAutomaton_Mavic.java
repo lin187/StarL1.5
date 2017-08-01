@@ -458,22 +458,6 @@ public class MotionAutomaton_Mavic extends RobotMotion {
         }
     }
 
-    public void rotateGimbal(float p, float y){
-        bti.rotateGimbal(p,y);
-    }
-
-    public void rotateGimbal(float y){
-        bti.rotateGimbal(y);
-    }
-
-    public void rotateGimbal(float p, float y, float r){
-        bti.rotateGimbal(p,y,r);
-    }
-
-    public void downloadPhotos(){
-        bti.downloadPhotos();
-    }
-
     @Override
     public void turnTo(ItemPosition dest) {
         throw new IllegalArgumentException("quadcopter does not have a corresponding turn to");

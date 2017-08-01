@@ -45,12 +45,9 @@ public class DjiController {
     private float maxTilt; //degrees
     private BaseProduct mProduct;
     private Aircraft mAircraft;
-    //private Camera mCamera;
     private FlightController mFlightController;
     private Handler mHandler;
     private FlightControlData mFlightControlData;
-    //private Gimbal mGimbal = mAircraft.getGimbal();
-    //private PlaybackManager mPlaybackManager = mCamera.getPlaybackManager();
 
 
     private static String TAG = "DjiController";
@@ -133,58 +130,6 @@ public class DjiController {
                 }
             });
         }
-    }
-
-    public void takePicture() {
-//        if (mFlightController != null)
-//        {
-//            mCamera.startShootPhoto(null);
-//        }
-    }
-
-    public void rotateGimbal(float y){
-//        Rotation rot = new Rotation.Builder().yaw(y).build();
-//        mGimbal.rotate(rot,null);
-    }
-
-    public void rotateGimbal(float p, float y){
-//        Rotation rot = new Rotation.Builder().pitch(p).yaw(y).build();
-//        mGimbal.rotate(rot,null);
-    }
-
-    public void rotateGimbal(float p, float y, float r){
-//        Rotation rot = new Rotation.Builder().pitch(p).yaw(y).roll(r).build();
-//        mGimbal.rotate(rot,null);
-    }
-
-    public void downloadPhotos(){
-//        String baseDir = Environment.getExternalStorageDirectory().getAbsolutePath();
-//        File dir = new File(baseDir);
-//        if (!dir.exists() || !dir.isDirectory()){
-//            dir.mkdirs();
-//        }
-//        mPlaybackManager.selectAllFiles();
-//        mPlaybackManager.downloadSelectedFiles(dir, new PlaybackManager.FileDownloadCallback() {
-//            @Override
-//            public void onStart() {
-//
-//            }
-//
-//            @Override
-//            public void onEnd() {
-//
-//            }
-//
-//            @Override
-//            public void onError(Exception e) {
-//
-//            }
-//
-//            @Override
-//            public void onProgressUpdate(int i) {
-//
-//            }
-//        });
     }
 
     // make the drone land immediately
@@ -328,7 +273,6 @@ public class DjiController {
     //important flight control information.
     private void constructFlightController(){
         mFlightController.setVirtualStickModeEnabled(true, null);
-        //mFlightController.setVirtualStickAdvancedModeEnabled(true);
         mFlightController.setConnectionFailSafeBehavior(ConnectionFailSafeBehavior.LANDING, null);
         mFlightController.setRollPitchControlMode(RollPitchControlMode.ANGLE);
         mFlightController.setYawControlMode(YawControlMode.ANGULAR_VELOCITY);
