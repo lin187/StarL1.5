@@ -5,8 +5,10 @@ package edu.illinois.mitra.starl.motion;
 import java.util.Arrays;
 
 import edu.illinois.mitra.starl.gvh.GlobalVarHolder;
+import edu.illinois.mitra.starl.interfaces.MessageListener;
 import edu.illinois.mitra.starl.interfaces.RobotEventListener.Event;
 import edu.illinois.mitra.starl.models.Model_Phantom;
+import edu.illinois.mitra.starl.objects.HandlerMessage;
 import edu.illinois.mitra.starl.objects.ItemPosition;
 import edu.illinois.mitra.starl.objects.ObstacleList;
 
@@ -20,6 +22,7 @@ public class MotionAutomaton_Phantom extends RobotMotion {
     protected static final String ERR = "Critical Error";
     final int safeHeight = 150;
     private boolean landed = true;
+    private boolean abort = false;
 
     protected GlobalVarHolder gvh;
     protected DjiController bti;
@@ -39,12 +42,18 @@ public class MotionAutomaton_Phantom extends RobotMotion {
     double Kdx = 0.4;
     double Kdy = 0.45;*/
     // the ones below work pretty well
-    double Kpx = 0.0314669809792096; //314....
-    double Kpy = 0.0314669809792096;
-    double Kix = 0.0110786899216426; //011...
+//    double Kpx = 0.0114669809792096; //314....
+//    double Kpy = 0.0114669809792096;
+//    double Kix = 0.0110786899216426; //011...
+//    double Kiy = 0.0110786899216426;
+//    double Kdx = 0.189205037832174; //113....
+//    double Kdy = 0.189205037832174;
+    double Kpx = 0.0714669809792096/4;
+    double Kpy = 0.0714669809792096/4;
+    double Kix = 0.0110786899216426;
     double Kiy = 0.0110786899216426;
-    double Kdx = 0.159205037832174; //113....
-    double Kdy = 0.159205037832174;
+    double Kdx = 0.189205037832174;
+    double Kdy = 0.189205037832174;
 
     PIDController PID_x = new PIDController(Kpx, Kix, Kdx, saturationLimit, windUpLimit, filterLength);
     PIDController PID_y = new PIDController(Kpy, Kiy, Kdy, saturationLimit, windUpLimit, filterLength);
@@ -89,7 +98,7 @@ public class MotionAutomaton_Phantom extends RobotMotion {
             done = false;
             this.destination = new ItemPosition(dest.name,dest.x,dest.y,0); //Todo(TIM) add dest.z?
             gvh.log.d(TAG, "Going to X: " + Integer.toString(dest.x) + ", Y: " + Integer.toString(dest.y));
-      //      Log.d(TAG, "Going to X: " + Integer.toString(dest.x) + ", Y: " + Integer.toString(dest.y));
+            //      Log.d(TAG, "Going to X: " + Integer.toString(dest.x) + ", Y: " + Integer.toString(dest.y));
             //this.destination = dest;
             this.mode = OPMODE.GO_TO;
             startMotion();
@@ -106,23 +115,25 @@ public class MotionAutomaton_Phantom extends RobotMotion {
     public void run() {
         super.run();
         gvh.threadCreated(this);
+
         while(true) {
+            String debugmsg = "";
             //			gvh.gps.getObspointPositions().updateObs();
             if(running) {
+
                 ItemPosition temp = gvh.gps.getMyPosition();
                 mypos = (Model_Phantom)temp; // TD_NATHAN: check. I fixed it.
-   //             if(mypos == null) { continue;}
+                //             if(mypos == null) { continue;}
                 // if you change to 3D waypoints, use distanceTo instead of distanceTo2D
                 int distance = mypos.distanceTo2D(destination);
                 colliding = false;
-
+                debugmsg += "My position: " + mypos.x + ", " + mypos.y + "\n";
+                debugmsg += "Destination: " + destination.x + ", " + destination.y + "\n";
                 if(!colliding && stage != null) {
                     if(stage != prev)
                         gvh.log.e(TAG, "Stage is: " + stage.toString());
-                    if((mypos.yaw >= 93 || mypos.yaw <= 87) && !landed){
-                        stage = STAGE.ROTATO;
-                    }
-
+                    gvh.log.e("POSITION DEBUG", "Stage: " + stage);
+                    debugmsg += "Stage: " + stage + "\n";
                     switch(stage) {
                         case INIT:
                             if(mode == OPMODE.GO_TO) {
@@ -156,7 +167,12 @@ public class MotionAutomaton_Phantom extends RobotMotion {
                                 double pitchCommand = PID_y.getCommand(mypos.y, destination.y);
                                 double yawCommand = calculateYaw();
                                 double gazCommand = 0;
+                                gvh.log.d("POSITION DEBUG", "My Position: " + mypos.x + " " + mypos.y);
+                                gvh.log.d("POSITION DEBUG", "Destination: " + destination.x + " " + destination.y);
+
                                 setControlInputRescale(yawCommand, pitchCommand, rollCommand, gazCommand);
+                                debugmsg += "Yaw, pitch, roll, throttle:\n";
+                                debugmsg += yawCommand + " " + pitchCommand + " " + rollCommand + " " + gazCommand + "\n";
                                 // TD_NATHAN: check and resolve: was mypos.angle
                                 // that was the correct solution, has been resolved
                             }
@@ -168,6 +184,7 @@ public class MotionAutomaton_Phantom extends RobotMotion {
                             else{
                                 rotateDrone();
                             }
+                            break;
                         case HOVER:
                             if(distance <= param.GOAL_RADIUS) {
                                 hover();
@@ -178,6 +195,8 @@ public class MotionAutomaton_Phantom extends RobotMotion {
                                 double yawCommand = calculateYaw();
                                 double gazCommand = 0;
                                 setControlInputRescale(yawCommand, pitchCommand, rollCommand, gazCommand);
+                                debugmsg += "Yaw, pitch, roll, throttle:\n";
+                                debugmsg += yawCommand + " " + pitchCommand + " " + rollCommand + " " + gazCommand + "\n";
                             }
                             break;
                         case TAKEOFF:
@@ -200,10 +219,16 @@ public class MotionAutomaton_Phantom extends RobotMotion {
                         case STOP:
                             motion_stop();
                     }
+                    if((mypos.yaw >= 100 || mypos.yaw <= 80) && !landed && stage != STAGE.ROTATO){
+                        next = STAGE.ROTATO;
+                    }
+                    if(abort){
+                        next = STAGE.LAND;
+                    }
                     if(next != null) {
                         prev = stage;
                         stage = next;
-                        System.out.println("Stage transition to " + stage.toString() + "previous stage is "+ prev);
+
 
                         gvh.log.i(TAG, "Stage transition to " + stage.toString());
                         gvh.trace.traceEvent(TAG, "Stage transition", stage.toString(), gvh.time());
@@ -216,6 +241,7 @@ public class MotionAutomaton_Phantom extends RobotMotion {
                     //stage = STAGE.LAND;
                 }
             }
+            gvh.plat.sendMainMsg(HandlerMessage.STATS, debugmsg);
             gvh.sleep(param.AUTOMATON_PERIOD);
         }
     }
@@ -225,14 +251,9 @@ public class MotionAutomaton_Phantom extends RobotMotion {
         land();
     }
 
-    public void takePicture(){}
-
     @Override
     public void motion_stop() {
-        land();
-        stage = STAGE.LAND;
-        this.destination = null;
-        running = false;
+        abort = true;
         inMotion = false;
     }
 
@@ -271,7 +292,7 @@ public class MotionAutomaton_Phantom extends RobotMotion {
     protected void takeOff(){
         //Bluetooth command to control the drone
         bti.sendTakeoff();
-        gvh.log.i(TAG, "Drone taking off");
+        gvh.log.i("POSITION DEBUG", "Drone taking off");
     }
 
     /**
@@ -295,18 +316,18 @@ public class MotionAutomaton_Phantom extends RobotMotion {
 
     protected double calculateYaw() {
         // this method calculates a yaw correction, to keep the drone's yaw angle near 90 degrees
-        if(mypos.yaw > 90) {
-            return -5;
-        }
-        else if(mypos.yaw < 90) {
+        if(mypos.yaw > 93) {
             return 5;
+        }
+        else if(mypos.yaw < 87) {
+            return -5;
         }
         else {
             return 0;
         }
     }
 
-     protected void setMaxTilt(float val) {
+    protected void setMaxTilt(float val) {
         bti.setMaxTilt(val);
     }
 

@@ -16,6 +16,8 @@ public class HandlerMessage {
 	public static final int  HEARTBEAT_MODE = 11; //GHOST HEARTBEAT
 	public static final int COPTER_CONNECTED =  12; //GHOST connected
 	public static final int ARM_TOGGLE = 13; //GHOST arm/disarm
+	public static final int STATS = 14;
+	public static final int COMMANDS = 15;
 	
 	public static final int BLUETOOTH_CONNECTING = 2;
 	public static final int BLUETOOTH_CONNECTED = 1;

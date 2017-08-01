@@ -75,6 +75,12 @@ public class MainHandler extends Handler {
 			case HandlerMessage.MESSAGE_REGISTERED_3DR:
 				cbRegistered.setChecked((boolean) msg.obj);
 				break;
+			case HandlerMessage.STATS:
+				txtDebug.setText((String)msg.obj);
+				break;
+			case HandlerMessage.COMMANDS:
+				txtDebug.append((String)msg.obj);
+				break;
 		}
 	}
 }

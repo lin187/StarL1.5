@@ -171,7 +171,7 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 	}
 
 	//Called from realisticSimMotionAutomaton_mavic
-	//@Override
+	@Override
 	public void setControlInputMav(String name, double v_yaw, double pitch, double roll, double gaz) {
 		/** TODO: replace with PID model here
 		 */
@@ -182,7 +182,7 @@ public class RealisticSimGpsProvider extends Observable implements SimGpsProvide
 	}
 
 	//Called from realisticSimMotionAutomaton_phantom
-	//@Override
+	@Override
 	public void setControlInputPhantom(String name, double v_yaw, double pitch, double roll, double gaz) {
 		/** TODO: replace with PID model here
 		 */

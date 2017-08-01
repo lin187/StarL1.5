@@ -77,30 +77,32 @@ public class DjiController {
 
     public void setInputs(float yaw, float pitch, float roll, float gaz){
         if(mFlightController != null){
-            mFlightControlData.setYaw(yaw*5);
-            mFlightControlData.setPitch(pitch * maxTilt);
-            mFlightControlData.setRoll(roll * maxTilt);
-            mFlightControlData.setVerticalThrottle(0);
-//            mFlightControlData.setYaw(0f);
-//            mFlightControlData.setPitch(0f);
-//            mFlightControlData.setRoll(0f);
-//            mFlightControlData.setVerticalThrottle(0f);
+            //mFlightController.setVerticalControlMode(VerticalControlMode.POSITION);
+            gvh.log.e("POSITION DEBUG", "Control mode: " + mFlightController.getRollPitchControlMode());
+            mFlightControlData = new FlightControlData( //pitch,roll,yaw,verticalThrottle
+                    roll * maxTilt,             //roll
+                    pitch * maxTilt,            //pitch
+                    yaw * 5,                    //yaw
+                    .5f);                         //altitude (meters)
             mFlightController.sendVirtualStickFlightControlData(mFlightControlData, new CommonCallbacks.CompletionCallback() {
                 @Override
                 public void onResult(DJIError djiError) {
-                    gvh.log.e(TAG, "Attempted to send " +
+                    String commands = "Attempted to send " +
                             mFlightControlData.getYaw() + " " +
                             mFlightControlData.getPitch() + " " +
                             mFlightControlData.getRoll() + " " +
-                            mFlightControlData.getVerticalThrottle());
-                    gvh.log.e(TAG, "Errors " + (djiError == null ? "no errors" : djiError));
+                            mFlightControlData.getVerticalThrottle() + " " +
+                            (djiError == null ? "" : djiError);
+                    gvh.log.e("POSITION DEBUG", commands);
+                    gvh.plat.sendMainMsg(HandlerMessage.COMMANDS, commands);
+                    gvh.log.e(TAG, "Errors: " + (djiError == null ? "" : djiError));
                 }
             });
         }
     }
 
     public void sendLanding() {
-        if (mFlightController != null)
+        if (mFlightController != null && mFlightController.getState().isFlying())
         {
             mFlightController.startLanding(new CommonCallbacks.CompletionCallback() {
                 @Override
@@ -276,7 +278,7 @@ public class DjiController {
         mFlightController.setConnectionFailSafeBehavior(ConnectionFailSafeBehavior.LANDING, null);
         mFlightController.setRollPitchControlMode(RollPitchControlMode.ANGLE);
         mFlightController.setYawControlMode(YawControlMode.ANGULAR_VELOCITY);
-        mFlightController.setVerticalControlMode(VerticalControlMode.VELOCITY);
+        mFlightController.setVerticalControlMode(VerticalControlMode.POSITION);
         mFlightController.setTerrainFollowModeEnabled(false, null);
         mFlightController.setTripodModeEnabled(false, null);
         mFlightController.setFlightOrientationMode(FlightOrientationMode.AIRCRAFT_HEADING, null);
