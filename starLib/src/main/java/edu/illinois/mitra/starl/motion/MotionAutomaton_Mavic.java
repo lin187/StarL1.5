@@ -406,7 +406,6 @@ public class MotionAutomaton_Mavic extends RobotMotion {
 
     public void takePicture(){
         //Bluetooth command to control the drone
-        bti.takePicture();
         gvh.log.i(TAG, "Taking picture");
     }
 

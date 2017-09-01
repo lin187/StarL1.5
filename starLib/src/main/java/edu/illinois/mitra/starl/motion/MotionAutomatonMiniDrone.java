@@ -66,28 +66,6 @@ public class MotionAutomatonMiniDrone extends RobotMotion {
 
     public void takePicture(){}
 
-    @Override
-    public void rotateGimbal(float y) {
-
-    }
-
-    @Override
-    public void rotateGimbal(float p, float y) {
-
-    }
-
-    @Override
-    public void rotateGimbal(float p, float y, float r) {
-
-    }
-
-    @Override
-    public void downloadPhotos() {
-
-    }
-
-    ;
-
     private OPMODE mode = OPMODE.GO_TO;
 
     private static final MotionParameters DEFAULT_PARAMETERS = MotionParameters.defaultParameters();

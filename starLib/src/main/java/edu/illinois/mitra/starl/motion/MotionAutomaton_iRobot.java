@@ -171,28 +171,6 @@ public class MotionAutomaton_iRobot extends RobotMotion {
 	public void takePicture(){}
 
 	@Override
-	public void rotateGimbal(float y) {
-
-	}
-
-	@Override
-	public void rotateGimbal(float p, float y) {
-
-	}
-
-	@Override
-	public void rotateGimbal(float p, float y, float r) {
-
-	}
-
-	@Override
-	public void downloadPhotos() {
-
-	}
-
-	;
-
-	@Override
 	public synchronized void start() {
 		super.start();
 		gvh.log.d(TAG, "STARTED!");
