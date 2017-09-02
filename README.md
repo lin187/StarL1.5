@@ -131,7 +131,7 @@ inside `DjiController.java`.
 private static final boolean USING_WIFI_BRIDGE = false;
 ```
 See the "Setting the Tablet and Drone Info" section for how to change Wi-Fi bridge IP address. **Do not set the IP to
-that of the device running StarL.**
+that of the device running StarL.** [Wi-Fi Bridge App](https://github.com/dji-sdk/Android-Bridge-App.)
 
 *Note:* When tuning the PID controller, it is important to remember that the controller was designed for
 the AR Minidrone which has opposite sign conventions for pitch as compared to DJI. Also,
