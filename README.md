@@ -85,10 +85,10 @@ In the case that the GPS connects after the drone has connected, the drone(s) wi
 - The proper permissions are not enabled - *crash on application launch.*
 - MatLab lost track of the drone - *crash while the drone is running.*
 - The MatLab drone name for a certain color robot is different - *crash on connection.*
-- Instant Run is enabled.
-- The project you opened is `starlTemplate` instead of `starl`. This will cause errors regarding `Mavlink`.
-- You do not have the correct build tools or Android libraries installed. Use the SDK manager to fix this.
-- If you have been running simulations, the `Java Platform SE Binary` task may have to be stopped.
+- Instant Run is enabled. - *compile error*
+- The project you opened is `starlTemplate` instead of `starl`. - *compile error regarding Mavlink*
+- You do not have the correct build tools or Android libraries installed. Use the SDK manager to fix this. - *compile error*
+- If you have been running simulations, the `Java Platform SE Binary` task may have to be stopped. - *compile error*
 
 ## Running Simulations
 Run `Main.java` for the StarL application that you want. `Main.java` also contains the settings for the simulation. In order for the simulation to run, the run configurations
@@ -119,6 +119,7 @@ dependencies {
 - Better crash avoidance calculation
 - Reduce time required to launch simulation
 - Clarify some variables since some drones do not use Bluetooth
+
 ## New Drone Statuses
 ### DJI SDK - STATUS: PID needs more tuning
 @timliang @stirling
@@ -129,7 +130,7 @@ inside `DjiController.java`.
 ```java
 private static final boolean USING_WIFI_BRIDGE = false;
 ```
-See the "Setting the Tablet and Drone info" section for how to change Wi-Fi bridge IP address. **Do not set the IP to
+See the "Setting the Tablet and Drone Info" section for how to change Wi-Fi bridge IP address. **Do not set the IP to
 that of the device running StarL.**
 
 *Note:* When tuning the PID controller, it is important to remember that the controller was designed for
