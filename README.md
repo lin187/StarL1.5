@@ -99,7 +99,7 @@ the working directory should be set to be the directory containing the waypoints
 
 ## Creating a New StarL Application
 The `starLTemplate` Android application has been designed as the interface for all StarL applications. It is not recommended
-to write a new Android application. Instead, new StarL applications should be written as
+to write a new Android application. Instead, new StarL applications should be written as 
 a module which can be instantiated with `starlTemplate`.
 
 Please use the provided applications as a guideline. Essentially, there should be one class which handles the state changes
@@ -125,13 +125,12 @@ dependencies {
 @timliang @stirling
 
 Compatible with Mavic and Phantom DJI drones.
-The tablet must be connected to the remote controller of the drone via USB or Wi-Fi bridge app. Wi-Fi bridging can be toggled
-inside `DjiController.java`.
+The tablet must be connected to the remote controller of the drone via USB or [Wi-Fi Bridge App](https://github.com/dji-sdk/Android-Bridge-App). Wi-Fi bridging can be toggled inside `DjiController.java`.
 ```java
 private static final boolean USING_WIFI_BRIDGE = false;
 ```
 See the "Setting the Tablet and Drone Info" section for how to change Wi-Fi bridge IP address. **Do not set the IP to
-that of the device running StarL.** [Wi-Fi Bridge App](https://github.com/dji-sdk/Android-Bridge-App.)
+that of the device running StarL.**
 
 *Note:* When tuning the PID controller, it is important to remember that the controller was designed for
 the AR Minidrone which has opposite sign conventions for pitch as compared to DJI. Also,
