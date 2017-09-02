@@ -2,7 +2,7 @@
 
 https://wiki.cites.illinois.edu/wiki/display/MitraResearch/StarL
 
-http://www.verivital.slack.com
+https://www.verivital.slack.com
 
 http://www.verivital.com/
 
@@ -147,7 +147,7 @@ The PID Controller has not been tuned, and the drone has trouble taking off.
 The 3DR Solo requires a GPS satellite connection and could not be run indoors via MatLab navigation.
 
 ---
-For further documentation or implementation clarification regarding the above drones, please message the corresponding authors at http://www.verivital.slack.com.
+For further documentation or implementation clarification regarding the above drones, please message the corresponding authors at https://www.verivital.slack.com.
 
 See the `Documentation` folder for other materials on the framework.
 
