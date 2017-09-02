@@ -42,7 +42,7 @@ if(color.equals("blue")) {
          this.type = new Model_quadcopter(name, 0,0);
      }
      else if(type == Common.PHANTOM){
-         bluetooth = "NA"; // DJI drones don't use bluetooth
+         bluetooth = "Wifi Bridge IP"; // Device IP for wifi bridge if applicable
          this.type = new Model_Phantom(name, 0, 0);
      }
  }
@@ -118,12 +118,19 @@ dependencies {
 - Automatic permission requesting
 - Better crash avoidance calculation
 - Reduce time required to launch simulation
+- Clarify some variables since some drones do not use Bluetooth
 ## New Drone Statuses
 ### DJI SDK - STATUS: PID needs more tuning
 @timliang @stirling
 
 Compatible with Mavic and Phantom DJI drones.
-The tablet must be connected to the remote controller of the drone via USB or WiFi bridge app.
+The tablet must be connected to the remote controller of the drone via USB or Wi-Fi bridge app. Wi-Fi bridging can be toggled
+inside `DjiController.java`.
+```java
+private static final boolean USING_WIFI_BRIDGE = false;
+```
+See the "Setting the Tablet and Drone info" section for how to change Wi-Fi bridge IP address. **Do not set the IP to
+that of the device running StarL.**
 
 *Note:* When tuning the PID controller, it is important to remember that the controller was designed for
 the AR Minidrone which has opposite sign conventions for pitch as compared to DJI. Also,
