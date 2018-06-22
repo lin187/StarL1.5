@@ -1,0 +1,7 @@
+square.wpt
+3 2
+Camera 1 0 0 1
+bot1 minidrone w
+bot3 minidrone g
+Camera 2 0 -2700 3
+bot2 minidrone b
